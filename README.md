@@ -22,7 +22,17 @@ This documentation aims to help you get started and master Hytale modding.
 ### Prerequisites
 
 - Node.js 18.x or higher
-- npm, pnpm, or yarn package manager
+- [Bun](https://bun.sh/) package manager
+
+### Installing Bun
+
+If you don't have Bun installed, you can install it globally using npm:
+
+```bash
+npm install -g bun
+```
+
+Alternatively, visit [bun.sh](https://bun.sh/) for other installation methods.
 
 ### Installation
 
@@ -36,24 +46,24 @@ cd site
 2. Install dependencies:
 
 ```bash
-npm install
+bun install
 ```
 
 3. Run the development server:
 
 ```bash
-npm run dev
+bun run dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to view the site.
 
 ### Available Scripts
 
-- `npm run dev` - Start the development server
-- `npm run build` - Build the production application
-- `npm start` - Run the production server
-- `npm run types:check` - Validate TypeScript types and MDX files
-- `npm run lint` - Run ESLint for code quality
+- `bun run dev` - Start the development server
+- `bun run build` - Build the production application
+- `bun start` - Run the production server
+- `bun run types:check` - Validate TypeScript types and MDX files
+- `bun run lint` - Run ESLint for code quality
 
 ## Documentation Structure
 
