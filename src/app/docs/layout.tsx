@@ -1,11 +1,15 @@
-import { source } from "@/lib/source";
-import { DocsLayout } from "@/components/layout/docs";
-import { baseOptions } from "@/lib/layout.shared";
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import { source } from '@/lib/source';
+import { baseOptions } from '@/lib/layout.shared';
+import { DocsBanner } from './docs-banner'; // Adjust path as needed
 
-export default function Layout({ children }: LayoutProps<"/docs">) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <DocsLayout tree={source.pageTree} {...baseOptions()}>
-      {children}
-    </DocsLayout>
+    <div className="flex flex-col min-h-screen">
+      <DocsBanner />
+      <DocsLayout tree={source.pageTree} {...baseOptions()}>
+        {children}
+      </DocsLayout>
+    </div>
   );
 }

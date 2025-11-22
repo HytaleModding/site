@@ -15,10 +15,11 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="font-grotesk relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden px-4">
-      <a
-        href="https://github.com/HytaleModding/site"
-        target="_blank"
+    <div className="font-grotesk flex flex-col justify-center items-center min-h-[calc(100vh-4rem)] px-4 relative overflow-hidden">
+      {/* Branch and Commit Info - Bottom Right */}
+      <a 
+        href="https://github.com/HytaleModding/site" 
+        target="_blank" 
         rel="noopener noreferrer"
         className="absolute right-4 bottom-4 z-10 flex cursor-pointer items-center gap-2 rounded-md border border-slate-300 bg-slate-100 px-3 py-1.5 font-mono text-xs transition-colors duration-150 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
       >
@@ -102,6 +103,11 @@ export default function HomePage() {
             <span className="text-base md:text-lg">Discord</span>
           </a>
         </div>
+      </div>
+      
+      {/* Copyright Footer */}
+      <div className="absolute bottom-4 left-4 z-10 text-xs text-slate-900 dark:text-slate-900">
+        © {new Date().getFullYear()} Hytale Modding
       </div>
     </div>
   );
