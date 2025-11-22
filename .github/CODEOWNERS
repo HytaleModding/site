@@ -1,3 +1,6 @@
 * @ItsNeil17
 
 /content/docs/what-we-know-so-far/ways-to-develop/text-based.mdx @okunamayanad
+/src/app/docs/* @okunamayanad
+/src/components/* @okunamayanad
+/src/app/(home)/* @ bencres
