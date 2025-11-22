@@ -2,7 +2,7 @@
     "title": "Established Information",
     "pages": [
         "faq.mdx",
-        "---[Info]Specific Categories---",
+        "---Specific Categories---",
         "server",
         "client",
         "gameplay",
