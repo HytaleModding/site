@@ -1,5 +1,8 @@
 {
-  "title": "What We Know So Far",
-  "pages": ["faq.mdx", "server-first-dev.mdx", "ways-to-develop"],
-  "icon": "Construction"
+    "title": "What We Know So Far",
+    "pages": [
+        "faq.mdx",
+        "server-first-dev.mdx",
+        "text-based.mdx"
+    ]
 }
