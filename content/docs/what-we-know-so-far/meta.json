@@ -3,5 +3,6 @@
     "pages": [
         "faq.mdx",
         "server-first-dev.mdx"
-    ]
+    ],
+    "icon": "🚧"
 }

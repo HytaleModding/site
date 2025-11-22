@@ -1,6 +1,7 @@
 {
-  "title": "Ways to Develop",
-  "description": "Different ways to develop mods for Hytale.",
-  "index": true,
-  "icon": "Wrench"
+    "title": "Ways to Develop",
+    "pages": [
+        "text-based.mdx"
+    ],
+    "icon": "🛠️"
 }
