@@ -2,6 +2,7 @@
     "title": "What We Know So Far",
     "pages": [
         "faq.mdx",
+        "developer-qa-insights.mdx",
         "server-first-dev.mdx",
         "inputs.mdx",
         "ui-customization.mdx",

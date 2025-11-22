@@ -1,0 +1,309 @@
+---
+title: Developer Q&A Technical Insights
+description: Technical insights from Hytale developers Zero and Slikey about the game's architecture, modding capabilities, and development approach.
+---
+
+This page summarizes technical information from a developer Q&A session with **Slikey** and **Zero** from Hypixel Studios. The information focuses on the technical architecture, modding capabilities, and development philosophy behind Hytale.
+
+## Modding Architecture
+
+### Server-Side Java Plugins
+
+Hytale's modding system is built around **Java plugins** that run server-side. This provides developers with extensive control over game functionality.
+
+- **Java 21+ Required**: Plugins must compile for at least Java 21, but the game ships with a Java 25 JVM
+- **Full Server Control**: Server plugins can do anything standard Java applications can do
+  - Database connections
+  - Web requests and API integrations
+  - Machine learning implementations
+  - Custom libraries and frameworks (including Lua scripting if desired)
+- **No Remote Code Execution**: Clients do NOT download executable code from servers for security reasons. Only configuration and assets are downloaded
+- **Highly Customizable**: Most of the core game can be changed - you could theoretically create a completely custom adventure mode with no vanilla content
+
+### Asset-Based Modding (No Code Required)
+
+For creators who don't want to write Java code, Hytale offers powerful data-driven modding:
+
+- **JSON Configuration**: Add NPCs, items, crafting recipes, and more by modifying JSON files
+- **In-Game Tools**: Use built-in creative mode tools to create content without coding
+- **Visual Scripting**: A sandboxed visual scripting system will replace traditional command blocks for asset packs
+- **Free and Open**: All modding tools are included with the base game - no paywalls or partnership requirements
+
+## Server Source Code Sharing
+
+One of Hytale's most significant features is the **shared source server** model:
+
+- **Release Timing**: Server source code will be released shortly after game launch (pending legal finalization)
+- **Shared Source Format**: The source code will be:
+  - Completely unobfuscated
+  - Include all developer comments
+  - Available for reading and modification
+- **Custom Server Software**: Technically skilled developers can create entirely custom server software (e.g., Rust implementations)
+  - Must maintain protocol compatibility with the latest client version
+  - Full control over server behavior and performance
+- **Documentation Access**: Developers can browse the source code directly, supplementing the public GitBook documentation
+
+## Network and Protocol
+
+### QUIC Protocol
+
+Hytale uses the **QUIC protocol** for networking:
+
+- **Modern Standard**: QUIC is a modern transport protocol built on UDP
+- **Potential Issues**: Some governments block QUIC, which could affect players in certain regions
+- **Current Data Layer**: Uses a custom serialization format that the team plans to replace post-launch
+- **Protocol Documentation**: Will be available when the shared source is released
+
+### Server Discovery
+
+- **Launch**: Servers accessible by direct IP at launch
+- **Post-Launch**: Server discovery system planned for after release to improve player and server owner experience
+
+## World Generation and Performance
+
+### Chunk Management
+
+- **Automatic Unloading**: Chunks and entities unload when outside all players' render distance to conserve RAM
+- **Multi-Threading**: Mixed approach for server performance
+  - Each world runs on its own main thread for core logic
+  - Parallel execution available for certain tasks
+  - Designed to utilize multi-core machines effectively
+
+### World Generation
+
+- **Powerful Algorithm**: Sophisticated world generation with extensive tooling
+- **Creative Building**: Create impressive structures in creative mode and share as "prefabs"
+- **Prefab System**: Advanced prefab system with an in-game editor
+- **No Code Required**: Create custom biomes and world features without writing Java
+- **Detailed Blog Post**: A dedicated world generation blog post is being written
+
+### NPC Systems
+
+- **Living World**: NPCs interact dynamically (e.g., bears attacking deer)
+- **Faction Support**: Adventure mode will feature faction interactions
+- **Herd Behavior**: System supports flocks/groups of NPCs that stay together
+- **Configurable**: Requires configuration time but offers powerful customization options
+
+## Graphics and Rendering
+
+### Current Technology
+
+- **OpenGL 3.3**: Current graphics API, chosen for Mac compatibility
+- **Art Style Commitment**: The team is committed to maintaining the current art style
+- **Hardware Accessibility**: Designed to run on affordable hardware and support more platforms
+- **Future Considerations**: Potential move to Vulkan/Metal in the future (long-term possibility)
+
+### Lighting Engine
+
+Current improvements in progress:
+
+- **Model Lighting**: Models currently only have a single light value; working toward gradients like full blocks
+- **Light Consistency**: Fixing differences between static lights (placed torches) and dynamic lights (held torches)
+- **Voxel Integration**: Addressing lighting inconsistencies between models and voxels
+
+## User Interface
+
+### NoesisGUI Integration
+
+Hytale is transitioning to **NoesisGUI** for UI customization:
+
+- **Client-Side Only**: NoesisGUI is exposed only on the client side
+- **Abstraction Layer**: Developers use Hytale's abstraction over NoesisGUI, not direct SDK access
+- **Community Feedback**: System designed to be powerful and react to community needs
+- **Nameplate Potential**: NoesisGUI transition may make nameplates more customizable
+- **Custom UI System**: Add elements to the HUD using the custom UI system
+- **Status Effects**: System supports buffs/debuffs (nameplate customization currently limited)
+
+### Current Limitations
+
+- **Lack of Super Custom UI/Input**: Recognized as a current limitation
+- **Invasive Mods**: Custom shaders and VR support are problematic without proper sandboxing
+  - Must maintain server-side compatibility
+  - VR support not possible anytime soon
+
+## Development Tools
+
+### Blockbench Plugin
+
+Hytale originally developed "Hytale Model Maker" but switched to Blockbench:
+
+- **Industry Standard**: Blockbench became the de-facto standard for block game modeling
+- **Partnership**: Partnered with Blockbench creator Jannis
+- **Features**: Supports both modeling and animation
+- **Release**: Will be available before or at game launch
+- **Internal Use**: Hypixel Studios uses it internally
+
+### Machinima and Cinematics
+
+- **Cinematic Tools**: Sophisticated tools for creating cinematics
+- **Proven**: The 2018 Hytale announcement trailer was created using these tools
+- **Available at Launch**: Players can create machinima content from day one
+
+## Documentation and Learning
+
+### Documentation Strategy
+
+- **Public GitBook**: Documentation will be hosted on a public GitBook
+- **Source Code Browsing**: Direct access to browse server source code
+- **Sparse Initially**: Documentation will be limited at launch
+- **Catch-Up Required**: Years of development documentation needs updating
+- **Server Source Release**: Full documentation may not arrive until server source release
+
+### No Text-Based Scripting at Launch
+
+- **Design Decision**: No built-in text-based scripting language
+- **Community Solutions**: Developers can add Lua or other scripting via Java libraries
+- **Flexibility**: Full control allows community to create their own solutions
+
+## Server Hosting and Multiplayer
+
+### Hosting Options
+
+- **Day One**: Self-hosting and Game Server Providers (GSPs) like Nitrado available at launch
+- **Cross-Platform**: Server runs on any platform supporting Java 25
+- **No Technical Difference**: Exploration mode and adventure mode use the same technology
+- **Friend Joining**: Working on system to join friends' single-player worlds
+
+### Server Customization
+
+- **Feature Toggles**: Many features can be disabled to boost performance
+- **Performance Factors**: Affected by player view distance, NPC count, mods, etc.
+- **Version Flexibility**: Server owners can run heavily modified server versions with the shared source
+- **EULA/TOS Only**: No business agreements required - just accept the EULA/TOS
+
+## Physics and Gameplay Systems
+
+### Block Physics
+
+- **Selective System**: Some blocks (like trees) use physics, but not all
+- **Player-Placed Blocks**: Don't break from physics automatically
+- **Creative Freedom**: Build floating bases or structures without physics concerns
+
+### Combat and Hitboxes
+
+- **Sub-Hitboxes**: System exists for large bosses
+- **Needs Work**: Hit registration for sub-hitboxes may need improvement
+- **Community Feedback**: Developers want feedback on boss fight mechanics (e.g., Monster Hunter-style systems)
+- **Multiple Boss Models**: Adventure mode will feature many boss fights
+
+### Stamina System
+
+- **Default**: Game uses stamina (not mana)
+- **Moddable**: Can add mana system via mods
+
+## Performance and Hardware
+
+### Requirements
+
+- **Accessible**: Won't require a $1000+ PC
+- **Hardware Tests**: Currently undergoing testing
+- **Optimization Goal**: Make the game as accessible as possible on cheaper hardware
+- **No Specific Numbers Yet**: Still collecting performance data
+
+### Server Performance
+
+Performance varies based on multiple factors:
+
+- CPU capacity
+- Player view distance
+- NPC count
+- Active mods
+- Server configuration
+
+Data collection ongoing; specific benchmarks not yet available.
+
+## Mod Distribution and Monetization
+
+### Distribution Platforms
+
+- **Community-Driven**: Hytale will not provide built-in mod discovery at launch
+- **Existing Platforms**: Use CurseForge, Modrinth, etc.
+- **Future Integration**: Plans to bring mod discovery into the game after launch
+- **No Walled Garden**: Avoiding restrictive ecosystems on day one
+
+### Monetization
+
+- **Platform-Dependent**: Monetization through established community platforms
+- **Learning Phase**: Team still learning about best practices
+- **Creator Support**: Want to give back to contributors, exact details being finalized
+- **No Ingame Marketplace Initially**: Focus on community-driven solutions first
+
+## Updates and Versioning
+
+### Update Philosophy
+
+- **Frequent Updates**: Very frequent updates planned, especially initially
+- **Community Feedback**: Constantly looking for feedback
+- **Community-Driven**: "We make this game great together"
+- **No Version Selector**: Clients always use the newest version
+- **Server Flexibility**: Servers can run custom versions using shared source (maintain protocol compatibility)
+
+### Technical Debt and Compatibility
+
+- **Real Issue**: Technical debt exists and is acknowledged
+- **Developer Problem**: Trying to minimize impact on modders
+- **Mod Breaking**: May break mods initially during rapid improvements
+- **Future Goal**: Proper deprecation policy with advance notice
+- **Backwards Compatibility**: Eventually aim for long-term compatibility support
+
+## Avatar and Character Systems
+
+### Model Customization
+
+- **Default Human**: All players start as human avatars
+- **Creative Mode**: Model Change feature allows switching to different character models in creative mode
+- **Server-Controlled**: Servers control player avatars (no client-side avatar injection)
+
+## Voxel Technology
+
+### Storage Technology
+
+- **Under Development**: Voxel storage technology currently undergoing changes
+- **Future Changes**: May change further post-launch
+- **Current Limitation**: Not fully documented yet
+
+## Development Philosophy
+
+### Team Culture
+
+- **Small Team**: Maintains a close-knit group
+- **Hiring Freeze**: Until after launch
+- **Unique Organization**: Very specific organizational style vulnerable to over-hiring
+- **Slow Growth**: Only hire when there are serious needs
+
+### Base Game Priority
+
+- **Core Focus**: Adventure mode (Orbis) is top priority
+- **Modding Integration**: Modding systems built alongside base game
+- **Co-Existence**: Base game and modding capabilities build off each other
+- **Long-Term Support**: Determined to keep adventure mode updated long-term
+
+### Community Relationship
+
+- **Listening**: Actively looking for community feedback
+- **Storm Response**: If community bands together on issues, developers will listen
+- **Overcoming Limitations**: Started as Hypixel minigame network wanting to overcome creative limitations
+- **Creative Freedom**: Solving problems to enable creativity without restrictions
+
+## Legal and Licensing
+
+### EULA and Terms
+
+- **Comprehensive EULA**: Will cover all applicable terms
+- **Nuanced Terms**: More detailed than simple yes/no answers
+- **Contributor Compensation**: Working on fair compensation for community contributors
+- **Details Pending**: Final legal details still being finalized
+
+### Pre-Orders
+
+- **Coming Soon**: Pre-orders launching soon
+- **Legal Approval**: In final stages of legal approval
+- **Release Date**: Stay tuned for release date announcement
+
+## Timeline Expectations
+
+The developers emphasized that players "don't need much patience anymore" and to "stay tuned for the release date announcement." The team is focused and working hard to deliver Hytale.
+
+---
+
+**Note**: This information was gathered from developer communications and represents the current state of development. Some details may change before or after launch as the team continues to refine and improve the game.

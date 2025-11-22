@@ -76,6 +76,7 @@ bun run dev
 | `/docs/quick-start` | Getting started guide for Hytale modding |
 | `/docs/what-we-know-so-far` | Current knowledge base about Hytale modding |
 | `/docs/what-we-know-so-far/faq` | Frequently asked questions |
+| `/docs/what-we-know-so-far/developer-qa-insights` | Technical insights from Hytale developers Zero and Slikey |
 | `/docs/what-we-know-so-far/inputs` | Input handling documentation |
 | `/docs/what-we-know-so-far/server-first-dev` | Server-first development approach |
 | `/docs/what-we-know-so-far/ui-customization` | UI customization guides |
