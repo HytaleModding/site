@@ -1,4 +1,4 @@
-import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import { DocsLayout } from '@/components/layout/docs/';
 import { source } from '@/lib/source';
 import { baseOptions } from '@/lib/layout.shared';
 import { DocsBanner } from './docs-banner'; // Adjust path as needed
