@@ -1,0 +1,12 @@
+{
+    "title": "Established Information",
+    "pages": [
+        "faq.mdx",
+        "---[Info]Specific Categories---",
+        "server",
+        "client",
+        "gameplay",
+        "misc"
+    ],
+    "icon": "Construction"
+}
