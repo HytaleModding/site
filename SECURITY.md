@@ -135,7 +135,6 @@ Security patches are applied as follows:
 For urgent security matters that cannot be disclosed publicly, please use:
 - GitHub's security advisory feature (preferred)
 - Email: `outreach@itsneil.dev`
-- Discord (available in the README)
 
 ## Acknowledgments
 
