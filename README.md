@@ -36,11 +36,12 @@ Alternatively, visit [bun.sh](https://bun.sh/) for other installation methods.
 
 ### Installation
 
-1. Clone the repository:
+1. Create a fork of the repository
+2. Clone that repository & change your directory into it. 
 
 ```bash
-git clone https://github.com/HytaleModding/site.git
-cd site
+git clone https://github.com/<you>/<fork repo name>.git
+cd <fork repo name>
 ```
 
 2. Install dependencies:
