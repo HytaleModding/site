@@ -2,7 +2,7 @@ import { getPageImage, source } from "@/lib/source";
 import { DocsPage } from "@/components/layout/page";
 import {
   DocsTitle,
-} from '@/components/layout/page';
+} from 'fumadocs-ui/page';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/mdx-components';
 import type { Metadata } from 'next';
