@@ -30,6 +30,6 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd /opt/website/
-            git pull origin main
+            git pull origin {{ github.ref_name }}
             bun run build
             pm2 restart website
