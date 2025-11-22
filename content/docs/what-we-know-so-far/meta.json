@@ -3,6 +3,7 @@
     "pages": [
         "faq.mdx",
         "server-first-dev.mdx",
+        "inputs.mdx",
         "ways-to-develop"
     ],
     "icon": "Construction"
