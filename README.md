@@ -108,14 +108,24 @@ content/
 
 ## Contributing
 
-This is a community-driven project. Contributions are welcome! Whether you want to:
+This is a community-driven project, and contributions are welcome! We value contributions from modders, developers, designers, and documentation enthusiasts of all skill levels.
 
-- Add new documentation
+### Ways to Contribute
+
+- Add new documentation for Hytale modding topics
 - Fix errors or improve existing content
 - Suggest new features or improvements
-- Report issues
+- Report issues or bugs
+- Answer questions from other community members
 
-Please feel free to open issues or submit pull requests on [GitHub](https://github.com/HytaleModding/site).
+### Getting Started with Contributing
+
+1. Read our [Contributing Guidelines](CONTRIBUTING.md)
+2. Check out our [Code of Conduct](CODE_OF_CONDUCT.md)
+3. Browse [open issues](https://github.com/HytaleModding/site/issues) or open a new one
+4. Submit a pull request with your changes
+
+For detailed information about the contribution process, development setup, and style guidelines, please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Community Links
 
@@ -135,6 +145,12 @@ Please feel free to open issues or submit pull requests on [GitHub](https://gith
 
 This is an **unofficial** community project and is not affiliated with or endorsed by Hypixel Studios or Hytale. All trademarks and game content are property of their respective owners.
 
+## Security
+
+If you discover a security vulnerability, please review our [Security Policy](SECURITY.md) for information on how to report it responsibly.
+
 ## License
 
-This documentation site is maintained by the community for the community. For specific licensing information, please check the repository.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+This documentation site is maintained by the community for the community.

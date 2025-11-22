@@ -1,0 +1,12 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Discord Community
+    url: https://discord.gg/54WX832HBM
+    about: Join our Discord for real-time help and discussions
+  - name: Official Hytale Website
+    url: https://hytale.com/
+    about: Visit the official Hytale website for game information
+  - name: Hytale Modding Strategy
+    url: https://hytale.com/news/2025/11/hytale-modding-strategy-and-status
+    about: Read about Hytale's official modding strategy and roadmap
+
