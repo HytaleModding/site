@@ -1,10 +1,7 @@
-import {
-  AnchorProvider,
-  type TOCItemType,
-} from 'fumadocs-core/toc';
-import FooterClient from '@/components/layout/PageClient';
-import { TocItemClient } from '@/components/layout/PageClient';
-import { type ReactNode } from 'react';
+import { AnchorProvider, type TOCItemType } from "fumadocs-core/toc";
+import FooterClient from "@/components/layout/PageClient";
+import { TocItemClient } from "@/components/layout/PageClient";
+import { type ReactNode } from "react";
 
 export interface DocsPageProps {
   toc?: TOCItemType[];
@@ -15,16 +12,16 @@ export function DocsPage({ toc = [], ...props }: DocsPageProps) {
   return (
     <AnchorProvider toc={toc}>
       <div className="flex flex-1">
-        <article className="flex-1 max-w-[860px] mx-auto px-8 py-12">
+        <article className="mx-auto max-w-[860px] flex-1 px-8 py-12">
           {props.children}
           <FooterClient />
         </article>
 
         {toc.length > 0 && (
-          <aside className="hidden xl:block w-[240px] shrink-0 sticky top-[72px] h-[calc(100vh-72px)] p-6">
+          <aside className="sticky top-[72px] hidden h-[calc(100vh-72px)] w-60 shrink-0 p-6 xl:block">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-medium text-[#D3AA8A] ">
+                <span className="text-xs font-medium text-orange-300">
                   On this page
                 </span>
               </div>

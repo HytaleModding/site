@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as SeparatorPrimitive from "@radix-ui/react-separator"
+import * as React from "react";
+import * as SeparatorPrimitive from "@radix-ui/react-separator";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 function Separator({
   className,
@@ -18,12 +18,12 @@ function Separator({
       orientation={orientation}
       // okay, we should add more gaps b/w title & sep and sep & desc
       className={cn(
-        "bg-orange-300 rounded-full shrink-0 data-[orientation=horizontal]:h-[4px] data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-[4px]",
-        className
+        "shrink-0 rounded-full bg-orange-300 data-[orientation=horizontal]:h-1 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1",
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { Separator }
+export { Separator };
