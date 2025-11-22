@@ -47,7 +47,7 @@ export default function HomePage() {
             Community
           </span>
         </div>
-        <h1 className="text-6xl font-medium p-2 md:text-7xl font-bold tracking-wide bg-gradient-to-b from-slate-500 to-slate-900 dark:from-slate-100 dark:to-slate-400 bg-clip-text text-transparent">
+        <h1 className="text-6xl font-medium p-2 md:text-7xl tracking-wide bg-linear-to-b from-slate-500 to-slate-900 dark:from-slate-100 dark:to-slate-400 bg-clip-text text-transparent">
           Hytale Modding
         </h1>
         <div className="w-64 h-1 bg-orange-300 mx-auto rounded-sm" />
@@ -56,6 +56,7 @@ export default function HomePage() {
             <span className='font-bold'> This is an unofficial community for modding Hytale</span>, providing guides, documentation, and resources.
           </p>
           <div className="flex flex-col items-center justify-center gap-4">
+            {/* TODO: replace all this hardcoded mess with a more readable and dynamic solution */}
             <Link
               href="/docs"
               className={`

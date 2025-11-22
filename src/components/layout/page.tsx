@@ -1,10 +1,7 @@
-import {
-  AnchorProvider,
-  type TOCItemType,
-} from 'fumadocs-core/toc';
-import FooterClient from '@/components/layout/PageClient';
-import { TocItemClient } from '@/components/layout/PageClient';
-import { type ReactNode } from 'react';
+import { AnchorProvider, type TOCItemType } from "fumadocs-core/toc";
+import FooterClient from "@/components/layout/PageClient";
+import { TocItemClient } from "@/components/layout/PageClient";
+import { type ReactNode } from "react";
 
 export interface DocsPageProps {
   toc?: TOCItemType[];
@@ -21,10 +18,10 @@ export function DocsPage({ toc = [], ...props }: DocsPageProps) {
         </article>
 
         {toc.length > 0 && (
-          <aside className="hidden xl:block w-[240px] shrink-0 sticky top-[72px] h-[calc(100vh-72px)] p-6">
+          <aside className="hidden xl:block w-60 shrink-0 sticky top-[72px] h-[calc(100vh-72px)] p-6">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-medium text-[#D3AA8A] ">
+                <span className="text-xs font-medium text-orange-300 ">
                   On this page
                 </span>
               </div>

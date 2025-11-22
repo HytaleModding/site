@@ -18,7 +18,7 @@ function Separator({
       orientation={orientation}
       // okay, we should add more gaps b/w title & sep and sep & desc
       className={cn(
-        "bg-orange-300 rounded-full shrink-0 data-[orientation=horizontal]:h-[4px] data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-[4px]",
+        "bg-orange-300 rounded-full shrink-0 data-[orientation=horizontal]:h-1 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1",
         className
       )}
       {...props}
