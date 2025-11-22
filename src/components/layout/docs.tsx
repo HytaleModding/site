@@ -33,7 +33,7 @@ export interface DocsLayoutProps {
 export function DocsLayout({ tree, children }: DocsLayoutProps) {
   return (
     <TreeContextProvider tree={tree}>
-      <div className="min-h-screen bg-background">
+      <div className="bg-background min-h-screen">
         <Header />
         <main className="flex">
           <Sidebar />
@@ -50,21 +50,21 @@ function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#1A1A1C] bg-[#111114]">
-      <nav className="flex items-center justify-between h-[72px] px-6">
+      <nav className="flex h-[72px] items-center justify-between px-6">
         <div className="flex items-center gap-8">
-          <Link href="/" className="text-base font-bold text-primary ">
+          <Link href="/" className="text-primary text-base font-bold">
             Hytale Modding
           </Link>
         </div>
 
         <div className="flex items-center gap-3">
           {/* Alert Badge */}
-          <div className="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full bg-coral-400">
-            <TriangleAlert className="w-3.5 h-3.5 text-red-800" />
-            <span className="text-xs font-medium text-red-800 ">
+          <div className="bg-coral-400 hidden items-center gap-2 rounded-full px-4 py-1.5 md:flex">
+            <TriangleAlert className="h-3.5 w-3.5 text-red-800" />
+            <span className="text-xs font-medium text-red-800">
               Documentation in Progress!
             </span>
-            <span className="text-[10px] text-red-700 ">
+            <span className="text-[10px] text-red-700">
               documentation @ 2de03df
             </span>
           </div>
@@ -86,10 +86,10 @@ function Header() {
 
           {/* Mobile Menu */}
           <button
-            className="md:hidden p-2 text-primary"
+            className="text-primary p-2 md:hidden"
             onClick={() => setOpen(!open)}
           >
-            <Menu className="w-5 h-5" />
+            <Menu className="h-5 w-5" />
           </button>
         </div>
       </nav>
@@ -117,31 +117,31 @@ function Sidebar() {
     <>
       <aside
         className={cn(
-          "fixed md:sticky top-[72px] left-0 h-[calc(100vh-72px)] w-[320px] border-r border-[#1A1A1C] bg-background overflow-y-auto transition-transform z-40",
-          !open && "max-md:-translate-x-full"
+          "bg-background fixed top-[72px] left-0 z-40 h-[calc(100vh-72px)] w-[320px] overflow-y-auto border-r border-[#1A1A1C] transition-transform md:sticky",
+          !open && "max-md:-translate-x-full",
         )}
       >
-        <div className="flex flex-col gap-4 p-6 h-full">
+        <div className="flex h-full flex-col gap-4 p-6">
           {/* Header */}
-          <div className="pb-3 border-b-2 border-orange-300">
-            <h2 className="text-base font-bold text-primary">Hytale Modding</h2>
+          <div className="border-b-2 border-orange-300 pb-3">
+            <h2 className="text-primary text-base font-bold">Hytale Modding</h2>
           </div>
 
           {/* Search */}
           {enabled && (
             <button
               onClick={() => setOpenSearch(true)}
-              className="flex items-center justify-between px-3 py-2 rounded-lg bg-orange-900 hover:bg-[#3d2f21] transition-colors"
+              className="flex items-center justify-between rounded-lg bg-orange-900 px-3 py-2 transition-colors hover:bg-[#3d2f21]"
             >
               <div className="flex items-center gap-2">
-                <Search className="w-3.5 h-3.5 text-orange-300" />
+                <Search className="h-3.5 w-3.5 text-orange-300" />
                 <span className="text-xs text-orange-300">Search...</span>
               </div>
               <div className="flex gap-1">
-                <kbd className="px-2 py-1 rounded text-[10px] bg-orange-950 text-orange-200">
+                <kbd className="rounded bg-orange-950 px-2 py-1 text-[10px] text-orange-200">
                   CTRL
                 </kbd>
-                <kbd className="px-2 py-1 rounded text-[10px] bg-orange-950 text-orange-200">
+                <kbd className="rounded bg-orange-950 px-2 py-1 text-[10px] text-orange-200">
                   K
                 </kbd>
               </div>
@@ -149,20 +149,20 @@ function Sidebar() {
           )}
 
           {/* Navigation */}
-          <nav className="flex flex-col gap-2 flex-1">{children}</nav>
+          <nav className="flex flex-1 flex-col gap-2">{children}</nav>
 
           {/* Footer Settings */}
-          <div className="pt-4 border-t border-[#1A1A1C] flex items-center justify-between">
-            <button className="p-2 rounded-full bg-orange-800 hover:bg-[#654630] transition-colors">
-              <Settings className="w-3.5 h-3.5 text-orange-300" />
+          <div className="flex items-center justify-between border-t border-[#1A1A1C] pt-4">
+            <button className="rounded-full bg-orange-800 p-2 transition-colors hover:bg-[#654630]">
+              <Settings className="h-3.5 w-3.5 text-orange-300" />
             </button>
 
-            <div className="flex gap-1 p-0.5 rounded-full bg-[#1A1A1C]">
-              <button className="p-2 rounded-full hover:bg-orange-800 transition-colors">
-                <Sun className="w-3.5 h-3.5 text-orange-300" />
+            <div className="flex gap-1 rounded-full bg-[#1A1A1C] p-0.5">
+              <button className="rounded-full p-2 transition-colors hover:bg-orange-800">
+                <Sun className="h-3.5 w-3.5 text-orange-300" />
               </button>
-              <button className="p-2 rounded-full bg-orange-800 hover:bg-[#654630] transition-colors">
-                <Moon className="w-3.5 h-3.5 text-orange-300" />
+              <button className="rounded-full bg-orange-800 p-2 transition-colors hover:bg-[#654630]">
+                <Moon className="h-3.5 w-3.5 text-orange-300" />
               </button>
             </div>
           </div>
@@ -172,7 +172,7 @@ function Sidebar() {
       {/* Mobile Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          className="fixed inset-0 z-30 bg-black/50 md:hidden"
           onClick={() => setOpen(false)}
         />
       )}
@@ -211,13 +211,13 @@ function SidebarItem({
       <Link
         href={item.url}
         className={cn(
-          "flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm transition-colors",
+          "flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition-colors",
           isActive
-            ? "text-orange-300 font-medium bg-orange-900"
-            : "text-orange-200 hover:text-orange-300 hover:bg-[#1A1A1C]"
+            ? "bg-orange-900 font-medium text-orange-300"
+            : "text-orange-200 hover:bg-[#1A1A1C] hover:text-orange-300",
         )}
       >
-        {isActive && <div className="w-1.5 h-1.5 rounded-full bg-orange-200" />}
+        {isActive && <div className="h-1.5 w-1.5 rounded-full bg-orange-200" />}
         {item.icon}
         {item.name}
       </Link>
@@ -226,7 +226,7 @@ function SidebarItem({
 
   if (item.type === "separator") {
     return (
-      <p className="text-muted text-xs font-medium mt-4 mb-2 first:mt-0">
+      <p className="text-muted mt-4 mb-2 text-xs font-medium first:mt-0">
         {item.icon}
         {item.name}
       </p>
@@ -241,10 +241,10 @@ function SidebarItem({
           <Link
             href={item.index.url}
             className={cn(
-              "flex-1 flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm transition-colors",
+              "flex flex-1 items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition-colors",
               pathname === item.index.url
-                ? "text-orange-300 font-medium"
-                : "text-orange-200 hover:text-orange-300"
+                ? "font-medium text-orange-300"
+                : "text-orange-200 hover:text-orange-300",
             )}
             onClick={(e) => e.stopPropagation()}
           >
@@ -253,13 +253,13 @@ function SidebarItem({
           </Link>
           <button
             onClick={toggleOpen}
-            className="p-1 rounded hover:bg-[#1A1A1C] transition-colors"
+            className="rounded p-1 transition-colors hover:bg-[#1A1A1C]"
             aria-label="Toggle folder"
           >
             <ChevronDown
               className={cn(
-                "w-3 h-3 text-orange-200 transition-transform duration-200",
-                isOpen && "rotate-180"
+                "h-3 w-3 text-orange-200 transition-transform duration-200",
+                isOpen && "rotate-180",
               )}
             />
           </button>
@@ -267,7 +267,7 @@ function SidebarItem({
       ) : (
         <button
           onClick={toggleOpen}
-          className="flex items-center justify-between px-2 py-1.5 text-sm text-orange-200 font-medium hover:text-orange-300 hover:bg-[#1A1A1C] rounded-lg transition-colors w-full text-left"
+          className="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left text-sm font-medium text-orange-200 transition-colors hover:bg-[#1A1A1C] hover:text-orange-300"
         >
           <span className="flex items-center gap-2">
             {item.icon}
@@ -275,16 +275,16 @@ function SidebarItem({
           </span>
           <ChevronDown
             className={cn(
-              "w-3 h-3 transition-transform duration-200",
-              isOpen && "rotate-180"
+              "h-3 w-3 transition-transform duration-200",
+              isOpen && "rotate-180",
             )}
           />
         </button>
       )}
       {isOpen && children && (
-        <div className="relative ml-4 mt-1 flex flex-col gap-1 pl-3">
+        <div className="relative mt-1 ml-4 flex flex-col gap-1 pl-3">
           {/* Decorative vertical line with gradient */}
-          <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-orange-300 rounded-full" />
+          <div className="absolute top-0 bottom-0 left-0 w-[2px] rounded-full bg-orange-300" />
           {children}
         </div>
       )}

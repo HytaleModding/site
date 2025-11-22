@@ -1,19 +1,17 @@
-import { getPageImage, source } from '@/lib/source';
-import {
-  DocsPage,
-} from '@/components/layout/page';
+import { getPageImage, source } from "@/lib/source";
+import { DocsPage } from "@/components/layout/page";
 import {
   DocsTitle,
   DocsDescription,
   DocsBody,
-} from '@/components/layout/PageClient'
-import { notFound } from 'next/navigation';
-import { getMDXComponents } from '@/mdx-components';
-import type { Metadata } from 'next';
-import { createRelativeLink } from 'fumadocs-ui/mdx';
-import { Separator } from '@/components/ui/separator';
+} from "@/components/layout/PageClient";
+import { notFound } from "next/navigation";
+import { getMDXComponents } from "@/mdx-components";
+import type { Metadata } from "next";
+import { createRelativeLink } from "fumadocs-ui/mdx";
+import { Separator } from "@/components/ui/separator";
 
-export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
+export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();
@@ -25,7 +23,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <div className="my-6">
-        <Separator/>
+        <Separator />
       </div>
       <DocsBody>
         <MDX
@@ -44,7 +42,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  props: PageProps<'/docs/[[...slug]]'>,
+  props: PageProps<"/docs/[[...slug]]">,
 ): Promise<Metadata> {
   const params = await props.params;
   const page = source.getPage(params.slug);

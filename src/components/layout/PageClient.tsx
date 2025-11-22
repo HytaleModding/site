@@ -1,13 +1,12 @@
-'use client';
-import { useActiveAnchors } from 'fumadocs-core/toc';
-import { useTreeContext } from 'fumadocs-ui/contexts/tree';
-import { usePathname } from 'fumadocs-core/framework';
-import Link from 'fumadocs-core/link';
-import type * as PageTree from 'fumadocs-core/page-tree';
-import { ComponentProps, useMemo } from 'react';
-import { type TOCItemType } from 'fumadocs-core/toc';
-import { cn } from '../../lib/cn';
-
+"use client";
+import { useActiveAnchors } from "fumadocs-core/toc";
+import { useTreeContext } from "fumadocs-ui/contexts/tree";
+import { usePathname } from "fumadocs-core/framework";
+import Link from "fumadocs-core/link";
+import type * as PageTree from "fumadocs-core/page-tree";
+import { ComponentProps, useMemo } from "react";
+import { type TOCItemType } from "fumadocs-core/toc";
+import { cn } from "../../lib/cn";
 
 export function TocItemClient({ item }: { item: TOCItemType }) {
   const activeAnchors = useActiveAnchors();
@@ -17,12 +16,14 @@ export function TocItemClient({ item }: { item: TOCItemType }) {
     <a
       href={item.url}
       className={cn(
-        'text-xs transition-colors  flex items-center gap-2',
-        isActive ? 'text-orange-300 font-medium' : 'text-stone-400 hover:text-orange-300'
+        "flex items-center gap-2 text-xs transition-colors",
+        isActive
+          ? "font-medium text-orange-300"
+          : "text-stone-400 hover:text-orange-300",
       )}
       style={{ paddingLeft: Math.max(0, item.depth - 2) * 16 }}
     >
-      {isActive && <div className="w-1.5 h-1.5 rounded-full bg-orange-200" />}
+      {isActive && <div className="h-1.5 w-1.5 rounded-full bg-orange-200" />}
       {item.title}
     </a>
   );
@@ -36,8 +37,8 @@ export default function FooterClient() {
     const result: PageTree.Item[] = [];
     function scan(items: PageTree.Node[]) {
       for (const item of items) {
-        if (item.type === 'page') result.push(item);
-        else if (item.type === 'folder') {
+        if (item.type === "page") result.push(item);
+        else if (item.type === "folder") {
           if (item.index) result.push(item.index);
           scan(item.children);
         }
@@ -59,14 +60,14 @@ export default function FooterClient() {
   if (!previous && !next) return null;
 
   return (
-    <div className="flex gap-4 mt-12 pt-6 border-t border-surface">
+    <div className="border-surface mt-12 flex gap-4 border-t pt-6">
       {previous && (
         <Link
           href={previous.url}
-          className="flex-1 p-4 rounded-lg bg-surface border-l-4 border-orange-300 hover:bg-elevated transition-colors"
+          className="bg-surface hover:bg-elevated flex-1 rounded-lg border-l-4 border-orange-300 p-4 transition-colors"
         >
-          <div className="text-xs text-stone-400 mb-1 ">Previous</div>
-          <div className="text-sm font-medium text-text-primary ">
+          <div className="mb-1 text-xs text-stone-400">Previous</div>
+          <div className="text-text-primary text-sm font-medium">
             {previous.name}
           </div>
         </Link>
@@ -74,10 +75,10 @@ export default function FooterClient() {
       {next && (
         <Link
           href={next.url}
-          className="flex-1 p-4 rounded-lg bg-surface border-r-4 border-orange-300 hover:bg-elevated transition-colors text-right ml-auto"
+          className="bg-surface hover:bg-elevated ml-auto flex-1 rounded-lg border-r-4 border-orange-300 p-4 text-right transition-colors"
         >
-          <div className="text-xs text-stone-400 mb-1 ">Next</div>
-          <div className="text-sm font-medium text-text-primary ">
+          <div className="mb-1 text-xs text-stone-400">Next</div>
+          <div className="text-text-primary text-sm font-medium">
             {next.name}
           </div>
         </Link>
@@ -86,45 +87,42 @@ export default function FooterClient() {
   );
 }
 
-export function DocsTitle(props: ComponentProps<'h1'>) {
+export function DocsTitle(props: ComponentProps<"h1">) {
   return (
     <h1
       {...props}
       className={cn(
-        'text-5xl font-bold bg-gradient-to-t from-text-gradient-start to-text-gradient-end bg-clip-text ',
-        props.className
+        "from-text-gradient-start to-text-gradient-end bg-gradient-to-t bg-clip-text text-5xl font-bold",
+        props.className,
       )}
-      style={{ WebkitTextFillColor: 'transparent' }}
+      style={{ WebkitTextFillColor: "transparent" }}
     >
       {props.children}
     </h1>
   );
 }
 // TODO: please uh do these
-// make the text thing more margin with the description, like add more space in it 
+// make the text thing more margin with the description, like add more space in it
 // also make the sep under the desc be aligned to how long the text is and be right behind the text, by like 5px
-export function DocsDescription(props: ComponentProps<'p'>) {
+export function DocsDescription(props: ComponentProps<"p">) {
   if (props.children === undefined) return null;
   return (
-    <p
-      {...props}
-      className={cn('text-xs text-text-muted ', props.className)}
-      > 
+    <p {...props} className={cn("text-text-muted text-xs", props.className)}>
       {props.children}
     </p>
   );
 }
 
-export function DocsBody(props: ComponentProps<'div'>) {
+export function DocsBody(props: ComponentProps<"div">) {
   return (
     <div
       {...props}
       className={cn(
-        'prose max-w-none text-text-primary',
-        '[&_a]:bg-gradient-to-t [&_a]:from-text-gradient-start [&_a]:to-text-gradient-end [&_a]:bg-clip-text [&_a]:font-bold',
-        '[&_blockquote]:border-l-4 [&_blockquote]:border-orange-300 [&_blockquote]:pl-4 [&_blockquote]:text-stone-400 [&_blockquote]:italic',
-        '[&_pre]:bg-surface [&_pre]:p-4 [&_pre]:rounded-lg',
-        '[&_code]:font-["Azeret_Mono"] [&_code]:text-xs'
+        "prose text-text-primary max-w-none",
+        "[&_a]:from-text-gradient-start [&_a]:to-text-gradient-end [&_a]:bg-gradient-to-t [&_a]:bg-clip-text [&_a]:font-bold",
+        "[&_blockquote]:border-l-4 [&_blockquote]:border-orange-300 [&_blockquote]:pl-4 [&_blockquote]:text-stone-400 [&_blockquote]:italic",
+        "[&_pre]:bg-surface [&_pre]:rounded-lg [&_pre]:p-4",
+        '[&_code]:font-["Azeret_Mono"] [&_code]:text-xs',
       )}
     >
       {props.children}
