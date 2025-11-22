@@ -41,7 +41,11 @@ Instead, report security vulnerabilities by:
    - Click "Report a vulnerability"
    - Fill out the form with details
 
-2. **Private Contact**
+2. **Email**
+   - Send details to: `outreach@itsneil.dev`
+   - Include "SECURITY" in the subject line
+
+3. **Private Contact**
    - Open a GitHub issue with minimal details asking to discuss privately
    - A maintainer will reach out to establish secure communication
 
@@ -128,7 +132,10 @@ Security patches are applied as follows:
 
 ## Contact
 
-For urgent security matters that cannot be disclosed publicly, please use GitHub's security advisory feature or contact the project maintainers through Discord (available in the README).
+For urgent security matters that cannot be disclosed publicly, please use:
+- GitHub's security advisory feature (preferred)
+- Email: `outreach@itsneil.dev`
+- Discord (available in the README)
 
 ## Acknowledgments
 
