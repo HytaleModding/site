@@ -59,7 +59,7 @@ function Header() {
 
         <div className="flex items-center gap-3">
           {/* Alert Badge */}
-          <div className="bg-coral-400 hidden items-center gap-2 rounded-full px-4 py-1.5 md:flex">
+            <div className="absolute left-1/2 transform -translate-x-1/2 bg-coral-400 hidden items-center gap-2 rounded-full px-4 py-1.5 md:flex">
             <TriangleAlert className="h-3.5 w-3.5 text-red-800" />
             <span className="text-xs font-medium text-red-800">
               Documentation in Progress!
@@ -67,7 +67,7 @@ function Header() {
             <span className="text-[10px] text-red-700">
               documentation @ 2de03df
             </span>
-          </div>
+            </div>
 
           {/* External Links */}
           {/* <button className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg bg-orange-800">
