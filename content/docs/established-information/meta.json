@@ -2,11 +2,11 @@
     "title": "Established Information",
     "pages": [
         "faq.mdx",
+        "developer-qa-insights.mdx",
         "---Specific Categories---",
         "server",
         "client",
-        "gameplay",
-        "misc"
+        "gameplay"
     ],
     "icon": "Construction"
 }
