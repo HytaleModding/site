@@ -117,7 +117,8 @@ export function DocsBody(props: ComponentProps<"div">) {
       {...props}
       className={cn(
         "prose text-text-primary max-w-none",
-        "[&_a]:from-text-gradient-start [&_a]:to-text-gradient-end [&_a]:bg-gradient-to-t [&_a]:bg-clip-text [&_a]:font-bold",
+        "[&_a]:from-text-gradient-start [&_a]:to-text-gradient-end [&_a]:bg-gradient-to-t [&_a]:bg-clittom-[-6px] [&_a]:after:h-[2px] [&_a]:after:bg-orange-60p-text [&_a]:font-bold [&_a]:text-transparent [&_a]:relative [&_a]:no-underline",
+        "[&_a]:after:content-[''] [&_a]:after:absolute [&_a]:after:left-0 [&_a]:after:right-0 [&_a]:after:bo0 [&_a]:after:rounded-full",
         "[&_blockquote]:relative [&_blockquote]:border-l-0 [&_blockquote]:pl-6 [&_blockquote]:text-stone-400 [&_blockquote]:italic [&_blockquote]:my-0 [&_blockquote]:py-0",
         "[&_blockquote]:before:content-[''] [&_blockquote]:before:absolute [&_blockquote]:before:left-0 [&_blockquote]:before:top-[25%] [&_blockquote]:before:bottom-[25%] [&_blockquote]:before:w-1 [&_blockquote]:before:bg-orange-300 [&_blockquote]:before:rounded-full",
         "[&_pre]:bg-surface [&_pre]:rounded-lg [&_pre]:p-4",
