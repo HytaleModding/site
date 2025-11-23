@@ -92,7 +92,7 @@ export function DocsTitle(props: ComponentProps<"h1">) {
     <h1
       {...props}
       className={cn(
-        "from-text-gradient-start to-text-gradient-end bg-gradient-to-t bg-clip-text text-5xl font-bold",
+        "from-text-gradient-start to-text-gradient-end bg-gradient-to-t bg-clip-text text-5xl font-bold mb-2 leading-tight pb-1",
         props.className,
       )}
       style={{ WebkitTextFillColor: "transparent" }}
@@ -101,13 +101,11 @@ export function DocsTitle(props: ComponentProps<"h1">) {
     </h1>
   );
 }
-// TODO: please uh do these
-// make the text thing more margin with the description, like add more space in it
-// also make the sep under the desc be aligned to how long the text is and be right behind the text, by like 5px
+
 export function DocsDescription(props: ComponentProps<"p">) {
   if (props.children === undefined) return null;
   return (
-    <p {...props} className={cn("text-text-muted text-xs", props.className)}>
+    <p {...props} className={cn("text-text-muted text-xs mb-4", props.className)}>
       {props.children}
     </p>
   );
