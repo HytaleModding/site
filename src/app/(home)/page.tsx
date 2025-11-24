@@ -109,6 +109,11 @@ export default function HomePage() {
       <div className="absolute bottom-4 left-4 z-10 text-xs text-slate-900 dark:text-slate-900">
         © {new Date().getFullYear()} Hytale Modding
       </div>
+      
+      {/* Copyright Footer */}
+      <div className="absolute bottom-4 left-4 z-10 text-xs text-slate-900 dark:text-slate-900">
+        © {new Date().getFullYear()} Hytale Modding
+      </div>
     </div>
   );
 }
