@@ -2,11 +2,14 @@ import { getPageImage, source } from "@/lib/source";
 import { DocsPage } from "@/components/layout/page";
 import {
   DocsTitle,
-} from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
-import { getMDXComponents } from '@/mdx-components';
-import type { Metadata } from 'next';
-import { createRelativeLink } from 'fumadocs-ui/mdx';
+  DocsDescription,
+  DocsBody,
+} from "@/components/layout/PageClient";
+import { notFound } from "next/navigation";
+import { getMDXComponents } from "@/mdx-components";
+import type { Metadata } from "next";
+import { createRelativeLink } from "fumadocs-ui/mdx";
+import { Separator } from "@/components/ui/separator";
 
 export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params;
