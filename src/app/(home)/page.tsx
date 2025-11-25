@@ -7,7 +7,7 @@ export default function HomePage() {
     <div className="font-grotesk flex flex-col justify-center items-center min-h-[calc(100vh-4rem)] px-4 relative overflow-hidden">
       {/* Branch and Commit Info - Bottom Right */}
       <a 
-        href="https://github.com/HytaleModding/site" 
+        href={`https://github.com/HytaleModding/site/tree/${branch}`} 
         target="_blank" 
         rel="noopener noreferrer"
         className="absolute bottom-4 right-4 z-10 flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-md border border-slate-300 dark:border-slate-700 text-xs font-mono hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors duration-150 cursor-pointer"

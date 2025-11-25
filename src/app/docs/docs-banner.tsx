@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { branch, commit } from '@/git-info.json';
+import Link from 'next/link';
 import { ExternalLinkIcon } from 'lucide-react';
 
 export function DocsBanner() {
@@ -15,12 +16,12 @@ export function DocsBanner() {
             </svg>
             <span className="font-medium">Documentation In Progress</span>
           </div>
-          <div className="flex items-center gap-1.5 text-xs font-mono text-slate-500 dark:text-slate-400">
+          <Link href={`https://github.com/HytaleModding/site/tree/${branch}`} className="flex items-center gap-1.5 text-xs font-mono text-slate-500 dark:text-slate-400">
             <ExternalLinkIcon className="size-4"/>
             <span>{branch}</span>
             <span className="text-slate-400 dark:text-slate-600">@</span>
             <span>{commit}</span>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
