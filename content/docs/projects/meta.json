@@ -1,5 +1,9 @@
 {
     "title": "Community Projects",
     "icon": "PackageSearch",
-    "index": true
+    "index": true,
+    "pages": [
+        "...",
+        "!example.mdx"
+    ]
 }
