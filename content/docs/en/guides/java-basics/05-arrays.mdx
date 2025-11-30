@@ -8,17 +8,20 @@ Arrays let you store multiple values of the same type in a single variable. Thin
 ## Creating Arrays
 
 ### Method 1: Declare and Initialize Separately
+
 ```java
 int[] numbers;           // Declare
 numbers = new int[5];    // Create array with 5 spaces
 ```
 
 ### Method 2: All at Once
+
 ```java
 int[] numbers = new int[5];
 ```
 
 ### Method 3: With Initial Values
+
 ```java
 int[] numbers = {10, 20, 30, 40, 50};
 ```
@@ -29,6 +32,7 @@ Once you create an array, its size is **fixed**. You can't add or remove element
 ```java
 int[] inventory = new int[9];  // Always has exactly 9 slots
 ```
+
 </Callout>
 
 ## Accessing Array Elements
@@ -45,8 +49,8 @@ System.out.println(players[2]); // "Charlie"
 
 ### Visual Representation
 
-| Index | 0       | 1     | 2        |
-|-------|---------|-------|----------|
+| Index | 0       | 1     | 2         |
+| ----- | ------- | ----- | --------- |
 | Value | "Alice" | "Bob" | "Charlie" |
 
 ## Modifying Array Values
@@ -78,6 +82,7 @@ Notice there are no parentheses! It's `array.length`, not `array.length()`.
 ## Looping Through Arrays
 
 ### Using For Loop
+
 ```java
 String[] items = {"Sword", "Shield", "Potion"};
 
@@ -87,6 +92,7 @@ for (int i = 0; i < items.length; i++) {
 ```
 
 ### Using Enhanced For Loop (For-Each)
+
 ```java
 String[] items = {"Sword", "Shield", "Potion"};
 
@@ -109,6 +115,7 @@ for (String item : items) {
     System.out.println(item);
 }
 ```
+
 </Callout>
 
 ## Multidimensional Arrays
@@ -129,13 +136,14 @@ System.out.println(grid[2][1]); // 8
 
 ### Visual Representation
 
-|       | 0 | 1 | 2 |
-|-------|---|---|---|
-| **0** | 1 | 2 | 3 |
-| **1** | 4 | 5 | 6 |
-| **2** | 7 | 8 | 9 |
+|       | 0   | 1   | 2   |
+| ----- | --- | --- | --- |
+| **0** | 1   | 2   | 3   |
+| **1** | 4   | 5   | 6   |
+| **2** | 7   | 8   | 9   |
 
 ### Looping Through 2D Arrays
+
 ```java tab="Code"
 int[][] grid = {
     {1, 2, 3},
@@ -150,15 +158,15 @@ for (int row = 0; row < grid.length; row++) {
 }
 ```
 
-
 ```java tab="Output"
-1 2 3 
-4 5 6 
+1 2 3
+4 5 6
 ```
 
 ## Practical Examples
 
 ### Player Inventory System
+
 ```java
 String[] inventory = new String[9]; // 9 hotbar slots
 
@@ -178,6 +186,7 @@ for (int i = 0; i < inventory.length; i++) {
 ```
 
 ### Find Highest Score
+
 ```java
 int[] scores = {45, 92, 67, 88, 55, 71};
 int highest = scores[0];
@@ -192,6 +201,7 @@ System.out.println("Highest score: " + highest);
 ```
 
 ### Calculate Average
+
 ```java
 double[] temperatures = {23.5, 25.0, 22.8, 24.3, 26.1};
 double sum = 0;
@@ -205,6 +215,7 @@ System.out.println("Average temperature: " + average);
 ```
 
 ### Block Grid (2D Array)
+
 ```java
 String[][] terrain = new String[5][5];
 
@@ -231,6 +242,7 @@ for (int x = 0; x < terrain.length; x++) {
 ## Common Array Operations
 
 ### Copy an Array
+
 ```java
 int[] original = {1, 2, 3, 4, 5};
 int[] copy = original.clone();
@@ -243,6 +255,7 @@ for (int i = 0; i < original.length; i++) {
 ```
 
 ### Search for a Value
+
 ```java
 String[] items = {"Sword", "Shield", "Potion", "Bow"};
 String target = "Potion";
@@ -263,6 +276,7 @@ if (foundIndex != -1) {
 ```
 
 ### Count Occurrences
+
 ```java
 String[] blocks = {"stone", "dirt", "stone", "grass", "stone"};
 String searchFor = "stone";
@@ -292,4 +306,5 @@ for (int i = 0; i < numbers.length; i++) {
     bigger[i] = numbers[i];
 }
 ```
+
 </Callout>
