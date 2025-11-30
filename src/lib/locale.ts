@@ -32,5 +32,5 @@ export function loadLanguage(locale: string) {
   try {
     const loadedMessages = require(`../../messages/${validLocale}.json`);
     messages[validLocale] = loadedMessages;
-  } catch { }
+  } catch {}
 }

@@ -8,18 +8,18 @@ const config = {
   async rewrites() {
     return [
       {
-        source: '/docs/:path*',
-        destination: '/en/docs/:path*',
+        source: "/docs/:path*",
+        destination: "/en/docs/:path*",
         locale: false,
       },
       {
-        source: '/docs',
-        destination: '/en/docs',
+        source: "/docs",
+        destination: "/en/docs",
         locale: false,
       },
       {
-        source: '/',
-        destination: '/en',
+        source: "/",
+        destination: "/en",
         locale: false,
       },
     ];

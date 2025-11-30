@@ -1,12 +1,12 @@
 // proxy.ts
 import { NextRequest, NextResponse, type NextFetchEvent } from "next/server";
-import { createI18nMiddleware } from 'fumadocs-core/i18n/middleware';
-import { i18n } from '@/lib/i18n';
+import { createI18nMiddleware } from "fumadocs-core/i18n/middleware";
+import { i18n } from "@/lib/i18n";
 
 export default createI18nMiddleware(i18n);
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
   ],
 };

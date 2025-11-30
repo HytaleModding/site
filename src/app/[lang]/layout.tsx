@@ -28,9 +28,7 @@ export default async function RootLayout({
       <Script id="set-lang" strategy="beforeInteractive">
         {`document.documentElement.lang = '${lang}';`}
       </Script>
-      <RootProvider i18n={provider(lang)}>
-        {children}
-      </RootProvider>
+      <RootProvider i18n={provider(lang)}>{children}</RootProvider>
     </>
   );
 }

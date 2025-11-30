@@ -1,5 +1,5 @@
-import { useParams } from 'next/navigation';
-import { getMessages, Messages } from '../locale';
+import { useParams } from "next/navigation";
+import { getMessages, Messages } from "../locale";
 
 export function useMessages(): Messages {
   const params = useParams();
