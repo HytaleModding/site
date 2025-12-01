@@ -6,7 +6,8 @@
         "---Specific Categories---",
         "server",
         "client",
-        "gameplay"
+        "gameplay",
+        "network"
     ],
     "icon": "Construction"
 }
