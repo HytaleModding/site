@@ -1,20 +1,27 @@
-import { Users, BookOpen, ExternalLinkIcon } from 'lucide-react';
-import Link from 'next/link';
-import { branch, commit } from '@/git-info.json';
+"use client";
+import { Users, BookOpen, ExternalLinkIcon } from "lucide-react";
+import Link from "next/link";
+import { branch, commit } from "@/git-info.json";
+import { localizeHref } from "@/lib/locale";
+import { useMessages } from "@/lib/hooks/useMessages";
+import { useParams } from "next/navigation";
 
 export default function HomePage() {
+  const params = useParams();
+  const messages = useMessages();
   return (
     <div className="font-grotesk relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden px-4">
-      {/* Branch and Commit Info - Bottom Right */}
-      <a 
-        href={`https://github.com/HytaleModding/site/tree/${branch}`} 
-        target="_blank" 
+      <a
+        href={`https://github.com/HytaleModding/site/tree/${branch}`}
+        target="_blank"
         rel="noopener noreferrer"
         className="absolute right-4 bottom-4 z-10 flex cursor-pointer items-center gap-2 rounded-md border border-slate-300 bg-slate-100 px-3 py-1.5 font-mono text-xs transition-colors duration-150 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
       >
         <div className="flex items-center gap-1.5">
-          <ExternalLinkIcon className="size-4"/>
-          <span className="text-slate-700 dark:text-slate-300 font-medium">{branch}</span>
+          <ExternalLinkIcon className="size-4" />
+          <span className="font-medium text-slate-700 dark:text-slate-300">
+            {branch}
+          </span>
         </div>
         <span className="text-slate-400 dark:text-slate-500">@</span>
         <span className="text-slate-600 dark:text-slate-400">{commit}</span>
@@ -31,28 +38,26 @@ export default function HomePage() {
         <div className="inline-flex items-center gap-2">
           <Users className="h-4 w-4 text-slate-600 dark:text-slate-400" />
           <span className="font-azeret text-sm font-medium text-slate-600 dark:text-slate-400">
-            Community
+            {messages.home.community}
           </span>
         </div>
         <h1 className="bg-gradient-to-b from-slate-500 to-slate-900 bg-clip-text p-2 text-6xl font-bold font-medium tracking-wide text-transparent md:text-7xl dark:from-slate-100 dark:to-slate-400">
-          Hytale Modding
+          {messages.home.title}
         </h1>
         <div className="mx-auto h-1 w-64 rounded-sm bg-orange-300" />
         <p className="mx-auto max-w-2xl p-2 text-lg leading-relaxed font-light text-slate-600 md:text-xl dark:text-slate-400">
-          Welcome to Hytale Modding!
-          <span className="font-bold">
-            {" "}
-            This is an unofficial community for modding Hytale
-          </span>
-          , providing guides, documentation, and resources.
+          {messages.home.welcome}
+          <span className="font-bold"> {messages.home.welcomeDescription}</span>
         </p>
         <div className="flex flex-col items-center justify-center gap-4">
           <Link
-            href="/docs"
+            href={localizeHref("/docs", params.lang?.toString())}
             className={`inline-flex items-center gap-3 rounded-md bg-[#f3e1c9] px-4 py-2 text-base text-[#a15b00] transition-colors duration-150 ease-in-out hover:bg-[#e4c99d] focus:bg-[#e4c99d] focus:outline-none md:text-lg dark:bg-[#422914] dark:text-[#FFC478] dark:hover:bg-[#5b361a] dark:focus:bg-[#5b361a]`}
           >
             <BookOpen className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5" />
-            <span className="text-base md:text-lg">Documentation</span>
+            <span className="text-base md:text-lg">
+              {messages.home.documentation}
+            </span>
           </Link>
 
           <a
@@ -77,11 +82,12 @@ export default function HomePage() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="text-base md:text-lg">Discord</span>
+            <span className="text-base md:text-lg">
+              {messages.home.discord}
+            </span>
           </a>
         </div>
       </div>
-
       {/* Copyright Footer */}
       <div className="absolute bottom-4 left-4 z-10 text-xs text-slate-900 dark:text-slate-900">
         © {new Date().getFullYear()} Hytale Modding

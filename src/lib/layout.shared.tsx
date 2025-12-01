@@ -1,16 +1,20 @@
-import { BookIcon, BookOpen } from "lucide-react";
+import { BookIcon } from "lucide-react";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
+import { i18n } from "@/lib/i18n";
+import { getMessages } from "./locale";
 
-export function baseOptions(): BaseLayoutProps {
+export function baseOptions(locale: string): BaseLayoutProps {
+  const messages = getMessages(locale);
   return {
+    i18n,
     nav: {
-      title: "Hytale Modding",
+      title: messages.nav.title,
     },
     links: [
       {
         icon: <BookIcon />,
-        text: "Documentation",
-        url: "/docs",
+        text: messages.nav.documentation,
+        url: `/${locale}/docs`,
         active: "nested-url",
       },
     ],

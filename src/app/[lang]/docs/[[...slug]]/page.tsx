@@ -9,25 +9,28 @@ import { notFound } from "next/navigation";
 import { getMDXComponents } from "@/mdx-components";
 import type { Metadata } from "next";
 import { createRelativeLink } from "fumadocs-ui/mdx";
-import { branch } from '@/git-info.json';
+import { branch } from "@/git-info.json";
 
-export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
+export default async function Page(
+  props: PageProps<"/[lang]/docs/[[...slug]]">,
+) {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+  const page = source.getPage(params.slug, params.lang);
   if (!page) notFound();
 
   const MDX = page.data.body;
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}
-      editOnGithub={
-        {
-          owner: "HytaleModding",
-          repo: "site",
-          path: `content/docs/${page.path}`,
-          sha: branch,
-        }
-      }>
+    <DocsPage
+      toc={page.data.toc}
+      full={page.data.full}
+      editOnGithub={{
+        owner: "HytaleModding",
+        repo: "site",
+        path: `content/docs/${page.path}`,
+        sha: branch,
+      }}
+    >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
@@ -47,10 +50,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  props: PageProps<"/docs/[[...slug]]">,
+  props: PageProps<"/[lang]/docs/[[...slug]]">,
 ): Promise<Metadata> {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+  const page = source.getPage(params.slug, params.lang);
   if (!page) notFound();
 
   return {
