@@ -1,77 +1,77 @@
 ---
-title: 01 - Variables & Data Types
-description: An introduction to variables and data types in Java programming.
+title: 01 - Variable & Tipe Data
+description: Pengantar variabel dan tipe data dalam pemrograman Java.
 ---
 
-Variables are containers that store data in your program. Think of them as labeled boxes where you can put different types of information.
+Variabel adalah wadah yang menyimpan data dalam programmu. Bayangkan mereka sebagai kotak berlabel di mana kamu bisa meletakkan berbagai jenis informasi.
 
-## What is a Variable?
+## Apa itu Variabel?
 
-A variable has three key components:
+Sebuah variabel memiliki tiga komponen utama:
 
-1. **Type**: What kind of data it holds (e.g., integer, string, boolean)
-2. **Name**: The label you use to refer to the variable
-3. **Value**: The data it contains
+1. **Tipe**: Jenis data apa yang disimpannya (misalnya: integer, string, boolean)
+2. **Nama**: Label yang kamu gunakan untuk merujuk ke variabel tersebut
+3. **Nilai**: Data yang ada di dalamnya
 
-## Declaring/Creating Variables
+## Mendeklarasikan/Membuat Variabel
 
-In Java, you must declare a variable before using it, like you'd need a box before putting something in it. The syntax is:
+Di Java, kamu harus mendeklarasikan variabel sebelum menggunakannya, seperti kamu membutuhkan kotak sebelum memasukkan sesuatu ke dalamnya. Sintaksnya adalah:
 
 ```java
 int age;
 age = 18;
 
-int age = 18; // Declaration and assignment in one line
+int age = 18; // Deklarasi dan penugasan dalam satu baris
 ```
 
-## Primitive Data Types
+## Tipe Data Primitif
 
-You might wonder what "int" means. It's a primitive data type in Java. Java has 8 primitive data types. Here are the most important ones for modding:
+Kamu mungkin bertanya-tanya apa arti "int". Itu adalah tipe data primitif di Java. Java memiliki 8 tipe data primitif. Berikut adalah yang paling penting untuk modding:
 
-| Data Type | Description                   | Example                    |
-| --------- | ----------------------------- | -------------------------- |
-| int       | Integer (whole numbers)       | `int score = 100;`         |
-| double    | Decimal numbers               | `double pi = 3.14;`        |
-| boolean   | True or false values          | `boolean isActive = true;` |
-| char      | Single character              | `char grade = 'A';`        |
-| String    | Sequence of characters (text) | `String name = "Hytale";`  |
+| Tipe Data | Deskripsi                           | Contoh                     |
+| --------- | ----------------------------------- | -------------------------- |
+| int       | Integer (bilangan bulat)            | `int score = 100;`         |
+| double    | Bilangan desimal                    | `double pi = 3.14;`        |
+| boolean   | Nilai benar atau salah (true/false) | `boolean isActive = true;` |
+| char      | Karakter tunggal                    | `char grade = 'A';`        |
+| String    | Urutan karakter (teks)              | `String name = "Hytale";`  |
 
-## Type Conversion
+## Konversi Tipe Data
 
-Sometimes you might not want a variable to stay the same type. You can convert between types:
+Terkadang kamu mungkin tidak ingin variabel tetap pada tipe yang sama. Kamu bisa mengonversi antar tipe data:
 
-### Automatic
+### Otomatis
 
 ```java
 int num = 10;
-double decimalNum = (double) num; // 10.0 - works automatically
+double decimalNum = (double) num; // 10.0 - berjalan secara otomatis
 ```
 
 ### Manual (Casting)
 
 ```java
 double decimalNum = 9.78;
-int num = (int) decimalNum; // 9 - decimals are dropped
+int num = (int) decimalNum; // 9 - desimal dibuang
 ```
 
-## Constants
+## Konstanta
 
-If you want a variable that shouldn't change, use the `final` keyword:
+Jika kamu ingin variabel yang tidak boleh berubah, gunakan kata kunci `final`:
 
 ```java
 final double PI = 3.14159;
 ```
 
-**Convention**: Constants use ALL_CAPS_WITH_UNDERSCORES.
+**Konvensi**: Konstanta menggunakan HURUF_KAPITAL_SEMUA_DENGAN_GARIS_BAWAH.
 
-## Practice
+## Latihan
 
-It's best to practice what you just learnt - don't look above now and try to do this yourself. If you get stuck, look back up!
+Ada baiknya mempraktikkan apa yang baru saja kamu pelajari - jangan lihat ke atas sekarang dan cobalah lakukan ini sendiri. Jika kamu buntu, silakan lihat ke atas lagi!
 
-1. Declare an integer variable named `lives` and set it to 3.
-2. Declare a double variable named `gravity` and set it to 9.81.
-3. Declare a boolean variable named `isGameOver` and set it to false.
-4. Convert the `lives` variable to a double and store it in a new variable named `livesAsDouble`.
-5. Declare a constant named `MAX_LEVEL` and set it to 100.
+1. Deklarasikan variabel integer bernama `lives` dan atur nilainya menjadi 3.
+2. Deklarasikan variabel double bernama `gravity` dan atur nilainya menjadi 9.81.
+3. Deklarasikan variabel boolean bernama `isGameOver` dan atur nilainya menjadi false.
+4. Konversi variabel `lives` menjadi double dan simpan dalam variabel baru bernama `livesAsDouble`.
+5. Deklarasikan konstanta bernama `MAX_LEVEL` dan atur nilainya menjadi 100.
 
-Great! You've learned about variables and data types in Java. Now we're going to learn about operators and expressions in the next lesson.
+Bagus! Kamu telah belajar tentang variabel dan tipe data di Java. Sekarang kita akan belajar tentang operator dan ekspresi di pelajaran berikutnya.
