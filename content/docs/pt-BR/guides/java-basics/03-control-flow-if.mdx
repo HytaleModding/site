@@ -1,0 +1,130 @@
+---
+title: Fluxo de controle. Declaração if
+description: Aprenda a controlar o fluxo de seus programas Java usando instruções if.
+---
+
+Os programas precisam tomar decisões. Instruções "se" permitem que seu código escolha caminhos diferentes com base em condições.
+
+## Declaração básica de if
+
+A forma mais simples verifica uma condição;
+
+```java
+int saude = 20;
+
+if (saude > 10) {
+    System.out.println("Você é saudável!");
+}
+```
+
+### Estrutura
+
+```java
+if (condition) {
+    // código para executar se condição for verdadeira
+}
+```
+
+## Declarações If-Else
+
+Escolha entre dois caminhos:
+
+```java
+int saude = 5;
+
+if (saude > 10) {
+    System.out.println("Você está saudável!");
+} else {
+    System.out.println("Você precisa se curar!");
+}
+```
+
+## If, Else Else-If Encadeado
+
+Verificar múltiplas condições em sequência:
+
+```java
+
+int saude = 7;
+
+if (saude > 15) {
+    System.out.println("Você está em ótima forma!");
+} else if (saude > 5) {
+    System.out.println("Você está bem");
+} else {
+    System.out.println("Você precisa se curar!");
+}
+```
+
+## Instruções If aninhadas
+
+Você pode colocar as declarações "if" dentro de outras instruções "if":
+
+```java
+int saude = 12;
+
+if (saude > 10) {
+    if (saude > 15) {
+        System.out.println("Você está em ótima forma");
+    } else {
+        System.out.println("Você está saudável!");
+    }
+} else {
+    System.out.println("Você precisa se curar!");
+}
+```
+
+## Condições Compostas
+
+Você pode combinar várias condições usando operadores lógicos:
+
+```java
+
+// AND - ambos precisam ser verdadeiros
+int saude = 12;
+boolean temPocao = true;
+
+if (saude > 10 && temPocao) {
+    System.out.println("Você está saudável e tem uma poção!");
+} else if (saude > 10) {
+    System.out.println("Você está saudável, mas precisa de uma poção!");
+} else {
+    System.out.println("Você precisa se curar!");
+}
+
+// OR - pelo menos um precisa ser verdadeiro
+
+int saude = 8;
+boolean temPocao = false;
+
+if (saude > 10 || temPocao) {
+    System.out.println("Você está saudável ou tem uma poção!");
+} else {
+    System.out.println("Você precisa se curar e de uma poção!");
+}
+
+// NOT - inverte a condição
+
+int saude = 8;
+
+if (!(saude > 10)) {
+    System.out.println("Você precisa se curar!");
+} else {
+    System.out.println("Você está saudável!");
+}
+```
+
+## Operadores Ternários
+
+Uma maneira compacta de atribuir valores:
+
+```java
+int saude = 12;
+String status = (saude > 10) ? "Saudavel" : "Precisa se curar";
+```
+
+### Sintaxe
+
+```java
+variável = (condição) ? valorSeVerdadeiro : valorSeFalso;
+```

@@ -1,0 +1,128 @@
+---
+title: 02 - Operadores e Expressões
+description: Uma introdução aos operadores e expressões em programação Java.
+---
+
+Operadores são símbolos que executam operações em variáveis e valores. São os verbos da programação - fazem as coisas acontecerem!
+
+## Operadores aritméticos
+
+Usado para cálculos matemáticos:
+
+```java
+int a = 10;
+int b = 5;
+
+int sum = a + b; // adição: 15
+int difference = a - b; // Subtraição: 5
+int product = a * b; // Multiplicação: 50
+int quotient = a /b; // Divisão: 2
+int remainder = a % b; // Modulo (resto): 0
+```
+
+<Callout type="info" title="Nota Sobre Divisão">
+  Ao dividir inteiros, o Java executa divisões inteiras, o que significa que descarta qualquer parte decimal. Por exemplo, `7 / 2` resultaria em `3`, não `3.5`.
+
+  ```java
+  int x = 7 / 2;       // 3 (não 3.5!) - Divisão Inteira
+  double y = 7.0 / 2; // 3.5 - Pelo menos um double dá resultado double
+  double z = (double) 7 / 2; // 3.5 - casting também funciona
+  ```
+</Callout>
+
+### Modulo (%) - O operador de resto
+
+O operador de módulo retorna o resto de uma operação de divisão:
+
+```java
+int remainder = 10 % 3; // 1 (porque 10 dividido por 3 é 3 com um resto de 1)
+```
+
+## Operadores de Atribuição Compostos
+
+Esses operadores combinam uma operação aritmética com atribuição:
+
+```java
+int a = 10;
+
+a = a + 5;  // O jeito antigo
+
+a += 5;     // a = a + 5
+a -= 3;     // a = a - 3
+a *= 2;     // a = a * 2
+a /= 4;     // a = a / 4
+a %= 3;     // a = a % 3
+```
+
+## Operadores de incremento e decremento
+
+Usado para aumentar ou diminuir o valor de uma variável em 1:
+
+```java
+int a = 5;
+a++; // Incremento: a vira 6
+a--; // Decremento: a volta para 5
+```
+
+<Callout type="info" title="Prefixo vs Posfixo">
+  ```java
+  int a = 5;
+  int b = a++; // b é 5, a agora é 6
+  int c = ++a; // a é 7, c agora é 7
+  ```
+</Callout>
+
+## Operadores de comparação
+
+Usado para comparar dois valores, retornando um resultado booleano (`true` ou `false`):
+
+```java
+int a = 10;
+int b = 5;
+
+a == b // false - Igual a
+a ! b // true - Diferente de
+a > b // true - Maior que
+a < b // false - false - Menor que
+a >= // true - Maior ou igual a
+a <= b // false - Menor ou igual a
+```
+
+## Operadores lógicos
+
+Usado para combinar várias expressões booleanas:
+
+```java
+boolean x = true;
+boolean y = false;
+
+x && y // false - E lógico
+x || y // true  - OU Lógico
+!x     // false - NÃO Lógico
+```
+
+### Combinando operadores lógicos
+
+```java
+boolean result = (a > b) && (b < 10); // verdadeiro se ambas as condições forem verdadeiras
+```
+
+## Concatenação de String
+
+O operador `+` também pode ser usado para concatenar (juntar) strings:
+
+```java
+Saudação de String = "Olá, " + "mundo!"; // "Olá, mundo!
+String name = "Alice";
+String greetingWithName = "Olá, " + name + "!"; // "Olá, Alice!"
+```
+
+## Precedência de operador
+
+A Precendência do operador significa qual operador é avaliado primeiro em uma linha de código. Pense nisso como a ordem das operações na matemática: parênteses, expoentes, multiplicação, divisão, adição e subtração!
+
+```java
+int result = 10 + 5 * 2; // resultado é 20, não 30
+```
+
+{/* prática a ser adicionada */}

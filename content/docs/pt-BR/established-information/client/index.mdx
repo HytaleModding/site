@@ -1,0 +1,68 @@
+---
+title: O Cliente Hytale
+description: Informações sobre o cliente Hytale.
+---
+
+<Callout>
+  O cliente está escrito em C#, compilado para machine code antes da distribuição, e não é modificável. O Single-player roda em um servidor local. Todos os mods devem passar pela API do servidor.
+</Callout>
+
+# Sem Mods Client-Side
+
+Não há modding no client-side.
+
+> Não pretendemos oferecer suporte a nenhum mod de cliente - Slikey
+
+## Porquê?
+
+1. Não há necessidade de baixar externamente.
+   * Hytale quer "evitar um ecossistema fragmentado onde cada servidor requer um cliente diferente modificado".
+
+2. Segurança do cliente.
+   * Executar arquivos `.jar` de sites de terceiros no cliente pode facilmente introduzir malware.
+   > [Não queremos expor os jogadores] aos riscos de segurança que existem em alguma outra plataforma de modding.
+
+3. Estabilidade do cliente.
+   * Hytale pode ir para outras plataformas nas quais o modding do cliente é impossível, então eles estão trancando cedo para definir a direção certa.
+   > Acreditamos que os resultados que as pessoas chegam em outros jogos de blocos usando mods do cliente podem ser facilmente alcançados usando nosso modding server-side. Em outros jogos de blocos você tem que instalar um mod de cliente para obter novos blocos, NPCs, UI, etc. Hytale faz tudo isso apenas pelo servidor. O servidor irá basicamente "modificar" o cliente temporariamente de uma forma muito segura para adicionar e modificar sua experiência de jogo. Você pode fazer sua própria versão do Orbis, usando nenhum de nossos modelos, musicas, geração de mundo, combate ou qualquer outra coisa. Você tem o controle e pode jogar isso tudo fora sem sequer tocar no cliente. Pense em como o roblox funciona.. Você nunca modifica seu App. Você só clica na experiência que quer e você obtêm tudo que precisa sem modificar a instalação em si. - Slikey
+
+## Modificação client-side não são necessárias
+
+Os casos de uso típicos de mods de cliente são:
+
+* Modificações cosméticas (pacotes de recursos, shaders, capas, etc.): servidores provêm os visuais, não o cliente.
+* Desempenho: o jogo base irá oferecer os controles de desempenho necessários.
+* Acessibilidade: o jogo base será acessível por conta própria.
+* Interface de usuário: a UI pertence ao servidor, não ao cliente.
+
+### Previsão do Client-Side
+
+Hytale utiliza client-side prediction orientada a dados para atenuar o lag, pois todas as interações ocorrem no servidor e são retransmitidas para o cliente. Isso já existe para alguns sistemas, mas ainda é limitado, embora haja planos de ampliar essa integração no futuro. Também está previsto que funcione junto com o sistema de script visual no futuro para melhorar ainda mais a otimização.
+
+## Execução Client-Side
+
+A Equipe esta explorando permitir a execução de código pelo cliente (o que é diferente de modificar o cliente; este é o código enviado do servidor), embora isso não seja garantido.
+
+# Modelos
+
+A pipeline de cliente e assets aceita `.blockymodel`, um formato personalizado para o Hytale. O plugin oficial para o Blockbench permitirá você exportar para este formato.
+
+# Detalhes Técnicos do Cliente
+
+Vai haver apenas uma versão atual e suportada do cliente.
+
+> A versão Java será atualizada por nós, e agora estamos na versão mais recente (Java 25). A versão do jogo não será selecionável para evitar a ‘selva de versões’ que tivemos na nossa rede de servidores do Hypixel. Nós simplesmente queremos garantir que as redes multiplayer possam contar com os jogadores usando a versão mais recente do jogo, para não precisarem dar suporte a mais de 15 versões diferentes do cliente. - Slikey
+
+O cliente é multithreaded.
+
+## GUI
+
+A GUI é construída usando bindings C# usando o Noesis.
+
+## Sistema de Compilação
+
+Hytale usa NativeAOT ("Ahead of Time") para compilar o cliente, que compila C# para machine code para a distribuição. Isto significa que, sem engenharia reversa do machine code, os mods terão que passar pela API do servidor.
+
+# Outras Informações
+
+O cliente tem seu próprio controle de versão e protocolo para interagir com os servidores.

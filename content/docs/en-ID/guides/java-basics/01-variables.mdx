@@ -1,0 +1,77 @@
+---
+title: 01 - Variable & Tipe Data
+description: Pengantar variabel dan tipe data dalam pemrograman Java.
+---
+
+Variabel adalah wadah yang menyimpan data dalam programmu. Bayangkan mereka sebagai kotak berlabel di mana kamu bisa meletakkan berbagai jenis informasi.
+
+## Apa itu Variabel?
+
+Sebuah variabel memiliki tiga komponen utama:
+
+1. **Tipe**: Jenis data apa yang disimpannya (misalnya: integer, string, boolean)
+2. **Nama**: Label yang kamu gunakan untuk merujuk ke variabel tersebut
+3. **Nilai**: Data yang ada di dalamnya
+
+## Mendeklarasikan/Membuat Variabel
+
+Di Java, kamu harus mendeklarasikan variabel sebelum menggunakannya, seperti kamu membutuhkan kotak sebelum memasukkan sesuatu ke dalamnya. Sintaksnya adalah:
+
+```java
+int age;
+age = 18;
+
+int age = 18; // Deklarasi dan penugasan dalam satu baris
+```
+
+## Tipe Data Primitif
+
+Kamu mungkin bertanya-tanya apa arti "int". Itu adalah tipe data primitif di Java. Java memiliki 8 tipe data primitif. Berikut adalah yang paling penting untuk modding:
+
+| Tipe Data | Deskripsi                           | Contoh                     |
+| --------- | ----------------------------------- | -------------------------- |
+| int       | Integer (bilangan bulat)            | `int score = 100;`         |
+| double    | Bilangan desimal                    | `double pi = 3.14;`        |
+| boolean   | Nilai benar atau salah (true/false) | `boolean isActive = true;` |
+| char      | Karakter tunggal                    | `char grade = 'A';`        |
+| String    | Urutan karakter (teks)              | `String name = "Hytale";`  |
+
+## Konversi Tipe Data
+
+Terkadang kamu mungkin tidak ingin variabel tetap pada tipe yang sama. Kamu bisa mengonversi antar tipe data:
+
+### Otomatis
+
+```java
+int num = 10;
+double decimalNum = (double) num; // 10.0 - berjalan secara otomatis
+```
+
+### Manual (Casting)
+
+```java
+double decimalNum = 9.78;
+int num = (int) decimalNum; // 9 - desimal dibuang
+```
+
+## Konstanta
+
+Jika kamu ingin variabel yang tidak boleh berubah, gunakan kata kunci `final`:
+
+```java
+final double PI = 3.14159;
+```
+
+**Konvensi**: Konstanta menggunakan HURUF_KAPITAL_SEMUA_DENGAN_GARIS_BAWAH.
+
+## Latihan
+
+Ada baiknya mempraktikkan apa yang baru saja kamu pelajari - jangan lihat ke atas sekarang dan cobalah lakukan ini sendiri. Jika kamu buntu, silakan lihat ke atas lagi!
+
+1. Deklarasikan variabel integer bernama `lives` dan atur nilainya menjadi 3.
+2. Deklarasikan variabel double bernama `gravity` dan atur nilainya menjadi 9.81.
+3. Deklarasikan variabel boolean bernama `isGameOver` dan atur nilainya menjadi false.
+4. Konversi variabel `lives` menjadi double dan simpan dalam variabel baru bernama `livesAsDouble`.
+5. Deklarasikan konstanta bernama `MAX_LEVEL` dan atur nilainya menjadi 100.
+
+Bagus! Kamu telah belajar tentang variabel dan tipe data di Java. Sekarang kita akan belajar tentang operator dan ekspresi di pelajaran berikutnya.
