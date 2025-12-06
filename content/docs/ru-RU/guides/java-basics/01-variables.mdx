@@ -1,77 +1,77 @@
 ---
-title: 01 - Variables & Data Types
-description: An introduction to variables and data types in Java programming.
+title: 01 - Переменные и типы данных
+description: Введение в переменные и типы данных в программировании на Java.
 ---
 
-Variables are containers that store data in your program. Think of them as labeled boxes where you can put different types of information.
+Переменные - это контейнеры, которые хранят данные в вашей программе. Думайте о них как о размеченных коробках, где вы можете хранить типы информации.
 
-## What is a Variable?
+## Что такое переменная?
 
-A variable has three key components:
+Переменная имеет три ключевых компонента:
 
-1. **Type**: What kind of data it holds (e.g., integer, string, boolean)
-2. **Name**: The label you use to refer to the variable
-3. **Value**: The data it contains
+1. **Тип**: какой тип данных он содержит (например, целые числа, строки,  логические значения)
+2. **Имя**: Название, которое вы используете для ссылки на переменную
+3. **Значение**: содержащиеся в нем данные
 
-## Declaring/Creating Variables
+## Объявление/создание переменных
 
-In Java, you must declare a variable before using it, like you'd need a box before putting something in it. The syntax is:
+В Java вы должны объявить переменную, прежде чем использовать её, как если бы вам понадобилась коробка перед тем, как вставить что-то в неё. Синтаксис:
 
 ```java
 int age;
 age = 18;
 
-int age = 18; // Declaration and assignment in one line
+int age = 18; // Объявление и присвоение в одной строке
 ```
 
-## Primitive Data Types
+## Примитивные типы данных
 
-You might wonder what "int" means. It's a primitive data type in Java. Java has 8 primitive data types. Here are the most important ones for modding:
+Вы можете задаться вопросом, что означает "int". Это примитивный тип данных в Java. Java имеет 8 примитивных типов данных. Вот самые важные из них для моддинга:
 
-| Data Type | Description                   | Example                    |
-| --------- | ----------------------------- | -------------------------- |
-| int       | Integer (whole numbers)       | `int score = 100;`         |
-| double    | Decimal numbers               | `double pi = 3.14;`        |
-| boolean   | True or false values          | `boolean isActive = true;` |
-| char      | Single character              | `char grade = 'A';`        |
-| String    | Sequence of characters (text) | `String name = "Hytale";`  |
+| Тип данных | Описание                            | Примеры                    |
+| ---------- | ----------------------------------- | -------------------------- |
+| int        | Целые числа                         | `int score = 100;`         |
+| double     | Десятичные числа                    | `double pi = 3.14;`        |
+| boolean    | Принимает значения True или False   | `boolean isActive = true;` |
+| char       | Прнимает один символ                | `char grade = 'A';`        |
+| String     | Последовательность символов (текст) | `String name = "Hytale";`  |
 
-## Type Conversion
+## Преобразование типов
 
-Sometimes you might not want a variable to stay the same type. You can convert between types:
+Иногда может возникнуть необходимость изменить тип переменной. Вы можете преобразовать между типами:
 
-### Automatic
+### Автоматически
 
 ```java
 int num = 10;
-double decimalNum = (double) num; // 10.0 - works automatically
+double decimalNum = (double) num; // 10.0 - работает автоматически
 ```
 
-### Manual (Casting)
+### Вручную
 
 ```java
 double decimalNum = 9.78;
-int num = (int) decimalNum; // 9 - decimals are dropped
+int num = (int) decimalNum; // 9 - десятичная часть пропала
 ```
 
-## Constants
+## Константы
 
-If you want a variable that shouldn't change, use the `final` keyword:
+Если вам нужна переменная, которая не должна изменяться, используйте ключевое слово `final`:
 
 ```java
 final double PI = 3.14159;
 ```
 
-**Convention**: Constants use ALL_CAPS_WITH_UNDERSCORES.
+Совет: Константы используют ALL_CAPS_WITH_UNDERSCORES.
 
-## Practice
+## Практика
 
-It's best to practice what you just learnt - don't look above now and try to do this yourself. If you get stuck, look back up!
+Лучше всего попрактиковаться в том, что вы только что выучили — не смотрите сейчас на примеры выше и попробуйте выполнить задания самостоятельно. Если застрянете, вернитесь к нашим примерам!
 
-1. Declare an integer variable named `lives` and set it to 3.
-2. Declare a double variable named `gravity` and set it to 9.81.
-3. Declare a boolean variable named `isGameOver` and set it to false.
-4. Convert the `lives` variable to a double and store it in a new variable named `livesAsDouble`.
-5. Declare a constant named `MAX_LEVEL` and set it to 100.
+1. Объявить integer переменную под названием `lives` и установить значение З.
+2. Объявить double переменную под названием `gravity` и установить значение 9.81.
+3. Объявить boolean переменную под названием `isGameOver` и установить значение False.
+4. Конвертируйте переменную `lives` в double и сохраните её в новую переменную под название `livesAsDouble`.
+5. Объявить константу с именем `MAX_LEVEL` и установить ее на 100.
 
-Great! You've learned about variables and data types in Java. Now we're going to learn about operators and expressions in the next lesson.
+Отлично! Вы изучили переменные и типы данных в Java. Теперь мы нам предстоит узнать об операторах и выражениях.

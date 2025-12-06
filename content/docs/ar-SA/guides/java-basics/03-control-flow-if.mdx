@@ -1,0 +1,128 @@
+---
+title: 03 - Control Flow If Statements
+description: Learn how to control the flow of your Java programs using if statements.
+---
+
+Programs need to make decisions. If statements let your code choose different paths based on conditions.
+
+## Basic If Statement
+
+The simplest form checks one condition;
+
+```java
+int health = 20;
+
+if (health > 10) {
+    System.out.println("You are healthy!");
+}
+```
+
+### Structure
+
+```java
+if (condition) {
+    // code to execute if condition is true
+}
+```
+
+## If-Else Statements
+
+Choose between two paths:
+
+```java
+int health = 5;
+
+if (health > 10) {
+    System.out.println("You are healthy!");
+} else {
+    System.out.println("You need healing!");
+}
+```
+
+## If-Else Else-If Chain
+
+Check multiple conditions in sequence:
+
+```java
+
+int health = 7;
+
+if (health > 15) {
+    System.out.println("You are in great shape!");
+} else if (health > 5) {
+    System.out.println("You are okay.");
+} else {
+    System.out.println("You need healing!");
+}
+```
+
+## Nested If Statements
+
+You can place if statements inside other if statements:
+
+```java
+int health = 12;
+
+if (health > 10) {
+    if (health > 15) {
+        System.out.println("You are in great shape!");
+    } else {
+        System.out.println("You are healthy!");
+    }
+} else {
+    System.out.println("You need healing!");
+}
+```
+
+## Compound Conditions
+
+You can combine multiple conditions using logical operators:
+
+```java
+
+// AND - both must be true
+int health = 12;
+boolean hasPotion = true;
+
+if (health > 10 && hasPotion) {
+    System.out.println("You are healthy and have a potion!");
+} else if (health > 10) {
+    System.out.println("You are healthy but need a potion!");
+} else {
+    System.out.println("You need healing!");
+}
+
+// OR - at least one must be true
+
+int health = 8;
+boolean hasPotion = false;
+if (health > 10 || hasPotion) {
+    System.out.println("You are either healthy or have a potion!");
+} else {
+    System.out.println("You need healing and a potion!");
+}
+
+// NOT - reverses the condition
+
+int health = 8;
+if (!(health > 10)) {
+    System.out.println("You need healing!");
+} else {
+    System.out.println("You are healthy!");
+}
+```
+
+## Ternary Operator
+
+A compact way to assign values:
+
+```java
+int health = 12;
+String status = (health > 10) ? "Healthy" : "Needs Healing";
+```
+
+### Syntax
+
+```java
+variable = (condition) ? valueIfTrue : valueIfFalse;
+```

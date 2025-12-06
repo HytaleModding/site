@@ -1,0 +1,17 @@
+{
+  "nav": {
+    "title": "Hytale Modding",
+    "documentation": "Documentation"
+  },
+  "home": {
+    "community": "Community",
+    "title": "Hytale Modding",
+    "welcome": "Welcome to Hytale Modding!",
+    "welcomeDescription": "This is an unofficial community for modding Hytale, providing guides, documentation, and resources.",
+    "documentation": "Documentation",
+    "discord": "Discord"
+  },
+  "misc": {
+    "gitInfoUnavailable": "Git info not available"
+  }
+}

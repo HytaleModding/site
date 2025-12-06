@@ -1,128 +1,132 @@
 ---
-title: 02 - Operators and Expressions
-description: An introduction to operators and expressions in Java programming.
+title: 02 - Operadores y Expresiones
+description: Una introducción a operadores y expresiones en programación Java.
 ---
 
-Operators are symbols that perform operations on variables and values. They're the verbs of programming - they make things happen!
+Los operadores son símbolos que realizan operaciones sobre variables y valores. Gracias a los operadores, el código puede realizar cálculos y modificaciones respecto al valor original.
 
-## Arithmetic Operators
+## Operadores aritméticos
 
-Used for mathematical calculations:
+Usado para operaciones matemáticas:
 
 ```java
 int a = 10;
 int b = 5;
 
-int sum = a + b;        // Addition: 15
-int difference = a - b; // Subtraction: 5
-int product = a * b;    // Multiplication: 50
-int quotient = a / b;   // Division: 2
-int remainder = a % b;  // Modulus (remainder): 0
+int suma      = a + b;  // Suma con resultado: 15
+int resta     = a - b;  // Resta con resultado: 5
+int producto  = a * b;  // Multiplicación con resultado: 50
+int cociente  = a / b;  // División con resultado: 2
+int resto     = a % b;  // Módulo, el resto de la división: 0
+
 ```
 
-<Callout type="info" title="Division Note">
-  When dividing integers, Java performs integer division, which means it discards any decimal part. For example, `7 / 2` would result in `3`, not `3.5`.
+<Callout type="info" title="Nota de división">
+  Al dividir entre números enteros, Java descarta la parte decimal, por ejemplo, `7/2` da como resultado `3`, no `3.5`.
 
   ```java
-  int x = 7 / 2;       // 3 (not 3.5!) - Integer division
-  double y = 7.0 / 2;  // 3.5 - At least one double gives double result
-  double z = (double) 7 / 2;  // 3.5 - Casting works too
+  int x = 7 / 2;             // 3 ¡no 3.5! La división de enteros devuelve un resultado entero
+  double y = 7.0 / 2;        // 3.5  Hay un número decimal en la operación, devuelve decimal
+  double z = (double) 7 / 2; // 3.5  El casting también funciona
+
   ```
 </Callout>
 
-### Modulus (%) - The remainder Operator
+### Módulo (%): obtiene el resto de una división
 
-The modulus operator returns the remainder of a division operation:
+El operador del módulo devuelve el resto de una operación de división:
 
 ```java
-int remainder = 10 % 3; // 1 (because 10 divided by 3 is 3 with a remainder of 1)
+int resto = 10 % 3; // 1 (porque 10 dividido por 3 es 3 y da un resto de 1)
 ```
 
-## Compound Assignment Operators
+## Operadores compuestos de asignación
 
-These operators combine an arithmetic operation with assignment:
+Estos operadores combinan una operación aritmética con la asignación:
 
 ```java
 int a = 10;
 
-a = a + 5;  // The old way
+a = a + 5; // La antigua manera
 
-a += 5;     // a = a + 5
-a -= 3;     // a = a - 3
-a *= 2;     // a = a * 2
-a /= 4;     // a = a / 4
-a %= 3;     // a = a % 3
+a += 5; // a = a + 5
+a -= 3; // a = a - 3
+a *= 2; // a = a * 2
+a /= 4; // a = a / 4
+a %= 3; // a = a % 3
 ```
 
-## Increment and Decrement Operators
+## Operadores de incremento y decremento
 
-Used to increase or decrease a variable's value by 1:
+Se utiliza para aumentar o disminuir el valor de una variable de uno en uno:
 
 ```java
 int a = 5;
-a++; // Increment: a becomes 6
-a--; // Decrement: a becomes 5 again
+a++; // Incrementa: "a" aumenta a 6
+a--; // Decrementa: "a" dismuniye a 5
 ```
 
-<Callout type="info" title="Prefix vs Postfix">
+<Callout type="info" title="Prefijo versus postfijo">
   ```java
   int a = 5;
-  int b = a++; // b is 5, a is now 6
-  int c = ++a; // a is 7, c is now 7
+  int b = a++; // "b" es 5, "a" ahora es 6
+  int c = ++a; // "a" es 7, "c" ahora es 7
   ```
 </Callout>
 
-## Comparison Operators
+## Operadores de comparación
 
-Used to compare two values, returning a boolean result (`true` or `false`):
+Utilizado para comparar dos valores, devolviendo un resultado *booleano* (`true` o `false`):
 
 ```java
 int a = 10;
 int b = 5;
 
-a == b // false - Equal to
-a != b // true  - Not equal to
-a > b  // true  - Greater than
-a < b  // false - Less than
-a >= b // true  - Greater than or equal to
-a <= b // false - Less than or equal to
+a == b  // false - verifica si "a" es igual a "b"
+a != b  // true  - verifica si "a" no es igual a "b"
+a > b   // true  - verifica si "a" es mayor que "b"
+a < b   // false - verifica si "a" es menor que "b"
+a >= b  // true  - verifica si "a" es mayor o igual que "b"
+a <= b  // false - verifica si "a" es menor o igual que "b"
+
 ```
 
-## Logical Operators
+## Operadores lógicos
 
-Used to combine multiple boolean expressions:
+Utilizado para combinar múltiples expresiones *booleanas*:
 
 ```java
 boolean x = true;
 boolean y = false;
 
-x && y // false - Logical AND
-x || y // true  - Logical OR
-!x     // false - Logical NOT
+x && y  // false  - operador lógico Y (AND)
+x || y  // true - operador lógico O (OR)
+!x      // false - operador lógico NO (NOT)
+
 ```
 
-### Combining Logical Operators
+### Combinando operadores lógicos
 
 ```java
-boolean result = (a > b) && (b < 10); // true if both conditions are true
+boolean result = (a > b) && (b < 10); // true - si las dos condiciones se cumplen
 ```
 
-## String Concatenation
+## Concatenación de cadenas de texto
 
-The `+` operator can also be used to concatenate (join) strings:
+El operador `+` también puede ser usado para concatenar o unir cadenas:
 
 ```java
-String greeting = "Hello, " + "world!"; // "Hello, world!"
-String name = "Alice";
-String greetingWithName = "Hello, " + name + "!"; // "Hello, Alice!"
+String saludo = "¡Hola," + "mundo!"; // ¡Hola, mundo!
+String  nombre = "Alice";
+String saludoConNombre = "¡Hola," + nombre + "!"; // ¡Hola, Alice!
 ```
 
-## Operator Precedence
+## Prioridad de operadores
 
-Operator Precendence means which operator gets evaluated first in an line of code. Think of it like BODMAS/PEMDAS in math!
+Prioridad de operadores indica qué operador se evalúa primero en una línea de código. Piensa en ello como el orden de las operaciones en matemáticas.
 
 ```java
-int result = 10 + 5 * 2; // result is 20, not 30
+int resultado = 10 + 5 * 2; // resultado es 20, no 30
 ```
 
-{/* practice to be added */}
+{/* práctica a añadir */}

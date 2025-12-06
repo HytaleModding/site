@@ -1,30 +1,30 @@
 ---
 title: 01 - Variablen & Datentypen
-description: An introduction to variables and data types in Java programming.
+description: Eine Einführung in Variablen und Datentypen in der Java-Programmierung.
 ---
 
-Variables are containers that store data in your program. Think of them as labeled boxes where you can put different types of information.
+Variablen sind Container, die Daten in Ihrem Programm speichern. Stellen Sie sich diese als beschriftete Boxen vor, in denen Sie verschiedene Arten von Informationen legen können.
 
 ## Was ist eine Variable?
 
-A variable has three key components:
+Eine Variable hat drei Hauptkomponenten:
 
-1. **Type**: What kind of data it holds (e.g., integer, string, boolean)
-2. **Name**: The label you use to refer to the variable
-3. **Value**: The data it contains
+1. **Typ**: Welche Art von Daten sie enthält (z. B. Integer, String, Boolean)
+2. **Name**: Die Bezeichnung, die Sie verwenden, um auf die Variable zu verweisen
+3. **Wert**: Die darin enthaltenen Daten
 
-## Declaring/Creating Variables
+## Deklarieren/Erstellen von Variablen
 
-In Java, you must declare a variable before using it, like you'd need a box before putting something in it. The syntax is:
+In Java müssen Sie eine Variable deklarieren, bevor Sie sie verwenden, so wie Sie eine Box benötigen, bevor Sie etwas in sie ablegen können. Die Syntax lautet:
 
 ```java
-int age;
-age = 18;
+int alter;
+alter = 18;
 
-int age = 18; // Declaration and assignment in one line
+int alter = 18; // Deklaration und Zuweisung in einer Zeile
 ```
 
-## Primitive Data Types
+## Primitive Datentypen
 
 Sie fragen sich vielleicht, was "int" bedeutet. Es ist ein primitiver Datentyp in Java. Java hat 8 primitiven Datentypen. Hier sind die wichtigsten für Modding:
 
@@ -44,34 +44,34 @@ Manchmal möchten Sie vielleicht nicht, dass eine Variable den gleichen Typ beib
 
 ```java
 int num = 10;
-double decimalNum = (double) num; // 10.0 - works automatically
+double decimalNum = (double) num; // 10.0 - funktioniert automatisch
 ```
 
-### Manual (Casting)
+### Manuell (Casting)
 
 ```java
 double decimalNum = 9.78;
-int num = (int) decimalNum; // 9 - decimals are dropped
+int num = (int) decimalNum; // 9 - Nachkommastellen fallen weg
 ```
 
-## Constants
+## Konstanten
 
-If you want a variable that shouldn't change, use the `final` keyword:
+Wenn Sie eine Variable wollen, die sich nicht ändern sollte, verwenden Sie das `final` Schlüsselwort:
 
 ```java
 final double PI = 3.14159;
 ```
 
-**Convention**: Constants use ALL_CAPS_WITH_UNDERSCORES.
+**Konvention**: Konstanten verwenden NUR_GROßBUCHSTABEN_MIT_UNTERSTRICHEN.
 
 ## Üben
 
-It's best to practice what you just learnt - don't look above now and try to do this yourself. If you get stuck, look back up!
+Es ist am besten, das zu üben, was Sie gerade gelernt haben - schauen sie jetzt nicht nach oben und probieren Sie es selber zu machen. Schauen Sie nur nach oben, wenn Sie hängen bleiben!
 
-1. Declare an integer variable named `lives` and set it to 3.
-2. Declare a double variable named `gravity` and set it to 9.81.
-3. Declare a boolean variable named `isGameOver` and set it to false.
-4. Convert the `lives` variable to a double and store it in a new variable named `livesAsDouble`.
-5. Declare a constant named `MAX_LEVEL` and set it to 100.
+1. Deklarieren Sie eine ganzzahlige Variable namens `leben` und setzen Sie diese auf 3.
+2. Deklarieren Sie eine "double"-Variable namens „erdanziehung“ und setzen Sie diese auf 9,81.
+3. Deklarieren Sie eine "boolean"-Variable namens `istSpielVorbei` und setzen Sie diese auf false.
+4. Konvertieren Sie die Variable „leben“ in eine Dezimalzahl und speichern Sie diese in einer neuen Variable namens „lebenAlsDouble“.
+5. Deklarieren Sie eine Konstante namens `MAX_LEVEL` und setzen Sie diese auf 100.
 
-Super! You've learned about variables and data types in Java. Now we're going to learn about operators and expressions in the next lesson.
+Super! Sie haben etwas über Variablen und Datentypen in Java gelernt. In der nächsten Lektion werden Sie etwas über Operatoren und Ausdrücke lernen.
