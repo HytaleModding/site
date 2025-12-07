@@ -1,0 +1,123 @@
+---
+title: Modelagem e Texturização / Recursos de Arte
+description: Informações sobre Modelagem 3D, Texturização e Recursos de Arte no Hytale.
+---
+
+# Modelagem / Texturas de Artes
+
+Hytale oferece grande suporte para modelagem 3D e criação de texturas de artes, com ferramentas especializadas e fluxos de trabalho projetado para manter o visual único do jogo enquanto auxilia criadores.
+
+## Ferramentas Atuais de Modding
+
+### Blockbench
+
+Hytale usa **Blockbench** como a ferramenta principal para modelagem 3D e animação:
+
+* **Suporte Oficial**: Usado para "criar os modelos, texturas, e animações do Hytale"
+* **Plugin Especial**: Hytale terá um plugin do Blockbench dedicado, será lançado o mais rápido possível
+* **Compatibilidade Direta**: O plugin permite criadores "criar modelos, texturas, e animações compatíveis com o Hytale, diretamente no Blockbench"
+* **Substituição das ferramentas antigas**: Substitui completamente o antigo criador de modelos do Hytale, para ajudar a comunidade com seus fluxos de trabalhos já implantados
+* **Recursos de Segurança**: Permite adicionar somente coisas compatíveis com a engine, não precisa se preocupar se vai crashar nada
+
+## Restrições de Modelos
+
+### Tipos Geométricos
+
+A maioria dos modelos de Hytale são limitados a formas geométricas básicas:
+
+**Elementos 3D**:
+
+* Blocos
+* Cubos
+* Caixas
+
+**Elementos 2D**:
+
+* Quadrados
+* Retângulos
+* Plano (composto por 2 triângulos)
+
+### Filosofia de design
+
+Essas limitações têm vários motivos:
+
+* **Otimização de desempenho**: Garante carregamento e desempenho do jogo eficientes
+* **Estilo visual consistente**: Preserva o visual único do Hytale
+* **Integração suave**: Faz os mods serem mais naturais em relação ao jogo base
+
+## Padrões de Densidade de Pixels
+
+Hytale usa diferentes densidades de pixels conforme o conteúdo:
+
+### Densidades Padrão
+
+* **Blocos**: densidade de 32px
+* **Modelos de jogador**: densidade de 64px
+* **Mobs**: Provavelmente também densidade de 64px
+* **Equipamento do jogador**: densidade de 64px (armas, cosméticos, armaduras, etc.)
+
+### Flexibilidade
+
+* **Resolução de densidade errada**: Usar densidade incorreta pode fazer com que os assets apareçam no tamanho errado, mas não causará falhas de importação
+* **Sem restrições rigoras**: Taxa de pixels, rotação e dimensionamento não são restritos
+* **Sistema tolerante**: As ferramentas são feitas para serem flexíveis sem perder a compatibilidade
+
+## Editor de Recursos do Hytale
+
+### Editor In-Game
+
+O Editor de Recursos é uma ferramenta abrangente que será lançada com o jogo:
+
+* **Lançamento com o jogo**: Disponível para todos os jogadores no lançamento
+* **Requisito da ferramenta externa**: não suporta a edição da imagem, você deve usar ferramentas externas para a criação de texturas
+* "Edição de recursos de dados: Editor principal para trabalhar com Data Assets
+* **Capacidades em expansão**: Atualmente suporta a maioria dos recursos, mas ainda possui limitações em NPCs, geração de mundo e interações, que serão ampliadas com o tempo
+
+### Criação de Partículas
+
+O Editor de Recursos inclui ferramentas de criação de partículas robusto:
+
+* **Criação in-game**: Partículas são criadas diretamente in-game usando o Editor de Recursos
+* **Padrão da indústria**: a lógica de partículas é robusta e similar aos sistemas de partícula usados na Unity/Unreal
+* **Orientado por Evento**: Partículas podem ser geradas em eventos ou interações (como abrir portas)
+* **Anexo à entidade**: Pode anexar partículas a entidades com pontos específicos de fixação
+* **Movimento dinâmico**: Suporta partículas se movendo com seus pontos de âncora
+* **Atraso de tempo**: Suporta efeitos e atrasos de partículas baseados no tempo
+
+## Materiais
+
+### Foco em Otimização
+
+Hytale adota uma abordagem diferente aos materiais em comparação com outras engines:
+
+* **Pré-otimizado**: os materiais são muito otimizados e os artistas não podem criar materiais personalizados
+* **Prioridade de desempenho**: Essa restrição garante um desempenho consistente em todos os conteúdos
+* **Sistema curado**: Mantém a consistência visual enquanto maximiza a eficiência
+
+## Melhores Práticas
+
+### Otimização de Recursos
+
+Considerações-chave da equipe de desenvolvimento do Hytale:
+
+* **Uso consciente de recursos**: Fique atento à quantidade de blocos/quads que você utiliza e ao tamanho dos arquivos de textura
+* **Evite excesso**: O objetivo é evitar bloat desnecessário de recursos que possa afetar o desempenho
+* **Foco em eficiência**: Equilibre qualidade visual com as limitações técnicas
+
+### Documentação Futura
+
+* **Guia de melhores práticas**: um guia abrangente de "melhores práticas" para arte e modelagem será lançado em algum momento
+* **Limites flexíveis**: A maioria dos objetivos criativos pode ser alcançada sem quebrar nada no sistema
+* **Fluxos de trabalho guiados pela comunidade**: As ferramentas são projetadas para apoiar os fluxos de trabalho criativos já estabelecidos na comunidade de modding
+
+## Integração com Pipeline de Desenvolvimento
+
+O fluxo de trabalho de modelagem e textura se integra perfeitamente ao ecossistema de desenvolvimento mais amplo do Hytale:
+
+* **Compatibilidade do Editor de Recursos**: Modelos criados no Blockbench funcionam diretamente com o Editor de Recursos do Hytale
+* **Integração com Data Assets**: modelos 3D podem ser configurados e personalizados por meio de Data Assets
+* **Suporte para Scripting Visual**: Modelos podem ser controlados e animados por meio de Visual Scripting
+* **Extensibilidade com plugins Java**: comportamentos avançados de modelos podem ser implementados por meio de plugins Java
+* **Integração com partículas**: modelos podem ter partículas anexadas em pontos específicos para criar efeitos visuais aprimorados
+
+Esta abordagem integrada garante que a modelagem 3D e a arte de textura não sejam processos criativos isolados, mas componentes centrais do ambiente de desenvolvimento abrangente do Hytale.

@@ -1,0 +1,165 @@
+---
+title: 05 - Alur Kontrol Perulangan Loops
+description: Pelajari cara mengulang kode secara efisien menggunakan loop di Java
+---
+
+Loop memungkinkanmu mengulang kode tanpa harus menulisnya berulang-ulang. Ini sangat penting untuk memproses koleksi data, menghasilkan dunia game, dan memperbarui objek game.
+
+## While Loop/Perulangan While
+
+Mengulang kode selama kondisi bernilai benar/true:
+
+```java tab="Code"
+
+int countdown = 5;
+
+while (countdown > 0) {
+    System.out.println(countdown);
+    countdown--;
+}
+System.out.println("Meluncur!");
+```
+
+```java tab="Output"
+5
+4
+3
+2
+1
+Meluncur!
+```
+
+### Struktue
+
+```java
+while (condition) {
+    // kode untuk diulang
+}
+```
+
+<Callout type="warning" title="Loop tak terbatas/infinites loop">
+  Selalu pastikan kondisi loop-mu pada akhirnya akan menjadi salah/false, atau programmu akan berjalan selamanya!
+
+  ```java tab="Bad Example"
+  int x = 0;
+  while (x < 10) {
+      System.out.println("Macet!");
+      // lupa menaikan nilai x!
+  }
+  ```
+
+  ```java tab="Good Example"
+  int x = 0;
+  while (x < 10) {
+      System.out.println("Menghitung: " + x);
+      x++; // Ini menaikan nilai x! // [!code ++]
+  }
+  ```
+</Callout>
+
+## Do-While Loop
+
+Seperti while loop, tapi selalu berjalan setidaknya satu kali:
+
+```java
+int health = 0;
+
+do {
+    System.out.println("Mencoba respawn...");
+    health = 100;
+} while (health <= 0);
+```
+
+## For Loop
+
+Terbaik saat kamu tahu berapa kali harus mengulang:
+
+```java tab="Code"
+for (int i = 1; i <= 5; i++) {
+    System.out.println("Level " + i);
+}
+```
+
+```java tab="Output"
+Level 1
+Level 2
+Level 3
+Level 4
+Level 5
+```
+
+### Struktur
+
+```java
+for (inisialisasi; kondisi; update) {
+    // code untuk diulang
+}
+```
+
+<Callout type="info" title="Bagian-bagian For Loop">
+  ```java
+  for (int i = 0; i < 10; i++) {
+  //   ^         ^        ^
+  //   Mulai     Berhenti     Langkah
+  }
+  ```
+
+  * **Inisialisasi**: int i = 0 - Berjalan sekali di awal
+  * **Kondisi**: i < 10 - Dicek sebelum setiap putaran loop
+  * **Update**: i++ - Berjalan setelah setiap putaran loop
+</Callout>
+
+## Pernyataan break
+
+Kamu bisa keluar dari loop lebih awal dengan break:
+
+```java
+
+for (int i = 1; i <= 10; i++) {
+    if (i == 6) {
+        break; // Keluar loop saat i adalah 6
+    }
+    System.out.println(i);
+}
+
+```
+
+## Pernyataan Continue
+
+Lompati ke iterasi berikutnya dengan `continue`:
+
+```java
+for (int i = 1; i <= 10; i++) {
+    if (i % 2 == 0) {
+        continue; // Lewati bilangan genap
+    }
+    System.out.println(i); // Hanya mencetak bilangan ganjil
+}
+```
+
+## Loop Bersarang/Nested Loops
+
+Kamu bisa menaruh loop di dalam loop lainnya:
+
+```java
+for (int i = 1; i <= 3; i++) {
+    for (int j = 1; j <= 2; j++) {
+        System.out.println("i: " + i + ", j: " + j);
+    }
+}
+```
+
+<Callout type="warning" title="Performa Nested Loop">
+  Hati-hati dengan nested loop! Mereka bisa memperlambat mod-mu secara signifikan.
+
+  ```java
+  // Ini berjalan 1,000,000 kali!
+  for (int i = 0; i < 1000; i++) {
+      for (int j = 0; j < 1000; j++) {
+          // Code disini
+      }
+  }
+  ```
+
+  Cobalah hindari nested loop yang dalam saat memproses data dalam jumlah besar.
+</Callout>

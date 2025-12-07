@@ -1,0 +1,127 @@
+---
+title: 02 - Operator dan Ekspresi
+description: Pengantar operator dan ekspresi dalam pemrograman Java.
+---
+
+Operator adalah simbol yang melakukan operasi pada variabel dan nilai. Mereka adalah kata kerja dalam pemrograman - mereka membuat sesuatu terjadi!
+
+## Operator Aritmatika
+
+Digunakan untuk perhitungan matematika:
+
+```java
+int a = 10;
+int b = 5;
+
+int sum = a + b;        // Penjumlahan: 15
+int difference = a - b; // Pengurangan: 5
+int product = a * b;    // Perkalian: 50
+int quotient = a / b;   // Pembagian: 2
+int remainder = a % b;  // Modulus (sisa bagi): 0
+```
+
+<Callout type="info" title="Catatan Pembagian">
+  Saat membagi bilangan bulat (integer), Java melakukan pembagian integer, yang berarti Java membuang bagian desimalnya.  Contohnya, 7 / 2 akan menghasilkan 3, bukan 3.5.
+
+  ```java
+  int x = 7 / 2;       // 3 (bukan 3.5!) - Pembagian integer
+  double y = 7.0 / 2;  // 3.5 - Setidaknya satu tipe double menghasilkan hasil double
+  double z = (double) 7 / 2;  // 3.5 - Casting juga bisa digunakan
+  ```
+</Callout>
+
+### Modulus (%) - Operator Sisa Bagi
+
+Operator modulus mengembalikan sisa dari operasi pembagian:
+
+```java
+int remainder = 10 % 3; // 1 (karena 10 dibagi 3 adalah 3 dengan sisa 1)
+```
+
+## Operator Penugasan Majemuk (Compound Assignment)
+
+Operator ini menggabungkan operasi aritmatika dengan penugasan:
+
+```java
+int a = 10;
+
+a = a + 5;  // Cara lama
+a += 5;     // a = a + 5
+a -= 3;     // a = a - 3
+a *= 2;     // a = a * 2
+a /= 4;     // a = a / 4
+a %= 3;     // a = a % 3
+```
+
+## Operator Increment dan Decrement
+
+Digunakan untuk menambah atau mengurangi nilai variabel sebesar 1:
+
+```java
+int a = 5;
+a++; // Increment: a menjadi 6
+a--; // Decrement: a menjadi 5 lagi
+```
+
+<Callout type="info" title="Prefix vs Postfix">
+  ```java
+  int a = 5;
+  int b = a++; // b adalah 5, a sekarang 6
+  int c = ++a; // a adalah 7, c sekarang 7
+  ```
+</Callout>
+
+## Operator Perbandingan
+
+Digunakan untuk membandingkan dua nilai, mengembalikan hasil boolean (`true` atau `false`):
+
+```java
+int a = 10;
+int b = 5;
+
+a == b // false - Sama dengan
+a != b // true  - Tidak sama dengan
+a > b  // true  - Lebih besar dari
+a < b  // false - Kurang dari
+a >= b // true  - Lebih besar dari atau sama dengan
+a <= b // false - Kurang dari atau sama dengan
+```
+
+## Operator Logika
+
+Digunakan untuk menggabungkan beberapa ekspresi boolean:
+
+```java
+boolean x = true;
+boolean y = false;
+
+x && y // false - Logika AND (DAN)
+x || y // true  - Logika OR (ATAU)
+!x     // false - Logika NOT (BUKAN/KEBALIKAN)
+```
+
+### Menggabungkan Operator Logika
+
+```java
+boolean result = (a > b) && (b < 10); // // true jika kedua kondisi benar
+```
+
+## Penggabungan String (Concatenation)
+
+Operator `+` juga dapat digunakan untuk menggabungkan (concatenate) string:
+
+```java
+String greeting = "Hello, " + "world!"; // "Hello, world!"
+String name = "Alice";
+String greetingWithName = "Hello, " + name + "!"; // "Hello, Alice!"
+```
+
+## Prioritas Operator (Precedence)
+
+Prioritas Operator berarti operator mana yang dievaluasi terlebih dahulu dalam satu baris kode. Anggap saja seperti BODMAS/PEMDAS dalam matematika!
+
+```java
+int result = 10 + 5 * 2; // hasilnya 20, bukan 30
+```
+
+{/* latihan akan ditambahkan */}

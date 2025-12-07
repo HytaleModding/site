@@ -1,0 +1,123 @@
+---
+title: Modelling & Texturing / Art Assets
+description: Information about 3D Modelling, Texturing and Art Assets in Hytale.
+---
+
+# Modelling / Texture Art
+
+Hytale provides comprehensive support for 3D modeling and texture art creation, with specialized tools and workflows designed to maintain the game's distinctive visual style while empowering creators.
+
+## Current Mod Tooling
+
+### Blockbench
+
+Hytale uses **Blockbench** as the primary tool for 3D modeling and animation:
+
+* **Official support**: Used for "creating Hytale models, textures, and animations"
+* **Special plugin**: Hytale will have a dedicated Blockbench plugin, to be released ASAP
+* **Direct compatibility**: The plugin allows creators to "create Hytale-compatible models, textures, and animations directly in Blockbench"
+* **Replaces legacy tools**: Fully replaces the old Hytale Model Maker to better support established creative workflows in the community
+* **Safety features**: Only allows you to add things compatible with the engine, so no need to worry about breaking anything
+
+## Model Constraints
+
+### Geometry Types
+
+The vast majority of models in Hytale are constrained to specific geometric primitives:
+
+**3D Elements**:
+
+* Blocks
+* Cuboids
+* Boxes
+
+**2D Elements**:
+
+* Quads
+* Rectangles
+* Planes (composed of 2 triangles)
+
+### Design Philosophy
+
+These constraints serve multiple purposes:
+
+* **Performance optimization**: Ensures efficient rendering and game performance
+* **Consistent art style**: Maintains Hytale's distinctive visual aesthetic
+* **Seamless integration**: Makes mods feel more cohesive with the base game
+
+## Pixel Density Standards
+
+Hytale uses different pixel densities for different types of content:
+
+### Standard Densities
+
+* **Blocks**: 32px density
+* **Player models**: 64px density
+* **Mobs**: Likely also 64px density
+* **Player equipment**: 64px density (weapons, cosmetics, armor, etc.)
+
+### Flexibility
+
+* **Wrong density handling**: Using incorrect density may cause assets to appear at the wrong size, but will not cause import failures
+* **No strict restrictions**: Pixel ratio, rotation, and scaling are not restricted
+* **Forgiving system**: The tools are designed to be flexible while maintaining compatibility
+
+## Hytale Asset Editor
+
+### In-Game Editor
+
+The Asset Editor is a comprehensive tool that will ship with the game:
+
+* **Ships with game**: Available to all players from launch
+* **External tool requirement**: Does not support image editing, you must use external tools for texture creation
+* **Data asset editing**: Primary editor for working with Data Assets
+* **Expanding capabilities**: Currently supports most features, though has limitations around NPCs, worldgen, and interactions that will expand over time
+
+### Particle Creation
+
+The Asset Editor includes robust particle creation tools:
+
+* **In-game creation**: Particles are created directly in-game using the Asset Editor
+* **Industry standard**: Particle logic is robust and similar to Unity/Unreal particle systems
+* **Event-driven**: Particles can be spawned on events or interactions (like opening doors)
+* **Entity attachment**: Can attach particles to entities with specific attachment points
+* **Dynamic movement**: Supports particles moving with their anchor points
+* **Time delays**: Supports time-based particle effects and delays
+
+## Materials
+
+### Optimization Focus
+
+Hytale takes a different approach to materials compared to other engines:
+
+* **Pre-optimized**: Materials are very optimized and artists cannot create custom materials
+* **Performance priority**: This constraint ensures consistent performance across all content
+* **Curated system**: Maintains visual consistency while maximizing efficiency
+
+## Best Practices
+
+### Asset Optimization
+
+Key considerations from Hytale's development team:
+
+* **Mindful resource usage**: Be conscious of how many blocks/quads you use and texture file sizes
+* **Avoid bloat**: Goal is to prevent unnecessary asset bloat that could impact performance
+* **Efficiency focus**: Balance visual quality with technical constraints
+
+### Future Documentation
+
+* **Best practice guide**: A comprehensive "best practice" guide for art and modeling will be released at some point
+* **Flexible boundaries**: Most creative goals can be achieved without breaking anything in the system
+* **Community-driven workflows**: Tools are designed to support established creative workflows in the modding community
+
+## Integration with Development Pipeline
+
+The modeling and texture art workflow integrates seamlessly with Hytale's broader development ecosystem:
+
+* **Asset Editor compatibility**: Models created in Blockbench work directly with the Hytale Asset Editor
+* **Data Asset integration**: 3D models can be configured and customized through Data Assets
+* **Visual Scripting support**: Models can be controlled and animated through Visual Scripting
+* **Java plugin extensibility**: Advanced model behaviors can be implemented through Java plugins
+* **Particle integration**: Models can have particles attached at specific points for enhanced visual effects
+
+This integrated approach ensures that 3D modeling and texture art aren't isolated creative processes, but core components of Hytale's comprehensive development environment.

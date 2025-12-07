@@ -1,3 +1,4 @@
 {
-  "pages": ["...", "java-basics"]
+  "pages": ["...", "java-basics"],
+  "icon": "GraduationCap"
 }

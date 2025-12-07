@@ -1,0 +1,17 @@
+{
+  "nav": {
+    "title": "Hytale Modding",
+    "documentation": "Dökümantasyon"
+  },
+  "home": {
+    "community": "Topluluk",
+    "title": "Hytale Modding",
+    "welcome": "Hytale Modding'e hoş geldin!",
+    "welcomeDescription": "Burası Hytale için modlama rehberleri, dökümentasyonları ve kaynakları içeren resmi-olmayan bir topluluk.",
+    "documentation": "Dökümantasyon",
+    "discord": "Discord"
+  },
+  "misc": {
+    "gitInfoUnavailable": "Git bilgisi bulunamadı"
+  }
+}

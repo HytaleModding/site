@@ -1,0 +1,165 @@
+---
+title: 04 - Estruturas de Repetição
+description: Aprenda a repetir código usando loops de forma eficiente em Java
+---
+
+Laços permitem que você repita o código sem escrevê-lo repetidamente. São essenciais para processar collections, gerar mundos e atualizar objetos do jogo.
+
+## Laço “while”
+
+Repete o código enquanto uma condição for verdadeira:
+
+```java tab="Code"
+
+int countdown = 5;
+
+while (countdown > 0) {
+    System.out.println(countdown);
+    countdown--;
+}
+System.out.println("Lançar!");
+```
+
+```java tab="Output"
+5
+4
+3
+2
+1
+Lançar!
+```
+
+### Estrutura
+
+```java
+while (condição) {
+    // código para repetir
+}
+```
+
+<Callout type="warning" title="Loops Infinitos">
+  Sempre certifique-se de que sua condição de loop se tornará falsa, ou seu programa será executado para sempre!
+
+  ```java tab="Bad Example"
+  int x = 0;
+  while (x < 10) {
+      System.out.println("Preso!");
+      // Esqueceu de aumentar x!
+  }
+  ```
+
+  ```java tab="Good Example"
+  int x = 0;
+  while (x < 10) {
+      System.out. rintln("Contagem: " + x);
+      x++; // Isso aumenta x! // [!code ++]
+  }
+  ```
+</Callout>
+
+## Laço "Do-While"
+
+Como um laço while, mas sempre executa pelo menos uma vez:
+
+```java
+int health = 0;
+
+do {
+    System.out.println("Tentando respawn...");
+    health = 100;
+} while (saúde <= 0);
+```
+
+## Laço “for”
+
+Melhor quando você sabe quantas vezes repetir:
+
+```java tab="Code"
+for (int i = 1; i <= 5; i++) {
+    System.out.println("Nível " + i);
+}
+```
+
+```java tab="Output"
+Nível 1
+Nível 2
+Nível 3
+Nível 4
+Nível 5
+```
+
+### Estrutura
+
+```java
+for (inicialização; condição; atualização) {
+    // código para repetir
+}
+```
+
+<Callout type="info" title="Partes do Laço For">
+  ```java
+  for (int i = 0; i < 10; i++) {
+  //   ^         ^        ^
+  //   Iniciar   Parar    Passo
+  }
+  ```
+
+  * **Inicialização**: int i = 0 - Executa uma vez no início
+  * **Condição**: i < 10 - Verificada antes de cada loop
+  * **Atualização**: i++ - Executa após cada loop
+</Callout>
+
+## Instrução "Break"
+
+Você pode sair de um laço cedo com `break`:
+
+```java
+
+for (int i = 1; i <= 10; i++) {
+    if (i == 6) {
+        break; // Sair do loop quando i for 6
+    }
+    System.out.println(i);
+}
+
+```
+
+## Instrução "Continue"
+
+Pular para a próxima iteração com `continue`:
+
+```java
+for (int i = 1; i <= 10; i++) {
+    if (i % 2 == 0) {
+        continua; // Pula números pares
+    }
+    System.out.println(i); // Imprime apenas números ímpares
+}
+```
+
+## Laços Aninhados
+
+Você pode colocar os laços dentro de outros laços:
+
+```java
+for (int i = 1; i <= 3; i++) {
+    for (int j = 1; j <= 2; j++) {
+        System.out.println("i: " + i + ", j: " + j);
+    }
+}
+```
+
+<Callout type="warning" title="Desempenho de Loop Aninhado">
+  Tenha cuidado com laços aninhados! Eles podem deixar seu mod significativamente mais lento.
+
+  ```java
+  // Isso executa 1.000.000 vezes!
+  for (int i = 0; i < 1000; i++) {
+      for (int j = 0; j < 1000; j++) {
+          // Código aqui
+      }
+  }
+  ```
+
+  Tente evitar laços aninhados profundamente ao processar grandes quantidades de dados.
+</Callout>

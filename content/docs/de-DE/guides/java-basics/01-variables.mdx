@@ -1,0 +1,77 @@
+---
+title: 01 - Variablen & Datentypen
+description: An introduction to variables and data types in Java programming.
+---
+
+Variables are containers that store data in your program. Think of them as labeled boxes where you can put different types of information.
+
+## Was ist eine Variable?
+
+A variable has three key components:
+
+1. **Type**: What kind of data it holds (e.g., integer, string, boolean)
+2. **Name**: The label you use to refer to the variable
+3. **Value**: The data it contains
+
+## Declaring/Creating Variables
+
+In Java, you must declare a variable before using it, like you'd need a box before putting something in it. The syntax is:
+
+```java
+int age;
+age = 18;
+
+int age = 18; // Declaration and assignment in one line
+```
+
+## Primitive Data Types
+
+Sie fragen sich vielleicht, was "int" bedeutet. Es ist ein primitiver Datentyp in Java. Java hat 8 primitiven Datentypen. Hier sind die wichtigsten für Modding:
+
+| Datentyp | Beschreibung                       | Beispiel                   |
+| -------- | ---------------------------------- | -------------------------- |
+| int      | Ganze Zahlen                       | `int punkte = 100;`        |
+| double   | Dezimalzahlen                      | `double pi = 3.14;`        |
+| boolean  | Wahr oder falsch (true oder false) | `boolean istAktiv = true;` |
+| char     | Einzelnes Zeichen                  | `char note = 'A';`         |
+| String   | Zeichenfolge (Text)                | `String name = "Hytale";`  |
+
+## Typumwandlung
+
+Manchmal möchten Sie vielleicht nicht, dass eine Variable den gleichen Typ beibehält. Sie können zwischen den Typen umwandeln:
+
+### Automatisch
+
+```java
+int num = 10;
+double decimalNum = (double) num; // 10.0 - works automatically
+```
+
+### Manual (Casting)
+
+```java
+double decimalNum = 9.78;
+int num = (int) decimalNum; // 9 - decimals are dropped
+```
+
+## Constants
+
+If you want a variable that shouldn't change, use the `final` keyword:
+
+```java
+final double PI = 3.14159;
+```
+
+**Convention**: Constants use ALL_CAPS_WITH_UNDERSCORES.
+
+## Üben
+
+It's best to practice what you just learnt - don't look above now and try to do this yourself. If you get stuck, look back up!
+
+1. Declare an integer variable named `lives` and set it to 3.
+2. Declare a double variable named `gravity` and set it to 9.81.
+3. Declare a boolean variable named `isGameOver` and set it to false.
+4. Convert the `lives` variable to a double and store it in a new variable named `livesAsDouble`.
+5. Declare a constant named `MAX_LEVEL` and set it to 100.
+
+Super! You've learned about variables and data types in Java. Now we're going to learn about operators and expressions in the next lesson.

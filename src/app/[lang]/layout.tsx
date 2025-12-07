@@ -10,7 +10,31 @@ const { provider } = defineI18nUI(i18n, {
     },
     "es-ES": {
       displayName: "Español",
-      search: "Buscar",
+    },
+    "af-ZA": {
+      displayName: "Afrikaans",
+    },
+    "de-DE": {
+      displayName: "Deutsch",
+    },
+    "id-ID": {
+      displayName: "Indonesia",
+    },
+    "fr-FR": {
+      displayName: "Français",
+    },
+    "hi-IN": {
+      displayName: "हिन्दी",
+      search: "खोजें",
+    },
+    "pt-BR": {
+      displayName: "Português (Brasil)",
+    },
+    "ru-RU": {
+      displayName: "Русский",
+    },
+    "tr-TR": {
+      displayName: "Türkçe",
     },
   },
 });

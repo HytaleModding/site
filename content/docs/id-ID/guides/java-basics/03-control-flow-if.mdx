@@ -1,0 +1,126 @@
+---
+title: Alur Kontrol If Statements
+description: Pelajari cara mengontrol alur program Java kamu menggunakan pernyataan if.
+---
+
+Program perlu membuat keputusan. Pernyataan if memungkinkan kodemu memilih jalur yang berbeda berdasarkan kondisi tertentu.
+
+## Pernyataan If Dasar
+
+Bentuk paling sederhana memeriksa satu kondisi;
+
+```java
+int health = 20;
+
+if (health > 10) {
+    System.out.println("Kamu sehat!");
+}
+```
+
+### Strukture
+
+```java
+if (condition) {
+    // kode untuk dijalankan jika kondisi benar (true)
+}
+```
+
+## Pernyataan If-Else
+
+Memilih antara dua jalur:
+
+```java
+int health = 5;
+
+if (health > 10) {
+    System.out.println("Kamu Sehat!");
+} else {
+    System.out.println("Kamu butuh penyembuhan!");
+}
+```
+
+## Rangkaian If-Else Else-If
+
+Memeriksa beberapa kondisi secara berurutan:
+
+```java
+int health = 7;
+
+if (health > 15) {
+    System.out.println("Kamu dalam kondisi prima!");
+} else if (health > 5) {
+    System.out.println("Kamu baik-baik saja.");
+} else {
+    System.out.println("Kamu butuh penyembuhan!");
+}
+```
+
+## Pernyataan If Bersarang (Nested If)
+
+Kamu bisa menempatkan pernyataan if di dalam pernyataan if lainnya:
+
+```java
+int health = 12;
+
+if (health > 10) {
+    if (health > 15) {
+        System.out.println("Kamu dalam kondisi prima!");
+    } else {
+        System.out.println("Kamu sehat!");
+    }
+} else {
+    System.out.println("Kamu butuh penyembuhan!");
+}
+```
+
+## Kondisi Majemuk (Compound)
+
+Kamu bisa menggabungkan beberapa kondisi menggunakan operator logika:
+
+```java
+// AND - keduanya harus benar
+int health = 12;
+boolean hasPotion = true;
+
+if (health > 10 && hasPotion) {
+    System.out.println("Kamu sehat dan punya ramuan!");
+} else if (health > 10) {
+    System.out.println("Kamu sehat tapi butuh ramuan!");
+} else {
+    System.out.println("Kamu butuh penyembuhan!");
+}
+
+// OR - setidaknya satu harus benar
+
+int health = 8;
+boolean hasPotion = false;
+if (health > 10 || hasPotion) {
+    System.out.println("Kamu sehat atau punya ramuan !");
+} else {
+    System.out.println("Kamu butuh penyembuhan dan ramuan!");
+}
+
+// NOT - membalikan kondisi
+
+int health = 8;
+if (!(health > 10)) {
+    System.out.println("Kamu butuh penyembuhan!");
+} else {
+    System.out.println("Kamu sehat!");
+}
+```
+
+## Operator Ternary
+
+Cara ringkas untuk menetapkan nilai:
+
+```java
+int health = 12;
+String status = (health > 10) ? "Sehat" : "Butuh Penyembuhan";
+```
+
+### Sintaks
+
+```java
+variabel = (kondisi) ? nilaiJikaBenar : nilaiJikaSalah;
+```

@@ -1,0 +1,61 @@
+---
+title: Daten-Dateien
+description: Informationen über Daten-Dateien in Hytale und darüber, wie sie das Spielverhalten und die Erstellung von Inhalten vorantreiben.
+---
+
+# Daten-Dateien
+
+Daten-Dateien sind JSON-Dateien, die das Spielverhalten und den Kerninhalt von Hytale steuern. Sie bieten einen leistungsstarken, datengesteuerten Ansatz zum Erstellen und Ändern von Spielelementen, ohne dass dafür Code geschrieben werden muss.
+
+## Was sind Daten-Dateien?
+
+Mit Daten-Dateien können Sie grundlegende Spielelemente über JSON-Konfigurationsdateien erstellen oder ändern:
+
+* **Blöcke**: Definiere neue Blocktypen und deren Eigenschaften
+* **Items**: Erstelle benutzerdefinierte Items mit besonderen Verhalten
+* **NPCs**: Konfiguriere Nichtspielercharaktere und deren KI
+* **Weltgeneration**: Steuere wie die Welt generiert wird
+* **Loot Tabellen**: Definiere welche Gegenstände von verschiedenen Quellen gedropt werden
+
+## Vergleich zu Minecraft
+
+Daten-Dateien sind vergleichbar mit Minecraft's JSON-Dateien, aber mit wesentlich größerem Umfang. Während die Datenpakete von Minecraft etwas begrenzt sind, bedeutet die datengestützte Architektur von Hytale, dass Kernelemente wie Blöcke Items, und NPCs alle durch JSON-Dateien modifiziert werden können.
+
+Dieser erweiterte datengestützte Ansatz gibt den Moddern viel mehr Möglichkeiten, das Spiel anzupassen, ohne in komplexe Programmierung eintauchen zu müssen.
+
+## Entwicklungstools
+
+Da die Bearbeitung von JSON-Dateien von Hand mühsam und fehleranfällig sein kann, plant Hytale die Bereitstellung mehrerer Tools, um die Arbeit mit Datenbeständen einfacher zu gestalten:
+
+### Node Editor
+
+Hytale entwickelt einen "Node Editor", um die Bearbeitung von Daten-Dateien benutzerfreundlicher zu gestalten:
+
+* **Grafisches Menü**: Bietet eine grafische Möglichkeit, mit Datenbeziehungen zu arbeiten
+* **Anpassungsfokus**: Besonders hilfreich bei der Anpassung von NPCs, Interaktionen und der Weltgenerierung
+* **Integrierter Workflow**: Funktioniert direkt innerhalb des Hytale Asset-Editors für eine einheitliche Creator-Suite
+* **Accessibility**: Macht es leichter, komplexe Datenbeziehungen zu verstehen und modifizieren
+
+### Zusätzliche Tools
+
+Neben dem Node Editor plant Hytale folgendes zu unterstützen:
+
+* **Visuelle JSON-Generatoren**: Grafisches Menü zum Erstellen von JSON ohne Syntax
+* **Formular-basierter Editor**: Strukturierte Formulare, die das passende JSON automatisch generieren
+* **Mehrere Workflow-Optionen**: Verschiedene Werkzeuge für unterschiedliche Komfortstufen und Anwendungsfälle
+
+## Effektivität und Einfachheit
+
+Die Effektivität von Daten-Dateien wird durch ihre Einfachheit demonstriert. Beispielsweise sind Informationen zufolge nur vier Zeilen JSON-Konfiguration erforderlich, um Raptoren in Hytale reitbar zu machen – was zeigt, wie leistungsstark und dennoch zugänglich das System gestaltet ist.
+
+Dieses Gleichgewicht zwischen Leistung und Zugänglichkeit ist von zentraler Bedeutung für Hytales Modding-Philosophie: Es bietet professionelle Tools, die keine Programmierkenntnisse benötigen, um sie effektiv nutzen zu können.
+
+## Integration mit anderen Systemen
+
+Daten-Dateien funktionieren nahtlos mit Hytales anderen Entwicklungsansätzen:
+
+* **Visuelles Scripting**: Kann Daten die in Daten-Dateien definiert sind referenzieren und manipulieren
+* **Java-Plugins**: Können Daten-Dateien lesen und modifizieren, um komplexere Verhaltensweisen zu ermöglichen
+* **Asset Editor**: Stellt ein einheitliches Menü zur Verwaltung von visuellen Assets und deren Datenkonfigurationen zur Verfügung
+
+Diese Integration stellt sicher, dass Daten-Dateien keine isolierten Konfigurationsdateien sind, sondern ein Kernbestandteil der umfassenden Entwicklungsumgebung von Hytale.

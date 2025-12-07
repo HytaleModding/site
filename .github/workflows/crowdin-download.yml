@@ -1,7 +1,13 @@
 name: Download Crowdin Translations
+permissions:
+  contents: write
+  pull-requests: write
+
 on:
   repository_dispatch:
-    types: [ file-fully-translated ]
+    types: 
+      - file-fully-translated
+      - file-fully-reviewed
 jobs:
   download:
     runs-on: ubuntu-latest
