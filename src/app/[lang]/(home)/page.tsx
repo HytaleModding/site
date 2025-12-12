@@ -55,7 +55,7 @@ export default function HomePage() {
       title: "[WIP] Soundscape: Melodium Chunk",
       author: "by 44Hydras",
       image: Melodium,
-      link: "",
+      link: "https://discord.com/users/197065442479702016",
     },
     {
       title: "Gale Wivern",
