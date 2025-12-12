@@ -43,7 +43,7 @@ export default function HomePage() {
       title: "Dragonfly Mount",
       author: "by Nicolas | Tourne_Vis",
       image: DragonFlyMount,
-      link: "",
+      link: "https://x.com/TourneVis_MC",
     },
     {
       title: "[WIP] Hylamity: Wulfrum Prosthesis",
@@ -61,7 +61,7 @@ export default function HomePage() {
       title: "Gale Wivern",
       author: "by Nicolas | Tourne_Vis",
       image: GaleWivern,
-      link: "",
+      link: "https://x.com/TourneVis_MC",
     },
     {
       title: "[WIP] Hylamity: Wulfrum Armor",
