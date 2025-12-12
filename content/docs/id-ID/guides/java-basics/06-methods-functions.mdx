@@ -1,0 +1,415 @@
+---
+title: 06 - Methods (Fungsi)
+description: Pelajari cara mengatur dan menggunakan kembali kode dengan method.
+---
+
+Method adalah blok kode yang dapat digunakan kembali untuk melakukan tugas tertentu. Method membantumu menghindari penulisan kode berulang dan membuat programmu lebih mudah dipahami.
+
+## Apa itu Method?
+
+Anggap method sebagai sebuah resep. Kamu mendefinisikannya sekali, lalu menggunakannya kapan pun kamu butuhkan.
+
+```java tab="Code"
+public class Game {
+    public static void main(String[] args) {
+        greet();        // Panggil method
+        greet();        // Panggil lagi!
+    }
+    
+    // Definisi Method
+    public static void greet() {
+        System.out.println("Selamat datang di Hytale!");
+    }
+}
+```
+
+```text tab="Output"
+Selamat datang di Hytale
+Selamat datang di Hytale
+```
+
+## Struktur Method
+
+```java
+public static void methodName() {
+//  ^      ^     ^      ^       ^
+//  |      |     |      |       |
+// akses  static balik  nama  parameter
+// modifier       tipe
+    // Code ditulis disini
+}
+```
+
+Kita akan belajar arti `public` dan `static` nanti. Untuk sekarang, gunakan saja dulu.
+
+## Method dengan Parameter
+
+Parameter membiarkanmu mengirim data ke dalam method:
+
+```java
+public static void greetPlayer(String name) {
+    System.out.println("Halo, " + name + "!");
+}
+
+public static void main(String[] args) {
+    greetPlayer("Alice");  // Halo, Alice!
+    greetPlayer("Bob");    // Halo, Bob!
+}
+```
+
+### Banyak Parameter
+
+```java
+public static void dealDamage(String target, int damage) {
+    System.out.println(target + " menerima " + damage + " damage!");
+}
+
+public static void main(String[] args) {
+    dealDamage("Zombie", 20);    // Zombie menerima 20 damage!
+    dealDamage("Skeleton", 15);  // Skeleton menerima 15 damage!
+}
+```
+
+<Callout type="info" title="Urutan Parameter Itu Penting">
+  Saat memanggil method, argumen harus sesuai dengan urutan parameter:
+
+  ```java
+  public static void createItem(String name, int quantity, double price) {
+      // ...
+  }
+
+  // Benar
+  createItem("Sword", 1, 50.0);
+
+  // Salah - Urutan itu penting!
+  createItem(1, "Sword", 50.0);  // Error!
+  ```
+</Callout>
+
+## Method dengan Nilai Kembalian/Return Values
+
+Method dapat mengirim data kembali menggunakan return:
+
+```java
+public static int add(int a, int b) {
+    int sum = a + b;
+    return sum;
+}
+
+public static void main(String[] args) {
+    int result = add(5, 3);
+    System.out.println(result);  // 8
+}
+```
+
+Tipe kembalian (return type) harus cocok dengan apa yang kamu kembalikan:
+
+* `void` - Tidak mengembalikan apa-apa
+* `int` - Mengembalikan integer (bilangan bulat)
+* `double` - Mengembalikan desimal
+* `boolean` - Mengembalikan true/false
+* `String` - Mengembalikan teks
+
+```java
+public static String getItemName() {
+    return "Diamond Sword";
+}
+
+public static boolean isPlayerAlive(int health) {
+    return health > 0;
+}
+
+public static double calculateDamage(int attack, double multiplier) {
+    return attack * multiplier;
+}
+```
+
+<Callout type="peringatan" title="Return Menghentikan Eksekusi">
+  Setelah method mencapai `return`, ia langsung berhenti. Kode setelah `return` tidak akan dijalankan!
+
+  ```java
+  public static int getValue() {
+      return 10;
+      System.out.println("This never runs!");  // Kode yang tidak terjangkau!
+  }
+  ```
+</Callout>
+
+## Contoh Praktis
+
+### Sistem Kesehatan/Health System
+
+```java tab="Code"
+public static void displayHealth(String name, int health, int maxHealth) {
+    double percentage = (health * 100.0) / maxHealth;
+    System.out.println(name + ": " + health + "/" + maxHealth + 
+                      " (" + percentage + "%)");
+}
+
+public static void main(String[] args) {
+    displayHealth("Player", 75, 100);
+    displayHealth("Boss", 450, 500);
+}
+```
+
+```text tab="Output"
+Player: 75/100 (75.0%)
+Boss: 450/500 (90.0%)
+```
+
+### Kalkulator Damage
+
+```java tab="Code"
+public static int calculateDamage(int baseAttack, int weaponDamage, boolean isCritical) {
+    int totalDamage = baseAttack + weaponDamage;
+    
+    if (isCritical) {
+        totalDamage *= 2;
+    }
+    
+    return totalDamage;
+}
+
+public static void main(String[] args) {
+    int damage1 = calculateDamage(10, 15, false);  // 25
+    int damage2 = calculateDamage(10, 15, true);   // 50
+    
+    System.out.println("Serangan normal: " + damage1);
+    System.out.println("Serangan kritis: " + damage2);
+}
+```
+
+### Persyaratan Level
+
+```java tab="Code"
+public static int getXPForLevel(int level) {
+    return level * 100;
+}
+
+public static boolean canLevelUp(int currentXP, int currentLevel) {
+    int required = getXPForLevel(currentLevel + 1);
+    return currentXP >= required;
+}
+
+public static void main(String[] args) {
+    int playerXP = 450;
+    int playerLevel = 4;
+    
+    if (canLevelUp(playerXP, playerLevel)) {
+        System.out.println("Kamu bisa naik level!");
+    } else {
+        int needed = getXPForLevel(playerLevel + 1) - playerXP;
+        System.out.println("Butuh " + needed + " XP lagi");
+    }
+}
+```
+
+### Kalkulator Jarak
+
+```java tab="Code"
+public static double calculateDistance(int x1, int y1, int x2, int y2) {
+    int dx = x2 - x1;
+    int dy = y2 - y1;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+public static boolean isInRange(int x1, int y1, int x2, int y2, double range) {
+    double distance = calculateDistance(x1, y1, x2, y2);
+    return distance <= range;
+}
+
+public static void main(String[] args) {
+    // Cek apakah musuh dalam jangkauan serangan
+    if (isInRange(0, 0, 5, 5, 10.0)) {
+        System.out.println("Target dalam jangkauan!");
+    }
+}
+```
+
+## Method Overloading
+
+Kamu bisa memiliki beberapa method dengan nama yang sama tapi parameter berbeda:
+
+```java
+public static void displayMessage(String message) {
+    System.out.println(message);
+}
+
+public static void displayMessage(String message, int times) {
+    for (int i = 0; i < times; i++) {
+        System.out.println(message);
+    }
+}
+
+public static void main(String[] args) {
+    displayMessage("Hello");           // Memanggil versi pertama
+    displayMessage("Hello", 3);        // Memanggil versi kedua
+}
+```
+
+<Callout type="info" title="Aturan Method Overloading">
+  Method dianggap berbeda jika memiliki:
+
+  * Jumlah parameter berbeda
+  * Tipe parameter berbeda
+  * Urutan parameter berbeda
+
+  ```java
+  public static void test(int a) { }
+  public static void test(int a, int b) { }        // Jumlah berbeda
+  public static void test(double a) { }            // Tipe berbeda
+  public static void test(String a, int b) { }     // Tipe-tipe berbeda
+  public static void test(int a, String b) { }     // Urutan berbeda
+
+  // Salah - Hanya tipe kembalian yang berbeda
+  public static int test(int a) { }
+  ```
+</Callout>
+
+## Pola Umum dalam Modding Hytale
+
+### Pembuatan Item
+
+```java
+public static Item createItem(String name, int durability) {
+    Item item = new Item();
+    item.setName(name);
+    item.setDurability(durability);
+    return item;
+}
+
+public static Item createSword() {
+    return createItem("Sword", 100);
+}
+
+public static Item createPickaxe() {
+    return createItem("Pickaxe", 150);
+}
+```
+
+### Validasi Penempatan Blok
+
+```java
+public static boolean canPlaceBlock(int x, int y, int z) {
+    // Cek apakah posisi valid
+    if (y < 0 || y > 255) {
+        return false;
+    }
+    
+    // Cek apakah blok sudah ada
+    if (isBlockAt(x, y, z)) {
+        return false;
+    }
+    
+    return true;
+}
+
+public static void placeBlock(int x, int y, int z, String type) {
+    if (canPlaceBlock(x, y, z)) {
+        // Tempatkan blok
+        System.out.println("Menempatkan " + type + " di (" + x + ", " + y + ", " + z + ")");
+    } else {
+        System.out.println("Tidak bisa menaruh blok di sana!");
+    }
+}
+```
+
+### Cek Status Pemain
+
+```java
+public static boolean isLowHealth(int health, int maxHealth) {
+    return (health * 100.0 / maxHealth) < 25;
+}
+
+public static String getHealthStatus(int health, int maxHealth) {
+    double percentage = (health * 100.0) / maxHealth;
+    
+    if (percentage >= 75) {
+        return "Sehat";
+    } else if (percentage >= 50) {
+        return "Terluka";
+    } else if (percentage >= 25) {
+        return "Kritis";
+    } else {
+        return "Hampir Mati";
+    }
+}
+```
+
+## Praktik Terbaik
+
+<Callout type="info" title="Penamaan Method">
+  Gunakan nama berbasis kata kerja yang deskriptif yang menjelaskan apa yang dilakukan method tersebut:
+
+  ```java
+  // Bagus
+  public static void calculateDamage() { }
+  public static boolean isPlayerAlive() { }
+  public static String getItemName() { }
+  public static void displayInventory() { }
+
+  // Buruk
+  public static void dmg() { }        // Terlalu pendek
+  public static void method1() { }    // Tidak Deskriptif
+  public static void stuff() { }      // Terlalu samar
+  ```
+</Callout>
+
+## Latihan Praktik
+
+1. **Konverter Suhu**: Tulis method untuk mengonversi:
+   * Celsius ke Fahrenheit: `(C × 9/5) + 32`
+   * Fahrenheit ke Celsius: `(F - 32) × 5/9`
+
+2. **Kalkulator Lingkaran**: Buat method yang menghitung:
+   * Luas: `π × radius²`
+   * Keliling: `2 × π × radius`
+   * Gunakan Math.PI untuk π
+
+3. **Durabilitas Item**: Tulis method-method ini:
+   * `damageItem(int current, int damage)` - mengembalikan durabilitas baru
+   * `isBroken(int durability)` - mengembalikan true jika durabilitas kurang dari atau sama dengan 0
+   * `repairItem(int current, int max)` - mengembalikan durabilitas maksimal
+
+4. **Validator Password**: Buat method yang mengecek apakah password valid:
+   * Minimal panjang 8 karakter
+   * Mengandung setidaknya satu angka
+   * Mengembalikan true jika valid, false jika tidak
+
+## Kesalahan Umum
+
+```java
+// Salah - Lupa pernyataan return
+public static int getValue() {
+    int x = 10;
+    // Lupa return!
+} !
+
+// Benar
+public static int getValue() {
+    int x = 10;
+    return x;
+}
+
+// Salah - Tipe return salah
+public static int getText() {
+    return "Hello";  // Error! Should return int, not String
+}
+
+// Benar
+public static String getText() {
+    return "Hello";
+}
+
+// Salah - Tidak memanggil method
+public static void main(String[] args) {
+    greet;  // Error! Kurang tanda ()
+}
+
+// Benar
+public static void main(String[] args) {
+    greet();
+}
+```
+
+---

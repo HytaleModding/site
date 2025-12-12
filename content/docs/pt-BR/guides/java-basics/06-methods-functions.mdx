@@ -1,0 +1,416 @@
+---
+title: 06 — Métodos (Funções)
+description: Aprenda a como organizar e reutilizar o código com métodos.
+---
+
+Os métodos são blocos de código reutilizáveis ​​que executam tarefas específicas. Elas ajudam você a evitar a repetição de código e tornam seus programas mais fáceis de entender.
+
+## O que é um Método?
+
+Imagine um "método" como uma receita. Defina-o uma vez e então o usa sempre que precisar.
+
+```java tab="Code"
+public class Jogo {
+    public static void main(String[] args) {
+        greet();        // Chama o método
+        greet();        // Chama-o novamente!
+    }
+    
+    // Definição do método
+    public static void greet() {
+        System.out.println("Bem-vindo(a) ao Hytale!");
+    }
+}
+```
+
+```text tab="Output"
+Bem-vindo(a) ao Hytale!
+Bem-vindo(a) ao Hytale!
+```
+
+## Estrutura do Método
+
+```java
+public static void methodName() {
+//  ^      ^     ^      ^       ^
+//  |      |     |      |       |
+// Acessar os parâmetros de nome de retornos estáticos
+// Tipo do modificador
+    // O código vai aqui
+}
+```
+
+Depois, aprenderemos o que significam `public` e `static`. Por enquanto, apenas os use.
+
+## Métodos com Parâmetros
+
+Os parâmetros permitem passar dados para os métodos:
+
+```java
+public static void greetPlayer(String nome) {
+    System.out.println("Olá, " + nome + "!");
+}
+
+public static void main(String[] args) {
+    greetPlayer("Alice");  // Olá, Alice!
+    greetPlayer("Bob");    // Olá, Bob!
+}
+```
+
+### Múltiplos Parâmetros
+
+```java
+public static void dealDamage(String alvo, int dano) {
+    System.out.println(alvo + " recebeu " + dano + " de dano!");
+}
+
+public static void main(String[] args) {
+    dealDamage("Zumbi", 20);    // Zumbi recebeu 20 de dano!
+    dealDamage("Esqueleto", 15);  // Esqueleto recebeu 15 de dano!
+}
+```
+
+<Callout type="info" title="A Ordem dos Parâmetros Importa">
+  Ao chamar um método, os argumentos devem corresponder à ordem dos parâmetros:
+
+  ```java
+  public static void createItem(String nome, int quantidade, double preço) {
+      // ...
+  }
+
+  // Correto
+  createItem("Espada", 1, 50.0);
+
+  // Errado — A ordem importa!
+  createItem(1, "Espada", 50.0);  // Erro!
+  ```
+</Callout>
+
+## Métodos com Valores de Retorno
+
+Os métodos podem enviar dados de volta usando o `return`:
+
+```java
+public static int add(int a, int b) {
+    int sum = a + b;
+    return sum;
+}
+
+public static void main(String[] args) {
+    int result = add(5, 3);
+    System.out.println(result);  // 8
+}
+```
+
+O tipo de retorno deve corresponder ao que você deseja retornar:
+
+* `void` — Retorna nada
+* `int` — Retorna um número inteiro
+* `double` — Retorna um decimal
+* `boolean` — Retorna verdadeiro/falso
+* `String` — Retorna texto
+
+```java
+public static String getItemName() {
+    return "Espada de Diamante";
+}
+
+public static boolean isPlayerAlive(int vida) {
+    return vida > 0;
+}
+
+public static double calculateDamage(int ataque, double multiplicador) {
+    return ataque * multiplicador;
+}
+```
+
+<Callout type="warning" title="Execução de Paradas de Retorno">
+  Quando um método executa o `return`, ele é encerrado imediatamente. Após o `return`, o código não será executado!
+
+  ```java
+  public static int getValue() {
+      return 10;
+      System.out.println("Isto nunca será executado!");  // Código inacessível!
+  }
+  ```
+</Callout>
+
+## Exemplos na prática
+
+### Sistema de Vida
+
+```java tab="Code"
+public static void displayHealth(String nome, int vida, int vidaMax) {
+    double porcentagem = (vida * 100.0) / vidaMax;
+    System.out.println(nome + ": " + vida + "/" + vidaMax + 
+                      " (" + porcentagem + "%)");
+}
+
+public static void main(String[] args) {
+    displayHealth("Jogador", 75, 100);
+    displayHealth("Chefe", 450, 500);
+}
+```
+
+```text tab="Output"
+Jogador: 75/100 (75.0%)
+Chefe: 450/500 (90.0%)
+```
+
+### Calculadora de Dano
+
+```java tab="Code"
+public static int calculateDamage(int Ataquebase, int Danoarma, boolean Critico) {
+    int Danototal = Ataquebase + Danoarma;
+    
+    if (Critico) {
+        Danototal *= 2;
+    }
+    
+    return Danototal;
+}
+
+public static void main(String[] args) {
+    int dano1= calculateDamage(10, 15, false);  // 25
+    int dano2= calculateDamage(10, 15, true);   // 50
+    
+    System.out.println("Golpe normal: " + dano1);
+    System.out.println("Golpe crítico: " + dano2);
+}
+```
+
+### Requisitos de Nível
+
+```java tab="Code"
+public static int obterEXPPorNivel(int nivel) {
+    return nivel * 100;
+}
+
+public static boolean podeSubirNivel(int EXPatual, int Nivelatual) {
+    int requerido = obterEXPPorNivel(Nivelatual+ 1);
+    return Nivelatual>= requerido;
+}
+
+public static void main(String[] args) {
+    int EXPJogador = 450;
+    int NivelJogador = 4;
+    
+    if (podeSubirNivel(EXPJogador, NivelJogador)) {
+        System.out.println("Você pode subir de nível!");
+    } else {
+        int needed = obterEXPPorNivel(NivelJogador + 1) - EXPJogador;
+        System.out.println("Requer mais" + needed + " pontos de EXP.");
+    }
+}
+```
+
+### Calculadora de Distância
+
+```java tab="Code"
+public static double calcularDistancia(int x1, int y1, int x2, int y2) {
+    int dx = x2 - x1;
+    int dy = y2 - y1;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+public static boolean noAlcance(int x1, int y1, int x2, int y2, double alcance) {
+    double distancia = calcularDistancia(x1, y1, x2, y2);
+    return distancia <= alcance;
+}
+
+public static void main(String[] args) {
+    // Verifica se o inimigo está no alcance do ataque
+    if (noAlcance(0, 0, 5, 5, 10.0)) {
+        System.out.println("O alvo está no alcance!");
+    }
+}
+```
+
+## Sobrecarga de Método
+
+Você pode ter vários métodos com o mesmo nome, mas com parâmetros diferentes:
+
+```java
+public static void mostrarMensagem(String mensagem) {
+    System.out.println(mensagem);
+}
+
+public static void mostrarMensagem(String mensagem, int vezes) {
+    for (int i = 0; i < vezes; i++) {
+        System.out.println(mensagem);
+    }
+}
+
+public static void main(String[] args) {
+    displayMessage("Olá");           // Chama a primeira versão
+    displayMessage("Olá", 3);        // Chama a segunda versão
+}
+```
+
+<Callout type="info" title="Regras de Sobrecarga de Métodos">
+  Os métodos são considerados diferentes se eles tiverem:
+
+  * Diferentes números de parâmetros
+  * Diferentes tipos de parâmetros
+  * Diferentes ordens de parâmetros
+
+  ```java
+  public static void teste(int a) { }
+  public static void teste(int a, int b) { }        // Contagem diferente
+  public static void teste(double a) { }            // Tipo diferente
+  public static void teste(String a, int b) { }     // Tipos diferentes
+  public static void teste(int a, String b) { }     // Ordem diferente
+
+  // Errado — A única diferença é o tipo de retorno 
+  public static int teste(int a) { }
+  ```
+</Callout>
+
+## Padrões comuns na criação de mods para o Hytale
+
+### Criação de Item
+
+```java
+public static Item criarItem(String nome, int durabilidade) {
+    Item item = new Item();
+    item.setName(nome);
+    item.setDurability(durabilidade);
+    return item;
+}
+
+public static Item criarEspada() {
+    return createItem("Espada", 100);
+}
+
+public static Item criarPicareta() {
+    return criarItem("Picareta", 150);
+}
+```
+
+### Validação do Posicionamento dos Blocos
+
+```java
+public static boolean podeColocarBloco(int x, int y, int z) {
+    // Verifica se a posição é válida
+    if (y < 0 || y > 255) {
+        return false;
+    }
+    
+    // Verifica se o bloco já existe
+    if (blocoEm(x, y, z)) {
+        return false;
+    }
+    
+    return true;
+}
+
+public static void colocarBloco(int x, int y, int z, String tipo) {
+    if (podeColocarBlock(x, y, z)) {
+        // Coloca o bloco
+        System.out.println("O bloco " + tipo + " foi colocado em: " + x + ", " + y + ", " + z + "");
+    } else {
+        // Se não for possível colocar o bloco, esta mensagem é mostrada
+        System.out.println("Não é possível colocar bloco ali!");
+    }
+}
+```
+
+### Verificações de Atributos do Jogador
+
+```java
+public static boolean vidaBaixa(int vida, int vidaMax) {
+    return (vida * 100.0 / maxHealth) < 25;
+}
+
+public static String obterEstadoSaude(int vida, int vidaMax) {
+    double porcentagem = (vida * 100.0) / vidaMax;
+    
+    if (porcentagem >= 75) {
+        return "Saudável";
+    } else if (percentage >= 50) {
+        return "Ferido";
+    } else if (percentage >= 25) {
+        return "Crítico";
+    } else {
+        return "À beira da morte";
+    }
+}
+```
+
+## Boas Práticas
+
+<Callout type="info" title="Nomeação de Método">
+  Use os nomes descritivos baseados em verbos que expliquem o que o método faz:
+
+  ```java
+  // Bom
+  public static void calcularDano() { }
+  public static boolean JogadorVivo() { }
+  public static String obterNomeItem() { }
+  public static void mostrarInventario() { }
+
+  // Ruim
+  public static void dan() { }        // Muito curto
+  public static void mtd1() { }    // Não é descritivo
+  public static void csa() { }      // Muito vago
+  ```
+</Callout>
+
+## Exercícios práticos
+
+1. **Conversor de Temperatura**: Digite os métodos para converter:
+   * Celsius para Fahrenheit: `(C × 9/5) + 32`
+   * Fahrenheit para Celsius: `(F - 32) × 5/9`
+
+2. **Calculadora de Círculo**: Crie métodos que calculem:
+   * Área: `π × raio²`
+   * Circunferência: `2 × π × raio`
+   * Use `Math.PI` para π
+
+3. **Durabilidade do Item**: Digite estes métodos:
+   * `danoItem(int atual, int dano)` — retorna uma nova durabilidade
+   * `estaQuebrado(int durabilidade)` — Retorna verdadeiro se a durabilidade for menor ou igual a 0.
+   * `repararItem(int atual, int max)` — retorna a durabilidade máxima
+
+4. **Validador de Senha**: Crie um método que verifique se uma senha é válida:
+   * Com pelo menos 8 caracteres.
+   * Tenha pelo menos um número
+   * Retorna verdadeiro se for válido, e falso se não for
+
+## Erros Comuns
+
+```java
+// Errado — Esquecendo a instrução de retorno
+public static int obterValor() {
+    int x = 10;
+    // Forgot to return!
+} !
+
+// Correto
+public static int obterValor() {
+    int x = 10;
+    return x;
+}
+
+// Errado — Tipo de retorno incorreto
+public static int obterTexto() {
+    return "Olá";  // Erro! Deve retornar int e não String
+}
+
+// Correto
+public static String obterTexto() {
+    return "Olá";
+}
+
+// Errado — Não chamar o método
+public static void main(String[] args) {
+    greet;  // Error! Falta os parenteses ()
+}
+
+// Correto
+public static void main(String[] args) {
+    greet();
+}
+```
+
+---

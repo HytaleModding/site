@@ -1,13 +1,13 @@
 ---
-title: 05 - Control Flow Loops
-description: Learn how to repeat code efficiently using loops in Java
+title: 05 - Циклы управляющего потока
+description: Узнайте, как эффективно зацикливать ваш код с помощью операторов в Java
 ---
 
-Loops let you repeat code without writing it over and over. They're essential for processing collections, generating worlds, and updating game objects.
+Циклы позволяют повторять код, не переписывая его снова и снова. Они необходимы для обработки коллекций, генерации миров и обновления игровых объектов.
 
-## While Loop
+## Цикл While
 
-Repeats code while a condition is true:
+Повторяет код до тех пока условие верно:
 
 ```java tab="Code"
 
@@ -17,7 +17,7 @@ while (countdown > 0) {
     System.out.println(countdown);
     countdown--;
 }
-System.out.println("Blast off!");
+System.out.println("Запускайте Квебеков!");
 ```
 
 ```java tab="Output"
@@ -26,25 +26,25 @@ System.out.println("Blast off!");
 3
 2
 1
-Blast off!
+Запускайте Квебеков!
 ```
 
-### Structure
+### Структура
 
 ```java
 while (condition) {
-    // code to repeat
+    // код, который нужно зациклить
 }
 ```
 
-<Callout type="warning" title="Infinite Loops">
-  Always make sure your loop condition will eventually become false, or your program will run forever!
+<Callout type="warning" title="Бесконечный цикл">
+  Убедитесь, что условие цикла невыполнимо иначе он, в один момент, может прерваться!
 
   ```java tab="Bad Example"
   int x = 0;
   while (x < 10) {
-      System.out.println("Stuck!");
-      // Forgot to increase x!
+      System.out.println("Nah, I'd win.");
+      // Забыл увеличить значение x! Условие цикла не выполнилось, а значит код будет бесконечно выводить "Nah, I'd win."
   }
   ```
 
@@ -52,27 +52,27 @@ while (condition) {
   int x = 0;
   while (x < 10) {
       System.out.println("Counting: " + x);
-      x++; // This increases x! // [!code ++]
+      x++; // С помощью этой строки мы увеличили значение x! 
   }
   ```
 </Callout>
 
-## Do-While Loop
+## Цикл Do-While
 
-Like a while loop, but always runs at least once:
+Работает так же, как и while, но всегда выполняется как минимум один раз:
 
 ```java
 int health = 0;
 
 do {
-    System.out.println("Attempting respawn...");
+    System.out.println("Попытка поймать Квебека...");
     health = 100;
 } while (health <= 0);
 ```
 
-## For Loop
+## Цикл for
 
-Best when you know how many times to repeat:
+Лучше всего подходит для случаев, когда вы имеете представление о том, сколько раз должен повторяться цикл:
 
 ```java tab="Code"
 for (int i = 1; i <= 5; i++) {
@@ -88,58 +88,56 @@ Level 4
 Level 5
 ```
 
-### Structure
+### Структура
 
 ```java
 for (initialization; condition; update) {
-    // code to repeat
+    // Тут должен быть код, который нужно зациклить
 }
 ```
 
-<Callout type="info" title="For Loop Parts">
+<Callout type="info" title="Элементы цикла for">
   ```java
   for (int i = 0; i < 10; i++) {
-  //   ^         ^        ^
-  //   Start     Stop     Step
+  //   ^          ^        ^
+  //   Старт      Стоп     Шаг
   }
   ```
 
-  * **Initialization**: int i = 0 - Runs once at the start
-  * **Condition**: i < 10 - Checked before each loop
-  * **Update**: i++ - Runs after each loop
+  * **Инициализация**: int i = 0 - Выполняется один раз в начале
+  * **Условие**: i < 10 - Проверяется перед каждым запуском цикла
+  * **Шаг**: i++ - Действие, которое происходит в конце цикла, в данном случае он увеличивает значение i
 </Callout>
 
-## Break Statement
+## Опреатор Break
 
-You can exit a loop early with `break`:
+Вы можете остановить цикл в любой момент его выполения с помощью `break`:
 
 ```java
 
 for (int i = 1; i <= 10; i++) {
     if (i == 6) {
-        break; // Exit loop when i is 6
+        break; // Цикл останавливается, когда i достигает значения 6, то есть условие цикла тут не причём
     }
     System.out.println(i);
 }
-
 ```
 
-## Continue Statement
+## Оператор Continue
 
-Skip to the next iteration with `continue`:
+Позволяет "пропустить" опеределенные значения двигаясь к следующей итерации:
 
 ```java
 for (int i = 1; i <= 10; i++) {
     if (i % 2 == 0) {
-        continue; // Skip even numbers
+        continue; // Пропускает чётные числа (то есть код проверяет, делится ли число на 2 без остатка и если это условие выполняется переходит к следующему значению пропуская нынешнее)
     }
-    System.out.println(i); // Prints only odd numbers
-}
+    System.out.println(i); // Выводит только нечётные числа
 ```
 
-## Nested Loops
+## Вложенные Циклы
 
-You can put loops inside other loops:
+Вы можете вложить один цикл внутрь другого:
 
 ```java
 for (int i = 1; i <= 3; i++) {
@@ -149,17 +147,17 @@ for (int i = 1; i <= 3; i++) {
 }
 ```
 
-<Callout type="warning" title="Nested Loop Performance">
-  Be careful with nested loops! They can slow down your mod significantly.
+<Callout type="warning" title="Производительность вложенных циклов.">
+  Будьте осторожны с вложенными циклами! Они могут существенно замедлить работу вашего мода.
 
   ```java
-  // This runs 1,000,000 times!
+  // Этот код выполняется 1,000,00 раз!
   for (int i = 0; i < 1000; i++) {
       for (int j = 0; j < 1000; j++) {
-          // Code here
+          // Тут мог бы быть ваш код
       }
   }
   ```
 
-  Try to avoid deeply nested loops when processing large amounts of data.
+  Старайтесь избегать глубоко вложенных циклов (многократно вложенных циклов) при обработке большого количества данных.
 </Callout>

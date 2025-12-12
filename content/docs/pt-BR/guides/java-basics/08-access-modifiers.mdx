@@ -1,0 +1,478 @@
+---
+title: 08 — Encapsulamento e Modificadores de Acesso
+description: Aprenda a como proteger e controlar o acesso aos dados das suas classes.
+---
+
+O Encapsulamento consiste em ocultar os detalhes internos de uma classe e determinar como os seus dados podem ser acessados ou modificados. Isso evita que erros aconteçam e o seu código se torna mais simples de manter e atualizar.
+
+## O Problema Sem o Encapsulamento
+
+```java
+public class Jogador {
+    public String nome;
+    public int vida;
+    public int vidaMax;
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Jogador jogador = new Jogador();
+        jogador.vida = 100;
+        jogador.vidaMax = 100;
+        
+        // Ops! Alguém pode quebrar as regras.
+        jogador.vida = 500;      // Vida excedente!
+        jogador.vida = -50;      // Vida negativa!
+        jogador.nome = "";         // Nome vazio!
+    }
+}
+```
+
+Sem proteção, qualquer um pode definir valores inválidos!
+
+## Modificadores de Acesso
+
+O Java tem palavras-chave que controlam quem pode acessar os membros da sua classe:
+
+| Modificador | Classe | Pacote | Subclasse | Mundo |
+| ----------- | ------ | ------ | --------- | ----- |
+| `public`    | ✓      | ✓      | ✓         | ✓     |
+| `protected` | ✓      | ✓      | ✓         | ✗     |
+| (nenhum)    | ✓      | ✓      | ✗         | ✗     |
+| `private`   | ✓      | ✗      | ✗         | ✗     |
+
+**Por enquanto, concentre-se em:**
+
+* `public` — Qualquer pessoa pode acessar
+* `private` — Apenas essa classe pode acessar
+
+## Tornando Propriedades Privadas
+
+```java
+public class Jogador {
+    private String nome;
+    private int vida;
+    private int vidaMax;
+    
+    public Jogador(String nome, int vidaMax) {
+        this.nome = nome;
+        this.vida = vidaMax;
+        this.vidaMax = vidaMax;
+    }
+}
+```
+
+Você não consegue mais acessar as propriedades diretamente:
+
+```java
+Jogador jogador = new Jogador("Alice", 100);
+jogador.vida = 500;  // ❌ Erro! A "vida" é privada
+```
+
+## Métodos Getters e Setters
+
+Para acessar propriedades privadas, crie os métodos **getter** e **setter**:
+
+```java
+public class Jogador {
+    private String nome;
+    private int vida;
+    private int vidaMax;
+    
+    public Jogador(String nome, int vidaMax) {
+        this.nome = nome;
+        this.vida = vidaMax;
+        this.vidaMax = vidaMax;
+    }
+    
+    // Getter — retorna o valor
+    public int obterVida() {
+        return vida;
+    }
+    
+    // Setter — define o valor com validação
+    public void definirVida(int vida) {
+        if (vida < 0) {
+            this.vida = 0;
+        } else if (vida > vidaMax) {
+            this.vida = vidaMax;
+        } else {
+            this.vida = vida;
+        }
+    }
+    
+    public String obterNome() {
+        return nome;
+    }
+    
+    public int obterVidaMax() {
+        return vidaMax;
+    }
+}
+```
+
+Now you can safely interact with the object:
+
+```java
+Jogador jogador = new Jogador("Alice", 100);
+
+jogador.definirVida(150);  // Limitado automaticamente para 100
+System.out.println(jogador.definirVida());  // 100
+
+jogador.definirVida(-20);  // Definido automaticamente para 0
+System.out.println(jogador.definirVida());  // 0
+```
+
+<Callout type="info" title="Getter and Setter Naming">
+  Follow Java naming conventions:
+
+  * **Getter**: `get` + property name (capitalized)
+  * **Setter**: `set` + property name (capitalized)
+  * **Boolean**: `is` + property name (capitalized)
+
+  ```java
+  private int Vida;
+  public int definirVida() { }
+  public void definirVida(int vida) { }
+
+  private boolean vivo;
+  public boolean estaVivo() { }
+  public void defineVivo(boolean vivo) { }
+
+  private String nome;
+  public String obterNome() { }
+  public void setName(String nome) { }
+  ```
+</Callout>
+
+## Vantagens do Encapsulamento
+
+### 1. Validação
+
+```java
+public class Item {
+    private int durabilidade;
+    private int durabilidadeMax;
+    
+    public void definirDurabilidade(int durabilidade) {
+        if (durabilidade < 0) {
+            this.durabilidade = 0;
+        } else if (durability > durabilidadeMax) {
+            this.durabilidade = durabilidadeMax;
+        } else {
+            this.durabilidade = durabilidade;
+        }
+    }
+    
+    public boolean estaQuebrado() {
+        return durabilidade <= 0;
+    }
+}
+```
+
+### 2. Propriedades Apenas de Leitura
+
+Às vezes, você não quer um setter:
+
+```java
+public class Monstro {
+    private String id;  // Nunca deveria mudar
+    private int vida;
+    
+    public Monstro(String id, int vida) {
+        this.id = id;
+        this.vida = vida;
+    }
+    
+    // Apenas Getter — Não Setter!
+    public String obterId() {
+        return id;
+    }
+    
+    public int obterVida() {
+        return vida;
+    }
+    
+    public void definirVida(int vida) {
+        this.vida = vida;
+    }
+}
+```
+
+### 3. Propriedades Calculadas
+
+Os métodos Getter não precisam retornar um campo diretamente:
+
+```java
+public class Jogador {
+    private int vida;
+    private int vidaMax;
+    
+    public int obterVida() {
+        return vida;
+    }
+    
+    // Propriedades calculadas
+    public double obterVidaPorcentagem() {
+        return (vida * 100.0) / vidaMax;
+    }
+    
+    // Propriedades calculadas
+    public boolean estaVidaBaixa() {
+        return obterVidaPorcentagem() < 25;
+    }
+}
+```
+
+## Exemplos na Prática
+
+### Item com Durabilidade
+
+```java
+public class Ferramenta {
+    private String nome;
+    private int durabilidade;
+    private int durabilidadeMax;
+    private boolean quebrado;
+    
+    public Ferramenta(String nome, int durabilidadeMax) {
+        this.nome = nome;
+        this.durabilidade = durabilidadeMax;
+        this.durabilidadeMax = durabilidadeMax;
+        this.quebrado = false;
+    }
+    
+    public void uso() {
+        if (quebrado) {
+            System.out.println(nome + " está quebrado!");
+            return;
+        }
+        
+        durabilidade--;
+        System.out.println(nome + " usado. Durabilidade: " + durabilidade);
+        
+        if (durabilidade <= 0) {
+            quebrado = true;
+            System.out.println(nome + " quebrado!");
+        }
+    }
+    
+    public void reparar() {
+        durability = durabilidadeMax;
+        quebrado = false;
+        System.out.println(nome + " reparado!");
+    }
+    
+    // Getters
+    public String obterNome() {
+        return nome;
+    }
+    
+    public int obterDurabilidade() {
+        return durabilidade;
+    }
+    
+    public boolean estaQuebrado() {
+        return quebrado;
+    }
+    
+    public double obterDurabilidadePorcentagem() {
+        return (durabilidade * 100.0) / durabilidadeMax;
+    }
+}
+```
+
+### Exemplo de Conta Bancária
+
+```java
+public class PlayerWallet {
+    private int gold;
+    private int silver;
+    
+    public PlayerWallet() {
+        this.gold = 0;
+        this.silver = 0;
+    }
+    
+    public void addGold(int amount) {
+        if (amount > 0) {
+            gold += amount;
+            System.out.println("Added " + amount + " gold");
+        }
+    }
+    
+    public boolean spendGold(int amount) {
+        if (amount > gold) {
+            System.out.println("Not enough gold!");
+            return false;
+        }
+        
+        gold -= amount;
+        System.out.println("Spent " + amount + " gold");
+        return true;
+    }
+    
+    public int getGold() {
+        return gold;
+    }
+    
+    public int getTotalValue() {
+        // 1 gold = 100 silver
+        return gold * 100 + silver;
+    }
+}
+```
+
+### Protected Block System
+
+```java
+public class ProtectedBlock {
+    private int x, y, z;
+    private String type;
+    private String owner;
+    private boolean locked;
+    
+    public ProtectedBlock(int x, int y, int z, String type, String owner) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.type = type;
+        this.owner = owner;
+        this.locked = true;
+    }
+    
+    public boolean canBreak(String playerName) {
+        if (!locked) {
+            return true;
+        }
+        
+        return playerName.equals(owner);
+    }
+    
+    public void unlock(String playerName) {
+        if (playerName.equals(owner)) {
+            locked = false;
+            System.out.println("Block unlocked");
+        } else {
+            System.out.println("You don't own this block!");
+        }
+    }
+    
+    // Getters only - position and owner shouldn't change
+    public int getX() {
+        return x;
+    }
+    
+    public int getY() {
+        return y;
+    }
+    
+    public int getZ() {
+        return z;
+    }
+    
+    public String getOwner() {
+        return owner;
+    }
+    
+    public boolean isLocked() {
+        return locked;
+    }
+}
+```
+
+## When to Use Private vs Public
+
+<Callout type="info" title="General Rules">
+  **Make it private by default!** Only make things public if they need to be accessed from outside.
+
+  **Private:**
+
+  * Internal data (health, position, inventory)
+  * Helper methods used only within the class
+  * Anything that needs validation
+
+  **Public:**
+
+  * Methods that define the class's behavior
+  * Constructor
+  * Methods other classes need to call
+
+  ```java
+  public class Example {
+      // Private - internal data
+      private int internalCounter;
+      private String secretKey;
+      
+      // Public - part of the interface
+      public void doSomething() {
+          // Uses private helper method
+          validateData();
+      }
+      
+      // Private - internal helper
+      private void validateData() {
+          // ...
+      }
+  }
+  ```
+</Callout>
+
+## The `final` Keyword
+
+`final` means a variable can't be changed after it's set:
+
+```java
+public class Player {
+    private final String id;  // Can't change after creation
+    private String name;      // Can change
+    private int health;       // Can change
+    
+    public Player(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    
+    public String getId() {
+        return id;
+    }
+    
+    // No setId() - it's final!
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+## Practice Exercises
+
+1. **Create a `BankAccount` Class**:
+   * Private properties: accountNumber, balance
+   * Constructor to set account number
+   * Methods: deposit(), withdraw(), getBalance()
+   * Validation: can't withdraw more than balance
+   * Account number should be read-only
+
+2. **Create a `Door` Class**:
+   * Private properties: isLocked, keyCode
+   * Constructor to set the key code
+   * Methods: lock(), unlock(String code), isLocked()
+   * unlock() only works with correct code
+   * Code should be private (don't expose it!)
+
+3. **Create a `PlayerStats` Class**:
+   * Private properties: strength, defense, speed
+   * Constructor to set all stats
+   * Getters for all stats
+   * Method: getPowerLevel() that returns strength + defense + speed
+   * Stats can't be negative or over 100
+
+4. **Refactor a Class**: Take one of your classes from the previous lesson and add proper encapsulation:
+   * Make all properties private
+   * Add appropriate getters and setters
+   * Add validation where needed

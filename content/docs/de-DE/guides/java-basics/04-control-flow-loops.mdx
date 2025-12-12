@@ -1,23 +1,22 @@
 ---
-title: 05 - Control Flow Loops
-description: Learn how to repeat code efficiently using loops in Java
+title: "05 - Kontrollfluss: Schleifen"
+description: Lerne, wie man Code mithilfe von Schleifen effizient wiederholt
 ---
 
-Loops let you repeat code without writing it over and over. They're essential for processing collections, generating worlds, and updating game objects.
+Schleifen erlauben es dir, Code zu wiederholen ohne ihn wiederholt schreiben zu müssen. Sie sind unentbehrlich, um Sammlungen zu verarbeiten, Welten zu generieren und Spielobjekte zu aktualisieren.
 
 ## 'while'-Schleife
 
 Wiederholt Code, solange eine Bedingung wahr ist:
 
 ```java tab="Code"
-
 int countdown = 5;
 
 while (countdown > 0) {
     System.out.println(countdown);
     countdown--;
 }
-System.out.println("Blast off!");
+System.out.println("Ende!");
 ```
 
 ```java tab="Output"
@@ -26,53 +25,53 @@ System.out.println("Blast off!");
 3
 2
 1
-Blast off!
+Ende!
 ```
 
-### Structure
+### Struktur
 
 ```java
-while (condition) {
-    // code to repeat
+while (Bedingung) {
+    // zu wiederholender Code
 }
 ```
 
-<Callout type="warning" title="Infinite Loops">
-  Always make sure your loop condition will eventually become false, or your program will run forever!
+<Callout type="warning" title="Endlose Schleifen">
+  Gehe immer sicher, dass deine Schleifenbedingung irgendwann falsch wird sonst läuft dein Programm immer weiter!
 
   ```java tab="Bad Example"
   int x = 0;
   while (x < 10) {
-      System.out.println("Stuck!");
-      // Forgot to increase x!
+      System.out.println("Endlosschleife!");
+      // Du musst x erhöhen!
   }
   ```
 
   ```java tab="Good Example"
   int x = 0;
   while (x < 10) {
-      System.out.println("Counting: " + x);
-      x++; // This increases x! // [!code ++]
+      System.out.println("x ist gerade: " + x);
+      x++; // Erhöht x! // [!code ++]
   }
   ```
 </Callout>
 
-## Do-While Loop
+## Do-While-Schleife
 
-Like a while loop, but always runs at least once:
+Wie eine While-Schleife, aber läuft mindestens einmal:
 
 ```java
-int health = 0;
+int leben = 0;
 
 do {
-    System.out.println("Attempting respawn...");
-    health = 100;
-} while (health <= 0);
+    System.out.println("Versucht respawn...");
+    leben = 100;
+} while (leben <= 0);
 ```
 
-## For Loop
+## For-Schleife
 
-Best when you know how many times to repeat:
+Am besten, wenn du weißt, wie oft du sie wiederholen möchtest:
 
 ```java tab="Code"
 for (int i = 1; i <= 5; i++) {
@@ -88,56 +87,54 @@ Level 4
 Level 5
 ```
 
-### Structure
+### Struktur
 
 ```java
-for (initialization; condition; update) {
-    // code to repeat
+for (Initialisierung; Bedingung; Update) {
+    // zu wiederholender Code
 }
 ```
 
-<Callout type="info" title="For Loop Parts">
+<Callout type="info" title="Teile der For-Schleife">
   ```java
   for (int i = 0; i < 10; i++) {
   //   ^         ^        ^
-  //   Start     Stop     Step
+  //   Start     Stop     Schritt
   }
   ```
 
-  * **Initialization**: int i = 0 - Runs once at the start
-  * **Condition**: i < 10 - Checked before each loop
-  * **Update**: i++ - Runs after each loop
+  * **Initialisierung**: int i = 0 - Läuft einmal am Anfang
+  * **Bedingung**: i < 10 - Überprüft vor jeder Schleife
+  * **Update**: i++ - Läuft nach jeder Schleife
 </Callout>
 
 ## Break Statement
 
-You can exit a loop early with `break`:
+Du kannst eine Schleife frühzeitig mit `break` beenden:
 
 ```java
-
 for (int i = 1; i <= 10; i++) {
     if (i == 6) {
-        break; // Exit loop when i is 6
+        break; // Beendet die Schleife, wenn i 6 ist
     }
     System.out.println(i);
 }
-
 ```
 
 ## Continue Statement
 
-Skip to the next iteration with `continue`:
+Springe zur nächsten Iteration mit `continue`:
 
 ```java
 for (int i = 1; i <= 10; i++) {
     if (i % 2 == 0) {
-        continue; // Skip even numbers
+        continue; // Überspringe gerade Zahlen
     }
-    System.out.println(i); // Prints only odd numbers
+    System.out.println(i); // Gibt nur ungerade Zahlen aus
 }
 ```
 
-## Nested Loops
+## Geschachtelte Schleifen
 
 Du kannst Schleifen in andere Schleifen packen:
 
@@ -149,17 +146,17 @@ for (int i = 1; i <= 3; i++) {
 }
 ```
 
-<Callout type="warning" title="Nested Loop Performance">
-  Be careful with nested loops! They can slow down your mod significantly.
+<Callout type="warning" title="Performance geschachtelter Schleifen">
+  Sei vorsichtig mit verschachtelten Schleifen! Sie können deine Mod erheblich verlangsamen.
 
   ```java
-  // This runs 1,000,000 times!
+  // Dies läuft 1,000,000 mal!
   for (int i = 0; i < 1000; i++) {
       for (int j = 0; j < 1000; j++) {
-          // Code here
+          // Code hier
       }
   }
   ```
 
-  Try to avoid deeply nested loops when processing large amounts of data.
+  Versuche tief verschachtelte Schleifen bei der Verarbeitung großer Datenmengen zu vermeiden.
 </Callout>

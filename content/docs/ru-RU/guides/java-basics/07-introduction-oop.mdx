@@ -1,0 +1,381 @@
+---
+title: 07 - Введение в объектно-ориентированное программирование
+description: Изучение основ классов и объектов в Java.
+---
+
+Object-Oriented Programming (OOP) - это основа Java и моддинга в Hytale. Вместо того чтобы использовать множество хаотично плавающих переменных и объектов мы организуем их в классы и объекты.
+
+## Что такое Класс?
+
+Класс по сути своей чертёж для создания объекта. Думайте о нём, как о рецепте или шаблоне.
+
+```java
+public class Player {
+    // Свойства(данные, информация)
+    String name;
+    int health;
+    int level;
+    
+    // Поведение (методы)
+    public void takeDamage(int damage) {
+        health -= damage;
+        System.out.println(name + " took " + damage + " damage!");
+    }
+}
+```
+
+## Что такое Объект?
+
+Объект по сути своей реализация класса(чертежа). Если класс - чертеж, то объект - это существующая вещь, построенная из этого чертежа.
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Создание объектов из класса Player
+        Player player1 = new Player();
+        player1.name = "Alice";
+        player1.health = 100;
+        player1.level = 5;
+        
+        Player player2 = new Player();
+        player2.name = "Bob";
+        player2.health = 80;
+        player2.level = 3;
+        
+        // Использование обхектов
+        player1.takeDamage(20);  // Алиса получает 20 урона!
+        player2.takeDamage(15);  // Боб получает 15 урона!
+    }
+}
+```
+
+<Callout type="info" title="Класс vs объект">
+  **Класс** = Чертеж (идея игрока)
+  **Объект** = Реальный объект (Алиса, Боб, конкретные игроки)
+
+  Один класс может создать много объектов, так же как из одного рецепта может сделать много тортиков!
+</Callout>
+
+## Создание простого класса
+
+Давайте создадим класс `Меч` для Hytale:
+
+```java
+public class Sword {
+    // Характеристики
+    String name;
+    int damage ;
+    int durability;
+    
+    // Метод для использования меча
+    public void attack(String target) {
+        System. ut.println(target + " атакован на " + damage + " урона!");
+        durability -= 1;
+        
+        if (durability <= 0) {
+            System. ut.println(name + " сломал! );
+        }
+    }
+    
+    // Метод отображения информации
+    public void displayInfo() {
+        System. ut.println("Оружие: " + name);
+        Система. ut.println("Урон: " + damage);
+        Система. ut.println("Прочность: " + durability);
+    }
+}
+```
+
+Использование класса:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Sword sword = new Sword();
+        sword.name = "Iron Sword";
+        sword.damage = 15;
+        sword.durability = 3;
+        
+        sword.displayInfo();
+        sword.attack("Zombie");
+        sword.attack("Skeleton");
+        sword.attack("Spider");  // This will break the sword
+    }
+}
+```
+
+## Конструкторы.
+
+Вместо установки свойств один за другим, используйте **конструктор** для инициализации объектов:
+
+```java
+public class Sword {
+    String name;
+    int damage;
+    int durability;
+    
+    // Конструктор
+    public Sword(String weaponName, int weaponDamage, int weaponDurability) {
+        name = weaponName;
+        damage = weaponDamage; 
+        durability = weaponDurability
+    }
+    
+    public void attack(String target) {
+        System. ut.println(target + " атакован на " + damage + " урона!");
+        durability--;
+    }
+}
+```
+
+Теперь создание гораздо мечей проще:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Гораздо лучше!
+        Sword ironSword = new Sword("Железный меч", 15, 100);
+        Sword diamondSword = new Sword("Алмазный меч, 25, 200);
+        
+        ironSword.attack("Zombie");
+        diamondSword.attack("Boss");
+    }
+}
+```
+
+<Callout type="info" title="Правила конструкторов">
+  * Такое же имя, как и у класса
+  * Нет возвращаемого типа (даже `void`)
+  * Вызывается автоматически при использовании `new`
+  * Может иметь несколько конструкторов (перегрузка)
+
+  ```java
+  public class Item {
+      String name;
+      int value;
+      
+      // Конструктор со всеми параметрами
+      public Item(String name, int value) {
+          this.name = name;
+          this.value = value;
+      }
+      
+      // Конструктор только с именем
+      public Item(String name) {
+          this.name = name;
+          this.value = 0;  // Default value
+      }
+  }
+  ```
+</Callout>
+
+## Ключевое слово `this`
+
+`this` относится к текущему объекту. Используйте его для уточнения, когда имена параметров соответствуют именам свойств:
+
+```java
+public class Player {
+    String name;
+    int health;
+    
+    public Player(String name, int health) {
+        this.name = name;      // this.name = the property
+        this.health = health;  // name = the parameter
+    }
+}
+```
+
+Без `this`, Java становится запутанной:
+
+```java
+public Player(String name, int health) {
+    name = name; // ❌ Какое имя? Неоднозначно!
+    health = health; // ❌ Какое здоровье? Неоднозначно!
+}
+```
+
+## Практические примеры
+
+### Класс Item
+
+```java
+public class Item {
+    String name;
+    String type;
+    int quantity;
+    double weight;
+    
+    public Item(String name, String type, int quantity, double weight) {
+        this.name = name;
+        this.type = type;
+        this.quantity = quantity;
+        this.weight = weight;
+    }
+    
+    public void use() {
+        if (quantity > 0) {
+            quantity--;
+            System.out.println( name + " использован. Остальсь использований: " + quantity);
+        } else {
+            System.out.println(name + "закончился!");
+        }
+    }
+    
+    public double getTotalWeight() {
+        return weight * quantity;
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Item potion = new Item("Зелье Лечения", "Расходный материал", 5, 0.5);
+        
+        potion.use();  // Использовано Зелье Лечения. Остальсь использований: 4
+        System.out.println("Общий вес: " + potion.getTotalWeight()); // 2.0
+    }
+}
+```
+
+### Класс Monster
+
+```java
+public class Monster {
+    String name;
+    int health;
+    int attack;
+    boolean isHostile;
+    
+    public Monster(String name, int health, int attack, boolean isHostile) {
+        this.name = name;
+        this.health = health;
+        this.attack = attack;
+        this.isHostile = isHostile;
+    }
+    
+    public void takeDamage(int damage) {
+        health -= damage;
+        System.out.println(name + " получил" + damage + " урона!");
+        
+        if (health <= 0) {
+            System.out.println(name + " был повержен!");
+        } else {
+            System.out.println(name + " имеет" + health + " очков здоровья.");
+        }
+    }
+    
+    public int attackPlayer() {
+        if (isHostile && health > 0) {
+            System.out.println(name + " атакован на " + attack + " урона!");
+            return attack;
+        }
+        return 0;
+    }
+    
+    public boolean isAlive() {
+        return health > 0;
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Monster zombie = new Monster("Зомби", 50, 10, true);
+        Monster chicken = new Monster("Курица", 10, 0, false);
+        
+        zombie.takeDamage(20);                       // Зомби получил 20 урона!
+        int damage = zombie.attackPlayer();   // Зомби атакует и наносит 10 урона!
+        
+        if (zombie.isAlive()) {
+            System.out.println("Монстр всё ещё жив!");
+        }
+    }
+}
+
+```
+
+### Класс Block
+
+```java
+public class Block {
+    String type;
+    int x, y, z;
+    boolean isSolid;
+    int hardness;
+
+    public Block(String type, int x, int y, int z, boolean isSolid, int hardness) {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.isSolid = isSolid;
+        this.hardness = hardness;
+    }
+
+    public void breakBlock() {
+        System.out.println("Ломаем блок типа " + type + " по координатам (" + x + ", " + y + ", " + z + ")");
+        System.out.println("Твёрдость: " + hardness);
+    }
+
+    public String getPosition() {
+        return "(" + x + ", " + y + ", " + z + ")";
+    }
+
+    public boolean canWalkThrough() {
+        return !isSolid;
+    }
+}
+
+```
+
+## Модификаторы доступа (предпросмотр)
+
+Вы видели `public` - это означает "любой может получить доступ". Позже мы узнаем больше о контроле доступа, но вот предварительный просмотр:
+
+```java
+public class Example {
+    public String publicVar;      // Доступно всем
+    private String privateVar;    // Доступно только внутри этого класса
+    // (без модификатора) String defaultVar; // Доступно внутри пакета
+}
+
+```
+
+На данный момент используйте `public` для всех. В следующей статье мы узнаем, когда следует использовать `private`.
+
+<Callout type="info" title="Зачем использовать классы?">
+  Классы помогут вам:
+
+  * **Организовать** связанные данные и методы вместе
+  * **Переиспользовать** код легко (создавать много объектов из одного класса)
+  * **Моделировать** реальные сущности (игроков, предметы, монстров)
+  * **Поддерживать** код (изменения в одном месте влияют на все объекты)
+
+  Без классов управление 100 игроками потребовало бы 100 отдельных переменных для каждого свойства. С классами это всего лишь 100 объектов Player!
+</Callout>
+
+## Практические Задания
+
+1. **Создайте класс `Potion`**:
+   * Свойства: name, healAmount, uses
+   * Конструктор для установки всех свойств
+   * Метод `drink()`, который лечит и уменьшает использование
+   * Метод `isEmpty()`, который возвращает true, если значение меньше или равно 0
+
+2. **Создайте класс `Chest`**:
+   * Свойства: isLocked, itemCount, capacity
+   * Конструктор
+   * Метод `addItem()`, который проверяет емкость
+   * Метод `unlock()`, который устанавливает isLocked в значение false
+   * Метод `isFull()`, который проверяет, что itemCount >= capacity
+
+3. **Создайте класс `Villager`**:
+   * Свойства: name, profession, tradeCount
+   * Конструктор
+   * Метод `greet()`, который печатает приветствие
+   * Метод `trade()`, который увеличивает tradeCount
+   * Метод `getInfo()`, который отображает все свойства
+
+4. **Создать несколько объектов**: Используя любой созданный тобой класс, создай 3 разных объекта и протестируй все их методы.

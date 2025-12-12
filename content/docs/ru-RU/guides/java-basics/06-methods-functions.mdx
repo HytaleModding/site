@@ -1,0 +1,414 @@
+---
+title: 06 - Методы (Функции)
+description: Вы узнаете, что такое методы, как они работают и как с помощью них можно значительно сократить размер кода.
+---
+
+Методы - это повторно используемые блоки кода, выполняющие конкретные задачи. Они помогают вам избежать повторения кода и облегчить понимание ваших программ.
+
+## Что такое Метод?
+
+Подумайте о методе как о рецепте. Вы записываете его один раз, затем достаёте его каждый раз, когда вам нужно приготовить блюдо
+
+```java tab="Code"
+public class Game {
+    public static void main(String[] args) {
+        greet();        // Вызываем метод
+        greet();        // Ещё раз!
+    }
+    
+    // Method definition
+    public static void greet() {
+        System.out.println("Добро пожаловать в Hytale!");
+    }
+}
+```
+
+```text tab="Output"
+Добро пожаловать в Hytale!
+Добро пожаловать в Hytale!
+```
+
+## Структура Метода
+
+```java
+public static void methodName() {
+//  ^      ^     ^      ^     ^
+//  |      |     |      |     |
+// доступ стат. return назв. параметры
+// модификатор       тип
+    // Тут должен быть код
+}
+```
+
+Мы узнаем, что такое `public` и `static` позже. Пока что просто используйте их.
+
+## Методы с параметрами
+
+Параметры позволяют передавать данные в методы:
+
+```java
+public static void greetPlayer(String name) {
+    System.out.println("Привет, " + name + "!");
+}
+
+public static void main(String[] args) {
+    greetPlayer("Алиса");  // Привет, Алиса!
+    greetPlayer("Bob");    // Привет, Боб!
+}
+```
+
+### Множество параметров
+
+```java
+public static void dealDamage(String target, int damage) {
+    System.out.println(target + " takes " + damage + " damage!");
+}
+
+public static void main(String[] args) {
+    dealDamage("Зомби", 20);    // Зомби получает 20 урона!
+    dealDamage("Скелет", 15);  // Скелет получает 15 урона!
+}
+```
+
+<Callout type="info" title="Порядок параметров очень важен">
+  При вызове метода аргументы должны соответствовать порядку параметров:
+
+  ```java
+  public static void createItem(String name, int quantity, double price) {
+      // ...
+  }
+
+  // Правильный вариант
+  createItem("Sword", 1, 50.0);
+
+  //Неправильный порядок аргументов!
+  createItem(1, "Sword", 50.0);  // Ошибка!
+  ```
+</Callout>
+
+## Возвращение значений методов с помощью Return
+
+Методы могут отправлять "возвращать" данные с помощью `return`:
+
+```java
+public static int add(int a, int b) {
+    int sum = a + b;
+    return sum;
+}
+
+public static void main(String[] args) {
+    int result = add(5, 3);
+    System.out.println(result);  // 8
+}
+```
+
+Тип данных, которые вы пытаетесь вернуть должен соответствовать значению, которое вы собираетесь вернуть:
+
+* `void` - Ничего не возвращает
+* `int` - Возвращает целое число
+* `double` - Возвращает число с десятичной дробью
+* `boolean` - Возвращает true/false
+* `String` - Возвращает текст
+
+```java
+public static String getItemName() {
+    return "Diamond Sword";
+}
+
+public static boolean isPlayerAlive(int health) {
+    return health > 0;
+}
+
+public static double calculateDamage(int attack, double multiplier) {
+    return attack * multiplier;
+}
+```
+
+<Callout type="warning" title="Return прерывает выполнения метода">
+  Как только метод достигает `return`, он немедленно завершается. Код после `return` не будет работать!
+
+  ```java
+  public static int getValue() {
+      return 10;
+      System.out.println("Hytale никогда не выйдет!!");  // Строка находится после return, значит она не будет выполнена!
+  }
+  ```
+</Callout>
+
+## Практические примеры
+
+### Система ХП
+
+```java tab="Code"
+public static void displayHealth(String name, int health, int maxHealth) {
+    double percentage = (health * 100.0) / maxHealth;
+    System.out.println(name + ": " + health + "/" + maxHealth + 
+                      " (" + percentage + "%)");
+}
+
+public static void main(String[] args) {
+    displayHealth("Игрок", 75, 100);
+    displayHealth("Босс", 450, 500);
+}
+```
+
+```text tab="Output"
+Игрок: 75/100 (75.0%)
+Босс: 450/500 (90.0%)
+```
+
+### Расчёт Урона
+
+```java tab="Code"
+public static int calculateDamage(int baseAttack, int weaponDamage, boolean isCritical) {
+    int totalDamage = baseAttack + weaponDamage;
+    
+    if (isCritical) {
+        totalDamage *= 2;
+    }
+    
+    return totalDamage;
+}
+
+public static void main(String[] args) {
+    int damage1 = calculateDamage(10, 15, false);  // 25
+    int damage2 = calculateDamage(10, 15, true);   // 50
+    
+    System.out.println("Normal hit: " + damage1);
+    System.out.println("Critical hit: " + damage2);
+}
+```
+
+### Требуемый Уровень
+
+```java tab="Code"
+public static int getXPForLevel(int level) {
+    return level * 100;
+}
+
+public static boolean canLevelUp(int currentXP, int currentLevel) {
+    int required = getXPForLevel(currentLevel + 1);
+    return currentXP >= required;
+}
+
+public static void main(String[] args) {
+    int playerXP = 450;
+    int playerLevel = 4;
+    
+    if (canLevelUp(playerXP, playerLevel)) {
+        System.out.println("You can level up!");
+    } else {
+        int needed = getXPForLevel(playerLevel + 1) - playerXP;
+        System.out.println("Need " + needed + " more XP");
+    }
+}
+```
+
+### Счетчик расстояния
+
+```java tab="Code"
+public static double calculateDistance(int x1, int y1, int x2, int y2) {
+    int dx = x2 - x1;
+    int dy = y2 - y1;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+public static boolean isInRange(int x1, int y1, int x2, int y2, double range) {
+    double distance = calculateDistance(x1, y1, x2, y2);
+    return distance <= range;
+}
+
+public static void main(String[] args) {
+    // Check if enemy is in attack range
+    if (isInRange(0, 0, 5, 5, 10.0)) {
+        System.out.println("Target in range!");
+    }
+}
+```
+
+## Перезгрузка метода
+
+У вас может быть несколько методов с одинаковыми названиями, но разными параметрами:
+
+```java
+public static void displayMessage(String message) {
+    System.out.println(message);
+}
+
+public static void displayMessage(String message, int times) {
+    for (int i = 0; i < times; i++) {
+        System.out.println(message);
+    }
+}
+
+public static void main(String[] args) {
+    displayMessage("Hello");           // Вызываем первый метод (указан только один параметр)
+    displayMessage("Hello", 3);        // Вызываем второй метод (указано два параметра)
+```
+
+<Callout type="info" title="Правила Использования Перегрузки Метода">
+  Методы считаются разными, если они имеют:
+
+  * Разное количество параметров
+  * Разные типы параметров
+  * Разный порядок параметров
+
+  ```java
+  public static void test(int a) { }
+  public static void test(int a, int b) { }        // Разное количество
+  public static void test(double a) { }            // Другой тип данных
+  public static void test(String a, int b) { }     // Несколько параметров с разным типом данных
+  public static void test(int a, String b) { }     // Другой порядок
+
+  // Ошибка, метод отличается только возвращаемым типом данных
+  public static int test(int a) { }
+  ```
+</Callout>
+
+## Шаблоны методов в Hytale моддинга
+
+### Создание Предметов
+
+```java
+ublic static Item createItem(String name, int durability) {
+    Item item = new Item();
+    item.setName(name);
+    item.setDurability(durability);
+    return item;
+}
+
+public static Item createSword() {
+    return createItem("Sword", 100);
+}
+
+public static Item createPickaxe() {
+    return createItem("Pickaxe", 150);
+}
+```
+
+### Проверка Размещения Блока
+
+```java
+public static boolean canPlaceBlock(int x, int y, int z) {
+    // Проверяет, возможно ли разместить блок в нужной позиции
+    if (y < 0 || y > 255) {
+        return false;
+    }
+    
+    // Проверяет, есть ли в этой позиции блок
+    if (isBlockAt(x, y, z)) {
+        return false;
+    }
+    
+    return true;
+}
+
+public static void placeBlock(int x, int y, int z, String type) {
+    if (canPlaceBlock(x, y, z)) {
+        // Place the block
+        System.out.println("Placed " + type + " at (" + x + ", " + y + ", " + z + ")");
+    } else {
+        System.out.println("Вы не можете разместить здесь блок!");
+    }
+}
+```
+
+### Проверка статов игрока
+
+```java
+public static boolean isLowHealth(int health, int maxHealth) {
+    return (health * 100.0 / maxHealth) < 25;
+}
+
+public static String getHealthStatus(int health, int maxHealth) {
+    double percentage = (health * 100.0) / maxHealth;
+    
+    if (percentage >= 75) {
+        return "Здоров";
+    } else if (percentage >= 50) {
+        return "Ранен";
+    } else if (percentage >= 25) {
+        return "В критическом состоянии";
+    } else {
+        return "Симон продаёт Hytale";
+    }
+}
+```
+
+## Рекомендации
+
+<Callout type="info" title="Наименование методов">
+  Старайтесь давать методам достаточно подробные наименования, чтобы было понятно, за что они отвечают:
+
+  ```java
+  // Хорошие примеры
+  public static void calculateDamage() { }
+  public static boolean isPlayerAlive() { }
+  public static String getItemName() { }
+  public static void displayInventory() { }
+
+  // Bad
+  public static void dmg() { }        // Слишком коротко
+  public static void method1() { }    // Недостаточно подробно
+  public static void stuff() { }      // Слишком расплывчатым
+  ```
+</Callout>
+
+## Практические Задания
+
+1. **Конвертер температуры**: Напишите методы для конвертирования:
+   * Цельсий в Фаренгейт: `(C × 9/5) + 32`
+   * Фаренгейт в Цельсии: `(F - 32) × 5/9`
+
+2. **Круговой калькулятор**: Создайте методы, которые вычисляют:
+   * Площадь: `π × radius²`
+   * Периметр: `2 × π × radius`
+   * Используйте `Math.PI` для вместо π
+
+3. **Прочность предмета**: Создайте следующие методы:
+   * `damageItem(int current, int damage)` - возвращает текущую(новую) прочность
+   * `isBroken(int durability)` - возвращает true, если прочность меньше или равна 0
+   * `repairItem(int current, int max)` - возвращает максимальную прочность
+
+4. **Проверка паролей**: Создайте метод, который проверяет надёжность пароля:
+   * Длина должна быть не меньше 8 символов
+   * Содержит как минимум одно число
+   * Возвращает true, если пароль достаточно надёжный, false, если нет
+
+## Распространённые ошибки
+
+```java
+// Ошибка, не оператора return
+public static int getValue() {
+    int x = 10;
+    // Forgot to return!
+} !
+
+// Правильный вариант
+public static int getValue() {
+    int x = 10;
+    return x;
+}
+
+// Ошибка, код возращает неправильный тип данных (код возвращает string, но, после static, указано int)
+public static int getText() {
+    return "Hello";  // Error! Should return int, not String
+}
+
+// Правильный вариант
+public static String getText() {
+    return "Hello";
+}
+
+// Ошибка, метод не вызывается
+public static void main(String[] args) {
+    greet;  // Отсутствуют ()
+}
+
+// Правильный вариант
+public static void main(String[] args) {
+    greet();
+}
+```
+
+---

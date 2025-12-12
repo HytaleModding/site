@@ -1,0 +1,123 @@
+---
+title: Modelēšana un Teksturēšana / Mākslas līdzekļi
+description: Informācija par 3D modelēšanu, Teksturēšanu un Mākslas līdzekļiem iekš Hytale.
+---
+
+# Modelēšana / Tekstūras
+
+Hytale sniedz visaptverošu atbalstu 3D modelēšanai un tekstūru izstrādāšanai ar specializētiem rīkiem un darba plūsmām, kas izstrādātas, lai uzturētu spēles izteiksmīgo vizuālo stilu un tikpat labi pastiprinātu māksliniekus.
+
+## Esošie Mod Rīki
+
+### Blockbench
+
+Hytale izmanto **blockbench** kā primāro rīku priekš 3D modelēšanas un animācijām:
+
+* **Oficiāls atbalsts**: Izmanto priekš "Hytale modeļu, tekstūru un animāciju izveides"
+* **Speciāls spraudnis** Priekš Hytale tiks sagatavots piemērotrs Blockbench spraudnis tuvākajā laikā
+* **Tieša saderība**: Spraudnis ļauj māksliniekiem "radīt Hytale-saderošus modeļus, tekstūras un animācijas tieši iekš Blockbench"
+* **Aizvieto vecos rīkus**: Pilnībā aizvieto veco Hytale Model Maker, lai labāk atbalstītu izstrādātas radošās darba plūsmas kopienā
+* **Drošības funkcijas**: Atļauj pievienot tikai to, kas spēles dzinējam pieņemams, tāpēc neuztraucies par kaut kā sabojāšanu
+
+## Modeļu ierobežojumi
+
+### Ģeometrijas Tipi
+
+Lielāka daļa Hytale modeļu ir ierobežoti ar šādiem ģeometriskajiem primitīviem:
+
+**3D Elementi**:
+
+* Bloki
+* Kubi
+* Kastes
+
+**2D Elementi**
+
+* Kvadrātveidoli
+* Kvadrāti
+* Plaknes (no 2 trijstūriem)
+
+### Dizaina Filozofija
+
+Šiem ierobežojumiem ir vairāki iemesli:
+
+* **Veiktspējas optimizācija**: Pārliecināsies par efektīvu renderēšanu un spēles veiktspēju
+* **Konsistentu mākslas stilu**: Uztur Hytale distinktīvo estētiku
+* **Gludu integrāciju**: Liek modifikācijām justies saskaņotām ar spēles bāzi
+
+## Pikseļu Blīvu Standarts
+
+Hytale izmanto dažādus pikseļu blīvumus dažādam saturam:
+
+### Standarta blīvums
+
+* **Bloki**: 32px blīvums
+* **Spēlētāja modeļi**: 64px blīvums
+* **Radības**: Visticamāk arī 64px blīvums
+* **Spēlētāja ekipējums**: 64px blīvums (apbruņojums, kosmētiskas lietas utml.)
+
+### Elastība
+
+* **Nepareiza blīvuma apstrāde**: Neizmantojot pareizo blīvumu/platumus, līdzekļi var izskatīties nepareizi izmērā, bet neizmetīs importēšanas kļūdas
+* **Nav stingru ierobežojumu**: Pikseļu attiecība, rotācija un mērogs nav ierobežoti
+* **Piedevīga sistēma**: Rīki izstrādāti, lai tie būtu elastīki un vienlaikus saderīgi
+
+## Hytale Līdzekļu Redaktors
+
+### Iekš-Spēles Redaktors
+
+Līdzekļu Redaktors ir visaptverošs rīks, kas tiks iepakots ar spēli:
+
+* **Iepakots ar spēli**: Pieejams visiem spēlētājiem pēc izlaišanas
+* **Ārējo rīku nepieciešamība**: Neatbalsta bilžu rediģēšanu.  Jāpiemeklē papildus rīki tekstūru izveidei
+* **Datu līdzekļu rediģēšana**: Galvenais redaktors darbam ar Datu Līdzekļiem
+* **Spēju paplašināšanās**: Pašlaik atbalsta lielāko daļu funkciju, bet ir limitācijas ap NPC, pasaules ģenerēšanu un mijiedarbību, kas paplašināsies pēc laika
+
+### Daļiņu Izveide
+
+Līdzekļu Redaktors iekļauj plašus daļiņu izveides rīkus:
+
+* **Iekš-spēles radīšana**: Daļiņas tiek izveidotas tieši iekš spēles, izmantojot Asset Editor
+* **Industrijas standarts**: Daļiņu loģika ir plaša un līdzīga Unity/Unreal daļiņu sistēmām
+* **Notikumu-vadīts**: Daļiņas efekti var tikt radīti ar notikumu, vai mijiedarbību (piem. atverot durvis)
+* **Vienības pielikums**: Daļiņas var pievienot vienībām ar specifiskiem punktiem
+* **Dinamiska kustība**: Atbalsta daļiņu kustību no enkura pukta
+* **Aizkavēšanās**: Atbalsta laika-balstītu daļiņu efektus un aizkavēšanos
+
+## Materiāli
+
+### Optimizāciju Fokuss
+
+Hytale izmanto savādāku pieeju materiāliem salīdzinājuma ar citiem dzinējiem:
+
+* **Pirms-optimizēts**: Materiāli ir ļoti optimizēti un mākslinieki nevar izveidot paštaisītus materiālus
+* **Veiktspējas prioritāte**: Šis ierobežojums nodrošina vienlīdzīgu veiktspēju starp visu saturu
+* **Kārtota sistēma**: Uztur vizuālu konsistenci vienlaikus maksimizējot efektivitāti
+
+## Labākā prakse
+
+### Līdzekļu Optimizācija
+
+Galvenie apsvērumi no Hytale izstrādātājiem:
+
+* **Apzināta resursu izmantošana**: Esi prātīgs ar bloku/kvadrātu daudzumu un tekstūru failu izmēriem
+* **Izvairies no uzpūšanās**: Mērķis ir novērst nevajadzīgu līdzekļu uzpūšanos, kas varētu ietekmēt veiktspēju
+* **Efektivitātes fokuss**: Balansē vizuālo kvalitāti ar tehniskajiem ierobežojumiem
+
+### Nākotnes Dokumentācija
+
+* **Labākās prakses pamācība**: Apvienota "labākās prakses" pamācība mākslai un modelēšanai tiks kaut kad izlaista
+* **Elastīgas robežas**: Vairumu radošos mērķu var sasniegt nebojājot sistēmu
+* **Kopienas-vadīta darba plūsma**: Rīki ir radīti, lai atbalstītu izstrādātu radošo darba plūsmu modificētāju kopienā
+
+## Integrācija ar Izstrādes darba plūsmu
+
+Modelēšana un tekstūru izstrādāšana tiek viegli integrēta iekš Hytale plašākā izstrādes ekosistēmā:
+
+* **Līdzekļu Redaktora saderība**: Modeļi veidoti Blockbench programmā strādā tieši iekš Hytale Līdzekļu Redaktora
+* **Datu Līdzekļu integrācija**: 3D modeļi var būt konfigurēti un pielāgoti caur Datu Līdzekļiem
+* **Vizuālā Skripta atbalsts**: Modeļi var būt pārvaldīti un animēti caur Vizuālo Skriptošanu
+* **Java spraudņu paplašināšana**: Advancētu modeļu uzvedība var būt implementēta ar Java spraudņiem
+* **Daļiņu integrācija**: Modeļiem var būt pievienoti daļiņu efekti pie specifiskiem punktiem uzlabotam vizuālajam efektam
+
+Šī integrētā pieeja nodrošina to, ka 3D modelēšana un tekstūrēšana nav izolēts radošais process, bet galvenā sastāvdaļa iekš Hytale visaptverošās izstrādes vides.

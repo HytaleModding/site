@@ -4,14 +4,19 @@
     "documentation": "Dökümantasyon"
   },
   "home": {
-    "community": "Topluluk",
-    "title": "Hytale Modding",
-    "welcome": "Hytale Modding'e hoş geldin!",
-    "welcomeDescription": "Burası Hytale için modlama rehberleri, dökümentasyonları ve kaynakları içeren resmi-olmayan bir topluluk.",
+    "title": "Hytale Modlama {flipwords} için #1 kaynak",
+    "flipwords": [
+    "kılavuzları",
+    "Documentation",
+    "Resources"
+    ],
+    "description": "The number one community resource for modding Hytale, featuring comprehensive guides, detailed documentation, and essential tools to kickstart your modding journey.",
     "documentation": "Dökümantasyon",
-    "discord": "Discord"
+    "discord": "Discord",
+    "memberCount": "{count} üye"
   },
   "misc": {
+    "loading": "Yükleniyor...",
     "gitInfoUnavailable": "Git bilgisi bulunamadı"
   }
 }

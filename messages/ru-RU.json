@@ -1,17 +1,22 @@
 {
   "nav": {
     "title": "Hytale Modding",
-    "documentation": "Documentation"
+    "documentation": "Документация"
   },
   "home": {
-    "community": "Community",
-    "title": "Hytale Modding",
-    "welcome": "Welcome to Hytale Modding!",
-    "welcomeDescription": "This is an unofficial community for modding Hytale, providing guides, documentation, and resources.",
-    "documentation": "Documentation",
-    "discord": "Discord"
+    "title": "#1 Ресурс для Моддинга Hytale",
+    "flipwords": [
+    "Гиды",
+    "Документация",
+    "Ресурсы"
+    ],
+    "description": "Лучший общественный ресурс для моддинга Hytale, включая полноценные инструкции, подробная документация, и самые необходимые инструменты, чтобы начать свой путь в моддинге.",
+    "documentation": "Документация",
+    "discord": "Присоединись нашей коммьюнити!",
+    "memberCount": "{count} Участников"
   },
   "misc": {
-    "gitInfoUnavailable": "Git info not available"
+    "loading": "Загрузка...",
+    "gitInfoUnavailable": "Git недоступен"
   }
 }

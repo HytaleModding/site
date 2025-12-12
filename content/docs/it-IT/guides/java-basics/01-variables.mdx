@@ -1,0 +1,77 @@
+---
+title: 01 - Variabili e Tipi di Dati
+description: Introduzione alle variabili e ai tipi di dati nella programmazione Java
+---
+
+Le variabili sono dei contenitori che memorizzano i dati nel tuo programma. Pensa a loro come delle scatole etichettate in cui è possibile inserire diversi tipi di informazioni.
+
+## Cos'è una Variabile?
+
+Una variabile ha tre componenti chiave:
+
+1. **Tipo**: Che tipo di dati contiene (es., integer, string, boolean)
+2. **Nome**: L'etichetta che usi per fare riferimento alla variabile
+3. **Valore**: I dati che contiene
+
+## Dichiarare/Creare Variabili
+
+In Java è necessario dichiarare una variabile prima di usarla, d'altronde ti serve una scatola prima di metterci qualcosa dentro. La sintassi è:
+
+```java
+int age;
+age = 18;
+
+int age = 18; // Dichiarazione e assegnamento in una singola linea
+```
+
+## Tipi di Dati Primitivi
+
+Potresti chiederti cosa significhi "int". In Java è un tipo di dati primitivo. Java ha 8 tipi primitivi. Ecco quelli più importanti per il modding:
+
+| Tipo di Dati | Descrizione                   | Esempio                   |
+| ------------ | ----------------------------- | ------------------------- |
+| int          | Numero intero                 | `int punteggio = 100;`    |
+| double       | Numero decimale               | `double pi = 3.14;`       |
+| boolean      | Valori veri o falsi           | `boolean attivo = true;`  |
+| char         | Un singolo carattere          | `char lettera = 'A';`     |
+| String       | Sequenza di caratteri (testo) | `String nome = "Hytale";` |
+
+## Convertire il Tipo
+
+A volte potresti voler cambiare il tipo di una variabile. È possibile convertire i valori:
+
+### Automaticamente
+
+```java
+int numero = 10;
+double numeroDecimale = numero; // 10.0 - funziona automaticamente
+```
+
+### Manuale (Casting)
+
+```java
+double numeroDecimale = 9.78;
+int numero = (int) numeroDecimale; // 9 - la parte decimale viene scartata
+```
+
+## Costanti
+
+Se vuoi che una variabile non cambi valore, usa la parola chiave `final`:
+
+```java
+final double PI = 3.14159;
+```
+
+**Convenzione**: I nomi delle costanti vengono scritti nel formato MAIUSCOLE_CON_UNDERSCORE
+
+## Pratica
+
+È meglio mettere in pratica cos'hai appena imparato - non guardare la teoria e prova a farlo da solo. Se ti blocchi, torna su!
+
+1. Dichiara una variable intera chiamata `vite` e impostala a 3.
+2. Dichiara una variabile decimale chiamata `gravita` e impostala a 9,81. (Non usare gli accenti nei nomi delle variabili)
+3. Dichiara una variabile booleana chiamata `giocoFinito` e impostala su falso.
+4. Converti la variabile `vite` in un valore decimale e salvala in una nuova variabile chiamata `viteDecimale`.
+5. Dichiara una costante chiamata `LIVELLO_MASSIMO` e impostala a 100.
+
+Ottimo! Hai imparato le variabili e i tipi di dati in Java. Nella prossima lezione impareremo gli operatori e le espressioni matematiche.

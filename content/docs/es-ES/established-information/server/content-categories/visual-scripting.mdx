@@ -1,59 +1,59 @@
 ---
-title: Visual Scripting
-description: An introduction to what we know of Hytale's visual scripting system as of writing this.
+title: Scripteo Visual
+description: Una introducción sobre lo que sabemos acerca del sistema de Scripteo Visual al momento de escribir este artículo
 ---
 
-# Visual Scripting
+# Scripteo Visual
 
-Hytale plans to support Visual Scripting as a method to make advanced logic and control flow accessible to a wider audience. This system will not be available at launch, but should be available shortly after launch.
+Hytale planea que el Scripteo Visual sea un método que permita la creación de lógica avanzada y flujos de control más accesibles a una audiencia más amplia. Este sistema no estará disponible al momento del lanzamiento, pero debería estar disponible un poco después.
 
-## Overview
+## Aspectos Generales
 
-Visual Scripting in Hytale is designed to function similarly to Blueprints in Unreal Engine. It allows designers to create complex behaviors through a visual interface that matches how they think about game logic, without needing to write code directly.
+El Scripteo Visual en Hytale está diseñado para funcionar de una manera similar a los Blueprints de Unreal Engine. Permitirá a los diseñadores el crear comportamientos complejos a través de una interfaz visual que coincida con su forma de pensar sobre la lógica del juego, sin necesidad de escribir código directamente.
 
-### Key Features
+### Funciones Principales
 
-* **Subset of Java functionality**: Visual Scripting can do a subset of what is possible with Java plugins
-* **Designer-friendly**: "Designers are empowered through a visual language that matches how they think about behaviors"
-* **Programmer extensible**: Programmers can extend and optimize the system by adding new visual nodes and performance-sensitive implementations
-* **Safe sharing environment**: Provides a sandboxed, safe environment for sharing logic between modders
+* **Funcionalidades Java Limitadas**: El Scripteo Visual podrá realizar una fracción de lo que es posible con Plugins Java
+* **Amigable con Diseñadores**: "Los diseñadores tendrán control a través de un lenguaje visual que coincida con su forma de pensar sobre comportamientos"
+* **Extensión para Programadores**: Los programadores pueden ampliar y optimizar el sistema agregando nuevos nodos visuales e implementaciones sensibles al rendimiento
+* **Entorno Seguro de Colaboración**: Provee un entorno seguro y controlado para compartir lógica entre modders.
 
-## Advantages Over Traditional Coding
+## Ventajas sobre la Programación Tradicional
 
-Visual Scripting makes writing custom logic more accessible by removing common hurdles found when developing in Java:
+El Scripteo Visual permite escribir lógica personalizada de forma más accesible al remover obstáculos encontrados al desarrollar con Java:
 
-* **No complex environment setup**: No need to worry about installing the right tools or configuring development environments
-* **Syntax-free development**: Removes the need to learn and remember programming syntax
-* **Safer sharing**: Malware in visual scripting should be virtually impossible
-* **More inclusive**: Lowers the barrier to entry for non-programmers
+* **Sin Complejos Entornos de Trabajo**: No hay necesidad de estresarse con instalar las herramientas correctas o configurar los entornos de desarrollo
+* **Desarrollo Libre de Sintaxis**: Elimina la necesidad de aprender y recordar sintaxis de programación
+* **Colaboración Segura**: El malware en el scripteo visual debería ser virtualmente imposible
+* **Mayor Inclusividad**: Disminuye la barrera de entrada para personas que no programan
 
-## Relationship with Java
+## Relación con Java
 
-Visual Scripting and Java plugins are designed to work in tandem:
+El Scripteo Visual y los Plugins de Java están diseñados para que funcionen en sintonía:
 
-* **Java extends Visual Scripting**: Programmers can create new visual nodes using Java
-* **Performance optimization**: While Visual Scripting may not be as optimized as Java directly, programmers can implement performance-critical logic in Java and expose it as visual nodes
-* **Best of both worlds**: Allows the majority of logic to remain in the accessible Visual Scripting environment while keeping expensive operations optimized
+* **Java amplia el Scripteo Visual**: Los programadores pueden crear nuevos nodos visuales usando Java
+* **Optimización de Rendimiento**: Aunque el Scripteo Visual no es tan optimizado como Java, los programadores pueden implementar lógica crítica de rendimiento en Java y exponerla como nodos visuales
+* **Lo Mejor de Ambos Mundos**: Permite que la mayoría de lógica permanezca en el accesible entorno de Scripteo Visual mientras las operaciones más complejas se mantienen optimizadas
 
-Hytale strongly recommends Visual Scripting since it is both more accessible and safer to share and download. However, staying purely in Java will still work for those who prefer it.
+Hytale recomienda fuertemente el Scripteo Visual, ya que es tanto más accesible como seguro para compartir y descargar. Sin embargo, usar únicamente Java seguirá siendo una opción para quienes lo prefieran
 
-## 3D Visual Scripting
+## Scripteo Visual 3D
 
-One of Hytale's unique features is bringing visual scripting directly into the 3D world:
+Una de las características únicas de Hytale es proveer el scripteo visual directamente en el mundo 3D:
 
-* **In-world editing**: Link levers, doors, spawners, triggers, and other elements directly inside the game
-* **Adventure map creation**: Excellent for building adventure maps and encounters without leaving Hytale
-* **Similar to DOOM SnapMap**: Provides a familiar workflow for those who have used similar systems
-* **Fully integrated**: Works seamlessly with the asset and scripting stack
+* **Edición en el Mundo**: Enlaza palancas, puertas, spawners, eventos y otros elementos directamente dentro del juego
+* **Creación de Mapas de Aventura**: Excelente para construir mapas de aventura y encuentros sin salir de Hytale
+* **Similar al SnapMap de DOOM**: Provee un flujo de trabajo familiar para aquellos que han usado sistemas similares
+* **Completamente Integrado**: Funciona perfectamente con conjuntos de recursos y scripts
 
-## No Text-Based Scripting
+## No Scripteo Basado en Texto
 
-Hytale has made a deliberate decision not to include text-based scripting languages. Their reasoning:
+Hytale ha tomado la decisión deliberada de no incluir lenguajes de scripteo basado en texto. Su razonamiento:
 
-* **False compromise**: Text-based scripting is often introduced to "help non-programmers" but still requires learning programming concepts
-* **Complexity increase**: Programmers end up juggling two languages where one is less powerful
-* **Still requires syntax**: Designers still need to learn syntax and programming concepts
-* **Less inclusive**: Doesn't truly solve the accessibility problem
-* **Fragmentation**: Avoids "fragmenting logic across multiple 'half-languages'"
+* **Falso Compromiso**: El scripteo basado en texto es usualmente introducido para "ayudar a no programadores" pero aún requiere aprender conceptos de programación
+* **Incrementa la Complejidad**: Los programadores terminan saltando entre 2 lenguajes donde uno es menos capaz
+* **Sigue Necesitando Sintaxis**: Los diseñadores necesitan aprender sintaxis y conceptos de programación para su uso
+* **Menos Inclusividad**: No resuelve del todo el problema de accesibilidad
+* **Fragmentación**: Evita la "lógica fragmentada a través de múltiples `medio-lenguajes`"
 
-Instead, Hytale believes visual scripting is a better approach that truly makes game logic accessible to a wider audience while maintaining the power and flexibility needed
+En cambio, Hytale confia en que el script visual es un enfoque mejorado que en realidad hace que la lógica del juego sea accesible a un público más amplio, al mismo tiempo que mantiene el poder y la flexibilidad necesarias.

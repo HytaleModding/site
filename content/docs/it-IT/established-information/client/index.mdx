@@ -1,0 +1,69 @@
+---
+title: Il Client Hytale
+description: Informazioni riguardanti il client Hytale.
+---
+
+<Callout>
+  Il client è scritto in C#, compilato in codice macchina prima di essere distribuito, pertanto non è modificabile. Il Single-Player gira su un server locale. Tutte le mod devono passare per l'API del server.
+</Callout>
+
+# Nessuna modifica lato client
+
+Non si puo modificare il client.
+
+> Non abbiamo intenzione di supportare nessuna modifica al client - Slikey
+
+## Perche?
+
+1. Non è necessario scaricare esternamente.
+   * Hytale vuole "evitare un ecosistema frammentato in cui ogni server richiede un client modificato diversamente".
+
+2. Sicurezza del client.
+   * L'esecuzione di file `.jar` da siti di terze parti sul client può facilmente introdurre malware.
+   > [Non vogliamo esporre i giocatori] ai rischi di sicurezza e incolumità presenti su altre piattaforme di modding.
+
+3. Stabilita del client.
+   * Hytale potrebbe spostarsi su altre piattaforme dove il modding lato client è impossibile, perciò stanno bloccando questa possibilità per stabilire la direzione corretta fin da subito.
+   > Crediamo che i risultati che le persone ottengono in altri giochi a blocchi utilizzando le mod client, possono essere facilmente raggiunte usando il nostro modding lato server. In altri giochi a blocchi e necessario installare mod sul client per ottenere nuovi blocchi, NPC, UI, ecc. Hytale fa tutto questo solo tramite il server.  Il server fondamentalmente "modifica" il client temporaneamente in un modo sicuro per aggiungere e modificare l'esperienza di gioco. Potresti creare la tua personale versione di Orbis, senza usare nessuno dei nostri modelli, musica, generazione del mondo, combattimento o qualsiasi cosa.  Hai il controllo e puoi rimuovere tutto senza toccare minimamente il client. Pensa a come funziona Roblox.. Non cambi mai la tua applicazione. Basta cliccare su uno dei giochi che vuoi e si ottiene tutto il necessario senza modificare il client stesso. - Slikey
+
+## Le mod sul client non sono necessarie
+
+I casi tipici per le mod sul client sono:
+
+* Cambiamenti cosmetici (pacchetti di risorse, shader, mantelli, ecc.): i server possiedono le risorse, non il client.
+* Prestazioni: il gioco base offrirà i necessari controlli delle prestazioni.
+* Accessibilità: il gioco base sarà accessibile anche da solo.
+* Interfaccia utente: i server decidono l'interfaccia utente, non il client.
+
+### Predizione lato client
+
+Hytale usa la previsione lato client per mitigare la latenza, in quanto tutte le interazioni avvengono sul server e vengono trasmesse al client. Questo è già presente per alcuni sistemi, ma attualmente limitato, tuttavia è prevista un'ulteriore integrazione in futuro. È previsto che in futuro funzioni con il sistema di scripting visivo per ulteriori ottimizzazioni.
+
+## Esecuzione Client-Side
+
+Il team sta valutando la possibilità di consentire l’esecuzione di codice da parte del client (distinta dal modding del client, perché si tratta di codice inviato dal server), anche se questo non è garantito.
+
+# Modelli
+
+Le pipeline del client e degli asset accettano `.blockymodel`, un formato personalizzato per Hytale. Il plugin ufficiale di Blockbench ti permettera di esportare in questo formato.
+
+# Dettagli tecnici del client
+
+Ci sara sempre una sola versione corrente, supportata del client.
+
+> La versione di Java sarà mantenuta aggiornata da noi e al momento utilizziamo l’ultima versione disponibile (Java 25).
+> La versione del gioco non sarà selezionabile, per evitare la “giungla di versioni” che abbiamo sperimentato sulla nostra rete di server Hypixel. Vogliamo semplicemente assicurarci che le reti multiplayer possano contare sul fatto che i giocatori abbiano l’ultima versione del gioco, così da non dover supportare più di 15 versioni diverse del client. - Slikey
+
+Il client e multithreaded.
+
+## GUI
+
+La GUI e costruita su C# usando Noesis.
+
+## Sistema di compilazione
+
+Hytale usa NativeAOT ("Ahead of Time") per generare il client, che compila C# in codice macchina per la distribuzione. Questo significa che, senza effettuare il reverse engineering del codice macchina, le mod dovranno passare attraverso le API del server.
+
+# Altre informazioni
+
+Il client ha le sue versioni e protocollo per interagire con i server.

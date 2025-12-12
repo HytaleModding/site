@@ -1,0 +1,33 @@
+---
+title: Java Modifikācijas (Servera Spraudņi)
+description: Ievads visam, kas šobrīd zināms par Hytale Java-bazēto modifikāciju sistēmu kopš raksta izveides.
+---
+
+Hytale modificēšanas iespējas iekļauj Javas bāzētu mod sistēmu, kas ļauj izstrādāt pielāgotas darbības, pieredzes un spēles mehānismus. Lai gan visas detaļas par šo sistēmu vēl nav publiski dokementētas, ņemot vērā ka spēle joprojām tiek izstrādāta, mēs varam apkopot pagaidām zināmo.
+
+### Svarīgas Detaļas Hytale Modifikācijai
+
+Hytale modificēšana notiek Servera pusē, ne klienta pusē. Tas nozīmē, ka modi/spraudņi tiek uzturēti serverī un spēlētāji pieslēdzas šiem mod serveriem, lai pieredzētu modificēto saturu bez vajdzības instalēt modus klientā. Šāda pieeja nodrošina vienādu pieredzi visiem spēlētājiem uz modificēta servera.
+
+### Java Bāzēto Modifikāciju Pārskats
+
+Servera puses modificēšanas sistēma iekš Hytale ir balstīta uz Javas, padarot spraudņus serverim par JAR failiem.
+
+Mūsu minējums ir ka tas tika darīts Minecraft modificētāju vieglai pārejai uz Hytale, jo kā zināms Minecraft modi arī ir primāri balstīti uz Java. Tas ļauj modificētājiem, kas jau pārzin Java, izmantot esošās zināšanas Hytale mod izstrādāšanā.
+
+#### Vienspēlētāja Bažas
+
+Par spīti nosaukumam, servera spraudņi var arī būt izmantoti vienspēlētāja režīmā.
+Vienspēlētāja režīms iekš Hytale strādā uz lokāla servera instances, kas ļauj spēlētājam izmantot servera spraudņus pat spēlējot vienam. Tas nozīmē, ka modifikācijas izstrādātas serverim arī var uzlabot vienspēlētāja režīma pieredzi.
+
+### Mixin Sistēma
+
+Mixin tika izmantoti Minecraft modificēšanā, lai tiešā veidā modificētu spēles kodu, pat pārrakstot, vai mainot loģiku un vērtības. Tā ir spēcīga, bet arī nedaudz trausla sistēma, kas atkarīga no pirmkoda/spēles versijas palikšanu nemainīgai.
+
+Mums nav oficiālas informācijas par Mixin iekš Hytale. Par spīti tam, mums ir iemesls ticēt, ka tos nevajadzēs atbalstīt šo iemeslu dēļ:
+
+1. Pareizi izplānotai spēlei, 95% Mixin lietošanas gadījumu var būt atrisināti izmantojot labu API.
+   Patiesībā, daudzums Minecraft mod API ir Mixin, lai izstrādātājiem, kas lieto šos API nebūtu pašiem jāraksta mixin.
+   * Tas tipiski aizvieto kategoriski iekodētās vērtības un uzvedību.
+   * Hytale ziņā tam visam būtu jābūt API, vai datu-vadītam.
+2. API var arī būt arī daudz elastīgāki par spēles versiju. Mums var būt atsevišķa API versiju sistēma un tas nozīmē, ka to pašu kodu nevajadzēs modificēt katrā atjauninājumā, kamēr API izmaiņas to neizposta.

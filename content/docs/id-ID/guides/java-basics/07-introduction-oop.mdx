@@ -1,0 +1,378 @@
+---
+title: 07 - Pengantar Pemrograman Berorientasi Objek
+description: Pelajari dasar-dasar class dan objek di Java.
+---
+
+Pemrograman Berorientasi Objek (OOP) adalah fondasi dari Java dan modding Hytale. Alih-alih hanya memiliki variabel dan method yang bertebaran, kita mengaturnya ke dalam **class** dan **objek**.
+
+## Apa itu Class?
+
+Class adalah cetak biru (blueprint) untuk membuat objek. Anggap saja seperti resep atau cetakan.
+
+```java
+public class Player {
+    // Properti (data)
+    String name;
+    int health;
+    int level;
+    
+    // Perilaku (method)
+    public void takeDamage(int damage) {
+        health -= damage;
+        System.out.println(name + " menerima " + damage + " damage!");
+    }
+}
+```
+
+## Apa itu Object?
+
+Objek adalah wujud nyata (instance) yang dibuat dari sebuah class. Jika class adalah cetak biru, objek adalah benda nyata yang dibangun dari cetak biru tersebut.
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Buat objek dari class Player
+        Player player1 = new Player();
+        player1.name = "Alice";
+        player1.health = 100;
+        player1.level = 5;
+        
+        Player player2 = new Player();
+        player2.name = "Bob";
+        player2.health = 80;
+        player2.level = 3;
+        
+        // Gunakan objeknya
+        player1.takeDamage(20);  // Alice menerima 20 damage!
+        player2.takeDamage(15);  // Bob menerima 15 damage!
+    }
+}
+```
+
+<Callout type="info" title="Class vs Object">
+  **Class** = Cetak Biru (ide tentang pemain)
+  **Objek** = Benda Nyata (Alice, Bob, pemain spesifik)
+
+  Satu class bisa membuat banyak objek, sama seperti satu resep bisa membuat banyak kue!
+</Callout>
+
+## Membuat Class Sederhana
+
+Mari kita buat class Sword (Pedang) untuk Hytale:
+
+```java
+public class Sword {
+    // Properties
+    String name;
+    int damage;
+    int durability;
+    
+    // Method untuk menggunakan pedang
+    public void attack(String target) {
+        System.out.println("Menyerang " + target + " sebesar " + damage + " damage!");
+        durability -= 1;
+        
+        if (durability <= 0) {
+            System.out.println(name + " rusak!");
+        }
+    }
+    
+    // Method untuk info display
+    public void displayInfo() {
+        System.out.println("Weapon: " + name);
+        System.out.println("Damage: " + damage);
+        System.out.println("Durability: " + durability);
+    }
+}
+```
+
+Menggunakan class tersebut:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Sword sword = new Sword();
+        sword.name = "Iron Sword";
+        sword.damage = 15;
+        sword.durability = 3;
+        
+        sword.displayInfo();
+        sword.attack("Zombie");
+        sword.attack("Skeleton");
+        sword.attack("Spider");  // This will break the sword
+    }
+}
+```
+
+## Konstruktor
+
+Daripada mengatur properti satu per satu, gunakan **konstruktor** untuk menginisialisasi objek:
+
+```java
+public class Sword {
+    String name;
+    int damage;
+    int durability;
+    
+    // Konstruktor
+    public Sword(String weaponName, int weaponDamage, int weaponDurability) {
+        name = weaponName;
+        damage = weaponDamage;
+        durability = weaponDurability;
+    }
+    
+    public void attack(String target) {
+        System.out.println("Attacking " + target + " for " + damage + " damage!");
+        durability--;
+    }
+}
+```
+
+Sekarang membuat pedang jadi lebih mudah:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Jauh lebih rapi!
+        Sword ironSword = new Sword("Iron Sword", 15, 100);
+        Sword diamondSword = new Sword("Diamond Sword", 25, 200);
+        
+        ironSword.attack("Zombie");
+        diamondSword.attack("Boss");
+    }
+}
+```
+
+<Callout type="info" title="Aturan Konstruktor ">
+  * Nama harus sama persis dengan nama class
+  * Tidak ada tipe kembalian (bahkan tidak pakai `void`)
+  * Dipanggil secara otomatis saat kamu menggunakan kata kunci new
+  * Bisa memiliki banyak konstruktor (overloading)
+
+  ```java
+  public class Item {
+      String name;
+      int value;
+      
+      // Konstruktor dengan semua parameter
+      public Item(String name, int value) {
+          this.name = name;
+          this.value = value;
+      }
+      
+      // Konstruktor hanya dengan nama
+      public Item(String name) {
+          this.name = name;
+          this.value = 0;  // Default value
+      }
+  }
+  ```
+</Callout>
+
+## Kata Kunci `this`
+
+`this` merujuk pada objek saat ini. Gunakan ini untuk memperjelas ketika nama parameter sama dengan nama properti:
+
+```java
+public class Player {
+    String name;
+    int health;
+    
+    public Player(String name, int health) {
+        this.name = name;      // this.name = propertinya
+        this.health = health;  // name = parameternya
+    }
+}
+```
+
+Tanpa `this`, Java akan bingung:
+
+```java
+public Player(String name, int health) {
+    name = name;      // ❌ Nama yang mana? Ambigu!
+    health = health;  // ❌ Health yang mana? Ambigu!
+}
+```
+
+## Contoh Praktis
+
+### Class Item
+
+```java
+public class Item {
+    String name;
+    String type;
+    int quantity;
+    double weight;
+    
+    public Item(String name, String type, int quantity, double weight) {
+        this.name = name;
+        this.type = type;
+        this.quantity = quantity;
+        this.weight = weight;
+    }
+    
+    public void use() {
+        if (quantity > 0) {
+            quantity--;
+            System.out.println("Used " + name + ". Remaining: " + quantity);
+        } else {
+            System.out.println("No more " + name + " left!");
+        }
+    }
+    
+    public double getTotalWeight() {
+        return weight * quantity;
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Item potion = new Item("Health Potion", "Consumable", 5, 0.5);
+        
+        potion.use();  // Menggunakan Health Potion. Sisa: 4
+        System.out.println("Total weight: " + potion.getTotalWeight()); // 2.0
+    }
+}
+```
+
+### Monster Class
+
+```java
+public class Monster {
+    String name;
+    int health;
+    int attack;
+    boolean isHostile;
+    
+    public Monster(String name, int health, int attack, boolean isHostile) {
+        this.name = name;
+        this.health = health;
+        this.attack = attack;
+        this.isHostile = isHostile;
+    }
+    
+    public void takeDamage(int damage) {
+        health -= damage;
+        System.out.println(name + " took " + damage + " damage!");
+        
+        if (health <= 0) {
+            System.out.println(name + " was defeated!");
+        } else {
+            System.out.println(name + " has " + health + " health left.");
+        }
+    }
+    
+    public int attackPlayer() {
+        if (isHostile && health > 0) {
+            System.out.println(name + " attacks for " + attack + " damage!");
+            return attack;
+        }
+        return 0;
+    }
+    
+    public boolean isAlive() {
+        return health > 0;
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Monster zombie = new Monster("Zombie", 50, 10, true);
+        Monster chicken = new Monster("Chicken", 10, 0, false);
+        
+        zombie.takeDamage(20);        // Zombie took 20 damage!
+        int damage = zombie.attackPlayer();  // Zombie attacks for 10 damage!
+        
+        if (zombie.isAlive()) {
+            System.out.println("Monster is still alive!");
+        }
+    }
+}
+```
+
+### Class Block
+
+```java
+public class Block {
+    String type;
+    int x, y, z;
+    boolean isSolid;
+    int hardness;
+    
+    public Block(String type, int x, int y, int z, boolean isSolid, int hardness) {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.isSolid = isSolid;
+        this.hardness = hardness;
+    }
+    
+    public void breakBlock() {
+        System.out.println("Menghancurkan blok " + type + " di (" + x + ", " + y + ", " + z + ")");
+        System.out.println("Hardness: " + hardness);
+    }
+    
+    public String getPosition() {
+        return "(" + x + ", " + y + ", " + z + ")";
+    }
+    
+    public boolean canWalkThrough() {
+        return !isSolid;
+    }
+}
+```
+
+## Access Modifier (Pratinjau)
+
+Kamu sudah melihat `public` - itu berarti "siapa saja bisa mengakses ini". Kita akan belajar lebih lanjut tentang kontrol akses nanti, tapi ini sekilas infonya:
+
+```java
+public class Example {
+    public String publicVar;      // Siapa saja bisa mengakses
+    private String privateVar;    // Hanya class ini yang bisa mengakses
+    // (tanpa modifier) String defaultVar; // Akses paket (Package)
+}
+```
+
+Untuk saat ini, gunakan public untuk semuanya. Kita akan belajar kapan harus menggunakan `private` di artikel berikutnya.
+
+<Callout type="info" title="Kenapa Menggunakan Class?">
+  Class membantumu:
+
+  * **Mengatur** data dan method yang terkait secara bersamaan
+  * **Menggunakan ulang** kode dengan mudah (membuat banyak objek dari satu class)
+  * **Memodelkan** benda dunia nyata (pemain, item, monster)
+  * **Memelihara** kode (perubahan di satu tempat mempengaruhi semua objek)
+
+  Tanpa class, mengelola 100 pemain akan membutuhkan 100 variabel terpisah untuk setiap properti. Dengan class, cukup 100 objek Player!
+</Callout>
+
+## Latihan Praktik
+
+1. **Buat Class `Potion` (Ramuan)**:
+   * Properti: name, healAmount, uses
+   * Konstruktor untuk mengatur semua properti
+   * Method `drink()` yang menyembuhkan dan mengurangi uses
+   * Method `isEmpty()` yang mengembalikan true jika uses kurang dari atau sama dengan 0
+
+2. **Buat Class `Chest` (Peti)**:
+   * Properti: isLocked, itemCount, capacity
+   * Konstruktor
+   * Method `addItem()` yang mengecek kapasitas
+   * Method `unlock()` yang mengatur isLocked menjadi false
+   * Method `isFull()` yang mengecek jika itemCount >= capacity
+
+3. **Buat Class `Villager` (Penduduk Desa)**:
+   * Properti: name, profession, tradeCount
+   * Konstruktor
+   * Method `greet()` yang mencetak salam
+   * Method `trade()` yang menaikkan tradeCount
+   * Method `getInfo()` yang menampilkan semua properti
+
+4. **Buat Beberapa Objek**: Menggunakan class apa pun yang kamu buat, ciptakan 3 objek berbeda dan uji semua method-nya.

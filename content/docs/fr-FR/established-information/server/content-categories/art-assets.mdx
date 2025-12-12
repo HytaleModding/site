@@ -19,105 +19,105 @@ Hytale utilise **Blockbench** comme outil principal pour la modélisation 3D et 
 * **Remplace les anciens outils** : Remplace entièrement l'ancien créateur de modèle de Hytale pour mieux soutenir les workflows créatifs établis dans la communauté
 * **Fonctions de sécurité** : permet uniquement d’ajouter des éléments compatibles avec le moteur du jeu, sans risque de casser quoi que ce soit
 
-## Model Constraints
+## Les contraintes des modèles
 
-### Geometry Types
+### Les types de géométrie
 
-The vast majority of models in Hytale are constrained to specific geometric primitives:
+La grande majorité des modèles dans Hytale sont limitées à des types précis de géométrie primitive :
 
-**3D Elements**:
+**Éléments 3D** :
 
-* Blocks
-* Cuboids
-* Boxes
+* Blocs
+* Cuboïdes
+* Boîtes
 
-**2D Elements**:
+**Éléments 2D** :
 
-* Quads
+* Quadrilatères
 * Rectangles
-* Planes (composed of 2 triangles)
+* Plans (composés de 2 triangles)
 
-### Design Philosophy
+### Philosophie de conception
 
-These constraints serve multiple purposes:
+Ces contraintes remplissent plusieurs fonctions :
 
-* **Performance optimization**: Ensures efficient rendering and game performance
-* **Consistent art style**: Maintains Hytale's distinctive visual aesthetic
-* **Seamless integration**: Makes mods feel more cohesive with the base game
+* **Optiomisation des performances** : assure des performances de rendu et de jeu efficaces
+* **Style artistique cohérent** : Maintient l'esthétique visuelle distincte d'Hytale
+* **Intégration transparente** : Rend les mods plus cohérents avec le jeu de base
 
-## Pixel Density Standards
+## Normes de densité de pixels
 
-Hytale uses different pixel densities for different types of content:
+Hytale utilise différentes densités de pixels selon le type de contenu :
 
-### Standard Densities
+### Densité standard
 
-* **Blocks**: 32px density
-* **Player models**: 64px density
-* **Mobs**: Likely also 64px density
-* **Player equipment**: 64px density (weapons, cosmetics, armor, etc.)
+* **Blocs** : densité de 32px
+* **Modèles des joueurs** : densité de 64px
+* **Créatures** : Probablement aussi une densité de 64px
+* **Équipements des joueurs** : densité de 64px (armes, cosmétiques, armures, etc.)
 
-### Flexibility
+### Flexibilité
 
-* **Wrong density handling**: Using incorrect density may cause assets to appear at the wrong size, but will not cause import failures
-* **No strict restrictions**: Pixel ratio, rotation, and scaling are not restricted
-* **Forgiving system**: The tools are designed to be flexible while maintaining compatibility
+* **Mauvaise gestion de la densité** : Utiliser une densité incorrecte peut faire apparaître des assets à la mauvaise taille, mais cela ne provoquera pas d’échec à l’importation
+* **Aucune restriction stricte** : la densité de pixels, la rotation et la mise à l'échelle ne sont pas restreintes
+* **Un système permissif** : Les outils sont conçus pour être flexibles tout en maintenant la compatibilité
 
-## Hytale Asset Editor
+## L'éditeur d'assets d'Hytale
 
-### In-Game Editor
+### L'éditeur en jeu
 
-The Asset Editor is a comprehensive tool that will ship with the game:
+L'éditeur d'assets est un outil complet qui sera fourni avec le jeu :
 
-* **Ships with game**: Available to all players from launch
-* **External tool requirement**: Does not support image editing, you must use external tools for texture creation
-* **Data asset editing**: Primary editor for working with Data Assets
-* **Expanding capabilities**: Currently supports most features, though has limitations around NPCs, worldgen, and interactions that will expand over time
+* **Fourni avec le jeu** : Disponible pour tous les joueurs dès le lancement
+* **Dépendance aux outils externes** : Ne prend pas en charge l'édition d'images ; vous devez utiliser un outil externe pour créer vos textures
+* **Édition de data assets** : éditeur principal pour travailler avec des data assets
+* **Extension des capacités** : prend actuellement en charge la plupart des fonctionnalités, mais présente des limites concernant les PNJ, la génération du monde et les interactions, qui seront élargies au fil du temps.
 
-### Particle Creation
+### La création de particules
 
-The Asset Editor includes robust particle creation tools:
+L'éditeur d'assets inclut de solides outils de création de particules.
 
-* **In-game creation**: Particles are created directly in-game using the Asset Editor
-* **Industry standard**: Particle logic is robust and similar to Unity/Unreal particle systems
-* **Event-driven**: Particles can be spawned on events or interactions (like opening doors)
-* **Entity attachment**: Can attach particles to entities with specific attachment points
-* **Dynamic movement**: Supports particles moving with their anchor points
-* **Time delays**: Supports time-based particle effects and delays
+* **Création en jeu** : Les particules sont créées directement en jeu en utilisant l'éditeur d'assets
+* **Norme de l'industrie** : La logique de particules est robuste et similaire aux systèmes de particules de Unity/Unreal
+* **Basé sur les événements** : Les particules peuvent être générées lors d'événements ou d'interactions (comme l'ouverture d'une porte)
+* **Attachement aux entités** : il est possible de fixer des particules à des entités via des points d’attache spécifiques.
+* **Mouvement dynamique** : prend en charge les particules qui se déplacent avec leurs points d'ancrage
+* **Délais** : prend en charge les effets de particules et les délais basés sur le temps.
 
-## Materials
+## Matériaux
 
-### Optimization Focus
+### Accent sur l’optimisation
 
-Hytale takes a different approach to materials compared to other engines:
+Hytale adopte une approche différente des matériaux par rapport aux autres moteurs de jeux :
 
-* **Pre-optimized**: Materials are very optimized and artists cannot create custom materials
-* **Performance priority**: This constraint ensures consistent performance across all content
-* **Curated system**: Maintains visual consistency while maximizing efficiency
+* **Pré-optimisé** : les matériaux sont très optimisés et les artistes ne peuvent pas créer de matériaux personnalisés
+* **Priorité à la performance** : cette contrainte garantit des performances cohérentes pour l’ensemble du contenu.
+* \**Système mis en valeur* : maintient la cohérence visuelle tout en maximisant l'efficacité
 
-## Best Practices
+## Meilleures pratiques
 
-### Asset Optimization
+### Optimisation des ressources
 
-Key considerations from Hytale's development team:
+Considérations clés de l'équipe de développement d'Hytale:
 
-* **Mindful resource usage**: Be conscious of how many blocks/quads you use and texture file sizes
-* **Avoid bloat**: Goal is to prevent unnecessary asset bloat that could impact performance
-* **Efficiency focus**: Balance visual quality with technical constraints
+* **Utilisation réfléchie des ressources** : Soyez conscient du nombre de blocs/quadrilatères que vous utilisez et de la taille des fichiers des textures
+* **Éviter le superflu** : le but est d'éviter les ressources inutiles qui peuvent affecter les performances
+* **Accent sur l'efficacité** : équilibrez la qualité visuelle avec des contraintes techniques
 
-### Future Documentation
+### Documentation future
 
-* **Best practice guide**: A comprehensive "best practice" guide for art and modeling will be released at some point
-* **Flexible boundaries**: Most creative goals can be achieved without breaking anything in the system
-* **Community-driven workflows**: Tools are designed to support established creative workflows in the modding community
+* **Guide des meilleures pratiques** : Un guide complet de "meilleures pratiques" pour l'art et la modélisation sera publié à un moment ou à un autre
+* **Limites flexibles** : La plupart des objectifs créatifs peuvent être atteints sans  casser quoi que ce soit dans le système
+* **Workflows dirigés par la communauté** : Les outils sont conçus pour soutenir les workflows créatifs établis dans la communauté de modding
 
-## Integration with Development Pipeline
+## Intégration au pipeline de développement
 
-The modeling and texture art workflow integrates seamlessly with Hytale's broader development ecosystem:
+Le workflow de modélisation et de texturage s'intègre parfaitement à l'écosystème de développement plus large d'Hytale :
 
-* **Asset Editor compatibility**: Models created in Blockbench work directly with the Hytale Asset Editor
-* **Data Asset integration**: 3D models can be configured and customized through Data Assets
-* **Visual Scripting support**: Models can be controlled and animated through Visual Scripting
-* **Java plugin extensibility**: Advanced model behaviors can be implemented through Java plugins
-* **Particle integration**: Models can have particles attached at specific points for enhanced visual effects
+* **Compatibilité avec l'éditeur d'assets** : Les modèles créés avec Blockbench fonctionnent directement avec l'éditeur d'assets d'Hytale
+* **Intégration de data assets** : Les modèles 3D peuvent être configurés et personnalisés via les data assets
+* **Prise en charge de la programmation visuelle** : les modèles peuvent être contrôlés et animés via la programmation visuelle
+* **Extensibilité avec des plugins Java** : Les comportements avancés des modèles peuvent être implémentés via des plugins Java
+* **Intégration des particules** : Les modèles peuvent avoir des particules attachées à des points spécifiques pour des effets visuels améliorés
 
-This integrated approach ensures that 3D modeling and texture art aren't isolated creative processes, but core components of Hytale's comprehensive development environment.
+Cette approche intégrée garantit que la modélisation 3D et le texturage ne sont pas des processus créatifs isolés, mais des composants essentiels de l’environnement de développement complet d’Hytale.

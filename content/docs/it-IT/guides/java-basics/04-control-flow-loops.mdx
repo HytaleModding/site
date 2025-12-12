@@ -1,0 +1,165 @@
+---
+title: 04 - Gestire il Flusso Cicli
+description: Impara a ripete il codice efficientemente usando i cicli in Java
+---
+
+I cicli permettono la ripetizione di codice senza doverlo scrivere più volte. Sono essenziali per elaborare collezioni, generare mondi e aggiornare oggetti di gioco.
+
+## Ciclo While
+
+Ripeti il codice mentre una condizione è vera:
+
+```java tab="Code"
+
+int contoAllaRovescia = 5;
+
+while (contoAllaRovescia > 0) {
+    System.out.println(contoAllaRovescia);
+    contoAllaRovescia--;
+}
+System.out.println("Decollo!");
+```
+
+```java tab="Output"
+5
+4
+3
+2
+1
+Decollo!
+```
+
+### Struttura
+
+```java
+while (condizione) {
+    // codice da ripetere
+}
+```
+
+<Callout type="warning" title="Cicli Infiniti">
+  Assicurati sempre che la condizione del ciclo diventi falsa, o il tuo programma verrà eseguito per sempre!
+
+  ```java tab="Bad Example"
+  int x = 0;
+  while (x < 10) {
+      System.out.println("Bloccato!");
+      // Hai dimenticato di incrementare x!
+  }
+  ```
+
+  ```java tab="Good Example"
+  int x = 0;
+  while (x < 10) {
+      System.out.println("Valore: " + x);
+      x++; // Questo incrementa x! // [!code ++]
+  }
+  ```
+</Callout>
+
+## Ciclo Do-While
+
+Come un ciclo while, ma viene eseguito sempre almeno una volta:
+
+```java
+int vita = 0;
+
+do {
+    System.out.println("Tento di rianimarti...");
+    vita = 100;
+} while (vita <= 0);
+```
+
+## Ciclo For
+
+Ottimo quando sai quante volte devi ripetere:
+
+```java tab="Code"
+for (int i = 1; i <= 5; i++) {
+    System.out.println("Livello " + i);
+}
+```
+
+```java tab="Output"
+Livello 1
+Livello 2
+Livello 3
+Livello 4
+Livello 5
+```
+
+### Struttura
+
+```java
+for (inizializzazione; condizione; aggiornamento) {
+    // codice da ripetere
+}
+```
+
+<Callout type="info" title="Parti del Ciclo For">
+  ```java
+  for (int i = 0; i < 10; i++) {
+  //   ^         ^        ^
+  //   Inizio    Fine    Step
+  }
+  ```
+
+  * **Inizializzazione**: int i = 0 - Viene eseguito una volta all'inizio
+  * **Condizione**: i < 10 - Verificata prima di ogni ciclo
+  * **Aggiornamento**: i++ - Eseguito dopo ogni loop
+</Callout>
+
+## Istruzione Break
+
+Puoi uscire anticipatamente da un ciclo con `break`:
+
+```java
+
+for (int i = 1; i <= 10; i++) {
+    if (i == 6) {
+        break; // Esce dal loop quando i è 6
+    }
+    System.out.println(i);
+}
+
+```
+
+## Istruzione Continua
+
+Salta alla prossima iterazione con `continue`:
+
+```java
+for (int i = 1; i <= 10; i++) {
+    if (i % 2 == 0) {
+        continue; // Salta i numeri pari
+    }
+    System.out.println(i); // Stampa solo i numeri dispari
+}
+```
+
+## Cicli Annidati
+
+Puoi inserire i cicli all'interno di altri cicli.
+
+```java
+for (int i = 1; i <= 3; i++) {
+    for (int j = 1; j <= 2; j++) {
+        System.out.println("i: " + i + ", j: " + j);
+    }
+}
+```
+
+<Callout type="warning" title="Prestazioni dei Cicli Annidati">
+  Fai attenzione con i cicli annidati! Possono rallentare la tua mod in modo significativo.
+
+  ```java
+  // Questo viene eseguito 1.000.000 di volte!
+  for (int i = 0; i < 1000; i++) {
+      for (int j = 0; j < 1000; j++) {
+          //Codice qui
+      }
+  }
+  ```
+
+  Evita di annidare troppi cicli quando devi elaborare grandi quantità di dati.
+</Callout>

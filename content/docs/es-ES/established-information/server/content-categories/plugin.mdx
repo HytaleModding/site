@@ -1,48 +1,37 @@
 ---
-title: Java Modding (Server Plugins)
-description: An introduction to what we know of Hytale's Java-based modding system as of writing this article.
+title: Java Modding (Plugins de Servidor)
+description: Una introducción a lo que sabemos del sistema de modding basado en Java de Hytale al momento de escribir este artículo.
 ---
 
-Hytale's modding capabilities include a Java-based modding system that allows modders
-to create custom behaviors, interactions, and game mechanics. While the full details of
-this system are not publicly documented as the game is still in development and not
-released, we can summarize what is currently known about it.
+Las capacidades de modding de Hytale incluyen un sistema de modding basado en Java que permite a los modders crear comportamientos, interacciones y mecánicas de juego personalizadas. Mientras que los detalles completos de
+este sistema no están documentados públicamente, ya que el juego todavía está en desarrollo y no
+liberado, podemos resumir lo que se sabe actualmente de ella.
 
-### Important Details of Modding in Hytale
+### Detalles Importantes del Modding en Hytale
 
-Hytale's modding goes on server side and not client side, meaning that mods/plugins are
-hosted on the server and players connect to these modded servers to experience the custom content
-without needing to install anything on their end. This approach ensures a consistent experience
-for all players on a modded server.
+El modding de Hytale funciona en el lado del servidor y no en el lado del cliente, es decir, que los mods/plugins son alojados en el servidor y los jugadores se conectan a estos servidores para experimentar el contenido personalizado sin necesidad de instalar nada al final. Este enfoque asegura una experiencia consistente
+para todos los jugadores en un servidor con mods.
 
-### Overview of Java-Based Modding
+### Vista general del Modding basado en Java
 
-The server-side modding system in Hytale is based on Java, making the server plugins JAR files.
+El sistema de modding del lado del servidor en Hytale se basa en Java, haciendo que los plugins del servidor sean archivos JAR.
 
-We're guessing this is done so that Minecraft modders can easily transition to Hytale modding,
-as Minecraft modding is also primarily Java-based. This allows modders familiar with Java
-to leverage their existing knowledge when creating mods for Hytale.
+Suponemos que esto se hizo de tal manera que los modders de Minecraft puedan pasar fácilmente a Hytale, ya que el modding en Minecraft está principalmente basado en Java. Esto permite a los modders familiarizados con Java
+aprovechar su conocimiento existente al crear mods para Hytale.
 
-#### Singleplayer Concerns
+#### Preocupaciones del modo un Jugador
 
-Despite the name, server plugins can also be used in singleplayer mode.
-Hytale's singleplayer mode runs a local server instance, allowing players to use server plugins
-even when playing alone. This means that mods created as server plugins can enhance the singleplayer experience as well.
+A pesar del nombre, los plugins del servidor también se pueden utilizar en modo de un solo jugador.
+El modo de un jugador de Hytale se ejecuta en un servidor local permitiendo a los jugadores usar plugins de servidor incluso cuando están jugando solos. Esto significa que los mods creados como plugins del servidor también pueden mejorar la experiencia de un solo jugador.
 
-### Mixin System
+### Sistema de Mixin
 
-Mixins were used in Minecraft modding to directly modify the game’s code, even able to overwrite
-or redirect logic and values. An extremely powerful but somewhat brittle system which depends
-on the source code/game version staying pretty much the same.
+Los Mixins son usados en el modding de Minecraft para modificar directamente el código del juego, incluso para sobreescribir o redirigir la lógica y valores. Un sistema extremadamente poderoso pero algo frágil, ya que depende el código fuente y la versión del juego se mantenga más o menos igual.
 
-We have no official information on Mixins in Hytale. Despite that, we have reason to believe they will not
-need to be supported for the following reasons:
+No tenemos información oficial sobre Mixins en Hytale. A pesar de eso, tenemos razones para creer que no lo soportaran por las siguientes razones:
 
-1. For a properly designed game, 95% of Mixin use cases can be solved with a good API instead.
-   In fact, many Minecraft modding APIs simply mixin to provide the API so the developers using
-   those APIs don’t have to write the mixin themselves.
-   * This is typically replacing hardcoded values and overwriting hardcoded behaviors.
-   * Hytale should ideally make these both API or data-driven.
-2. APIs can also be much more resilient than the game version. We can have a separate API
-   version system which means the same code will not need to be modified across multiple updates
-   until the API changes in a breaking way.
+1. Para un juego propiamente diseñado, el 95% de los casos de uso de los Mixin puede lograrse con una buena API.
+   De hecho, muchas APIs de modding para Minecraft son solamente mixins para quienes usan dichas API no tengan que escribirlos por sí mismos.
+   * Esto típicamente reemplaza valores y sobreescribe comportamientos que están escritos en duro en el código.
+   * Idealmente Hytale debería permitir esto mediante API o basado en datos.
+2. Las APIs pueden ser más resilientes que la versión del juego. Podemos tener un sistema de versiones separado para la API, lo que significa el código de los mods no necesitaría modificarse cada vez que se actualiza la API, a no ser que la actualización rompa algo

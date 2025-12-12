@@ -4,14 +4,19 @@
     "documentation": "Dokumentation"
   },
   "home": {
-    "community": "Community",
     "title": "Hytale Modding",
-    "welcome": "Willkommen bei Hytale Modding!",
-    "welcomeDescription": "Dies ist eine inoffizielle Community fürs Modden von Hytale, die Anleitungen, Dokumentation und Ressourcen bereitstellt.",
+    "flipwords": [
+    "Guides",
+    "Documentation",
+    "Resources"
+    ],
+    "description": "The number one community resource for modding Hytale, featuring comprehensive guides, detailed documentation, and essential tools to kickstart your modding journey.",
     "documentation": "Dokumentation",
-    "discord": "Discord"
+    "discord": "Discord",
+    "memberCount": "{count} Members"
   },
   "misc": {
+    "loading": "Loading...",
     "gitInfoUnavailable": "Git Info nicht verfügbar"
   }
 }

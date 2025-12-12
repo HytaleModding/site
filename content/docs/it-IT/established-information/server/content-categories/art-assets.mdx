@@ -1,0 +1,123 @@
+---
+title: Modellazione & Texturing / Art Assets
+description: Informazioni su Modelling 3D, Texturing e Art Assets in Hytale.
+---
+
+# Modellazione / Texture Art
+
+Hytale offre un supporto completo per la modellazione 3D e la creazione di texture, con strumenti e workflow specializzati pensati per mantenere lo stile visivo caratteristico del gioco e al tempo stesso dare grande libertà ai creatori.
+
+## Strumenti di modding attuali
+
+### Blockbench
+
+Hytale utilizza Blockbench come strumento principale per la modellazione 3D e l’animazione:
+
+* Supporto ufficiale: viene usato per creare modelli, texture e animazioni di Hytale.
+* Plugin dedicato: Hytale avrà un plugin Blockbench dedicato, che sarà rilasciato il prima possibile.
+* Compatibilità diretta: il plugin consente di creare modelli, texture e animazioni compatibili con Hytale direttamente in Blockbench.
+* Sostituisce gli strumenti legacy: rimpiazza completamente il vecchio Hytale Model Maker per supportare meglio i workflow già consolidati nella community.
+* Sicurezza: permette di aggiungere solo elementi compatibili con il motore, così non c’è rischio di rompere nulla.
+
+## Vincoli sui modelli
+
+### Tipi di geometria
+
+La grande maggioranza dei modelli in Hytale è vincolata a primitive geometriche specifiche.
+
+Elementi 3D:
+
+* Blocchi
+* Cuboidi
+* Box
+
+Elementi 2D
+
+* Quadrilateri
+* Rettangoli
+* Piani (composti da 2 triangoli)
+
+### Filosofia del design
+
+Questi vincoli hanno molteplici scopi:
+
+* Ottimizzazione delle prestazioni: garantiscono un rendering efficiente e buone performance di gioco.
+* Stile coerente: mantengono l’estetica visiva distintiva di Hytale.
+* Integrazione fluida: fanno sì che le mod risultino coese con il gioco base.
+
+## Standard di densità dei pixel
+
+Hytale utilizza densità di pixel diverse a seconda del tipo di contenuto.
+
+### Densità standard
+
+* Blocchi: densità 32 px
+* Modelli giocatore: densità 64 px
+* Mostri (mobs): molto probabilmente 64 px
+* Equipaggiamento del giocatore: 64 px (armi, cosmetici, armature, ecc.)
+
+### Flessibilita
+
+* Densità errata: usare una densità sbagliata può far apparire le risorse con dimensioni scorrette, ma non impedirà l’import.
+* Nessun vincolo rigido: rapporto di pixel, rotazione e scalatura non sono rigidamente limitati.
+* Sistema permissivo: gli strumenti sono progettati per essere flessibili pur mantenendo la compatibilità.
+
+## Hytale Asset Editor
+
+### Editor in‑game
+
+L’Asset Editor è uno strumento completo che sarà incluso nel gioco:
+
+* Incluso nel gioco: disponibile per tutti i giocatori al lancio.
+* Strumenti esterni per le immagini: non supporta l’editing delle immagini, quindi per creare le texture servono strumenti esterni.
+* Editing dei Data Asset: è l’editor principale per lavorare con i Data Asset.
+* Capacità in espansione: al momento supporta la maggior parte delle funzionalità, ma ha limitazioni su NPC, worldgen e interazioni che verranno ampliate nel tempo.
+
+### Creazione di particelle
+
+L’Asset Editor integra potenti strumenti per la creazione di particelle:
+
+* Creazione in‑game: le particelle vengono create direttamente nel gioco tramite l’Asset Editor.
+* Standard di settore: la logica delle particelle è solida e simile ai sistemi particellari di Unity/Unreal.
+* Event‑driven: le particelle possono essere generate su eventi o interazioni (ad esempio aprire una porta).
+* Aggancio alle entità: è possibile agganciare particelle alle entità tramite specifici punti di attacco.
+* Movimento dinamico: supporta particelle che si muovono con i loro punti di ancoraggio.
+* Ritardi temporali: supporta effetti particellari basati sul tempo e ritardi.
+
+## Materiali
+
+### Focus sull’ottimizzazione
+
+Hytale adotta un approccio diverso ai materiali rispetto ad altri motori:
+
+* Pre‑ottimizzati: i materiali sono altamente ottimizzati e gli artisti non possono creare materiali personalizzati.
+* Priorità alle performance: questo vincolo garantisce prestazioni costanti su tutti i contenuti.
+* Sistema curato: mantiene coerenza visiva massimizzando l’efficienza.
+
+## Buone pratiche
+
+### Ottimizzazione delle risorse
+
+Indicazioni chiave dal team di sviluppo di Hytale:
+
+* Uso consapevole delle risorse: presta attenzione al numero di blocchi/quad utilizzati e alla dimensione dei file di texture.
+* Evitare il bloat: l’obiettivo è prevenire un gonfiore inutile degli asset che possa impattare sulle prestazioni.
+* Focus sull’efficienza: bilancia qualità visiva e vincoli tecnici.
+
+### Documentazione futura
+
+* Guida alle best practice: in futuro verrà rilasciata una guida completa alle “best practice” per arte e modellazione.
+* Confini flessibili: la maggior parte degli obiettivi creativi può essere raggiunta senza rompere nulla nel sistema.
+* Workflow guidati dalla community: gli strumenti sono pensati per supportare i workflow creativi già affermati nella community di modding.
+
+## Integrazione nella pipeline di sviluppo
+
+Il workflow di modellazione e texture art si integra in modo fluido con il più ampio ecosistema di sviluppo di Hytale:
+
+* Compatibilità con l’Asset Editor: i modelli creati in Blockbench funzionano direttamente con l’Hytale Asset Editor.
+* Integrazione con i Data Asset: i modelli 3D possono essere configurati e personalizzati tramite Data Asset.
+* Supporto per Visual Scripting: i modelli possono essere controllati e animati tramite Visual Scripting.
+* Estendibilità via plugin Java: i comportamenti avanzati dei modelli possono essere implementati tramite plugin Java.
+* Integrazione con particelle: i modelli possono avere particelle agganciate in punti specifici per effetti visivi avanzati.
+
+Questo approccio integrato garantisce che la modellazione 3D e la creazione di texture non siano processi isolati, ma componenti centrali dell’ambiente di sviluppo completo di Hytale.

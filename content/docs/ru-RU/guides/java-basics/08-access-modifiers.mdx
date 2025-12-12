@@ -1,0 +1,478 @@
+---
+title: 08 - Модификаторы инкапсуляции и доступа
+description: Узнайте, как защитить и контролировать доступ к данным вашего класса.
+---
+
+Инкапсуляция подразумевает скрытие внутренних деталей класса и контроль доступа и изменения его данных. Это предотвращает ошибки и делает ваш код более поддерживаемым.
+
+## Проблема без инкапсуляции
+
+```java
+public class Player {
+    public String name;
+    public int health;
+    public int maxHealth;
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Player player = new Player();
+        player.health = 100;
+        player.maxHealth = 100;
+        
+        // Oops! Someone can break the rules
+        player.health = 500;      // Health over maximum!
+        player.health = -50;      // Negative health!
+        player.name = "";         // Empty name!
+    }
+}
+```
+
+Без защиты каждый может установить неверные значения!
+
+## Модификаторы доступа
+
+У Java есть ключевые слова, которые определяют, кто может получить доступ к членам вашего класса:
+
+| Модификатор | Класс | Пакет | Подкласс | Мир |
+| ----------- | ----- | ----- | -------- | --- |
+| `public`    | ✓     | ✓     | ✓        | ✓   |
+| `protected` | ✓     | ✓     | ✓        | ✗   |
+| (none)      | ✓     | ✓     | ✗        | ✗   |
+| `private`   | ✓     | ✗     | ✗        | ✗   |
+
+**Теперь внимательно:**
+
+* `public` - Любой может получить доступ
+* `private` - только этот класс может получить доступ
+
+## Создание приватных свойств
+
+```java
+public class Player {
+    private String name;
+    private int health;
+    private int maxHealth;
+    
+    public Player(String name, int maxHealth) {
+        this.name = name;
+        this.health = maxHealth;
+        this.maxHealth = maxHealth;
+    }
+}
+```
+
+Теперь вы не можете получить доступ к свойствам напрямую:
+
+```java
+Игрок = new Player("Alice", 100);
+player.health = 500; // ❌ Error!
+```
+
+## Геттеры и Сеттеры
+
+Для доступа к закрытым свойствам создайте методы **геттер** и **сеттер**.
+
+```java
+public class Player {
+    private String name;
+    private int health;
+    private int maxHealth;
+    
+    public Player(String name, int maxHealth) {
+        this.name = name;
+        this.health = maxHealth;
+        this.maxHealth = maxHealth;
+    }
+    
+    // Геттер - возвращает значение
+    public int getHealth() {
+        return health;
+    }
+    
+    // Сеттер — устанавливает значение с проверкой
+    public void setHealth(int health) {
+        if (health < 0) {
+            this.health = 0;
+        } else if (health > maxHealth) {
+            this.health = maxHealth;
+        } else {
+            this.health = health;
+        }
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+}
+```
+
+Теперь вы можете безопасно взаимодействовать с этим объектом:
+
+```java
+Player player = new Player("Alice", 100);
+
+player.setHealth(150);  // Автоматически ограничено на 100
+System.out.println(player.getHealth());  // 100
+
+player.setHealth(-20);  // Автоматически установлено на 0
+System.out.println(player.getHealth());  // 0
+```
+
+<Callout type="info" title="Именование геттеров и сеттеров">
+  Следуйте соглашениям об именовании Java:
+
+  * **Геттер**: `get` + имя свойства (заглавными буквами)
+  * **Сеттер**: `set` + имя свойства (заглавными буквами)
+  * **Boolean**: `is` + имя свойства (заглавными буквами)
+
+  ```java
+  private int health;
+  public int getHealth() { }
+  public void setHealth(int health) { }
+
+  private boolean alive;
+  public boolean isAlive() { }
+  public void setAlive(boolean alive) { }
+
+  private String name;
+  public String getName() { }
+  public void setName(String name) { }
+  ```
+</Callout>
+
+## Преимущества инкапсуляции
+
+### 1. Валидация
+
+```java
+public class Item {
+    private int durability;
+    private int maxDurability;
+    
+    public void setDurability(int durability) {
+        if (durability < 0) {
+            this. urability = 0;
+        } else if (durability > maxDurability) {
+            это. urability = максимальная прочность;
+        } else {
+            this. urability = долговечность;
+        }
+    }
+    
+    public boolean isBroken() {
+        return durability <= 0;
+    }
+}
+```
+
+### 2. Свойства только для чтения
+
+Иногда вам не нужен сеттер:
+
+```java
+public class Monster {
+    private String id;  // Should never change
+    private int health;
+    
+    public Monster(String id, int health) {
+        this.id = id;
+        this.health = health;
+    }
+    
+    // Getter only - no setter!
+    public String getId() {
+        return id;
+    }
+    
+    public int getHealth() {
+        return health;
+    }
+    
+    public void setHealth(int health) {
+        this.health = health;
+    }
+}
+```
+
+### 3. Вычисляемые свойства
+
+Геттерам не обязательно возвращать поле напрямую:
+
+```java
+public class Player {
+    private int health;
+    private int maxHealth;
+    
+    public int getHealth() {
+        return health;
+    }
+    
+    // Вычисляемое свойство
+    public double getHealthPercentage() {
+        return (health * 100. ) / maxHealth;
+    }
+    
+    // Вычисляемое свойство
+    public boolean isLowHealth() {
+        return getHealthPercentage() < 25;
+    }
+}
+```
+
+## Практические примеры
+
+### Предмет с прочностью
+
+```java
+public class Tool {
+    private String name;
+    private int durability;
+    private int maxDurability;
+    private boolean broken;
+    
+    public Tool(String name, int maxDurability) {
+        this.name = name;
+        this.durability = maxDurability;
+        this.maxDurability = maxDurability;
+        this.broken = false;
+    }
+    
+    public void use() {
+        if (broken) {
+            System.out.println(name + " is broken!");
+            return;
+        }
+        
+        durability--;
+        System.out.println(name + " used. Durability: " + durability);
+        
+        if (durability <= 0) {
+            broken = true;
+            System.out.println(name + " broke!");
+        }
+    }
+    
+    public void repair() {
+        durability = maxDurability;
+        broken = false;
+        System.out.println(name + " repaired!");
+    }
+    
+    // Getters
+    public String getName() {
+        return name;
+    }
+    
+    public int getDurability() {
+        return durability;
+    }
+    
+    public boolean isBroken() {
+        return broken;
+    }
+    
+    public double getDurabilityPercentage() {
+        return (durability * 100.0) / maxDurability;
+    }
+}
+```
+
+### Пример банковского счета
+
+```java
+public class PlayerWallet {
+    private int gold;
+    private int silver;
+    
+    public PlayerWallet() {
+        this.gold = 0;
+        this.silver = 0;
+    }
+    
+    public void addGold(int amount) {
+        if (amount > 0) {
+            gold += amount;
+            System.out.println("Added " + amount + " gold");
+        }
+    }
+    
+    public boolean spendGold(int amount) {
+        if (amount > gold) {
+            System.out.println("Not enough gold!");
+            return false;
+        }
+        
+        gold -= amount;
+        System.out.println("Spent " + amount + " gold");
+        return true;
+    }
+    
+    public int getGold() {
+        return gold;
+    }
+    
+    public int getTotalValue() {
+        // 1 gold = 100 silver
+        return gold * 100 + silver;
+    }
+}
+```
+
+### Защищенная блочная система
+
+```java
+public class ProtectedBlock {
+    private int x, y, z;
+    private String type;
+    private String owner;
+    private boolean locked;
+    
+    public ProtectedBlock(int x, int y, int z, String type, String owner) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.type = type;
+        this.owner = owner;
+        this.locked = true;
+    }
+    
+    public boolean canBreak(String playerName) {
+        if (!locked) {
+            return true;
+        }
+        
+        return playerName.equals(owner);
+    }
+    
+    public void unlock(String playerName) {
+        if (playerName.equals(owner)) {
+            locked = false;
+            System.out.println("Block unlocked");
+        } else {
+            System.out.println("You don't own this block!");
+        }
+    }
+    
+    // Getters only - position and owner shouldn't change
+    public int getX() {
+        return x;
+    }
+    
+    public int getY() {
+        return y;
+    }
+    
+    public int getZ() {
+        return z;
+    }
+    
+    public String getOwner() {
+        return owner;
+    }
+    
+    public boolean isLocked() {
+        return locked;
+    }
+}
+```
+
+## Когда использовать Private, а когда Public
+
+<Callout type="info" title="Общие Правила">
+  **Делайте его приватным по умолчанию!** Делайте его публичным только в том случае, если необходимо иметь доступ извне.
+
+  **Private:**
+
+  * Внутренние данные (здоровье, расположение, инвентарь)
+  * Вспомогательные методы, используемые только внутри класса
+  * Все, что требует проверки
+
+  **Public:**
+
+  * Методы, определяющие поведение класса
+  * Конструктор
+  * Методы других классов должны быть вызваны
+
+  ```java
+  public class Example {
+      // Private - внутренние данные
+      private int internalCounter;
+      private String secretKey;
+      
+      // Public - часть интерфейса
+      public void doSomething() {
+          // Использует частный вспомогательный метод
+          validateData();
+      }
+      
+      // Private- внутренний помощник
+      private void validateData() {
+          // . .
+      }
+  }
+  ```
+</Callout>
+
+## Ключевое слово `final`
+
+`final` означает, что переменная не может быть изменена после ее установки:
+
+```java
+public class Player {
+    private final String id;  // Не может быть изменено после создания
+    private String name;      // Может быть изменено
+    private int health;       // Может быть изменено
+    
+    public Player(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    
+    public String getId() {
+        return id;
+    }
+    
+    // Нет setId() — это final!
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+## Практические Задания
+
+1. \*\*Создайте класс `BankAccount` \*\*:
+   * Private свойства: accountNumber, balance
+   * Конструктор для задания номера счета
+   * Методы: deposit(), withdraw(), getBalance()
+   * Проверка: нельзя снять больше, чем баланс
+   * Номер счета должен быть доступен только для чтения
+
+2. \*\*Создайте класс `Door`, \*\*:
+   * Приватные свойства: isLocked, keyCode
+   * Конструктор для установки кода - ключа
+   * Методы: lock(), unlock(String code), isLocked()
+   * unlock() работает только с правильным кодом
+   * Код должен быть приватным (не используйте его!)
+
+3. **Создайте класс `PlayerStats`**:
+   * Private свойства: strength, defense, speed
+   * Конструктор для установки всей статистики
+   * Геттеры для всей статистики
+   * Метод: getPowerLevel(), который возвращает силу + защиту + скорость
+   * Статистика не может быть отрицательной или больше 100
+
+4. **Рефакторинг класса**: возьмите один из ваших классов с предыдущего урока и добавьте правильную инкапсуляцию:
+   * Сделать все свойства приватными
+   * Добавьте соответствующие геттеры и сеттеры
+   * Добавьте проверку там, где это необходимо

@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "title": "Hytale Modding",
+    "documentation": "Documentation"
+  },
+  "home": {
+    "title": "#1 Resource for Hytale Modding {flipwords}",
+    "flipwords": [
+    "Guides",
+    "Documentation",
+    "Resources"
+    ],
+    "description": "The number one community resource for modding Hytale, featuring comprehensive guides, detailed documentation, and essential tools to kickstart your modding journey.",
+    "documentation": "Docs",
+    "discord": "Join the community!",
+    "memberCount": "{count} Members"
+  },
+  "misc": {
+    "loading": "Loading...",
+    "gitInfoUnavailable": "Git info not available"
+  }
+}

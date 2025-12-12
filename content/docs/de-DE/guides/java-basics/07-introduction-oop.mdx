@@ -1,0 +1,378 @@
+---
+title: 07 - Einführung in die objektorientierte Programmierung
+description: Lerne die Grundlagen von Klassen und Objekten in Java.
+---
+
+Objektorientiertes Programmieren (OOP) ist die Grundlage von Java und Hytale Modding. Anstatt Variablen und Methoden einfach nur herumfliegen zu lassen, organisieren wir sie in **Klassen** und **Objekten**.
+
+## Was ist eine Klasse?
+
+Eine Klasse ist eine Blaupause zum Erstellen von Objekten. Stell es dir wie ein Rezept oder eine Vorlage vor.
+
+```java
+public class Spieler {
+    // Eigenschaften (Daten)
+    String name;
+    int leben;
+    int level;
+    
+    // Verhalten (Methoden)
+    public void schadenNehmen(int schaden) {
+        leben -= schaden;
+        System.out.println(name + " hat " + schaden + " Schaden genommen!");
+    }
+}
+```
+
+## Was ist ein Objekt?
+
+Ein Objekt ist eine Instanz, die von einer Klasse erstellt wird. Wenn eine Klasse eine Blaupause ist, dann ist ein Objekt die eigentliche Sache, die aus dieser Blaupause gebaut wurde.
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Objekte der Player Klasse erstellen
+        Player player1 = new Player();
+        player1.name = "Alice";
+        player1.health = 100;
+        player1.level = 5;
+        
+        Player player2 = new Player();
+        player2.name = "Bob";
+        player2.health = 80;
+        player2.level = 3;
+        
+        // Verwende die Objekte
+        player1.takeDamage(20);  // Alice hat 20 Schaden genommen!
+        player2.takeDamage(15);  // Bob hat 15 Schaden genommen!
+    }
+}
+```
+
+<Callout type="info" title="Klasse vs Objekt">
+  **Klasse** = Blaupause (die Idee eines Spielers)
+  **Objekt** = Tatsächliche Sache (Alice, Bob, bestimmte Spieler)
+
+  Eine Klasse kann viele Objekte erstellen, genau wie man mit einem Rezept mehrere Kuchen backen kann!
+</Callout>
+
+## Eine einfache Klasse erstellen
+
+Lass uns eine Schwert-Klasse für Hytale erstellen:
+
+```java
+public class Schwert {
+    // Eigenschaften
+    String name;
+    int schaden;
+    int haltbarkeit;
+    
+    // Methoden um das Schwert zu nutzen
+    public void angreifen(String gegner) {
+        System.out.println("Greift " + gegner + " für " + schaden + " Schaden an!");
+        haltbarkeit -= 1;
+        
+        if (haltbarkeit <= 0) {
+            System.out.println(name + " ist kaputt gegangen!");
+        }
+    }
+    
+    // Methode um Informationen anzuzeigen
+    public void infoAnzeigen() {
+        System.out.println("Waffe: " + name);
+        System.out.println("Schaden: " + schaden);
+        System.out.println("Haltbarkeit: " + haltbarkeit);
+    }
+}
+```
+
+Die Klasse verwenden:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Schwert schwert = new Schwert();
+        schwert.name = "Eisenschwert";
+        schwert.schaden = 15;
+        schwert.haltbarkeit = 3;
+        
+        schwert.infoAnzeigen();
+        schwert.angreifen("Zombie");
+        schwert.angreifen("Skeleton");
+        schwert.angreifen("Spider");  // Macht das Schwert kaputt
+    }
+}
+```
+
+## Konstruktoren
+
+Statt Eigenschaften einzeln zu setzen, verwende einen **Konstruktor**, um Objekte zu initialisieren:
+
+```java
+public class Schwert {
+    String name;
+    int schaden;
+    int haltbarkeit;
+    
+    // Konstruktor
+    public Schwert(String waffenName, int waffenSchaden, int waffenHaltbarkeit) {
+        name = waffenName;
+        damage = waffenSchaden;
+        durability = waffenHaltbarkeit;
+    }
+    
+    public void angreifen(String gegner) {
+        System.out.println("Greift " + gegner + " für " + schaden + " Schaden an!");
+        haltbarkeit--;
+    }
+}
+```
+
+Jetzt ist es einfacher, Schwerter zu erstellen:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Viel ordentlicher!
+        Schwert eisenSchwert = new Schwert("Eisenschwert", 15, 100);
+        Schwert diamantSchwert = new Sword("Diamantschwert", 25, 200);
+        
+        eisenSchwert.angreifen("Zombie");
+        diamantSchwert.angreifen("Boss");
+    }
+}
+```
+
+<Callout type="info" title="Konstruktor-Regeln">
+  * Selber Name wie die Klasse
+  * Kein return type (nicht einmal `void`)
+  * Wird automatisch aufgerufen, wenn du `new` verwendest
+  * Kann mehrere Konstruktoren haben (Overloading)
+
+  ```java
+  public class Item {
+      String name;
+      int value;
+      
+      // Konstruktor mit allen Parametern
+      public Item(String name, int value) {
+          this.name = name;
+          this.value = value;
+      }
+      
+      // Konstruktor nur mit Name
+      public Item(String name) {
+          this.name = name;
+          this.value = 0;  // Standardwert
+      }
+  }
+  ```
+</Callout>
+
+## Das `this` Keyword
+
+`this` bezieht sich auf das aktuelle Objekt. Verwende es zum klarzustellen, wenn Parametername und Eigenschaftsname übereinstimmen:
+
+```java
+public class Player {
+    String name;
+    int leben;
+    
+    public Player(String name, int leben) {
+        this.name = name;      // this.name = Eigenschaft
+        this.leben = leben;  // name = Parameter
+    }
+}
+```
+
+Ohne `this` kommt Java durcheinander:
+
+```java
+public Player(String name, int leben) {
+    name = name;      // ❌ Welches name? Mehrdeutig!
+    leben = leben;    // ❌ Welches leben? Mehrdeutig!
+}
+```
+
+## Praktische Beispiele
+
+### Item Klasse
+
+```java
+public class Item {
+    String name;
+    String type;
+    int quantity;
+    double weight;
+    
+    public Item(String name, String type, int quantity, double weight) {
+        this.name = name;
+        this.type = type;
+        this.quantity = quantity;
+        this.weight = weight;
+    }
+    
+    public void use() {
+        if (quantity > 0) {
+            quantity--;
+            System.out.println(name + "verwendet. Noch übrig: " + quantity);
+        } else {
+            System.out.println("Kein " + name + " mehr übrig!");
+        }
+    }
+    
+    public double getTotalWeight() {
+        return weight * quantity;
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Item trank = new Item("Heiltrank", "Konsumierbares", 5, 0.5);
+        
+        trank.use();  // Heiltrank verwendet. Noch übrig: 4
+        System.out.println("Gesamtgewicht: " + potion.getTotalWeight()); // 2.0
+    }
+}
+```
+
+### Monster Klasse
+
+```java
+public class Monster {
+    String name;
+    int health;
+    int attack;
+    boolean isHostile;
+    
+    public Monster(String name, int health, int attack, boolean isHostile) {
+        this.name = name;
+        this.health = health;
+        this.attack = attack;
+        this.isHostile = isHostile;
+    }
+    
+    public void takeDamage(int damage) {
+        health -= damage;
+        System.out.println(name + " hat " + damage + " Schaden genommen!");
+        
+        if (health <= 0) {
+            System.out.println(name + " wurde besiegt!");
+        } else {
+            System.out.println(name + " hat " + health + " Leben übrig.");
+        }
+    }
+    
+    public int attackPlayer() {
+        if (isHostile && health > 0) {
+            System.out.println(name + " greift für " + attack + " Schaden an!");
+            return attack;
+        }
+        return 0;
+    }
+    
+    public boolean isAlive() {
+        return health > 0;
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Monster zombie = new Monster("Zombie", 50, 10, true);
+        Monster chicken = new Monster("Chicken", 10, 0, false);
+        
+        zombie.takeDamage(20);        // Zombie hat 20 Schaden genommen!
+        int damage = zombie.attackPlayer();  // Zombie greift für 20 Schaden an!
+        
+        if (zombie.isAlive()) {
+            System.out.println("Monster lebt noch!");
+        }
+    }
+}
+```
+
+### Block Klasse
+
+```java
+public class Block {
+    String type;
+    int x, y, z;
+    boolean isSolid;
+    int hardness;
+    
+    public Block(String type, int x, int y, int z, boolean isSolid, int hardness) {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.isSolid = isSolid;
+        this.hardness = hardness;
+    }
+    
+    public void breakBlock() {
+        System.out.println("Macht " + type + " bei (" + x + ", " + y + ", " + z + ") kaputt");
+        System.out.println("Härte: " + hardness);
+    }
+    
+    public String getPosition() {
+        return "(" + x + ", " + y + ", " + z + ")";
+    }
+    
+    public boolean canWalkThrough() {
+        return !isSolid;
+    }
+}
+```
+
+## Access Modifiers (Vorschau)
+
+Du kennst schon `public` - es bedeutet "jeder kann darauf zugreifen". Du wirst später mehr über Access Modifiers (Zugriffskontrolle) erfahren, aber hier ist eine Vorschau:
+
+```java
+public class Beispiel {
+    public String publicVar;      // Jeder kann drauf zugreifen
+    private String privateVar;    //Nur diese Klasse kann zugreifen
+    // (no modifier) String defaultVar; // Package-Zugriff
+}
+```
+
+Verwende im Moment `public` für alles. Du wirst in der nächsten Lektion lernen, wie man `private` verwendet.
+
+<Callout type="info" title="Warum Klassen verwenden?">
+  Klassen helfen dir:
+
+  * Methoden und zusammengehörende Daten zu **organisieren**
+  * Code einfach **wiederverwenden** (Erstellen vieler Objekte von einer Klasse)
+  * Dinge aus der echten Welt **abbilden** (Spieler, Items, Monster)
+  * Code **warten** (Änderungen an einem Ort beeinflussen alle Objekte)
+
+  Ohne Klassen würde das Management von 100 Spielern für jede Eigenschaft 100 separate Variablen erfordern. Mit Klassen sind es nur 100 Spielerobjekte!
+</Callout>
+
+## Übungsaufgaben
+
+1. **Erstelle eine `Trank` Klasse**:
+   * Eigenschaften: name, heilungsMenge, benutzungen
+   * Konstruktor um alle Eigenschaften zu setzen
+   * Methode `trinken()` die heilt und benutzungen reduziert
+   * Methode `istLeer()` die true zurückgibt, wenn benutzungen weniger als oder gleich 0 ist
+
+2. **Erstelle eine `Kiste` Klasse**:
+   * Eigenschaften: istGesperrt, itemAnzahl, kapazität
+   * Konstruktor
+   * Methode `itemHinzufügen()` die kapazität überprüft
+   * Methode `entsperren()` die istGesperrt auf false setzt
+   * Methode `istVoll()` die überprüft, ob itemAnzahl mehr oder gleich kapazität ist
+
+3. **Erstelle eine `Villager` Klasse**:
+   * Eigenschaften: name, beruf, anzahlGehandelt
+   * Konstruktor
+   * Methode `begrüßen()` die einen Gruß ausgibt
+   * Methode `handeln()` die anzahlGehandelt erhöht
+   * Methode `infoAusgeben()` die alle Eigenschaften anzeigt
+
+4. **Erstelle mehrere Objekte**: Erstelle mithilfe einer beliebigen Klasse, die du erstellt hast, 3 verschiedene Objekte und teste alle ihre Methoden.

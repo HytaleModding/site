@@ -1,40 +1,40 @@
 ---
-title: UI Customization
-description: Information about UI customization in Hytale.
+title: Personalização da IU
+description: Informações sobre a personalização da IU no Hytale.
 ---
 
-UI can be customized via **server-side** modding. Many of the UI pages shown to players are available to be modified by server owners through mods.
+A Interface do Usuário pode ser personalizada por modificações feitas diretamente no lado do servidor. Grande parte das telas da interface do usuário, mostradas aos jogadores, pode ser modificada pelos donos de servidores através de mods.
 
-## UI Customization in Hytale
+## Personalização da IU no Hytale
 
-Hytale provides extensive UI customization capabilities through server-side modding, allowing server owners to modify many of the UI pages that players interact with.
+O Hytale oferece extensas capacidades de customização da interface do usuário através de modificações gerenciadas pelo servidor, permitindo que os donos de servidores modifiquem muitas das páginas da IU com as quais os jogadores interagem.
 
-### Control Flow
+### Controle de Fluxo
 
-The UI system in Hytale follows a specific control flow pattern:
+O sistema de IU do Hytale adota um padrão de fluxo de controle específico:
 
-1. Server sends UI data to the client
-2. Client renders the UI
-3. User interacts with the UI (e.g., pressing a button)
-4. Client sends the interaction event to the server
-5. Server executes the callback logic for the event
+1. O servidor envia os dados da IU para o cliente
+2. O cliente renderiza a IU
+3. O usuário interage com a IU (p. ex.: pressionando um botão)
+4. O cliente envia o evento de interação para o servidor
+5. O servidor executa a lógica de retorno de chamada para o evento
 
-This architecture means:
+Essa arquitetura significa:
 
-* The client is responsible for rendering UI and sending user interactions to the server
-* The server handles all the actual logic behind user interactions
+* O cliente é responsável por renderizar a IU e enviar as interações do usuário para o servidor
+* O servidor lida com toda a lógica real por trás das interações do usuário
 
-<Callout type="warning" title="Possible Performance Implications">
+<Callout type="warning" title="Possíveis Implicações de Desempenho">
   <span>
-    Because the server processes all UI logic, there is an inherent latency
-    impact on UI responsiveness. Button clicks and other interactions must
-    travel to the server before taking effect, meaning network ping directly
-    affects UI responsiveness.
+    Por conta do servidor lidar com toda a lógica da IU, isso resulta em um
+    impacto inevitável de latência na interatividade da IU. Os cliques de botões e outras interações precisam
+    passar até o servidor antes de terem efeito, o que significa que a latência da rede afeta diretamente
+    a capacidade de resposta da IU.
   </span>
 
   <span>
-    Additionally, since client-side modding is not supported, no modded values
-    persist on the client.
+    Além disso, uma vez que a modificação do lado do cliente não é suportada, nenhum valor modificado
+    persiste no cliente.
   </span>
 </Callout>
 

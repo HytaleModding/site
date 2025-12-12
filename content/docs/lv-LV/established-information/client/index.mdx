@@ -1,0 +1,68 @@
+---
+title: Hytale klients
+description: Informācija par Hytale klientu.
+---
+
+<Callout>
+  Hytale klients ir rakstīts C# valodā, kompilēts  mašīnkodā pirms distribūcijas un nav modificējams. Vienspēlētāja režīms strādā uz lokāla servera. Visiem modiem jāiet cauri Servera API.
+</Callout>
+
+# Nav Klienta-puses Modu.
+
+Klienta-puses modifikācijas nepastāv.
+
+> Mēs neatbalstīsim jebkādus klienta-puses modus - Slikey
+
+## Kāpēc?
+
+1. Nebūs nepieciešamības lejuplādēt kaut ko atsevišķi.
+   *
+
+2. Lietotāja aizsardzība.
+   * Iespēja palaist '.jar' failus no trešās partijas saitēm uz Klienta paver iespēju ļaunprogrammatūrai.
+   > [Mēs nevēlamies pakļaut spēlētājus] drošības riskiem, kas eksistē uz dažām citām modu platformām.
+
+3. Klienta stabilitāte.
+   * Iespējams Hytale varētu pāriet uz citām platformām, kur klienta modifikācija ir neiespējama. Tāpēc viņi noslēdz Klientu savlaicīgi, lai noteiktu pareizo virzienu no sākuma.
+   > Mēs ticam, ka rezultāti ar servera modiem ir viegli sasniedzami salīdzinājumā ar citām bloku spēlēm kur tiek izmantoti klienta modi. Citās bloku spēles Tev jāinstalē Klienta modi, lai iegūtu jaunus blokus, NPC, UI Iterfeisu, utml. Hytale dara visu to pašu tikai no servera. Serveris būtība "modificēs" klientu uz doto brīdi ļoti drošā veidā, lai mainītu Tavu spēles pieredzi. Tu varētu izveidot savu Orbis versiju, neizmantojot nevienu no mūsu modeļiem, mūzikas, pasaules ģenerāciju, kaujas mehāniku, vai jebko citu. Tev piešķirta kontrole un Tu vari to visu izķidāt pat nepieskaroties Klientam. Padomā kā Roblox strādā... Tu katreiz nemaini Aplikāciju. Tu vienkārši nospied uz kādu 'pieredzi' tu vēlies un saņem visu, kas vajadzīgs bez modifikācijām instalācijā. -Slikey
+
+## Klienta modi Nav Nepieciešami
+
+Tipiskie pielietojumi klienta modiem ir:
+
+* Kosmētiskas izmaiņas (resursu pakas, shaderi, apmetņi, utml): paša servera vizuālie elementi, nevis klienta.
+* Veiktspēja: spēles bāze piedāvās nepieciešamos veiktspējas rīkus.
+* Pieejamība: spēles bāze būs pati pieejama.
+* Lietotāja Interfeiss: servera paša UI, nevis klienta.
+
+### Klienta-puses Prognozēšana
+
+Hytale izmanto datu-balstītu klienta-puses prognozēšanu, lai mazinātu lag (atpalicību) starp visām veiktajām darbībām serverī un pārraida to atpakaļ klientam. Prognozēšanu jau tiek izmantota dažās sistēmās, bet ir pagaidām ierobežota. Tālāka integrācija ir plānota nākotnē. Nākotnē ir arī plānots tam strādāt ar vizuālās skripta sistēmu tālākai optimizācijai.
+
+## Klienta-puses Palaišana
+
+Komanda pēta iespēju atļaut koda palaišanu no klienta puses (kas atšķirās no klienta modificēšanas; tādā ziņā, ka kods tiek sūtīts no servera), lai gan tas nav garantēti.
+
+# Modeļi
+
+Klienta un resursu tunelis akceptē '.blockymodel', kā pielāgojamu formātu priekš Hytale. Oficiālais Blockbench spraudnis atļaus eksportēt šajā formātā.
+
+# Klienta Tehniskās Detaļas
+
+
+
+> Mēs paši atjaunosim Java versiju un pašlaik esam uz jaunākās versijas (Java 25) Spēles versijas nebūs izvēlamas atsevišķi, lai izvairītos no versiju džungļiem uz mūsu hypixel serveru tīkla. Vēlamies vienkārši pārliecināties, ka daudzpēlētāju tīkli var paļauties uz spēlētāju būšanas jaunākajā spēles versijā, lai nebūtu jāatbalsta 15+ klienta versijas. -Slikey
+
+Klients ir daudzprocesu.
+
+## GUI
+
+Grafiskais Lietotāja Interfeiss ir veidots no C# saiknēm, izmantojot Noesis.
+
+## Uzbūves Sistēma
+
+Hytale izmanto NativeAOT ("Ahead Of Time") Klienta uzbūvei, kas kompilē C# mašīnkodā priekš distribūcijas. Tas nozīmē, ka bez mašīnkoda atpakaļinženierijas, modifikācijām jāiet caur Servera API.
+
+# Cita Informācija
+
+Klientam ir sava versiju sistēma on protokols, lai sazinātos ar serveri.

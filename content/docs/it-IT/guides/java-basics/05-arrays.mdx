@@ -1,0 +1,306 @@
+---
+title: 05 - Vettori
+description: Impara a memorizzare e gestire le collezioni di dati utilizzando i vettori.
+---
+
+I vettori consentono la memorizzazione di valori multipli dello stesso tipo in una singola variabile. Pensa al vettore come una fila di scatole, ciascuna contenente un oggetta.
+
+## Creare Vettori
+
+### Metodo 1: Dichiarare e Inizializzare Separatamente
+
+```java
+int[] numeri;           // Dichiarazione
+numeri = new int[5];    // Crea un vettore con 5 spazi
+```
+
+### Metodo 2: Tutto insieme
+
+```java
+int[] numeri = new int[5];
+```
+
+### Metodo 3: Con i Valori Iniziali
+
+```java
+int[] numers = {10,20,30,40,50};
+```
+
+<Callout type="info" title="Dimesione del Vettore">
+  Una volta creato un vettore, la sua dimensione è **fissa**. Non è possibile aggiungere o rimuovere degli spazi successivamente!
+
+  ```java
+  int[] inventario = new int[9];  // Ha sempre esattamente 9 slot
+  ```
+</Callout>
+
+## Accedere agli Elementi di un Vettore
+
+I vettori usano **indici** numerici che partono da **0**:
+
+```java
+String[] giocatori = {"Alice", "Bob", "Charlie"};
+
+System.out.println(players[0]); // "Alice"
+System.out.println(players[1]); // "Bob"
+System.out.println(players[2]); // "Charlie"
+```
+
+### Rappresentazione Visiva
+
+| Indice | 0       | 1     | 2         |
+| ------ | ------- | ----- | --------- |
+| Valore | "Alice" | "Bob" | "Charlie" |
+
+## Modifica dei Valori del Vettore
+
+```java
+int[] vita = {100, 80, 90};
+
+vita[1] = 60;  // Cambia la vita di Bob a 60
+
+System.out.println(vita[0]); // 100
+System.out.println(vita[1]); // 60
+System.out.println(vita[2]); // 90
+```
+
+## Lunghezza del Vettore
+
+Usa `.length` per ottenere la grandezza di un vettore:
+
+```java
+int[] punti = {45, 67, 89, 92, 55};
+System.out.println(punti.length); // 5
+```
+
+<Callout type="warning" title="La lunghezza Non è un Metodo">
+  Notate come non ci sono parentesi! È `array.length`, non `array.length()`.
+</Callout>
+
+## Ciclare i Valori di un Vettore
+
+### Usando i cicli for
+
+```java
+String[] oggetti = {"Spada", "Scudo", "Pozione"};
+
+for (int i = 0; i < oggetti.length; i++) {
+    System.out.println(oggetti[i]);
+}
+```
+
+### Usando i cicli for "enhanced" (For-Each)
+
+```java
+String[] oggetti = {"Spada", "Scudo", "Pozione"};
+
+for (String oggetto : oggetti) {
+    System.out.println(oggetto);
+}
+```
+
+<Callout type="info" title="Ciclo For-Else">
+  Il ciclo for-each è più semplice e sicuro, ma non è possibile modificare il vettore o conoscere l'indice attuale.
+
+  ```java
+  // Quando ti serve l'indice
+  for (int i = 0; i < oggetti.length; i++) {
+      System.out.println(i + ": " + oggetti[i]);
+  }
+
+  // Quando ti servono solo i valori
+  for (String oggetto : oggetti) {
+      System.out.println(oggetto);
+  }
+  ```
+</Callout>
+
+## Matrici
+
+I vettori possono contenere altri vettori, creando una griglia:
+
+```java
+int[][] griglia = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+System.out.println(griglia[0][0]); // 1
+System.out.println(griglia[1][2]); // 6
+System.out.println(griglia[2][1]); // 8
+```
+
+### Rappresentazione Visiva
+
+|       | 0 | 1 | 2 |
+| ----- | - | - | - |
+| **0** | 1 | 2 | 3 |
+| **1** | 4 | 5 | 6 |
+| **2** | 7 | 8 | 9 |
+
+### Ciclare i Valori delle Matrici
+
+```java tab="Code"
+int[][] grid = {
+    {1, 2, 3},
+    {4, 5, 6}
+};
+
+for (int riga = 0; riga < griglia.length; riga++) {
+    for (int colonna = 0; colonna < griglia[riga].length; colonna++) {
+        System.out.print(griglia[riga][colonna] + " ");
+    }
+    System.out.println();
+}
+```
+
+```java tab="Output"
+1 2 3
+4 5 6
+```
+
+## Esempi Pratici
+
+### Inventario del Giocatore
+
+```java
+String[] inventario = new String[9]; // 9 slot della barra rapida
+
+// Aggiungiamo gli oggetti
+inventario[0] = "Spada di Diamante";
+inventario[1] = "Scudo";
+inventario[8] = "Cibo";
+
+// Mostrare l'inventario
+for (int i = 0; i < inventario.length; i++) {
+    if (inventario[i] != null) {
+        System.out.println("Slot " + i + ": " + inventario[i]);
+    } else {
+        System.out.println("Slot " + i + ": Vuoto");
+    }
+}
+```
+
+### Trovare il Punteggio più Alto
+
+```java
+int[] punteggi = {45, 92, 67, 88, 55, 71};
+int maggiore = punteggi[0];
+
+for (int i = 1; i < punteggi.length; i++) {
+    if (punteggi[i] > maggiore) {
+        maggiore = punteggi[i];
+    }
+}
+
+System.out.println("Punteggio più alto: " + maggiore);
+```
+
+### Calcolare la Media
+
+```java
+double[] temperature = {23.5, 25.0, 22.8, 24.3, 26.1};
+double somma = 0;
+
+for (double temp : temperature) {
+    somma += temp;
+}
+
+double media = somma / temperature.length;
+System.out.println("La temperatura media è di: " + media);
+```
+
+### Griglia di Blocchi (Matrice)
+
+```java
+String[][] terreno = new String[5][5];
+
+// Riempiamo con terra
+for (int x = 0; x < 5; x++) {
+    for (int z = 0; z < 5; z++) {
+        terreno[x][z] = "terra";
+    }
+}
+
+// Piazziamo della pietra
+terreno[2][2] = "pietra";
+terreno[1][3] = "pietra";
+
+// Stampiamo il terreno
+for (int x = 0; x < terreno.length; x++) {
+    for (int z = 0; z < terreno[x].length; z++) {
+        System.out.print(terreno[x][z] + " ");
+    }
+    System.out.println();
+}
+```
+
+## Operazioni Comuni con i Vettori
+
+### Copiare un Vettore
+
+```java
+int[] originale = {1, 2, 3, 4, 5};
+int[] copia = originale.clone();
+
+// O manualmente
+int[] copia2 = new int[originale.length];
+for (int i = 0; i < originale.length; i++) {
+    copia2[i] = originale[i];
+}
+```
+
+### Cercare un Valore
+
+```java
+String[] oggetti = {"Spada", "Scudo", "Pozione", "Arco"};
+String obiettivo = "Pozione";
+int indice = -1;
+
+for (int i = 0; i < oggetti.length; i++) {
+    if (oggetti[i].equals(obiettivo)) {
+        indice = i;
+        break;
+    }
+}
+
+if (indice != -1) {
+    System.out.println("Trovato all'indice: " + indice);
+} else {
+    System.out.println("Non trovato");
+}
+```
+
+### Contare le Occorrenze
+
+```java
+String[] blocchi = {"stone", "dirt", "stone", "grass", "stone"};
+String obiettivo = "stone";
+int occorrenze = 0;
+
+for (String blocco : blocchi) {
+    if (blocco.equals(obiettivo)) {
+        occorrenze++;
+    }
+}
+
+System.out.println(obiettivo + " è presente " + occorrenze + " volte");
+```
+
+## Limiti dei Vettori
+
+<Callout type="warning" title="Dimensione Fissa">
+  I vettori non possono essere ingranditi o ridotti. Se hai bisogno di flessibilità, più avanti imparerai gli `ArrayList`!
+
+  ```java
+  int[] numeri = new int[5];
+  // Impossibile aggiungere un sesto elemento
+
+  // Se ti serve più spazio, crea un nuovo vettore
+  int[] grande = new int[10];
+  for (int i = 0; i < numeri.length; i++) {
+      grande[i] = numeri[i];
+  }
+  ```
+</Callout>

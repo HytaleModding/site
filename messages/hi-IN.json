@@ -1,17 +1,22 @@
 {
   "nav": {
     "title": "Hytale Modding",
-    "documentation": "Documentation"
+    "documentation": "प्रलेखन"
   },
   "home": {
-    "community": "Community",
     "title": "Hytale Modding",
-    "welcome": "Welcome to Hytale Modding!",
-    "welcomeDescription": "This is an unofficial community for modding Hytale, providing guides, documentation, and resources.",
-    "documentation": "Documentation",
-    "discord": "Discord"
+    "flipwords": [
+    "गाइड",
+    "प्रलेखन",
+    "संसाधन"
+    ],
+    "description": "मॉडिंग के लिए नंबर वन कम्युनिटी रिसोर्स Hytale, जिसमें\nपूरी गाइड, डिटेल्ड डॉक्यूमेंटेशन और आपकी मॉडिंग जर्नी को शुरू करने के लिए ज़रूरी टूल्स हैं।",
+    "documentation": "प्रलेखन",
+    "discord": "कम्युनिटी में शामिल हों!\n",
+    "memberCount": "{गिनती} सदस्य"
   },
   "misc": {
-    "gitInfoUnavailable": "Git info not available"
+    "loading": "लोड हो रहा है...",
+    "gitInfoUnavailable": "Git जानकारी उपलब्ध नहीं है"
   }
 }

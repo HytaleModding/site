@@ -1,0 +1,128 @@
+---
+title: 03 - Gestione del Flusso Istruzione If
+description: Impara a controllare il flusso dei tuoi programmi Java utilizzando l'istruzione if (se).
+---
+
+I programmi devono prendere delle decisioni. Le istruzioni if permettono al tuo codice di diramarsi in strade diverse in base alle condizioni.
+
+## Istruzione If Base
+
+La forma più semplice controlla una singola condizione;
+
+```java
+int vita = 20;
+
+if (vita > 10) {
+    System.out.println("Sei in salute!");
+}
+```
+
+### Struttura
+
+```java
+if (condizione) {
+    // codice da eseguire se la condizione è vera
+}
+```
+
+## Istruzione If-Else
+
+Si dirama in due percorsi:
+
+```java
+int vita = 5;
+
+if (vita > 10) {
+    System.out.println("Sei in salute!");
+} else {
+    System.out.println("Hai bisogno di cure!");
+}
+```
+
+## Sequenza di Condizioni If-Else
+
+Si dirama in più percorsi in sequenza:
+
+```java
+
+int vita = 7;
+
+if (vita > 15) {
+    System.out.println("Sei in ottima salute!");
+} else if (vita > 5) {
+    System.out.println("Stai bene.");
+} else {
+    System.out.println("Hai bisogno di cure!");
+}
+```
+
+## Istruzioni If Annidate
+
+Puoi posizionare istruzioni if all'interno di altre istruzioni if:
+
+```java
+int vita = 12;
+
+if (vita > 10) {
+    if (vita > 15) {
+        System.out.println("Sei in ottima salute!");
+    } else {
+        System.out.println("Sei in salute!");
+    }
+} else {
+    System.out.println("Hai bisogno di cure!");
+}
+```
+
+## Condizioni Composte:
+
+Puoi combinare più condizioni utilizzando operatori logici:
+
+```java
+
+// AND - entrambe devono essere vere
+int vita = 12;
+boolean haPozione = true;
+
+if (vita > 10 && haPozione) {
+    System.out.println("Sei in salute e hai una pozione!");
+} else if (vita > 10) {
+    System.out.println("Sei in salute, ma ti serve una pozione!");
+} else {
+    System.out.println("Hai bisogno di cure!");
+}
+
+// OR - almeno una deve essere vera
+
+int vita = 8;
+boolean haPozione = false;
+if (vita > 10 || haPozione) {
+    System.out.println("O sei in salute o hai una pozione!");
+} else {
+    System.out.println("Hai bisogno di cure e di una pozione!");
+}
+
+// NOT - inverte la condizione
+
+int vita = 8;
+if (!(vita > 10)) {
+    System.out.println("Hai bisogno di cure!");
+} else {
+    System.out.println("Sei in salute!");
+}
+```
+
+## Operatore Ternario
+
+Un modo compatto per assegnare dei valori:
+
+```java
+int vita = 12;
+String stato = (vita > 10) ? "In Salute" : "Deve curarsi";
+```
+
+### Sintassi
+
+```java
+variabile = (condizione) ? valoreSeVero : valoreSeFalso;
+```

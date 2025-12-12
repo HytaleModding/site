@@ -1,80 +1,76 @@
 ---
-title: UI Customization
-description: Information about UI customization in Hytale.
+title: Personalización de la Interfaz
+description: Información sobre la personalización de la interfaz en Hytale
 ---
 
-UI can be customized via **server-side** modding. Many of the UI pages shown to players are available to be modified by server owners through mods.
+La Interfaz puede ser personalizada a través de modding **del lado del servidor**.  Varias de las interfaces mostradas a los jugadores están habilitadas a ser modificadas por los administradores de un servidor a través de mods.
 
-## UI Customization in Hytale
+## Personalización de la Interfaz en Hytale
 
-Hytale provides extensive UI customization capabilities through server-side modding, allowing server owners to modify many of the UI pages that players interact with.
+Hytale proporciona amplias capacidades de personalización de la interfaz a través del modding del lado del servidor, permitiendo a los administradores de servidores el modificar varias de las interfaces con las que los jugadores interactúan.
 
-### Control Flow
+### Flujo de Control
 
-The UI system in Hytale follows a specific control flow pattern:
+El sistema de interfaz en Hytale sigue un patrón específico en su flujo de control:
 
-1. Server sends UI data to the client
-2. Client renders the UI
-3. User interacts with the UI (e.g., pressing a button)
-4. Client sends the interaction event to the server
-5. Server executes the callback logic for the event
+1. El servidor envía los datos de la interfaz al cliente
+2. El cliente renderiza la interfaz
+3. El usuario interactúa con la interfaz (por ejemplo, presionando un botón)
+4. El cliente envía la interacción al servidor
+5. El servidor ejecuta la lógica relacionada ha la interacción
 
-This architecture means:
+Esta arquitectura significa que:
 
-* The client is responsible for rendering UI and sending user interactions to the server
-* The server handles all the actual logic behind user interactions
+* El cliente es responsable de renderizar la interfaz y enviar las interacciones del usuario al servidor
+* El servidor controla la lógica tras las interacciones del usuario
 
-<Callout type="warning" title="Possible Performance Implications">
+<Callout type="warning" title="Posibles Implicaciones de Rendimiento">
   <span>
-    Because the server processes all UI logic, there is an inherent latency
-    impact on UI responsiveness. Button clicks and other interactions must
-    travel to the server before taking effect, meaning network ping directly
-    affects UI responsiveness.
+    Ya que el servidor procesa toda la lógica de las interfaces, hay un impacto de latencia en la respuesta de la interfaz Clicks en botones y otras interacciones deben viajar a través del servidor antes de tener efecto, significando que el ping de la red afecta directamente a la respuesta de la interfaz
   </span>
 
   <span>
-    Additionally, since client-side modding is not supported, no modded values
-    persist on the client.
+    Adicionalmente, dado que el modding del lado del cliente no está soportado, no hay persistencia de datos de los mods del lado del cliente.
   </span>
 </Callout>
 
-### UI Layout Assets
+### Recursos de Diseño de Interfaz
 
-Hytale's UI customization system works through the following structure:
+El sistema de personalización de interfaces de Hytale funciona mediante la siguiente estructura:
 
-* **UI Layout**: Sent to the client as an asset
-* **UI Behavior**: Defined in Java code
-* **Custom Layouts**: Enables creation of bespoke UI layouts rather than repurposing existing ones (unlike inventory menu modifications in Minecraft)
+* **Diseño de la Interfaz**: Enviado directamente al cliente como un recurso
+* **Comportamiento de la Interfaz**: Definido en el código Java
+* **Diseños Personalizados**: Permite la creación de nuevos diseños de interfaz en lugar de reutilizar los existentes (a diferencia de las modificaciones del menú de inventario en Minecraft)
 
-### UI Framework Implementations
+### Implementaciones de Marcos de Trabajo para Interfaces
 
-Hytale currently supports multiple UI implementations, with plans to consolidate on NoesisGUI:
+Actualmente Hytale soporta múltiples implementaciones de interfaces,con planes en consolidar en NoesisGUI:
 
-#### Legacy Implementation
+#### Implementación de Legado
 
-* Serves as an example of server modding capabilities
-* Uses a combination of in-game elements, UI Markup Assets, and Java mod code
-* Utilizes a legacy custom markup language
-* Will be deprecated in favor of NoesisGUI
+* Sirve como ejemplo en las capacidades de modding del lado del servidor
+* Utiliza una combinación de elementos dentro del juego, Recursos de Marcado de Interfaz y código de mods en Java
+* Utiliza un lenguaje de marcado personalizado de legado
+* Será marcado como obsoleto para dar paso a NoesisGUI
 
-#### NoesisGUI (Primary Framework)
+#### NoesisGUI (Principal Marco de Trabajo)
 
-* Uses XAML Markup Language for UI definition
-* Supports multiple languages for internationalization
-* Runs on C# bindings on the client side (not C++)
-* Represents the future direction of Hytale's UI system
+* Utiliza el lenguaje de marcado XAML para la definicion de interfaces
+* Soporta múltiples lenguajes para internacionalización
+* Se ejecuta en enlaces C# del lado del cliente (no C++)
+* Representa la futura dirección en el sistema de interfaces de Hytale
 
-#### Third Framework
+#### Marco de Trabajo de Terceros
 
-* Currently being phased out
-* Will be replaced by NoesisGUI as part of the consolidation effort
+* Actualmente en desuso
+* Será reemplazado por NoesisGUI como parte del esfuerzo de consolidación
 
-### Performance Considerations
+### Consideraciones de Rendimiento
 
-Due to the server-side nature of UI processing, there are inherent performance characteristics to consider:
+Debido a la naturaleza del procesado de interfaces del lado del servidor, hay características de rendimientos inherentes a considerar:
 
-* **Latency Impact**: Button clicks and UI interactions must travel to the server before taking effect, meaning network ping directly affects UI responsiveness
-* **No Client Persistence**: Since client-side modding is not supported, no modded values persist on the client
-* **Optimized Architecture**: Hytale's system is designed to minimize latency through efficient communication protocols and optimized server performance, ensuring smooth interactions despite server-side processing requirements
+* **Impacto en la Latencia**: Clicks en botones e interacciones de la interfaz deben pasar a través del servidor antes de tener efecto, significando que el ping de la red afecta directamente a la respuesta de la interfaz
+* **Sin Persistencia en el Cliente**: Ya que el modding del lado del cliente no es soportado, no se persisten datos del lado del cliente
+* **Arquitectura Optimizada**: El sistema de Hytale está diseñado para minimizar la latencia a través de protocolos de comunicación eficientes y el rendimiento optimizado del servidor, garantizando interacciones fluidas a pesar de los requisitos de procesamiento del lado del servidor.
 
-The architecture prioritizes security and consistency by centralizing UI logic on the server while maintaining responsive user experiences
+La arquitectura prioriza seguridad y consistencia al centralizar la lógica de interfaces en el servidor mientras mantiene experiencias de usuario receptivas

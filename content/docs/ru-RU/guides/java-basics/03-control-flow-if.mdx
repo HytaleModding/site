@@ -1,128 +1,128 @@
 ---
-title: 03 - Control Flow If Statements
-description: Learn how to control the flow of your Java programs using if statements.
+title: "03 — Управление потоком: оператор if"
+description: Вы узнаете, как управлять потоками ваших программ на Java с помощью оператора if.
 ---
 
-Programs need to make decisions. If statements let your code choose different paths based on conditions.
+Программы должны "принимать определенные решения". Оператор if позволяют вашему коду выбирать различные "пути", основанные на заданных вами условиях.
 
-## Basic If Statement
+## Базовый оператор if
 
-The simplest form checks one condition;
+Самая простая форма проверяет одно условие;
 
 ```java
 int health = 20;
 
 if (health > 10) {
-    System.out.println("You are healthy!");
+    System.out.println("Ты здоров!");
 }
 ```
 
-### Structure
+### Структура
 
 ```java
 if (condition) {
-    // code to execute if condition is true
+    // код, который будет выполняться при выполнении условия
 }
 ```
 
-## If-Else Statements
+## If-Else
 
-Choose between two paths:
+Выберите один из двух путей:
 
 ```java
 int health = 5;
 
 if (health > 10) {
-    System.out.println("You are healthy!");
+    System.out.println("Ты здоров!");
 } else {
-    System.out.println("You need healing!");
+    System.out.println("Джет узнал об отмене Hytale (ему нужна помощь)..");
 }
 ```
 
-## If-Else Else-If Chain
+## Цепочка If-Else Else-If
 
-Check multiple conditions in sequence:
+Позволяет проверять несколько условий в последовательности:
 
 ```java
 
 int health = 7;
 
 if (health > 15) {
-    System.out.println("You are in great shape!");
+    System.out.println("Саймон выкупил Hytale!");
 } else if (health > 5) {
-    System.out.println("You are okay.");
+    System.out.println("Ты жив.");
 } else {
-    System.out.println("You need healing!");
+    System.out.println("Джет узнал об отмене Hytale (ему нужна помощь).."");
 }
 ```
 
-## Nested If Statements
+## Вложенные операторы If
 
-You can place if statements inside other if statements:
+Вы можете поместить один оператор if внутри другого:
 
 ```java
 int health = 12;
 
 if (health > 10) {
     if (health > 15) {
-        System.out.println("You are in great shape!");
+        System.out.println("Саймон выкупил Hytale!");
     } else {
-        System.out.println("You are healthy!");
+        System.out.println("Ты жив.");
     }
 } else {
-    System.out.println("You need healing!");
+    System.out.println("Джет узнал об отмене Hytale (ему нужна помощь).."");
 }
 ```
 
-## Compound Conditions
+## Составные условия
 
-You can combine multiple conditions using logical operators:
+Вы можете комбинировать несколько условий с помощью логических операторов:
 
 ```java
-
-// AND - both must be true
+// AND - оба условия должны быть верными
 int health = 12;
 boolean hasPotion = true;
 
 if (health > 10 && hasPotion) {
-    System.out.println("You are healthy and have a potion!");
+    System.out.println("Саймон выкупил Hytale! Джет обновил пк!");
 } else if (health > 10) {
-    System.out.println("You are healthy but need a potion!");
+    System.out.println("Саймон выкупил Hytale, но Джет пока не собрал новый пк.");
 } else {
-    System.out.println("You need healing!");
+    System.out.println("Джет узнал об отмене Hytale (ему нужна помощь)..");
 }
 
-// OR - at least one must be true
+// OR - как минимум одно из условий должно выполняться
 
 int health = 8;
 boolean hasPotion = false;
 if (health > 10 || hasPotion) {
-    System.out.println("You are either healthy or have a potion!");
+    System.out.println("Саймон выкупил Hytale или у Джета начался приступ?");
 } else {
-    System.out.println("You need healing and a potion!");
+    System.out.println("Саймон выкупил Hytale и у Джета приступ?!");
 }
 
 // NOT - reverses the condition
 
 int health = 8;
 if (!(health > 10)) {
-    System.out.println("You need healing!");
+    System.out.println("Саймон выкупил Hytale! ");
 } else {
-    System.out.println("You are healthy!");
+    System.out.println("Hytale отменили.");
 }
 ```
 
-## Ternary Operator
+## Условный (тернарный) оператор
 
-A compact way to assign values:
+Компактный способ присвоения значений:
 
 ```java
 int health = 12;
-String status = (health > 10) ? "Healthy" : "Needs Healing";
+String status = (health > 10) ? "Проклятие разрушено" : "Проклят"; 
 ```
 
-### Syntax
+### Синтаксис
 
 ```java
 variable = (condition) ? valueIfTrue : valueIfFalse;
+(Формат: (условие) ? "значение при True(health>10)" : "значение при False(health<=10)";)
 ```
