@@ -1,0 +1,11 @@
+{
+  "title": "Core Concepts",
+  "description": "Understanding Pokemon, trainers, battles, and world integration",
+  "pages": [
+    "pokemon.mdx",
+    "battles.mdx"
+  ],
+  "icon": "Lightbulb"
+}
+
+

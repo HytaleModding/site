@@ -1,0 +1,10 @@
+{
+  "title": "Core Classes",
+  "description": "Core API classes for Pokemon, Trainers, and Battle System",
+  "pages": [
+    "pokemon-class.mdx"
+  ],
+  "icon": "Package"
+}
+
+

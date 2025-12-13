@@ -1,0 +1,10 @@
+{
+  "title": "Events",
+  "description": "Events fired by the Pokemon mod system",
+  "pages": [
+    "pokemon-events.mdx"
+  ],
+  "icon": "Zap"
+}
+
+

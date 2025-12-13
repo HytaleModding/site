@@ -1,0 +1,262 @@
+---
+title: Pokemon Events
+description: Events fired by the Pokemon mod system that developers can listen to.
+---
+
+# Pokemon Events
+
+The Pokemon mod fires various events that allow developers to react to and modify Pokemon-related actions. All events extend Hytale's base `Event` class and can be cancelled (unless otherwise noted).
+
+## Event System Overview
+
+Events are handled using Hytale's event system. Register listeners using the `@EventHandler` annotation:
+
+```java
+@EventHandler
+public void onPokemonSpawn(PokemonSpawnEvent event) {
+    // Handle event
+}
+```
+
+## Pokemon Events
+
+### `PokemonSpawnEvent`
+
+Fired when a Pokemon spawns in the world.
+
+**Event Properties:**
+- `getPokemon()` - Returns the spawned Pokemon (`Pokemon`)
+- `getLocation()` - Returns the spawn location (`Location`)
+- `setCancelled(boolean)` - Cancel the spawn
+
+**Example:**
+```java
+@EventHandler
+public void onPokemonSpawn(PokemonSpawnEvent event) {
+    Pokemon pokemon = event.getPokemon();
+    Location loc = event.getLocation();
+    
+    // Prevent legendary Pokemon from spawning in certain areas
+    if (pokemon.getSpecies().isLegendary() && loc.getY() < 50) {
+        event.setCancelled(true);
+    }
+}
+```
+
+### `PokemonCatchEvent`
+
+Fired when a trainer attempts to catch a Pokemon.
+
+**Event Properties:**
+- `getTrainer()` - The trainer attempting to catch (`Trainer`)
+- `getPokemon()` - The Pokemon being caught (`Pokemon`)
+- `getPokeBall()` - The Poke Ball being used (`PokeBall`)
+- `getCatchRate()` - Current catch rate (`double`)
+- `setCatchRate(double)` - Modify the catch rate
+- `setCancelled(boolean)` - Cancel the catch attempt
+
+**Example:**
+```java
+@EventHandler
+public void onPokemonCatch(PokemonCatchEvent event) {
+    // Increase catch rate for certain Pokemon
+    if (event.getPokemon().getSpecies().getName().equals("Magikarp")) {
+        event.setCatchRate(event.getCatchRate() * 2.0);
+    }
+}
+```
+
+### `PokemonLevelUpEvent`
+
+Fired when a Pokemon levels up.
+
+**Event Properties:**
+- `getPokemon()` - The Pokemon that leveled up (`Pokemon`)
+- `getOldLevel()` - Previous level (`int`)
+- `getNewLevel()` - New level (`int`)
+
+**Note:** This event cannot be cancelled.
+
+**Example:**
+```java
+@EventHandler
+public void onPokemonLevelUp(PokemonLevelUpEvent event) {
+    Pokemon pokemon = event.getPokemon();
+    
+    // Check if Pokemon can learn a new move
+    if (pokemon.canLearnMoveAtLevel(event.getNewLevel())) {
+        Move newMove = pokemon.getSpecies().getMoveAtLevel(event.getNewLevel());
+        // Notify trainer about new move
+    }
+}
+```
+
+### `PokemonEvolveEvent`
+
+Fired when a Pokemon evolves.
+
+**Event Properties:**
+- `getPokemon()` - The Pokemon before evolution (`Pokemon`)
+- `getEvolvedPokemon()` - The Pokemon after evolution (`Pokemon`)
+- `setCancelled(boolean)` - Cancel the evolution
+
+**Example:**
+```java
+@EventHandler
+public void onPokemonEvolve(PokemonEvolveEvent event) {
+    // Send special message when Pokemon evolves
+    Trainer trainer = PokemonMod.getTrainer(event.getPokemon().getOwner());
+    trainer.sendMessage("Your " + event.getPokemon().getSpecies().getName() + 
+                       " evolved into " + event.getEvolvedPokemon().getSpecies().getName() + "!");
+}
+```
+
+## Battle Events
+
+### `BattleStartEvent`
+
+Fired when a battle begins.
+
+**Event Properties:**
+- `getBattle()` - The battle instance (`Battle`)
+- `getTrainer1()` - First trainer (`Trainer`)
+- `getTrainer2()` - Second trainer (`Trainer`), or `null` for wild battles
+- `getWildPokemon()` - Wild Pokemon (`Pokemon`), or `null` for trainer battles
+
+**Example:**
+```java
+@EventHandler
+public void onBattleStart(BattleStartEvent event) {
+    Battle battle = event.getBattle();
+    
+    // Apply special rules for gym battles
+    if (event.getTrainer2() != null && event.getTrainer2().isGymLeader()) {
+        // Disable items in gym battles
+        battle.setItemsAllowed(false);
+    }
+}
+```
+
+### `MoveUseEvent`
+
+Fired when a move is used in battle.
+
+**Event Properties:**
+- `getBattle()` - The battle (`Battle`)
+- `getUser()` - Pokemon using the move (`Pokemon`)
+- `getTarget()` - Target Pokemon (`Pokemon`)
+- `getMove()` - The move being used (`Move`)
+- `getDamage()` - Calculated damage (`int`)
+- `setDamage(int)` - Modify the damage
+- `setCancelled(boolean)` - Cancel the move
+
+**Example:**
+```java
+@EventHandler
+public void onMoveUse(MoveUseEvent event) {
+    // Double damage for critical hits
+    if (event.isCriticalHit()) {
+        event.setDamage(event.getDamage() * 2);
+    }
+    
+    // Prevent certain moves in certain conditions
+    if (event.getMove().getName().equals("Fly") && 
+        event.getBattle().getLocation().getY() < 0) {
+        event.setCancelled(true);
+        event.getUser().getTrainer().sendMessage("Cannot use Fly underground!");
+    }
+}
+```
+
+### `PokemonFaintEvent`
+
+Fired when a Pokemon faints in battle.
+
+**Event Properties:**
+- `getBattle()` - The battle (`Battle`)
+- `getPokemon()` - The fainted Pokemon (`Pokemon`)
+- `getCause()` - What caused the faint (`FaintCause`)
+
+**Note:** This event cannot be cancelled.
+
+**Example:**
+```java
+@EventHandler
+public void onPokemonFaint(PokemonFaintEvent event) {
+    // Award experience to the winning Pokemon
+    Pokemon winner = event.getBattle().getOpponent(event.getPokemon());
+    if (winner != null) {
+        int expGained = calculateExperience(event.getPokemon(), winner);
+        winner.addExperience(expGained);
+    }
+}
+```
+
+### `BattleEndEvent`
+
+Fired when a battle ends.
+
+**Event Properties:**
+- `getBattle()` - The battle that ended (`Battle`)
+- `getWinner()` - Winning trainer (`Trainer`), or `null` if draw
+- `getLoser()` - Losing trainer (`Trainer`), or `null` if draw
+
+**Note:** This event cannot be cancelled.
+
+## Trainer Events
+
+### `TrainerBattleChallengeEvent`
+
+Fired when a trainer challenges another trainer to a battle.
+
+**Event Properties:**
+- `getChallenger()` - Trainer issuing challenge (`Trainer`)
+- `getChallenged()` - Trainer being challenged (`Trainer`)
+- `setCancelled(boolean)` - Cancel the challenge
+
+**Example:**
+```java
+@EventHandler
+public void onBattleChallenge(TrainerBattleChallengeEvent event) {
+    // Prevent challenges if trainer is in a restricted area
+    if (event.getChallenged().getPlayer().getLocation().isInRestrictedArea()) {
+        event.setCancelled(true);
+        event.getChallenger().sendMessage("Cannot challenge trainers in this area!");
+    }
+}
+```
+
+## Event Priority
+
+Events support priority levels to control execution order:
+
+```java
+@EventHandler(priority = EventPriority.HIGH)
+public void onPokemonSpawn(PokemonSpawnEvent event) {
+    // This runs before normal priority handlers
+}
+```
+
+**Priority Levels:**
+- `LOWEST` - Execute last
+- `LOW` - Execute after normal
+- `NORMAL` - Default priority
+- `HIGH` - Execute before normal
+- `HIGHEST` - Execute first
+- `MONITOR` - Execute last, cannot modify event
+
+## Best Practices
+
+1. **Check Event Type** - Always verify the event type matches your expectations
+2. **Avoid Long Operations** - Keep event handlers fast to prevent lag
+3. **Handle Null Values** - Some properties may be null (e.g., `getTrainer2()` in wild battles)
+4. **Use Appropriate Priority** - Use `MONITOR` priority for logging, `HIGH` for modifications
+5. **Don't Cancel Critical Events** - Some events (like `BattleEndEvent`) cannot be cancelled for good reason
+
+## Related Topics
+
+- [Core Classes](/docs/demo-mod-doc/api/core/pokemon-class) - Classes that fire these events
+- [Battle System](/docs/demo-mod-doc/api/core/battle-system) - Battle-related events
+- [Examples](/docs/demo-mod-doc/examples/custom-battle) - Practical event usage examples
+
+

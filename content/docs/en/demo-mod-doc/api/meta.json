@@ -1,0 +1,11 @@
+{
+  "title": "API Reference",
+  "description": "Complete Java API documentation for developers",
+  "pages": [
+    "core",
+    "events"
+  ],
+  "icon": "Code"
+}
+
+

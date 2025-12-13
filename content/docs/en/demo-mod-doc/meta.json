@@ -1,0 +1,14 @@
+{
+  "title": "Demo Mod Documentation",
+  "description": "Demo mod documentation",
+  "pages": [
+    "getting-started",
+    "concepts",
+    "api",
+    "configuration",
+    "examples"
+  ],
+  "icon": "Book"
+}
+
+

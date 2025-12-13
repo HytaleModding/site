@@ -1,0 +1,274 @@
+---
+title: Pokemon Class
+description: Core class representing a Pokemon entity in the mod.
+---
+
+# Pokemon Class
+
+The `Pokemon` class represents a single Pokemon instance with all its properties, stats, and behaviors.
+
+
+## Package
+
+`com.demomod.core.Pokemon`
+
+## Overview
+
+A `Pokemon` instance represents an individual Pokemon with unique characteristics. Each Pokemon has a species, level, stats, moves, and various other properties that make it unique.
+
+## Fields
+
+### `private PokemonSpecies species`
+The species of this Pokemon (e.g., Pikachu, Charizard).
+
+- **Type:** `PokemonSpecies`  
+- **Access:** Getter only  
+- **Default:** Required in constructor
+
+### `private int level`
+The current level of the Pokemon (1-100).
+
+- **Type:** `int`  
+- **Access:** Getter/Setter  
+- **Default:** `1`  
+- **Range:** `1-100`
+
+### `private Stats stats`
+The calculated stats of the Pokemon (HP, Attack, Defense, etc.).
+
+- **Type:** `Stats`  
+- **Access:** Getter only  
+- **Note:** Stats are recalculated when level or IVs change
+
+### `private IndividualValues ivs`
+The Individual Values (IVs) for each stat (0-31 each).
+
+- **Type:** `IndividualValues`  
+- **Access:** Getter/Setter  
+- **Default:** Randomly generated
+
+### `private EffortValues evs`
+The Effort Values (EVs) earned through training.
+
+- **Type:** `EffortValues`  
+- **Access:** Getter/Setter  
+- **Default:** All zeros
+
+### `private Nature nature`
+The Pokemon's nature, which affects stat growth.
+
+- **Type:** `Nature`  
+- **Access:** Getter only  
+- **Default:** Randomly assigned
+
+### `private int currentHP`
+The current health points of the Pokemon.
+
+- **Type:** `int`  
+- **Access:** Getter/Setter  
+- **Range:** `0` to `getMaxHP()`
+
+### `private List<Move> moves`
+The moves known by this Pokemon (maximum 4).
+
+- **Type:** `List<Move>`  
+- **Access:** Getter/Setter  
+- **Max Size:** `4`
+
+### `private StatusCondition status`
+The current status condition (if any).
+
+- **Type:** `StatusCondition`  
+- **Access:** Getter/Setter  
+- **Default:** `StatusCondition.NONE`
+**Access:** Getter/Setter  
+
+---
+
+## Constructors
+
+### `Pokemon(PokemonSpecies species, int level)`
+Creates a new Pokemon instance with the specified species and level.
+
+**Parameters:**
+- `species` (`PokemonSpecies`) - The species of Pokemon to create
+- `level` (`int`) - The starting level (1-100)
+
+**Throws:**
+- `IllegalArgumentException` - If level is outside valid range
+
+**Example:**
+```java
+PokemonSpecies pikachuSpecies = PokemonSpeciesRegistry.get("Pikachu");
+Pokemon pikachu = new Pokemon(pikachuSpecies, 25);
+```
+
+### `Pokemon(PokemonSpecies species, int level, IndividualValues ivs)`
+Creates a new Pokemon with custom IVs.
+
+**Parameters:**
+- `species` (`PokemonSpecies`) - The species of Pokemon
+- `level` (`int`) - The starting level
+- `ivs` (`IndividualValues`) - Custom IV values
+
+**Example:**
+```java
+IndividualValues perfectIVs = new IndividualValues(31, 31, 31, 31, 31, 31);
+Pokemon perfectPikachu = new Pokemon(pikachuSpecies, 50, perfectIVs);
+```
+
+---
+
+## Methods
+
+### `public PokemonSpecies getSpecies()`
+Returns the species of this Pokemon.
+
+**Returns:** The Pokemon's species (`PokemonSpecies`)
+
+**Example:**
+```java
+PokemonSpecies species = pokemon.getSpecies();
+String name = species.getName(); // "Pikachu"
+```
+
+### `public int getLevel()`
+Returns the current level of the Pokemon.
+
+**Returns:** Current level (`int`)
+
+### `public void setLevel(int level)`
+Sets the Pokemon's level and recalculates stats.
+
+**Parameters:**
+- `level` (`int`) - New level (1-100)
+
+**Throws:**
+- `IllegalArgumentException` - If level is outside valid range
+
+**Note:** This method automatically recalculates all stats based on the new level.
+
+### `public int getHP()`
+Returns the current HP of the Pokemon.
+
+**Returns:** Current HP (`int`)
+
+### `public int getMaxHP()`
+Returns the maximum HP this Pokemon can have at its current level.
+
+**Returns:** Maximum HP (`int`)
+
+### `public Stats getStats()`
+Returns the calculated stats object.
+
+**Returns:** Current stats (`Stats`)
+
+**Note:** Stats are calculated using: Base Stats + IVs + EVs + Level + Nature
+
+### `public void levelUp()`
+Increases the Pokemon's level by 1.
+
+**Throws:**
+- `MaxLevelException` - If the Pokemon is already at level 100
+
+**Note:** 
+- Stats are automatically recalculated
+- May learn new moves
+- May evolve if evolution conditions are met
+
+**Example:**
+```java
+if (pokemon.getLevel() < 100) {
+    pokemon.levelUp();
+    // Check if Pokemon learned a new move
+    // Check if Pokemon can evolve
+}
+```
+
+### `public void addExperience(int amount)`
+Adds experience points to the Pokemon.
+
+**Parameters:**
+- `amount` (`int`) - Experience points to add
+
+**Note:** Automatically levels up if enough experience is gained.
+
+**Example:**
+```java
+pokemon.addExperience(150);
+// Pokemon may level up if experience threshold is reached
+```
+
+### `public boolean canEvolve()`
+Checks if this Pokemon can evolve.
+
+**Returns:** `true` if evolution conditions are met, `false` otherwise
+
+**Example:**
+```java
+if (pokemon.canEvolve()) {
+    Pokemon evolved = pokemon.evolve();
+}
+```
+
+### `public Pokemon evolve()`
+Evolves this Pokemon into its evolution.
+
+**Returns:** The evolved Pokemon (`Pokemon`)
+
+**Throws:**
+- `EvolutionException` - If evolution conditions are not met
+
+**Note:** The original Pokemon is replaced with the evolved form.
+
+### `public void learnMove(Move move)`
+Teaches the Pokemon a new move.
+
+**Parameters:**
+- `move` (`Move`) - The move to learn
+
+**Throws:**
+- `MoveLimitException` - If Pokemon already knows 4 moves
+
+**Note:** If Pokemon knows 4 moves, you must forget a move first using `forgetMove()`.
+
+### `public void forgetMove(int index)`
+Removes a move from the Pokemon's move list.
+
+**Parameters:**
+- `index` (`int`) - Index of move to forget (0-3)
+
+**Throws:**
+- `IndexOutOfBoundsException` - If index is invalid
+
+### `public boolean isFainted()`
+Checks if the Pokemon has fainted (HP \<= 0).
+
+**Returns:** `true` if fainted, `false` otherwise
+
+### `public void heal()`
+Fully heals the Pokemon and removes status conditions.
+
+**Example:**
+```java
+pokemon.heal();
+// Pokemon's HP is restored to max, status conditions cleared
+```
+
+### `public void takeDamage(int damage)`
+Reduces the Pokemon's HP by the specified amount.
+
+**Parameters:**
+- `damage` (`int`) - Amount of damage to take
+
+**Note:** HP cannot go below 0.
+
+---
+
+## Related Classes
+
+- [Trainer Class](/docs/demo-mod-doc/api/core/trainer-class) - Manages Pokemon teams
+- [BattleSystem](/docs/demo-mod-doc/api/core/battle-system) - Handles Pokemon battles
+- [PokemonSpecies](/docs/demo-mod-doc/api/core/pokemon-class) - Defines Pokemon species
+- [Pokemon Events](/docs/demo-mod-doc/api/events/pokemon-events) - Events related to Pokemon
+

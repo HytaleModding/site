@@ -1,0 +1,10 @@
+{
+  "title": "Examples",
+  "description": "Practical code examples and tutorials",
+  "pages": [
+    "creating-pokemon.mdx"
+  ],
+  "icon": "FileCode"
+}
+
+

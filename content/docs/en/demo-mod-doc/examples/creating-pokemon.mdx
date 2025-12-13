@@ -1,0 +1,255 @@
+---
+title: Creating Custom Pokemon
+description: Learn how to create custom Pokemon species and integrate them into your server.
+---
+
+# Creating Custom Pokemon
+
+This guide demonstrates how to create custom Pokemon species for your server using the Pokemon mod's API.
+
+## Basic Pokemon Creation
+
+The simplest way to create a custom Pokemon is using the `PokemonSpecies` builder:
+
+```java
+import com.pokemonmod.core.PokemonSpecies;
+import com.pokemonmod.core.PokemonType;
+import com.pokemonmod.core.Stats;
+
+public class CustomPokemonExample {
+    
+    public static void registerCustomPokemon() {
+        PokemonSpecies customPokemon = PokemonSpecies.builder()
+            .name("HytaleMon")
+            .type(PokemonType.NORMAL)
+            .baseStats(new Stats(100, 100, 100, 100, 100, 100))
+            .build();
+        
+        // Register with the mod
+        PokemonSpeciesRegistry.register(customPokemon);
+    }
+}
+```
+
+## Complete Example: Creating a Fire-Type Pokemon
+
+Here's a complete example of creating a custom Fire-type Pokemon:
+
+```java
+import com.pokemonmod.core.*;
+import com.pokemonmod.core.moves.Move;
+import com.pokemonmod.core.moves.MoveType;
+
+public class FireDragonExample {
+    
+    public static PokemonSpecies createFireDragon() {
+        // Define base stats
+        Stats baseStats = new Stats(
+            80,   // HP
+            120,  // Attack
+            80,   // Defense
+            120,  // Special Attack
+            80,   // Special Defense
+            100   // Speed
+        );
+        
+        // Create the species
+        PokemonSpecies fireDragon = PokemonSpecies.builder()
+            .name("FlameDrake")
+            .type(PokemonType.FIRE, PokemonType.DRAGON)  // Dual type
+            .baseStats(baseStats)
+            .height(2.5)  // Height in meters
+            .weight(150.0)  // Weight in kilograms
+            .catchRate(45)  // Catch rate (lower = harder to catch)
+            .baseExperience(300)  // Base experience when defeated
+            .build();
+        
+        // Add moves learned by level
+        fireDragon.learnMoveAtLevel(1, MoveRegistry.get("Ember"));
+        fireDragon.learnMoveAtLevel(1, MoveRegistry.get("Scratch"));
+        fireDragon.learnMoveAtLevel(7, MoveRegistry.get("Dragon Rage"));
+        fireDragon.learnMoveAtLevel(15, MoveRegistry.get("Flamethrower"));
+        fireDragon.learnMoveAtLevel(30, MoveRegistry.get("Dragon Claw"));
+        fireDragon.learnMoveAtLevel(50, MoveRegistry.get("Fire Blast"));
+        
+        // Set evolution (if any)
+        fireDragon.setEvolution(35, "InfernoDrake");  // Evolves at level 35
+        
+        // Add abilities
+        fireDragon.addAbility(AbilityRegistry.get("Blaze"));
+        fireDragon.addAbility(AbilityRegistry.get("Solar Power"));
+        
+        return fireDragon;
+    }
+    
+    public static void register() {
+        PokemonSpecies species = createFireDragon();
+        PokemonSpeciesRegistry.register(species);
+    }
+}
+```
+
+## Creating Custom Moves
+
+You can also create custom moves for your Pokemon:
+
+```java
+import com.pokemonmod.core.moves.*;
+
+public class CustomMoveExample {
+    
+    public static Move createCustomMove() {
+        Move customMove = Move.builder()
+            .name("Hytale Strike")
+            .type(PokemonType.NORMAL)
+            .category(MoveCategory.PHYSICAL)
+            .power(80)
+            .accuracy(100)
+            .powerPoints(15)
+            .priority(MovePriority.NORMAL)
+            .build();
+        
+        // Register the move
+        MoveRegistry.register(customMove);
+        
+        return customMove;
+    }
+}
+```
+
+## Registering on Plugin Enable
+
+Register your custom Pokemon when your plugin enables:
+
+```java
+import com.hytale.plugin.Plugin;
+import com.pokemonmod.core.PokemonMod;
+
+public class MyCustomPlugin extends Plugin {
+    
+    @Override
+    public void onEnable() {
+        // Register custom Pokemon
+        PokemonSpeciesRegistry.register(createFireDragon());
+        
+        // Register custom moves
+        MoveRegistry.register(createCustomMove());
+        
+        getLogger().info("Custom Pokemon registered!");
+    }
+}
+```
+
+## Spawning Custom Pokemon
+
+To make your custom Pokemon spawn in the world:
+
+```java
+import com.pokemonmod.core.spawn.SpawnManager;
+import com.hytale.world.Location;
+
+public class SpawnCustomPokemon {
+    
+    public void spawnCustomPokemon(Location location) {
+        PokemonSpecies customSpecies = PokemonSpeciesRegistry.get("FlameDrake");
+        
+        if (customSpecies != null) {
+            SpawnManager spawnManager = PokemonMod.getSpawnManager();
+            spawnManager.spawnPokemon(location, customSpecies, 10);  // Level 10
+        }
+    }
+}
+```
+
+## Biome-Specific Spawning
+
+Make your Pokemon spawn in specific biomes:
+
+```java
+import com.pokemonmod.core.spawn.BiomeSpawnConfig;
+
+public class BiomeSpawnExample {
+    
+    public static void configureBiomeSpawning() {
+        PokemonSpecies flameDrake = PokemonSpeciesRegistry.get("FlameDrake");
+        
+        // Configure spawn rates per biome
+        BiomeSpawnConfig config = new BiomeSpawnConfig(flameDrake);
+        config.setSpawnRate(BiomeType.VOLCANIC, 0.3);  // 30% spawn rate in volcanic biomes
+        config.setSpawnRate(BiomeType.DESERT, 0.1);   // 10% spawn rate in deserts
+        config.setSpawnRate(BiomeType.PLAINS, 0.0);   // No spawn in plains
+        
+        // Register the configuration
+        SpawnManager.getInstance().registerBiomeSpawn(config);
+    }
+}
+```
+
+## Advanced: Custom Evolution
+
+Create custom evolution conditions:
+
+```java
+import com.pokemonmod.core.evolution.EvolutionCondition;
+
+public class CustomEvolutionExample {
+    
+    public static void setupCustomEvolution() {
+        PokemonSpecies baseForm = PokemonSpeciesRegistry.get("FlameDrake");
+        PokemonSpecies evolvedForm = PokemonSpeciesRegistry.get("InfernoDrake");
+        
+        // Create custom evolution condition
+        EvolutionCondition condition = new EvolutionCondition() {
+            @Override
+            public boolean canEvolve(Pokemon pokemon) {
+                // Evolve only during day time and at level 35+
+                return pokemon.getLevel() >= 35 && 
+                       World.getTimeOfDay() == TimeOfDay.DAY;
+            }
+        };
+        
+        baseForm.setEvolutionCondition(condition, evolvedForm);
+    }
+}
+```
+
+## Testing Your Custom Pokemon
+
+Test your custom Pokemon in-game:
+
+```java
+import com.hytale.command.Command;
+import com.hytale.command.CommandContext;
+
+public class TestPokemonCommand extends Command {
+    
+    @Override
+    public void execute(CommandContext context) {
+        Player player = context.getPlayer();
+        Trainer trainer = PokemonMod.getTrainer(player);
+        
+        // Give player a custom Pokemon
+        PokemonSpecies customSpecies = PokemonSpeciesRegistry.get("FlameDrake");
+        Pokemon customPokemon = new Pokemon(customSpecies, 50);
+        
+        trainer.addToTeam(customPokemon);
+        player.sendMessage("You received a " + customPokemon.getSpecies().getName() + "!");
+    }
+}
+```
+
+## Best Practices
+
+1. **Unique Names** - Use unique names to avoid conflicts with existing Pokemon
+2. **Balanced Stats** - Keep base stats reasonable (total around 300-600)
+3. **Type Balance** - Consider type effectiveness when creating dual-type Pokemon
+4. **Move Variety** - Give Pokemon a mix of move types and categories
+5. **Test Thoroughly** - Test spawn rates, evolution, and battle mechanics
+
+## Related Topics
+
+- [API Reference: PokemonSpecies](/docs/demo-mod-doc/api/core/pokemon-class) - Complete API documentation
+- [World Integration](/docs/demo-mod-doc/concepts/world-integration) - Spawning and biome integration
+- [Configuration](/docs/demo-mod-doc/configuration/pokemon-config) - Configure spawn rates
+
+

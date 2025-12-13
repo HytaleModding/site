@@ -1,0 +1,79 @@
+---
+title: Installation
+description: How to install and set up the Pokemon mod on your Hytale server.
+---
+
+# Installation
+
+This guide will walk you through installing the Pokemon mod on your Hytale server.
+
+## Prerequisites
+
+1. Numbered list of prerequisites
+
+## Installation Steps
+
+### 1. Download the Mod
+
+Download the latest version of the Pokemon mod JAR file from the releases page.
+
+### 2. Place the Plugin
+
+Copy the `pokemon-mod-X.X.X.jar` file to your server's `plugins` directory:
+
+```
+hytale-server/
+└── plugins/
+    └── pokemon-mod-1.0.0.jar
+```
+
+### 3. Start the Server
+
+Start or restart your Hytale server. The mod will automatically:
+
+- Create a `plugins/PokemonMod/` directory
+- Generate default configuration files
+- Initialize the Pokemon database
+
+### 4. Verify Installation
+
+Once the server has started, check the console for the following message:
+
+```
+[PokemonMod] Pokemon Mod v1.0.0 has been enabled!
+[PokemonMod] Loaded 151 Pokemon species
+[PokemonMod] Database initialized successfully
+```
+
+If you see these messages, the mod has been installed successfully!
+
+## First-Time Setup
+
+After installation, the mod will create several files in `plugins/PokemonMod/`:
+
+```
+plugins/PokemonMod/
+├── config.yml          # Main configuration file
+├── pokemon/            # Pokemon species definitions
+│   └── species/
+└── data/               # Player and Pokemon data
+    └── database.db
+```
+
+### Configuration
+
+Before players can use the mod, you may want to review the [configuration options](/docs/demo-mod-doc/configuration/pokemon-config).
+
+## Troubleshooting
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+
+## Next Steps
+
+Now that the mod is installed:
+
+- [Catch Your First Pokemon](/docs/demo-mod-doc/getting-started/first-pokemon) - Learn how to catch and interact with Pokemon
+- [Configure the Mod](/docs/demo-mod-doc/configuration/pokemon-config) - Customize Pokemon behavior and settings
+- [Learn Core Concepts](/docs/demo-mod-doc/concepts/pokemon) - Understand how Pokemon work in the mod
+
+

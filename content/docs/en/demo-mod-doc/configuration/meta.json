@@ -1,0 +1,11 @@
+{
+  "title": "Configuration",
+  "description": "Server and plugin configuration options",
+  "pages": [
+    "pokemon-config.mdx",
+    "server-config.mdx"
+  ],
+  "icon": "Settings"
+}
+
+
