@@ -46,13 +46,16 @@ export default async function RootLayout({
   children,
   params,
 }: LayoutProps<"/[lang]">) {
-  const lang = (await params).lang;
+  const { lang } = await params;
+  const dir = lang.startsWith("ar") ? "rtl" : "ltr";
+
   return (
-    <>
-      <Script id="set-lang" strategy="beforeInteractive">
-        {`document.documentElement.lang = '${lang}';`}
-      </Script>
-      <RootProvider i18n={provider(lang)}>{children}</RootProvider>
-    </>
+    <html lang={lang} dir={dir} suppressHydrationWarning>
+      <body>
+        <RootProvider i18n={provider(lang)}>
+          {children}
+        </RootProvider>
+      </body>
+    </html>
   );
 }
