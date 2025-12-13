@@ -1,0 +1,52 @@
+---
+title: Event Documentation Template
+description: Template for event documentation.
+---
+
+# `<EventName>`
+
+**Package:** `<PackageName>`
+
+**Event Type:** `<EventType>`
+
+---
+
+## Description
+
+A high-level overview of the event's purpose and when it is triggered within Hytale.
+
+## Event Properties
+
+### `public <Type> myProperty`
+
+A description of the property and its value when the event is triggered.
+
+## Event Handlers
+
+Refer to the example handler below:
+
+#### `public void on<EventName>(<EventName> event)`
+
+A brief description of when this handler is called and what it does.
+
+    | Parameter | Type | Description |
+    | :--- | :--- | :--- |
+    | `event` | `<EventName>` | The event object containing event-specific data. |
+
+**Note:** Only include a Return Type if the handler does not return void.
+
+    | Return Type| Description |
+    | :--- | :--- |
+    | `boolean` | Some notes about what is returned, including why it is not void. |
+
+**Usage Example:**
+
+```java
+// some java code here
+```
+
+---
+
+## Usage
+
+Provide a bulleted list of any non-obvious notes on best practices, considerations, or pitfalls when working with this event.
