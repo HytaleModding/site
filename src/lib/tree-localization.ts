@@ -1,10 +1,13 @@
 import FallbackLanguage from "@/../messages/en.json";
 import * as fs from "fs";
+import { DocsLayoutProps } from "fumadocs-ui/layouts/docs";
 import * as path from "path";
 
-export function localizePageTree(tree: any, lang: string): any {
-  // Load the language file
-  let translations: any = FallbackLanguage;
+export function localizePageTree(
+  tree: DocsLayoutProps["tree"],
+  lang: string,
+): DocsLayoutProps["tree"] {
+  let translations = FallbackLanguage;
 
   console.log("Loading translations for lang:", lang);
 
@@ -19,22 +22,20 @@ export function localizePageTree(tree: any, lang: string): any {
     }
   }
 
-  // Helper function to get translation from nested object using dot notation
   function getTranslation(key: string): string {
     const parts = key.split(".");
-    let value: any = translations;
+    let value = translations;
 
     for (const part of parts) {
       if (value && typeof value === "object" && part in value) {
-        value = value[part];
+        value = (value as Record<string, any>)[part];
       } else {
-        // Fall back to English if translation not found
         value = FallbackLanguage;
         for (const fallbackPart of parts) {
           if (value && typeof value === "object" && fallbackPart in value) {
-            value = value[fallbackPart];
+            value = (value as Record<string, any>)[fallbackPart];
           } else {
-            return key; // Return the key itself if not found in fallback
+            return key;
           }
         }
         break;
@@ -44,7 +45,6 @@ export function localizePageTree(tree: any, lang: string): any {
     return typeof value === "string" ? value : key;
   }
 
-  // Helper function to translate a string if it's wrapped in {}
   function translateString(text: string): string {
     if (!text || typeof text !== "string") return text;
 
@@ -55,33 +55,20 @@ export function localizePageTree(tree: any, lang: string): any {
     return text;
   }
 
-  // Recursively traverse and translate the tree
   function traverseNode(node: any): any {
     if (!node) return node;
 
-    // Clone the node to avoid mutating the original
-    const clonedNode = { ...node };
+    if (node.name) node.name = translateString(node.name);
 
-    // Translate properties that might contain translation keys
-    if (clonedNode.name) {
-      clonedNode.name = translateString(clonedNode.name);
-    }
+    if (node.title) node.title = translateString(node.title);
 
-    if (clonedNode.title) {
-      clonedNode.title = translateString(clonedNode.title);
-    }
+    if (node.index && typeof node.index === "object")
+      node.index = traverseNode(node.index);
 
-    // Handle index property (for folders with index pages)
-    if (clonedNode.index && typeof clonedNode.index === "object") {
-      clonedNode.index = traverseNode(clonedNode.index);
-    }
+    if (Array.isArray(node.children))
+      node.children = node.children.map(traverseNode);
 
-    // Recursively handle children
-    if (Array.isArray(clonedNode.children)) {
-      clonedNode.children = clonedNode.children.map(traverseNode);
-    }
-
-    return clonedNode;
+    return node;
   }
 
   return traverseNode(tree);
