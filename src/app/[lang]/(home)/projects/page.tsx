@@ -59,7 +59,7 @@ export default async function ProjectsPage({ params }: { params: { lang: string 
         <div className="max-w-5xl w-full space-y-6 max-lg:max-w-lg max-lg:py-32">
           <h1 className="text-4xl font-semibold text-balance">Projects</h1>
           <h2 className="text-muted-foreground text-lg text-balance">
-            Explore community projects. Click a card to view full MDX details.
+            Explore community projects.
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pt-2">
