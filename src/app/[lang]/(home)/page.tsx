@@ -106,7 +106,7 @@ export default function HomePage() {
             </Button>
             <Button asChild>
               <Link
-                href="https://forum.hytalemodding.guide"
+                href="https://forum.hytalemodding.dev"
                 target="_blank"
                 rel="noopener noreferrer"
               >

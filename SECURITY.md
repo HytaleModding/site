@@ -42,7 +42,7 @@ Instead, report security vulnerabilities by:
    - Fill out the form with details
 
 2. **Email**
-   - Send details to: `hello@hytalemodding.guide`
+   - Send details to: `hello@hytalemodding.dev`
    - Include "SECURITY" in the subject line
 
 3. **Private Contact**
@@ -134,7 +134,7 @@ Security patches are applied as follows:
 
 For urgent security matters that cannot be disclosed publicly, please use:
 - GitHub's security advisory feature (preferred)
-- Email: `hello@hytalemodding.guide`
+- Email: `hello@hytalemodding.dev`
 
 ## Acknowledgments
 
