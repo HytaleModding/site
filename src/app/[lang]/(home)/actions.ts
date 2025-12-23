@@ -2,6 +2,7 @@
 
 export async function getDiscordStats() {
   try {
+    // TODO: Change to .dev however needs api changing first.
     const response = await fetch(
       "https://api.internal.hytalemodding.guide/guild/stats",
       {
