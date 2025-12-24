@@ -16,8 +16,10 @@ export function baseOptions(
     },
   };
 
+  options.links = [];
+
   if (!docsLayout) {
-    options.links = [
+    options.links?.push(
       {
         icon: <BookIcon />,
         text: messages.nav.documentation,
@@ -28,7 +30,7 @@ export function baseOptions(
         text: messages.nav.sponsors,
         url: `/${locale}/sponsors`,
       },
-    ];
+    );
   }
 
   return options;
