@@ -60,6 +60,7 @@ const config = {
   experimental: {
     viewTransition: true,
   },
+  cacheComponents: true,
 };
 
 export default withMDX(config);
