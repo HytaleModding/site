@@ -1,5 +1,10 @@
 "use client";
-import { ExternalLinkIcon, BookIcon, MessageSquare, ArrowUpRightIcon } from "lucide-react";
+import {
+  ExternalLinkIcon,
+  BookIcon,
+  MessageSquareIcon,
+  ArrowUpRightIcon,
+} from "lucide-react";
 import { FlipWords } from "@/components/ui/flip-words";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { Button } from "@/components/ui/button";
@@ -289,7 +294,8 @@ export default function HomePage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <MessageSquare /> {messages.home.forum}
+                  <MessageSquareIcon /> {messages.home.forum}{" "}
+                  <ExternalLinkIcon />
                 </Link>
               </Button>
             </div>
@@ -314,11 +320,9 @@ export default function HomePage() {
           <MarqueeFade side="right" className="w-12" />
         </Marquee>
 
-        <div className="flex justify-center mt-6">
+        <div className="mt-6 flex justify-center">
           <Button asChild>
-            <Link
-              href={params?.lang?.toString() + "/projects"}
-            >
+            <Link href={params?.lang?.toString() + "/projects"}>
               <ArrowUpRightIcon className="mr-2 h-4 w-4" />
               View More Projects
             </Link>
