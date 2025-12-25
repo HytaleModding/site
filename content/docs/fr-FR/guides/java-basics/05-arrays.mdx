@@ -1,129 +1,129 @@
 ---
-title: 05 - Arrays
-description: Learn how to store and manage collections of data using arrays.
+title: 05 - Tableaux
+description: Apprenez à stocker et gérer les collections de données en utilisant des tableaux.
 ---
 
-Arrays let you store multiple values of the same type in a single variable. Think of an array as a row of boxes, each holding one item.
+Les tableaux vous permettent de stocker plusieurs valeurs du même type dans une seule variable. Pensez à un tableau comme une ligne de boîtes, chacune contenant un élément.
 
-## Creating Arrays
+## Créer des tableaux
 
-### Method 1: Declare and Initialize Separately
+### Méthode 1 : Déclarer et initialiser séparément
 
 ```java
-int[] numbers;           // Declare
-numbers = new int[5];    // Create array with 5 spaces
+int[] numbers;           // Déclaration
+numbers = new int[5];    // Crée un tableau avec 5 espaces
 ```
 
-### Method 2: All at Once
+### Méthode 2 : Tout en une fois
 
 ```java
 int[] numbers = new int[5];
 ```
 
-### Method 3: With Initial Values
+### Méthode 3 : Avec des valeurs initiales
 
 ```java
-int[] numbers = {10, 20, 30, 40, 50};
+int[] numbers = { 10, 20, 30, 40, 50 };
 ```
 
-<Callout type="info" title="Array Size">
-  Once you create an array, its size is **fixed**. You can't add or remove elements later!
+<Callout type="info" title="Taille de tableau">
+  Une fois que vous avez créé un tableau, sa taille est **fixe**. Vous ne pouvez pas rajouter ou supprimer des éléments plus tard !
 
   ```java
-  int[] inventory = new int[9];  // Always has exactly 9 slots
+  int[] inventory = new int[9];  // A toujours exactement 9 emplacements
   ```
 </Callout>
 
-## Accessing Array Elements
+## Accès aux éléments du tableau
 
-Arrays use **index** numbers starting from **0**:
+Les tableaux utilisent des nombres **index** à partir de **0** :
 
 ```java
-String[] players = {"Alice", "Bob", "Charlie"};
+String[] players = { "Alice", "Bob", "Charlie" };
 
 System.out.println(players[0]); // "Alice"
 System.out.println(players[1]); // "Bob"
 System.out.println(players[2]); // "Charlie"
 ```
 
-### Visual Representation
+### Représentation visuelle
 
-| Index | 0       | 1     | 2         |
-| ----- | ------- | ----- | --------- |
-| Value | "Alice" | "Bob" | "Charlie" |
+| Index  | 0       | 1     | 2         |
+| ------ | ------- | ----- | --------- |
+| Valeur | "Alice" | "Bob" | "Charlie" |
 
-## Modifying Array Values
+## Modifier les valeurs du tableau
 
 ```java
-int[] health = {100, 80, 90};
+int[] health = { 100, 80, 90 };
 
-health[1] = 60;  // Change Bob's health to 60
+health[1] = 60;  // Change la vie de Bob et la met à 60
 
 System.out.println(health[0]); // 100
 System.out.println(health[1]); // 60
 System.out.println(health[2]); // 90
 ```
 
-## Array Length
+## Longueur de tableau
 
-Use `.length` to get the size of an array:
+Utilisez `.length` pour obtenir la taille d'un tableau
 
 ```java
 int[] scores = {45, 67, 89, 92, 55};
 System.out.println(scores.length); // 5
 ```
 
-<Callout type="warning" title="Length is Not a Method">
-  Notice there are no parentheses! It's `array.length`, not `array.length()`.
+<Callout type="warning" title="Length n'est pas une méthode">
+  Remarquez qu'il n'y a pas de parenthèses ! C'est `array.length`, et pas `array.length()`.
 </Callout>
 
-## Looping Through Arrays
+## Boucler à travers des tableaux
 
-### Using For Loop
+### En utilisant la boucle for
 
 ```java
-String[] items = {"Sword", "Shield", "Potion"};
+String[] items = { "Sword", "Shield", "Potion" };
 
 for (int i = 0; i < items.length; i++) {
     System.out.println(items[i]);
 }
 ```
 
-### Using Enhanced For Loop (For-Each)
+### En utilisant les boucles for améliorées (for-each)
 
 ```java
-String[] items = {"Sword", "Shield", "Potion"};
+String[] items = { "Sword", "Shield", "Potion" };
 
 for (String item : items) {
     System.out.println(item);
 }
 ```
 
-<Callout type="info" title="Enhanced For Loop">
-  The enhanced for loop is simpler and safer, but you can't modify the array or know the current index.
+<Callout type="info" title="Boucles for améliorées">
+  La boucle for améliorée est plus simple et plus sûre, mais vous ne pouvez pas modifier le tableau ou connaitre l'index actuel.
 
   ```java
-  // When you need the index
+  // Quand vous avez besoin de l'index
   for (int i = 0; i < items.length; i++) {
       System.out.println(i + ": " + items[i]);
   }
 
-  // When you just need the values
+  // Quand vous avez juste besoin des valeurs
   for (String item : items) {
       System.out.println(item);
   }
   ```
 </Callout>
 
-## Multidimensional Arrays
+## Tableaux multidimensionnels
 
-Arrays can hold other arrays, creating a grid:
+Les tableaux peuvent contenir d'autres tableaux, formant des grilles :
 
 ```java
 int[][] grid = {
-    {1, 2, 3},
-    {4, 5, 6},
-    {7, 8, 9}
+    { 1, 2, 3 },
+    { 4, 5, 6 },
+    { 7, 8, 9 }
 };
 
 System.out.println(grid[0][0]); // 1
@@ -131,7 +131,7 @@ System.out.println(grid[1][2]); // 6
 System.out.println(grid[2][1]); // 8
 ```
 
-### Visual Representation
+### Représentation visuelle
 
 |       | 0 | 1 | 2 |
 | ----- | - | - | - |
@@ -139,12 +139,12 @@ System.out.println(grid[2][1]); // 8
 | **1** | 4 | 5 | 6 |
 | **2** | 7 | 8 | 9 |
 
-### Looping Through 2D Arrays
+### Boucler sur des tableaux à 2 dimensions
 
 ```java tab="Code"
 int[][] grid = {
-    {1, 2, 3},
-    {4, 5, 6}
+    { 1, 2, 3 },
+    { 4, 5, 6 }
 };
 
 for (int row = 0; row < grid.length; row++) {

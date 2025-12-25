@@ -3,57 +3,60 @@
   "nav": {
     "title": "صناعة مودات هايتيل",
     "documentation": "دليل التوثيق",
-    "search": "Search"
+    "sponsors": "الرعاة",
+    "search": "بحث"
   },
   "home": {
     "title": "المرجع الأول لكيفية صناعة مودات هايتيل {flipwords}",
     "flipwords": [
       "الشروحات",
       "دليل التوثيق",
-      "الموارد",
-      "Tutorials"
+      "أدوات",
+      "الشروحات"
     ],
     "description": "أهم مورد مجتمعي لتعديل لعبة هايتيل، يقدّم أدلّة شاملة، ووثائق تفصيلية، وأدوات أساسية لمساعدتك على بدء رحلتك في عالم صناعة المودز.",
     "documentation": "الوثائق",
-    "forum": "Forum",
+    "forum": "المنتدى",
     "discord": "انضم إلى مجتمعنا!",
     "memberCount": "عدد الاعضاء: {count} "
   },
   "misc": {
     "loading": "جارٍ التحميل…",
-    "gitInfoUnavailable": "معلومات Git غير متوفرة"
+    "gitInfoUnavailable": "معلومات Git غير متوفرة",
+    "credit": "بقلم",
+    "supportUs": "ادعمنا"
   },
   "meta": {
     "established_information": {
-      "title": "Established Information",
-      "separator": "Specific Categories",
+      "title": "معلومات موثوقة",
+      "separator": "تصنيفات خاصة",
       "server": {
-        "title": "Server",
+        "title": "الخادم",
         "content_categories": {
-          "title": "Content Categories"
+          "title": "تصنيفات المحتوى"
         },
         "interface": {
-          "title": "Interface"
+          "title": "واجهة"
         }
       },
       "client": {
-        "title": "Client"
+        "title": "العميل"
       },
       "gameplay": {
-        "title": "Gameplay"
+        "title": "أسلوب اللعب"
       },
       "misc": {
-        "title": "Miscellaneous"
+        "title": "أخرى"
       }
     },
     "guides": {
-      "title": "Guides",
+      "title": "الشروحات",
       "java_basics": {
-        "title": "Java Basics"
+        "title": "أساسيات جافا"
       }
     },
     "community_projects": {
-      "title": "Community Projects"
+      "title": "مشاريع المجتمع"
     }
   }
 }

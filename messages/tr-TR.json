@@ -3,6 +3,7 @@
   "nav": {
     "title": "Hytale Modding",
     "documentation": "Dökümantasyon",
+    "sponsors": "Sponsors",
     "search": ""
   },
   "home": {
@@ -21,7 +22,9 @@
   },
   "misc": {
     "loading": "Yükleniyor...",
-    "gitInfoUnavailable": "Git bilgisi bulunamadı"
+    "gitInfoUnavailable": "Git bilgisi bulunamadı",
+    "credit": "Written by",
+    "supportUs": "Support Us"
   },
   "meta": {
     "established_information": {

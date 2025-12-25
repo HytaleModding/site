@@ -5,7 +5,7 @@ description: Master text manipulation and string operations in Java.
 
 Strings are one of the most commonly used types in Java. They're essential for handling player names, chat messages, item descriptions, and like everything you see.
 
-## String Basics
+## Noções básicas de string
 
 Strings are objects that store text:
 
@@ -38,7 +38,7 @@ int length = name.length();
 System.out.println(length);  // 5
 ```
 
-### Alteração da capitalização
+### Reverter uma Cadeia
 
 ```java
 String texto = "Olá, Mundo";
@@ -61,13 +61,13 @@ boolean ends = message.endsWith("Hytale");  // verdadeiro
 ### Extração das partes da string
 
 ```java
-String text = "Hello World";
+String text = "Olá Mundo";
 
-char first = text.charAt(0);      // 'H'
-char last = text.charAt(10);      // 'd'
+char first = text.charAt(0);      // 'O'
+char last = text.charAt(10);      // 'o'
 
-String sub1 = text.substring(0, 5);   // "Hello"
-String sub2 = text.substring(6);      // "World"
+String sub1 = text.substring(0, 5);   // "OIá"
+String sub2 = text.substring(6);      // "Mundo"
 ```
 
 <Callout type="info" title="Substring Indices">
@@ -83,7 +83,7 @@ String sub2 = text.substring(6);      // "World"
   ```
 </Callout>
 
-### Replacing Text
+### Substituindo texto
 
 ```java
 String text = "Eu amo Minecraft";
@@ -94,7 +94,7 @@ String noSpaces = "Olá, Mundo".replace(" ", "");
 System.out.println(noSpaces);  // "Olá,Mundo" — sem o espaço entre as palavras
 ```
 
-### Trimming Whitespace
+### Retirando espaços vazios
 
 ```java
 String messy = "  Olá, Mundo  ";
@@ -102,7 +102,7 @@ String clean = messy.trim();
 System.out.println(clean);  // "Olá, Mundo" (sem espaços no final)
 ```
 
-### Splitting Strings
+### Dividindo cadeias
 
 ```java
 String command = "Dar jogador espada 5";
@@ -114,68 +114,68 @@ System.out.println(parts[2]);  // "espada"
 System.out.println(parts[3]);  // "5"
 ```
 
-## String Comparison
+## Comparação de strings
 
-<Callout type="warning" title="Never Use == for Strings">
-  Always use `.equals()` to compare string contents!
+<Callout type="warning" title="Nunca use `==` para strings">
+  Sempre use `.equals()` para comparar os conteúdos das strings!
 
   ```java
   String name1 = "Steve";
   String name2 = "Steve";
 
-  // Wrong - Compares object references
+  // Errado — Compara referências de objetos
   if (name1 == name2) {
-      System.out.println("Same");
+      System.out.println("Iguais");
   }
 
-  // Correct - Compares actual text
+  // Correto — Compara o texto real
   if (name1.equals(name2)) {
-      System.out.println("Same");
+      System.out.println("Iguais");
   }
 
-  // Ignore case when comparing
+  // Ignora letras maiúsculas e minúsculas ao comparar.
   if (name1.equalsIgnoreCase("steve")) {
-      System.out.println("Same (ignoring case)");
+      System.out.println("Iguais (ignorando a capitalização");
   }
   ```
 </Callout>
 
-### Comparing Order
+### Comparando a ordem
 
 ```java
-String a = "Apple";
+String a = "Maçã";
 String b = "Banana";
 
 int result = a.compareTo(b);
-// result < 0 if a comes before b
-// result == 0 if a equals b
-// result > 0 if a comes after b
+// resultado: < 0 se "a" vier antes de "b"
+// resultado: == 0 se "a" for igual a "b"
+// resultado: > 0 se "a" vier depois de "b"
 
 if (a.compareTo(b) < 0) {
-    System.out.println(a + " comes before " + b);
+    System.out.println(a + " vem antes de " + b);
 }
 ```
 
-## String Concatenation
+## Concatenação de string
 
-### Using + Operator
+### Usando o operador `+`
 
 ```java
-String first = "Hello";
-String second = "World";
-String combined = first + " " + second;  // "Hello World"
+String first = "Olá";
+String second = "Mundo";
+String combined = first + " " + second;  // "Olá Mundo"
 
 int score = 100;
-String message = "Score: " + score;  // "Score: 100"
+String message = "Pontuação: " + score;  // "Pontuação: 100"
 ```
 
-### Using concat()
+### Usando `.concat()`
 
 ```java
-String result = "Hello".concat(" World");  // "Hello World"
+String result = "Olá".concat(" Mundo");  // "Olá Mundo"
 ```
 
-### Building Long Strings
+### Construindo strings longas
 
 For many concatenations, use `StringBuilder`:
 
@@ -193,7 +193,7 @@ System.out.println(result);
 // "Player: Alice, Level: 10, Health: 100"
 ```
 
-<Callout type="info" title="Why StringBuilder?">
+<Callout type="info" title="Por que StringBuilder?">
   Regular concatenation creates many temporary strings:
 
   ```java

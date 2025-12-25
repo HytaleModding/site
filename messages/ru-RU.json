@@ -3,6 +3,7 @@
   "nav": {
     "title": "Моддинг Hytale",
     "documentation": "Документация",
+    "sponsors": "Спонсоры",
     "search": "Поиск"
   },
   "home": {
@@ -15,13 +16,15 @@
     ],
     "description": "Лучший ресурс для моддинг комьюнити Hytale, включающий в себя\nподробные гайды, документацию и все необходимые инструменты, чтобы начать свое путешествие в мир моддинга.",
     "documentation": "Документация",
-    "forum": "Forum",
+    "forum": "Форум",
     "discord": "Присоединись нашей коммьюнити!",
     "memberCount": "{count} Участников"
   },
   "misc": {
     "loading": "Загрузка...",
-    "gitInfoUnavailable": "Git недоступен"
+    "gitInfoUnavailable": "Git недоступен",
+    "credit": "Написано ",
+    "supportUs": "Поддержи нас"
   },
   "meta": {
     "established_information": {

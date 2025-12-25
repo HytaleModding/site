@@ -3,6 +3,7 @@
   "nav": {
     "title": "Hytale Modding",
     "documentation": "Documentatie",
+    "sponsors": "Sponsors",
     "search": "Zoeken"
   },
   "home": {
@@ -21,7 +22,9 @@
   },
   "misc": {
     "loading": "Aan het laden...",
-    "gitInfoUnavailable": "Git informatie niet beschikbaar"
+    "gitInfoUnavailable": "Git informatie niet beschikbaar",
+    "credit": "Written by",
+    "supportUs": "Support Us"
   },
   "meta": {
     "established_information": {
