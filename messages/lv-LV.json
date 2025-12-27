@@ -3,6 +3,7 @@
   "nav": {
     "title": "Hytale Modding",
     "documentation": "Dokumentācija",
+    "sponsors": "Sponsori",
     "search": "Meklēt"
   },
   "home": {
@@ -21,7 +22,9 @@
   },
   "misc": {
     "loading": "Lādējas...",
-    "gitInfoUnavailable": "Git info nav pieejams"
+    "gitInfoUnavailable": "Git info nav pieejams",
+    "credit": "Rakstīja",
+    "supportUs": "Atbalsti Mūs"
   },
   "meta": {
     "established_information": {

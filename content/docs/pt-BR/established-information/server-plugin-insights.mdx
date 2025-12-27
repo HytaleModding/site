@@ -1,31 +1,31 @@
 ---
-title: Server Code Insights
-description: Slikey shared some insights about server code on 12/15/2025. This document covers key points and takeaways from that discussion.
+title: Informações do código do servidor
+description: Slikey compartilhou algumas informações sobre o código do servidor em 15/12/2025. Este documento abrange os principais pontos e os tópicos dessa discussão.
 ---
 
 <Callout type="info" title="Nota">
-  The following information is based on insights shared by Technical Director Slikey on December 15, 2025 on the Hytale Discord Server. It provides an overview of the server code architecture and plugin capabilities.
+  As informações a seguir baseiam-se em observações compartilhadas pelo Diretor Técnico Slikey, em 15 de dezembro de 2025, no servidor de Discord do Hytale. Ele fornece uma visão geral da arquitetura do código do servidor e das capacidades dos plugins.
 
-  Majority of this document is just straight quotes from Slikey with minimal commentary. It is more over to preserve the information shared rather than reword it.
+  Este documento é composto principalmente por falas do próprio Slikey, com poucas observações adicionais. A ideia é manter o que foi dito em vez de mudar as palavras e o contexto.
 </Callout>
 
-# Server Source Code
+# Código-fonte do servidor
 
-The server will be released as shared source - we will have the source code with no obfuscation and all their comments.
+O servidor será lançado como _shared source_. Teremos acesso ao código-fonte sem qualquer ofuscação e com todos os seus comentários.
 
 ### Licença
 
-The license permits usage for any **hytale related** things, so as long as you dont use the server / source to make your own game or sell their algorithms.
+A licença autoriza o uso em tudo o que for ligado ao Hytale. A única restrição é não usar o servidor ou o código para fazer um jogo próprio ou comercializar os algoritmos da empresa.
 
 # Sistema de permissão
 
-After being asked in the Hytale Modding server, Lead Architect Zero has replied:
+Após ser questionado no servidor Hytale Modding, o Arquiteto Chefe Zero respondeu:
 
 It's quite basic, so don't expect much but yes we do have a permissions system built in. It also support implementing your own backend. Ex. if you wanted to store it in a database.
 
 ![Premission Source Snippet](/assets/premission-system.png)
 
-# Implementação da Geração de Mundo
+# Implementação da geração de mundo
 
 The following block of text is directly from Lead Architect Zero:
 
@@ -34,7 +34,7 @@ We have some stuff load prefabs and there is existing code in the current world 
 
 ```java
 public interface IWorldGenProvider {
-    BuilderCodecMapCodec<IWorldGenProvider> CODEC = new BuilderCodecMapCodec<>("Tipo", true);
+    BuilderCodecMapCodec<IWorldGenProvider> CODEC = new BuilderCodecMapCodec<>("Type", true);
 
     IWorldGen getGenerator() throws WorldGenLoadException;
 }
@@ -78,7 +78,7 @@ Let's say you connect to a server and open the asset editor: the server will sen
 > i guess this part also shows a bit how we use constants to store some language keys - Slikey
 > (in reference to the image below)
 
-![Constants to store Language Keys](/assets/constants.png)
+![Constantes para armazenar chaves de idioma](/assets/constants.png)
 
 > you can completely customize the chunk storage provider, we for example made one that is just empty where it doesnt load any chunks from disk
 > you could add an MySQLChunkStorageProvider and it could read the data from a database

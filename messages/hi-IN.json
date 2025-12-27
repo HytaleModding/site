@@ -3,6 +3,7 @@
   "nav": {
     "title": "Hytale Modding",
     "documentation": "प्रलेखन",
+    "sponsors": "Sponsors",
     "search": "खोजें"
   },
   "home": {
@@ -21,7 +22,9 @@
   },
   "misc": {
     "loading": "लोड हो रहा है...",
-    "gitInfoUnavailable": "Git जानकारी उपलब्ध नहीं है"
+    "gitInfoUnavailable": "Git जानकारी उपलब्ध नहीं है",
+    "credit": "Written by",
+    "supportUs": "Support Us"
   },
   "meta": {
     "established_information": {

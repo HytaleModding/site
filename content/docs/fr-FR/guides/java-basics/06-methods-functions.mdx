@@ -1,289 +1,285 @@
 ---
-title: 06 - Methods (Functions)
-description: Learn how to organize and reuse code with methods.
+title: 06 - Méthodes (Fonctions)
+description: Apprenez à organiser et réutiliser votre code avec des méthodes.
 ---
 
-Methods are reusable blocks of code that perform specific tasks. They help you avoid repeating code and make your programs easier to understand.
+Les méthodes sont des blocs de code réutilisables qui effectuent des tâches spécifiques. Elles vous évitent de réécrire du code et rendent votre code plus simple à comprendre.
 
-## What is a Method?
+## Qu'est-ce qu'une méthode ?
 
-Think of a method as a recipe. You define it once, then use it whenever you need it.
+Une méthode est un peu comme une recette. Vous la définissez une fois, puis vous pouvez l'utiliser à chaque fois que vous en avez besoin.
 
 ```java tab="Code"
-public class Game {
-    public static void main(String[] args) {
-        greet();        // Call the method
-        greet();        // Call it again!
-    }
-    
-    // Method definition
-    public static void greet() {
-        System.out.println("Welcome to Hytale!");
-    }
+public class Jeu {
+   public static void main(String[] args) {
+       salutation();           // Appelle la méthode
+       salutation();           // L'appelle à nouveau
+   }
+
+   // Définition de la méthode
+   public static void salutation() {
+      System.out.println("Bienvenue sur Hytale!");
+   }
 }
 ```
 
 ```text tab="Output"
-Welcome to Hytale!
-Welcome to Hytale!
+Bienvenue sur Hytale!
+Bienvenue sur Hytale!
 ```
 
-## Method Structure
+## Structure d'une méthode
 
 ```java
-public static void methodName() {
+public static void nomDeLaMethode() {
 //  ^      ^     ^      ^       ^
 //  |      |     |      |       |
-// access static return name  parameters
-// modifier       type
-    // Code goes here
+// Accède aux paramètres statiques de retour
+// Modificateur de type
+   // Insérez le code ici
 }
 ```
 
-We'll learn what `public` and `static` mean later. For now, just use them.
+Nous allons apprendre ce que signifie 'public' et 'static' plus tard. Pour l'instant, utilisez-les.
 
-## Methods with Parameters
+## Méthodes avec paramètres
 
-Parameters let you pass data into methods:
+Les paramètres vous permettent de passer des données dans des méthodes :
 
 ```java
-public static void greetPlayer(String name) {
-    System.out.println("Hello, " + name + "!");
+public static void salutationJoueur(String name) {
+   System.out.println("Hello, " + name + "!");
 }
 
 public static void main(String[] args) {
-    greetPlayer("Alice");  // Hello, Alice!
-    greetPlayer("Bob");    // Hello, Bob!
+   salutationJoueur ("Alice");   // Hello, Alice!
+   salutationJoueur("Bob");     // Hello, Bob!
 }
 ```
 
-### Multiple Parameters
+### Plusieurs paramètres
 
 ```java
-public static void dealDamage(String target, int damage) {
-    System.out.println(target + " takes " + damage + " damage!");
+public static void faireDesDegats(String target, int damage) {
+   System.out.println(target + " prend " + damage + " dégâts!");
 }
 
 public static void main(String[] args) {
-    dealDamage("Zombie", 20);    // Zombie takes 20 damage!
-    dealDamage("Skeleton", 15);  // Skeleton takes 15 damage!
+   faireDesDegats("Zombie", 20);       // Zombie prend 20 dégâts!
+   faireDesDegats("Squelette", 15);   // Squelette prend 15 dégâts!
 }
 ```
 
-<Callout type="info" title="Parameter Order Matters">
-  When calling a method, arguments must match the parameter order:
+<Callout type="info" title="L'ordre des paramètres est important ">
+  Lors de l'appel d'une méthode, les arguments doivent correspondre à l'ordre des paramètres :
 
   ```java
-  public static void createItem(String name, int quantity, double price) {
-      // ...
+  public static void creeUnObjet(String nom, int quantite, double prix) {
+     // ...
   }
 
   // Correct
-  createItem("Sword", 1, 50.0);
+  creeUnObjet("Épée", 1, 50.0);
 
-  // Wrong - Order matters!
-  createItem(1, "Sword", 50.0);  // Error!
+  // Incorrect - L'ordre importe !
+  creeUnObjet(1, "Épée", 50.0);   // Erreur!
   ```
 </Callout>
 
-## Methods with Return Values
+## Méthodes avec des valeurs de retour
 
-Methods can send data back using `return`:
+Les méthodes peuvent renvoyer des données en utilisant 'return'
 
 ```java
-public static int add(int a, int b) {
-    int sum = a + b;
-    return sum;
+public static int ajouter(int a, int b) {
+   int somme = a + b;
+   return somme;
 }
 
 public static void main(String[] args) {
-    int result = add(5, 3);
-    System.out.println(result);  // 8
+   int resultat = add(5, 3);
+   System.out.println(resultat);   // 8
 }
 ```
 
-The return type must match what you return:
+Le type de la valeur retournée annoncée doit correspondre à ce que vous retournez réellement.
 
-* `void` - Returns nothing
-* `int` - Returns an integer
-* `double` - Returns a decimal
-* `boolean` - Returns true/false
-* `String` - Returns text
+* 'void' - Ne revoie rien
+* 'int' - Renvoie un entier
+* 'double' - Renvoie un nombre décimal
+* 'boolean' - Renvoie true/false    (vrai/faux)
+* 'String' - Renvoie du texte
 
 ```java
-public static String getItemName() {
-    return "Diamond Sword";
+public static String avoirNomObjet() {
+   return "Épée en diamant";
 }
 
-public static boolean isPlayerAlive(int health) {
-    return health > 0;
-}
-
-public static double calculateDamage(int attack, double multiplier) {
-    return attack * multiplier;
+public static boolean joueurEnVie(int vie) {
+   return health > 0;
 }
 ```
 
-<Callout type="warning" title="Return Stops Execution">
-  Once a method hits `return`, it immediately exits. Code after `return` won't run!
+<Callout type="warning" title="Le renvoi arrête l'exécution">
+  Une fois que la méthode arrive à 'return', elle se termine immédiatement. Tout le code après 'return' ne sera pas exécuté!
 
   ```java
-  public static int getValue() {
-      return 10;
-      System.out.println("This never runs!");  // Unreachable code!
+  public static int avoirValeur() {
+     return 10;
+     System.out.println("Ceci ne s'exécute jamais!")   // Code inatteignable!
   }
   ```
 </Callout>
 
-## Practical Examples
+## Exemple
 
-### Health System
+### Système de santé
 
 ```java tab="Code"
-public static void displayHealth(String name, int health, int maxHealth) {
-    double percentage = (health * 100.0) / maxHealth;
-    System.out.println(name + ": " + health + "/" + maxHealth + 
-                      " (" + percentage + "%)");
+public static void afficheSante(String nom, int vie, int vieMax) {
+   double pourcentage = (health * 100.0) / vieMax;
+   System.out.println(nom + ": " + vie + "/" + vieMax + 
+                      " (" + pourcentage+ "%)");
 }
 
 public static void main(String[] args) {
-    displayHealth("Player", 75, 100);
-    displayHealth("Boss", 450, 500);
+    afficheSante("Joueur", 75, 100);
+    afficheSante("Boss", 450, 500);
 }
 ```
 
 ```text tab="Output"
-Player: 75/100 (75.0%)
-Boss: 450/500 (90.0%)
+Joueur : 75/100 (75.0%)
+Boss : 450/500 (90.0%)
 ```
 
-### Damage Calculator
+### Calculateur de dégâts
 
 ```java tab="Code"
-public static int calculateDamage(int baseAttack, int weaponDamage, boolean isCritical) {
-    int totalDamage = baseAttack + weaponDamage;
+public static int calculerDegats(int attaqueBase, int degatArme, boolean estCritique) {
+    int degatsTotal = attaqueBase+ degatArme;
     
-    if (isCritical) {
-        totalDamage *= 2;
+    if (estCritique) {
+        degatsTotal *= 2;
     }
     
-    return totalDamage;
+    return degatsTotal ;
 }
 
 public static void main(String[] args) {
-    int damage1 = calculateDamage(10, 15, false);  // 25
-    int damage2 = calculateDamage(10, 15, true);   // 50
+    int degats1 = calculerDegats(10, 15, false);  // 25
+    int degats2 = calculerDegats(10, 15, true);   // 50
     
-    System.out.println("Normal hit: " + damage1);
-    System.out.println("Critical hit: " + damage2);
+    System.out.println("Coup normal : " + damage1);
+    System.out.println("Coup critique : " + damage2);
 }
 ```
 
-### Level Requirements
+### Niveau requis
 
 ```java tab="Code"
-public static int getXPForLevel(int level) {
-    return level * 100;
+public static int avoirExpPourNiveau(int niveau) {
+    return niveau * 100;
 }
 
-public static boolean canLevelUp(int currentXP, int currentLevel) {
-    int required = getXPForLevel(currentLevel + 1);
-    return currentXP >= required;
+public static boolean peutNiveauSup(int expActuelle, int niveauActuel) {
+    int requis = avoirExpPourNiveau(niveauActuel+ 1);
+    return expActuelle>= requis;
 }
 
 public static void main(String[] args) {
-    int playerXP = 450;
-    int playerLevel = 4;
+    int expJoueur = 450;
+    int joueurNiveau = 4;
     
-    if (canLevelUp(playerXP, playerLevel)) {
-        System.out.println("You can level up!");
+    if (peutNiveauSup(expJoueur, joueurNiveau)) {
+        System.out.println("Vous pouvez monter de niveau!");
     } else {
-        int needed = getXPForLevel(playerLevel + 1) - playerXP;
-        System.out.println("Need " + needed + " more XP");
+        int necessaire = avoirExpPourNiveau(niveauJoueur + 1) - expJoueur;
+        System.out.println("Besoin de " + needed + " points d'expérience en plus");
     }
 }
 ```
 
-### Distance Calculator
+### Calculateur de distance
 
 ```java tab="Code"
-public static double calculateDistance(int x1, int y1, int x2, int y2) {
+public static double calculerDistance(int x1, int y1, int x2, int y2) {
     int dx = x2 - x1;
     int dy = y2 - y1;
     return Math.sqrt(dx * dx + dy * dy);
 }
 
-public static boolean isInRange(int x1, int y1, int x2, int y2, double range) {
-    double distance = calculateDistance(x1, y1, x2, y2);
-    return distance <= range;
+public static boolean estAPortee(int x1, int y1, int x2, int y2, double portee) {
+    double distance = calculerDistance(x1, y1, x2, y2);
+    return distance <= portee;
 }
 
 public static void main(String[] args) {
-    // Check if enemy is in attack range
-    if (isInRange(0, 0, 5, 5, 10.0)) {
-        System.out.println("Target in range!");
+    // Vérifie si un ennemi est à portée d'attaque
+    if (estAPortee(0, 0, 5, 5, 10.0)) {
+        System.out.println("Cible à portée!");
     }
 }
 ```
 
-## Method Overloading
+## Surcharge de méthode
 
-You can have multiple methods with the same name but different parameters:
+Vous pouvez définir plusieurs méthodes avec le même nom mais avec des paramètres différents :
 
 ```java
-public static void displayMessage(String message) {
+public static void afficherMessage(String message) {
     System.out.println(message);
 }
 
-public static void displayMessage(String message, int times) {
-    for (int i = 0; i < times; i++) {
+public static void afficherMessages(String message, int fois) {
+    for (int i = 0; i < fois; i++) {
         System.out.println(message);
     }
 }
 
 public static void main(String[] args) {
-    displayMessage("Hello");           // Calls first version
-    displayMessage("Hello", 3);        // Calls second version
+    afficherMessages("Hello");           // Appelle la première version
+    afficherMessages("Hello", 3);        // Appelle la seconde version
 }
 ```
 
-<Callout type="info" title="Method Overloading Rules">
-  Methods are considered different if they have:
+<Callout type="info" title="Règles de la surcharge de méthode">
+  Les méthodes ayant le même nom sont considérées comme différentes si elles ont :
 
-  * Different number of parameters
-  * Different types of parameters
-  * Different order of parameters
+  * Un nombre différent de paramètres
+  * Des types de paramètres différents
+  * Un ordre de paramètres différents
 
   ```java
   public static void test(int a) { }
-  public static void test(int a, int b) { }        // Different count
-  public static void test(double a) { }            // Different type
-  public static void test(String a, int b) { }     // Different types
-  public static void test(int a, String b) { }     // Different order
+  public static void test(int a, int b) { }        // Nombre de paramètres différent
+  public static void test(double a) { }            // Type différent
+  public static void test(String a, int b) { }     // Types différents
+  public static void test(int a, String b) { }     // Ordre différent
 
-  // Wrong - Only return type is different
+  // Faux - Seul le type de retour est différent
   public static int test(int a) { }
   ```
 </Callout>
 
-## Common Patterns in Hytale Modding
+## Schémas communs dans le Modding de Hytale
 
-### Item Creation
+### Création d'objet
 
 ```java
-public static Item createItem(String name, int durability) {
-    Item item = new Item();
-    item.setName(name);
-    item.setDurability(durability);
+public static Item creeObjet(String nom, int durabilite) {
+    Item objet = new Item();
+    item.setName(nom);
+    item.setDurability(durabilite);
     return item;
 }
 
-public static Item createSword() {
-    return createItem("Sword", 100);
+public static Item creeEpee() {
+    return creeObjet("Épée", 100);
 }
 
-public static Item createPickaxe() {
-    return createItem("Pickaxe", 150);
+public static Item creePioche() {
+    return creeObjet("Pioche", 150);
 }
 ```
 

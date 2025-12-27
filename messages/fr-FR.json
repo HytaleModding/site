@@ -3,6 +3,7 @@
   "nav": {
     "title": "Modding d'Hytale",
     "documentation": "Documentation",
+    "sponsors": "Partenaires",
     "search": "Recherche"
   },
   "home": {
@@ -21,7 +22,9 @@
   },
   "misc": {
     "loading": "Chargement...",
-    "gitInfoUnavailable": "Informations de git indisponibles"
+    "gitInfoUnavailable": "Informations de git indisponibles",
+    "credit": "Écrit par",
+    "supportUs": "Soutenez-nous"
   },
   "meta": {
     "established_information": {

@@ -3,6 +3,7 @@
   "nav": {
     "title": "Hytale Modding",
     "documentation": "Documentación",
+    "sponsors": "Sponsors",
     "search": "Buscar"
   },
   "home": {
@@ -16,21 +17,23 @@
     "description": "El recurso comunitario número uno para mods de Hytale, con guías exhaustivas, documentación detallada y herramientas esenciales para que empiece su viaje de modding.",
     "documentation": "Documentación",
     "forum": "Forum",
-    "discord": "Discord",
-    "memberCount": "{count} Miembros"
+    "discord": "¡Únete a la comunidad!",
+    "memberCount": "{count} miembros"
   },
   "misc": {
     "loading": "Cargando...",
-    "gitInfoUnavailable": "Información de Git no disponible"
+    "gitInfoUnavailable": "La información de Git no está disponible",
+    "credit": "Written by",
+    "supportUs": "Support Us"
   },
   "meta": {
     "established_information": {
-      "title": "Información Establecida",
+      "title": "Información recopilada",
       "separator": "Categorías específicas",
       "server": {
         "title": "Servidor",
         "content_categories": {
-          "title": "Categorías de contenido"
+          "title": "Áreas de contenido"
         },
         "interface": {
           "title": "Interfaz"

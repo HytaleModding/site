@@ -3,6 +3,7 @@
   "nav": {
     "title": "Hytale Modding",
     "documentation": "Documentação",
+    "sponsors": "Apoiadores",
     "search": "Buscar"
   },
   "home": {
@@ -21,16 +22,18 @@
   },
   "misc": {
     "loading": "Carregando...",
-    "gitInfoUnavailable": "Informações do Git indisponíveis"
+    "gitInfoUnavailable": "Informações do Git indisponíveis",
+    "credit": "Escrito por",
+    "supportUs": "Apoie-nos"
   },
   "meta": {
     "established_information": {
-      "title": "Informações Estabelecidas",
-      "separator": "Categorias Específicas",
+      "title": "Informações estabelecidas",
+      "separator": "Categorias específicas",
       "server": {
         "title": "Servidor",
         "content_categories": {
-          "title": "Categorias de Conteúdo"
+          "title": "Categorias de conteúdo"
         },
         "interface": {
           "title": "Interface"
@@ -53,7 +56,7 @@
       }
     },
     "community_projects": {
-      "title": "Projetos da Comunidade"
+      "title": "Projetos da comunidade"
     }
   }
 }

@@ -455,36 +455,36 @@ public class Player {
 
 Una classe può definire due tipi di membri:
 
-* **Membri dell' istanza**  — appartengono al singolo oggetto (ogni istanza ne ha la propria copia)
+* **Membri dell'istanza**  — appartengono al singolo oggetto (ogni istanza ne ha la propria copia)
 
-* **Membri statici**  — appartengono alla classe (una singola copia condivisa per l' intero tipo)
+* **Membri statici**  — appartengono alla classe (una singola copia condivisa per l'intero tipo)
 
 In parole povere: i membri dell' istanza appartengono agli oggetti; i membri statici appartengono alla classe stessa e sono condivisi da tutti gli oggetti di quel tipo.
 
 #### Dichiarazione
 
 ```java
-    /* (access modifier) */ static ... memberName; 
+    /* (modificatore d'accesso) */ static ... memberName; 
 ```
 
 #### Esempio
 
 ```java
 class Data {
-    public int x; // Instanced member
-    public static int y = 1000; // Static member
+    public int x; // Membro istanziato
+    public static int y = 1000; // Membro statico
 
-    // Instanced member:
-    // can access to both static and non-static members
+    // Membro istanziato:
+    // può accedere sia a membri statici che non-statici
     public void foo() {
-        x = 100; // OK - same as this.x = 100;
-        y = 100; // OK - same as Data.y = 200;
+        x = 100; // OK - equivalente a this.x = 100;
+        y = 100; // OK - equivalente a Data.y = 200;
     }
 
-    // Static member:
-    // cannot access to non-static variables
+    // Membro static:
+    // non può accedere a membri non statici
     public static void bar() {
-        x = 100; // Error: non-static variable x cannot be renference from a static context
+        x = 100; // Errore: la variable non statica x non può essere chiamata in un contesto statico
         y = 100; // OK
     }
 }
