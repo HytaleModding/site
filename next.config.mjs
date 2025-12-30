@@ -19,6 +19,10 @@ const config = {
         protocol: "https",
         hostname: "ui-avatars.com",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.internal.hytalemodding.dev"
+      }
     ],
   },
   async redirects() {
