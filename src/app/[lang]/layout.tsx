@@ -14,7 +14,19 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
   ),
-  keywords: ["hytale modding", "hytale", "hytale plugins", "hytale mods", "how to mod hytale", "modding tutorial", "modding guides", "hytale modding guides", "hytale modding tutorial", "how to start modding Hytale", "how to make a mod"]
+  keywords: [
+    "hytale modding",
+    "hytale",
+    "hytale plugins",
+    "hytale mods",
+    "how to mod hytale",
+    "modding tutorial",
+    "modding guides",
+    "hytale modding guides",
+    "hytale modding tutorial",
+    "how to start modding Hytale",
+    "how to make a mod",
+  ],
 };
 
 const translations = Object.fromEntries(
