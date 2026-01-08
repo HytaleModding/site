@@ -1,11 +1,11 @@
 ---
-title: 11 — HashMap e Armazenamento de Chaves-Valor
+title: 11 — HashMap e armazenamento de chaves-Valor
 description: Aprenda a armazenar e recuperar dados usando pares de chave-valor.
 ---
 
 Um `HashMap` armazena dados em pares de chave-valor, como um dicionário no mundo real. Você busca por uma palavra (chave) para encontrar a sua definição (valor). Isso é perfeito para dados de jogadores, propriedades de itens e configurações.
 
-## Primeiros passos com um HashMap
+## Noções básicas de HashMap
 
 ```java
 import java.util.HashMap;
@@ -37,12 +37,12 @@ public class Main {
   | Cada chave é única                  | Pode haver duplicatas            |
 
   ```java
-  // ArrayList - acesso por número
+  // ArrayList — acesso por número
   ArrayList<String> players = new ArrayList<>();
   players.add("Alice");
   String player = players.get(0);  // Obtém o primeiro jogador
 
-  // HashMap - acesso por nome
+  // HashMap — acesso por nome
   HashMap<String, Integer> levels = new HashMap<>();
   levels.put("Alice", 10);
   int level = levels.get("Alice");  // Obtém o nível de Alice
@@ -101,7 +101,7 @@ scores.clear();                   // Remove tudo
 System.out.println(scores);       // {}
 ```
 
-### Verificação de tamanho e vazio
+### Verificação de tamanho e espaço vazio
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
@@ -111,9 +111,9 @@ int size = scores.size();         // 1
 boolean empty = scores.isEmpty(); // false
 ```
 
-## Repetição através de HashMaps
+## Repetição por HashMaps
 
-### Através de chaves
+### Por chaves
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
@@ -127,7 +127,7 @@ for (String name : scores.keySet()) {
 // Saída: Alice, Bob, Charlie (a ordem pode mudar)
 ```
 
-### Através de valores
+### Por valores
 
 ```java
 for (Integer score : scores.values()) {
@@ -136,7 +136,7 @@ for (Integer score : scores.values()) {
 // Saída: 100, 150, 75 (a ordem pode mudar)
 ```
 
-### Através de chaves e valores
+### Por chaves e valores
 
 ```java
 for (String name : scores.keySet()) {

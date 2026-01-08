@@ -1,26 +1,26 @@
 ---
-title: 11 - HashMap and Key-Value Storage
-description: Learn to store and retrieve data using key-value pairs.
+title: 11 - HashMap et stockage clé-valeur
+description: Apprenez à stocker et récupérer des données en utilisant les paires clés-valeurs.
 ---
 
-A `HashMap` stores data in key-value pairs, like a real-world dictionary. You look up a word (key) to find its definition (value). This is perfect for player data, item properties, and configuration settings.
+Une `HashMap` stocke des données en paires clés-valeurs, comme un vrai dictionnaire. Vous cherchez un mot (clé) pour trouver sa définition (valeur). C'est parfait pour les données du joueur, les propriétés d'objets, et les paramètres de configuration.
 
-## HashMap Basics
+## Bases des HashMap
 
 ```java
 import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        // Create a HashMap (String keys, Integer values)
+        // Crée une HashMap (clés String, valeur Entiers)
         HashMap<String, Integer> playerLevels = new HashMap<>();
         
-        // Add key-value pairs
+        // Ajouter une paire clé-valeur
         playerLevels.put("Alice", 10);
         playerLevels.put("Bob", 15);
         playerLevels.put("Charlie", 8);
         
-        // Get a value by key
+        // Récupérer une valeur par clé
         int aliceLevel = playerLevels.get("Alice");  // 10
         
         System.out.println("Alice is level " + aliceLevel);

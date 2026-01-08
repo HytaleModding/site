@@ -1,0 +1,68 @@
+{
+  "displayName": "English",
+  "nav": {
+    "title": "Hytale Modding",
+    "documentation": "Documentation",
+    "sponsors": "Sponsors",
+    "search": "Search"
+  },
+  "home": {
+    "title": "#1 Resource for Hytale Modding {flipwords}",
+    "flipwords": [
+      "Guides",
+      "Documentation",
+      "Tools",
+      "Tutorials"
+    ],
+    "description": "The number one community resource for modding Hytale, featuring\ncomprehensive guides, detailed documentation, and essential tools to\nkickstart your modding journey.",
+    "documentation": "Docs",
+    "forum": "Forum",
+    "discord": "Join the community!",
+    "memberCount": "{count} Members"
+  },
+  "sponsors": {
+    "title": "Support Us",
+    "description": "HytaleModding is an open-source community project, and part of managing the community involves paying for services, servers and infrastructure, like hosting this website. If you would like to support the project, consider becoming a sponsor! We use OpenCollective so you can see how funds are being used to support the community.",
+    "ourSponsors": "Our Sponsors"
+  },
+  "misc": {
+    "loading": "Loading...",
+    "failedToLoad": "Failed to load.",
+    "gitInfoUnavailable": "Git info not available",
+    "credit": "Written by",
+    "supportUs": "Support Us"
+  },
+  "meta": {
+    "established_information": {
+      "title": "Established Information",
+      "separator": "Specific Categories",
+      "server": {
+        "title": "Server",
+        "content_categories": {
+          "title": "Content Categories"
+        },
+        "interface": {
+          "title": "Interface"
+        }
+      },
+      "client": {
+        "title": "Client"
+      },
+      "gameplay": {
+        "title": "Gameplay"
+      },
+      "misc": {
+        "title": "Miscellaneous"
+      }
+    },
+    "guides": {
+      "title": "Guides",
+      "java_basics": {
+        "title": "Java Basics"
+      }
+    },
+    "community_projects": {
+      "title": "Community Projects"
+    }
+  }
+}

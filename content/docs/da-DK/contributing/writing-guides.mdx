@@ -1,86 +1,86 @@
 ---
-title: Writing Guides
+title: Skrivevejledninger
 ---
 
-## Creating a guide file
+## Oprettelse af en guidefil
 
-To start writing a guide, you need to create a file with extension `.mdx`. You need to create this file inside the `/content/docs/en` directory, now it depends in which section you want to make the guide, so you can decide which folder you should put it in after that.
+For at begynde at skrive en guide, skal du oprette en fil med filendelsen `.mdx`. Du skal oprette filen i mappen `/content/docs/en`. Det afhænger herefter af, hvilken sektion guiden skal ligge i, så du kan selv vælge, hvilken undermappe den skal placeres i.
 
-Suppose I want to make a java basics guide, I'd put it in `/content/docs/en/guides/java-basics`. You'll have to do some digging to find out where you want to place it.
+Hvis jeg f.eks. vil lave en guide om Java-basics, ville jeg placere den i `/content/docs/en/guides/java-basics`. Du skal muligvis undersøge strukturen lidt, for at finde det rette sted at placere guiden.
 
 <Callout>
-  If there's already a guide in the section you want to write about, you can just press on the "Edit On GitHub" button on our website and it'll take you to the folder, now you can write in the same folder to have your guide appear in the same section.
+  Hvis der allerede findes en guide i den sektion, du vil skrive om, så kan du blot klikke på "Edit on GitHub" knappen på vores hjemmeside. Det fører dig til den relevante mappe, hvor du kan skrive din guide, så den vises i samme sektion.
 </Callout>
 
 ## Frontmatter
 
-Frontmatter is the metadata of your guide, it tells our website how to display your guide. This needs to be at the very top of the file, which starts with `---` and ends with `---`.
+Frontmatter er metadata for din guide, som fortæller vores hjemmeside hvordan guiden skal vises. Det skal placeret helt øverst i filen og starter med `---`og slutter med `---`.
 
-Here's an example:
+Her er et eksempel:
 
 ```mdx
 ---
 title: "Java Basics"
-description: "Learn the basics of Java programming."
+description: "Lær det basale af Java programmering." 
 authors:
-    - name: "Your Name"
-      url: "https://yourwebsite.com"
+    - name: "Dit navn"
+      url: "https://dinhjemmeside.dk"
 ---
 ```
 
-Now as you can see, it's pretty self explanatory, you just need to fill in the details for your specific guide. If you don't have a URL you want to link yourself to, just don't write that whole line. Additionally, the authors section is optional, so if you don't want to add it, you can just leave it out although we encourage you to do so and credit yourself.
+Som du kan se, er det ret selvforklarende - du skal blot udfylde detaljerne for din specifikke guide. Hvis du ikke har en URL, du vil linke til, så skal du blot undlade at skrive hele den linje. Derudover er forfatter-sektionen valgfri, så hvis du ikke ønsker at tilføje den, kan du blot lade den være tom - dog opfordrer vi dig til at gøre det og kreditere dig selv.
 
-The indentation in the frontmatter is important, so make sure to keep it consistent with the example.
+Indrykningen i frontmatter er vigtig, så sørg for at holde den konsekvent i forhold til eksemplet.
 
-## Content Structure
+## Indholdsstruktur
 
-You should structure the content of your guide in a clear and organized manner. Here are some tips on how to do that:
+Du bør strukturere indholdet i din guide på en klar og overskuelig måde. Her er nogle tips til, hvordan du kan gøre det.
 
-- **Introduction:** Start with an overview of the topic and what the reader can expect to learn.
-- **Prerequisites:** List any prerequisites or prior knowledge the reader should have before diving into the guide.
-- **Step-by-Step Instructions:** Break down the content into clear, actionable steps. Use headings and subheadings to organize the information.
-- **Code Examples:** Include code snippets to illustrate key points. Make sure to explain each example thoroughly.
-- **Conclusion:** Summarize the main points and encourage the reader to explore further or try out what they've learned.
+- **Introduktion:** Start med en oversigt over emnet og hvad læseren kan forvente at lære.
+- **Forudsætninger:** Angiv eventuelle forudsætninger eller forhåndsviden, som læseren bør have, før vedkommende går i gang med guiden.
+- **Trin-for-trin-instruktioner:** Opdel indholdet i klare og handlingsorienterede trin. Brug overskrifter og underoverskrifter for at strukturere informationen.
+- **Kodeeksempler:** Inkluder kodeeksempler for at illustrere centrale pointer. Sørg for at forklare hvert eksempel grundigt.
+- **Konklusion:** Opsummer de vigtigste pointer, og opfordre læseren til at udforske emnet yderligere eller afprøve det, de har lært.
 
-Now if you're writing a really big section, you should split this into multiple pages so that it's easier for the reader to digest the information. No one wants to read a big wall of text all at once!
+Hvis du skriver en meget stor sektion, bør du opdele den i flere sider, så det bliver nemmere og overskueligt for læseren. Ingen har lyst til at læse en kæmpe lang sammenhængende tekst.
 
-When we write guides, we should also think of how people will consume them, and many people prefer to skim content rather than read it in detail. This is why it's better to split information into multiple pages, so it looks like a smaller amount of information to the reader. Also, consider using bullet points, numbered lists, and other formatting techniques to make the content more scannable.
+Når vi skriver guides, bør vi også tænke over, hvordan folk læser dem - mange foretrækker at skimme indhold frem for at læse det i detaljer. Derfor er det bedre at opdele informationen i flere sider, så den fremstår som en mindre mængde indhold for læseren. Derudover burde du overveje at bruge punktopstillinger, nummererede lister og andre formateringsteknikker, for at gøre indholdet mere overskueligt.
 
-## Formatting
+## Formatering
 
-We use [Markdown](https://www.markdownguide.org/) for formatting our guides. Here are some key points to keep in mind:
+Vi bruger [Markdown](https://www.markdownguide.org/) til at formatere vores guides. Her er nogle vigtige punkter, du bør have i mente:
 
-- Use headings (`#`, `##`, `###`) to organize your content.
-- Use bullet points and numbered lists for clarity.
-- Use code blocks (\`\`\`) for code snippets.
-- Use links to reference other guides or external resources.
+- Brug overskrifter (`#`, `##`, `###`) til at strukturere dit indhold.
+- Brug punktopstillinger og nummererede lister for at skabe klarhed.
+- Brug kodeblokke (\`\`\`) til kodeeksempler.
+- Brug links til at henvise til andre guides eller eksterne ressourcer.
 
-This is the same type of formatting you'll see on most documentation websites, and also social media platforms like Discord.
+Dette er den samme type formatering, som du ser på de fleste dokumentationshjemmesider samt på sociale medieplatforme som Discord.
 
-You can also make a Callout to highlight important information or tips. Use the following syntax:
+Du kan også bruge en Callout til at fremhæve vigtige information eller tips. Brug følgende syntaks:
 
 ```mdx
 <Callout>
-    This is a callout message.
+    Dette er en callout-besked.
 </Callout>
 ```
 
 <Callout>
-  This is a callout message.
+  Dette er en callout-besked.
 </Callout>
 
-You can change the color of the callout by adding a `type` attribute. For example:
+Du kan ændre farven på callouten, ved at tilføje en `type` attribut. For eksempel:
 
 ```mdx
 <Callout type="info">
-    This is an info callout.
+    Dette er en info-callout.
 </Callout>
 ```
 
-Available types are: `info`, `warning`, `error`, and `success`.
+Tilgængelige typer er: `info`, `warning`, `error`, og `success`.
 
-## Conclusion
+## Konklusion
 
-That's all! You are now a master at writing guides. Just remember, do not think you need to be perfect with your English, write the guide the way you will explain the topic to someone, and don't hesitate to ask for feedback or help if you need it.
+Det er alt! Du er nu mester i at skrive guides. Husk blot, at du ikke behøver at skrive perfekt engelsk - skriv guiden, som du ville forklare emnet for en anden, og tøv ikke med at bede om feedback eller hjælp, hvis du har brug for det.
 
-Happy writing!
+God skrivelyst!

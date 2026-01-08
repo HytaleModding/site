@@ -1,0 +1,378 @@
+---
+title: 07 - Introduction to Object-Oriented Programming
+description: Learn the fundamentals of classes and objects in Java.
+---
+
+Object-Oriented Programming (OOP) is the foundation of Java and Hytale modding. Instead of just having variables and methods floating around, we organize them into **classes** and **objects**.
+
+## What is a Class?
+
+A class is a blueprint for creating objects. Think of it like a recipe or a template.
+
+```java
+public class Player {
+    // Properties (data)
+    String name;
+    int health;
+    int level;
+    
+    // Behavior (methods)
+    public void takeDamage(int damage) {
+        health -= damage;
+        System.out.println(name + " took " + damage + " damage!");
+    }
+}
+```
+
+## What is an Object?
+
+An object is an instance created from a class. If a class is a blueprint, an object is the actual thing built from that blueprint.
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Create objects from the Player class
+        Player player1 = new Player();
+        player1.name = "Alice";
+        player1.health = 100;
+        player1.level = 5;
+        
+        Player player2 = new Player();
+        player2.name = "Bob";
+        player2.health = 80;
+        player2.level = 3;
+        
+        // Use the objects
+        player1.takeDamage(20);  // Alice took 20 damage!
+        player2.takeDamage(15);  // Bob took 15 damage!
+    }
+}
+```
+
+<Callout type="info" title="Class vs Object">
+  **Class** = Blueprint (the idea of a player)
+  **Object** = Actual thing (Alice, Bob, specific players)
+
+  One class can create many objects, just like one recipe can make many cakes!
+</Callout>
+
+## Creating a Simple Class
+
+Let's create a `Sword` class for Hytale:
+
+```java
+public class Sword {
+    // Properties
+    String name;
+    int damage;
+    int durability;
+    
+    // Method to use the sword
+    public void attack(String target) {
+        System.out.println("Attacking " + target + " for " + damage + " damage!");
+        durability -= 1;
+        
+        if (durability <= 0) {
+            System.out.println(name + " broke!");
+        }
+    }
+    
+    // Method to display info
+    public void displayInfo() {
+        System.out.println("Weapon: " + name);
+        System.out.println("Damage: " + damage);
+        System.out.println("Durability: " + durability);
+    }
+}
+```
+
+Using the class:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Sword sword = new Sword();
+        sword.name = "Iron Sword";
+        sword.damage = 15;
+        sword.durability = 3;
+        
+        sword.displayInfo();
+        sword.attack("Zombie");
+        sword.attack("Skeleton");
+        sword.attack("Spider");  // This will break the sword
+    }
+}
+```
+
+## Constructors
+
+Instead of setting properties one by one, use a **constructor** to initialize objects:
+
+```java
+public class Sword {
+    String name;
+    int damage;
+    int durability;
+    
+    // Constructor
+    public Sword(String weaponName, int weaponDamage, int weaponDurability) {
+        name = weaponName;
+        damage = weaponDamage;
+        durability = weaponDurability;
+    }
+    
+    public void attack(String target) {
+        System.out.println("Attacking " + target + " for " + damage + " damage!");
+        durability--;
+    }
+}
+```
+
+Now creating swords is easier:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Much cleaner!
+        Sword ironSword = new Sword("Iron Sword", 15, 100);
+        Sword diamondSword = new Sword("Diamond Sword", 25, 200);
+        
+        ironSword.attack("Zombie");
+        diamondSword.attack("Boss");
+    }
+}
+```
+
+<Callout type="info" title="Constructor Rules">
+  * Same name as the class
+  * No return type (not even `void`)
+  * Called automatically when you use `new`
+  * Can have multiple constructors (overloading)
+
+  ```java
+  public class Item {
+      String name;
+      int value;
+      
+      // Constructor with all parameters
+      public Item(String name, int value) {
+          this.name = name;
+          this.value = value;
+      }
+      
+      // Constructor with just name
+      public Item(String name) {
+          this.name = name;
+          this.value = 0;  // Default value
+      }
+  }
+  ```
+</Callout>
+
+## The `this` Keyword
+
+`this` refers to the current object. Use it to clarify when parameter names match property names:
+
+```java
+public class Player {
+    String name;
+    int health;
+    
+    public Player(String name, int health) {
+        this.name = name;      // this.name = the property
+        this.health = health;  // name = the parameter
+    }
+}
+```
+
+Without `this`, Java gets confused:
+
+```java
+public Player(String name, int health) {
+    name = name;      // ❌ Which name? Ambiguous!
+    health = health;  // ❌ Which health? Ambiguous!
+}
+```
+
+## Practical Examples
+
+### Item Class
+
+```java
+public class Item {
+    String name;
+    String type;
+    int quantity;
+    double weight;
+    
+    public Item(String name, String type, int quantity, double weight) {
+        this.name = name;
+        this.type = type;
+        this.quantity = quantity;
+        this.weight = weight;
+    }
+    
+    public void use() {
+        if (quantity > 0) {
+            quantity--;
+            System.out.println("Used " + name + ". Remaining: " + quantity);
+        } else {
+            System.out.println("No more " + name + " left!");
+        }
+    }
+    
+    public double getTotalWeight() {
+        return weight * quantity;
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Item potion = new Item("Health Potion", "Consumable", 5, 0.5);
+        
+        potion.use();  // Used Health Potion. Remaining: 4
+        System.out.println("Total weight: " + potion.getTotalWeight()); // 2.0
+    }
+}
+```
+
+### Monster Class
+
+```java
+public class Monster {
+    String name;
+    int health;
+    int attack;
+    boolean isHostile;
+    
+    public Monster(String name, int health, int attack, boolean isHostile) {
+        this.name = name;
+        this.health = health;
+        this.attack = attack;
+        this.isHostile = isHostile;
+    }
+    
+    public void takeDamage(int damage) {
+        health -= damage;
+        System.out.println(name + " took " + damage + " damage!");
+        
+        if (health <= 0) {
+            System.out.println(name + " was defeated!");
+        } else {
+            System.out.println(name + " has " + health + " health left.");
+        }
+    }
+    
+    public int attackPlayer() {
+        if (isHostile && health > 0) {
+            System.out.println(name + " attacks for " + attack + " damage!");
+            return attack;
+        }
+        return 0;
+    }
+    
+    public boolean isAlive() {
+        return health > 0;
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Monster zombie = new Monster("Zombie", 50, 10, true);
+        Monster chicken = new Monster("Chicken", 10, 0, false);
+        
+        zombie.takeDamage(20);        // Zombie took 20 damage!
+        int damage = zombie.attackPlayer();  // Zombie attacks for 10 damage!
+        
+        if (zombie.isAlive()) {
+            System.out.println("Monster is still alive!");
+        }
+    }
+}
+```
+
+### Block Class
+
+```java
+public class Block {
+    String type;
+    int x, y, z;
+    boolean isSolid;
+    int hardness;
+    
+    public Block(String type, int x, int y, int z, boolean isSolid, int hardness) {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.isSolid = isSolid;
+        this.hardness = hardness;
+    }
+    
+    public void breakBlock() {
+        System.out.println("Breaking " + type + " block at (" + x + ", " + y + ", " + z + ")");
+        System.out.println("Hardness: " + hardness);
+    }
+    
+    public String getPosition() {
+        return "(" + x + ", " + y + ", " + z + ")";
+    }
+    
+    public boolean canWalkThrough() {
+        return !isSolid;
+    }
+}
+```
+
+## Access Modifiers (Preview)
+
+You've seen `public` - it means "anyone can access this". We'll learn more about access control later, but here's a preview:
+
+```java
+public class Example {
+    public String publicVar;      // Anyone can access
+    private String privateVar;    // Only this class can access
+    /* (no modifier) */ String defaultVar; // Package access
+}
+```
+
+For now, use `public` for everything. We'll learn when to use `private` in the next article.
+
+<Callout type="info" title="Why Use Classes?">
+  Classes help you:
+
+  * **Organize** related data and methods together
+  * **Reuse** code easily (create many objects from one class)
+  * **Model** real-world things (players, items, monsters)
+  * **Maintain** code (changes in one place affect all objects)
+
+  Without classes, managing 100 players would require 100 separate variables for each property. With classes, it's just 100 Player objects!
+</Callout>
+
+## Practice Exercises
+
+1. **Create a `Potion` Class**:
+   * Properties: name, healAmount, uses
+   * Constructor to set all properties
+   * Method `drink()` that heals and decreases uses
+   * Method `isEmpty()` that returns true if uses less than or equal to 0
+
+2. **Create a `Chest` Class**:
+   * Properties: isLocked, itemCount, capacity
+   * Constructor
+   * Method `addItem()` that checks capacity
+   * Method `unlock()` that sets isLocked to false
+   * Method `isFull()` that checks if itemCount >= capacity
+
+3. **Create a `Villager` Class**:
+   * Properties: name, profession, tradeCount
+   * Constructor
+   * Method `greet()` that prints a greeting
+   * Method `trade()` that increases tradeCount
+   * Method `getInfo()` that displays all properties
+
+4. **Create Multiple Objects**: Using any class you made, create 3 different objects and test all their methods.

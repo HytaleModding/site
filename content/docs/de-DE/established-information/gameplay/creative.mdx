@@ -9,7 +9,7 @@ Der Kreativemodus in Hytale ist ein Sandbox-Modus, der es Spielern erlaubt, die 
 
 ## World Editing Tools
 
-Der Kreativmodus beinhaltet eine Vielzahl von Tools, die Spielern helfen, die Welt zu bearbeiten. Es enthält Undo-Funktionen für die Bearbeitung.
+Der Kreativmodus beinhaltet eine Vielzahl von Tools, die Spielern helfen, die Welt zu bearbeiten. Dieser enthält eine Funktion mit welcher vergangene Änderungen rückgängig gemacht werden können.
 
 Beachte: Die nachgenannten Abschnitte waren in der Video-Demo unbenannt.
 
@@ -24,128 +24,128 @@ Zeigt einen Lichstrahl von der Kamera des Spielers in die Richtung, in die der S
 - Dauer (Zahlen-Schieber): Beschreibung unbekannt Stand Dezember 2025.
 - Laserfarbe (Hex-Farbcode): Beschreibung unbekannt Stand Dezember 2025.
 
-### Sculpt Brush Tool
+### Vorformungs-Werkzeug
 
-Allows the user to raise and lower the terrain to more accurately sculpt and blend shapes. Supports most features of the Paint Brush.
+Ermöglicht dem Benutzer, das Gelände zu erhöhen und zu senken, um dieses genauer zu formen und vermischen. Unterstützt die meisten Funktionen der Pinsel Werkzeugs.
 
-### Line Brush Tool
+### Linienpinsel Werkzeug
 
-Unknown as of December 2025.
+Unbekannt Stand Dezember 2025.
 
-### Selection Tool
+### Auswahl-Werkzeug
 
-Allows the user to select and edit regions of the world by transforming selections of blocks or a prefab via position, rotation, and extrusion.
+Ermöglicht es dem Benutzer, Regionen der Welt auszuwählen und zu bearbeiten, indem die Auswahl von Blöcken oder eine vorgefertigte Struktur über Rotation und Extrusion transformiert wird.
 
-#### Settings
+#### Einstellungen
 
-- Mode (Combo Box: Set, Wall, Fill, Replace): Description unknown as of December 2025.
-- Material (Integer Slider): Description unknown as of December 2025.
-- Weight (Integer Slider): Description unknown as of December 2025.
-- Pitch (Integer): Description unknown as of December 2025.
+- Modus (Combo Box: Set, Wall, Fill, Replace): Beschreibung unbekannt stand vom Dezember 2025.
+- Material (Ganzzahlen-Schieber): Beschreibung unbekannt Stand Dezember 2025.
+- Gewicht (Ganzzahlen-Schieber): Beschreibung unbekannt Stand Dezember 2025.
+- Rotation (Ganzzahl): Beschreibung unbekannt Stand Dezember 2025.
 
-### Ruler
+### Maßstab
 
-Allows the user to measure distances between multiple points in 3D space, with support for multiple measurement lines and editing of measured points.
+Ermöglicht es dem Benutzer die Entfernungen zwischen mehreren Punkten im dreidimensionalen Raum zu messen, mit Unterstützung für mehrere Messlinien und Bearbeitung von Messpunkten.
 
-### Layer Brush Tool
+### Ebenen pinsel-Werkzeug
 
-Unknown as of December 2025.
+Unbekannt Stand Dezember 2025.
 
-### Paste Tool
+### Einfügen Werkzeug
 
-Allows the user to paste a copied selection of blocks or a prefab at the point at which the player is looking. The paste is relative to the selection's anchor point. If the selection is a prefab, the anchor point may be set in the Prefab Editor. It is unknown if the selection's anchor may be set otherwise.
+Ermöglicht dem Benutzer, eine kopierte Auswahl von Blöcken oder einer vorgefertigter Struktur an dem Punkt einzufügen, an dem der Spieler schaut. Die Einfügung erfolgt relativ zum Ankerpunkt der Auswahl. Ist die Auswahl eine Struktur, so kann der Ankerpunkt im Strukturen-Editor gesetzt werden. Es ist unbekannt, ob der Anker der Auswahl anderweitig gesetzt werden kann.
 
-### Flood Brush Tool
+### Fluten Werkzeug
 
-Unknown as of December 2025.
+Unbekannt Stand Dezember 2025.
 
-### Paint Brush Tool
+### Pinsel-Werkzeug
 
-Brushes are used to make large changes to the world from far away.
+Bürsten werden verwendet, um große Veränderungen in der Welt von weit entfernt vorzunehmen.
 
-#### General Abilities
+#### Allgemeine Funktionen
 
-- Place Shapes and Prefabs
-- Replace Blocks
-- Create Axis Locks and Masks
+- Formen und Strukturen platzieren
+- Blöcke ersetzen
+- Achsensperren und Masken erstellen
 
-#### Settings
+#### Einstellungen
 
 - Material
-- Width (Integer Slider): Description unknown as of December 2025.
-- Height (Integer Slider): Description unknown as of December 2025.
-- Shape (Combo Box: Cube, Sphere, Cylinder, Cone, Inverted Cone, Pyramid, Inverted Pyramid, Cuboid Grid): Description unknown as of December 2025.
-- Origin (Combo Box: Center, Bottom, Top): Description unknown as of December 2025.
-- Mirror Axis (Combo Box: None, Unknown other options): Description unknown as of December 2025.
-- Wall Thickness (Integer Slider): Description unknown as of December 2025.
-- Density (Integer Slider): Description unknown as of December 2025.
+- Breite (Ganzzahlen-Schieber): Beschreibung unbekannt Stand Dezember 2025.
+- Höhe (Ganzzahlen-Schieber): Beschreibung unbekannt Stand Dezember 2025.
+- Form (Kombi Box: Würfel, Kugel, Zylinder, Kegel, Invertierter Kegel, Pyramide, Invertierte Pyramide, Quader-Gitter): Beschreibung unbekannt Stand Dezember 2025.
+- Ursprung (Kombi Box: Zentriert, Unten, Oben): Beschreibung unbekannt Stand Dezember 2025.
+- Spiegelachse (Kombi Box: Keine, Andere Optionen unbekannt): Beschreibung unbekannt Stand Dezember 2025.
+- Wanddicke (Ganzzahlen-Schieber): Beschreibung unbekannt Stand Dezember 2025.
+- Dichte (Ganzzahlen-Schieber): Beschreibung unbekannt Stand Dezember 2025.
 
-#### Presets:
+#### Voreinstellungen:
 
-- Boulder: Creates a boulder at the point at which the player is looking.
-- Grassy Path: Transforms the terrain into a grass path at the point at which the player is looking.
-- Rubble: Generate rubble at the point at which the player is looking.
-- Tentacle: TBD
-- Lava Cracks: Transforms the terrain into a lava crack at the point at which the player is looking.
-- Hot Springs: TBD
-- Ruins: Generates a ruin at the point at which the player is looking.
-- Ruin Roofs: Generates a ruin with a roof at the point at which the player is looking.
-- Grass: TBD
-- Mountain: Places consecutive chunks of terrain to form a mountain at the point at which the player is looking.
-- Ruins: TBD
-
----
-
-### Entity Grabber Tool
-
-Unknown as of December 2025.
-
-### Noise Brush Tool
-
-Unknown as of December 2025.
-
-### Scatter Brush Tool
-
-Unknown as of December 2025.
-
-### Extrude Brush Tool
-
-Unknown as of December 2025.
-
-### Prefab Selector Tool
-
-Allows the user to select a prefab when inside the Prefab Editor. May be used with the copy command.
-
-### Smooth Brush Tool
-
-Unknown as of December 2025.
-
-### Hitbox Tool
-
-Unknown as of December 2025.
-
-### Set Anchor Tool
-
-Allows the user to set an anchor point for a prefab when inside the Prefab Editor.
-
-### Tint Brush Tool
-
-Unknown as of December 2025.
+- Felsbrocken: Erzeugt einen Felsbrocken an dem Punkt, an welchen der Spieler hinblickt.
+- Grasweg: Verwandelt das Gelände in einen Grasweg an dem Punkt, an welchen der Spieler hinblickt.
+- Schutt: Erzeugt Schutt an dem Punkt, an dem der Spieler hinblickt.
+- Tentakel: noch nicht festgelegt
+- Lavarinne: verwandelt das Gelände in eine Lavarinne an dem Punkt, an welchem der Spieler hinblickt.
+- Heiße Quellen: noch nicht festgelegt
+- Ruinen: Erzeugt eine Ruine an dem Punkt, an welchem der Spieler hinblickt.
+- Ruinendach: Erzeugt eine Ruine mit einem Dach an der Stelle, an welcher der Spieler hinblickt.
+- Gras: noch nicht festgelegt
+- Berg: Platziert aufeinanderfolgende Geländestücke, um einen Berg an dem Punkt zu bilden, an welchem der Spieler hinblickt.
+- Ruinen: noch nicht festgelegt
 
 ---
 
-## Creative Mode Quick Settings
+### Entitätengreifer Werkzeug
 
-Note that these are WIP and subject to change. **Not all settings and functionality are currently known**.
+Unbekannt Stand Dezember 2025.
 
-- Tool Reach Distance (Integer Slider): Description unknown as of December 2025.
+### Rauschpinsel Werkzeug
+
+Unbekannt Stand Dezember 2025.
+
+### Streupinsel Werkzeug
+
+Unbekannt Stand Dezember 2025.
+
+### Extrudierpinsel Werkzeug
+
+Unbekannt Stand Dezember 2025.
+
+### Struktur Auswahlwerkzeug
+
+Ermöglicht dem Benutzer, im Struktureditor eine Struktur auszuwählen. Kann mit dem Kopierbefehl verwendet werden.
+
+### Glättendes Pinselwerkzeug
+
+Unbekannt Stand Dezember 2025.
+
+### Hitbox Werkzeug
+
+Unbekannt Stand Dezember 2025.
+
+### Ankersetzwerkzeug
+
+Ermöglicht der Benutzer\*in, einen Ankerpunkt für eine Struktur zu definieren, wenn dieser im Struktureditor ist.
+
+### Tönungswerkzeug
+
+Unbekannt Stand Dezember 2025.
+
+---
+
+## Schnelleinstellungen für den Kreativmodus
+
+Beachte, dass diese noch nicht voll ausgearbeitet sind & Änderungen vorbehalten sind. **Derzeit sind nicht alle Einstellungen und Funktionen bekannt**.
+
+-
 - Tool Delay Minimum (Integer Slider): Description unknown as of December 2025.
 - Brush Opacity (Integer Slider): Description unknown as of December 2025.
 - Selection Opacity (Integer Slider): Description unknown as of December 2025.
 - Selection Panel Opacity (Integer Slider): Description unknown as of December 2025.
 - Enable Brush Shape Rendering (Toggle): Description unknown as of December 2025.
-- Display Legend (Toggle): Description unknown as of December 2025.
-- Show Tool Notifications (Toggle): Description unknown as of December 2025.
+- Legende anzeigen (Umschalten): Beschreibung unbekannt Stand Dezember 2025.
+- Werkzeugbenachrichtigungen anzeigen (Umschalten): Beschreibung unbekannt Stand Dezember 2025.
 - Default Laser Pointer (Hex Color Code): Description unknown as of December 2025.
 - Enable Brush Spacing (Toggle): Description unknown as of December 2025.
 - Spacing Between Br? (Integer Slider): Description unknown as of December 2025.
@@ -154,39 +154,39 @@ Note that these are WIP and subject to change. **Not all settings and functional
 - No Clip (Toggle): Description unknown as of December 2025.
 - Air Placement (Toggle): Description unknown as of December 2025.
 
-## Content Creation Tools
+## Werkzeuge zur Erstellung von Inhalten
 
-Hytale includes a variety of built-in content creation tools to help players create and edit content.
+Hytale enthält eine Reihe von integrierten Tools zur Erstellung von Inhalten, die Spielern dabei helfen, Inhalte zu erstellen und zu bearbeiten.
 
 ### Asset Editor
 
-Unknown as of December 2025.
+Unbekannt Stand Dezember 2025.
 
-### Model Editor
+### Modell Editor
 
-Unknown as of December 2025.
+Unbekannt Stand Dezember 2025.
 
-### Asset Node Editor
+### Asset-Node Editor
 
-Unknown as of December 2025.
+Unbekannt Stand Dezember 2025.
 
-### World Tools
+### Welt-Werkzeuge
 
 These are tools that allow the user to directly edit the current world.
 
-#### Prefab Editor
+#### Strukturen Editor
 
 Allows the user to create or edit prefabs in a separate space.
 
-##### Settings
+##### Einstellungen
 
-- Saved configs (Unknown type; presumably a file)
+- Gespeicherte Konfigurationen (Unbekannter Typ; vermutlich eine Datei)
 - Root Dir (Unknown type; presumably a folder)
 - Prefab Paths or Folders (Unknown type; presumably a list of paths or folders)
-- Recursively Search for Prefabs (Toggle)
-- Spawn Entities and NPCs (Toggle)
-- Desired Y Level to Paste (Integer)
-- Blocks Between Prefabs (Integer)
+- Rekursiv nach Strukturen suchen (Umschalten)
+- Spawne Entitäten und NPCs (Umschalten)
+- Gewünschtes Y Level zum Einfügen (Ganzzahl)
+- Blöcke zwischen Strukturen (Integer)
 - WorldGen Type (Combo Box: Flat, Unknown other options): Description unknown as of December 2025.
 - (Flat WorldGen Only) Num Air Blocks Below Prefabs (Integer): Description unknown as of December 2025.
 - Axis to Paste On (Combo Box: X, Unknown other options): Description unknown as of December 2025.
@@ -199,11 +199,11 @@ Allows the user to create or edit prefabs in a separate space.
 
 #### Spawn NPC
 
-Unknown as of December 2025.
+Unbekannt Stand Dezember 2025.
 
 #### Spawn Particle
 
-Unknown as of December 2025.
+Unbekannt Stand Dezember 2025.
 
 #### Change Player Model
 
@@ -211,15 +211,15 @@ Unknown as of December 2025.
 
 #### Tint Chunk
 
-Unknown as of December 2025.
+Unbekannt Stand Dezember 2025.
 
 #### Instances
 
-Unknown as of December 2025.
+Unbekannt Stand Dezember 2025.
 
 ### Builder Tools
 
-Unknown as of December 2025.
+Unbekannt Stand Dezember 2025.
 
 ### Machinima
 

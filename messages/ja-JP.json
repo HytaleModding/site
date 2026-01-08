@@ -1,68 +1,68 @@
 {
   "displayName": "日本語",
   "nav": {
-    "title": "Hytale Modding",
-    "documentation": "Documentation",
-    "sponsors": "Sponsors",
-    "search": "Search"
+    "title": "Hytale Mod開発",
+    "documentation": "ドキュメント",
+    "sponsors": "支援者",
+    "search": "検索"
   },
   "home": {
-    "title": "#1 Resource for Hytale Modding {flipwords}",
+    "title": "#1 Hytale MOD開発リソース {flipwords}",
     "flipwords": [
-      "Guides",
-      "Documentation",
+      "ガイド",
+      "ドキュメント",
       "Resources",
-      "Tutorials"
+      "チュートリアル"
     ],
     "description": "The number one community resource for modding Hytale, featuring comprehensive guides, detailed documentation, and essential tools to kickstart your modding journey.",
-    "documentation": "Docs",
-    "forum": "Forum",
-    "discord": "Join the community!",
-    "memberCount": "{count} Members"
+    "documentation": "ドキュメント",
+    "forum": "フォーラム",
+    "discord": "コミュニティに参加する",
+    "memberCount": "{count}人のメンバー"
   },
   "sponsors": {
-    "title": "Support Us",
-    "description": "HytaleModding is an open-source community project, and part of managing the community involves paying for services, servers and infrastructure, like hosting this website. If you would like to support the project, consider becoming a sponsor! We use OpenCollective so you can see how funds are being used to support the community.",
-    "ourSponsors": "Our Sponsors"
+    "title": "支援する",
+    "description": "HytaleModdingはオープンソースのコミュニティプロジェクトです。コミュニティ管理の一環で、サイトのホスティング、サーバーやインフラストラクチャに費用を投じています。\nプロジェクトを支援したい方は支援者になってみませんか？Open Collectiveサービスを利用しているため、資金の透明性が高く、支出の詳細を確認することができます。",
+    "ourSponsors": "支援者一覧"
   },
   "misc": {
-    "loading": "Loading...",
-    "failedToLoad": "Failed to load.",
-    "gitInfoUnavailable": "Git info not available",
-    "credit": "Written by",
-    "supportUs": "Support Us"
+    "loading": "ロード中...",
+    "failedToLoad": "ロードに失敗しました",
+    "gitInfoUnavailable": "Gitリポジトリの情報が見つかりません",
+    "credit": "著者",
+    "supportUs": "支援する"
   },
   "meta": {
     "established_information": {
       "title": "Established Information",
       "separator": "Specific Categories",
       "server": {
-        "title": "Server",
+        "title": "サーバー",
         "content_categories": {
           "title": "Content Categories"
         },
         "interface": {
-          "title": "Interface"
+          "title": "インターフェイス"
         }
       },
       "client": {
-        "title": "Client"
+        "title": "クライアント"
       },
       "gameplay": {
-        "title": "Gameplay"
+        "title": "ゲームプレイ"
       },
       "misc": {
-        "title": "Miscellaneous"
+        "title": "その他"
       }
     },
     "guides": {
-      "title": "Guides",
+      "title": "ガイド",
       "java_basics": {
-        "title": "Java Basics"
+        "title": "Javaの基本"
       }
     },
     "community_projects": {
-      "title": "Community Projects"
+      "title": "コミュニティプロジェクト"
     }
   }
 }

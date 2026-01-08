@@ -1,0 +1,93 @@
+---
+title: Server Code Insights
+description: Slikey shared some insights about server code on 12/15/2025. This document covers key points and takeaways from that discussion.
+---
+
+<Callout type="info" title="Note">
+  The following information is based on insights shared by Technical Director Slikey on December 15, 2025 on the Hytale Discord Server. It provides an overview of the server code architecture and plugin capabilities.
+
+  Majority of this document is just straight quotes from Slikey with minimal commentary. It is more over to preserve the information shared rather than reword it.
+</Callout>
+
+# Server Source Code
+
+The server will be released as shared source - we will have the source code with no obfuscation and all their comments.
+
+### License
+
+The license permits usage for any **hytale related** things, so as long as you dont use the server / source to make your own game or sell their algorithms.
+
+# Permission system
+
+After being asked in the Hytale Modding server, Lead Architect Zero has replied:
+
+It's quite basic, so don't expect much but yes we do have a permissions system built in. It also support implementing your own backend. Ex. if you wanted to store it in a database.
+
+![Premission Source Snippet](/assets/premission-system.png)
+
+# World Gen Implementation
+
+The following block of text is directly from Lead Architect Zero:
+
+You can totally implement a custom world gen in a plugin super easy. So if you want a totally different config or logic for generating terrain you can add that into a plugin and then configure a world to use that,
+We have some stuff load prefabs and there is existing code in the current world generators that could possibly be reused but no APIs specifically for the details of the generation itself.
+
+```java
+public interface IWorldGenProvider {
+    BuilderCodecMapCodec<IWorldGenProvider> CODEC = new BuilderCodecMapCodec<>("Type", true);
+
+    IWorldGen getGenerator() throws WorldGenLoadException;
+}
+```
+
+```java
+public interface IWorldGen {
+    @Nullable
+    WorldGenTimingsCollector getTimings();
+
+    CompletableFuture<GeneratedChunk> generate(int seed, long index, int x, int z, LongPredicate stillNeeded);
+
+    @Deprecated
+    Transform[] getSpawnPoints(int seed);
+
+    @Nonnull
+    default ISpawnProvider getDefaultSpawnProvider(int seed) {
+        return new FitToHeightMapSpawnProvider(new IndividualSpawnProvider(getSpawnPoints(seed)));
+    }
+
+    default void shutdown() {}
+}
+```
+
+# Server Code Snippets
+
+Some code snippets from a plugin they made were also shared. The following snippets are directly quoted from Technical Director Slikey:
+
+## BlockSpawner Plugin
+
+Alright, I'll drop some code snippets here for a simple plugin called "BlockSpawner" which will turn into a "random" block when put into the world based on the configured rules
+
+There is more code here in general but it shows the Asset System and the plugin layout. You can see that the asset system defines "Codecs" which are used to serialize and deserialize data. Using these codecs we can generate schemas.
+Let's say you connect to a server and open the asset editor: the server will send those schemas - so every single asset type defined server side, even you own, now become part of the asset editor on the client - no need to do anything, you just get to enjoy the editor UI for making your assets that you defined
+
+![Block Spawner Code 1](/assets/blockspawner-code-1.png)
+![Block Spawner Code 2](/assets/blockspawner-code-2.png)
+![Block Spawner Code 3](/assets/blockspawner-code-3.png)
+![Block Spawner Manifest](/assets/blockspawner-manifest.png)
+
+> i guess this part also shows a bit how we use constants to store some language keys - Slikey
+> (in reference to the image below)
+
+![Constants to store Language Keys](/assets/constants.png)
+
+> you can completely customize the chunk storage provider, we for example made one that is just empty where it doesnt load any chunks from disk
+> you could add an MySQLChunkStorageProvider and it could read the data from a database
+> and the same goes for worldgen, you can simply implement this interface to generate a world generator - slikey
+
+![Chunks 1](/assets/chunks-1.png)
+![Chunks 2](/assets/chunks-2.png)
+![Chunks 3](/assets/chunks-3.png)
+
+> i mean here are all the weapons defined, you tell me, obviously you will discover limitations but i think there is plenty of room to make changes - this stuff is actually hard though, there is a lot of QoL to have happen here
+
+![Weapons 1](/assets/weapons-1.png)

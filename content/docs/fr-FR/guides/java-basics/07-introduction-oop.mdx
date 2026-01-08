@@ -241,40 +241,40 @@ public class Main {
 ### Classe Monstre
 
 ```java
-public class Monster {
-    String name;
-    int health;
-    int attack;
-    boolean isHostile;
+public class Monstre {
+    String nom;
+    int vie;
+    int attaque;
+    boolean estHostile;
     
-    public Monster(String name, int health, int attack, boolean isHostile) {
-        this.name = name;
-        this.health = health;
-        this.attack = attack;
-        this.isHostile = isHostile;
+    public Monstre(String nom, int vie, int attaque, boolean estHostile) {
+        this.nom = nom;
+        this.vie = vie;
+        this.attaque = attaque;
+        this.estHostile = estHostile;
     }
     
-    public void takeDamage(int damage) {
-        health -= damage;
-        System.out.println(name + " took " + damage + " damage!");
+    public void subirDegats(int degats) {
+        vie -= degats;
+        System.out.println(nom + " à pris " + degats + " dégâts !");
         
-        if (health <= 0) {
-            System.out.println(name + " was defeated!");
+        if (vie <= 0) {
+            System.out.println(nom + " was defeated!");
         } else {
-            System.out.println(name + " has " + health + " health left.");
+            System.out.println(nom + " a " + vie + " points de vie restant.");
         }
     }
     
-    public int attackPlayer() {
-        if (isHostile && health > 0) {
-            System.out.println(name + " attacks for " + attack + " damage!");
-            return attack;
+    public int attaquerJoueur() {
+        if (estHostile && vie > 0) {
+            System.out.println(nom + " attaque pour " + attaque + " dégâts !");
+            return attaque;
         }
         return 0;
     }
     
-    public boolean isAlive() {
-        return health > 0;
+    public boolean estEnVie() {
+        return vie > 0;
     }
 }
 ```
@@ -282,55 +282,55 @@ public class Monster {
 ```java
 public class Main {
     public static void main(String[] args) {
-        Monster zombie = new Monster("Zombie", 50, 10, true);
-        Monster chicken = new Monster("Chicken", 10, 0, false);
+        Monster zombie = new Monstre("Zombie", 50, 10, true);
+        Monster poulet = new Monstre("Poulet", 10, 0, false);
         
-        zombie.takeDamage(20);        // Zombie took 20 damage!
-        int damage = zombie.attackPlayer();  // Zombie attacks for 10 damage!
+        zombie.subirDegats(20);        // Zombie à pris 20 dégâts !
+        int degats = zombie.attaquerJoueur();  // Zombie attaque pour 10 dégâts !
         
-        if (zombie.isAlive()) {
-            System.out.println("Monster is still alive!");
+        if (zombie.estEnVie()) {
+            System.out.println("Monstre est toujours en vie !");
         }
     }
 }
 ```
 
-### Block Class
+### Classe Bloc
 
 ```java
-public class Block {
+public class Bloc {
     String type;
     int x, y, z;
-    boolean isSolid;
-    int hardness;
+    boolean estSolide;
+    int durete;
     
-    public Block(String type, int x, int y, int z, boolean isSolid, int hardness) {
+    public Bloc(String type, int x, int y, int z, boolean estSolide, int durete) {
         this.type = type;
         this.x = x;
         this.y = y;
         this.z = z;
-        this.isSolid = isSolid;
-        this.hardness = hardness;
+        this.estSolide = estSolide;
+        this.durete = durete;
     }
     
-    public void breakBlock() {
-        System.out.println("Breaking " + type + " block at (" + x + ", " + y + ", " + z + ")");
-        System.out.println("Hardness: " + hardness);
+    public void casserBloc() {
+        System.out.println("J’ai cassé le bloc " + type + " en (" + x + ", " + y + ", " + z + ")");
+        System.out.println("Durete : " + durete);
     }
     
-    public String getPosition() {
+    public String obtenirPosition() {
         return "(" + x + ", " + y + ", " + z + ")";
     }
     
-    public boolean canWalkThrough() {
-        return !isSolid;
+    public boolean peutMarcherATravers() {
+        return !estSolide;
     }
 }
 ```
 
-## Access Modifiers (Preview)
+## Modificateurs d'accès (Aperçu)
 
-You've seen `public` - it means "anyone can access this". We'll learn more about access control later, but here's a preview:
+Vous avez pu voir `public` - Cela signifie "Tout le monde peut y accéder". Nous en apprendrons plus sur le contrôle d'accès plus tard, mais voici un aperçu :
 
 ```java
 public class Exemple {
@@ -340,39 +340,39 @@ public class Exemple {
 }
 ```
 
-For now, use `public` for everything. We'll learn when to use `private` in the next article.
+Pour l'instant, utilisez `public` pour tout. Nous apprendrons quand utiliser `private` dans le prochain article.
 
-<Callout type="info" title="Why Use Classes?">
-  Classes help you:
+<Callout type="info" title="Pourquoi utiliser des Classes ?">
+  Les classes vous aident :
 
-  * **Organize** related data and methods together
-  * **Reuse** code easily (create many objects from one class)
-  * **Model** real-world things (players, items, monsters)
-  * **Maintain** code (changes in one place affect all objects)
+  * **Organiser** les données et méthodes qui vont ensemble
+  * **Réutiliser** du code facilement (créer plusieurs objets à partir d'une classe)
+  * **Modéliser** des choses du monde réel (joueurs, objets, monstres)
+  * **Maintenir** le code (des changements à un endroit affectent tous les objets)
 
-  Without classes, managing 100 players would require 100 separate variables for each property. With classes, it's just 100 Player objects!
+  Sans classes, gérer 100 joueurs nécessiterait 100 variables distinctes pour chaque propriété. Avec des classes, c'est juste 100 objets Joueur !
 </Callout>
 
-## Practice Exercises
+## Exercices pratiques
 
-1. **Create a `Potion` Class**:
-   * Properties: name, healAmount, uses
-   * Constructor to set all properties
-   * Method `drink()` that heals and decreases uses
-   * Method `isEmpty()` that returns true if uses less than or equal to 0
+1. **Créez une classe `Potion`** :
+   * Propriétés : nom, valeurDeSoin, utilisations
+   * Un constructeur pour définir toutes les propriétés
+   * Une méthode `boire()` qui soigne et fait baisser le nombre d'utilisations restantes
+   * Une méthode `estVide()` qui retourne vrai si les utilisations restantes sont inférieures ou égales à 0
 
-2. **Create a `Chest` Class**:
-   * Properties: isLocked, itemCount, capacity
-   * Constructor
-   * Method `addItem()` that checks capacity
-   * Method `unlock()` that sets isLocked to false
-   * Method `isFull()` that checks if itemCount >= capacity
+2. **Créez une classe `Coffre`** :
+   * Propriétés : estFerme, nombreObjets, capacite
+   * Un constructeur
+   * Une méthode `ajouterObjet()` qui vérifie la capacité
+   * Une méthode `debloquer()` qui met estFerme à faux
+   * Une méthode `estPlein()` qui vérifie si nombreObjets est >= à capacite
 
-3. **Create a `Villager` Class**:
-   * Properties: name, profession, tradeCount
-   * Constructor
-   * Method `greet()` that prints a greeting
-   * Method `trade()` that increases tradeCount
-   * Method `getInfo()` that displays all properties
+3. **Créez une classe `Villageois`** :
+   * Propriétés : nom, profession, nombreDeTransactions
+   * Un constructeur
+   * Une méthode `saluer()` qui affiche une salutation
+   * Une méthode `echange()` qui augmente le nombreDeTransactions
+   * Une méthode `obtenirInfos()` qui affiche toutes les propriétés
 
-4. **Create Multiple Objects**: Using any class you made, create 3 different objects and test all their methods.
+4. **Créez plusieurs Objets** : en utilisant les classes que vous avez créées, instanciez trois objets et testez toutes leurs méthodes.
