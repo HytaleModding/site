@@ -1,0 +1,415 @@
+---
+title: 06 - Methods (Functions)
+description: Learn how to organize and reuse code with methods.
+---
+
+Methods are reusable blocks of code that perform specific tasks. They help you avoid repeating code and make your programs easier to understand.
+
+## What is a Method?
+
+Think of a method as a recipe. You define it once, then use it whenever you need it.
+
+```java tab="Code"
+public class Game {
+    public static void main(String[] args) {
+        greet();        // Call the method
+        greet();        // Call it again!
+    }
+    
+    // Method definition
+    public static void greet() {
+        System.out.println("Welcome to Hytale!");
+    }
+}
+```
+
+```text tab="Output"
+Welcome to Hytale!
+Welcome to Hytale!
+```
+
+## Method Structure
+
+```java
+public static void methodName() {
+//  ^      ^     ^      ^       ^
+//  |      |     |      |       |
+// access static return name  parameters
+// modifier       type
+    // Code goes here
+}
+```
+
+We'll learn what `public` and `static` mean later. For now, just use them.
+
+## Methods with Parameters
+
+Parameters let you pass data into methods:
+
+```java
+public static void greetPlayer(String name) {
+    System.out.println("Hello, " + name + "!");
+}
+
+public static void main(String[] args) {
+    greetPlayer("Alice");  // Hello, Alice!
+    greetPlayer("Bob");    // Hello, Bob!
+}
+```
+
+### Multiple Parameters
+
+```java
+public static void dealDamage(String target, int damage) {
+    System.out.println(target + " takes " + damage + " damage!");
+}
+
+public static void main(String[] args) {
+    dealDamage("Zombie", 20);    // Zombie takes 20 damage!
+    dealDamage("Skeleton", 15);  // Skeleton takes 15 damage!
+}
+```
+
+<Callout type="info" title="Parameter Order Matters">
+  When calling a method, arguments must match the parameter order:
+
+  ```java
+  public static void createItem(String name, int quantity, double price) {
+      // ...
+  }
+
+  // Correct
+  createItem("Sword", 1, 50.0);
+
+  // Wrong - Order matters!
+  createItem(1, "Sword", 50.0);  // Error!
+  ```
+</Callout>
+
+## Methods with Return Values
+
+Methods can send data back using `return`:
+
+```java
+public static int add(int a, int b) {
+    int sum = a + b;
+    return sum;
+}
+
+public static void main(String[] args) {
+    int result = add(5, 3);
+    System.out.println(result);  // 8
+}
+```
+
+The return type must match what you return:
+
+* `void` - Returns nothing
+* `int` - Returns an integer
+* `double` - Returns a decimal
+* `boolean` - Returns true/false
+* `String` - Returns text
+
+```java
+public static String getItemName() {
+    return "Diamond Sword";
+}
+
+public static boolean isPlayerAlive(int health) {
+    return health > 0;
+}
+
+public static double calculateDamage(int attack, double multiplier) {
+    return attack * multiplier;
+}
+```
+
+<Callout type="warning" title="Return Stops Execution">
+  Once a method hits `return`, it immediately exits. Code after `return` won't run!
+
+  ```java
+  public static int getValue() {
+      return 10;
+      System.out.println("This never runs!");  // Unreachable code!
+  }
+  ```
+</Callout>
+
+## Practical Examples
+
+### Health System
+
+```java tab="Code"
+public static void displayHealth(String name, int health, int maxHealth) {
+    double percentage = (health * 100.0) / maxHealth;
+    System.out.println(name + ": " + health + "/" + maxHealth + 
+                      " (" + percentage + "%)");
+}
+
+public static void main(String[] args) {
+    displayHealth("Player", 75, 100);
+    displayHealth("Boss", 450, 500);
+}
+```
+
+```text tab="Output"
+Player: 75/100 (75.0%)
+Boss: 450/500 (90.0%)
+```
+
+### Damage Calculator
+
+```java tab="Code"
+public static int calculateDamage(int baseAttack, int weaponDamage, boolean isCritical) {
+    int totalDamage = baseAttack + weaponDamage;
+    
+    if (isCritical) {
+        totalDamage *= 2;
+    }
+    
+    return totalDamage;
+}
+
+public static void main(String[] args) {
+    int damage1 = calculateDamage(10, 15, false);  // 25
+    int damage2 = calculateDamage(10, 15, true);   // 50
+    
+    System.out.println("Normal hit: " + damage1);
+    System.out.println("Critical hit: " + damage2);
+}
+```
+
+### Level Requirements
+
+```java tab="Code"
+public static int getXPForLevel(int level) {
+    return level * 100;
+}
+
+public static boolean canLevelUp(int currentXP, int currentLevel) {
+    int required = getXPForLevel(currentLevel + 1);
+    return currentXP >= required;
+}
+
+public static void main(String[] args) {
+    int playerXP = 450;
+    int playerLevel = 4;
+    
+    if (canLevelUp(playerXP, playerLevel)) {
+        System.out.println("You can level up!");
+    } else {
+        int needed = getXPForLevel(playerLevel + 1) - playerXP;
+        System.out.println("Need " + needed + " more XP");
+    }
+}
+```
+
+### Distance Calculator
+
+```java tab="Code"
+public static double calculateDistance(int x1, int y1, int x2, int y2) {
+    int dx = x2 - x1;
+    int dy = y2 - y1;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+public static boolean isInRange(int x1, int y1, int x2, int y2, double range) {
+    double distance = calculateDistance(x1, y1, x2, y2);
+    return distance <= range;
+}
+
+public static void main(String[] args) {
+    // Check if enemy is in attack range
+    if (isInRange(0, 0, 5, 5, 10.0)) {
+        System.out.println("Target in range!");
+    }
+}
+```
+
+## Method Overloading
+
+You can have multiple methods with the same name but different parameters:
+
+```java
+public static void displayMessage(String message) {
+    System.out.println(message);
+}
+
+public static void displayMessage(String message, int times) {
+    for (int i = 0; i < times; i++) {
+        System.out.println(message);
+    }
+}
+
+public static void main(String[] args) {
+    displayMessage("Hello");           // Calls first version
+    displayMessage("Hello", 3);        // Calls second version
+}
+```
+
+<Callout type="info" title="Method Overloading Rules">
+  Methods are considered different if they have:
+
+  * Different number of parameters
+  * Different types of parameters
+  * Different order of parameters
+
+  ```java
+  public static void test(int a) { }
+  public static void test(int a, int b) { }        // Different count
+  public static void test(double a) { }            // Different type
+  public static void test(String a, int b) { }     // Different types
+  public static void test(int a, String b) { }     // Different order
+
+  // Wrong - Only return type is different
+  public static int test(int a) { }
+  ```
+</Callout>
+
+## Common Patterns in Hytale Modding
+
+### Item Creation
+
+```java
+public static Item createItem(String name, int durability) {
+    Item item = new Item();
+    item.setName(name);
+    item.setDurability(durability);
+    return item;
+}
+
+public static Item createSword() {
+    return createItem("Sword", 100);
+}
+
+public static Item createPickaxe() {
+    return createItem("Pickaxe", 150);
+}
+```
+
+### Block Placement Validation
+
+```java
+public static boolean canPlaceBlock(int x, int y, int z) {
+    // Check if position is valid
+    if (y < 0 || y > 255) {
+        return false;
+    }
+    
+    // Check if block already exists
+    if (isBlockAt(x, y, z)) {
+        return false;
+    }
+    
+    return true;
+}
+
+public static void placeBlock(int x, int y, int z, String type) {
+    if (canPlaceBlock(x, y, z)) {
+        // Place the block
+        System.out.println("Placed " + type + " at (" + x + ", " + y + ", " + z + ")");
+    } else {
+        System.out.println("Cannot place block there!");
+    }
+}
+```
+
+### Player State Checks
+
+```java
+public static boolean isLowHealth(int health, int maxHealth) {
+    return (health * 100.0 / maxHealth) < 25;
+}
+
+public static String getHealthStatus(int health, int maxHealth) {
+    double percentage = (health * 100.0) / maxHealth;
+    
+    if (percentage >= 75) {
+        return "Healthy";
+    } else if (percentage >= 50) {
+        return "Injured";
+    } else if (percentage >= 25) {
+        return "Critical";
+    } else {
+        return "Near Death";
+    }
+}
+```
+
+## Best Practices
+
+<Callout type="info" title="Method Naming">
+  Use descriptive verb-based names that explain what the method does:
+
+  ```java
+  // Good
+  public static void calculateDamage() { }
+  public static boolean isPlayerAlive() { }
+  public static String getItemName() { }
+  public static void displayInventory() { }
+
+  // Bad
+  public static void dmg() { }        // Too short
+  public static void method1() { }    // Not descriptive
+  public static void stuff() { }      // Too vague
+  ```
+</Callout>
+
+## Practice Exercises
+
+1. **Temperature Converter**: Write methods to convert:
+   * Celsius to Fahrenheit: `(C × 9/5) + 32`
+   * Fahrenheit to Celsius: `(F - 32) × 5/9`
+
+2. **Circle Calculator**: Create methods that calculate:
+   * Area: `π × radius²`
+   * Circumference: `2 × π × radius`
+   * Use `Math.PI` for π
+
+3. **Item Durability**: Write these methods:
+   * `damageItem(int current, int damage)` - returns new durability
+   * `isBroken(int durability)` - returns true if durability is less than or equal to 0
+   * `repairItem(int current, int max)` - returns max durability
+
+4. **Password Validator**: Create a method that checks if a password is valid:
+   * At least 8 characters long
+   * Contains at least one number
+   * Returns true if valid, false otherwise
+
+## Common Mistakes
+
+```java
+// Wrong - Forgetting return statement
+public static int getValue() {
+    int x = 10;
+    // Forgot to return!
+} !
+
+// Correct
+public static int getValue() {
+    int x = 10;
+    return x;
+}
+
+// Wrong - Wrong return type
+public static int getText() {
+    return "Hello";  // Error! Should return int, not String
+}
+
+// Correct
+public static String getText() {
+    return "Hello";
+}
+
+// Wrong - Not calling the method
+public static void main(String[] args) {
+    greet;  // Error! Missing ()
+}
+
+// Correct
+public static void main(String[] args) {
+    greet();
+}
+```
+
+---

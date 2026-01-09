@@ -1,22 +1,22 @@
 ---
-title: 12 — Tratando Erros
-description: Aprenda a tratar os erros de forma adequada em seus programas Java.
+title: 12 — Tratamento de exceções
+description: Aprenda a lidar com os erros indicados pelas exceções de forma adequada em seus programas Java.
 ---
 
-Exceptions são erros que ocorrem enquanto o programa está em execução. Em vez de o jogo travar, você pode capturar esses erros e tratá-los de forma segura.
+As `Exceptions` são erros que ocorrem enquanto o programa está em execução. Em vez do jogo travar, você pode capturar esses erros e tratá-los de forma segura.
 
-## O que é uma Exception?
+## O que é uma `Exception`?
 
-Uma Exception é um evento que interrompe o fluxo estável do programa:
+É um evento que interrompe o fluxo estável do programa:
 
 ```java
 String text = null;
-System.out.println(text.length());  // NullPointerException - trava!
+System.out.println(text.length());  // NullPointerException — trava!
 ```
 
 Sem um tratamento adequado, seu mod travará e quebrará a estabilidade do jogo!
 
-## Blocos Try-Catch
+## Blocos `Try-Catch`
 
 Use `Try-Catch` para tratar erros:
 
@@ -51,11 +51,11 @@ System.out.println("Programa continua...");
   ```
 </Callout>
 
-## Tipos comuns de Exception
+## Tipos comuns de `Exception`
 
 ### NullPointerException
 
-Acessando métodos/propriedades em objetos null:
+Acessando métodos/propriedades em objetos `null`:
 
 ```java
 String name = null;
@@ -63,7 +63,7 @@ String name = null;
 try {
     int length = name.length();
 } catch (NullPointerException e) {
-    System.out.println("name é null!");
+    System.out.println("A string 'name' é null!");
 }
 ```
 
@@ -105,9 +105,9 @@ try {
 }
 ```
 
-## Vários blocos Catch
+## Vários blocos `Catch`
 
-Trata diferentes erros de forma única:
+Trata diferentes exceções e seus erros de forma única:
 
 ```java
 String input = "abc";
@@ -123,9 +123,9 @@ try {
 }
 ```
 
-## Capturando vários tipos de Exception
+## Capturando vários tipos de `Exception`
 
-Captura vários erros em um único bloco:
+Captura várias exceções e seus erros em um único bloco:
 
 ```java
 try {
@@ -135,9 +135,9 @@ try {
 }
 ```
 
-## Bloco Finally
+## Bloco `Finally`
 
-Código que **sempre** executa, independentemente de um erro ocorrer ou não:
+Código que **sempre** executa, independentemente de uma exceção ocorrer ou não:
 
 ```java
 try {
@@ -147,11 +147,11 @@ try {
     System.out.println("Erro: " + e.getMessage());
 } finally {
     System.out.println("Fechando arquivo...");
-    // Isso SEMPRE será executado - é útil para limpeza
+    // Isso SEMPRE será executado — É útil para limpeza
 }
 ```
 
-<Callout type="info" title="Quando usar o Finally">
+<Callout type="info" title="Quando usar o `Finally`">
   Use o `finally` para tarefas de limpeza que sempre devem ocorrer, como:
 
   - Fechar arquivos;
@@ -174,7 +174,7 @@ try {
   ```
 </Callout>
 
-## Obtendo informações da Exception
+## Obtendo informações de `Exception`
 
 Um objeto de erro contém informações úteis:
 
@@ -308,7 +308,7 @@ public class ConfigLoader {
     
     public void setSetting(String key, String value) {
         if (key == null || value == null) {
-            System.out.println("key e value não podem ser null!");
+            System.out.println("a 'key' e o 'value' não podem ser null!");
             return;
         }
         settings.put(key, value);
@@ -383,7 +383,7 @@ public class CommandParser {
                         throw new IllegalArgumentException("A quantidade deve ser positiva!");
                     }
                     
-                    System.out.println(amount + item + " foram dados a " + target);
+                    System.out.println(amount + "x "  + item + " foram dados a " + target);
                     break;
                     
                 case "tp":
@@ -418,9 +418,9 @@ public class CommandParser {
 }
 ```
 
-## Lançando Exceptions
+## Lançando as `Exceptions`
 
-Voce pode lançar os seus próprios erros:
+Você pode lançar as suas próprias `exceptions`:
 
 ```java
 public class Player {
@@ -438,8 +438,8 @@ public class Player {
 }
 ```
 
-<Callout type="info" title="Quando lançar Exceptions">
-  Lance erros quando:
+<Callout type="info" title="Quando lançar `Exceptions`">
+  Lance-as quando:
 
   - O método receber uma entrada inválida;
   - A operação não puder ser concluída;
@@ -465,24 +465,24 @@ public class Player {
 
 ## Exceptions verificadas e não verificadas
 
-<Callout type="warning" title="Tipos de Exception">
-  **Exceptions não verificadas** (RuntimeException):
+<Callout type="warning" title="Tipos de `Exception`">
+  **Exceptions não verificadas** (`RuntimeException`):
 
   - Não precisam ser capturadas;
   - São normalmente um erro de programação;
-  - Exemplos: NullPointerException, ArrayIndexOutOfBoundsException.
+  - Exemplos: `NullPointerException`, `ArrayIndexOutOfBoundsException`.
 
-  **Exceptions verificadas**:
+  **`Exceptions` verificadas**:
 
   - Devem ser capturadas ou declaradas;
   - São normalmente erros externos (como arquivos ou rede);
-  - Exemplos: IOException, FileNotFoundException.
+  - Exemplos: `IOException`, `FileNotFoundException`.
 
   ```java
-  // Não verificada - não é necessário capturar
+  // Não verificada — não é necessário capturar
   int result = 10 / 0;  // ArithmeticException
 
-  // Verificada - deve-se capturar ou declarar
+  // Verificada — deve-se capturar ou declarar
   try {
       FileReader file = new FileReader("data.txt");  // IOException
   } catch (IOException e) {
@@ -493,12 +493,12 @@ public class Player {
 
 ## Exercícios práticos
 
-1. **Calculadora com divisão segura**: Crie um método que divide dois números. Trate a divisão por zero e as entradas inválidas com elegância.
+1. **Calculadora com divisão segura**: crie um método que divide dois números. Trate a divisão por zero e as entradas inválidas com elegância.
 
-2. **Definidor de nível de jogador**: Crie um método que define um nível de jogador (1-100). Lance um erro se for inválido e trate-o na main.
+2. **Definidor de nível de jogador**: crie um método que define o nível do jogador (1-100). Lance uma `exception` se for inválido e trate-a na `main`.
 
-3. **Acesso seguro a um vetor**: Crie um método que acessa elementos de um vetor de forma segura. Retorne null se o índice for inválido em vez de travar.
+3. **Acesso seguro a um vetor**: crie um método que acessa elementos de um vetor de forma segura. Retorne `null` se o índice for inválido em vez de travar.
 
-4. **Analisador de configurações**: Leia uma string de configuração como "maxPlayers=10" e analise-a. Trate os formatos inválidos com elegância.
+4. **Analisador de configurações**: leia uma string de configuração como "maxPlayers=10" e a analise. Trate os formatos inválidos com elegância.
 
-5. **Validador de nome de arquivo**: Crie um método que verifica se o nome de um arquivo é válido (sem caracteres especiais, nem vazio). Lance erros para nomes inválidos.
+5. **Validador de nome de arquivo**: crie um método que verifica se o nome de um arquivo é válido (sem caracteres especiais, nem vazio). Lance `exceptions` para nomes inválidos.

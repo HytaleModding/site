@@ -101,16 +101,32 @@ export async function generateMetadata(
 
   const slug = params.slug || [];
   const imageUrl = `/api/og/docs/${params.lang}${slug.length > 0 ? "/" + slug.join("/") : ""}`;
+  const pageKeywords = (page.data as any).keywords || [];
+  const globalKeywords = [
+    "hytale modding",
+    "hytale",
+    "hytale plugins",
+    "hytale mods",
+    "how to mod hytale",
+    "modding tutorial",
+    "modding guides",
+    "hytale modding guides",
+    "hytale modding tutorial",
+    "how to start modding Hytale",
+    "how to make a mod",
+  ];
 
   if (ogLanguageBlacklist.includes(params.lang))
     return {
       title: page.data.title,
       description: page.data.description,
+      keywords: [...globalKeywords, ...pageKeywords],
     };
   else
     return {
       title: page.data.title,
       description: page.data.description,
+      keywords: [...globalKeywords, ...pageKeywords],
       openGraph: {
         images: [
           {

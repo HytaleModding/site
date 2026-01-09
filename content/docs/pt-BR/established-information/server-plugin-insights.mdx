@@ -29,8 +29,7 @@ Após ser questionado no servidor Hytale Modding, o Arquiteto Chefe Zero respond
 
 O seguinte bloco de texto é diretamente do Arquiteto Chefe Zero:
 
-Você pode implementar uma geração de mundo personalizada por um plugin de maneira super fácil. Portanto, se você deseja uma configuração ou lógica totalmente diferente para gerar terrenos, pode adicioná-la a um plugin e, em seguida, configurar um mundo para usá-la.
-Temos alguns prefabs de carregamento e existe código nos geradores de mundos atuais que poderia ser reutilizado, mas não há APIs específicas para os detalhes da geração em si.
+Você pode implementar uma geração de mundo personalizada por um plugin de maneira super fácil. Portanto, se você deseja uma configuração ou lógica totalmente diferente para gerar terrenos, pode adicioná-la a um plugin e, em seguida, configurar um mundo para usá-la. Temos alguns prefabs de carregamento e existe código nos geradores de mundos atuais que poderia ser reutilizado, mas não há APIs específicas para os detalhes da geração em si.
 
 ```java
 public interface IWorldGenProvider {
@@ -80,9 +79,7 @@ Digamos que você se conecte a um servidor e abra o editor de ativos: o servidor
 
 ![Constantes para armazenar chaves de idioma](/assets/constants.png)
 
-> Você pode personalizar completamente o provedor de armazenamento de blocos. Por exemplo, criamos um que fica vazio, sem carregar nenhum bloco do disco.
-> Você pode adicionar um MySQLChunkStorageProvider, que pode ler os dados de um banco de dados.
-> O mesmo vale para o worldgen. Basta implementar essa interface para gerar um gerador de mundos - slikey.
+> Por exemplo, criamos um que fica vazio, sem carregar nenhum bloco do disco. Você pode adicionar um MySQLChunkStorageProvider, que pode ler os dados de um banco de dados. O mesmo vale para o worldgen. Basta implementar essa interface para gerar um gerador de mundos - slikey.
 
 ![Chunks 1](/assets/chunks-1.png)
 ![Chunks 2](/assets/chunks-2.png)

@@ -123,11 +123,11 @@ player.setHealth(-20);  // Definido automaticamente para 0
 System.out.println(player.getHealth());  // 0
 ```
 
-<Callout type="info" title="Nomeação de Getter e Setter">
+<Callout type="info" title="Nomeação Getter e Setter">
   Seguir convenções de nomenclatura do Java:
 
-  * **Getter**: `obter` + nome da propriedade (capitalizado)
-  * **Setter**: `definir` + nome da propriedade (capitalizado)
+  * **Getter**: `get` + nome da propriedade (capitalizado);
+  * **Setter**: `set` + nome da propriedade (capitalizado);
   * **Boolean**: `is` + nome da propriedade (capitalizado)
 
   ```java
@@ -199,9 +199,9 @@ public class Monster {
 }
 ```
 
-### 3. Propriedades Calculadas
+### 3. Propriedades calculadas
 
-Os métodos Getter não precisam retornar um campo diretamente:
+Os métodos `Getters` não precisam retornar um campo diretamente:
 
 ```java
 public class Player {
@@ -224,9 +224,9 @@ public class Player {
 }
 ```
 
-## Exemplos na Prática
+## Exemplos práticos
 
-### Item com Durabilidade
+### Item com durabilidade
 
 ```java
 public class Tool {
@@ -282,7 +282,7 @@ public class Tool {
 }
 ```
 
-### Exemplo de Conta Bancária
+### Exemplo de conta bancária
 
 ```java
     private int gold;
@@ -322,7 +322,7 @@ public class Tool {
 }
 ```
 
-### Sistema de Blocos Protegido
+### Sistema de proteção de bloco
 
 ```java
 public class ProtectedBlock {
@@ -380,22 +380,22 @@ public class ProtectedBlock {
 }
 ```
 
-## Quando Usar Private vs Public
+## Quando usar `Private` e `Public`
 
-<Callout type="info" title="Regras Gerais">
+<Callout type="info" title="Regras gerais">
   **Torná-lo privado por padrão!** Apenas torne as coisas públicas se elas precisarem ser acessadas de fora.
 
   **Private:**
 
-  * Dados internos (health, position, inventory)
-  * Métodos de ajuda usados apenas na classe
-  * Tudo que precise de validação
+  * Dados internos (health, position, inventory);
+  * Métodos de ajuda usados apenas na classe;
+  * Tudo que precise de validação.
 
   **Public:**
 
-  * Métodos que definem o comportamento da classe
-  * Construtor
-  * Métodos que outras classes precisam utilizar
+  * Métodos que definem o comportamento da classe;
+  * Construtor;
+  * Métodos que outras classes precisam utilizar.
 
   ```java
   public class Example {
@@ -448,7 +448,7 @@ public class Player {
 }
 ```
 
-## A Palavra-chave `static`
+## A palavra-chave `static`
 
 ### Membros estáticos
 
@@ -463,7 +463,7 @@ Simplificando um pouco: os 'Instance Members' pertencem a objetos, enquanto os '
 #### Declaração
 
 ```java
-    /* (access modifier) */ static ... memberName; 
+    /* (modificador de acesso) */ static ... memberName; 
 ```
 
 #### Exemplo
@@ -508,7 +508,7 @@ Um campo estático representa um dado membro de propriedade do tipo de classe, e
 É declarado o seguinte:
 
 ```java
-/* (access modifier) (opcional) */ static /* final/volatile (opcional) */ fieldName;
+/* (modificador de acesso) (opcional) */ static /* final/volatile (opcional) */ fieldName;
 ```
 
 Vamos pegar o mesmo exemplo da Classe de Dados e adicionar este construtor:
@@ -568,27 +568,27 @@ class OtherData {
 ## Exercícios práticos
 
 1. **Crie uma classe `BankAccount`**:
-   * Propriedades privadas: accountNumber, balance
-   * Construtor para definir o número da conta
-   * Métodos: deposit(), withdraw(), getBalance()
-   * Validação: não é possível sacar mais do que o saldo
-   * O número da conta deve ser apenas leitura
+   * Propriedades privadas: `accountNumber`, `balance`;
+   * Construtor para definir o número da conta;
+   * Métodos: `deposit()`, `withdraw()`, `getBalance()`;
+   * Validação: não é possível sacar mais do que o saldo;
+   * O número da conta deve ser apenas leitura.
 
 2. **Crie uma classe `Door`**:
-   * Propriedades privadas: isLocked, keyCode
-   * Construtor para definir o código-chave
-   * Métodos: lock(), unlock(String code), isLocked()
-   * O método unlock() funciona apenas com o código correto
-   * O código deve ser `private` (não o exponha!)
+   * Propriedades privadas: `isLocked`, `keyCode`;
+   * Construtor para definir o código-chave;
+   * Métodos: `lock()`, `unlock(String code)`, `isLocked()`;
+   * O método `unlock()` funciona apenas com o código correto;
+   * O código deve ser `private` (não o exponha!).
 
 3. **Crie uma classe `PlayerStats`**:
-   * Propriedades privadas: strength, defense, speed
-   * Construtor para definir todas as estatísticas
-   * Getters para todas as estatísticas
-   * Método: getPowerLevel() that returns strength + defense + speed
-   * As estatísticas não podem ser negativas ou superiores a 100
+   * Propriedades privadas: `strength`, `defense`, `speed`;
+   * Construtor para definir todas as estatísticas;
+   * Getters para todas as estatísticas;
+   * Método: `getPowerLevel()` que retorna `strength` + `defense` + `speed`;
+   * As estatísticas não podem ser negativas ou superiores a 100.
 
 4. **Refatore uma Classe**: Pegue uma de suas classes da lição anterior e adicione o encapsulamento adequado:
-   * Prive todas as propriedades
-   * Adicionar getters e setters apropriados
-   * Adicione a validação aonde necessário
+   * Prive todas as propriedades;
+   * Adicionar `getters` e `setters` apropriados;
+   * Adicione a validação quando for necessário.

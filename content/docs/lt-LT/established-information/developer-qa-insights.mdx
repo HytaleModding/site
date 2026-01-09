@@ -1,0 +1,125 @@
+---
+title: Developer Q&A Technical Insights
+description: Comprehensive summary of technical insights from Hytale developers covering architecture, modding, gameplay systems, and development philosophy.
+---
+
+# Developer Q&A Technical Insights
+
+This extensive Q&A session with Hytale developers reveals critical technical details about the game's architecture, modding philosophy, gameplay systems, and development approach.
+
+## Technical Architecture
+
+### Network & Infrastructure
+
+* **Protocol**: Uses QUIC (reliable UDP with unreliable channels) instead of TCP
+* **Server Compatibility**: Runs on any platform supporting Java 25
+* **Connection Method**: Direct IP initially, server discovery planned post-launch
+* **Data Layer**: Current custom serialization format will be replaced post-launch
+* **Performance**: Multi-core support - each world has main thread + parallel execution
+* **Rendering**: OpenGL 3.3 for Mac compatibility, potential future Vulkan/Metal migration
+* **Tick Model**: Base server tick rate is 30 TPS by default; can be changed using server plugins.
+
+### Security & Distribution
+
+* **No Client-Side Code Execution**: Prevents remote code execution exploits
+* **Downloads Limited To**: Configuration files and assets only
+* **Mod Distribution**: Community platforms (CurseForge, Modrinth), no immediate in-game marketplace
+* **Server Hosting**: Available day 1, no business agreements required (just EULA/TOS)
+
+## Modding Capabilities
+
+### Server-Side Power
+
+* **Full Java Access**: Database connections, web requests, any Java functionality
+* **Custom Libraries**: Can create Lua scripting, ML frameworks, or any Java library
+* **Server Modification**: Shared source code allows heavy server modifications
+* **Hot Reload**: Supported for most asset types
+* **Documentation**: Public GitBook planned, though initially sparse
+
+### Content Creation (No Code Required)
+
+* **World Generation**: Custom biomes and maps without Java
+* **NPCs & Items**: JSON-based configuration
+* **Crafting Recipes**: Data-driven system
+* **Visual Scripting**: Replaces command blocks, fully sandboxed
+* **Prefab System**: Sophisticated building blocks with in-game editor
+
+### Advanced Modding
+
+* **Combat System**: Data-driven interaction system for attack chains and abilities
+* **Sub-Hitboxes**: Support for complex boss mechanics (needs improvement)
+* **Status Effects**: Buff/debuff system with custom effects and stats
+* **Custom UI**: NoesisGUI transition enables powerful interface customization
+* **Block Physics**: Selective system (trees fall, but placed blocks don't)
+
+## Gameplay Systems
+
+### Core Mechanics
+
+* **Stamina System**: No hunger by default (can be modded in)
+* **Gravity**: Selective block physics - trees collapse, buildings can float
+* **Lighting**: Major overhaul to fix model/voxel inconsistencies
+* **World Height**: Currently limited, may change with voxel storage updates
+* **Automation**: No redstone equivalent at launch (moddable)
+
+### Player Systems
+
+* **Character Models**: Humans by default, changeable in creative mode
+* **Multiplayer Avatars**: Server-controlled (no custom models in multiplayer)
+* **Skins**: Full customization possible ("mod yourself into a potato")
+* **Shapeshifting**: Transformation potions exist for fun/modding
+
+### World & NPCs
+
+* **Faction System**: Living world with dynamic NPC interactions
+* **Village Systems**: Planned dynamic villages with relationships and behaviors
+* **Chunk Loading**: Entities unload when out of all players' render distance
+* **Seeds**: Shareable world generation seeds supported
+
+## Development Philosophy
+
+### Release Strategy
+
+* **Base Game Priority**: Adventure mode is primary focus, modding architecture supports it
+* **Tech Debt**: Acknowledged as necessary for release, commitment to improvement
+* **Update Frequency**: Very frequent updates planned, especially post-launch
+* **Version Policy**: Always latest version, but servers can run modified versions
+
+### Community Focus
+
+* **Creator Support**: Development bounties planned for community contributors
+* **Tutorials**: Official modding tutorials planned with partners
+* **Feedback Integration**: Strong commitment to community-driven improvements
+* **Accessibility**: Designed for lower-end hardware, reasonable system requirements
+
+### Tools & Documentation
+
+* **Blockbench Integration**: Replaces custom "Hytale Model Maker"
+* **Machinima Tools**: Full cinematic creation capabilities
+* **Creative Tools**: Major reveal planned for building/creation features
+* **Source Access**: Server code will be unobfuscated with developer comments
+
+## Platform Support
+
+* **Current**: Windows (primary)
+* **Planned**: Mac/Linux support actively in development
+* **VR**: Not feasible in near future
+* **Performance**: Uncapped framerate, designed for accessibility
+* **Offline Play**: Single-player works without internet connection
+
+## Monetization & Legal
+
+* **No Pay-to-Win**: Firm commitment against P2W mechanics
+* **Cosmetics Only**: Low-price cosmetic packs to support infrastructure
+* **Server EULA**: Terms being finalized for server monetization policies
+* **QUIC Blocking**: Acknowledged issue in some regions, no alternative protocol
+
+## Current Limitations
+
+* **Custom Shaders**: Not supported until sandboxing solution found
+* **UI/Input Limitations**: Being expanded but currently restricted
+* **Documentation**: Sparse initially, will improve over time
+* **Client Mods**: No client-side code execution for security
+* **Nameplates**: Currently limited customization
+
+This comprehensive technical foundation positions Hytale as a secure, extensible platform that empowers creators while maintaining performance, accessibility, and a commitment to continuous improvement.

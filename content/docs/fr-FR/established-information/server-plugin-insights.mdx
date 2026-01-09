@@ -66,7 +66,7 @@ Des extraits de code d'un plugin qu'ils ont fait ont également été partagés.
 
 Très bien, je vais partager quelques extraits de code ici pour un plugin simple appelé "BlockSpawner" qui se transformera en un bloc "aléatoire" lorsqu'il sera posé dans le monde, en fonction des règles configurées.
 
-Il y a plus de code ici en général, mais cela montre le système d'assets et la disposition du plugin. Vous pouvez voir que le système d'assets définit des "Codecs" qui sont utilisés pour sérialiser et désérialiser des données En utilisant ces codecs, nous pouvons générer des schémas.
+Il y a plus de code ici en général, mais cela montre le système d'assets et la disposition du plugin. Vous pouvez voir que le système d'assets définit des "Codecs" qui sont utilisés pour sérialiser et désérialiser des données En utilisant ces codecs, nous pouvons générer des schémas. En utilisant ces codecs, nous pouvons générer des schémas.
 Admettons que vous vous connectez à un serveur et ouvrez l'éditeur d'assets : le serveur vous enverra ces schémas - donc chaque type d'asset défini côté-serveur, même les vôtres, fait maintenant partie de l'éditeur d'assets sur le client - pas besoin de faire quoi que ce soit, vous pouvez juste profiter de l'interface utilisateur de l'éditeur pour faire les assets que vous avez définis
 
 ![Code de BlockSpawner 1](/assets/blockspawner-code-1.png)
@@ -79,9 +79,7 @@ Admettons que vous vous connectez à un serveur et ouvrez l'éditeur d'assets : 
 
 ![Constantes pour stocker les clés de langage](/assets/constants.png)
 
-> Vous pouvez complètement personnaliser le fournisseur de stockage de chunks, nous en avons par exemple fait un qui est juste vide et qui ne charge aucun chunks du disque.
-> Vous pourriez ajouter un MySQLChunkStorageProvider et il pourrait lire les données d'une base de données.
-> Et la même chose vaut pour la génération de monde, vous pouvez simplement implémenter cette interface pour générer un générateur de monde - Slikey
+> Vous pouvez complètement personnaliser le fournisseur de stockage de chunks, nous en avons par exemple fait un qui est juste vide et qui ne charge aucun chunks du disque. Vous pourriez ajouter un MySQLChunkStorageProvider et il pourrait lire les données d'une base de données. Et la même chose vaut pour la génération de monde, vous pouvez simplement implémenter cette interface pour générer un générateur de monde - Slikey
 
 ![Chunks 1](/assets/chunks-1.png)
 ![Chunks 2](/assets/chunks-2.png)

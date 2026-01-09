@@ -1,0 +1,504 @@
+---
+title: 12 - Exception Handling
+description: Learn how to handle errors gracefully in your Java programs.
+---
+
+Exceptions are errors that occur while your program is running. Instead of crashing, you can "catch" these errors and handle them gracefully.
+
+## What is an Exception?
+
+An exception is an event that disrupts the normal flow of your program:
+
+```java
+String text = null;
+System.out.println(text.length());  // NullPointerException - crashes!
+```
+
+Without handling, this crashes your mod and breaks the game!
+
+## Try-Catch Blocks
+
+Use `try-catch` to handle exceptions:
+
+```java
+try {
+    // Code that might throw an exception
+    String text = null;
+    System.out.println(text.length());
+} catch (NullPointerException e) {
+    // Code to handle the error
+    System.out.println("Error: text was null!");
+}
+
+System.out.println("Program continues...");
+```
+
+<Callout type="info" title="How Try-Catch Works">
+  1. Code in `try` block runs normally
+  2. If an exception occurs, execution jumps to `catch` block
+  3. After `catch` block, program continues normally
+  4. If no exception occurs, `catch` block is skipped
+
+  ```java
+  try {
+      // Try to do something risky
+      int result = 10 / 0;  // Division by zero!
+  } catch (ArithmeticException e) {
+      // Handle the error
+      System.out.println("Can't divide by zero!");
+  }
+  // Program keeps running
+  ```
+</Callout>
+
+## Common Exception Types
+
+### NullPointerException
+
+Accessing methods/properties on null objects:
+
+```java
+String name = null;
+
+try {
+    int length = name.length();
+} catch (NullPointerException e) {
+    System.out.println("Name is null!");
+}
+```
+
+### ArrayIndexOutOfBoundsException
+
+Accessing invalid array index:
+
+```java
+int[] numbers = {1, 2, 3};
+
+try {
+    int value = numbers[10];  // Index 10 doesn't exist!
+} catch (ArrayIndexOutOfBoundsException e) {
+    System.out.println("Invalid array index!");
+}
+```
+
+### NumberFormatException
+
+Converting invalid strings to numbers:
+
+```java
+try {
+    int number = Integer.parseInt("abc");  // Not a number!
+} catch (NumberFormatException e) {
+    System.out.println("Invalid number format!");
+}
+```
+
+### ArithmeticException
+
+Math errors like division by zero:
+
+```java
+try {
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    System.out.println("Math error!");
+}
+```
+
+## Multiple Catch Blocks
+
+Handle different exceptions differently:
+
+```java
+String input = "abc";
+
+try {
+    int number = Integer.parseInt(input);
+    int result = 100 / number;
+    System.out.println(result);
+} catch (NumberFormatException e) {
+    System.out.println("Invalid number!");
+} catch (ArithmeticException e) {
+    System.out.println("Cannot divide by zero!");
+}
+```
+
+## Catching Multiple Exception Types
+
+Catch multiple exceptions in one block:
+
+```java
+try {
+    // Some risky code
+} catch (NumberFormatException | ArithmeticException e) {
+    System.out.println("Math-related error occurred!");
+}
+```
+
+## The Finally Block
+
+Code that **always** runs, whether exception occurs or not:
+
+```java
+try {
+    System.out.println("Opening file...");
+    // Code that might fail
+} catch (Exception e) {
+    System.out.println("Error: " + e.getMessage());
+} finally {
+    System.out.println("Closing file...");
+    // This ALWAYS runs - good for cleanup
+}
+```
+
+<Callout type="info" title="When to Use Finally">
+  Use `finally` for cleanup tasks that must always happen:
+
+  - Closing files
+  - Releasing resources
+  - Saving data
+  - Logging
+
+  ```java
+  FileReader file = null;
+  try {
+      file = new FileReader("data.txt");
+      // Read file
+  } catch (Exception e) {
+      System.out.println("Error reading file");
+  } finally {
+      if (file != null) {
+          file.close();  // Always close the file!
+      }
+  }
+  ```
+</Callout>
+
+## Getting Exception Information
+
+The exception object contains useful information:
+
+```java
+try {
+    int result = Integer.parseInt("xyz");
+} catch (NumberFormatException e) {
+    System.out.println("Message: " + e.getMessage());
+    System.out.println("Type: " + e.getClass().getName());
+    e.printStackTrace();  // Print full error details
+}
+```
+
+## Practical Examples
+
+### Safe Player Input
+
+```java
+import java.util.Scanner;
+
+public class PlayerInput {
+    public static int getPlayerChoice(Scanner scanner) {
+        while (true) {
+            try {
+                System.out.print("Enter choice (1-5): ");
+                String input = scanner.nextLine();
+                int choice = Integer.parseInt(input);
+                
+                if (choice < 1 || choice > 5) {
+                    System.out.println("Please enter a number between 1 and 5");
+                    continue;
+                }
+                
+                return choice;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a number.");
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice = getPlayerChoice(scanner);
+        System.out.println("You chose: " + choice);
+    }
+}
+```
+
+### Safe Item Durability Update
+
+```java
+public class Item {
+    private String name;
+    private int durability;
+    private int maxDurability;
+    
+    public Item(String name, int maxDurability) {
+        this.name = name;
+        this.durability = maxDurability;
+        this.maxDurability = maxDurability;
+    }
+    
+    public void damage(int amount) {
+        try {
+            if (amount < 0) {
+                throw new IllegalArgumentException("Damage cannot be negative!");
+            }
+            
+            durability -= amount;
+            
+            if (durability < 0) {
+                durability = 0;
+            }
+            
+            System.out.println(name + " durability: " + durability + "/" + maxDurability);
+            
+            if (durability == 0) {
+                System.out.println(name + " broke!");
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+```
+
+### Safe Config Loading
+
+```java
+import java.util.HashMap;
+
+public class ConfigLoader {
+    private HashMap<String, String> settings;
+    
+    public ConfigLoader() {
+        this.settings = new HashMap<>();
+        loadDefaults();
+    }
+    
+    private void loadDefaults() {
+        settings.put("maxPlayers", "10");
+        settings.put("difficulty", "normal");
+        settings.put("pvpEnabled", "true");
+    }
+    
+    public int getIntSetting(String key, int defaultValue) {
+        try {
+            String value = settings.get(key);
+            if (value == null) {
+                return defaultValue;
+            }
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number for " + key + ", using default");
+            return defaultValue;
+        }
+    }
+    
+    public boolean getBooleanSetting(String key, boolean defaultValue) {
+        try {
+            String value = settings.get(key);
+            if (value == null) {
+                return defaultValue;
+            }
+            return Boolean.parseBoolean(value);
+        } catch (Exception e) {
+            System.out.println("Invalid boolean for " + key + ", using default");
+            return defaultValue;
+        }
+    }
+    
+    public void setSetting(String key, String value) {
+        if (key == null || value == null) {
+            System.out.println("Key and value cannot be null!");
+            return;
+        }
+        settings.put(key, value);
+    }
+}
+```
+
+### Safe Array Access
+
+```java
+public class Inventory {
+    private String[] items;
+    
+    public Inventory(int size) {
+        this.items = new String[size];
+    }
+    
+    public boolean setItem(int slot, String item) {
+        try {
+            if (slot < 0 || slot >= items.length) {
+                throw new ArrayIndexOutOfBoundsException("Invalid slot: " + slot);
+            }
+            
+            items[slot] = item;
+            System.out.println("Placed " + item + " in slot " + slot);
+            return true;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    public String getItem(int slot) {
+        try {
+            return items[slot];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Invalid slot: " + slot);
+            return null;
+        }
+    }
+}
+```
+
+### Command Parser with Error Handling
+
+```java
+public class CommandParser {
+    public static void parseCommand(String command) {
+        try {
+            if (command == null || command.trim().isEmpty()) {
+                throw new IllegalArgumentException("Command cannot be empty!");
+            }
+            
+            String[] parts = command.split(" ");
+            
+            if (parts.length < 2) {
+                throw new IllegalArgumentException("Invalid command format!");
+            }
+            
+            String action = parts[0];
+            String target = parts[1];
+            
+            switch (action) {
+                case "give":
+                    if (parts.length < 4) {
+                        throw new IllegalArgumentException("Usage: give <player> <item> <amount>");
+                    }
+                    String item = parts[2];
+                    int amount = Integer.parseInt(parts[3]);
+                    
+                    if (amount <= 0) {
+                        throw new IllegalArgumentException("Amount must be positive!");
+                    }
+                    
+                    System.out.println("Giving " + amount + " " + item + " to " + target);
+                    break;
+                    
+                case "tp":
+                    if (parts.length < 5) {
+                        throw new IllegalArgumentException("Usage: tp <player> <x> <y> <z>");
+                    }
+                    int x = Integer.parseInt(parts[2]);
+                    int y = Integer.parseInt(parts[3]);
+                    int z = Integer.parseInt(parts[4]);
+                    
+                    System.out.println("Teleporting " + target + " to " + x + ", " + y + ", " + z);
+                    break;
+                    
+                default:
+                    throw new IllegalArgumentException("Unknown command: " + action);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Invalid number in command!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error: " + e.getMessage());
+        }
+    }
+    
+    public static void main(String[] args) {
+        parseCommand("give Steve diamond 5");
+        parseCommand("give Steve sword abc");  // Invalid number
+        parseCommand("tp Alice 10 64 20");
+        parseCommand("unknown command");       // Unknown command
+    }
+}
+```
+
+## Throwing Exceptions
+
+You can throw your own exceptions:
+
+```java
+public class Player {
+    private int health;
+    
+    public void setHealth(int health) {
+        if (health < 0) {
+            throw new IllegalArgumentException("Health cannot be negative!");
+        }
+        if (health > 100) {
+            throw new IllegalArgumentException("Health cannot exceed 100!");
+        }
+        this.health = health;
+    }
+}
+```
+
+<Callout type="info" title="When to Throw Exceptions">
+  Throw exceptions when:
+
+  - Method receives invalid input
+  - Operation cannot be completed
+  - Preconditions are not met
+  - Something unexpected happens
+
+  ```java
+  public void damagePlayer(int damage) {
+      if (damage < 0) {
+          throw new IllegalArgumentException("Damage must be positive!");
+      }
+      // Apply damage
+  }
+
+  public Item getItem(int slot) {
+      if (slot < 0 || slot >= inventory.length) {
+          throw new IndexOutOfBoundsException("Invalid inventory slot!");
+      }
+      return inventory[slot];
+  }
+  ```
+</Callout>
+
+## Checked vs Unchecked Exceptions
+
+<Callout type="warning" title="Exception Types">
+  **Unchecked Exceptions** (RuntimeException):
+
+  - Don't need to be caught
+  - Usually programming errors
+  - Examples: NullPointerException, ArrayIndexOutOfBoundsException
+
+  **Checked Exceptions**:
+
+  - Must be caught or declared
+  - Usually external errors (files, network)
+  - Examples: IOException, FileNotFoundException
+
+  ```java
+  // Unchecked - no need to catch
+  int result = 10 / 0;  // ArithmeticException
+
+  // Checked - must catch or declare
+  try {
+      FileReader file = new FileReader("data.txt");  // IOException
+  } catch (IOException e) {
+      // Handle error
+  }
+  ```
+</Callout>
+
+## Practice Exercises
+
+1. **Safe Division Calculator**: Create a method that divides two numbers. Handle division by zero and invalid input gracefully.
+
+2. **Player Level Setter**: Create a method that sets player level (1-100). Throw an exception if invalid, and handle it in main.
+
+3. **Safe Array Access**: Create a method that safely accesses array elements. Return null if index is invalid instead of crashing.
+
+4. **Config Parser**: Read a config string like "maxPlayers=10" and parse it. Handle invalid formats gracefully.
+
+5. **File Name Validator**: Create a method that checks if a filename is valid (no special characters, not empty). Throw exceptions for invalid names.
