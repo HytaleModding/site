@@ -1,0 +1,11 @@
+{
+  "title": "Advanced elements",
+  "pages": [
+    "Advanced elements.mdx",
+    "---Specific Categories---",
+    "Advanced blocks",
+    "Mana API.mdx",
+    "Plugins.mdx"
+  ],
+  "icon": "Placeholder"
+}
