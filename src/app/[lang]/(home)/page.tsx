@@ -41,7 +41,7 @@ import Confetti from "react-confetti";
 
 type ProjectType = "art" | "website" | "server" | "mod";
 
-const RELEASE_DATE = new Date("2025-01-13T15:00:00.000Z");
+const RELEASE_DATE = new Date("2026-01-13T15:00:00.000Z");
 
 interface ShowcaseItem {
   title: string;
