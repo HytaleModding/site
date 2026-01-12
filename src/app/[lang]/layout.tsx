@@ -3,11 +3,17 @@ import { defineI18nUI } from "fumadocs-ui/i18n";
 import { i18n } from "@/lib/i18n";
 import Script from "next/script";
 import englishTranslations from "@/../messages/en.json";
-import { Geist } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
+import { cn } from "@/lib/utils";
 
 const geist = Geist({
   subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -65,7 +71,7 @@ export default async function RootLayout({
   return (
     <html lang={lang} dir={dir} suppressHydrationWarning>
       <body>
-        <div className={geist.className}>
+        <div className={cn(geist.className, geistMono.variable)}>
           <RootProvider i18n={provider(lang)}>{children}</RootProvider>
         </div>
       </body>

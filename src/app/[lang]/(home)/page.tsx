@@ -35,9 +35,13 @@ import Froggy from "./(showcaseImages)/Froggy.gif";
 import { DiscordButton } from "./discord-button";
 import { SponsorButton } from "./support-button";
 import { GitInfoButton } from "@/components/git-info-button";
-import { ViewTransition } from "react";
+import { useEffect, useState, ViewTransition } from "react";
+import { SlidingNumber } from "@/components/ui/sliding-number";
+import Confetti from "react-confetti";
 
 type ProjectType = "art" | "website" | "server" | "mod";
+
+const RELEASE_DATE = new Date("2025-01-13T15:00:00.000Z");
 
 interface ShowcaseItem {
   title: string;
@@ -196,6 +200,37 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
   );
 };
 
+const DrawConfetti = () => {
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return (
+    <Confetti
+      width={width}
+      height={height}
+      recycle={false}
+      confettiSource={{
+        x: 0,
+        y: height,
+        w: width,
+        h: 0,
+      }}
+      initialVelocityY={25}
+    />
+  );
+};
+
 export default function HomePage() {
   const params = useParams();
   const messages = useMessages();
@@ -280,6 +315,37 @@ export default function HomePage() {
   const shuffledItems = [...showcaseItems].sort(() => Math.random() - 0.5);
   const repeatedItems = [...shuffledItems, ...shuffledItems, ...shuffledItems];
 
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [isReleased, setIsReleased] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const diff = RELEASE_DATE.getTime() - now.getTime();
+
+      if (diff <= 0) {
+        setIsReleased(true);
+        setHours(0);
+        setMinutes(0);
+        setSeconds(0);
+        clearInterval(interval);
+        return;
+      }
+
+      const _hours = Math.floor(diff / (1000 * 60 * 60));
+      const _minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const _seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setHours(_hours);
+      setMinutes(_minutes);
+      setSeconds(_seconds);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  });
+
   return (
     <div className="relative flex flex-1 flex-col overflow-hidden">
       <Spotlight />
@@ -303,6 +369,28 @@ export default function HomePage() {
         <div className="max-w-5xl space-y-8 pt-16 text-center md:pt-0">
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
+              <div className="bg-card mx-auto flex w-fit gap-0.5 rounded-lg border p-2 font-mono">
+                {!isReleased ? (
+                  <>
+                    {messages.home.countdown.split("{countdown}")[0].trim()}
+                    <span className="mx-2 inline-flex items-center">
+                      <SlidingNumber value={hours} padStart />
+                      <span className="text-muted-foreground">:</span>
+
+                      <SlidingNumber value={minutes} padStart />
+                      <span className="text-muted-foreground">:</span>
+
+                      <SlidingNumber value={seconds} padStart />
+                    </span>
+                    {messages.home.countdown.split("{countdown}")[1].trim()}
+                  </>
+                ) : (
+                  <>
+                    <span>{messages.home.hytaleReleased} 🎉🎉</span>
+                    <DrawConfetti />
+                  </>
+                )}
+              </div>
               <h1 className="text-4xl font-semibold text-balance md:text-5xl">
                 <div>{messages.home.title.split("{flipwords}")[0]}</div>
                 <div>

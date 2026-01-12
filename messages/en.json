@@ -15,7 +15,14 @@
     "documentation": "Docs",
     "forum": "Forum",
     "discord": "Join the community!",
-    "memberCount": "{count} Members"
+    "memberCount": "{count} Members",
+    "countdown": "Hytale releases in {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale is out!"
   },
 
   "sponsors": {
