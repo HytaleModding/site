@@ -226,7 +226,7 @@ const DrawConfetti = () => {
         w: width,
         h: 0,
       }}
-      initialVelocityY={25}
+      initialVelocityY={30}
     />
   );
 };
@@ -357,7 +357,7 @@ export default function HomePage() {
         <div className="flex justify-end">
           <Image
             src="/branding/logo-light-348.png"
-            alt="Hytalies Sponsor Logo"
+            alt="Sponsor Logo"
             width={40}
             height={20}
             className="object-contain"
