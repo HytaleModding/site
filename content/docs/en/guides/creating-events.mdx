@@ -1,0 +1,39 @@
+---
+title: "Working with events"
+description: "Learn how to register custom events for your Hytale mod."
+icon: "CircleQuestionMark"
+authors:
+    - name: "oskarscot"
+      link: "https://oskar.scot"
+---
+
+Creating a command is easy. You need to extend the `CommandBase` class.
+
+
+## Simple Event
+
+
+```java
+public class ExampleEvent {
+
+  public static void onPlayerReady(PlayerReadyEvent event) {
+    Player player = event.getPlayer();
+    player.sendMessage(Message.raw("Welcome " + player.getDisplayName()));
+  }
+
+}
+```
+
+## Registering the event
+
+To register the event, you need to register it via the EventRegistry in your plugin's main class by providing the event class and the handler:
+
+```java
+public class MyPlugin extends JavaPlugin {
+
+    @Override
+    public void setup() {
+        this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
+    }
+}
+```
