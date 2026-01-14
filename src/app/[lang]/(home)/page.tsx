@@ -4,6 +4,7 @@ import {
   BookIcon,
   MessageSquareIcon,
   ArrowUpRightIcon,
+  FolderIcon,
 } from "lucide-react";
 import { FlipWords } from "@/components/ui/flip-words";
 import { Spotlight } from "@/components/ui/spotlight-new";
@@ -425,6 +426,13 @@ export default function HomePage() {
               <div className="flex flex-wrap justify-center gap-4">
                 <DiscordButton />
                 <SponsorButton />
+              </div>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Button asChild>
+                  <Link href={localizeHref("/projects", params.lang?.toString())}>
+                    <FolderIcon /> {messages.home.projects}
+                  </Link>
+                </Button>
               </div>
             </div>
           </ViewTransition>

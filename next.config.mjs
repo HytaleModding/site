@@ -59,6 +59,16 @@ const config = {
         destination: "/docs/en/established-information/:path*",
         permanent: false,
       },
+      {
+        source: "/projects/:path*",
+        destination: "/en/projects/:path*",
+        permanent: false,
+      },
+      {
+        source: "/projects",
+        destination: "/en/projects",
+        permanent: false,
+      },
     ];
   },
   experimental: {
