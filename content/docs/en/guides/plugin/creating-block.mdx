@@ -1,0 +1,89 @@
+---
+title: "Creating custom Block"
+description: "Learn how to create simple custom block for your Hytale mod."
+authors:
+    - name: "Flo_12344"
+      link: "https://flotterstudio.com"
+---
+
+To create a new object you need to:
+
+- Set *IncludesAssetPack* to true in manifest.json
+
+- Then in your mod resource folder you will a structure like that:
+```
+    resources
+    |-Server
+    | |-Item
+    | | |-Items
+    | |-Languages
+    |   |-en-US
+    |-Common
+      |-Blocks
+      |-BlockTextures
+```
+
+In Server/Languages/en-US we will add a items.lang
+
+```
+    my_new_block.name = My New Block
+```
+
+## Simple Block
+
+In Server/Item/Items we will create a my_new_object.json
+
+```json
+    {
+        "TranslationProperties":{
+            "Name": "items.my_new_object.name",
+            "Description": "items.my_new_object.name"
+        },
+        "Id": "MyNewBlock",
+        "MaxStack": 20,
+        "BlockType": {
+            "Material": "Solid",
+            "DrawType": "Cube",
+            "Opacity": "Transparent",
+            "Textures": [
+                {
+                    "All": "BlockTextures/texture.png",
+                    "Weight": 1
+                }
+            ]
+        },
+        "Icon": "Icons/ItemsGenerated/my_new_object.png"
+    }
+```
+
+Now you just need to place your texture in Common/BlockTextures and your icon in Common/Icons/ItemsGenerated
+
+## Custom Model
+
+In Server/Item/Items we will create a my_new_object.json
+
+```json
+    {
+        "TranslationProperties":{
+            "Name": "items.my_new_object.name",
+            "Description": "items.my_new_object.name"
+        },
+        "Id": "MyNewBlock",
+        "MaxStack": 20,
+        "BlockType": {
+            "Material": "Solid",
+            "DrawType": "Model",
+            "Opacity": "Transparent",
+            "CustomModel": "Blocks/my_new_model.blockymodel",
+            "CustomModelTexture": [
+                {
+                    "Texture": "Blocks/texture.png",
+                    "Weight": 1
+                }
+            ],
+        },
+        "Icon": "Icons/ItemsGenerated/my_new_object.png"
+    }
+```
+
+Now you just need to place your texture and model in Common/Blocks and your icon in Common/Icons/ItemsGenerated
