@@ -1,13 +1,14 @@
 {
   "pages": [
-    "---Introduction---",
     "index",
     "quick-start",
     "established-information",
     "---Guides---",
     "...guides",
-    "publishing",
+    "---Documentation---",
+    "...server",
     "---Community---",
+    "publishing",
     "projects",
     "contributing"
   ]

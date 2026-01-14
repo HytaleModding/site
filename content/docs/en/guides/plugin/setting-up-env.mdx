@@ -1,17 +1,10 @@
 ---
 title: "Setting Up Your Development Environment"
 description: "Learn how to set up your development environment for modding Hytale."
-icon: "Terminal"
 authors:
     - name: "Neil Revin"
       link: "https://itsneil.dev"
 ---
-
-<Callout>
-    This Callout is for anyone looking at this page or translators - this page is NOT READY! Please do not translate this file at all, including this message. Thank you
-</Callout>
-
-# Setting Up Your Development Environment
 
 This guide will walk you through setting up a complete development environment for Hytale modding, including all necessary tools and dependencies.
 
@@ -57,34 +50,21 @@ We recommend IntelliJ IDEA Community Edition for Hytale modding.
 2. Install with default settings
 3. Launch and complete the initial setup wizard
 
-### 3. Git Version Control
-
-#### Windows
-Download Git from [git-scm.com](https://git-scm.com/download/win) and install with default settings.
-
-#### macOS
-```bash
-# Using Homebrew
-brew install git
-```
-
-#### Linux
-```bash
-# Ubuntu/Debian
-sudo apt install git
-
-# Fedora/CentOS
-sudo dnf install git
-```
-
-Verify installation:
-```bash
-git --version
-```
-
 ## Setting Up Your Workspace
 
-### 1. Clone the Plugin Template
+### 1. Add HytaleServer.jar Dependency
+
+Before you can start modding, you need to add the HytaleServer.jar file as a dependency:
+
+1. **Download HytaleServer.jar** using the [Hytale Downloader](https://support.hytale.com/hc/en-us/articles/45326769420827-Hytale-Server-Manual)
+2. **Add to IntelliJ IDEA**:
+   - Click on **"File"** at the top left
+   - Go to **"Project Structure"**
+   - Go to **"Libraries"**
+   - Click on the **+ icon**
+   - Select the **HytaleServer.jar** you downloaded
+
+### 2. Clone the Plugin Template
 
 Instead of creating an empty directory, we'll use the official Hytale plugin template:
 
@@ -93,35 +73,11 @@ Instead of creating an empty directory, we'll use the official Hytale plugin tem
 git clone https://github.com/HytaleModding/plugin-template.git MyFirstMod
 cd MyFirstMod
 ```
-
-### 2. Configure the Project
-
-Remove the existing Git history and initialize your own:
-
-```bash
-# Remove the template's Git history
-rm -rf .git
-
-# Initialize a new Git repository
-git init
-git add .
-git commit -m "Initial commit from plugin template"
-```
-
-### 3. Configure Git Identity
-
-Set up your Git identity for future commits:
-
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
-```
-
-### 4. Open in IntelliJ IDEA
+### 3. Open in IntelliJ IDEA
 
 1. Open IntelliJ IDEA
 2. Click "Open" and navigate to your `MyFirstMod` directory
-3. IntelliJ will automatically detect it as a Gradle project
+3. IntelliJ will automatically detect it as a Maven project
 4. Wait for the project to index and dependencies to download
 
 ## Next Steps

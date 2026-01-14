@@ -1,0 +1,109 @@
+---
+title: "Permission Management"
+description: "Learn how to manage permission nodes and groups in your Hytale plugin."
+authors:
+    - name: "Neil Revin"
+      link: "https://itsneil.dev"
+    - name: "Bird"
+      link: "https://discord.com/users/495709580068651009"
+    - name: "Craw"
+      link: "https://discord.com/users/292656109939064833"
+---
+
+In this guide, you'll learn how to manage permission nodes and groups in your Hytale plugin.
+
+## The `PermissionsModule` class
+
+The `PermissionsModule` class is responsible for managing permission nodes and groups in your plugin. It provides methods to check, grant and revoke permissions and groups for players. It allows the following operations
+- Add permissions to user
+- Remove permissions from user
+- Add permissions to group (this also creates the group if it doesn't exist)
+- Remove permissions from group
+- Add user to group
+- Remove user from group
+- List all groups for a user
+- Check if a user has a permission (it checks both user and group permissions for the given player UUID)
+
+With this class you cannot:
+- List all defined groups
+- Remove a group 
+
+### Adding Permission Nodes
+
+You need a `Set<String>` containing all the permission nodes you want to add, these are added on top of the already existing permission nodes the user may have, it is not a replacement.
+
+```java
+Set<String> permissions = new HashSet<>();
+PermissionsModule perms = PermissionsModule.get();
+perms.addUserPermission(playerUUID, permissions);
+```
+
+### Removing Permission Nodes
+
+Same as above, we just use the `removeUserPermission` method instead to remove permission nodes.
+
+```java
+Set<String> permissions = new HashSet<>();
+PermissionsModule perms = PermissionsModule.get();
+perms.removeUserPermission(playerUUID, permissions);
+```
+
+### Add permissions to group
+```java
+String groupName = "testGroup";
+Set<String> permissions = new HashSet<>();
+PermissionsModule perms = PermissionsModule.get();
+perms.addGroupPermission(groupName, permissions);
+```
+
+### Remove permissions from group
+```java
+String groupName = "testGroup";
+Set<String> permissions = new HashSet<>();
+PermissionsModule perms = PermissionsModule.get();
+perms.removeGroupPermission(groupName, permissions);
+```
+
+### Add user to group
+```java
+String groupName = "testGroup";
+Set<String> permissions = new HashSet<>();
+PermissionsModule perms = PermissionsModule.get();
+perms.addUserToGroup(playerUUID, groupName);
+```
+
+### Remove user from group
+```java
+String groupName = "testGroup";
+Set<String> permissions = new HashSet<>();
+PermissionsModule perms = PermissionsModule.get();
+perms.removeUserFromGroup(playerUUID, groupName);
+```
+
+### List all groups for a user
+```java
+PermissionsModule perms = PermissionsModule.get();
+perms.getGroupsForUser(playerUUID);
+```
+
+### Check Permission Nodes
+
+To check if a player has a specific permission node, you can use the `hasPermission` method.
+
+```java
+boolean hasPermission = PermissionsModule.hasPermission(playerUUID, "permission.node");
+```
+
+### Additional: Defining your own storage provider for permissions and groups
+
+Apparently we could implement our own storage provider for permissions and groups as file storage is not very reliable. 
+
+First we need to define a provider class that implements PermissionProvider: 
+
+```java
+public class DatabasePermissionProvider implements PermissionProvider
+```
+Then we just implement the required methods using a database implementation. To force our plugin to use this new provider we just need to add to the provider list our fresh DatabasePermissionProvider.
+```java
+perms.getProviders().addFirst(new DatabasePermissionProvider());
+```
