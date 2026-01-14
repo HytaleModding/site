@@ -66,26 +66,36 @@ This is because you aren't intercepting Q, but rather `InteractionType.Ability1`
 This is one of the better systems to capture, as it intercepts packets not even used during standard play.
 
 ```java
-// 1. Grant permission on join
-player.addPermission("hytale.editor.builderTools");
+// 1. Grant permission on join (in PlayerReadyEvent handler)
+PermissionsModule.get().addUserPermission(
+    playerRef.getUuid(),
+    Set.of("hytale.editor.builderTools")
+);
 
 // 2. Intercept in packet handler
-void handleBuilderToolAction(BuilderToolGeneralAction packet, PlayerRef player) {
-    if (player.getGameMode() != GameMode.Creative) {
+void handleBuilderToolAction(BuilderToolGeneralAction packet, PlayerRef playerRef) {
+    Ref<EntityStore> ref = playerRef.getReference();
+    if (ref == null) return;
+    
+    Store<EntityStore> store = ref.getStore();
+    Player playerComponent = (Player) store.getComponent(ref, Player.getComponentType());
+    
+    if (playerComponent.getGameMode() != GameMode.Creative) {
         // Hijack for abilities
         switch (packet.action) {
-            case ActivateToolMode -> castFireball(player);    // B pressed
-            case DeactivateToolMode -> endFireball(player);   // B released
-            case HistoryUndo -> castFireTrail(player);        // Ctrl+Z
-            case HistoryRedo -> castHaste(player);            // Ctrl+Y
-            case SelectionCopy -> castVanish(player);         // Ctrl+C
+            case ActivateToolMode -> castFireball(playerRef);   // B pressed
+            case DeactivateToolMode -> endFireball(playerRef);  // B released
+            case HistoryUndo -> castRewind(playerRef);          // Ctrl+Z
+            case HistoryRedo -> castHaste(playerRef);           // Ctrl+Y
+            case SelectionCopy -> castClone(playerRef);         // Ctrl+C
         }
         return;  // Don't run actual builder tool logic
     }
     // Creative players get normal behavior
-    super.handleBuilderToolAction(packet, player);
+    super.handleBuilderToolAction(packet, playerRef);
 }
 ```
+
 You can do this with anything, so a custom keybind for UI, gameplay, etc. 
 
 **Critical Note:** If the player changes keybinds you won't know, so your guides have to reference Default Hytale Controls. Also if they change key binds due to your mod (disliking Ctrl+C as an ability for example) the setting follows them, and may impact their experience outside of your ecosystem. Important to consider while choosing packets.
