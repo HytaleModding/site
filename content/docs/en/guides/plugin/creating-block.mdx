@@ -1,0 +1,105 @@
+---
+title: "Creating custom blocks"
+description: "Learn how to create custom blocks for your Hytale mod."
+authors:
+    - name: "Flo_12344"
+      link: "https://flotterstudio.com"
+---
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+
+Creating custom blocks requires enabling asset packs and organizing your files properly.
+
+## Setup
+
+1. Enable asset packs in `manifest.json` by setting `IncludesAssetPack` to `true`
+2. Create the following folder structure:
+
+<Files>
+    <Folder name="resources" defaultOpen>
+        <Folder name="Server" defaultOpen>
+            <Folder name="Item" defaultOpen>
+                <Folder name="Items"></Folder>
+            </Folder>
+            <Folder name="Languages" defaultOpen>
+                <Folder name="en-US"></Folder>
+            </Folder>
+        </Folder>
+        <Folder name="Common" defaultOpen>
+            <Folder name="Icons"></Folder>
+            <Folder name="Blocks" defaultOpen>
+                <Folder name="my_new_block" defaultOpen>
+                    <File name="model.blockymodel" />
+                </Folder>
+            </Folder>
+            <Folder name="BlockTextures" defaultOpen>
+                <File name="texture.png" />
+            </Folder>
+        </Folder>
+    </Folder>
+</Files>
+
+3. Add translations in `Server/Languages/en-US/items.lang`:
+
+```
+my_new_block.name = My New Block
+my_new_block.description = My Description
+```
+
+## Basic Cube Block
+
+Create `Server/Item/Items/my_new_block.json`:
+
+```json
+{
+    "TranslationProperties": {
+        "Name": "items.my_new_block.name",
+        "Description": "items.my_new_block.description"
+    },
+    "Id": "MyNewBlock",
+    "PlayerAnimationsId": "Block",
+    "MaxStack": 20,
+    "BlockType": {
+        "Material": "Solid",
+        "DrawType": "Cube",
+        "Opacity": "Transparent",
+        "Textures": [
+            {
+                "All": "BlockTextures/texture.png",
+                "Weight": 1
+            }
+        ]
+    },
+    "Icon": "Icons/ItemsGenerated/my_new_block.png"
+}
+```
+
+## Custom Model Block
+
+For custom models, use `DrawType: "Model"`:
+
+```json
+{
+    "TranslationProperties": {
+        "Name": "items.my_new_block.name",
+        "Description": "items.my_new_block.description"
+    },
+    "Id": "MyNewBlock",
+    "PlayerAnimationsId": "Block",
+    "MaxStack": 20,
+    "BlockType": {
+        "Material": "Solid",
+        "DrawType": "Model",
+        "Opacity": "Transparent",
+        "CustomModel": "Blocks/my_new_model.blockymodel",
+        "CustomModelTexture": [
+            {
+                "Texture": "BlockTextures/texture.png",
+                "Weight": 1
+            }
+        ]
+    },
+    "Icon": "Icons/ItemsGenerated/my_new_object.png"
+}
+```
+
+Ensure all referenced files exist in their respective folders, and the paths are correct.

@@ -5,13 +5,10 @@ authors:
     - name: "Vibe Theory"
       url: "https://discord.com/users/145420279294722048"
 ---
-# Customizing Camera Controls Guide
-
-Hytale provides great camera customizability! Heres the essentials to get started.
-
----
 
 ## The Basics
+
+Hytale provides great camera customizability! Heres the essentials to get started.
 
 Camera is controlled by sending a `SetServerCamera` packet with `ServerCameraSettings`:
 
@@ -50,6 +47,8 @@ settings.distance = 20.0f;
 settings.displayCursor = true;
 settings.isFirstPerson = false;
 settings.movementForceRotationType = MovementForceRotationType.Custom;
+// Align movement with camera yaw (horizontal rotation only)
+settings.movementForceRotation = new Direction(-0.7853981634f, 0.0f, 0.0f);  // 45° left
 settings.eyeOffset = true;
 settings.positionDistanceOffsetType = PositionDistanceOffsetType.DistanceOffset;
 settings.rotationType = RotationType.Custom;
@@ -76,6 +75,34 @@ settings.rotationType = RotationType.Custom;
 settings.mouseInputType = MouseInputType.LookAtPlane;
 settings.planeNormal = new Vector3f(0.0f, 0.0f, 1.0f);         // Side plane
 ```
+## Common Settings Explained
+
+### Position & Rotation
+- **`positionLerpSpeed`** (0.0-1.0): How smoothly the camera follows the player. Lower = smoother but slower response.
+- **`rotationLerpSpeed`** (0.0-1.0): How smoothly the camera rotates. Lower = smoother but slower response.
+- **`distance`**: Camera distance from player. Higher = zoomed out more.
+- **`rotation`**: Camera angle as `Direction(yaw, pitch, roll)` in radians.
+- **`rotationType`**: How rotation is calculated. `RotationType.Custom` uses your `rotation` value.
+
+### Movement Alignment
+- **`movementForceRotationType`**:
+- `MovementForceRotationType.AttachedToHead` = movement follows where player looks
+- `MovementForceRotationType.Custom` = use `movementForceRotation` value
+- **`movementForceRotation`**: When using `Custom`, this sets the direction for W/S movement. Match yaw with camera but keep pitch at 0.
+
+### Input & Display
+- **`displayCursor`**: Show/hide mouse cursor.
+- **`mouseInputType`**:
+- `MouseInputType.LookAtPlane` = mouse moves cursor on a plane (good for top-down)
+- `MouseInputType.LookAtTarget` = mouse rotates camera
+- **`planeNormal`**: For `LookAtPlane`, defines which plane the mouse moves on. `(0,1,0)` = ground plane.
+
+### Advanced
+- **`positionDistanceOffsetType`**:
+- `DistanceOffset` = simple distance offset
+- `DistanceOffsetRaycast` = prevents camera clipping through walls
+- **`eyeOffset`**: Offset camera from player's eye position.
+- **`movementMultiplier`**: Scale movement on each axis. `(1,1,0)` = lock Z-axis for 2D movement.
 
 ---
 
@@ -102,6 +129,8 @@ import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
 - **Wall clipping:** Use `PositionDistanceOffsetType.DistanceOffsetRaycast`
 - **Lock camera:** Set `isLocked = true` in the packet to prevent player changes
 - **2D movement:** Set `movementMultiplier` to zero out an axis
+- **Isometric cameras:** Always set `movementForceRotation` to match camera yaw for proper movement alignment
+- **Angle calculations:** Use `Math.toRadians(degrees)` or `degrees * Math.PI / 180.0` to convert degrees to radians
 
 ---
 
