@@ -4,6 +4,8 @@ description: "Learn how to create custom events for your Hytale mod."
 authors:
     - name: "Neil Revin"
       link: "https://itsneil.dev"
+    - name: "EllieAU"
+      link: "https://ellie.au"
 ---
 
 ## Event Class
@@ -33,6 +35,55 @@ public class MyPlugin extends JavaPlugin {
     @Override
     public void setup() {
         this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
+    }
+}
+```
+
+## ESC Event Classes
+
+For events that fall under the [ESC Events](../../server/events#ecsevent) list you will need to instead create and register an entity event system.
+An example is included below that will cancel the crafting of a recipe if it uses fibre as an input.
+
+```java
+class ExampleCancelCraft extends EntityEventSystem<EntityStore, CraftRecipeEvent.Pre> {
+    public ExampleCancelCraft() {
+        super(CraftRecipeEvent.Pre.class);
+    }
+
+    @Override
+    public void handle(int index,
+                       @NonNullDecl ArchetypeChunk<EntityStore> archetypeChunk,
+                       @NonNullDecl Store<EntityStore> store,
+                       @NonNullDecl CommandBuffer<EntityStore> commandBuffer,
+                       @NonNullDecl CraftRecipeEvent.Pre craftRecipeEvent) {
+        CraftingRecipe recipe = craftRecipeEvent.getCraftedRecipe();
+        if (recipe.getInput() != null) {
+            for (MaterialQuantity mq : recipe.getInput()) {
+                if (Objects.equals(mq.getItemId(), "Ingredient_Fibre")) {
+                    craftRecipeEvent.setCancelled(true);
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public Query<EntityStore> getQuery() {
+        return Archetype.empty();
+    }
+}
+```
+
+## Registering ESC Events
+
+You will need to register the system in your plugin:
+
+```java
+public class MyPlugin extends JavaPlugin {
+
+    @Override
+    public void setup() {
+        this.getEntityStoreRegistry().registerSystem(new ExampleCancelCraft());
     }
 }
 ```
