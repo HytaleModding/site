@@ -1,0 +1,265 @@
+---
+title: Hytale Asset Index
+subtitle: r1 – 14th of January, 2026
+description: A static, inspectable index of Hytale item assets, derived from game data and rendered as SQLite + HTML.
+icon: "List"
+full: true
+---
+
+The Hytale Asset Index produces a **static snapshot of item-related asset data** extracted from a given game version.
+Its outputs are intended to be browsed, filtered, queried, and archived without requiring any runtime environment beyond a web browser or SQLite client.
+
+The index is suitable for:
+
+* comparing item definitions across versions
+* auditing unused, debug, or prototype content
+* building external tooling on top of a stable dataset
+* long-term archival of asset state at a specific revision
+
+All outputs are deterministic with respect to the input assets.
+
+---
+
+## Output Overview
+
+The generation process produces three primary artifacts:
+
+### `items.db` — canonical dataset
+
+A SQLite database containing **every discovered item file**, regardless of validity or classification.
+
+Characteristics:
+
+* unfiltered and lossless
+* stable schema
+* indexed on item ID and classification flags
+* suitable for:
+
+  * ad-hoc SQL queries
+  * diffing between versions
+  * downstream automation or analysis
+
+Invalid, non-object, and migration files are retained and explicitly marked rather than discarded.
+
+---
+
+### `items.html` — human-readable index
+
+A fully static HTML document representing a **filtered projection** of the database.
+
+Behavior:
+
+* renders only items that pass the selected filters
+* performs all searching and filtering client-side
+* does not require JavaScript frameworks or a backend
+* can be opened directly from disk
+
+Displayed fields typically include:
+
+* item ID
+* resolved display name (or fallback)
+* translation key (if present)
+* relative asset path
+* classification flags (debug, template, etc.)
+
+The HTML is designed for inspection, not authoring; it is regenerated rather than edited manually.
+
+---
+
+### `styles.css` — presentation layer
+
+Controls **all visual aspects** of the HTML output.
+
+Responsibilities:
+
+* layout and spacing
+* color scheme and highlights
+* visual distinction for special cases (e.g. invalid JSON, migrations)
+* selection and filter state styling
+
+The stylesheet is versioned alongside the HTML and must remain colocated with it.
+
+---
+
+## Output Directory Layout
+
+Typical output layout:
+
+```text
+out/
+├─ items.db
+├─ items.html
+└─ styles.css
+```
+
+Files are overwritten on regeneration. No incremental state is preserved.
+
+---
+
+## Item Representation in Outputs
+
+### Normal items
+
+When an item file parses successfully as an object:
+
+* an item ID is resolved from one of:
+  `Id`, `ItemId`, `itemId`, `id`
+* a display name is resolved via:
+  `TranslationProperties.Name` → translation table
+* if translation fails, the ID or key is shown as a fallback
+* the item is classified based on its path
+
+These items behave normally in search, filtering, and export.
+
+---
+
+### Block migration entries
+
+Files under `Block/Migrations/` are treated as **structurally distinct**:
+
+* not considered gameplay items
+* typically lack translation keys or display names
+* rendered as **“Block migration X”**
+* marked with a dedicated label and tooltip
+* optionally hidden or shown depending on filter settings
+
+They are included to preserve visibility into version-to-version mapping data.
+
+---
+
+### Invalid JSON entries
+
+Files that fail to parse:
+
+* are still represented in the database
+* appear in HTML only if inclusion is enabled
+* are clearly labeled as invalid
+* do not participate in normal item searches
+
+Purpose:
+
+* auditing broken or partially extracted assets
+* identifying incomplete dumps
+
+---
+
+### Non-object JSON entries
+
+Files that parse but are not JSON objects:
+
+* tracked separately from parse failures
+* marked distinctly in both DB and HTML
+* optionally visible
+
+This distinction matters when diagnosing malformed but syntactically valid data.
+
+---
+
+## Classification Flags (as seen in outputs)
+
+Each item row or card carries derived flags based on its asset path:
+
+* **Debug**
+* **Template**
+* **Editor**
+* **Prototype**
+* **Hypixel**
+* **QA**
+* **Gameplay-safe**
+* **Block migration**
+
+Gameplay-safe is **strictly negative**:
+it is only true when *none* of the other flags apply.
+
+If debug or template items are shown, gameplay-safe-only views are automatically disabled to avoid misleading output.
+
+---
+
+## Search, Filtering, and Export Semantics
+
+### Search behavior
+
+Search operates over the **currently rendered dataset** and matches against:
+
+* item ID
+* resolved display name
+* translation key
+* relative asset path
+
+Matching is inclusive and client-side.
+
+---
+
+### Visual selection
+
+Items can be selected in the HTML view:
+
+* selection is purely visual
+* indicated by an amber highlight
+* selection state affects exports but not filtering
+
+---
+
+### Export behavior
+
+Exports reflect **exactly what is visible and/or selected** at the time of export.
+
+Supported formats:
+
+* plaintext (one entry per line)
+* structured JSON (one object per item)
+
+No hidden or filtered-out items are included implicitly.
+
+---
+
+## Expected Limitations in Outputs
+
+### Missing or unresolved names
+
+If translation keys cannot be resolved:
+
+* the raw key or item ID is shown
+* this is expected for incomplete or unusual translation maps
+
+---
+
+### Translation coverage
+
+Translation loading is best-effort:
+
+* large or irregular translation files may be partially scanned
+* uncommon nesting patterns may be skipped
+* missing names do not imply missing items
+
+---
+
+### Dataset size
+
+Large asset sets result in:
+
+* large HTML files
+* higher client-side memory usage
+
+This is expected and does not affect database integrity.
+
+---
+
+### Path normalization
+
+All paths shown in outputs are:
+
+* normalized
+* relative to `Assets/`
+* platform-independent (Windows paths are canonicalized)
+
+---
+
+## Output Stability Guarantees
+
+* database schema is stable across runs
+* classification rules are deterministic
+* rerunning generation with identical inputs yields identical outputs
+* outputs are safe to version-control or archive
+
+The index should be treated as a **read-only representation of asset state at a point in time**, not as an authoring surface.
