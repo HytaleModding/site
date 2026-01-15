@@ -3,7 +3,7 @@
   "nav": {
     "title": "Hytale Modding",
     "documentation": "Documentatie",
-    "sponsors": "Sponsors",
+    "sponsors": "Sponsoren",
     "search": "Zoeken"
   },
   "home": {
@@ -18,19 +18,26 @@
     "documentation": "Documentatie",
     "forum": "Forum",
     "discord": "Word lid van de community!",
-    "memberCount": "{count} Leden"
+    "memberCount": "{count} Leden",
+    "countdown": "Hytale komt uit over {countdown}",
+    "countdownUnits": {
+      "hours": "u",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale is uit!"
   },
   "sponsors": {
-    "title": "Support Us",
-    "description": "HytaleModding is an open-source community project, and part of managing the community involves paying for services, servers and infrastructure, like hosting this website. If you would like to support the project, consider becoming a sponsor! We use OpenCollective so you can see how funds are being used to support the community.",
-    "ourSponsors": "Our Sponsors"
+    "title": "Steun ons",
+    "description": "HytaleModding is een open-source gemeenschapsproject en een deel van het beheer van de gemeenschap betreft het betalen voor diensten, servers en infrastructuur, zoals het hosten van deze website. Als je het project wilt steunen, kun je overwegen een sponsor te worden! We gebruiken OpenCollective zodat je kunt zien hoe fondsen worden gebruikt om de gemeenschap te ondersteunen.",
+    "ourSponsors": "Onze sponsoren"
   },
   "misc": {
     "loading": "Aan het laden...",
-    "failedToLoad": "Failed to load.",
+    "failedToLoad": "Laden is mislukt.",
     "gitInfoUnavailable": "Git informatie niet beschikbaar",
-    "credit": "Written by",
-    "supportUs": "Support Us"
+    "credit": "Geschreven door",
+    "supportUs": "Steun ons"
   },
   "meta": {
     "established_information": {
@@ -39,7 +46,7 @@
       "server": {
         "title": "Server",
         "content_categories": {
-          "title": "Content Categories"
+          "title": "Content Categorieën"
         },
         "interface": {
           "title": "Uiterlijk"
@@ -58,7 +65,7 @@
     "guides": {
       "title": "Handleidingen",
       "java_basics": {
-        "title": "Java Basics"
+        "title": ""
       }
     },
     "community_projects": {

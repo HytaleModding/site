@@ -1,39 +1,39 @@
 ---
-title: PR Riktlinjer
-description: Riktlinjer som granskare och bidragsgivare bör följa när de skickar in och granskar pull-requests.
+title: PR Guidelines
+description: Guidelines that reviewers and contributors should follow when submitting and reviewing pull requests.
 ---
 
-# Riktlinjer för Pull Request
+# Pull Request Guidelines
 
-För att säkerställa en smidig och effektiv granskningsprocess så borde både bidragsgivare och granskare följa följande riktlinjer när de skickar in och granskar pull requests (PRs)
+To ensure a smooth and efficient review process, both contributors and reviewers should adhere to the following guidelines when submitting and reviewing pull requests (PRs).
 
-## För bidragsgivare
+## For Contributors
 
-1. **Beskrivande rubriker och beskrivningar**
-   - Använd tydliga och koncisa titlar som sammanfattar ändringarna.
-   - Ge detaljerade beskrivningar av vad PR gör, varför förändringarna är nödvändiga, och alla relevanta sammanhang.
-2. **Länk till problem**
-   - I din PR-titel lägger du till `GH-ISSUE-NUMBER` för att länka PR till det relevanta problemet. Detta krävs för alla PRs.
-3. **Små, fokuserade ändringar**
-   - Sikta att hålla PRs små och fokuserade på en enda fråga eller funktion. Detta gör det enklare för granskare att förstå och ge feedback.
-4. **Kodkvalitet**
-   - Se till att din kod följer projektets kodningsstandarder och bästa praxis.
-   - Inkludera kommentarer där det behövs för att förklara komplex logik.
-5. **Testning**
-   - Testa dina ändringar genomförligt innan du skickar in PR.
-   - Om tillämpligt, inkludera enhetstester eller integrationstester för att verifiera dina ändringar.
-6. **Dokumentation**
-   - Uppdatera eller lägg till dokumentation efter behov för att återspegla dina ändringar.
-7. **Commit Meddelanden**
-   - Använda klara och beskrivande commit meddelanden som följer formatet [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
-8. **Kontrollera konflikter**
-   - Innan du skickar in din PR, se till att din gren är uppdaterad med basgrenen för att minimera sammanslagningskonflikter.
+1. **Descriptive Titles and Descriptions**
+   - Use clear and concise titles that summarize the changes.
+   - Provide detailed descriptions of what the PR does, why the changes are necessary, and any relevant context.
+2. **Link to Issues**
+   - In your PR title, add `GH-ISSUE-NUMBER` to link the PR to the relevant issue. This is required for all PRs.
+3. **Small, Focused Changes**
+   - Aim to keep PRs small and focused on a single issue or feature. This makes it easier for reviewers to understand and provide feedback.
+4. **Code Quality**
+   - Ensure your code follows the project's coding standards and best practices.
+   - Include comments where necessary to explain complex logic.
+5. **Testing**
+   - Test your changes thoroughly before submitting the PR.
+   - If applicable, include unit tests or integration tests to verify your changes.
+6. **Documentation**
+   - Update or add documentation as needed to reflect your changes.
+7. **Commit Messages**
+   - Use clear and descriptive commit messages that follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) format.
+8. **Check for Conflicts**
+   - Before submitting your PR, ensure that your branch is up to date with the base branch to minimize merge conflicts.
 
-## För granskare
+## For Reviewers
 
-- Du är tänkt att granska PRs grundligt, och begära ändringar om det behövs.
-- Ge konstruktiv feedback och förslag till förbättringar.
-- Verifiera att ändringarna möter projektets kodningsstandard och bästa praxis.
-- Distribuera PR med hjälp av dokploy integration för att säkerställa förändringarna funkar som förväntat.
-- Se till att dokumentationen uppdateras vid behov.
-- Godkänn PR endast när du är nöjd med ändringarna och alla kontroller har passerat.
+- You are supposed to review PRs thoroughly, and request changes if needed.
+- Provide constructive feedback and suggestions for improvement.
+- Verify that the changes meet the project's coding standards and best practices.
+- Deploy the PR using the dokploy integration to ensure the changes work as expected.
+- Ensure that documentation is updated as necessary.
+- Approve the PR only when you are satisfied with the changes and all checks have passed.

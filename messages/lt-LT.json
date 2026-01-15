@@ -18,7 +18,14 @@
     "documentation": "Dokumentacija",
     "forum": "Forumas",
     "discord": "Prisijunkite prie bendruomenės!",
-    "memberCount": "{count} Narių"
+    "memberCount": "{count} Narių",
+    "countdown": "Hytale releases in {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale is out!"
   },
   "sponsors": {
     "title": "Paremkite mus",

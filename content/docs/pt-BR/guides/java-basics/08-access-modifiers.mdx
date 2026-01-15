@@ -1,11 +1,11 @@
 ---
-title: 08 — Encapsulamento e Modificadores de Acesso
-description: Aprenda a como proteger e controlar o acesso aos dados das suas classes.
+title: 08 - Encapsulation and Access Modifiers
+description: Learn how to protect and control access to your class data.
 ---
 
-O Encapsulamento consiste em ocultar os detalhes internos de uma classe e determinar como os seus dados podem ser acessados ou modificados. Isso evita que erros aconteçam e o seu código se torna mais simples de manter e atualizar.
+Encapsulation is about hiding the internal details of a class and controlling how its data is accessed and modified. This prevents bugs and makes your code more maintainable.
 
-## O problema sem o encapsulamento
+## The Problem Without Encapsulation
 
 ```java
 public class Player {
@@ -28,11 +28,11 @@ public class Main {
 }
 ```
 
-Sem proteção, qualquer um pode definir valores inválidos!
+Without protection, anyone can set invalid values!
 
-## Modificadores de Acesso
+## Access Modifiers
 
-O Java tem palavras-chave que controlam quem pode acessar os membros da sua classe:
+Java has keywords that control who can access your class members:
 
 | Modificador | Classe | Pacote | Subclasse | Mundo |
 | ----------- | ------ | ------ | --------- | ----- |
@@ -46,7 +46,7 @@ O Java tem palavras-chave que controlam quem pode acessar os membros da sua clas
 * `public` — Qualquer pessoa pode acessar
 * `private` — Apenas essa classe pode acessar
 
-## Tornando Propriedades Privadas
+## Making Properties Private
 
 ```java
 public class Player {
@@ -62,7 +62,7 @@ public class Player {
 }
 ```
 
-Você não consegue mais acessar as propriedades diretamente:
+Now you can't access properties directly:
 
 ```java
 Player player = new Player("Alice", 100);
@@ -124,7 +124,7 @@ System.out.println(player.getHealth());  // 0
 ```
 
 <Callout type="info" title="Nomeação Getter e Setter">
-  Seguir convenções de nomenclatura do Java:
+  Follow Java naming conventions:
 
   * **Getter**: `get` + nome da propriedade (capitalizado);
   * **Setter**: `set` + nome da propriedade (capitalizado);
@@ -145,7 +145,7 @@ System.out.println(player.getHealth());  // 0
   ```
 </Callout>
 
-## Vantagens do Encapsulamento
+## Benefits of Encapsulation
 
 ### 1. Validação
 
@@ -170,9 +170,9 @@ public class Item {
 }
 ```
 
-### 2. Propriedades Apenas de Leitura
+### 2. Read-Only Properties
 
-Às vezes, você não quer um setter:
+Sometimes you don't want a setter:
 
 ```java
 public class Monster {
@@ -285,6 +285,7 @@ public class Tool {
 ### Exemplo de conta bancária
 
 ```java
+public class PlayerWallet {
     private int gold;
     private int silver;
     
@@ -357,7 +358,7 @@ public class ProtectedBlock {
         }
     }
     
-    // Somente Getters - posição e owner não devem mudar
+    // Getters only - position and owner shouldn't change
     public int getX() {
         return x;
     }
@@ -383,7 +384,7 @@ public class ProtectedBlock {
 ## Quando usar `Private` e `Public`
 
 <Callout type="info" title="Regras gerais">
-  **Torná-lo privado por padrão!** Apenas torne as coisas públicas se elas precisarem ser acessadas de fora.
+  **Make it private by default!** Only make things public if they need to be accessed from outside.
 
   **Private:**
 
@@ -399,17 +400,17 @@ public class ProtectedBlock {
 
   ```java
   public class Example {
-      // Privado - dados internos
+      // Private - internal data
       private int internalCounter;
       private String secretKey;
       
-      // Público - parte da interface
+      // Public - part of the interface
       public void doSomething() {
-          // Usa um método auxiliar privado
+          // Uses private helper method
           validateData();
       }
       
-      // Auxiliar interno privado
+      // Private - internal helper
       private void validateData() {
           // ...
       }
@@ -419,7 +420,7 @@ public class ProtectedBlock {
 
 ## A palavra-chave `final`
 
-`final` significa que uma variável não pode ser alterada após ser definida:
+`final` means a variable can't be changed after it's set:
 
 ```java
 public class Player {
@@ -452,13 +453,13 @@ public class Player {
 
 ### Membros estáticos
 
-Uma classe pode definir dois tipos de membros:
+A class can define two kinds of members:
 
-* **Instance members** — pertencentes a cada objeto (cada instância tem sua própria cópia).
+* **Instance members** — owned by each object (each instance has its own copy).
 
-* **Static members** — pertencentes à classe (uma cópia compartilhada do tipo inteiro).
+* **Static members** — owned by the class (one shared copy for the entire type).
 
-Simplificando um pouco: os 'Instance Members' pertencem a objetos, enquanto os 'Static Members' pertencem à própria classe e são compartilhados por todos os objetos desse tipo.
+Put simply: instance members belong to objects; static members belong to the class itself and are shared by all objects of that type.
 
 #### Declaração
 
@@ -473,15 +474,15 @@ class Data {
     public int x; // Instanced member
     public static int y = 1000; // Static member
 
-    // Membro da Instância (Instanced member):
-    // Pode acessar ambos os membros, estáticos e instanciados
+    // Instanced member:
+    // can access to both static and non-static members
     public void foo() {
         x = 100; // OK - same as this.x = 100;
         y = 100; // OK - same as Data.y = 200;
     }
 
-    // Membro Estático (Static member):
-    // Não pode acessar variáveis de membros não-estáticos
+    // Static member:
+    // cannot access to non-static variables
     public static void bar() {
         x = 100; // Error: non-static variable x cannot be renference from a static context
         y = 100; // OK
@@ -489,21 +490,21 @@ class Data {
 }
 ```
 
-#### Acessando Membros Estáticos (Static Members)
+#### Accessing static members
 
 ```java
 Data data = new Data();
 data.x = 1000; // OK
 
-data.y = 1000; // OK-ish - não é realmente recomendado; é melhor usar Data.y
-Data.y = 1000; // OK - boa prática
+data.y = 1000; // OK-ish - not really suggested; it's better to use Data.y
+Data.y = 1000; // OK - best practice
 
-Data.x = 1000; // Erro: não é possível acessar variáveis de instância em um contexto estático
+Data.x = 1000; // Error: cannot access instanced variables in a static context
 ```
 
 ### Campos estáticos
 
-Um campo estático representa um dado membro de propriedade do tipo de classe, em vez do objeto. Campos estáticos também são armazenados em um local específico de memória que foi compartilhado entre todas as instâncias de objeto que são criadas.
+A static field represents a data member owned by the class type rather then the object. Static fields are also stored in a specific memory location that's been shared between all the object instances that are created.
 
 É declarado o seguinte:
 
@@ -511,39 +512,39 @@ Um campo estático representa um dado membro de propriedade do tipo de classe, e
 /* (modificador de acesso) (opcional) */ static /* final/volatile (opcional) */ fieldName;
 ```
 
-Vamos pegar o mesmo exemplo da Classe de Dados e adicionar este construtor:
+Let's take the same Data class example and add this constructor:
 
 ```java
 public Data() {
-    y++; // lembre-se de que isso é o mesmo que Data.y++;
+    y++; // remember that's the same as Data.y++;
 }
 ```
 
 ```java
-// Cada instância de Data terá uma cópia privada do membro de instância x
-//No entanto, todas apontarão para o mesmo local na memória para o membro y
+// Every instance of Data will have a private copy of the instanced member x
+// However it will point to the same location in memory for the member y
 Data d1 = new Data(); // y = 1001
 d1.x = 5;
 Data d2 = new Data(); // y = 1002
 d2.x = 25;
 Data d3 = new Data(); // y = 1003
-// ... e assim por diante
+// ... and so on
 ```
 
 ### Métodos estáticos
 
-Métodos static essencialmente representam uma função membro de um determinado tipo de classe
+Static methods essentially represent a function member of a certain class type
 
-Da classe Data, lembre-se da função (instanced method) `foo` e do (static method) `bar`
+From the Data class remember the function (instanced method) `foo` and (static method) `bar`
 
-É possível acessar esses métodos via:
+One can access those methods via:
 
 ```java
 Data d1 = new Data();
 
-d1.foo(); // Instanced method: acessível SOMENTE por um objeto
+d1.foo(); // Instanced method: Accessible ONLY by an object
 
-Data.bar(); // Static method: acessível sem um objeto
+Data.bar(); // Static method: accessible without an object
 ```
 
 ### Inicializador estático
@@ -560,7 +561,7 @@ class OtherData {
         msg = "Initialization..."
         System.out.println(msg);
         b = 4;
-        // ... inicialização complexa que não pode ser feita em uma única expressão
+        // ... complex initialization that can't be done in a single expression
     }
 }
 ```
@@ -588,7 +589,7 @@ class OtherData {
    * Método: `getPowerLevel()` que retorna `strength` + `defense` + `speed`;
    * As estatísticas não podem ser negativas ou superiores a 100.
 
-4. **Refatore uma Classe**: Pegue uma de suas classes da lição anterior e adicione o encapsulamento adequado:
+4. **Refactor a Class**: Take one of your classes from the previous lesson and add proper encapsulation:
    * Prive todas as propriedades;
    * Adicionar `getters` e `setters` apropriados;
    * Adicione a validação quando for necessário.

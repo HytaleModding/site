@@ -1,61 +1,65 @@
 ---
 title: Modtale
-description: Полное руководство по публикации и управлению модами Hytale на платформе Modtale .
+description: Complete guide to publishing and managing your Hytale mods on Modtale.
 ---
 
-# Публикация вашего мода на Modtale
+# Publishing Your Mod on Modtale
 
-[Modtale](https://modtale.net) — современная платформа для обмена и поиска Hytale модов, плагинов и другого контента. Данное руководство покажет полноценный процесс публикации своего мода.
+[Modtale](https://modtale.net) is the Hytale Community Repository for discovering mods, asset packs, worlds, and modpacks.
 
-## Требования
+This guide will walk you through the complete process of publishing your mod.
 
-Прежде чем начать, убедитесь, что у вас есть:
+## Prerequisites
 
-- Скомпилированный файл `.jar` вашего мода
-- Высококачественные скриншоты или изображения вашего мода в действии
-- Логотип или значок (рекомендуемый размер: 512x512px)
-- Подробное описание функций вашего мода
-- Задокументированные зависимости или требования
+Before you start, make sure you have:
 
-## Пошаговый процесс публикации
+- A compiled `.jar` file of your plugin, or `.zip` of your asset pack
+- A description of your mod's features
 
-### 1. Настройки учетной записи
+We also recommended:
 
-Войдите в [Modtale](https://modtale.net), используя предпочтительный метод. Если у вас еще нет аккаунта, создайте его!
+- High-quality screenshots or images of your mod in action
+- A clear logo or icon (recommended size: 512x512px)
+- Any dependencies or requirements documented
 
-### 2. Начало процесса
+## Step-by-Step Publishing Process
 
-Нажмите на **"Создать"**  (Create) на панели навигации или перейдите на [страницу загрузки](https://modtale.net/upload).
+### 1. Account Setup
 
-### 3. Выберите тип контента
+Sign in to [Modtale](https://modtale.net) using your preferred method. If you don't have an account, create one first.
 
-Выберите подходящий тип контента для вашей публикации:
+### 2. Start Creating
 
-- **Server Plugins** — для Hytale server-plugins и модов
-- **Data Assets** — для пользовательских наборов данных, loot-tables и другого контента на основе данных
-- **Art Assets** — для наборов текстур (текстурпак), моделей и другого художественного контента
-- **Worlds** — пользовательские миры и схематики
-- **Modpacks** — для коллекций модов и др. контента
+Click on the **"Create"** button in the navigation bar or go directly to the [upload page](https://modtale.net/upload).
 
-![Выбор типа содержимого](/assets/guides/modtale_type.png)
+### 3. Choose Content Type
 
-### 4. Основная информация
+Select the appropriate content type for your submission:
 
-Заполните необходимые данные:
+- **Server Plugins** - For Hytale server-side plugins and modifications
+- **Data Assets** - For custom data packs, loot tables, and other data-driven content
+- **Art Assets** - For texture packs, models, and other artistic content
+- **Worlds** - For custom Hytale worlds
+- **Modpacks** - For curated collections of mods and assets
 
-- **Название**: Выберите понятное, описательное название для вашего мода
-- **Описание**: Напишите краткое описание (1-2 предложения), которое объясняет, что делает модификация.
-- **Теги**: Добавьте соответствующие теги, чтобы помочь пользователям найти ваш мод.
+![Content Type Selection](/assets/guides/modtale_type.png)
 
-Название и описание проекта
+### 4. Basic Information
 
-### Project Configuration
+Fill in the essential details:
+
+- **Name**: Choose a clear, descriptive name for your mod
+- **Summary**: Write a brief description (1-2 sentences, 250 char max) that explains what your mod does
+
+![Project Title and Description](/assets/guides/modtale_title.png)
+
+### 5. Project Configuration
 
 Now you're on your project's management page. Here you can:
 
 #### Upload Files
 
-Navigate to the **"Files"** tab and upload your `.jar` file:
+Navigate to the **"Files"** tab and upload your `.jar` or `.zip` file:
 
 - Drag and drop your file or use the upload button
 - Add version notes describing changes and new features
@@ -65,23 +69,27 @@ Navigate to the **"Files"** tab and upload your `.jar` file:
 
 #### Customize Your Project
 
-- **Logo**: Upload a high-quality logo (PNG format recommended)
+- **Logo**: Upload a high-quality logo (512x512 recommended)
+- **Banner**: Upload a banner for your page (1920x640 recommended)
 - **Screenshots**: Add multiple screenshots showing your mod in action
 - **Description**: Write a comprehensive description using Markdown formatting
 - **Links**: Add links to your source code, Discord server, or documentation
+- **Tags**: Add relevant tags to help users find your mod
+- **License**: Indicate what license your mod uses from a selection of common licenses, or use a custom license
 
 ## Best Practices
 
 ### Documentation
 
 <Callout type="info">
-  Информация Users should understand what your mod does, how to use it, and any special requirements.
+  Always include comprehensive documentation in your mod description. Users should understand what your mod does, how to use it, and any special requirements.
 </Callout>
 
 ### Version Notes
 
 When uploading new versions:
 
+- You must adhere to SemVer
 - Clearly document all changes and new features
 - Include bug fixes and known issues
 - Mention any breaking changes or migration steps
@@ -89,7 +97,7 @@ When uploading new versions:
 
 ### Visual Appeal
 
-- Use high-quality screenshots that showcase your mod's features
+- Use high-quality screenshots that showcase your mod's features in the gallery
 - Create an eye-catching logo that represents your mod
 - Consider adding a banner image for your project page
 
@@ -99,13 +107,17 @@ When uploading new versions:
 - Consider creating a Discord server for community support
 - Regularly update your mod based on user feedback
 
-## После публикации
+## After Publishing
 
-### Мониторинг вашего проекта
+### Automated updates
 
-- Проверяйте аналитику, чтобы увидеть статистику скачиваний
-- Отслеживайте комментарии и отзывы
-- Следить за сообщениями об ошибках и запросами
+- You can configure your project to automatically upload new versions using Github Actions, Gradle, Maven, or Go. See examples [here](https://github.com/Modtale/modtale-example)
+
+### Monitoring Your Project
+
+- Check the analytics to see download statistics
+- Monitor comments and reviews
+- Keep track of bug reports and feature requests
 
 ### Marketing Your Mod
 

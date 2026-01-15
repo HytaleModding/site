@@ -1,112 +1,112 @@
 ---
-title: 07 - Вступ до об'єктно-орієнтованого програмування
-description: Вивчіть основи класів та об'єктів у Java.
+title: 07 - Introduction to Object-Oriented Programming
+description: Learn the fundamentals of classes and objects in Java.
 ---
 
-Об'єктно-орієнтоване програмування (ООП) є основою Java та модифікацій Hytale. Замість того, щоб просто мати змінні та методи, ми організовуємо їх у **класи** та **об'єкти**.
+Object-Oriented Programming (OOP) is the foundation of Java and Hytale modding. Instead of just having variables and methods floating around, we organize them into **classes** and **objects**.
 
-## Що таке клас?
+## What is a Class?
 
-Клас - це план для створення об'єктів. Уявіть його як рецепт або шаблон.
+A class is a blueprint for creating objects. Think of it like a recipe or a template.
 
 ```java
 public class Player {
-    // Властивості (дані)
+    // Properties (data)
     String name;
     int health;
     int level;
     
-    // Поведінка (методи)
+    // Behavior (methods)
     public void takeDamage(int damage) {
         health -= damage;
-        System.out.println(name + " отримав(-ла) " + damage + " шкоди!");
+        System.out.println(name + " took " + damage + " damage!");
     }
 }
 ```
 
-## Що таке об'єкт?
+## What is an Object?
 
-Об'єкт - це екземпляр, створений на основі класу. Якщо клас - це креслення, то об'єкт - це реальна річ, побудована за цим кресленням.
+An object is an instance created from a class. If a class is a blueprint, an object is the actual thing built from that blueprint.
 
 ```java
 public class Main {
     public static void main(String[] args) {
-        // Створити об'єкти з класу Player
+        // Create objects from the Player class
         Player player1 = new Player();
-        player1.name = "Анна";
+        player1.name = "Alice";
         player1.health = 100;
         player1.level = 5;
         
         Player player2 = new Player();
-        player2.name = "Богдан";
+        player2.name = "Bob";
         player2.health = 80;
         player2.level = 3;
         
-        // Використання об'єктів
-        player1.takeDamage(20);  // Анна отримав(-ла) 20 шкоди!
-        player2.takeDamage(15);  // Богдан отримав(-ла) 15 шкоди!
+        // Use the objects
+        player1.takeDamage(20);  // Alice took 20 damage!
+        player2.takeDamage(15);  // Bob took 15 damage!
     }
 }
 ```
 
-<Callout type="info" title="Клас проти об'єкта">
-  **Клас** = креслення (ідея гравця)
-  **Об'єкт** = реальна річ (Анна, Богдан, конкретні гравці)
+<Callout type="info" title="Class vs Object">
+  **Class** = Blueprint (the idea of a player)
+  **Object** = Actual thing (Alice, Bob, specific players)
 
-  Один клас може створити багато об'єктів, так само як один рецепт може створити багато тортів!
+  One class can create many objects, just like one recipe can make many cakes!
 </Callout>
 
-## Створення простого класу
+## Creating a Simple Class
 
-Створімо клас `Sword` для Hytale:
+Let's create a `Sword` class for Hytale:
 
 ```java
 public class Sword {
-    // Властивості
+    // Properties
     String name;
     int damage;
     int durability;
     
-    // Метод використання меча
+    // Method to use the sword
     public void attack(String target) {
-        System.out.println("Атакує " + target + " на " + damage + " шкоди!");
+        System.out.println("Attacking " + target + " for " + damage + " damage!");
         durability -= 1;
         
         if (durability <= 0) {
-            System.out.println(name + " зламався!");
+            System.out.println(name + " broke!");
         }
     }
     
-    // Метод для відображення інформації
+    // Method to display info
     public void displayInfo() {
-        System.out.println("Зброя: " + name);
-        System.out.println("Шкода: " + damage);
-        System.out.println("Міцність: " + durability);
+        System.out.println("Weapon: " + name);
+        System.out.println("Damage: " + damage);
+        System.out.println("Durability: " + durability);
     }
 }
 ```
 
-Використання класу:
+Using the class:
 
 ```java
 public class Main {
     public static void main(String[] args) {
         Sword sword = new Sword();
-        sword.name = "Залізний меч";
+        sword.name = "Iron Sword";
         sword.damage = 15;
         sword.durability = 3;
         
         sword.displayInfo();
-        sword.attack("Зомбі");
-        sword.attack("Скелет");
-        sword.attack("Павук");  // Це зламає меч
+        sword.attack("Zombie");
+        sword.attack("Skeleton");
+        sword.attack("Spider");  // This will break the sword
     }
 }
 ```
 
-## Конструктори
+## Constructors
 
-Замість того, щоб встановлювати властивості по одній, використовуйте **конструктор** для ініціалізації об'єктів:
+Instead of setting properties one by one, use a **constructor** to initialize objects:
 
 ```java
 public class Sword {
@@ -114,7 +114,7 @@ public class Sword {
     int damage;
     int durability;
     
-    // Конструктор
+    // Constructor
     public Sword(String weaponName, int weaponDamage, int weaponDurability) {
         name = weaponName;
         damage = weaponDamage;
@@ -122,56 +122,56 @@ public class Sword {
     }
     
     public void attack(String target) {
-        System.out.println("Атакує " + target + " на " + damage + " шкоди!");
+        System.out.println("Attacking " + target + " for " + damage + " damage!");
         durability--;
     }
 }
 ```
 
-Тепер створювати мечі стало простіше:
+Now creating swords is easier:
 
 ```java
 public class Main {
     public static void main(String[] args) {
-        // Набагато простіше!
-        Sword ironSword = new Sword("Залізний меч", 15, 100);
-        Sword diamondSword = new Sword("Діамантовий меч", 25, 200);
+        // Much cleaner!
+        Sword ironSword = new Sword("Iron Sword", 15, 100);
+        Sword diamondSword = new Sword("Diamond Sword", 25, 200);
         
-        ironSword.attack("Зомбі");
-        diamondSword.attack("Бос");
+        ironSword.attack("Zombie");
+        diamondSword.attack("Boss");
     }
 }
 ```
 
-<Callout type="info" title="Правила конструктора">
-  * Така сама назва, як і клас
-  * Без типу повернення (навіть `void`)
-  * Викликається автоматично при використанні `new`
-  * Може мати кілька конструкторів (перевантаження)
+<Callout type="info" title="Constructor Rules">
+  * Same name as the class
+  * No return type (not even `void`)
+  * Called automatically when you use `new`
+  * Can have multiple constructors (overloading)
 
   ```java
   public class Item {
       String name;
       int value;
       
-      // Конструктор з усіма параметрами
+      // Constructor with all parameters
       public Item(String name, int value) {
           this.name = name;
           this.value = value;
       }
       
-      // Конструктор тільки з ім'ям
+      // Constructor with just name
       public Item(String name) {
           this.name = name;
-          this.value = 0;  // Значення за замовчуванням
+          this.value = 0;  // Default value
       }
   }
   ```
 </Callout>
 
-## Ключове слово `this`
+## The `this` Keyword
 
-`this` посилається на поточний об'єкт. Використовуйте його для уточнення, коли імена параметрів збігаються з іменами властивостей:
+`this` refers to the current object. Use it to clarify when parameter names match property names:
 
 ```java
 public class Player {
@@ -179,24 +179,24 @@ public class Player {
     int health;
     
     public Player(String name, int health) {
-        this.name = name;      // this.name = властивість
-        this.health = health;  // name = параметр
+        this.name = name;      // this.name = the property
+        this.health = health;  // name = the parameter
     }
 }
 ```
 
-Без `this` Java заплутується:
+Without `this`, Java gets confused:
 
 ```java
 public Player(String name, int health) {
-    name = name;      // ❌ Чиє ім'я? Неоднозначно!
-    health = health;  // ❌ Чиє здоров'я? Неоднозначно!
+    name = name;      // ❌ Which name? Ambiguous!
+    health = health;  // ❌ Which health? Ambiguous!
 }
 ```
 
-## Практичні приклади
+## Practical Examples
 
-### Клас предмету
+### Item Class
 
 ```java
 public class Item {
@@ -215,9 +215,9 @@ public class Item {
     public void use() {
         if (quantity > 0) {
             quantity--;
-            System.out.println("Використано " + name + ". Залишилося: " + quantity);
+            System.out.println("Used " + name + ". Remaining: " + quantity);
         } else {
-            System.out.println("Більше " + name + " не лишилось!");
+            System.out.println("No more " + name + " left!");
         }
     }
     
@@ -230,15 +230,15 @@ public class Item {
 ```java
 public class Main {
     public static void main(String[] args) {
-        Item potion = new Item("Зілля здоров'я", "Витратний", 5, 0.5);
+        Item potion = new Item("Health Potion", "Consumable", 5, 0.5);
         
-        potion.use();  // Використано Зілля здоров'я. Залишилося: 4
-        System.out.println("Загальна вага: " + potion.getTotalWeight()); // 2.0
+        potion.use();  // Used Health Potion. Remaining: 4
+        System.out.println("Total weight: " + potion.getTotalWeight()); // 2.0
     }
 }
 ```
 
-### Клас монстра
+### Monster Class
 
 ```java
 public class Monster {
@@ -256,18 +256,18 @@ public class Monster {
     
     public void takeDamage(int damage) {
         health -= damage;
-        System.out.println(name + " отримав(-ла) " + damage + " шкоди!");
+        System.out.println(name + " took " + damage + " damage!");
         
         if (health <= 0) {
-            System.out.println(name + " був переможений!");
+            System.out.println(name + " was defeated!");
         } else {
-            System.out.println(name + " має ще " + health + " здоров'я.");
+            System.out.println(name + " has " + health + " health left.");
         }
     }
     
     public int attackPlayer() {
         if (isHostile && health > 0) {
-            System.out.println(name + " атакує на " + attack + " шкоди!");
+            System.out.println(name + " attacks for " + attack + " damage!");
             return attack;
         }
         return 0;
@@ -282,20 +282,20 @@ public class Monster {
 ```java
 public class Main {
     public static void main(String[] args) {
-        Monster zombie = new Monster("Зомбі", 50, 10, true);
-        Monster chicken = new Monster("Курка", 10, 0, false);
+        Monster zombie = new Monster("Zombie", 50, 10, true);
+        Monster chicken = new Monster("Chicken", 10, 0, false);
         
-        zombie.takeDamage(20);        // Зомбі отримав(-ла) 20 шкоди!
-        int damage = zombie.attackPlayer();  // Зомбі атакує на 10 шкоди!
+        zombie.takeDamage(20);        // Zombie took 20 damage!
+        int damage = zombie.attackPlayer();  // Zombie attacks for 10 damage!
         
         if (zombie.isAlive()) {
-            System.out.println("Монстр досі живий!");
+            System.out.println("Monster is still alive!");
         }
     }
 }
 ```
 
-### Клас блоку
+### Block Class
 
 ```java
 public class Block {
@@ -314,8 +314,8 @@ public class Block {
     }
     
     public void breakBlock() {
-        System.out.println("Ламає " + type + " блок в (" + x + ", " + y + ", " + z + ")");
-        System.out.println("Твердість: " + hardness);
+        System.out.println("Breaking " + type + " block at (" + x + ", " + y + ", " + z + ")");
+        System.out.println("Hardness: " + hardness);
     }
     
     public String getPosition() {
@@ -328,51 +328,51 @@ public class Block {
 }
 ```
 
-## Модифікатори доступу (попередній перегляд)
+## Access Modifiers (Preview)
 
-Ви вже бачили `public` - це означає "доступний для всіх". Пізніше ми дізнаємося більше про контроль доступу, а поки що ось попередній перегляд:
+You've seen `public` - it means "anyone can access this". We'll learn more about access control later, but here's a preview:
 
 ```java
 public class Example {
-    public String publicVar;      // Доступний для всіх
-    private String privateVar;    // Доступний тільки для цього класу
-    /* (без модифікатора) */ String defaultVar; // Доступ до пакета
+    public String publicVar;      // Anyone can access
+    private String privateVar;    // Only this class can access
+    /* (no modifier) */ String defaultVar; // Package access
 }
 ```
 
-Наразі використовуйте `public` для всього. Коли використовувати `private`, ми дізнаємося в наступній статті.
+For now, use `public` for everything. We'll learn when to use `private` in the next article.
 
-<Callout type="info" title="Навіщо використовувати класи?">
-  Класи допомагають:
+<Callout type="info" title="Why Use Classes?">
+  Classes help you:
 
-  * **Організувати** пов'язані дані та методи разом
-  * Легко **повторно використовувати** код (створювати багато об'єктів з одного класу)
-  * **Моделювати** реальні речі (гравців, предмети, монстрів)
-  * **Підтримувати** код (зміни в одному місці впливають на всі об'єкти)
+  * **Organize** related data and methods together
+  * **Reuse** code easily (create many objects from one class)
+  * **Model** real-world things (players, items, monsters)
+  * **Maintain** code (changes in one place affect all objects)
 
-  Без класів для управління 100 гравцями знадобилося б 100 окремих змінних для кожної властивості. З класами це лише 100 об'єктів гравця!
+  Without classes, managing 100 players would require 100 separate variables for each property. With classes, it's just 100 Player objects!
 </Callout>
 
-## Практичні вправи
+## Practice Exercises
 
-1. **Створіть клас `Potion`**:
-   * Властивості: name, healAmount, uses
-   * Конструктор для встановлення всіх властивостей
-   * Метод `drink()`, який лікує і зменшує використання (uses)
-   * Метод `isEmpty()`, який повертає true, якщо використання (uses) менше або дорівнює 0
+1. **Create a `Potion` Class**:
+   * Properties: name, healAmount, uses
+   * Constructor to set all properties
+   * Method `drink()` that heals and decreases uses
+   * Method `isEmpty()` that returns true if uses less than or equal to 0
 
-2. **Створіть клас `Chest`**:
-   * Властивості: isLocked, itemCount, capacity
-   * Конструктор
-   * Метод `addItem()`, який перевіряє capacity
-   * Метод `unlock()`, який встановлює isLocked на false
-   * Метод `isFull()`, який перевіряє, чи itemCount >= capacity
+2. **Create a `Chest` Class**:
+   * Properties: isLocked, itemCount, capacity
+   * Constructor
+   * Method `addItem()` that checks capacity
+   * Method `unlock()` that sets isLocked to false
+   * Method `isFull()` that checks if itemCount >= capacity
 
-3. **Створіть клас `Villager`**:
-   * Властивості: name, profession, tradeCount
-   * Конструктор
-   * Метод `greet()`, який виводить привітання
-   * Метод `trade()`, який збільшує tradeCount
-   * Метод `getInfo()`, який відображає всі властивості
+3. **Create a `Villager` Class**:
+   * Properties: name, profession, tradeCount
+   * Constructor
+   * Method `greet()` that prints a greeting
+   * Method `trade()` that increases tradeCount
+   * Method `getInfo()` that displays all properties
 
-4. **Створіть кілька об'єктів**: Використовуючи будь-який створений вами клас, створіть 3 різних об'єкти та протестуйте всі їхні методи.
+4. **Create Multiple Objects**: Using any class you made, create 3 different objects and test all their methods.

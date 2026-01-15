@@ -1,23 +1,31 @@
 ---
-title: Java-Modding (Server Erweiterungen)
-description: Eine Einführung zu allem was wir über Hytale's Java-basiertes Modding System zum jetzigen zeitpunkt wissen
+title: Java Modding (Server Plugins)
+description: An introduction to what we know of Hytale's Java-based modding system as of writing this article.
 ---
 
-Hytale's modding beinhaltet ein Java-basiertes modding System dass moddern erlaubt benutzerdefinierte Verhalten,interaktionen und spielmechaniken einzubauen. Da die vollständigen Details dieses Systems nicht öffentlich dokumentiert sind, da sich das Spiel noch in der Entwicklung befindet und nicht veröffentlicht wurde, können wir zusammenfassen, was derzeit darüber bekannt ist.
+Hytale's modding capabilities include a Java-based modding system that allows modders
+to create custom behaviors, interactions, and game mechanics. While the full details of
+this system are not publicly documented as the game is still in development and not
+released, we can summarize what is currently known about it.
 
-### Wichtige Details über Modding in Hytale
+### Important Details of Modding in Hytale
 
-Das Modding von Hytale erfolgt serverseitig und nicht clientseitig. Das bedeutet, dass Mods/Plugins auf dem Server gehostet werden und die Spieler sich mit diesen modifizierten Servern verbinden, um die benutzerdefinierten Inhalte zu erleben – ohne dass sie selbst etwas installieren müssen. Dieser Ansatz stellt ein einheitliches Erlebnis für alle Spieler auf einem modifizierten Server sicher
+Hytale's modding goes on server side and not client side, meaning that mods/plugins are
+hosted on the server and players connect to these modded servers to experience the custom content
+without needing to install anything on their end. This approach ensures a consistent experience
+for all players on a modded server.
 
-### Übersicht über Java-basiertes Modding
+### Overview of Java-Based Modding
 
-Das serverseitige Modding-System in Hytale basiert auf Java, wodurch die Server-Plugins JAR-Dateien sind.
+The server-side modding system in Hytale is based on Java, making the server plugins JAR files.
 
-Wir vermuten, dass dies so gemacht wurde, damit Minecraft-Modder leicht auf Hytale-Modding umsteigen können, da Minecraft-Modding ebenfalls hauptsächlich Java-basiert ist. Dies ermöglicht Moddern, die mit Java vertraut sind, ihr bestehendes Wissen zu nutzen, wenn sie Mods für Hytale erstellen.
+We're guessing this is done so that Minecraft modders can easily transition to Hytale modding,
+as Minecraft modding is also primarily Java-based. This allows modders familiar with Java
+to leverage their existing knowledge when creating mods for Hytale.
 
-#### Bedenken am Einzelspielermodus
+#### Singleplayer Concerns
 
-Trotz des Namens können Server-Plugins auch im Einzelspielermodus verwendet werden.
+Despite the name, server plugins can also be used in singleplayer mode.
 Hytale's singleplayer mode runs a local server instance, allowing players to use server plugins
 even when playing alone. This means that mods created as server plugins can enhance the singleplayer experience as well.
 

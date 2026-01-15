@@ -1,119 +1,119 @@
 ---
-title: 11 - Almacenamiento de HashMap y clave-valor
-description: Aprende a almacenar y recuperar datos usando pares clave-valor.
+title: 11 - HashMap and Key-Value Storage
+description: Learn to store and retrieve data using key-value pairs.
 ---
 
-Un `HashMap` almacena datos en pares clave-valor, al igual que un diccionario del mundo real. Buscas una palabra (clave) para encontrar su definición (valor). Esto es perfecto para datos del jugador, propiedades de objetos y configuraciones.
+A `HashMap` stores data in key-value pairs, like a real-world dictionary. You look up a word (key) to find its definition (value). This is perfect for player data, item properties, and configuration settings.
 
-## Conceptos básicos del HashMap
+## HashMap Basics
 
 ```java
 import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        // Crea un HashMap (String keys, Integer values)
+        // Create a HashMap (String keys, Integer values)
         HashMap<String, Integer> playerLevels = new HashMap<>();
         
-        // agrega pares clave-valor
+        // Add key-value pairs
         playerLevels.put("Alice", 10);
         playerLevels.put("Bob", 15);
         playerLevels.put("Charlie", 8);
         
-        // obtener un valor por su clave
+        // Get a value by key
         int aliceLevel = playerLevels.get("Alice");  // 10
         
-        System.out.println("Alice es nivel " + aliceLevel);
+        System.out.println("Alice is level " + aliceLevel);
     }
 }
 ```
 
 <Callout type="info" title="HashMap vs ArrayList">
-  | **HashMap**                                    | **ArrayList**                       |
-  | ---------------------------------------------- | ----------------------------------- |
-  | Sin ordenar                                    | Ordenado por el índice (0, 1, 2...) |
-  | Acceso por clave (puede ser de cualquier tipo) | Acceso por posición                 |
-  | Útil para buscar valores                       | Útil para listas de elementos       |
-  | Cada clave es única                            | Puede tener duplicados              |
+  | **HashMap**                     | **ArrayList**                 |
+  | ------------------------------- | ----------------------------- |
+  | Unordered                       | Ordered by index (0, 1, 2...) |
+  | Access by key (can be any type) | Access by position            |
+  | Good for looking up values      | Good for lists of items       |
+  | Each key is unique              | Can have duplicates           |
 
   ```java
-  // ArrayList - acceso por número
+  // ArrayList - access by number
   ArrayList<String> players = new ArrayList<>();
   players.add("Alice");
-  String player = players.get(0);  // Obtener el primer jugador
+  String player = players.get(0);  // Get first player
 
-  // HashMap - acceso por nombre
+  // HashMap - access by name
   HashMap<String, Integer> levels = new HashMap<>();
   levels.put("Alice", 10);
-  int level = levels.get("Alice");  // Obtener el nivel de Alice
+  int level = levels.get("Alice");  // Get Alice's level
   ```
 </Callout>
 
-## Métodos comunes del HashMap
+## Common HashMap Methods
 
-### Agregar y Actualizar
+### Adding and Updating
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 
-scores.put("Alice", 100);     // Añadir una nueva entrada
+scores.put("Alice", 100);     // Add new entry
 scores.put("Bob", 150);
-scores.put("Alice", 200);     // Actualizar una entrada existente (Alice ahora tendrá 200)
+scores.put("Alice", 200);     // Update existing (Alice now 200)
 ```
 
-### Obtener Valores
+### Getting Values
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 scores.put("Alice", 100);
 
 int score = scores.get("Alice");        // 100
-Integer missing = scores.get("Dave");   // null (no existe)
+Integer missing = scores.get("Dave");   // null (doesn't exist)
 
-// Obtener con valor predeterminado
-int score2 = scores.getOrDefault("Dave", 0);  // 0 (devuelve el valor predeterminado)
+// Get with default value
+int score2 = scores.getOrDefault("Dave", 0);  // 0 (returns default)
 ```
 
-### Comprobación de Claves/Valores
+### Checking for Keys/Values
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 scores.put("Alice", 100);
 
-boolean hasAlice = scores.containsKey("Alice");    // Verdadero
-boolean hasDave = scores.containsKey("Dave");      // Falso
+boolean hasAlice = scores.containsKey("Alice");    // true
+boolean hasDave = scores.containsKey("Dave");      // false
 
-boolean has100 = scores.containsValue(100);        // Verdadero
-boolean has200 = scores.containsValue(200);        // Falso
+boolean has100 = scores.containsValue(100);        // true
+boolean has200 = scores.containsValue(200);        // false
 ```
 
-### Eliminación de Entradas
+### Removing Entries
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 scores.put("Alice", 100);
 scores.put("Bob", 150);
 
-scores.remove("Alice");           // Eliminar por entrada
+scores.remove("Alice");           // Remove by key
 System.out.println(scores);       // {Bob=150}
 
-scores.clear();                   // Eliminar todo
+scores.clear();                   // Remove everything
 System.out.println(scores);       // {}
 ```
 
-### Comprobación de Tamaño y Vacío
+### Size and Empty Check
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 scores.put("Alice", 100);
 
 int size = scores.size();         // 1
-boolean empty = scores.isEmpty(); // Falso
+boolean empty = scores.isEmpty(); // false
 ```
 
-## Recorriendo un HashMap
+## Looping Through HashMap
 
-### Recorrer Claves
+### Loop Through Keys
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
@@ -124,19 +124,19 @@ scores.put("Charlie", 75);
 for (String name : scores.keySet()) {
     System.out.println(name);
 }
-// Salida: Alice, Bob, Charlie (el orden puede variar)
+// Output: Alice, Bob, Charlie (order may vary)
 ```
 
-### Recorrer Valores
+### Loop Through Values
 
 ```java
 for (Integer score : scores.values()) {
     System.out.println(score);
 }
-// Salida: 100, 150, 75 (el orden puede variar)
+// Output: 100, 150, 75 (order may vary)
 ```
 
-### Recorrer Claves y Valores
+### Loop Through Both Keys and Values
 
 ```java
 for (String name : scores.keySet()) {
@@ -144,7 +144,7 @@ for (String name : scores.keySet()) {
     System.out.println(name + ": " + score);
 }
 
-// O usando un entrySet (más eficiente)
+// Or using entrySet (more efficient)
 for (var entry : scores.entrySet()) {
     String name = entry.getKey();
     int score = entry.getValue();
@@ -152,8 +152,8 @@ for (var entry : scores.entrySet()) {
 }
 ```
 
-<Callout type="info" title="Orden del HashMap">
-  ¡HashMap **no** mantiene el orden de inserción! Si necesitas mantener el orden, usa `LinkedHashMap`:
+<Callout type="info" title="HashMap Order">
+  HashMap does **not** maintain insertion order! If you need order, use `LinkedHashMap`:
 
   ```java
   import java.util.LinkedHashMap;
@@ -163,17 +163,17 @@ for (var entry : scores.entrySet()) {
   orderedScores.put("Bob", 150);
   orderedScores.put("Charlie", 75);
 
-  // Se imprimirá en orden de inserción
+  // Will print in insertion order
   for (String name : orderedScores.keySet()) {
       System.out.println(name);
   }
-  // Salida: Alice, Bob, Charlie (orden garantizado)
+  // Output: Alice, Bob, Charlie (guaranteed order)
   ```
 </Callout>
 
-## Ejemplos Prácticos
+## Practical Examples
 
-### Sistema de Estadísticas del Jugador
+### Player Statistics System
 
 ```java
 import java.util.HashMap;
@@ -183,7 +183,7 @@ public class PlayerStats {
     
     public PlayerStats() {
         this.stats = new HashMap<>();
-        // Inicializar las estadísticas predeterminadas
+        // Initialize default stats
         stats.put("health", 100);
         stats.put("mana", 50);
         stats.put("strength", 10);
@@ -212,7 +212,7 @@ public class PlayerStats {
     }
 }
 
-// Forma de utilizarlo
+// Usage
 public class Main {
     public static void main(String[] args) {
         PlayerStats stats = new PlayerStats();
@@ -227,7 +227,7 @@ public class Main {
 }
 ```
 
-### Base de Datos de las Propiedades de un Objeto
+### Item Properties Database
 
 ```java
 import java.util.HashMap;
@@ -276,7 +276,7 @@ public class ItemDatabase {
     }
 }
 
-// Forma de utilizarlo
+// Usage
 public class Main {
     public static void main(String[] args) {
         ItemDatabase db = new ItemDatabase();
@@ -290,7 +290,7 @@ public class Main {
 }
 ```
 
-### Gestor de Configuración
+### Configuration Manager
 
 ```java
 import java.util.HashMap;
@@ -342,7 +342,7 @@ public class GameConfig {
 }
 ```
 
-### Inventario del Jugador con Cantidades
+### Player Inventory with Quantities
 
 ```java
 import java.util.HashMap;
@@ -410,14 +410,14 @@ public class Inventory {
     }
 }
 
-// Forma de utilizarlo
+// Usage
 public class Main {
     public static void main(String[] args) {
         Inventory inv = new Inventory(10);
         
         inv.addItem("Wood", 64);
         inv.addItem("Stone", 32);
-        inv.addItem("Wood", 20);  // Se suma a la cantidad ya existente
+        inv.addItem("Wood", 20);  // Adds to existing
         
         inv.displayInventory();
         
@@ -427,14 +427,67 @@ public class Main {
 }
 ```
 
-### Gestor del Tiempo de Reutilización
+### Cooldown Manager
 
 ```java
+import java.util.HashMap;
+
+public class CooldownManager {
+    private HashMap<String, Long> cooldowns;
+    
+    public CooldownManager() {
+        this.cooldowns = new HashMap<>();
+    }
+    
+    public void startCooldown(String ability, long durationMs) {
+        long endTime = System.currentTimeMillis() + durationMs;
+        cooldowns.put(ability, endTime);
+        System.out.println(ability + " on cooldown for " + (durationMs / 1000) + " seconds");
+    }
+    
+    public boolean isOnCooldown(String ability) {
+        if (!cooldowns.containsKey(ability)) {
+            return false;
+        }
+        
+        long endTime = cooldowns.get(ability);
+        long now = System.currentTimeMillis();
+        
+        if (now >= endTime) {
+            cooldowns.remove(ability);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public long getRemainingTime(String ability) {
+        if (!isOnCooldown(ability)) {
+            return 0;
+        }
+        
+        long endTime = cooldowns.get(ability);
+        long now = System.currentTimeMillis();
+        return (endTime - now) / 1000;  // Return seconds
+    }
+    
+    public boolean useAbility(String ability, long cooldownSeconds) {
+        if (isOnCooldown(ability)) {
+            long remaining = getRemainingTime(ability);
+            System.out.println(ability + " is on cooldown (" + remaining + "s remaining)");
+            return false;
+        }
+        
+        System.out.println("Used " + ability + "!");
+        startCooldown(ability, cooldownSeconds * 1000);
+        return true;
+    }
+}
 ```
 
-## HashMap con Objetos Personalizados
+## HashMap with Custom Objects
 
-Almacena tus propias clases como un valor:
+Store your own classes as values:
 
 ```java
 public class Player {
@@ -463,53 +516,53 @@ public class Main {
         players.put("player1", new Player("Alice", 10));
         players.put("player2", new Player("Bob", 15));
         
-        // Obtener y usar un jugador
+        // Get and use player
         Player alice = players.get("player1");
         System.out.println(alice);
     }
 }
 ```
 
-## HashMaps anidados
+## Nested HashMaps
 
-Los HashMaps pueden contener otros HashMaps:
+HashMaps can contain other HashMaps:
 
 ```java
-// Almacenar múltiples propiedades por jugador
+// Store multiple properties per player
 HashMap<String, HashMap<String, Integer>> playerData = new HashMap<>();
 
-// Agregar jugador con estadísticas
+// Add player with stats
 HashMap<String, Integer> aliceStats = new HashMap<>();
 aliceStats.put("level", 10);
 aliceStats.put("health", 100);
 aliceStats.put("mana", 50);
 playerData.put("Alice", aliceStats);
 
-// Acceder a datos anidados
+// Access nested data
 int aliceLevel = playerData.get("Alice").get("level");
-System.out.println("Nivel de Alice: " + aliceLevel);
+System.out.println("Alice's level: " + aliceLevel);
 ```
 
-## Ejercicios Prácticos
+## Practice Exercises
 
-1. **Agenda telefónica**: Crea una agenda telefónica que almacena nombres y números de teléfono. Añadir métodos a:
-   - Añadir contacto
-   - Encontrar un número por el nombre
-   - Borrar contacto
-   - Mostrar todos los contactos
+1. **Phone Book**: Create a phone book that stores names and phone numbers. Add methods to:
+   - Add contact
+   - Find number by name
+   - Delete contact
+   - Display all contacts
 
-2. **Gestor de calificaciones**: Almacena los nombres de los estudiantes y sus calificaciones. Añadir métodos a:
-   - Añadir un estudiante con su calificación
-   - Actualizar calificación
-   - Calcular la media de la clase
-   - Encontrar la calificación más alta
+2. **Grade Manager**: Store student names and grades. Create methods to:
+   - Add student with grade
+   - Update grade
+   - Calculate class average
+   - Find highest grade
 
-3. **Cuentapalabras**: Escribe un programa que cuenta las veces que aparece cada palabra en una frase haciendo uso de un HashMap.
+3. **Word Counter**: Write a program that counts how many times each word appears in a sentence using a HashMap.
 
-4. **Tienda de objetos**: Crea una tienda donde los objetos tengan nombre y precio. Añadir métodos a:
-   - Añadir un objeto con precio
-   - Obtener el precio del objeto
-   - Aplicar un descuento a todos los objetos
-   - Mostrar todos los objetos y precios
+4. **Item Shop**: Create a shop where items have names and prices. Add methods to:
+   - Add item with price
+   - Get item price
+   - Apply discount to all items
+   - Display all items and prices
 
 ---

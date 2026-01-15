@@ -1,26 +1,26 @@
 ---
-title: 11 - HashMap et stockage clé-valeur
-description: Apprenez à stocker et récupérer des données en utilisant les paires clés-valeurs.
+title: 11 - HashMap and Key-Value Storage
+description: Learn to store and retrieve data using key-value pairs.
 ---
 
-Une `HashMap` stocke des données en paires clés-valeurs, comme un vrai dictionnaire. Vous cherchez un mot (clé) pour trouver sa définition (valeur). C'est parfait pour les données du joueur, les propriétés d'objets, et les paramètres de configuration.
+A `HashMap` stores data in key-value pairs, like a real-world dictionary. You look up a word (key) to find its definition (value). This is perfect for player data, item properties, and configuration settings.
 
-## Bases des HashMap
+## HashMap Basics
 
 ```java
 import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        // Crée une HashMap (clés String, valeur Entiers)
+        // Create a HashMap (String keys, Integer values)
         HashMap<String, Integer> playerLevels = new HashMap<>();
         
-        // Ajouter une paire clé-valeur
+        // Add key-value pairs
         playerLevels.put("Alice", 10);
         playerLevels.put("Bob", 15);
         playerLevels.put("Charlie", 8);
         
-        // Récupérer une valeur par clé
+        // Get a value by key
         int aliceLevel = playerLevels.get("Alice");  // 10
         
         System.out.println("Alice is level " + aliceLevel);
@@ -29,52 +29,52 @@ public class Main {
 ```
 
 <Callout type="info" title="HashMap vs ArrayList">
-  | **HashMap**                                      | **ArrayList**                    |
-  | ------------------------------------------------ | -------------------------------- |
-  | Non ordonné                                      | Ordonné par index (0, 1, 2, ...) |
-  | Accès par clé (peut être de n'importe quel type) | Accès par position               |
-  | Bien pour la recherche de valeurs                | Bien pour une liste d'objets     |
-  | Chaque clé est unique                            | Peut avoir des doublons          |
+  | **HashMap**                     | **ArrayList**                 |
+  | ------------------------------- | ----------------------------- |
+  | Unordered                       | Ordered by index (0, 1, 2...) |
+  | Access by key (can be any type) | Access by position            |
+  | Good for looking up values      | Good for lists of items       |
+  | Each key is unique              | Can have duplicates           |
 
   ```java
-  // ArrayList - accès par nombre
+  // ArrayList - access by number
   ArrayList<String> players = new ArrayList<>();
   players.add("Alice");
-  String player = players.get(0);  // Récupère le premier joueur
+  String player = players.get(0);  // Get first player
 
-  // HashMap - accès par nom
+  // HashMap - access by name
   HashMap<String, Integer> levels = new HashMap<>();
   levels.put("Alice", 10);
-  int level = levels.get("Alice");  // Récupère le niveau d'Alice
+  int level = levels.get("Alice");  // Get Alice's level
   ```
 </Callout>
 
-## Méthodes courantes sur les HashMaps
+## Common HashMap Methods
 
-### Ajouter et Modifier
+### Adding and Updating
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 
-scores.put("Alice", 100);     // Ajoute une nouvelle entrée
+scores.put("Alice", 100);     // Add new entry
 scores.put("Bob", 150);
-scores.put("Alice", 200);     // Modifie l'entrée existante (Alice à maintenant 200)
+scores.put("Alice", 200);     // Update existing (Alice now 200)
 ```
 
-### Récupérer des valeurs
+### Getting Values
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 scores.put("Alice", 100);
 
 int score = scores.get("Alice");        // 100
-Integer missing = scores.get("Dave");   // null (n'existe pas)
+Integer missing = scores.get("Dave");   // null (doesn't exist)
 
-// Récupérer avec valeur par défaut
-int score2 = scores.getOrDefault("Dave", 0);  // 0 (Dave n'existe pas, retourne la valeur par défaut)
+// Get with default value
+int score2 = scores.getOrDefault("Dave", 0);  // 0 (returns default)
 ```
 
-### Vérifier les clés/valeurs
+### Checking for Keys/Values
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
@@ -87,21 +87,21 @@ boolean has100 = scores.containsValue(100);        // true
 boolean has200 = scores.containsValue(200);        // false
 ```
 
-### Supprimer des entrées
+### Removing Entries
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 scores.put("Alice", 100);
 scores.put("Bob", 150);
 
-scores.remove("Alice");           // Retire par clé
-System.out.println(scores);       // { Bob=150 }
+scores.remove("Alice");           // Remove by key
+System.out.println(scores);       // {Bob=150}
 
-scores.clear();                   // Retire tout
+scores.clear();                   // Remove everything
 System.out.println(scores);       // {}
 ```
 
-### Vérification de la taille et du remplissage
+### Size and Empty Check
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
@@ -111,9 +111,9 @@ int size = scores.size();         // 1
 boolean empty = scores.isEmpty(); // false
 ```
 
-## Boucler sur une HashMap
+## Looping Through HashMap
 
-### Boucler sur les clés
+### Loop Through Keys
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
@@ -124,36 +124,36 @@ scores.put("Charlie", 75);
 for (String name : scores.keySet()) {
     System.out.println(name);
 }
-// Sortie : Alice, Bob, Charlie (l'ordre peut changer)
+// Output: Alice, Bob, Charlie (order may vary)
 ```
 
-### Boucler sur les valeurs
+### Loop Through Values
 
 ```java
 for (Integer score : scores.values()) {
     System.out.println(score);
 }
-// Sortie : 100, 150, 75 (l'ordre peut changer)
+// Output: 100, 150, 75 (order may vary)
 ```
 
-### Boucler sur les clés et les valeurs
+### Loop Through Both Keys and Values
 
 ```java
 for (String name : scores.keySet()) {
     int score = scores.get(name);
-    System.out.println(name + " : " + score);
+    System.out.println(name + ": " + score);
 }
 
-// Ou en utilisant l'entrySet (plus efficace)
+// Or using entrySet (more efficient)
 for (var entry : scores.entrySet()) {
     String name = entry.getKey();
     int score = entry.getValue();
-    System.out.println(name + " : " + score);
+    System.out.println(name + ": " + score);
 }
 ```
 
-<Callout type="info" title="Ordre dans les HashMaps">
-  Les HashMaps **ne maintiennent pas** l'ordre d'insertion ! Si vous avez besoin d'ordre, utilisez les `LinkedHashMap`
+<Callout type="info" title="HashMap Order">
+  HashMap does **not** maintain insertion order! If you need order, use `LinkedHashMap`:
 
   ```java
   import java.util.LinkedHashMap;
@@ -163,17 +163,17 @@ for (var entry : scores.entrySet()) {
   orderedScores.put("Bob", 150);
   orderedScores.put("Charlie", 75);
 
-  // Affichera dans l'ordre d'insertion
+  // Will print in insertion order
   for (String name : orderedScores.keySet()) {
       System.out.println(name);
   }
-  // Output: Alice, Bob, Charlie (ordre garanti)
+  // Output: Alice, Bob, Charlie (guaranteed order)
   ```
 </Callout>
 
-## Exemples pratiques
+## Practical Examples
 
-### Système de statistiques du joueur
+### Player Statistics System
 
 ```java
 import java.util.HashMap;
@@ -184,11 +184,11 @@ public class PlayerStats {
     public PlayerStats() {
         this.stats = new HashMap<>();
         // Initialize default stats
-        stats.put("vie", 100);
+        stats.put("health", 100);
         stats.put("mana", 50);
-        stats.put("force", 10);
-        stats.put("défense", 5);
-        stats.put("vitesse", 8);
+        stats.put("strength", 10);
+        stats.put("defense", 5);
+        stats.put("speed", 8);
     }
     
     public int getStat(String statName) {
@@ -205,29 +205,29 @@ public class PlayerStats {
     }
     
     public void displayStats() {
-        System.out.println("=== Statistiques du Joueur ===");
+        System.out.println("=== Player Stats ===");
         for (var entry : stats.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 }
 
-// Utilisation
+// Usage
 public class Main {
     public static void main(String[] args) {
         PlayerStats stats = new PlayerStats();
         stats.displayStats();
         
-        stats.modifyStat("force", 5);
-        stats.modifyStat("vie", -20);
+        stats.modifyStat("strength", 5);
+        stats.modifyStat("health", -20);
         
-        System.out.println("\nAprès modifications :");
+        System.out.println("\nAfter modifications:");
         stats.displayStats();
     }
 }
 ```
 
-### Base de données de propriétés d'objets
+### Item Properties Database
 
 ```java
 import java.util.HashMap;
@@ -241,9 +241,9 @@ public class ItemDatabase {
     
     public void addItem(String itemName) {
         HashMap<String, Object> properties = new HashMap<>();
-        properties.put("dégâts", 0);
-        properties.put("durabilité", 100);
-        properties.put("rareté", "Commun");
+        properties.put("damage", 0);
+        properties.put("durability", 100);
+        properties.put("rarity", "Common");
         properties.put("stackable", true);
         
         items.put(itemName, properties);
@@ -264,33 +264,33 @@ public class ItemDatabase {
     
     public void displayItem(String itemName) {
         if (!items.containsKey(itemName)) {
-            System.out.println("Objet non trouvé !");
+            System.out.println("Item not found!");
             return;
         }
         
         System.out.println("=== " + itemName + " ===");
         HashMap<String, Object> props = items.get(itemName);
         for (var entry : props.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 }
 
-// Utilisation
+// Usage
 public class Main {
     public static void main(String[] args) {
         ItemDatabase db = new ItemDatabase();
         
-        db.addItem("Épée en fer");
-        db.setProperty("Épée en fer", "dégâts", 15);
-        db.setProperty("Épée en fer", "rareté", "Rare");
+        db.addItem("Iron Sword");
+        db.setProperty("Iron Sword", "damage", 15);
+        db.setProperty("Iron Sword", "rarity", "Uncommon");
         
-        db.displayItem("Épée en fer");
+        db.displayItem("Iron Sword");
     }
 }
 ```
 
-### Gestionnaire de configuration
+### Configuration Manager
 
 ```java
 import java.util.HashMap;
@@ -304,11 +304,11 @@ public class GameConfig {
     }
     
     private void loadDefaults() {
-        settings.put("difficulté", "normale");
-        settings.put("volumeMusique", "50");
-        settings.put("volumeEffets", "50");
-        settings.put("distanceRendu", "10");
-        settings.put("afficherFPS", "false");
+        settings.put("difficulty", "normal");
+        settings.put("musicVolume", "50");
+        settings.put("sfxVolume", "50");
+        settings.put("renderDistance", "10");
+        settings.put("showFPS", "false");
     }
     
     public String getSetting(String key) {
@@ -317,7 +317,7 @@ public class GameConfig {
     
     public void setSetting(String key, String value) {
         settings.put(key, value);
-        System.out.println("Définit " + key + " à " + value);
+        System.out.println("Set " + key + " to " + value);
     }
     
     public int getIntSetting(String key) {
@@ -334,7 +334,7 @@ public class GameConfig {
     }
     
     public void displaySettings() {
-        System.out.println("=== Paramètres du Jeu ===");
+        System.out.println("=== Game Settings ===");
         for (var entry : settings.entrySet()) {
             System.out.println(entry.getKey() + " = " + entry.getValue());
         }
@@ -342,7 +342,7 @@ public class GameConfig {
 }
 ```
 
-### Inventaire du joueur avec quantités
+### Player Inventory with Quantities
 
 ```java
 import java.util.HashMap;
@@ -358,25 +358,25 @@ public class Inventory {
     
     public boolean addItem(String itemName, int quantity) {
         if (items.size() >= maxSlots && !items.containsKey(itemName)) {
-            System.out.println("Inventaire plein !");
+            System.out.println("Inventory full!");
             return false;
         }
         
         int current = items.getOrDefault(itemName, 0);
         items.put(itemName, current + quantity);
-        System.out.println("Ajouté " + quantity + "x " + itemName);
+        System.out.println("Added " + quantity + "x " + itemName);
         return true;
     }
     
     public boolean removeItem(String itemName, int quantity) {
         if (!items.containsKey(itemName)) {
-            System.out.println("Nous n'avons pas cet objet !");
+            System.out.println("Don't have that item!");
             return false;
         }
         
         int current = items.get(itemName);
         if (current < quantity) {
-            System.out.println("Pas assez de " + itemName);
+            System.out.println("Not enough " + itemName);
             return false;
         }
         
@@ -386,7 +386,7 @@ public class Inventory {
             items.put(itemName, current - quantity);
         }
         
-        System.out.println("Retiré " + quantity + "x " + itemName);
+        System.out.println("Removed " + quantity + "x " + itemName);
         return true;
     }
     
@@ -399,9 +399,9 @@ public class Inventory {
     }
     
     public void displayInventory() {
-        System.out.println("\n=== Inventaire (" + items.size() + "/" + maxSlots + " emplacements) ===");
+        System.out.println("\n=== Inventory (" + items.size() + "/" + maxSlots + " slots) ===");
         if (items.isEmpty()) {
-            System.out.println("Vide");
+            System.out.println("Empty");
         } else {
             for (var entry : items.entrySet()) {
                 System.out.println(entry.getKey() + " x" + entry.getValue());
@@ -410,24 +410,24 @@ public class Inventory {
     }
 }
 
-// Utilisation
+// Usage
 public class Main {
     public static void main(String[] args) {
         Inventory inv = new Inventory(10);
         
-        inv.addItem("Bois", 64);
-        inv.addItem("Pierre", 32);
-        inv.addItem("Bois", 20);  // Ajoute à l'existant
+        inv.addItem("Wood", 64);
+        inv.addItem("Stone", 32);
+        inv.addItem("Wood", 20);  // Adds to existing
         
         inv.displayInventory();
         
-        inv.removeItem("Bois", 50);
+        inv.removeItem("Wood", 50);
         inv.displayInventory();
     }
 }
 ```
 
-### Gestionnaire de cooldown
+### Cooldown Manager
 
 ```java
 import java.util.HashMap;
@@ -442,7 +442,7 @@ public class CooldownManager {
     public void startCooldown(String ability, long durationMs) {
         long endTime = System.currentTimeMillis() + durationMs;
         cooldowns.put(ability, endTime);
-        System.out.println(ability + " est en cooldown pour " + (durationMs / 1000) + " secondes");
+        System.out.println(ability + " on cooldown for " + (durationMs / 1000) + " seconds");
     }
     
     public boolean isOnCooldown(String ability) {
@@ -468,26 +468,26 @@ public class CooldownManager {
         
         long endTime = cooldowns.get(ability);
         long now = System.currentTimeMillis();
-        return (endTime - now) / 1000;  // Retourne les secondes
+        return (endTime - now) / 1000;  // Return seconds
     }
     
     public boolean useAbility(String ability, long cooldownSeconds) {
         if (isOnCooldown(ability)) {
             long remaining = getRemainingTime(ability);
-            System.out.println(ability + " est en cooldown (" + remaining + "s restantes)");
+            System.out.println(ability + " is on cooldown (" + remaining + "s remaining)");
             return false;
         }
         
-        System.out.println("Utilisation de " + ability + " !");
+        System.out.println("Used " + ability + "!");
         startCooldown(ability, cooldownSeconds * 1000);
         return true;
     }
 }
 ```
 
-## HashMap avec des objets personnalisés
+## HashMap with Custom Objects
 
-Vous pouvez stocker vos propres classes en valeurs :
+Store your own classes as values:
 
 ```java
 public class Player {
@@ -501,11 +501,11 @@ public class Player {
         this.health = 100;
     }
     
-    // Getters et Setters...
+    // Getters and setters...
     
     @Override
     public String toString() {
-        return name + " (Niv. " + level + ", Vie : " + health + ")";
+        return name + " (Lv. " + level + ", HP: " + health + ")";
     }
 }
 
@@ -516,53 +516,53 @@ public class Main {
         players.put("player1", new Player("Alice", 10));
         players.put("player2", new Player("Bob", 15));
         
-        // Récupérer et utiliser un joueur
+        // Get and use player
         Player alice = players.get("player1");
         System.out.println(alice);
     }
 }
 ```
 
-## HashMaps imbriqués
+## Nested HashMaps
 
-Les HashMaps peuvent contenir d'autres HashMaps
+HashMaps can contain other HashMaps:
 
 ```java
-// Stocker de multiples propriétés par joueur
+// Store multiple properties per player
 HashMap<String, HashMap<String, Integer>> playerData = new HashMap<>();
 
-// Ajouter des joueurs avec des statistiques
+// Add player with stats
 HashMap<String, Integer> aliceStats = new HashMap<>();
-aliceStats.put("niveau", 10);
-aliceStats.put("vie", 100);
+aliceStats.put("level", 10);
+aliceStats.put("health", 100);
 aliceStats.put("mana", 50);
 playerData.put("Alice", aliceStats);
 
-// Accéder aux données imbriquées
-int aliceLevel = playerData.get("Alice").get("niveau");
-System.out.println("Niveau d'Alice : " + aliceLevel);
+// Access nested data
+int aliceLevel = playerData.get("Alice").get("level");
+System.out.println("Alice's level: " + aliceLevel);
 ```
 
-## Exercices pratiques
+## Practice Exercises
 
-1. **Annuaire téléphonique** : créez un annuaire téléphonique qui stocke des noms et numéros de téléphone associés. Ajoutez des méthodes pour :
-   - Ajouter un contact
-   - Trouver un numéro à partir d'un nom
-   - Supprimer un contact
-   - Afficher tous les contacts
+1. **Phone Book**: Create a phone book that stores names and phone numbers. Add methods to:
+   - Add contact
+   - Find number by name
+   - Delete contact
+   - Display all contacts
 
-2. **Gestionnaire de notes** : stockez les noms des étudiants et leurs notes. Créez des méthodes pour :
-   - Ajouter un étudiant avec une note
-   - Modifier la note
-   - Calculer la moyenne de la classe
-   - Trouver la note la plus haute
+2. **Grade Manager**: Store student names and grades. Create methods to:
+   - Add student with grade
+   - Update grade
+   - Calculate class average
+   - Find highest grade
 
-3. **Compteur de mots** : écrivez un programme qui compte combien de fois chaque mot apparait dans une phrase en utilisant une HashMap.
+3. **Word Counter**: Write a program that counts how many times each word appears in a sentence using a HashMap.
 
-4. **Boutique d'objets** : créez une boutique où les objets ont un nom et un prix. Ajoutez des méthodes pour :
-   - Ajouter un objet avec son prix
-   - Récupérer le prix d'un objet
-   - Appliquer une réduction sur tous les objets
-   - Afficher tous les objets et leurs prix
+4. **Item Shop**: Create a shop where items have names and prices. Add methods to:
+   - Add item with price
+   - Get item price
+   - Apply discount to all items
+   - Display all items and prices
 
 ---

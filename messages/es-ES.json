@@ -11,14 +11,21 @@
     "flipwords": [
       "Guías",
       "Documentación",
-      "Herramientas",
+      "Tools",
       "Tutoriales"
     ],
     "description": "El recurso comunitario número uno para mods de Hytale, con guías exhaustivas, documentación detallada y herramientas esenciales para que empiece su viaje de modding.",
     "documentation": "Documentación",
     "forum": "Foro",
     "discord": "¡Únete a la comunidad!",
-    "memberCount": "{count} miembros"
+    "memberCount": "{count} miembros",
+    "countdown": "Hytale releases in {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale is out!"
   },
   "sponsors": {
     "title": "Apóyenos",

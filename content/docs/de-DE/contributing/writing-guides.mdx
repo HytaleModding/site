@@ -1,27 +1,34 @@
 ---
-title: Das Schreiben eines Leitfadens
+title: Writing Guides
 ---
 
-## Das Erstellen von einer Leitfadendatei
+## Creating a guide file
 
-Um mit dem Schreiben eines Leitfadens zu beginnen, ist das Anlegen einer Datei mit der Endung ".mdx" notwendig. You need to create this file inside the `/content/docs/en` directory, now it depends in which section you want to make the guide, so you can decide which folder you should put it in after that.
+To start writing a guide, you need to create a file with extension `.mdx`. You need to create this file inside the `/content/docs/en` directory, now it depends in which section you want to make the guide, so you can decide which folder you should put it in after that.
 
-Nehmen wir an, Sie wollen ein Leitfaden über die Grundkenntnisse von Java schreiben; Sie würden diesen in `/content/docs/en/guides/java-basics` einfügen Sie werden ein wenig stöbern müssen, um die Wahl zu treffen, wo genau sie ihn platzieren wollen.
+Suppose I want to make a java basics guide, I'd put it in `/content/docs/en/guides/java-basics`. You'll have to do some digging to find out where you want to place it.
 
 <Callout>
-  Falls es in diesem Bereich bereits einen Leitfaden gibt, über welchen Sie schreiben wollen, können Sie einfach auf den "Edit On GitHub" Knopf, welcher sich auf unserer Website befindet, drücken. Dieser wird Sie zu jenem Ordner bringen, sodass die nun im gleichen Ordner schreiben können, um das Erscheinen Ihres Leitfadens im selben Bereich zu erzwecken
+  If there's already a guide in the section you want to write about, you can just press on the "Edit On GitHub" button on our website and it'll take you to the folder, now you can write in the same folder to have your guide appear in the same section.
 </Callout>
 
-## Dateikopf
+## Frontmatter
 
-Der Dateikopf ist der Metadatenblock, er informiert unsere Website, auf welche Weise sie den Leitfaden, welchen Sie erstellt haben, anzeigen soll.  This needs to be at the very top of the file, which starts with `---` and ends with `---`.
+Frontmatter is the metadata of your guide, it tells our website how to display your guide. This needs to be at the very top of the file, which starts with `---` and ends with `---`.
 
 Here's an example:
 
 ```mdx
+---
+title: "Java Basics"
+description: "Learn the basics of Java programming."
+authors:
+    - name: "Your Name"
+      url: "https://yourwebsite.com"
+---
 ```
 
-Now as you can see, it's pretty self explanatory, you just need to fill in the details for your specific guide. If you don't have a URL you want to link yourself to, just don't write that whole line. Des Weiteren ist der Autorenbereich optional; sollte das Hinzufügen von diesem für Sie nicht infrage kommen, können sie diesen einfach auslassen, obwohl wir Sie ermutigen dies nicht zu tun, und sich selbst als Urheber angeben.
+Now as you can see, it's pretty self explanatory, you just need to fill in the details for your specific guide. If you don't have a URL you want to link yourself to, just don't write that whole line. Additionally, the authors section is optional, so if you don't want to add it, you can just leave it out although we encourage you to do so and credit yourself.
 
 The indentation in the frontmatter is important, so make sure to keep it consistent with the example.
 

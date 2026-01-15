@@ -1,37 +1,37 @@
 ---
-title: 07 - Introducción a la programación orientada a objetos
-description: Aprende los fundamentos de las clases y objetos en Java.
+title: 07 - Introduction to Object-Oriented Programming
+description: Learn the fundamentals of classes and objects in Java.
 ---
 
-La programación orientada a objetos (OOP por sus iniciales en inglés) es la base fundamental de Java y del modding para Hytale. En vez de solo usar variables y métodos flotando por todos lados, los organizamos en **clases** y **objetos**
+Object-Oriented Programming (OOP) is the foundation of Java and Hytale modding. Instead of just having variables and methods floating around, we organize them into **classes** and **objects**.
 
-## ¿Qué es una clase?
+## What is a Class?
 
-Una clase es una plantilla para crear objetos. Piensa como si fuera una receta o una guía
+A class is a blueprint for creating objects. Think of it like a recipe or a template.
 
 ```java
 public class Player {
-    // Propiedades (datos)
+    // Properties (data)
     String name;
     int health;
     int level;
     
-    // Comportamiento (métodos)
-    public void takeDamage (int damage) {
+    // Behavior (methods)
+    public void takeDamage(int damage) {
         health -= damage;
-        System.out.println(name + " recibió" + damage + " de daño!");
+        System.out.println(name + " took " + damage + " damage!");
     }
 }
 ```
 
-## ¿Qué es un objeto?
+## What is an Object?
 
-Un objeto es una instancia creada desde una clase Si una clase es una plantilla, un objeto es lo que se hace a partir de dicha plantilla. Si una clase es una plantilla, un objeto es lo que se hace a partir de dicha plantilla.
+An object is an instance created from a class. If a class is a blueprint, an object is the actual thing built from that blueprint.
 
 ```java
 public class Main {
     public static void main(String[] args) {
-        // Crea objetos en base a la clase Player
+        // Create objects from the Player class
         Player player1 = new Player();
         player1.name = "Alice";
         player1.health = 100;
@@ -42,71 +42,71 @@ public class Main {
         player2.health = 80;
         player2.level = 3;
         
-        // Usa los objetos
-        player1.takeDamage(20);  // Alice recibió 20 de daño!
-        player2.takeDamage(15);  // Bob recibió 15 de daño! 
+        // Use the objects
+        player1.takeDamage(20);  // Alice took 20 damage!
+        player2.takeDamage(15);  // Bob took 15 damage!
     }
 }
 ```
 
-<Callout type="info" title="Clases vs Objetos">
-  **Clase** = Plantilla (La idea de un jugador)
-  **Objeto** = Lo que si usaremos (Alice, Bob, jugadores específicos)
+<Callout type="info" title="Class vs Object">
+  **Class** = Blueprint (the idea of a player)
+  **Object** = Actual thing (Alice, Bob, specific players)
 
-  ¡Una clase puede crear muchos objetos, igual que una receta puede hacer muchas galletas!
+  One class can create many objects, just like one recipe can make many cakes!
 </Callout>
 
-## Creando una clase simple
+## Creating a Simple Class
 
-Creemos una clase para "Espada" en Hytale:
+Let's create a `Sword` class for Hytale:
 
 ```java
-public class Espada {
-    // Propiedades
+public class Sword {
+    // Properties
     String name;
     int damage;
     int durability;
     
-    // Método para usar la espada
+    // Method to use the sword
     public void attack(String target) {
-        System.out.println("¡Impacta a " + target + " por " + damage + " de daño!");
+        System.out.println("Attacking " + target + " for " + damage + " damage!");
         durability -= 1;
         
         if (durability <= 0) {
-            System.out.println(name + " se gastó");
+            System.out.println(name + " broke!");
         }
     }
     
-    // Método para mostrar información
+    // Method to display info
     public void displayInfo() {
-        System.out.println("Arma: " + name);
-        System.out.println("Daño: " + damage);
-        System.out.println("Durabilidad: " + durability);
+        System.out.println("Weapon: " + name);
+        System.out.println("Damage: " + damage);
+        System.out.println("Durability: " + durability);
     }
 }
 ```
 
-Usando la clase:
+Using the class:
 
 ```java
 public class Main {
     public static void main(String[] args) {
         Sword sword = new Sword();
-        sword.name = "Espada de hierro";
+        sword.name = "Iron Sword";
         sword.damage = 15;
         sword.durability = 3;
         
         sword.displayInfo();
         sword.attack("Zombie");
-        sword.attack("Esqueleto");
-        sword.attack("Araña");  // Esto romperá la espada con su uso
+        sword.attack("Skeleton");
+        sword.attack("Spider");  // This will break the sword
     }
 }
 ```
 
-## Constructores
+## Constructors
 
-En vez de establecer propiedades una por una, use un **constructor** para inicializar objetos:
+Instead of setting properties one by one, use a **constructor** to initialize objects:
 
 ```java
 public class Sword {
@@ -122,56 +122,56 @@ public class Sword {
     }
     
     public void attack(String target) {
-        System.out.println("¡Impaca a " + target + " por " + damage + " de daño!");
+        System.out.println("Attacking " + target + " for " + damage + " damage!");
         durability--;
     }
 }
 ```
 
-Ahora la creación de espadas es más fácil:
+Now creating swords is easier:
 
 ```java
 public class Main {
     public static void main(String[] args) {
-        // Más limpio!
-        Sword ironSword = new Sword("Espada de Hierro", 15, 100);
-        Sword diamondSword = new Sword("Espada de Diamante", 25, 200);
+        // Much cleaner!
+        Sword ironSword = new Sword("Iron Sword", 15, 100);
+        Sword diamondSword = new Sword("Diamond Sword", 25, 200);
         
-        ironSword.attack("Zombi");
-        diamondSword.attack("Jefe");
+        ironSword.attack("Zombie");
+        diamondSword.attack("Boss");
     }
 }
 ```
 
-<Callout type="info" title="Reglas del Constructor">
-  * Mismo nombre que la clase
-  * Sin tipo de retorno (ni siquiera `void`)
-  * Es llamado automáticamente cuando utilizas `new`
-  * Puede haber varios constructores (overloading)
+<Callout type="info" title="Constructor Rules">
+  * Same name as the class
+  * No return type (not even `void`)
+  * Called automatically when you use `new`
+  * Can have multiple constructors (overloading)
 
   ```java
   public class Item {
       String name;
       int value;
       
-      // Constructor con todos los parámetros
+      // Constructor with all parameters
       public Item(String name, int value) {
           this.name = name;
           this.value = value;
       }
       
-      // Constructor solo con el nombre
+      // Constructor with just name
       public Item(String name) {
           this.name = name;
-          this.value = 0;  // Valor por defecto
+          this.value = 0;  // Default value
       }
   }
   ```
 </Callout>
 
-## La palabra clave `this`
+## The `this` Keyword
 
-`this` se refiere al objeto actual. Úsalo para aclarar cuándo los nombres de los parámetros coinciden con los nombres de propiedades:
+`this` refers to the current object. Use it to clarify when parameter names match property names:
 
 ```java
 public class Player {
@@ -179,24 +179,24 @@ public class Player {
     int health;
     
     public Player(String name, int health) {
-        this.name = name;      // this.name = la propiedad
-        this.health = health;  // name = el parámetro
+        this.name = name;      // this.name = the property
+        this.health = health;  // name = the parameter
     }
 }
 ```
 
-Sin `this`, Java se confunde.
+Without `this`, Java gets confused:
 
 ```java
 public Player(String name, int health) {
-    name = name;      // ❌ ¿Cuál nombre? Ambiguo!
-    health = health;  // ❌ ¿Cuál vida? Ambiguo!
+    name = name;      // ❌ Which name? Ambiguous!
+    health = health;  // ❌ Which health? Ambiguous!
 }
 ```
 
-## Ejemplos prácticos
+## Practical Examples
 
-### Clase Item
+### Item Class
 
 ```java
 public class Item {
@@ -215,9 +215,9 @@ public class Item {
     public void use() {
         if (quantity > 0) {
             quantity--;
-            System.out.println("Se utilizó " + name + ". Restantes: " + quantity);
+            System.out.println("Used " + name + ". Remaining: " + quantity);
         } else {
-            System.out.println("Ya no queda más " + name + " !");
+            System.out.println("No more " + name + " left!");
         }
     }
     
@@ -230,15 +230,15 @@ public class Item {
 ```java
 public class Main {
     public static void main(String[] args) {
-        Item potion = new Item("Poción de Curación", "Consumible", 5, 0.5);
+        Item potion = new Item("Health Potion", "Consumable", 5, 0.5);
         
-        potion.use();  // Se utilizó Poción de Curación. Restantes: 4
-        System.out.println("Peso total: " + potion.getTotalWeight()); // 2.0
+        potion.use();  // Used Health Potion. Remaining: 4
+        System.out.println("Total weight: " + potion.getTotalWeight()); // 2.0
     }
 }
 ```
 
-### Clase Monstruo
+### Monster Class
 
 ```java
 public class Monster {
@@ -256,18 +256,18 @@ public class Monster {
     
     public void takeDamage(int damage) {
         health -= damage;
-        System.out.println(name + " recibió " + damage + " de daño!");
+        System.out.println(name + " took " + damage + " damage!");
         
         if (health <= 0) {
-            System.out.println(name + " fue derrotado!");
+            System.out.println(name + " was defeated!");
         } else {
-            System.out.println(name + " tiene " + health + " de vida restante.");
+            System.out.println(name + " has " + health + " health left.");
         }
     }
     
     public int attackPlayer() {
         if (isHostile && health > 0) {
-            System.out.println(name + " ataca y causa " + attack + " de daño!");
+            System.out.println(name + " attacks for " + attack + " damage!");
             return attack;
         }
         return 0;
@@ -282,20 +282,20 @@ public class Monster {
 ```java
 public class Main {
     public static void main(String[] args) {
-        Monster zombie = new Monster("Zombi", 50, 10, true);
-        Monster chicken = new Monster("Pollo", 10, 0, false);
+        Monster zombie = new Monster("Zombie", 50, 10, true);
+        Monster chicken = new Monster("Chicken", 10, 0, false);
         
-        zombie.takeDamage(20);        // Zombi recibió 20 de daño!
-        int damage = zombie.attackPlayer();  // Zombi ataca y causa 10 de daño!
+        zombie.takeDamage(20);        // Zombie took 20 damage!
+        int damage = zombie.attackPlayer();  // Zombie attacks for 10 damage!
         
         if (zombie.isAlive()) {
-            System.out.println("El monstruo sigue vivo!");
+            System.out.println("Monster is still alive!");
         }
     }
 }
 ```
 
-### Clase Bloque
+### Block Class
 
 ```java
 public class Block {
@@ -314,8 +314,8 @@ public class Block {
     }
     
     public void breakBlock() {
-        System.out.println("Rompiendo " + type + " bloque en (" + x + ", " + y + ", " + z + ")");
-        System.out.println("Dureza: " + hardness);
+        System.out.println("Breaking " + type + " block at (" + x + ", " + y + ", " + z + ")");
+        System.out.println("Hardness: " + hardness);
     }
     
     public String getPosition() {
@@ -328,51 +328,51 @@ public class Block {
 }
 ```
 
-## Modificadores de Acceso (Ejemplo)
+## Access Modifiers (Preview)
 
-Has visto `public` - significa "cualquiera puede acceder a esto". Vamos a aprender más sobre control de acceso más tarde, pero aquí hay un ejemplo:
+You've seen `public` - it means "anyone can access this". We'll learn more about access control later, but here's a preview:
 
 ```java
 public class Example {
     public String publicVar;      // Anyone can access
     private String privateVar;    // Only this class can access
-    // (no modifier) String defaultVar; // Package access
+    /* (no modifier) */ String defaultVar; // Package access
 }
 ```
 
-Por ahora, utilizaremos `public` para todo. Aprenderemos a utilizar `private` en el próximo artículo.
+For now, use `public` for everything. We'll learn when to use `private` in the next article.
 
-<Callout type="info" title="¿Por qué usar clases?">
-  Las clases te ayudan a:
+<Callout type="info" title="Why Use Classes?">
+  Classes help you:
 
-  * **Organizar** datos y métodos relacionados entre sí
-  * **Reutilizar** código fácilmente (crear muchos objetos a partir de una sola clase)
-  * **Modelar** cosas del mundo real (jugadores, items, monstruos)
-  * **Mantener** el código (cambios en un solo lugar afectan a todos los objetos)
+  * **Organize** related data and methods together
+  * **Reuse** code easily (create many objects from one class)
+  * **Model** real-world things (players, items, monsters)
+  * **Maintain** code (changes in one place affect all objects)
 
-  Sin clases, administrar 100 jugadores requeriría 100 variables separadas para cada propiedad. ¡Con clases, son solo 100 objetos Player!
+  Without classes, managing 100 players would require 100 separate variables for each property. With classes, it's just 100 Player objects!
 </Callout>
 
-## Ejercicios de Práctica
+## Practice Exercises
 
-1. **Crea una clase `Potion`**:
-   * Propiedades: name, healAmount, uses
-   * Constructos para definir todas las propiedades
-   * Método `drink()` que cura y disminuye usos.
-   * Método `isEmpty()` que retorne `true` si los usos son menores o iguales a 0
+1. **Create a `Potion` Class**:
+   * Properties: name, healAmount, uses
+   * Constructor to set all properties
+   * Method `drink()` that heals and decreases uses
+   * Method `isEmpty()` that returns true if uses less than or equal to 0
 
-2. **Crea una clase `Chest`**:
-   * Propiedades: isLocked, itemCount, capacity
+2. **Create a `Chest` Class**:
+   * Properties: isLocked, itemCount, capacity
    * Constructor
-   * Método `addItem()` que compruebe la capacidad
-   * Método `unlock()` que establezca isLocked a `false`
-   * Método `isFull()` que compruebe si itemCount >= capacity
+   * Method `addItem()` that checks capacity
+   * Method `unlock()` that sets isLocked to false
+   * Method `isFull()` that checks if itemCount >= capacity
 
-3. **Crea una clase `Villager`**:
-   * Propiedades: name, profession, tradeCount
+3. **Create a `Villager` Class**:
+   * Properties: name, profession, tradeCount
    * Constructor
-   * Método `greet()` que imprima un saludo
-   * Método `trade()` que aumente tradeCount
-   * Método `getInfo()` que muestre todas las propiedades
+   * Method `greet()` that prints a greeting
+   * Method `trade()` that increases tradeCount
+   * Method `getInfo()` that displays all properties
 
-4. **Crea Múltiples Objetos**: Usando cualquier clase que hayas hecho, crea 3 objetos diferentes y prueba todos sus métodos.
+4. **Create Multiple Objects**: Using any class you made, create 3 different objects and test all their methods.

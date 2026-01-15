@@ -1,123 +1,123 @@
 ---
-title: النمذجة وتلوين القوام / الأصول الفنية
-description: معلومات حول النمذجة ثلاثية الأبعاد (3D Modelling)، تلوين القوام (Texturing)، والأصول الفنية (Art Assets) في هايتيل.
+title: Modelling & Texturing / Art Assets
+description: Information about 3D Modelling, Texturing and Art Assets in Hytale.
 ---
 
-# النمذجة / فن القوام
+# Modelling / Texture Art
 
-تقدّم هايتيل دعمًا شاملاً لإنشاء النماذج ثلاثية الأبعاد وفن القوام (Texture art)، مع أدوات متخصصة وسير عمل مصمَّم للحفاظ على الأسلوب البصري المميز للعبة، وفي الوقت نفسه تمكين المبدعين من الإبداع بحرية.
+Hytale provides comprehensive support for 3D modeling and texture art creation, with specialized tools and workflows designed to maintain the game's distinctive visual style while empowering creators.
 
-## أدوات التعديل الحالية
+## Current Mod Tooling
 
 ### Blockbench
 
-تستخدم هايتيل **Blockbench** كأداة رئيسية للنمذجة ثلاثية الأبعاد والتحريك (الأنيميشن):
+Hytale uses **Blockbench** as the primary tool for 3D modeling and animation:
 
-* **الدعم الرسمي**:  يُستخدم لإنشاء نماذج هايتيل والقوام (textures) والتحريك (الأنيميشن).
-* **الإضافة الخاصة**: ستوفّر هايتيل إضافة مخصصة لبرنامج Blockbench، وسيتم إصدارها في أقرب وقت ممكن.
-* **التوافق المباشر**: تتيح الإضافة للمبدعين إنشاء نماذج، قوام، وتحريك متوافق مع هايتيل مباشرةً داخل Blockbench.
-* **استبدال الأدوات القديمة**: تقوم بالإحلال الكامل لأداة Hytale Model Maker القديمة لدعم سير العمل الإبداعي المتعارف عليه في المجتمع بشكل أفضل.
-* **ميزات الأمان**: تتيح لك إضافة عناصر متوافقة فقط مع محرك اللعبة، فلا داعي للقلق من كسر أي شيء.
+* **Official support**: Used for "creating Hytale models, textures, and animations"
+* **Special plugin**: Hytale will have a dedicated Blockbench plugin, to be released ASAP
+* **Direct compatibility**: The plugin allows creators to "create Hytale-compatible models, textures, and animations directly in Blockbench"
+* **Replaces legacy tools**: Fully replaces the old Hytale Model Maker to better support established creative workflows in the community
+* **Safety features**: Only allows you to add things compatible with the engine, so no need to worry about breaking anything
 
-## قيود النماذج
+## Model Constraints
 
-### أنواع الهندسة
+### Geometry Types
 
-الغالبية العظمى من النماذج في هايتيل مقيدة بنوع محدد من الأشكال الهندسية الأولية:
+The vast majority of models in Hytale are constrained to specific geometric primitives:
 
-**العناصر ثلاثية الأبعاد**:
+**3D Elements**:
 
-* الكتل (البلوكات)
-* أشباه المكعبات
-* الصناديق
+* Blocks
+* Cuboids
+* Boxes
 
-**العناصر ثنائية الأبعاد**:
+**2D Elements**:
 
-* المربعات
-* المستطيلات
-* السطوح المسطحة (مكوّنة من مثلثين)
+* Quads
+* Rectangles
+* Planes (composed of 2 triangles)
 
-### فلسفة التصميم
+### Design Philosophy
 
-تخدم هذه القيود عدة أغراض:
+These constraints serve multiple purposes:
 
-* تحسين الأداء: يضمن عرضًا فعالًا وأداءً سلسًا للعبة.
-* أسلوب فني متسق: يحافظ على الطابع البصري المميز لهايتيل.
-* تكامل سلس: يجعل التعديلات تبدو أكثر انسجامًا مع اللعبة الأساسية.
+* **Performance optimization**: Ensures efficient rendering and game performance
+* **Consistent art style**: Maintains Hytale's distinctive visual aesthetic
+* **Seamless integration**: Makes mods feel more cohesive with the base game
 
-## معايير كثافة البكسل
+## Pixel Density Standards
 
-تستخدم هايتيل كثافات بكسل مختلفة لأنواع المحتوى المختلفة:
+Hytale uses different pixel densities for different types of content:
 
-### الكثافات النموذجية
+### Standard Densities
 
-* **الكتل (البلوكات)**: كثافة 32 بكسل
-* **نماذج اللاعبين**: كثافة 64 بكسل
-* **المخلوقات (الموبز)**: على الأرجح كثافة 64 بكسل أيضًا
-* **معدات اللاعبين**: كثافة 64 بكسل (أسلحة، عناصر تجميلية، دروع، وما إلى ذلك)
+* **Blocks**: 32px density
+* **Player models**: 64px density
+* **Mobs**: Likely also 64px density
+* **Player equipment**: 64px density (weapons, cosmetics, armor, etc.)
 
-### المرونة
+### Flexibility
 
-* **التعامل مع الكثافة الخاطئة**: استخدام كثافة غير صحيحة قد يؤدي إلى ظهور الأصول (assets) بحجم غير مناسب، ولكنه لن يتسبب في فشل الاستيراد.
-* **ليس هناك قيود صارمة**: نسبة البكسل، التدوير، والتكبير/التصغير كلها غير مقيدة.
-* **نظام متسامح**: تم تصميم الأدوات لتكون مرنة مع الحفاظ على التوافق.
+* **Wrong density handling**: Using incorrect density may cause assets to appear at the wrong size, but will not cause import failures
+* **No strict restrictions**: Pixel ratio, rotation, and scaling are not restricted
+* **Forgiving system**: The tools are designed to be flexible while maintaining compatibility
 
-## محرر أصول هايتيل
+## Hytale Asset Editor
 
-### المحرر داخل اللعبة
+### In-Game Editor
 
-يعد **محرر الأصول** أداة شاملة سيتم تضمينها مع اللعبة:
+The Asset Editor is a comprehensive tool that will ship with the game:
 
-* **مرفق مع اللعبة**: متاح لجميع اللاعبين منذ الإطلاق.
-* **متطلب لأداة خارجية**: لا يدعم تحرير الصور، ويجب استخدام أدوات خارجية لإنشاء القوام (textures).
-* **تحرير أصول البيانات**: المحرر الرئيسي للعمل مع أصول البيانات (data assets).
-* توسيع الإمكانيات: يدعم حاليًا معظم الميزات، رغم وجود بعض القيود المتعلقة بالشخصيات الغير قابلة للعب (شخصيات الكمبيوتر)، وتوليد العالم، والتفاعلات، والتي ستتوسع مع مرور الوقت.
+* **Ships with game**: Available to all players from launch
+* **External tool requirement**: Does not support image editing, you must use external tools for texture creation
+* **Data asset editing**: Primary editor for working with Data Assets
+* **Expanding capabilities**: Currently supports most features, though has limitations around NPCs, worldgen, and interactions that will expand over time
 
-### إنشاء الجسيمات (البارتكلز)
+### Particle Creation
 
-يتضمن محرر الأصول (asset editor) أدوات قوية لإنشاء الجسيمات (البارتكلز):
+The Asset Editor includes robust particle creation tools:
 
-* **الإنشاء داخل اللعبة**: يتم إنشاء الجسيمات مباشرة داخل اللعبة باستخدام محرر الأصول (asset editor).
-* المعيار الصناعي: منطق الجسيمات (البارتكلز) قوي ويشبه أنظمة الجسيمات (البارتكلز) في Unity و Unreal.
-* **قائم على الأحداث**: يمكن إنشاء الجسيمات (البارتكلز) عند حدوث أحداث أو تفاعلات (مثل فتح الأبواب).
-* **الارتباط بالكائنات (الموبز)**: يمكن ربط الجسيمات (البارتكلز) بالكائنات (بالموبز) عند نقاط ارتباط محددة.
-* **الحركة الديناميكية**: يدعم تحرك الجسيمات (البارتكلز) مع نقاط تثبيتها.
-* **تأخيرات زمنية**: يدعم تأثيرات الجسيمات (البارتكلز) المبنية على الوقت والتأخيرات الزمنية.
+* **In-game creation**: Particles are created directly in-game using the Asset Editor
+* **Industry standard**: Particle logic is robust and similar to Unity/Unreal particle systems
+* **Event-driven**: Particles can be spawned on events or interactions (like opening doors)
+* **Entity attachment**: Can attach particles to entities with specific attachment points
+* **Dynamic movement**: Supports particles moving with their anchor points
+* **Time delays**: Supports time-based particle effects and delays
 
-## المواد / الخامات (الماتريالز)
+## Materials
 
-### تركيز على الأداء
+### Optimization Focus
 
-تتبع هايتيل نهجًا مختلفًا فيما يخص المواد / الخامات (الماتريالز) مقارنة بمحركات الألعاب الأخرى:
+Hytale takes a different approach to materials compared to other engines:
 
-* مسبقة التحسين: الخامات مُحسّنة بشكل كبير، ولا يمكن للفنانين إنشاء مواد / خامات (ماتريالز) مخصصة.
-* أولوية الأداء: هذا القيد يضمن أداءً ثابتًا عبر جميع المحتويات.
-* نظام منسّق: يحافظ على الاتساق البصري مع تحقيق أقصى قدر من الكفاءة.
+* **Pre-optimized**: Materials are very optimized and artists cannot create custom materials
+* **Performance priority**: This constraint ensures consistent performance across all content
+* **Curated system**: Maintains visual consistency while maximizing efficiency
 
-## أفضل الممارسات
+## Best Practices
 
-### تحسين الأصول (assets)
+### Asset Optimization
 
-الاعتبارات الأساسية من فريق تطوير هايتيل:
+Key considerations from Hytale's development team:
 
-* **استخدام الموارد بعناية**: كن واعيًا بعدد الكتل (البلوكات) / المربعات التي تستخدمها وحجم ملفات القوام (textures).
-* **تجنب التضخيم**: الهدف هو منع تراكم الأصول (assets) غير الضرورية التي قد تؤثر على الأداء.
-* **تركيز على الكفاءة**: احرص على موازنة الجودة البصرية مع القيود التقنية.
+* **Mindful resource usage**: Be conscious of how many blocks/quads you use and texture file sizes
+* **Avoid bloat**: Goal is to prevent unnecessary asset bloat that could impact performance
+* **Efficiency focus**: Balance visual quality with technical constraints
 
-### التوثيق المستقبلي
+### Future Documentation
 
-* **دليل أفضل الممارسات**: سيتم إصدار دليل شامل لـ "أفضل الممارسات" للفن والنمذجة (المودلينج) في المستقبل.
-* **حدود مرنة**: يمكن تحقيق معظم الأهداف الإبداعية دون كسر أي شيء في النظام.
-* **سير العمل المدفوع بالمجتمع**: تم تصميم الأدوات لدعم سير العمل الإبداعي المتعارف عليه في مجتمع التعديلات (المودات).
+* **Best practice guide**: A comprehensive "best practice" guide for art and modeling will be released at some point
+* **Flexible boundaries**: Most creative goals can be achieved without breaking anything in the system
+* **Community-driven workflows**: Tools are designed to support established creative workflows in the modding community
 
-## التكامل مع خط الإنتاج التطويري
+## Integration with Development Pipeline
 
-يتكامل سير العمل الخاص بالنمذجة (المودلينج) وفن القوام (texture art) بسلاسة مع منظومة تطوير هايتيل الأوسع:
+The modeling and texture art workflow integrates seamlessly with Hytale's broader development ecosystem:
 
-* **التوافق مع محرر الأصول (Asset Editor)**: النماذج التي تم إنشاؤها في Blockbench تعمل مباشرة مع محرر أصول (Asset Editor) هايتيل.
-* **دمج أصول البيانات (Data Assets)**: يمكن تكوين وتخصيص النماذج ثلاثية الأبعاد عبر أصول البيانات (Data Assets).
-* دعم البرمجة المرئية (Visual Scripting): يمكن التحكم بالنماذج وتحريكها عبر البرمجة المرئية (Visual Scripting).
-* قابلية التوسع عبر إضافات جافا: يمكن تنفيذ سلوكيات متقدمة للنماذج باستخدام إضافات جافا.
-* دمج الجسيمات (البارتكلز): يمكن ربط الجسيمات (البارتكلز) بالنماذج عند نقاط محددة لتعزيز التأثيرات البصرية.
+* **Asset Editor compatibility**: Models created in Blockbench work directly with the Hytale Asset Editor
+* **Data Asset integration**: 3D models can be configured and customized through Data Assets
+* **Visual Scripting support**: Models can be controlled and animated through Visual Scripting
+* **Java plugin extensibility**: Advanced model behaviors can be implemented through Java plugins
+* **Particle integration**: Models can have particles attached at specific points for enhanced visual effects
 
-هذا النهج المتكامل يضمن أن النمذجة (المودلنج) ثلاثية الأبعاد وفن القوام (texture art) ليست عمليات إبداعية منفصلة، بل هي مكونات أساسية في بيئة تطوير هايتيل الشاملة.
+This integrated approach ensures that 3D modeling and texture art aren't isolated creative processes, but core components of Hytale's comprehensive development environment.

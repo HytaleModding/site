@@ -1,142 +1,142 @@
 ---
-title: 11 - HashMap та Key-Value сховище
-description: Навчіться зберігати та отримувати дані за допомогою пар Key-Value.
+title: 11 - HashMap and Key-Value Storage
+description: Learn to store and retrieve data using key-value pairs.
 ---
 
-`HashMap` зберігає дані у парах key-value, як у реальному словнику. Ви шукаєте слово (key), щоб знайти його значення (value). Це ідеально підходить для даних гравця, властивостей предметів та налаштувань конфігурації.
+A `HashMap` stores data in key-value pairs, like a real-world dictionary. You look up a word (key) to find its definition (value). This is perfect for player data, item properties, and configuration settings.
 
-## Основи HashMap
+## HashMap Basics
 
 ```java
 import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        // Створити HashMap (String keys, Integer values)
+        // Create a HashMap (String keys, Integer values)
         HashMap<String, Integer> playerLevels = new HashMap<>();
         
-        // Додати пари key-value
-        playerLevels.put("Анна", 10);
-        playerLevels.put("Богдан", 15);
-        playerLevels.put("Василь", 8);
+        // Add key-value pairs
+        playerLevels.put("Alice", 10);
+        playerLevels.put("Bob", 15);
+        playerLevels.put("Charlie", 8);
         
-        // Отримати значення за ключем
-        int aliceLevel = playerLevels.get("Анна");  // 10
+        // Get a value by key
+        int aliceLevel = playerLevels.get("Alice");  // 10
         
-        System.out.println("Анна на рівні " + aliceLevel);
+        System.out.println("Alice is level " + aliceLevel);
     }
 }
 ```
 
-<Callout type="info" title="HashMap проти ArrayList">
-  | **HashMap**                                  | **ArrayList**                      |
-  | -------------------------------------------- | ---------------------------------- |
-  | Без сортування                               | Сортовано за індексом (0, 1, 2...) |
-  | Доступ за ключем (може бути будь-яким типом) | Доступ за позицією                 |
-  | Корисно для пошуку значень                   | Корисно для списків елементів      |
-  | Кожен ключ є унікальним                      | Може мати дублікати                |
+<Callout type="info" title="HashMap vs ArrayList">
+  | **HashMap**                     | **ArrayList**                 |
+  | ------------------------------- | ----------------------------- |
+  | Unordered                       | Ordered by index (0, 1, 2...) |
+  | Access by key (can be any type) | Access by position            |
+  | Good for looking up values      | Good for lists of items       |
+  | Each key is unique              | Can have duplicates           |
 
   ```java
-  // ArrayList - доступ за числом
+  // ArrayList - access by number
   ArrayList<String> players = new ArrayList<>();
-  players.add("Анна");
-  String player = players.get(0);  // Отримати першого гравця
+  players.add("Alice");
+  String player = players.get(0);  // Get first player
 
-  // HashMap - доступ за ім'ям
+  // HashMap - access by name
   HashMap<String, Integer> levels = new HashMap<>();
-  levels.put("Анна", 10);
-  int level = levels.get("Alice");  // Отримати рівень Анни
+  levels.put("Alice", 10);
+  int level = levels.get("Alice");  // Get Alice's level
   ```
 </Callout>
 
-## Загальні методи HashMap
+## Common HashMap Methods
 
-### Додавання та оновлення
+### Adding and Updating
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 
-scores.put("Анна", 100);     // Додати нове значення
-scores.put("Богдан", 150);
-scores.put("Анна", 200);     // Оновити чинне (Анна тепер 200)
+scores.put("Alice", 100);     // Add new entry
+scores.put("Bob", 150);
+scores.put("Alice", 200);     // Update existing (Alice now 200)
 ```
 
-### Отримання значень
+### Getting Values
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
-scores.put("Анна", 100);
+scores.put("Alice", 100);
 
-int score = scores.get("Анна");        // 100
-Integer missing = scores.get("Данило");   // null (не існує)
+int score = scores.get("Alice");        // 100
+Integer missing = scores.get("Dave");   // null (doesn't exist)
 
-// Отримати зі значенням за умовчанням 
-int score2 = scores.getOrDefault("Данило", 0);  // 0 (повертає значення за умовчанням )
+// Get with default value
+int score2 = scores.getOrDefault("Dave", 0);  // 0 (returns default)
 ```
 
-### Перевірка ключів/значень
+### Checking for Keys/Values
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
-scores.put("Анна", 100);
+scores.put("Alice", 100);
 
-boolean hasAlice = scores.containsKey("Анна");    // true
-boolean hasDave = scores.containsKey("Данило");      // false
+boolean hasAlice = scores.containsKey("Alice");    // true
+boolean hasDave = scores.containsKey("Dave");      // false
 
 boolean has100 = scores.containsValue(100);        // true
 boolean has200 = scores.containsValue(200);        // false
 ```
 
-### Видалення записів
+### Removing Entries
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
-scores.put("Анна", 100);
-scores.put("Богдан", 150);
+scores.put("Alice", 100);
+scores.put("Bob", 150);
 
-scores.remove("Анна");           // Видалити за ключем
-System.out.println(scores);       // {Богдан=150}
+scores.remove("Alice");           // Remove by key
+System.out.println(scores);       // {Bob=150}
 
-scores.clear();                   // Видалити все
+scores.clear();                   // Remove everything
 System.out.println(scores);       // {}
 ```
 
-### Розмір і порожня перевірка
+### Size and Empty Check
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
-scores.put("Анна", 100);
+scores.put("Alice", 100);
 
 int size = scores.size();         // 1
 boolean empty = scores.isEmpty(); // false
 ```
 
-## Перебір HashMap
+## Looping Through HashMap
 
-### Перебір ключів
+### Loop Through Keys
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
-scores.put("Анна", 100);
-scores.put("Богдан", 150);
-scores.put("Василь", 75);
+scores.put("Alice", 100);
+scores.put("Bob", 150);
+scores.put("Charlie", 75);
 
 for (String name : scores.keySet()) {
     System.out.println(name);
 }
-// Вивід: Анна, Богдан, Василь(порядок може варіюватися)
+// Output: Alice, Bob, Charlie (order may vary)
 ```
 
-### Перебір значень
+### Loop Through Values
 
 ```java
 for (Integer score : scores.values()) {
     System.out.println(score);
 }
-// Вивід: 100, 150, 75 (порядок може варіюватися)
+// Output: 100, 150, 75 (order may vary)
 ```
 
-### Перебір ключів і значень
+### Loop Through Both Keys and Values
 
 ```java
 for (String name : scores.keySet()) {
@@ -144,7 +144,7 @@ for (String name : scores.keySet()) {
     System.out.println(name + ": " + score);
 }
 
-// Або використовуючи entrySet (більш ефективний)
+// Or using entrySet (more efficient)
 for (var entry : scores.entrySet()) {
     String name = entry.getKey();
     int score = entry.getValue();
@@ -152,28 +152,28 @@ for (var entry : scores.entrySet()) {
 }
 ```
 
-<Callout type="info" title="Порядок HashMap ">
-  HashMap **не** підтримує порядок вставки! Якщо вам потрібен порядок, використовуйте `LinkedHashMap`:
+<Callout type="info" title="HashMap Order">
+  HashMap does **not** maintain insertion order! If you need order, use `LinkedHashMap`:
 
   ```java
   import java.util.LinkedHashMap;
 
   LinkedHashMap<String, Integer> orderedScores = new LinkedHashMap<>();
-  orderedScores.put("Анна", 100);
-  orderedScores.put("Богдан", 150);
-  orderedScores.put("Василь", 75);
+  orderedScores.put("Alice", 100);
+  orderedScores.put("Bob", 150);
+  orderedScores.put("Charlie", 75);
 
-  // Друкуватиметься в порядку вставки
+  // Will print in insertion order
   for (String name : orderedScores.keySet()) {
       System.out.println(name);
   }
-  // Output: Анна, Богдан, Василь(гарантований порядок)
+  // Output: Alice, Bob, Charlie (guaranteed order)
   ```
 </Callout>
 
-## Практичні приклади
+## Practical Examples
 
-### Система статистики гравців
+### Player Statistics System
 
 ```java
 import java.util.HashMap;
@@ -183,12 +183,12 @@ public class PlayerStats {
     
     public PlayerStats() {
         this.stats = new HashMap<>();
-        // Ініціалізувати статистику за замовчуванням
-        stats.put("Здоров'я", 100);
-        stats.put("Мана", 50);
-        stats.put("Сила", 10);
-        stats.put("Захист", 5);
-        stats.put("Швидкість", 8);
+        // Initialize default stats
+        stats.put("health", 100);
+        stats.put("mana", 50);
+        stats.put("strength", 10);
+        stats.put("defense", 5);
+        stats.put("speed", 8);
     }
     
     public int getStat(String statName) {
@@ -205,29 +205,29 @@ public class PlayerStats {
     }
     
     public void displayStats() {
-        System.out.println("=== Статистика гравця===");
+        System.out.println("=== Player Stats ===");
         for (var entry : stats.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 }
 
-// Використання
+// Usage
 public class Main {
     public static void main(String[] args) {
         PlayerStats stats = new PlayerStats();
         stats.displayStats();
         
-        stats.modifyStat("Сила", 5);
-        stats.modifyStat("Здоров'я", -20);
+        stats.modifyStat("strength", 5);
+        stats.modifyStat("health", -20);
         
-        System.out.println("\Після модифікації:");
+        System.out.println("\nAfter modifications:");
         stats.displayStats();
     }
 }
 ```
 
-### База даних властивостей елементів
+### Item Properties Database
 
 ```java
 import java.util.HashMap;
@@ -241,10 +241,10 @@ public class ItemDatabase {
     
     public void addItem(String itemName) {
         HashMap<String, Object> properties = new HashMap<>();
-        properties.put("Шкода", 0);
-        properties.put("Витривалість", 100);
-        properties.put("Рідкісність", "Звичайна");
-        properties.put("Стакований", true);
+        properties.put("damage", 0);
+        properties.put("durability", 100);
+        properties.put("rarity", "Common");
+        properties.put("stackable", true);
         
         items.put(itemName, properties);
     }
@@ -264,7 +264,7 @@ public class ItemDatabase {
     
     public void displayItem(String itemName) {
         if (!items.containsKey(itemName)) {
-            System.out.println("Пркдмет знайдено!");
+            System.out.println("Item not found!");
             return;
         }
         
@@ -276,21 +276,21 @@ public class ItemDatabase {
     }
 }
 
-// Використання
+// Usage
 public class Main {
     public static void main(String[] args) {
         ItemDatabase db = new ItemDatabase();
         
-        db.addItem("Залізний меч");
-        db.setProperty("Залізний меч", "Шкода", 15);
-        db.setProperty("Залізний меч", "Рідкісність", "Невичайна");
+        db.addItem("Iron Sword");
+        db.setProperty("Iron Sword", "damage", 15);
+        db.setProperty("Iron Sword", "rarity", "Uncommon");
         
-        db.displayItem("Залізний меч");
+        db.displayItem("Iron Sword");
     }
 }
 ```
 
-### Менеджер конфігурації
+### Configuration Manager
 
 ```java
 import java.util.HashMap;
@@ -304,11 +304,11 @@ public class GameConfig {
     }
     
     private void loadDefaults() {
-        settings.put("Важкість", "normal");
-        settings.put("Гучність музики", "50");
-        settings.put("Гучність звуку", "50");
-        settings.put("Відстань рендеру", "10");
-        settings.put("Показати FPS", "false");
+        settings.put("difficulty", "normal");
+        settings.put("musicVolume", "50");
+        settings.put("sfxVolume", "50");
+        settings.put("renderDistance", "10");
+        settings.put("showFPS", "false");
     }
     
     public String getSetting(String key) {
@@ -317,7 +317,7 @@ public class GameConfig {
     
     public void setSetting(String key, String value) {
         settings.put(key, value);
-        System.out.println("Встановити " + key + " : " + value);
+        System.out.println("Set " + key + " to " + value);
     }
     
     public int getIntSetting(String key) {
@@ -334,7 +334,7 @@ public class GameConfig {
     }
     
     public void displaySettings() {
-        System.out.println("=== Налаштування гри===");
+        System.out.println("=== Game Settings ===");
         for (var entry : settings.entrySet()) {
             System.out.println(entry.getKey() + " = " + entry.getValue());
         }

@@ -51,52 +51,45 @@ Create `Server/Item/Items/my_new_block.json`:
 
 ```json
 {
-    "TranslationProperties": {
-        "Name": "items.my_new_block.name",
-        "Description": "items.my_new_block.description"
-    },
-    "Id": "MyNewBlock",
-    "MaxStack": 20,
-    "BlockType": {
-        "Material": "Solid",
-        "DrawType": "Cube",
-        "Opacity": "Transparent",
-        "Textures": [
-            {
-                "All": "BlockTextures/texture.png",
-                "Weight": 1
-            }
-        ]
-    },
-    "Icon": "Icons/ItemsGenerated/my_new_block.png"
-}
-```
+  "TranslationProperties": {
+    "Name": "items.my_new_block.name",
+    "Description": "items.my_new_block.description"
+  },
+  "Id": "My_New_Block",
+  "MaxStack": 100,
+  "Icon": "Icons/ItemsGenerated/my_new_block.png",
+  "Categories": [
+    "Blocks.Rocks"
+  ],
 
-## Custom Model Block
-
-For custom models, use `DrawType: "Model"`:
-
-```json
-{
-    "TranslationProperties": {
-        "Name": "items.my_new_block.name",
-        "Description": "items.my_new_block.description"
+  "PlayerAnimationsId": "Block",
+  "Set": "Rock_Stone",
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Group": "Stone",
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "ItemId": "my_new_block"
+      }
     },
-    "Id": "MyNewBlock",
-    "MaxStack": 20,
-    "BlockType": {
-        "Material": "Solid",
-        "DrawType": "Model",
-        "Opacity": "Transparent",
-        "CustomModel": "Blocks/my_new_model.blockymodel",
-        "CustomModelTexture": [
-            {
-                "Texture": "BlockTextures/texture.png",
-                "Weight": 1
-            }
-        ]
-    },
-    "Icon": "Icons/ItemsGenerated/my_new_object.png"
+    "BlockParticleSetId": "Stone",
+    "Textures": [
+      {
+        "All": "BlockTextures/my_new_block.png"
+      }
+    ],
+    "ParticleColor": "#aeae8c",
+    "BlockSoundSetId": "Stone",
+    "BlockBreakingDecalId": "Breaking_Decals_Rock"
+  },
+  "ResourceTypes": [
+    {
+      "Id": "Rock"
+    }
+  ]
 }
 ```
 

@@ -16,7 +16,7 @@ String empty = "";
 ```
 
 <Callout type="warning" title="Strings são imutáveis">
-  Uma vez criada, uma string **não pode ser alterada**. Métodos que parecem modificar uma string realmente criam uma nova!
+  Uma vez criada, uma string **não pode ser alterada**. Methods that seem to modify a string actually create a new one!
 
   ```java
   String text = "Olá";
@@ -177,7 +177,7 @@ String result = "Olá".concat(" Mundo");  // "Olá Mundo"
 
 ### Construindo strings longas
 
-Para muitas concatenações, use o `StringBuilder`:
+For many concatenations, use `StringBuilder`:
 
 ```java
 StringBuilder builder = new StringBuilder();
@@ -197,21 +197,21 @@ System.out.println(result);
   A concatenação regular cria muitas strings temporárias:
 
   ```java
-  // Ineficiente - Cria muitas strings temporárias
+  // Inefficient - Creates many temporary strings
   String result = "";
   for (int i = 0; i < 1000; i++) {
-      result = result + i;  // Cria 1000 strings temporárias!
+      result = result + i;  // Creates 1000 temporary strings!
   }
 
-  // Eficiente - StringBuilder é mutável
+  // Efficient - StringBuilder is mutable
   StringBuilder sb = new StringBuilder();
   for (int i = 0; i < 1000; i++) {
-      sb.append(i);  // Modifica um objeto
+      sb.append(i);  // Modifies one object
   }
   String result = sb.toString();
   ```
 
-  Use `StringBuilder` ao montar strings em repetições!
+  Use `StringBuilder` when building strings in loops!
 </Callout>
 
 ## Exemplos práticos
@@ -273,7 +273,7 @@ public class PlayerFormatter {
 ```java
 public class UsernameValidator {
     public static boolean isValid(String username) {
-        // Regras: 3-16 caracteres, somente letras e números
+        // Rules: 3-16 characters, letters and numbers only
         
         if (username == null || username.isEmpty()) {
             return false;
@@ -296,15 +296,15 @@ public class UsernameValidator {
     }
     
     public static void main(String[] args) {
-        System.out.println(isValid("Steve"));      // correto
-        System.out.println(isValid("Player_123")); // errado (possui sublinhado)
-        System.out.println(isValid("ab"));         // errado (muito curto)
-        System.out.println(isValid(""));           // errado (vazio)
+        System.out.println(isValid("Steve"));      // true
+        System.out.println(isValid("Player_123")); // false (has underscore)
+        System.out.println(isValid("ab"));         // false (too short)
+        System.out.println(isValid(""));           // false (empty)
     }
 }
 ```
 
-### Criador de Descrições de Itens
+### Item Description Builder
 
 ```java
 public class ItemDescription {
@@ -312,12 +312,12 @@ public class ItemDescription {
                                          int damage, int durability) {
         StringBuilder desc = new StringBuilder();
         
-        // Título com código de cor de raridade
+        // Title with rarity color code
         desc.append(getRarityColor(rarity));
         desc.append(name);
         desc.append("\n");
         
-        // Status
+        // Stats
         desc.append("Damage: ").append(damage).append("\n");
         desc.append("Durability: ").append(durability).append("/");
         desc.append(durability).append("\n");
@@ -328,11 +328,11 @@ public class ItemDescription {
     
     private static String getRarityColor(String rarity) {
         switch (rarity.toLowerCase()) {
-            case "legendary": return "§6";  // Dourado
-            case "epic": return "§5";       // Roxo
-            case "rare": return "§9";       // Azul
-            case "common": return "§f";     // Branco
-            default: return "§7";           // Cinza
+            case "legendary": return "§6";  // Gold
+            case "epic": return "§5";       // Purple
+            case "rare": return "§9";       // Blue
+            case "common": return "§f";     // White
+            default: return "§7";           // Gray
         }
     }
     
@@ -343,7 +343,7 @@ public class ItemDescription {
 }
 ```
 
-### Filtro de Mensagens de Chat
+### Chat Message Filter
 
 ```java
 public class ChatFilter {
@@ -370,9 +370,9 @@ public class ChatFilter {
 }
 ```
 
-## Formatação de String
+## String Formatting
 
-### Usando String.format()
+### Using String.format()
 
 ```java
 String name = "Alice";
@@ -382,46 +382,46 @@ double health = 85.5;
 String formatted = String.format("%s is level %d with %.1f%% health", 
                                  name, level, health);
 System.out.println(formatted);
-// "Alice está no nível 10 com 85.5% de vida"
+// "Alice is level 10 with 85.5% health"
 ```
 
-<Callout type="info" title="Especificadores de Formatação">
-  Códigos de formato comum:
+<Callout type="info" title="Format Specifiers">
+  Common format codes:
 
   - `%s` — String
-  - `%d` — Integer
-  - `%f` — Ponto float
-  - `%.2f` — Float com 2 casas decimais
-  - `%n` — Nova linha (independente da plataforma)
+  - `%d` - Integer
+  - `%f` - Floating point
+  - `%.2f` - Float with 2 decimal places
+  - `%n` - New line (platform independent)
 
   ```java
-  String.format("Name: %s", "Steve");          // "Nome: Steve"
-  String.format("Level: %d", 10);              // "Nível: 10"
-  String.format("Health: %.1f", 85.5);         // "Vida: 85.5"
+  String.format("Name: %s", "Steve");          // "Name: Steve"
+  String.format("Level: %d", 10);              // "Level: 10"
+  String.format("Health: %.1f", 85.5);         // "Health: 85.5"
   String.format("Position: (%d, %d, %d)", 
-                10, 64, -5);                    // "Posição: (10, 64, -5)"
+                10, 64, -5);                    // "Position: (10, 64, -5)"
   ```
 </Callout>
 
-## Operações Comuns de Strings
+## Common String Operations
 
-### Verificar se a string está vazia
+### Check if String is Empty
 
 ```java
 String text = "";
 
-// Verificar se está vazio ou nulo
+// Check for empty or null
 if (text == null || text.isEmpty()) {
     System.out.println("Empty!");
 }
 
-// Verificar apenas se há valores vazios, nulos ou espaços em branco
+// Check for empty, null, or whitespace only
 if (text == null || text.trim().isEmpty()) {
     System.out.println("Empty or whitespace!");
 }
 ```
 
-### Contagem de ocorrências
+### Count Occurrences
 
 ```java
 public static int countOccurrences(String text, String target) {
@@ -436,12 +436,12 @@ public static int countOccurrences(String text, String target) {
     return count;
 }
 
-// Uso
+// Usage
 int count = countOccurrences("hello hello world", "hello");
 System.out.println(count);  // 2
 ```
 
-### Reverter uma Cadeia
+### Reverse a String
 
 ```java
 public static String reverse(String text) {
@@ -449,12 +449,12 @@ public static String reverse(String text) {
     return sb.reverse().toString();
 }
 
-// Uso
+// Usage
 String reversed = reverse("Hello");
 System.out.println(reversed);  // "olleH"
 ```
 
-### Verifique se é um Palíndromo
+### Check if Palindrome
 
 ```java
 public static boolean isPalindrome(String text) {
@@ -464,30 +464,30 @@ public static boolean isPalindrome(String text) {
 }
 
 // Usage
-System.out.println(isPalindrome("racecar"));     // Correto
-System.out.println(isPalindrome("hello"));       // Errado
+System.out.println(isPalindrome("racecar"));     // true
+System.out.println(isPalindrome("hello"));       // false
 ```
 
-## Exercícios Práticos
+## Practice Exercises
 
-1. **Verificador de Usuário**: Escreva um método que verifique se um nome de usuário:
-   - Deve ter entre 3 e 16 caracteres
-   - Conter apenas letras, números e sublinhados
-   - Não pode começar com um número
-   - Retorna _true_ se for válido, e _false_ se não for
+1. **Username Checker**: Write a method that checks if a username:
+   - Is between 3 and 16 characters
+   - Contains only letters, numbers, and underscores
+   - Doesn't start with a number
+   - Returns true if valid, false otherwise
 
-2. **Command Parse**: Analisar este formato do comando: `/teleport x y z`
-   - Extrair as coordenadas
-   - Converter para números inteiros
-   - Retorna uma matriz de três valores
+2. **Command Parser**: Parse this command format: `/teleport x y z`
+   - Extract the coordinates
+   - Convert them to integers
+   - Return an array of the three values
 
-3. **Formatador de Chat**: Crie um método que formate as mensagens de chat:
-   - Input: nome do jogador, cargo, mensagem
-   - Output: `"[RANK] Nome do Jogador: mensagem"`
-   - Se não houver rank, apenas mostre `"Nome do Jogador: mensagem"`
+3. **Chat Formatter**: Create a method that formats chat messages:
+   - Input: player name, rank, message
+   - Output: `"[RANK] PlayerName: message"`
+   - If no rank, just show `"PlayerName: message"`
 
-4. **Contagem de Palavras**: Contar quantas palavras há em uma frase (as palavras são separadas por espaços)
+4. **Word Counter**: Count how many words are in a sentence (words are separated by spaces)
 
-5. **Casos de Título**: Converter uma sequência de caracteres para maiúsculas e minúsculas:
+5. **Title Case**: Convert a string to title case:
    - Input: `"hello world"`
    - Output: `"Hello World"`

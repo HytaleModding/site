@@ -1,59 +1,59 @@
 ---
-title: البرمجة المرئية
-description: مقدمة حول ما نعرفه عن نظام البرمجة المرئية في هايتيل حتى وقت كتابة هذا المقال.
+title: Visual Scripting
+description: An introduction to what we know of Hytale's visual scripting system as of writing this.
 ---
 
-# البرمجة المرئية
+# Visual Scripting
 
-تخطط هايتيل لدعم البرمجة المرئية كطريقة لجعل المنطق المتقدم وتدفق التحكم (control flow) أكثر سهولة ومتاحة لشريحة أوسع من المستخدمين. لن يكون هذا النظام متاحًا عند الإطلاق، ولكنه من المتوقع أن يصبح متاحًا بعد فترة وجيزة من الإطلاق.
+Hytale plans to support Visual Scripting as a method to make advanced logic and control flow accessible to a wider audience. This system will not be available at launch, but should be available shortly after launch.
 
-## نظرة عامة
+## Overview
 
-تم تصميم البرمجة المرئية في هايتيل لتعمل بطريقة مشابهة لنظام الBlueprints في محرك Unreal Engine. يتيح ذلك للمصممين إنشاء سلوكيات معقدة عبر واجهة بصرية تتوافق مع طريقة تفكيرهم في منطق اللعبة، دون الحاجة لكتابة الكود مباشرة.
+Visual Scripting in Hytale is designed to function similarly to Blueprints in Unreal Engine. It allows designers to create complex behaviors through a visual interface that matches how they think about game logic, without needing to write code directly.
 
-### الميزات الرئيسية
+### Key Features
 
-* **جزء من وظائف جافا**: يمكن للبرمجة المرئية القيام بجزء من ما هو ممكن باستخدام إضافات جافا
-* **صديق للمصممين**: يتم تمكين المصممين من خلال لغة مرئية تتوافق مع طريقة تفكيرهم في السلوكيات
-* **قابل للتطوير برمجيًا**: يمكن للمبرمجين توسيع النظام وتحسينه عن طريق إضافة عقد بصرية (Visual Nodes) جديدة وتنفيذات حساسة للأداء
-* **بيئة مشاركة آمنة**: توفر بيئة معزولة وآمنة لمشاركة المنطق بين المعدّلين (المودرز)
+* **Subset of Java functionality**: Visual Scripting can do a subset of what is possible with Java plugins
+* **Designer-friendly**: "Designers are empowered through a visual language that matches how they think about behaviors"
+* **Programmer extensible**: Programmers can extend and optimize the system by adding new visual nodes and performance-sensitive implementations
+* **Safe sharing environment**: Provides a sandboxed, safe environment for sharing logic between modders
 
-## المزايا مقارنة بالرمجة التقليدية
+## Advantages Over Traditional Coding
 
-تجعل البرمجة المرئية كتابة المنطق المخصص أكثر سهولة من خلال إزالة العقبات الشائعة التي تواجه المطورين عند العمل بجافا:
+Visual Scripting makes writing custom logic more accessible by removing common hurdles found when developing in Java:
 
-* **لا حاجة لإعداد بيئة معقدة**: لا داعي للقلق بشأن تثبيت الأدوات الصحيحة أو تكوين بيئة التطوير
-* **التطوير بدون قواعد برمجية (syntax)**: يتيح إنشاء المنطق المخصص دون الحاجة لكتابة الأكواد أو حفظ تراكيبها
-* **مشاركة أكثر أمانًا**: من المفترض أن يكون وجود برامج ضارة في البرمجة البصرية شبه مستحيل.
-* **أكثر شمولية**: يقلل الحاجز أمام غير المبرمجين
+* **No complex environment setup**: No need to worry about installing the right tools or configuring development environments
+* **Syntax-free development**: Removes the need to learn and remember programming syntax
+* **Safer sharing**: Malware in visual scripting should be virtually impossible
+* **More inclusive**: Lowers the barrier to entry for non-programmers
 
-## العلاقة مع جافا
+## Relationship with Java
 
-تم تصميم البرمجة المرئية وإضافات جافا للعمل معًا بتناغم:
+Visual Scripting and Java plugins are designed to work in tandem:
 
-* **توسيع البرمجة المرئية باستخدام جافا**: يمكن للمبرمجين إنشاء عقد بصرية (Visual Nodes) جديدة باستخدام جافا
-* **تحسين الأداء**: بينما قد لا تكون البرمجة المرئية بنفس كفاءة جافا، يمكن للمبرمجين تنفيذ المنطق الحرج للأداء (erformance-critical logic) باستخدام جافا وعرضه كعقد بصرية (Visual Nodes)
-* **أفضل ما في العالمين**: يتيح إبقاء الجزء الأكبر من المنطق في بيئة البرمجة المرئية سهلة الوصول مع الحفاظ على تحسين العمليات المكلفة.
+* **Java extends Visual Scripting**: Programmers can create new visual nodes using Java
+* **Performance optimization**: While Visual Scripting may not be as optimized as Java directly, programmers can implement performance-critical logic in Java and expose it as visual nodes
+* **Best of both worlds**: Allows the majority of logic to remain in the accessible Visual Scripting environment while keeping expensive operations optimized
 
-توصي هايتيل بشدة باستخدام البرمجة المرئية لأنها أكثر سهولة وأمانًا للمشاركة والتنزيل. ومع ذلك، سيظل العمل باستخدام جافا فقط ممكنًا لأولئك الذين يفضلونه.
+Hytale strongly recommends Visual Scripting since it is both more accessible and safer to share and download. However, staying purely in Java will still work for those who prefer it.
 
-## البرمجة المرئية ثلاثية الأبعاد
+## 3D Visual Scripting
 
-إحدى الميزات الفريدة لهايتيل هي دمج البرمجة المرئية مباشرة داخل العالم ثلاثي الأبعاد:
+One of Hytale's unique features is bringing visual scripting directly into the 3D world:
 
-* **التحرير داخل العالم**: ربط المقابض، والأبواب، ونقاط الظهور (السبونارز)، والمشغلات، وعناصر أخرى مباشرة داخل اللعبة
-* **إنشاء خرائط المغامرات**: ممتاز لإنشاء خرائط المغامرات والمواجهات دون الحاجة لمغادرة هايتيل
-* **مشابه لDOOM SnapMap**: يوفر سير عمل مألوف لأولئك الذين استخدموا أنظمة مماثلة
-* متكامل بالكامل: يعمل بانسجام تام مع نظام الأصول (Assets System) والبرمجة
+* **In-world editing**: Link levers, doors, spawners, triggers, and other elements directly inside the game
+* **Adventure map creation**: Excellent for building adventure maps and encounters without leaving Hytale
+* **Similar to DOOM SnapMap**: Provides a familiar workflow for those who have used similar systems
+* **Fully integrated**: Works seamlessly with the asset and scripting stack
 
-## لا يوجد برمجة نصية
+## No Text-Based Scripting
 
-اتخذت هايتيل قرارًا متعمدًا بعدم تضمين لغات البرمجة النصية. سبب ذلك:
+Hytale has made a deliberate decision not to include text-based scripting languages. Their reasoning:
 
-* **حل زائف**: غالبًا ما يتم إدخال البرمجة النصية ل"مساعدة غير المبرمجين"، لكنها لا تزال تتطلب تعلم مفاهيم البرمجة
-* **زيادة التعقيد**: ينتهي الأمر بالمبرمجين بإدارة لغتين، حيث تكون إحداهما أقل قوة
-* **لا يزال يتطلب تعلم القواعد البرمجية**: يحتاج المصممون إلى تعلم تراكيب اللغة ومفاهيم البرمجة
-* **أقل شمولية**: لا يحل فعليًا مشكلة سهولة الوصول
-* **التجزئة**: تجنّب تجزئة المنطق عبر عدة لغات نصفية
+* **False compromise**: Text-based scripting is often introduced to "help non-programmers" but still requires learning programming concepts
+* **Complexity increase**: Programmers end up juggling two languages where one is less powerful
+* **Still requires syntax**: Designers still need to learn syntax and programming concepts
+* **Less inclusive**: Doesn't truly solve the accessibility problem
+* **Fragmentation**: Avoids "fragmenting logic across multiple 'half-languages'"
 
-بدلاً من ذلك، ترى هايتيل أن البرمجة المرئية هي النهج الأفضل، حيث تجعل منطق اللعبة فعليًا أكثر سهولة لشريحة أوسع من المستخدمين مع الحفاظ على القوة والمرونة المطلوبة.
+Instead, Hytale believes visual scripting is a better approach that truly makes game logic accessible to a wider audience while maintaining the power and flexibility needed

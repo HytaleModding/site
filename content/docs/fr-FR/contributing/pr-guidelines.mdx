@@ -1,39 +1,39 @@
 ---
-title: Règles concernant les PRs
-description: Règles que les examinateurs et contributeurs doivent suivre quand ils soumettent et examinent des pull requests.
+title: PR Guidelines
+description: Guidelines that reviewers and contributors should follow when submitting and reviewing pull requests.
 ---
 
-# Règles concernant les Pull Requests
+# Pull Request Guidelines
 
-Pour assurer un processus d'examen doux et efficace, les contributeurs et les examinateurs doivent adhérer aux règles suivantes lorsqu'ils soumettent et examinent des pull requests (PRs)
+To ensure a smooth and efficient review process, both contributors and reviewers should adhere to the following guidelines when submitting and reviewing pull requests (PRs).
 
-## Pour les contributeurs
+## For Contributors
 
-1. **Titres et descriptions descriptifs**
-   - Utilisez des titres clairs et concis qui résument les changements.
-   - Donnez des descriptions détaillées de ce que la PR fait, pour les changements sont nécessaires, et tout contexte pertinent.
-2. **Lien vers les issues**
-   - Dans le titre de votre PR, ajoutez `GH-ISSUE-NUMBER` pour lier la PR à l'issue correspondante. Ceci est requis pour toutes les PRs.
-3. **Changements petits et ciblés**
-   - Visez à garder les PRs de petite taille et ciblée sur une seule issue ou fonctionnalité. Cela permet aux examinateurs de plus facilement comprendre et faire des retours.
-4. **Qualité du code**
-   - Assurez-vous que votre code suive les standards de programmation du projet et les bonnes pratiques.
-   - Ajoutez des commentaires quand c'est nécessaire pour expliquer les logiques complexes.
-5. **Tests**
-   - Testez rigoureusement vos changements avant de soumettre une PR.
-   - Si possible, incluez des tests unitaires ou des tests d'intégration pour valider vos changements
+1. **Descriptive Titles and Descriptions**
+   - Use clear and concise titles that summarize the changes.
+   - Provide detailed descriptions of what the PR does, why the changes are necessary, and any relevant context.
+2. **Link to Issues**
+   - In your PR title, add `GH-ISSUE-NUMBER` to link the PR to the relevant issue. This is required for all PRs.
+3. **Small, Focused Changes**
+   - Aim to keep PRs small and focused on a single issue or feature. This makes it easier for reviewers to understand and provide feedback.
+4. **Code Quality**
+   - Ensure your code follows the project's coding standards and best practices.
+   - Include comments where necessary to explain complex logic.
+5. **Testing**
+   - Test your changes thoroughly before submitting the PR.
+   - If applicable, include unit tests or integration tests to verify your changes.
 6. **Documentation**
-   - Mettez à jour ou ajoutez la documentation si besoin qui reflète vos changements.
-7. **Messages de commit**
-   - Utilisez des messages de commit clairs et descriptifs qui suivent le format de convention [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
-8. **Vérifiez les confilts**
-   - Avant de soumettre votre PR, assurez-vous que votre branche est à jour avec la branche de base pour minimiser les conflits de merge.
+   - Update or add documentation as needed to reflect your changes.
+7. **Commit Messages**
+   - Use clear and descriptive commit messages that follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) format.
+8. **Check for Conflicts**
+   - Before submitting your PR, ensure that your branch is up to date with the base branch to minimize merge conflicts.
 
-## Pour les examinateurs
+## For Reviewers
 
-- Vous être supposés examiner les PRs rigoureusement, et demander des changements si nécessaire.
-- Donnez des retours constructifs et des suggestions pour l'amélioration.
-- Vérifiez que les changements sont en accord avec les standards de programmation du projet et les bonnes pratiques.
-- Déployez la PR en utilisant l'intégration dokploy pour s'assurer que les changements fonctionnent comme prévu.
-- Assurez-vous que la documentation est mise à jour si besoin.
-- Approuvez la PR seulement si vous êtes satisfaits des changements et que toutes les vérifications sont validées.
+- You are supposed to review PRs thoroughly, and request changes if needed.
+- Provide constructive feedback and suggestions for improvement.
+- Verify that the changes meet the project's coding standards and best practices.
+- Deploy the PR using the dokploy integration to ensure the changes work as expected.
+- Ensure that documentation is updated as necessary.
+- Approve the PR only when you are satisfied with the changes and all checks have passed.

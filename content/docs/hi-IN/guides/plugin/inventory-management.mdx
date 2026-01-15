@@ -1,0 +1,123 @@
+---
+title: Inventory Management
+description: Learn how to manage player inventories in your Hytale mod.
+authors:
+  - name: Neil Revin
+    link: https://itsneil.dev
+---
+
+In this guide, you'll learn how to manage player inventories in your Hytale mod.
+
+## Accessing the Player Inventory
+
+To access the Inventory of a `Player`, you can use the `getInventory()` method which returns the `Inventory` object.
+
+```java
+Inventory inventory = player.getInventory();
+```
+
+## Opening Inventories
+
+You can open different types of inventories, these inventories are known as "Pages". You can also add custom pages, this will be covered in a guide later on.
+
+You can use the `Page` enum to reference existing inventories, currently the following pages are available:
+
+- `Page.None`
+- `Page.Bench`
+- `Page.Inventory`
+- `Page.ToolsSettings`
+- `Page.Map`
+- `Page.MachinimaEditor`
+- `Page.ContentCreation`
+- `Page.Custom`
+
+```java
+PageManager pageManager = player.getPageManager();
+Store<EntityStore> store = player.getWorld().getEntityStore().getStore();
+pageManager.setPage(player.getReference(), store, Page.Inventory);
+```
+
+## `ItemStack` Class
+
+You can create and manipulate items in a player's inventory using the `ItemStack` class. This class represents a stack of items, and provides methods for managing the quantity and type of items in the stack.
+
+### Creating an ItemStack
+
+To create an `ItemStack`, you need to specify the material type and the quantity of items in the stack.
+
+```java
+ItemStack item = new ItemStack("Stone"); 
+ItemStack withQuantity = new ItemStack("Stone", 64);
+```
+
+#### Adding custom metadata
+
+You can also add custom metadata to a `ItemStack` by passing a `BsonDocument` when creating it.
+
+```java
+BsonDocument metadata = new BsonDocument();
+metadata.append("customData", new BsonString("value"));
+ItemStack item = new ItemStack("Stone", 64, metadata);
+```
+
+### Setting a durability
+
+```java
+ItemStack stackWithDurability = new ItemStack(
+    "DiamondSword", // itemId
+    1,              // quantity
+    100.0,          // durability
+    100.0,          // maxDurability
+    metadata        // metadata (optional)
+);
+```
+
+## Getting the `ItemContainer`
+
+The `Inventory` class provides methods to get multiple `ItemContainer` objects, like:
+
+- `.getStorage()`
+- `.getArmor()`
+- `.getBackpack()`
+- `.getHotbar()`
+- `.getUtility()`
+
+There are also combined methods like:
+
+- `.getCombinedEverything()`
+- `.getCombinedArmorHotbarStorage()`
+- `.getCombinedBackpackStorageHotbar()`
+- `.getCombinedHotbarFirst()`
+- `.getCombinedStorageFirst()`
+- `.getCombinedArmorHotbarUtilityStorage()`
+- `.getCombinedHotbarUtilityConsumableStorage()`
+
+## Adding `ItemStack` objects to the Inventory
+
+To add an `ItemStack` to a player's inventory, you can use the `addItemStack()` method of the `Inventory` class.
+
+```java
+Inventory inventory = player.getInventory();
+inventory.addItemStack(item);
+```
+
+Or you can specify a certain slot to add it to:
+
+```java
+inventory.addItemStackToSlot((short) 4, stack)
+```
+
+## Removing `ItemStack` objects from the Inventory
+
+To remove an `ItemStack` from a player's inventory, you can use the `removeItemStack()` method of the `Inventory` class.
+
+```java
+Inventory inventory = player.getInventory();
+inventory.removeItemStack(item);
+```
+
+Or you can specify a certain slot to remove it from:
+
+```java
+inventory.removeItemStackFromSlot((short) 4);
+```

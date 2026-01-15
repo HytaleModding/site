@@ -1,130 +1,128 @@
 ---
-title: '03 - Control de flujo: sentencias "if"'
-description: Aprende cómo controlar el flujo de sus programas Java usando las sentencias "if".
+title: 03 - Control Flow If Statements
+description: Learn how to control the flow of your Java programs using if statements.
 ---
 
-Los programas necesitan tomar decisiones. Las sentencias `if` permiten que el código elija distintos caminos según las condiciones.
+Programs need to make decisions. If statements let your code choose different paths based on conditions.
 
-## Sentencia básica de  `if`
+## Basic If Statement
 
-Es la forma más simple de verificar una condición:
+The simplest form checks one condition;
 
 ```java
-int salud = 20;
+int health = 20;
 
-if (salud > 10) {
-    System.out.println("¡Estás en buena forma!");
+if (health > 10) {
+    System.out.println("You are healthy!");
 }
 ```
 
-### Estructura
+### Structure
 
 ```java
-if (condicion) {
-    // código a ejecutar si la condición se cumple
+if (condition) {
+    // code to execute if condition is true
 }
 ```
 
-## Sentencias de `if`-`else`
+## If-Else Statements
 
-Son condiciones que permiten elegir entre dos caminos, dependiendo de si se cumple la condición o no:
+Choose between two paths:
 
 ```java
-int salud = 5;
+int health = 5;
 
-if (salud > 10) {
-    System.out.println("¡Estás en buena forma!");
+if (health > 10) {
+    System.out.println("You are healthy!");
 } else {
-    System.out.println("¡Necesitas curarte!");
+    System.out.println("You need healing!");
 }
 ```
 
-## Sentencias encadenadas de `if`-`else`
+## If-Else Else-If Chain
 
-Comprueba múltiples condiciones en secuencia:
+Check multiple conditions in sequence:
 
 ```java
 
-int salud = 7;
+int health = 7;
 
-if (salud > 15) {
-    System.out.println("¡Estás en buena forma!");
+if (health > 15) {
+    System.out.println("You are in great shape!");
 } else if (health > 5) {
-    System.out.println("Podrías estar mejor.");
+    System.out.println("You are okay.");
 } else {
-    System.out.println("¡Necesitas curarte!");
+    System.out.println("You need healing!");
 }
 ```
 
-## Sentencias anidadas de `if`
+## Nested If Statements
 
-Puedes colocar una sentencia `if` dentro de otra, de modo que la segunda solo se ejecuta si la primera se cumple:
+You can place if statements inside other if statements:
 
 ```java
-int salud = 12;
+int health = 12;
 
-if (salud > 10) {
+if (health > 10) {
     if (health > 15) {
-        System.out.println("¡Estás de maravilla!");
+        System.out.println("You are in great shape!");
     } else {
-        System.out.println("¡Estás en buena forma!");
+        System.out.println("You are healthy!");
     }
 } else {
-    System.out.println("¡Necesitas curarte!");
+    System.out.println("You need healing!");
 }
 ```
 
-## Condiciones compuestas
+## Compound Conditions
 
-Puedes combinar múltiples condiciones usando operadores lógicos:
+You can combine multiple conditions using logical operators:
 
 ```java
 
-// Operador Y (AND) -  ambas condiciones deben de cumplirse.
-int salud = 12;
-boolean tienePocion = true;
+// AND - both must be true
+int health = 12;
+boolean hasPotion = true;
 
-if (salud > 10 && tienePocion) {
-    System.out.println("¡Estás en buena forma y tienes una poción!");
-} else if (salud > 10) {
-    System.out.println("¡Estás en buena forma y conseguir una poción!");
+if (health > 10 && hasPotion) {
+    System.out.println("You are healthy and have a potion!");
+} else if (health > 10) {
+    System.out.println("You are healthy but need a potion!");
 } else {
-    System.out.println("¡Necesitas curarte!");
+    System.out.println("You need healing!");
 }
 
-// Operador O (OR) - al menos una condición se debe de cumplir
+// OR - at least one must be true
 
-int salud = 8;
-boolean tienePocion = false;
-
-if (salud > 10 || tienePocion) {
-    System.out.println("¡Estás en buena forma o tienes una poción!");
+int health = 8;
+boolean hasPotion = false;
+if (health > 10 || hasPotion) {
+    System.out.println("You are either healthy or have a potion!");
 } else {
-    System.out.println("¡Necesitas curarte y conseguir una poción!");
+    System.out.println("You need healing and a potion!");
 }
 
+// NOT - reverses the condition
 
-// Operador NO (NOT) - invierte la condición
-
-int salud = 8;
-if (!(salud > 10)) {
-    System.out.println("¡Necesitas curarte!");
+int health = 8;
+if (!(health > 10)) {
+    System.out.println("You need healing!");
 } else {
-    System.out.println("¡Estás en buena forma!");
+    System.out.println("You are healthy!");
 }
 ```
 
-## Operador ternario
+## Ternary Operator
 
-Es una forma compacta de asignar valores:
+A compact way to assign values:
 
 ```java
-int salud = 12;
-String estado = (salud > 10) ? "Saludable" : "Necesita curación"
+int health = 12;
+String status = (health > 10) ? "Healthy" : "Needs Healing";
 ```
 
-### Sintaxis
+### Syntax
 
 ```java
-variable = (condición) ? valorSiVerdadero : valorSiFalso;
+variable = (condition) ? valueIfTrue : valueIfFalse;
 ```

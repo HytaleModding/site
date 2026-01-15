@@ -1,0 +1,143 @@
+---
+title: World Generation System
+description: Learn how to create custom world generation features for your Hytale mod.
+authors:
+  - name: Neil Revin
+    link: https://itsneil.dev
+---
+
+# Overview
+
+This section covers Hytale's procedural world generation systems that creates environments, biomes, and structures dynamically as players explore the world.
+
+Hytale’s world generation is organized into three interconnected systems:
+
+- **Zones** - Large-scale regions that define overall world structure
+- **Biomes** - Terrain characteristics and environmental properties within zones
+- **Caves** - Underground structures and networks generated within zones
+
+These systems work together to create a rich, varied world with smooth transitions and coherent regional themes.
+
+## Getting Started
+
+1. Zone System - Large regions
+2. Biome System - Terrain and environment within zones
+3. Cave System - Underground structures and networks within zones
+
+## Implementation Details
+
+### Zone Lookup and Generation
+
+```java
+
+// Get zone at position
+ZonePatternGenerator zoneGen = /* world generator */;
+ZoneGeneratorResult zoneResult = zoneGen.generate(seed, x, z);
+Zone zone = zoneResult.getZone();
+
+// Get biome within zone
+BiomePatternGenerator biomeGen = zone.biomePatternGenerator();
+Biome biome = biomeGen.generateBiomeAt(zoneResult, seed, x, z);
+
+// Check for caves in zone
+CaveGenerator caveGen = zone.caveGenerator();
+if (caveGen != null) {
+    CaveType[] caveTypes = caveGen.getCaveTypes();
+    // Generate caves as needed
+}
+```
+
+### Creating a Custom Zone
+
+```java
+// Configure zone discovery
+ZoneDiscoveryConfig discovery = new ZoneDiscoveryConfig(
+    true,                           // Show notification
+    "Custom Zone",                  // Display name
+    "zone.forest.discover",         // Sound event
+    "icons/forest.png",             // Icon
+    true,                           // Major zone
+    5.0f, 2.0f, 1.5f                // Duration, fade in, fade out
+);
+
+// Create biome pattern
+IPointGenerator biomePoints;
+IWeightedMap<TileBiome> tileBiomes;
+CustomBiome[] customBiomes;
+
+BiomePatternGenerator biomeGen = new BiomePatternGenerator(
+    biomePoints,
+    tileBiomes,
+    customBiomes
+);
+
+// Create cave configuration
+CaveType[] caveTypes; // cave definitions
+CaveGenerator caveGen = new CaveGenerator(caveTypes);
+
+// Assemble the zone
+Zone customZone = new Zone(
+    100,                    // Unique ID
+    "new_custom_zone",      // Internal name
+    discovery,              // Discovery config
+    caveGen,                // Cave generator
+    biomeGen,               // Biome pattern
+    uniquePrefabs           // Unique structures
+);
+```
+
+## System Integration
+
+### Zone & Biome Integration
+
+Each zone defines its own biome pattern:
+
+```java
+Zone zone = zoneGen.generate(seed, x, z).getZone();
+BiomePatternGenerator biomeGen = zone.biomePatternGenerator();
+Biome biome = biomeGen.generateBiomeAt(zoneResult, seed, x, z);
+```
+
+### Zone & Cave Integration
+
+Eacdh zone defines it's own cave patterns:
+
+```java
+Zone zone = /* ... */;
+CaveGenerator caveGen = zone.caveGenerator();
+if (caveGen != null) {
+    // This zone has caves
+    CaveType[] types = caveGen.getCaveTypes();
+}
+```
+
+### Biome & Cave Integration
+
+Caves use biome masks for placement control:
+
+```java
+// Cave type with biome restrictions
+Int2FlagsCondition biomeMask = caveType.getBiomeMask();
+int biomeId = biome.getId();
+int flags = biomeMask.eval(biomeId);
+
+// Check if cave can generate in this biome
+if (CaveBiomeMaskFlags.canGenerate(flags)) {
+    // Generate cave
+}
+```
+
+### Border Transitions
+
+All systems respect zone boundaries:
+
+```java
+ZoneGeneratorResult result = zoneGen.generate(seed, x, z);
+double borderDistance = result.getBorderDistance();
+
+// Fade custom biomes near borders
+if (borderDistance < customBiome.getFadeContainer().getMaskFadeSum()) {
+    double factor = customBiome.getFadeContainer().getMaskFactor(result);
+    // Apply fading
+}
+```

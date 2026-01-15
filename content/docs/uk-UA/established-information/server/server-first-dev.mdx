@@ -1,28 +1,29 @@
 ---
-title: Розробка, орієнтована на сервер
-description: Інформація про те, що означає розробка, орієнтована на сервер, та інше.
+title: Server-First Development
+description: Information regarding what Server-First Development means, and more.
 ---
 
-Hytale розробляється з урахуванням підходу «сервер перш за все». Це означає, що сервер вважається авторитетним джерелом стану та логіки гри, тоді як клієнт в основному обробляє рендеринг та введення даних користувачем.
+Hytale is being developed with a "server-first" approach. This means that the server is considered the authoritative source of game state and logic, while the client primarily handles rendering and user input.
 
-## Що означає «Сервер на першому місці»?
+## What does "Server-First" mean?
 
-У серверно-орієнтованій архітектурі сервер відповідає за управління ігровим світом, забезпечення дотримання правил та обробку дій гравців. Клієнт підключається до сервера, щоб отримувати оновлення про стан гри та надсилати дані гравця. Такий підхід допомагає забезпечити узгодженість та справедливість у багатокористувацьких середовищах, оскільки сервер контролює логіку гри.
+In a server-first architecture, the server is responsible for managing the game world, enforcing rules, and processing player actions. The client connects to the server to receive updates about the game state and to send player inputs. This approach helps ensure consistency and fairness in multiplayer environments, as the server has control over the game logic.
 
-## Переваги серверно-орієнтованої розробки
+## Benefits of Server-First Development
 
-* **Узгодженість**: Оскільки сервер є авторитетним джерелом, усі гравці відчувають однаковий ігровий стан, що зменшує розбіжності та шахрайство.
-* **Масштабованість**: Архітектури, що орієнтовані на сервер, легше масштабувати для розміщення великої кількості гравців, оскільки сервер може керувати ресурсами та ефективно розподіляти навантаження.
-* **Безпека**: Централізація ігрової логіки на сервері ускладнює для гравців несправедливе маніпулювання станом гри.
-* **Простіші оновлення**: Оновлення та зміни можна вносити на стороні сервера, не вимагаючи від гравців завантаження нових версій клієнта.
-* **Тільки одна версія**: Для клієнта Hytale не буде селектора версії, а це означає, що власникам серверів не потрібно підтримувати кілька версій і вони можуть покладатися на те, що всі користуються найновішою версією клієнта. Це допоможе як власникам серверів, так і модерам.
+* **Consistency**: Since the server is the authoritative source, all players experience the same game state, reducing discrepancies and cheating.
+* **Scalability**: Server-first architectures can be more easily scaled to accommodate large numbers
+  of players, as the server can manage resources and distribute load effectively.
+* **Security**: By centralizing game logic on the server, it becomes more difficult for players to manipulate the game state unfairly.
+* **Easier Updates**: Updates and changes can be made on the server side without requiring players to download new client versions.
+* **Only One Version**: There won't be a version selector for the Hytale Client, meaning that server owners do not need to support multiple versions and can rely on everyone being on the latest client. This will help both server owners and modders.
 
 ## Наслідки для модингу
 
-Модери в основному взаємодіятимуть із серверними компонентами Hytale. Це означає, що моди часто зосереджуються на зміні логіки гри, правил та поведінки, якими керує сервер. Зміни на стороні клієнта заборонені (станом на надану інформацію).
+Модороби в основному взаємодіятимуть із серверними компонентами Hytale. This means that mods will often focus on altering game logic, rules, and behaviors that are managed by the server. Client-side modifications are not allowed (as of the information given right now).
 
-Загалом, підхід Hytale, орієнтований на сервер, має на меті створити надійний та справедливий багатокористувацький досвід, водночас надаючи модерам потужні інструменти для налаштування та покращення гри.
+Overall, the server-first approach in Hytale aims to create a robust and fair multiplayer experience while providing modders with powerful tools to customize and enhance the game.
 
-## Висновок
+## Conclusion
 
-Модель розробки, орієнтована на сервер, є ключовим аспектом архітектури Hytale, що забезпечує послідовний та безпечний багатокористувацький досвід. Модерам слід зосередитися на модифікаціях на стороні сервера, щоб повною мірою використовувати можливості цього підходу та створювати захопливий контент для гравців.
+The server-first development model is a key aspect of Hytale's architecture, ensuring a consistent and secure multiplayer experience. Modders should focus on server-side modifications to fully leverage the capabilities of this approach and create engaging content for players.

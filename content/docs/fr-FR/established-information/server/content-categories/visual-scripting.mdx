@@ -1,59 +1,59 @@
 ---
-title: Script visuel
-description: Voici une introduction à ce que nous savons du système de script visuel d'Hytale à l'heure actuelle.
+title: Visual Scripting
+description: An introduction to what we know of Hytale's visual scripting system as of writing this.
 ---
 
-# Script visuel
+# Visual Scripting
 
-Hytale prévoit de prendre en charge la méthode du script visuel pour élargir l'accès à la logique avancée et au contrôle de flux. Ce système ne sera pas disponible au lancement du jeu, mais devrait l'être peu de temps après.
+Hytale plans to support Visual Scripting as a method to make advanced logic and control flow accessible to a wider audience. This system will not be available at launch, but should be available shortly after launch.
 
-## Aperçu
+## Overview
 
-Le script visuel dans Hytale est conçu pour fonctionner de la même manière que les blueprints dans Unreal Engine. Il permet aux concepteurs de créer des comportements complexes à travers une interface visuelle qui correspond à leur manière de penser la logique du jeu, sans avoir besoin d'écrire directement du code.
+Visual Scripting in Hytale is designed to function similarly to Blueprints in Unreal Engine. It allows designers to create complex behaviors through a visual interface that matches how they think about game logic, without needing to write code directly.
 
-### Principales caractéristiques
+### Key Features
 
-* **Un sous-ensemble de fonctionnalités Java** : le script visuel peut effectuer un sous-ensemble des possibilités proposées par les plug-ins Java
-* **Pratique pour les concepteurs** : « Les concepteurs peuvent exploiter un langage visuel qui correspond à leur façon de penser les comportements »
-* **Extensible pour les programmeurs** : les programmeurs peuvent étendre et optimiser le système en ajoutant de nouveaux nœuds visuels et des implémentations sensibles aux performances
-* **Un environnement de partage sécurisé** : fournit un environnement sain et sécurisé pour le partage de la logique entre les créateurs de mods
+* **Subset of Java functionality**: Visual Scripting can do a subset of what is possible with Java plugins
+* **Designer-friendly**: "Designers are empowered through a visual language that matches how they think about behaviors"
+* **Programmer extensible**: Programmers can extend and optimize the system by adding new visual nodes and performance-sensitive implementations
+* **Safe sharing environment**: Provides a sandboxed, safe environment for sharing logic between modders
 
-## Avantages par rapport au codage traditionnel
+## Advantages Over Traditional Coding
 
-Le script visuel rend l'écriture d'une logique personnalisée plus accessible en supprimant les obstacles fréquemment trouvés lors du développement dans Java :
+Visual Scripting makes writing custom logic more accessible by removing common hurdles found when developing in Java:
 
-* **Pas d'installation d'environnement complexe** : pas besoin de vous soucier d'installer les bons outils ou de configurer des environnements de développement
-* **Un développement sans syntaxe** : supprime le besoin d'apprendre et de se souvenir de la syntaxe de programmation
-* **Un partage plus sûr** : les logiciels malveillants dans les scripts visuels devraient être virtuellement impossibles
-* **Plus inclusif** : les utilisateurs non-programmeurs peuvent être introduits plus facilement
+* **No complex environment setup**: No need to worry about installing the right tools or configuring development environments
+* **Syntax-free development**: Removes the need to learn and remember programming syntax
+* **Safer sharing**: Malware in visual scripting should be virtually impossible
+* **More inclusive**: Lowers the barrier to entry for non-programmers
 
-## La relation avec Java
+## Relationship with Java
 
-Le script visuel et les plug-ins Java sont conçus pour fonctionner ensemble :
+Visual Scripting and Java plugins are designed to work in tandem:
 
-* **Java comme extension du script visuel** : les programmeurs peuvent créer de nouveaux nœuds visuels en utilisant Java
-* **Optimisation des performances** : bien que le script visuel ne soit pas aussi optimisé que Java, les programmeurs peuvent implémenter la logique critique pour les performances dans Java et l'exposer sous forme de nœuds visuels
-* **Le meilleur des deux mondes** : permet à la majorité de la logique de rester dans un environnement de script visuel accessible tout en maintenant l'optimisation des opérations coûteuses
+* **Java extends Visual Scripting**: Programmers can create new visual nodes using Java
+* **Performance optimization**: While Visual Scripting may not be as optimized as Java directly, programmers can implement performance-critical logic in Java and expose it as visual nodes
+* **Best of both worlds**: Allows the majority of logic to remain in the accessible Visual Scripting environment while keeping expensive operations optimized
 
-Hytale recommande fortement le script visuel car il est à la fois plus accessible et plus sûr pour le partage et le téléchargement. Cependant, rester intégralement en Java fonctionnera toujours pour ceux qui préfèrent.
+Hytale strongly recommends Visual Scripting since it is both more accessible and safer to share and download. However, staying purely in Java will still work for those who prefer it.
 
-## Script visuel 3D
+## 3D Visual Scripting
 
-L'une des caractéristiques uniques d'Hytale consiste à introduire le script visuel directement dans le monde 3D :
+One of Hytale's unique features is bringing visual scripting directly into the 3D world:
 
-* **L'édition dans le jeu** : reliez des leviers, des portes, des points d'apparition, des déclencheurs et d'autres éléments directement à l'intérieur du jeu
-* **Création d'une carte d'aventure** : idéal pour construire des cartes d'aventure et des rencontres sans quitter Hytale
-* **Similaire à DOOM SnapMap** : fournit un flux de travail familier pour ceux qui ont utilisé des systèmes similaires
-* **Intégration complète** : fonctionne de manière fluide avec la pile d'assets et de scripts
+* **In-world editing**: Link levers, doors, spawners, triggers, and other elements directly inside the game
+* **Adventure map creation**: Excellent for building adventure maps and encounters without leaving Hytale
+* **Similar to DOOM SnapMap**: Provides a familiar workflow for those who have used similar systems
+* **Fully integrated**: Works seamlessly with the asset and scripting stack
 
-## Pas de script textuel
+## No Text-Based Scripting
 
-Hytale a fait le choix de ne pas inclure de langages de script basés sur du texte. Leur raisonnement :
+Hytale has made a deliberate decision not to include text-based scripting languages. Their reasoning:
 
-* **Un faux compromis** : les scripts textuels sont souvent introduits pour « aider les non-programmeurs » mais ils nécessitent toujours d'apprendre des concepts de programmation
-* **Une complexité plus grande** : les programmeurs finissent par jongler avec deux langages dont l'une est moins puissante
-* **Une syntaxe toujours nécessaire** : les concepteurs doivent tout de même apprendre la syntaxe et les concepts de programmation
-* **Moins inclusif** : le problème d'accessibilité n'est pas vraiment résolu
-* **Fragmentation** : évite la « fragmentation de la logique dans plusieurs 'demi-langages' »
+* **False compromise**: Text-based scripting is often introduced to "help non-programmers" but still requires learning programming concepts
+* **Complexity increase**: Programmers end up juggling two languages where one is less powerful
+* **Still requires syntax**: Designers still need to learn syntax and programming concepts
+* **Less inclusive**: Doesn't truly solve the accessibility problem
+* **Fragmentation**: Avoids "fragmenting logic across multiple 'half-languages'"
 
-De son côté, Hytale pense que le script visuel est une meilleure approche qui rend la logique du jeu réellement accessible à un public plus large tout en conservant la puissance et la flexibilité nécessaires
+Instead, Hytale believes visual scripting is a better approach that truly makes game logic accessible to a wider audience while maintaining the power and flexibility needed

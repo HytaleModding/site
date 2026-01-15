@@ -1,77 +1,77 @@
 ---
-title: 01 - Змінні та типи даних
-description: Вступ до змінних та типів даних у програмуванні на Java.
+title: 01 - Variables & Data Types
+description: An introduction to variables and data types in Java programming.
 ---
 
-Змінні - це контейнери, які зберігають дані у вашій програмі. Уявіть їх як ящики з маркуванням, куди ви можете покласти різні типи інформації.
+Variables are containers that store data in your program. Think of them as labeled boxes where you can put different types of information.
 
-## Що таке змінна?
+## What is a Variable?
 
-Змінна має три ключові компоненти:
+A variable has three key components:
 
-1. **Тип**: який тип даних вона містить (наприклад, ціле число, рядок, логічне значення)
-2. **Ім'я**: мітка, яку ви використовуєте для посилання на змінну
-3. **Значення**: дані, які вона містить
+1. **Type**: What kind of data it holds (e.g., integer, string, boolean)
+2. **Name**: The label you use to refer to the variable
+3. **Value**: The data it contains
 
-## Оголошення/створення змінних
+## Declaring/Creating Variables
 
-У Java ви повинні оголосити змінну перед її використанням, так само як вам потрібна коробка, перш ніж покласти в неї щось. Синтаксис наступний:
+In Java, you must declare a variable before using it, like you'd need a box before putting something in it. The syntax is:
 
 ```java
-int age;
-age = 18;
+int age; // A declaration
+age = 18; // An assignment
 
-int age = 18; // Оголошення та присвоєння в одному рядку
+int age = 18; // Declaration and assignment in one line, also considered an initialization
 ```
 
-## Примітивні типи даних
+## Primitive Data Types
 
-Ви можете запитати, що означає "int". Це примітивний тип даних у Java. Java має 8 примітивних типів даних. Ось найважливіші з них для модифікацій:
+You might wonder what "int" means. It's a primitive data type in Java. Java has 8 primitive data types. Here are the most important ones for modding:
 
-| Тип даних | Опис                                     | Приклад                    |
-| --------- | ---------------------------------------- | -------------------------- |
-| int       | Цілі числа                               | `int score = 100;`         |
-| double    | Десяткові числа                          | `double pi = 3.14;`        |
-| boolean   | Логічні значення - "істина" або "брехня" | `boolean isActive = true;` |
-| char      | Один символ                              | `char grade = 'A';`        |
-| String    | Послідовність символів (текст)           | `String name = "Hytale";`  |
+| Data Type | Description                   | Example                    |
+| --------- | ----------------------------- | -------------------------- |
+| int       | Integer (whole numbers)       | `int score = 100;`         |
+| double    | Decimal numbers               | `double pi = 3.14;`        |
+| boolean   | True or false values          | `boolean isActive = true;` |
+| char      | Single character              | `char grade = 'A';`        |
+| String    | Sequence of characters (text) | `String name = "Hytale";`  |
 
-## Перетворення типів
+## Type Conversion
 
-Іноді ви можете не хотіти, щоб змінна залишалася того самого типу. Ви можете здійснювати перетворення між типами:
+Sometimes you might not want a variable to stay the same type. You can convert between types:
 
-### Автоматично
+### Automatic
 
 ```java
 int num = 10;
-double decimalNum = num; // 10.0 - працює автоматично
+double decimalNum = num; // 10.0 - works automatically
 ```
 
-### Ручне (перетворення)
+### Manual (Casting)
 
 ```java
 double decimalNum = 9.78;
-int num = (int) decimalNum; // 9 - десяткові знаки відкидаються
+int num = (int) decimalNum; // 9 - decimals are dropped
 ```
 
-## Константи
+## Constants
 
-Якщо ви хочете, щоб змінна не змінювалася, використовуйте ключове слово `final`:
+If you want a variable that shouldn't change, use the `final` keyword:
 
 ```java
 final double PI = 3.14159;
 ```
 
-**Умовність**: Константи пишуться ВЕЛИКИМИ_ЛІТЕРАМИ_З_ПІДКРЕСЛЕННЯМИ.
+**Convention**: Constants use ALL_CAPS_WITH_UNDERSCORES.
 
-## Практика
+## Practice
 
-Найкраще практикувати те, що ви щойно вивчили - не дивіться вище і спробуйте зробити це самостійно. Якщо ви застрягли, підгляньте вище!
+It's best to practice what you just learnt - don't look above now and try to do this yourself. If you get stuck, look back up!
 
-1. Оголосіть цілочисельну змінну з іменем `lives` і встановіть для неї значення 3.
-2. Оголосіть змінну десяткового типу з іменем `gravity` і встановіть для неї значення 9,81.
-3. Оголосіть змінну логічного типу з іменем `isGameOver` і встановіть для неї значення false.
-4. Перетворіть змінну `lives` у змінну десяткового типу і збережіть її в новій змінній з іменем `livesAsDouble`.
-5. Оголосіть константу з іменем `MAX_LEVEL` і встановіть для неї значення 100.
+1. Declare an integer variable named `lives` and set it to 3.
+2. Declare a double variable named `gravity` and set it to 9.81.
+3. Declare a boolean variable named `isGameOver` and set it to false.
+4. Convert the `lives` variable to a double and store it in a new variable named `livesAsDouble`.
+5. Declare a constant named `MAX_LEVEL` and set it to 100.
 
-Чудово! Ви дізналися про змінні та типи даних у Java. У наступному уроці ми дізнаємося про оператори та вирази.
+Great! You've learned about variables and data types in Java. Now we're going to learn about operators and expressions in the next lesson.

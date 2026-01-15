@@ -1,16 +1,16 @@
 ---
-title: 13 — Успадкування (Inheritance)
-description: Дізнайтеся, як створювати ієрархії класів та ефективно використовувати код повторно.
+title: 13 - Inheritance
+description: Learn how to create class hierarchies and reuse code effectively.
 ---
 
-Спадкування дозволяє створювати нові класи на основі наявних. Новий клас успадковує всі властивості та методи батьківського класу, а також може додавати власні або змінювати успадковані.
+Inheritance lets you create new classes based on existing ones. The new class inherits all the properties and methods of the parent class, and can add its own or modify inherited ones.
 
-## Що таке успадкування?
+## What is Inheritance?
 
-Уявіть успадкування як сімейне дерево. Дитина успадковує риси від своїх батьків, але також може мати свої унікальні особливості.
+Think of inheritance like a family tree. A child inherits traits from their parent, but can also have their own unique traits.
 
 ```java
-// Батьківський клас (суперклас)
+// Parent class (superclass)
 public class Entity {
     protected String name;
     protected int health;
@@ -22,75 +22,75 @@ public class Entity {
     
     public void takeDamage(int damage) {
         health -= damage;
-        System.out.println(name + " отримав " + damage + " одиниць шкоди!");
+        System.out.println(name + " took " + damage + " damage!");
     }
 }
 
-// Дочірній клас (підклас)
+// Child class (subclass)
 public class Player extends Entity {
     private int level;
     
     public Player(String name, int health, int level) {
-        super(name, health);  // Виклик конструктора батька
+        super(name, health);  // Call parent constructor
         this.level = level;
     }
     
     public void levelUp() {
         level++;
-        System.out.println(name + " підняв рівень до " + level + "!");
+        System.out.println(name + " leveled up to " + level + "!");
     }
 }
 ```
 
-<Callout type="info" title="Термінологія спадкування">
-  - **Суперклас/Батько**: Клас, від якого успадковують (напр. Entity).
-  - **Підклас/Дитина**: Клас, який успадковує (напр. Player).
-  - **extends**: Ключове слово для створення зв'язку спадкування.
-  - **super**: Ключове слово для доступу до членів батьківського класу.
+<Callout type="info" title="Inheritance Terminology">
+  - **Superclass/Parent**: The class being inherited from (Entity)
+  - **Subclass/Child**: The class inheriting (Player)
+  - **extends**: Keyword to inherit from a class
+  - **super**: Keyword to access parent class members
 
   ```java
   public class Monster extends Entity {
-      // Монстр — ЦЕ сутність
-      // Монстр успадковує від Сутності
-      // Сутність — це батько, Монстр — дитина
+      // Monster IS-A Entity
+      // Monster inherits from Entity
+      // Entity is the parent, Monster is the child
   }
   ```
 </Callout>
 
-## Ключове слово extends
+## The extends Keyword
 
-Використовуйте `extends` для успадкування від класу:
+Use `extends` to inherit from a class:
 
 ```java
 public class Animal {
     protected String name;
     
     public void makeSound() {
-        System.out.println(name + " видає звук");
+        System.out.println(name + " makes a sound");
     }
 }
 
 public class Dog extends Animal {
     public void wagTail() {
-        System.out.println(name + " махає хвостом");
+        System.out.println(name + " wags tail");
     }
 }
 
 public class Main {
     public static void main(String[] args) {
         Dog dog = new Dog();
-        dog.name = "Бадді";
-        dog.makeSound();  // Успадковано від Animal
-        dog.wagTail();    // Власний метод Dog
+        dog.name = "Buddy";
+        dog.makeSound();  // Inherited from Animal
+        dog.wagTail();    // Dog's own method
     }
 }
 ```
 
-## Ключове слово super
+## The super Keyword
 
-`super` посилається на батьківський клас:
+`super` refers to the parent class:
 
-### Виклик конструктора батька
+### Calling Parent Constructor
 
 ```java
 public class Entity {
@@ -105,33 +105,33 @@ public class Player extends Entity {
     private int level;
     
     public Player(String name, int level) {
-        super(name);  // Викликати конструктор батька ПЕРШИМ
+        super(name);  // Call parent constructor FIRST
         this.level = level;
     }
 }
 ```
 
-<Callout type="warning" title="Правила конструкторів">
-  - `super()` має бути першою інструкцією в конструкторі дитини.
-  - Якщо ви не викликаєте `super()`, Java автоматично викликає порожній конструктор батька.
-  - Якщо у батька немає конструктора без аргументів, ви ЗОБОВ'ЯЗАНІ викликати `super()` з аргументами.
+<Callout type="warning" title="Constructor Rules">
+  - `super()` must be the **first** statement in child constructor
+  - If you don't call `super()`, Java automatically calls the no-argument parent constructor
+  - If parent has no no-argument constructor, you MUST call `super()` with arguments
 
   ```java
-  // НЕПРАВИЛЬНО — super() не на першому місці
+  // Wrong - super() not first
   public Player(String name, int level) {
       this.level = level;
-      super(name);  // Помилка!
+      super(name);  // Error!
   }
 
-  // ПРАВИЛЬНО
+  // Correct
   public Player(String name, int level) {
-      super(name);  // Перша інструкція
+      super(name);  // First statement
       this.level = level;
   }
   ```
 </Callout>
 
-### Виклик методів батьківського класу
+### Calling Parent Methods
 
 ```java
 public class Entity {
@@ -139,43 +139,43 @@ public class Entity {
     
     public void takeDamage(int damage) {
         health -= damage;
-        System.out.println("Сутність отримала шкоду!");
+        System.out.println("Entity took damage!");
     }
 }
 
 public class Player extends Entity {
     @Override
     public void takeDamage(int damage) {
-        super.takeDamage(damage);  // Викликаємо версію батька
+        super.takeDamage(damage);  // Call parent version
         if (health < 20) {
-            System.out.println("Попередження: Низьке здоров'я!");
+            System.out.println("Warning: Low health!");
         }
     }
 }
 ```
 
-## Перевизначення методів (Method Overriding)
+## Method Overriding
 
-Дочірні класи можуть замінювати поведінку батьківських методів:
+Child classes can replace parent methods:
 
 ```java
 public class Entity {
     public void attack() {
-        System.out.println("Сутність атакує!");
+        System.out.println("Entity attacks!");
     }
 }
 
 public class Player extends Entity {
-    @Override // Гарна практика використовувати цю анотацію
+    @Override  // Good practice to use this annotation
     public void attack() {
-        System.out.println("Гравець замахується мечем!");
+        System.out.println("Player swings sword!");
     }
 }
 
 public class Monster extends Entity {
     @Override
     public void attack() {
-        System.out.println("Монстр кусається!");
+        System.out.println("Monster bites!");
     }
 }
 
@@ -184,67 +184,72 @@ public class Main {
         Player player = new Player();
         Monster monster = new Monster();
         
-        player.attack();   // "Гравець замахується мечем!"
-        monster.attack();  // "Монстр кусається!"
+        player.attack();   // "Player swings sword!"
+        monster.attack();  // "Monster bites!"
     }
 }
 ```
 
-<Callout type="info" title="Анотація @Override">
-  Завжди використовуйте @Override при перевизначенні методів:
+<Callout type="info" title="@Override Annotation">
+  Always use `@Override` when overriding methods:
 
-  - Допомагає виявити друкарські помилки: якщо методу не існує в батьківському класі, ви отримаєте помилку.
-  - Робить код зрозумілішим.
-  - Служить гарною документацією.
+  - Helps catch typos (if method doesn't exist in parent, you get an error)
+  - Makes code clearer
+  - Good documentation
 
   ```java
-  // БЕЗ @Override — помилку не помічено
-  public void attac() {  // Друкарська помилка! Просто створює новий метод
+  // Without @Override - typo not caught
+  public void attac() {  // Typo! Creates new method instead
       // ...
   }
 
-  // З @Override — помилку виявлено миттєво
+  // With @Override - error caught immediately
   @Override
-  public void attac() {  // Помилка: методу не існує в батьківському класі
+  public void attac() {  // Error: method doesn't exist in parent
       // ...
   }
   ```
 </Callout>
 
-## Модифікатори доступу при спадкуванні
+## Access Modifiers in Inheritance
 
-- `public` — доступний всюди.
-- `protected` — доступний у поточному класі та його підкласах.
-- `private` — тільки в межах класу (не успадковується).
+- `public` - Accessible everywhere
+- `protected` - Accessible in class and subclasses
+- `private` - Only in the class (not inherited)
 
 ```java
 public class Parent {
-    public int publicVar;      // Дитина має доступ
-    protected int protectedVar; // Дитина має доступ
-    private int privateVar;     // Дитина НЕ МАЄ доступу
+    public int publicVar;      // Child can access
+    protected int protectedVar; // Child can access
+    private int privateVar;     // Child CANNOT access
     
-    private void privateMethod() { /* ... */ }    // Дитина не може викликати
-    protected void protectedMethod() { /* ... */ } // Дитина може викликати
+    private void privateMethod() {
+        // Child cannot call this
+    }
+    
+    protected void protectedMethod() {
+        // Child can call this
+    }
 }
 
 public class Child extends Parent {
     public void test() {
-        publicVar = 10;      // ОК
-        protectedVar = 20;   // ОК
-        privateVar = 30;     // Помилка!
+        publicVar = 10;      // OK
+        protectedVar = 20;   // OK
+        privateVar = 30;     // Error!
         
-        protectedMethod();   // ОК
-        privateMethod();     // Помилка!
+        protectedMethod();   // OK
+        privateMethod();     // Error!
     }
 }
 ```
 
-## Практичні приклади
+## Practical Examples
 
-### Ієрархія ігрових сутностей (Game Entity Hierarchy)
+### Game Entity Hierarchy
 
 ```java
-// Базовий клас для всіх сутностей
+// Base class for all entities
 public class Entity {
     protected String name;
     protected int health;
@@ -260,7 +265,7 @@ public class Entity {
     public void takeDamage(int damage) {
         health -= damage;
         if (health < 0) health = 0;
-        System.out.println(name + " отримав " + damage + " одиниць шкоди. Здоров'я: " + health);
+        System.out.println(name + " took " + damage + " damage. Health: " + health);
     }
     
     public boolean isAlive() {
@@ -271,11 +276,11 @@ public class Entity {
         this.x = x;
         this.y = y;
         this.z = z;
-        System.out.println(name + " перемістився в координати (" + x + ", " + y + ", " + z + ")");
+        System.out.println(name + " moved to (" + x + ", " + y + ", " + z + ")");
     }
 }
 
-// Player (Гравець) успадковує Entity
+// Player extends Entity
 public class Player extends Entity {
     private int level;
     private int experience;
@@ -290,7 +295,7 @@ public class Player extends Entity {
     
     public void gainExperience(int amount) {
         experience += amount;
-        System.out.println("Отримано " + amount + " XP");
+        System.out.println("Gained " + amount + " XP");
         
         if (experience >= level * 100) {
             levelUp();
@@ -302,19 +307,19 @@ public class Player extends Entity {
         maxHealth += 10;
         health = maxHealth;
         mana += 5;
-        System.out.println("Новий рівень! Тепер рівень " + level);
+        System.out.println("Level up! Now level " + level);
     }
     
     @Override
     public void takeDamage(int damage) {
         super.takeDamage(damage);
         if (health < maxHealth * 0.25) {
-            System.out.println("⚠ УВАГА: Низький рівень здоров'я!");
+            System.out.println("⚠ WARNING: Low health!");
         }
     }
 }
 
-// Monster (Монстр) успадковує Entity
+// Monster extends Entity
 public class Monster extends Entity {
     private int attackPower;
     private String type;
@@ -326,7 +331,7 @@ public class Monster extends Entity {
     }
     
     public int attack() {
-        System.out.println(name + " атакує!");
+        System.out.println(name + " attacks!");
         return attackPower;
     }
     
@@ -334,17 +339,17 @@ public class Monster extends Entity {
     public void takeDamage(int damage) {
         super.takeDamage(damage);
         if (!isAlive()) {
-            System.out.println(name + " було переможено!");
+            System.out.println(name + " was defeated!");
         }
     }
 }
 
-// Boss (Бос) успадковує Monster (багаторівневе спадкування)
+// Boss extends Monster (multi-level inheritance)
 public class Boss extends Monster {
     private int phase;
     
     public Boss(String name, int health, int attackPower) {
-        super(name, health, attackPower, "Бос");
+        super(name, health, attackPower, "Boss");
         this.phase = 1;
     }
     
@@ -352,10 +357,10 @@ public class Boss extends Monster {
     public void takeDamage(int damage) {
         super.takeDamage(damage);
         
-        // Зміна фази при 50% здоров'я
+        // Change phase at 50% health
         if (phase == 1 && health < maxHealth / 2) {
             phase = 2;
-            System.out.println(name + " переходить у ФАЗУ 2!");
+            System.out.println(name + " enters PHASE 2!");
         }
     }
     
@@ -364,170 +369,170 @@ public class Boss extends Monster {
         int damage = super.attack();
         if (phase == 2) {
             damage *= 2;
-            System.out.println("ЛЮТА АТАКА!");
+            System.out.println("ENRAGED ATTACK!");
         }
         return damage;
     }
 }
 ```
 
-### Ієрархія предметів
+### Item Hierarchy
 
 ```java
-// Базовий клас предмета
-public class Item {    
-    protected String name;    
-    protected int value;    
-    protected double weight;        
+// Base Item class
+public class Item {
+    protected String name;
+    protected int value;
+    protected double weight;
     
-    public Item(String name, int value, double weight) {        
-        this.name = name;        
-        this.value = value;        
-        this.weight = weight;    
-    }        
+    public Item(String name, int value, double weight) {
+        this.name = name;
+        this.value = value;
+        this.weight = weight;
+    }
     
-    public void use() {        
-        System.out.println("Використання: " + name);    
-    }        
+    public void use() {
+        System.out.println("Using " + name);
+    }
     
-    public String getInfo() {        
-        return name + " ($" + value + ", " + weight + " кг)";    
+    public String getInfo() {
+        return name + " ($" + value + ", " + weight + " kg)";
     }
 }
 
-// Weapon (Зброя) успадковує Item
-public class Weapon extends Item {    
-    private int damage;    
-    private int durability;        
+// Weapon extends Item
+public class Weapon extends Item {
+    private int damage;
+    private int durability;
     
-    public Weapon(String name, int value, double weight, int damage, int durability) {        
-        super(name, value, weight);        
-        this.damage = damage;        
-        this.durability = durability;    
-    }        
+    public Weapon(String name, int value, double weight, int damage, int durability) {
+        super(name, value, weight);
+        this.damage = damage;
+        this.durability = durability;
+    }
     
-    @Override    
-    public void use() {        
-        if (durability > 0) {            
-            System.out.println("Атака предметом " + name + ". Шкода: " + damage + "!");            
-            durability--;        
-        } else {            
-            System.out.println(name + " зламано!");        
-        }    
-    }        
+    @Override
+    public void use() {
+        if (durability > 0) {
+            System.out.println("Attacking with " + name + " for " + damage + " damage!");
+            durability--;
+        } else {
+            System.out.println(name + " is broken!");
+        }
+    }
     
-    @Override    
-    public String getInfo() {        
-        return super.getInfo() + ", Шкода: " + damage + ", Міцність: " + durability;    
+    @Override
+    public String getInfo() {
+        return super.getInfo() + ", Damage: " + damage + ", Durability: " + durability;
     }
 }
 
-// Consumable (Витратні предмети) успадковує Item
-public class Consumable extends Item {    
-    private int healAmount;    
-    private int uses;        
+// Consumable extends Item
+public class Consumable extends Item {
+    private int healAmount;
+    private int uses;
     
-    public Consumable(String name, int value, double weight, int healAmount, int uses) {        
-        super(name, value, weight);        
-        this.healAmount = healAmount;        
-        this.uses = uses;    
-    }        
+    public Consumable(String name, int value, double weight, int healAmount, int uses) {
+        super(name, value, weight);
+        this.healAmount = healAmount;
+        this.uses = uses;
+    }
     
-    @Override    
-    public void use() {        
-        if (uses > 0) {            
-            System.out.println("Використано " + name + ", відновлено " + healAmount + " здоров'я!");            
-            uses--;        
-        } else {            
-            System.out.println(name + " закінчився!");        
-        }    
-    }        
+    @Override
+    public void use() {
+        if (uses > 0) {
+            System.out.println("Used " + name + ", restored " + healAmount + " health!");
+            uses--;
+        } else {
+            System.out.println("No " + name + " left!");
+        }
+    }
     
-    @Override    
-    public String getInfo() {        
-        return super.getInfo() + ", Лікування: " + healAmount + ", Залишилось використань: " + uses;    
+    @Override
+    public String getInfo() {
+        return super.getInfo() + ", Heals: " + healAmount + ", Uses: " + uses;
     }
 }
 
-// Armor (Броня) успадковує Item
-public class Armor extends Item {    
-    private int defense;    
-    private String slot;        
+// Armor extends Item
+public class Armor extends Item {
+    private int defense;
+    private String slot;
     
-    public Armor(String name, int value, double weight, int defense, String slot) {        
-        super(name, value, weight);        
-        this.defense = defense;        
-        this.slot = slot;    
-    }        
+    public Armor(String name, int value, double weight, int defense, String slot) {
+        super(name, value, weight);
+        this.defense = defense;
+        this.slot = slot;
+    }
     
-    @Override    
-    public void use() {        
-        System.out.println("Екіпіровано " + name + " (+" + defense + " захисту)");    
-    }        
+    @Override
+    public void use() {
+        System.out.println("Equipped " + name + " (+" + defense + " defense)");
+    }
     
-    @Override    
-    public String getInfo() {        
-        return super.getInfo() + ", Захист: " + defense + ", Слот: " + slot;    
+    @Override
+    public String getInfo() {
+        return super.getInfo() + ", Defense: " + defense + ", Slot: " + slot;
     }
 }
 ```
 
-## Поліморфізм
+## Polymorphism
 
-Дочірні об'єкти можуть розглядатися як об'єкти батьківського класу:
+Child objects can be treated as parent objects:
 
 ```java
 Entity entity1 = new Player("Alice");
 Entity entity2 = new Monster("Goblin", 50, 10, "Hostile");
 Entity entity3 = new Boss("Dragon", 500, 50);
 
-// Усі можуть використовувати методи Entity
+// All can use Entity methods
 entity1.takeDamage(10);
 entity2.takeDamage(10);
 entity3.takeDamage(10);
 
-// Масив різних типів
+// Array of different types
 Entity[] entities = {
     new Player("Bob"),
     new Monster("Zombie", 30, 8, "Hostile"),
     new Monster("Spider", 20, 5, "Hostile")
 };
 
-// Обробка всіх сутностей однаковим способом
+// Process all entities the same way
 for (Entity entity : entities) {
     entity.takeDamage(5);
 }
 ```
 
-<Callout type="info" title="Переваги поліморфізму">
-  Поліморфізм дозволяє писати код, який працює з батьківськими типами, але коректно обробляє дочірні типи:
+<Callout type="info" title="Polymorphism Benefits">
+  Polymorphism lets you write code that works with parent types but handles child types correctly:
 
   ```java
   public void damageEntity(Entity entity, int damage) {
       entity.takeDamage(damage);
-      // Працює для Player, Monster, Boss тощо.
-      // Кожен використовує власну версію takeDamage()
+      // Works for Player, Monster, Boss, etc.
+      // Each uses their own version of takeDamage()
   }
 
-  // Можна викликати з будь-яким типом Entity
+  // Can call with any Entity type
   damageEntity(new Player("Alice"), 10);
   damageEntity(new Monster("Goblin", 50, 10, "Hostile"), 10);
   damageEntity(new Boss("Dragon", 500, 50), 10);
   ```
 </Callout>
 
-## Клас Object
+## The Object Class
 
-Усі класи в Java автоматично успадковуються від `Object`:
+All classes in Java automatically inherit from `Object`:
 
 ```java
 public class MyClass {
-    // Автоматично розширює (extends) Object
-    // Має такі методи, як toString(), equals() тощо.
+    // Automatically extends Object
+    // Has methods like toString(), equals(), etc.
 }
 ```
 
-Поширені методи Object для перевизначення:
+Common Object methods to override:
 
 ```java
 public class Player {
@@ -536,7 +541,7 @@ public class Player {
     
     @Override
     public String toString() {
-        return "Гравець: " + name + " (Рівень " + level + ")";
+        return "Player: " + name + " (Lv. " + level + ")";
     }
     
     @Override
@@ -550,17 +555,17 @@ public class Player {
 }
 ```
 
-## Фінальні класи та методи
+## Final Classes and Methods
 
-Ключове слово `final` запобігає успадкуванню або перевизначенню:
+`final` prevents inheritance or overriding:
 
 ```java
-// Фінальний клас — не може бути успадкований
+// Final class - cannot be extended
 public final class SpecialItem {
-    // Жоден клас не може розширити цей
+    // No class can extend this
 }
 
-// Фінальний метод — не може бути перевизначений
+// Final method - cannot be overridden
 public class Entity {
     public final void printName() {
         System.out.println(name);
@@ -569,56 +574,56 @@ public class Entity {
 
 public class Player extends Entity {
     @Override
-    public void printName() {  // Помилка! Метод є final
-        // Неможливо перевизначити
+    public void printName() {  // Error! Method is final
+        // Cannot override
     }
 }
 ```
 
-## Поширені помилки
+## Common Mistakes
 
 ```java
-// НЕПРАВИЛЬНО — забуто super()
+// Wrong - Forgetting super()
 public class Player extends Entity {
     public Player(String name) {
-        // Помилка! Entity не має конструктора без аргументів
+        // Error! Entity has no no-arg constructor
     }
 }
 
-// ПРАВИЛЬНО
+// Correct
 public class Player extends Entity {
     public Player(String name) {
-        super(name, 100);  // Виклик конструктора батька
+        super(name, 100);  // Call parent constructor
     }
 }
 
-// НЕПРАВИЛЬНО — доступ до private членів
+// Wrong - Accessing private members
 public class Child extends Parent {
     public void test() {
-        privateVar = 10;  // Помилка! private не успадковується
+        privateVar = 10;  // Error! private is not inherited
     }
 }
 
-// ПРАВИЛЬНО — використовуйте protected
+// Correct - Use protected
 public class Parent {
-    protected int protectedVar;  // Дитина має доступ
+    protected int protectedVar;  // Child can access
 }
 
-// НЕПРАВИЛЬНО — множинне спадкування (заборонено в Java)
-public class Child extends Parent1, Parent2 {  // Помилка!
+// Wrong - Multiple inheritance (not allowed in Java)
+public class Child extends Parent1, Parent2 {  // Error!
 }
 
-// ПРАВИЛЬНО — тільки одиничне спадкування
+// Correct - Single inheritance only
 public class Child extends Parent {
 }
 ```
 
-## Практичні вправи
+## Practice Exercises
 
-1. **Ієрархія транспорту**: Створіть клас `Vehicle` (Транспорт) з властивостями швидкості та пального.  Створіть підкласи `Car` та `Motorcycle` з їхніми унікальними особливостями.
+1. **Vehicle Hierarchy**: Create a `Vehicle` class with properties like speed and fuel. Create `Car` and `Motorcycle` subclasses with their own unique features.
 
-2. **Калькулятор фігур**: Створіть клас `Shape` з методом calculateArea().  Створіть підкласи `Circle`, `Rectangle` та `Triangle`, які перевизначають цей метод.
+2. **Shape Calculator**: Create a `Shape` class with a `calculateArea()` method. Create `Circle`, `Rectangle`, and `Triangle` subclasses that override this method.
 
-3. **RPG Персонажі**: Створіть клас `Character`.  Розширте його, щоб створити класи `Warrior`, `Mage` та `Archer` з унікальними здібностями.
+3. **RPG Characters**: Create a `Character` class. Extend it to make `Warrior`, `Mage`, and `Archer` classes with unique abilities.
 
-4. **Звуки тварин**: Створіть клас `Animal` з методом makeSound().  Створіть різні підкласи тварин, які перевизначають цей метод.
+4. **Animal Sounds**: Create an `Animal` class with a `makeSound()` method. Create various animal subclasses that override this method.

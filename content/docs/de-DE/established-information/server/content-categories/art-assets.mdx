@@ -1,79 +1,79 @@
 ---
-title: Modellierung & Texturierung / Kunstwerke
-description: Informationen zu 3D-Modellierung, Texturierung und Kunstwerken in Hytale.
+title: Modelling & Texturing / Art Assets
+description: Information about 3D Modelling, Texturing and Art Assets in Hytale.
 ---
 
-# Modellierung/Texturen
+# Modelling / Texture Art
 
-Hytale bietet umfassende Unterstützung für die 3D-Modellierung und die Erstellung von Texturen mit speziellen Tools und Workflows, die darauf ausgelegt sind, den unverwechselbaren visuellen Stil des Spiels zu bewahren und gleichzeitig Entwicklern mehr Möglichkeiten zu bieten.
+Hytale provides comprehensive support for 3D modeling and texture art creation, with specialized tools and workflows designed to maintain the game's distinctive visual style while empowering creators.
 
-## Aktuelle Mod-Erstellungs-Werkzeuge
+## Current Mod Tooling
 
 ### Blockbench
 
 Hytale benutzt **Blockbench** als Haupttool für die 3D-Modellierung und Animationen:
 
-* **Offizielle Unterstützung**: Wird fürs "erstellen von Hytale Models, Texturen und Animationen" verwendet
-* **Besonderes plugin**: Hytale wird ein dediziertes Blockbench plugin haben, dass so früh wie möglich veröffentlicht wird
-* **Direkte Kompatibilität**: Das Plugin erlaubt es Erstellern "Hytale-kompatible Modelle, Texturen und Animationen direkt in Blockbench" zu erstellen
-* Ersetzt ältere Tools: Ersetzt den alten Hytale Model Maker vollständig, um etablierte kreative Arbeitsabläufe in der Community besser zu unterstützen
-* Sicherheitsfunktionen: Sie können nur Dinge hinzufügen, die mit der Software kompatibel sind, sodass Sie sich keine Sorgen machen müssen, dass etwas kaputt geht.
+* **Official support**: Used for "creating Hytale models, textures, and animations"
+* **Special plugin**: Hytale will have a dedicated Blockbench plugin, to be released ASAP
+* **Direct compatibility**: The plugin allows creators to "create Hytale-compatible models, textures, and animations directly in Blockbench"
+* **Replaces legacy tools**: Fully replaces the old Hytale Model Maker to better support established creative workflows in the community
+* **Safety features**: Only allows you to add things compatible with the engine, so no need to worry about breaking anything
 
-## Modellbeschränkungen
+## Model Constraints
 
-### Geometrie-Typen
+### Geometry Types
 
-Die überwiegende Mehrheit der Hytale Modelle ist auf bestimmte geometrische Primitiven beschränkt:
+The vast majority of models in Hytale are constrained to specific geometric primitives:
 
-**3D Elemente**:
+**3D Elements**:
 
-* Blöcke
-* Quader
-* Boxen
+* Blocks
+* Cuboids
+* Boxes
 
-**2D Elemente**:
+**2D Elements**:
 
-* Vierecke
-* Rechtecke
-* Ebenen (bestehend aus 2 Dreiecken)
+* Quads
+* Rectangles
+* Planes (composed of 2 triangles)
 
-### Design-Philosophie
+### Design Philosophy
 
-Diese Beschränkungen dienen mehreren Zwecken:
+These constraints serve multiple purposes:
 
-* **Leistungsoptimierung**: sichert effizientes Rendering und Spielleistung
-* Konsistenter Kunststil: Behält die unverwechselbare visuelle Ästhetik von Hytale bei
-* Nahtlose Integration: Sorgt dafür, dass Mods besser mit dem Basisspiel harmonieren
+* **Performance optimization**: Ensures efficient rendering and game performance
+* **Consistent art style**: Maintains Hytale's distinctive visual aesthetic
+* **Seamless integration**: Makes mods feel more cohesive with the base game
 
-## Pixeldichte-Standards
+## Pixel Density Standards
 
-Hytale verwendet unterschiedliche Pixeldichte für verschiedene Arten von Inhalten:
+Hytale uses different pixel densities for different types of content:
 
-### Standardeigenschaften
+### Standard Densities
 
-* **Blöcke**: 32px Dichte
-* **Spieler-Modelle**: 64px Dichte
-* Mobs: Wahrscheinlich auch 64px Dichte
-* **Spielerausrüstung**: 64px Dichte (Waffen, Kosmetik, Rüstung, etc.)
+* **Blocks**: 32px density
+* **Player models**: 64px density
+* **Mobs**: Likely also 64px density
+* **Player equipment**: 64px density (weapons, cosmetics, armor, etc.)
 
-### Flexibilität
+### Flexibility
 
-* **Falsche Dichte Behandlung**: Die falsche Dichte kann dazu führen, dass Assets in der falschen Größe erscheinen, aber nicht zu Importfehlern führen
-* **Keine strengen Einschränkungen**: Pixelverhältnis, Drehung und Skalierung sind nicht eingeschränkt
-* **Verzeihendes System**: Die Tools sind so konzipiert, dass sie flexibel sind und die Kompatibilität beibehalten
+* **Wrong density handling**: Using incorrect density may cause assets to appear at the wrong size, but will not cause import failures
+* **No strict restrictions**: Pixel ratio, rotation, and scaling are not restricted
+* **Forgiving system**: The tools are designed to be flexible while maintaining compatibility
 
 ## Hytale Asset Editor
 
 ### In-Game Editor
 
-Der Asset-Editor ist ein umfassendes Werkzeug, das zusammen mit dem Spiel ausgeliefert wird.
+The Asset Editor is a comprehensive tool that will ship with the game:
 
-* **Kommt mit dem spiel**: ab Launch für alle verfügbar
+* **Ships with game**: Available to all players from launch
 * **External tool requirement**: Does not support image editing, you must use external tools for texture creation
 * **Data asset editing**: Primary editor for working with Data Assets
 * **Expanding capabilities**: Currently supports most features, though has limitations around NPCs, worldgen, and interactions that will expand over time
 
-### Partikel Erstellung
+### Particle Creation
 
 The Asset Editor includes robust particle creation tools:
 
@@ -84,9 +84,9 @@ The Asset Editor includes robust particle creation tools:
 * **Dynamic movement**: Supports particles moving with their anchor points
 * **Time delays**: Supports time-based particle effects and delays
 
-## Materialien
+## Materials
 
-### Optimierungsfokus
+### Optimization Focus
 
 Hytale takes a different approach to materials compared to other engines:
 
@@ -94,17 +94,17 @@ Hytale takes a different approach to materials compared to other engines:
 * **Performance priority**: This constraint ensures consistent performance across all content
 * **Curated system**: Maintains visual consistency while maximizing efficiency
 
-## Beste Praktiken
+## Best Practices
 
 ### Asset Optimization
 
-Haupt bedenken von Hytale's Entwickler Teams
+Key considerations from Hytale's development team:
 
 * **Mindful resource usage**: Be conscious of how many blocks/quads you use and texture file sizes
 * **Avoid bloat**: Goal is to prevent unnecessary asset bloat that could impact performance
 * **Efficiency focus**: Balance visual quality with technical constraints
 
-### Zukünftige Dokumentation
+### Future Documentation
 
 * **Best practice guide**: A comprehensive "best practice" guide for art and modeling will be released at some point
 * **Flexible boundaries**: Most creative goals can be achieved without breaking anything in the system

@@ -1,77 +1,77 @@
 ---
-title: 01 - Variables et Types de données
-description: Une introduction aux variables et aux types de données en programmation Java.
+title: 01 - Variables & Data Types
+description: An introduction to variables and data types in Java programming.
 ---
 
-Les variables sont des conteneurs qui stockent des données dans votre programme. Considérez-les comme des boites étiquetez où vous pouvez mettre différents types d'information.
+Variables are containers that store data in your program. Think of them as labeled boxes where you can put different types of information.
 
-## Qu'est-ce qu'une variable ?
+## What is a Variable?
 
-Une variable à trois composants clés :
+A variable has three key components:
 
-1. **Un type** : quel type de donnée elle contient (par exemple un entier, une chaine de caractère, un booléen)
-2. **Un nom** : l'étiquette que vous utilisez pour faire référence à la variable
-3. **Une valeur** : les données que la variable contient
+1. **Type**: What kind of data it holds (e.g., integer, string, boolean)
+2. **Name**: The label you use to refer to the variable
+3. **Value**: The data it contains
 
-## Déclarer/Créer des variables
+## Declaring/Creating Variables
 
-En Java, vous devez déclarer une variable avant de l'utiliser, comme vous devriez avoir besoin d'une boite avant de mettre quelque chose dedans. La syntaxe est :
-
-```java
-int age;
-age = 18;
-
-int age = 18; // Déclaration et affectation en une ligne
-```
-
-## Types de données primitifs
-
-Vous vous demandez sûrement ce que "int" signifie. Il s'agit d'un type primitif en Java. Java possède 8 types de données primitifs. Voici les plus importants pour le modding :
-
-| Type de donnée | Description                         | Exemple                    |
-| -------------- | ----------------------------------- | -------------------------- |
-| int            | Entier                              | `int score = 100;`         |
-| double         | Nombre décimal                      | `double pi = 3.14;`        |
-| boolean        | Valeur True ou False (Vrai ou Faux) | `boolean isActive = true;` |
-| char           | Caractère simple                    | `char note = 'A';`         |
-| String         | Chaîne de caractères (texte)        | `String nom = "Hytale";`   |
-
-## Conversion de type
-
-Parfois, vous ne voudriez pas qu'une variable reste du même type Vous pouvez faire des conversions entre les types : Parfois, vous ne voudriez pas qu'une variable reste du même type Vous pouvez faire des conversions entre les types : Vous pouvez faire des conversions entre les types :
-
-### Automatique
+In Java, you must declare a variable before using it, like you'd need a box before putting something in it. The syntax is:
 
 ```java
-int nombre = 10;
-double nombreDecimal = (double) nombre; // 10.0 - fonctionne directement
+int age; // A declaration
+age = 18; // An assignment
+
+int age = 18; // Declaration and assignment in one line, also considered an initialization
 ```
 
-### Manuelle (Casting)
+## Primitive Data Types
+
+You might wonder what "int" means. It's a primitive data type in Java. Java has 8 primitive data types. Here are the most important ones for modding:
+
+| Data Type | Description                   | Example                    |
+| --------- | ----------------------------- | -------------------------- |
+| int       | Integer (whole numbers)       | `int score = 100;`         |
+| double    | Decimal numbers               | `double pi = 3.14;`        |
+| boolean   | True or false values          | `boolean isActive = true;` |
+| char      | Single character              | `char grade = 'A';`        |
+| String    | Sequence of characters (text) | `String name = "Hytale";`  |
+
+## Type Conversion
+
+Sometimes you might not want a variable to stay the same type. You can convert between types:
+
+### Automatic
 
 ```java
-double nombreDecimal = 9.78;
-int nombre = (int) nombreDecimal; // 9 - les décimales sont abandonnées
+int num = 10;
+double decimalNum = num; // 10.0 - works automatically
 ```
 
-## Constantes
-
-Si vous voulez une variable qui ne change pas, utilisez le mot clé `final` :
+### Manual (Casting)
 
 ```java
-final double PI = 3.14159:
+double decimalNum = 9.78;
+int num = (int) decimalNum; // 9 - decimals are dropped
 ```
 
-**Convention** : les constantes utilisent DES_MAJUSCULES_AVEC_UNDERSCORES.
+## Constants
 
-## Pratique
+If you want a variable that shouldn't change, use the `final` keyword:
 
-Il est préférable de pratiquer ce que vous venez juste d'apprendre - ne regardez pas au-dessus et essayez de le faire par vous-même. Si vous êtes bloqués, regardez à nouveau plus haut !
+```java
+final double PI = 3.14159;
+```
 
-1. Déclarez une variable entière appelée `vies` et mettez sa valeur à 3.
-2. Déclarez une variable décimale nommée `gravite` et mettez sa valeur à 9.81.
-3. Déclarez une variable booléenne nommée `estGameOver` et mettez sa valeur à faux.
-4. Convertissez la variable `vies` en décimale et stockez là dans une nouvelle variable nommée `viesEnDouble`.
-5. Déclarez une constante nommée `NIVEAU_MAX` et mettez sa valeur à 100.
+**Convention**: Constants use ALL_CAPS_WITH_UNDERSCORES.
 
-Super ! Vous avez appris les variables et les types de données en Java. Nous allons apprendre les opérateurs et les expressions dans la prochaine leçon.
+## Practice
+
+It's best to practice what you just learnt - don't look above now and try to do this yourself. If you get stuck, look back up!
+
+1. Declare an integer variable named `lives` and set it to 3.
+2. Declare a double variable named `gravity` and set it to 9.81.
+3. Declare a boolean variable named `isGameOver` and set it to false.
+4. Convert the `lives` variable to a double and store it in a new variable named `livesAsDouble`.
+5. Declare a constant named `MAX_LEVEL` and set it to 100.
+
+Great! You've learned about variables and data types in Java. Now we're going to learn about operators and expressions in the next lesson.

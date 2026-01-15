@@ -18,11 +18,18 @@
     "documentation": "Documentação",
     "forum": "Fórum",
     "discord": "Participe da comunidade",
-    "memberCount": "{count} membros"
+    "memberCount": "{count} membros",
+    "countdown": "Lançamento do Hytale em {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "min.",
+      "seconds": "s"
+    },
+    "hytaleReleased": "O Hytale está disponível!"
   },
   "sponsors": {
     "title": "Apoie-nos",
-    "description": "O HytaleModding é um projeto comunitário de código aberto. Para mantermos a comunidade funcionando, temos custos com serviços, servidores e com a hospedagem deste site. Se deseja ajudar o projeto, torne-se um apoiador! Usamos o OpenCollective para que você possa acompanhar com total transparência como os recursos são investidos na nossa comunidade.",
+    "description": "O Hytale Modding é um projeto comunitário de código aberto. Para mantermos a comunidade funcionando, temos custos com serviços, servidores e com a hospedagem deste site. Se deseja ajudar o projeto, torne-se um apoiador! Usamos o OpenCollective para que você possa acompanhar com total transparência como os recursos são investidos na nossa comunidade.",
     "ourSponsors": "Nossos apoiadores"
   },
   "misc": {

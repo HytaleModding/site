@@ -1,0 +1,145 @@
+---
+title: Customizing Camera Controls
+description: Intro to custom camera modding.
+authors:
+  - name: Vibe Theory
+    url: https://discord.com/users/145420279294722048
+---
+
+## The Basics
+
+Hytale provides great camera customizability! Heres the essentials to get started.
+
+Camera is controlled by sending a `SetServerCamera` packet with `ServerCameraSettings`:
+
+```java
+ServerCameraSettings settings = new ServerCameraSettings();
+settings.distance = 10.0f;           // Zoom distance from player
+settings.isFirstPerson = false;      // Third-person mode
+settings.positionLerpSpeed = 0.2f;   // Smooth camera follow
+
+playerRef.getPacketHandler().writeNoCache(
+    new SetServerCamera(ClientCameraView.Custom, true, settings)
+);
+```
+
+This gives you a simple third-person camera. The presets below show more complete configurations.
+
+**Reset to default:**
+
+```java
+playerRef.getPacketHandler().writeNoCache(
+    new SetServerCamera(ClientCameraView.Custom, false, null)
+);
+```
+
+---
+
+## Camera Presets
+
+### Top-Down (RTS/ARPG Style)
+
+_Source: `com.hypixel.hytale.server.core.command.commands.player.camera.PlayerCameraTopdownCommand`_
+
+```java
+ServerCameraSettings settings = new ServerCameraSettings();
+settings.positionLerpSpeed = 0.2f;
+settings.rotationLerpSpeed = 0.2f;
+settings.distance = 20.0f;
+settings.displayCursor = true;
+settings.isFirstPerson = false;
+settings.movementForceRotationType = MovementForceRotationType.Custom;
+// Align movement with camera yaw (horizontal rotation only)
+settings.movementForceRotation = new Direction(-0.7853981634f, 0.0f, 0.0f);  // 45° left
+settings.eyeOffset = true;
+settings.positionDistanceOffsetType = PositionDistanceOffsetType.DistanceOffset;
+settings.rotationType = RotationType.Custom;
+settings.rotation = new Direction(0.0f, -1.5707964f, 0.0f);  // Look straight down
+settings.mouseInputType = MouseInputType.LookAtPlane;
+settings.planeNormal = new Vector3f(0.0f, 1.0f, 0.0f);       // Ground plane
+```
+
+### Side-Scroller (2D Platformer Style)
+
+_Source: `com.hypixel.hytale.server.core.command.commands.player.camera.PlayerCameraSideScrollerCommand`_
+
+```java
+ServerCameraSettings settings = new ServerCameraSettings();
+settings.positionLerpSpeed = 0.2f;
+settings.rotationLerpSpeed = 0.2f;
+settings.distance = 15.0f;
+settings.displayCursor = true;
+settings.isFirstPerson = false;
+settings.movementForceRotationType = MovementForceRotationType.Custom;
+settings.movementMultiplier = new Vector3f(1.0f, 1.0f, 0.0f);  // Lock Z-axis
+settings.eyeOffset = true;
+settings.positionDistanceOffsetType = PositionDistanceOffsetType.DistanceOffset;
+settings.rotationType = RotationType.Custom;
+settings.mouseInputType = MouseInputType.LookAtPlane;
+settings.planeNormal = new Vector3f(0.0f, 0.0f, 1.0f);         // Side plane
+```
+
+## Common Settings Explained
+
+### Position & Rotation
+
+- **`positionLerpSpeed`** (0.0-1.0): How smoothly the camera follows the player. Lower = smoother but slower response.
+- **`rotationLerpSpeed`** (0.0-1.0): How smoothly the camera rotates. Lower = smoother but slower response.
+- **`distance`**: Camera distance from player. Higher = zoomed out more.
+- **`rotation`**: Camera angle as `Direction(yaw, pitch, roll)` in radians.
+- **`rotationType`**: How rotation is calculated. `RotationType.Custom` uses your `rotation` value.
+
+### Movement Alignment
+
+- **`movementForceRotationType`**:
+- `MovementForceRotationType.AttachedToHead` = movement follows where player looks
+- `MovementForceRotationType.Custom` = use `movementForceRotation` value
+- **`movementForceRotation`**: When using `Custom`, this sets the direction for W/S movement. Match yaw with camera but keep pitch at 0.
+
+### Input & Display
+
+- **`displayCursor`**: Show/hide mouse cursor.
+- **`mouseInputType`**:
+- `MouseInputType.LookAtPlane` = mouse moves cursor on a plane (good for top-down)
+- `MouseInputType.LookAtTarget` = mouse rotates camera
+- **`planeNormal`**: For `LookAtPlane`, defines which plane the mouse moves on. `(0,1,0)` = ground plane.
+
+### Advanced
+
+- **`positionDistanceOffsetType`**:
+- `DistanceOffset` = simple distance offset
+- `DistanceOffsetRaycast` = prevents camera clipping through walls
+- **`eyeOffset`**: Offset camera from player's eye position.
+- **`movementMultiplier`**: Scale movement on each axis. `(1,1,0)` = lock Z-axis for 2D movement.
+
+---
+
+## Imports
+
+```java
+import com.hypixel.hytale.protocol.ClientCameraView;
+import com.hypixel.hytale.protocol.Direction;
+import com.hypixel.hytale.protocol.MouseInputType;
+import com.hypixel.hytale.protocol.MovementForceRotationType;
+import com.hypixel.hytale.protocol.PositionDistanceOffsetType;
+import com.hypixel.hytale.protocol.RotationType;
+import com.hypixel.hytale.protocol.ServerCameraSettings;
+import com.hypixel.hytale.protocol.Vector3f;
+import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
+```
+
+---
+
+## Tips
+
+- **Zoom:** Adjust `distance` (higher = further out)
+- **Smoothness:** `positionLerpSpeed` and `rotationLerpSpeed` control how quickly the camera catches up to its target
+- **Wall clipping:** Use `PositionDistanceOffsetType.DistanceOffsetRaycast`
+- **Lock camera:** Set `isLocked = true` in the packet to prevent player changes
+- **2D movement:** Set `movementMultiplier` to zero out an axis
+- **Isometric cameras:** Always set `movementForceRotation` to match camera yaw for proper movement alignment
+- **Angle calculations:** Use `Math.toRadians(degrees)` or `degrees * Math.PI / 180.0` to convert degrees to radians
+
+---
+
+_From Hytale Server build `2026.01.13-dcad8778f`_

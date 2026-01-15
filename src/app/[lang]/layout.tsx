@@ -33,13 +33,6 @@ export const metadata: Metadata = {
     "how to start modding Hytale",
     "how to make a mod",
   ],
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon.ico", type: "image/x-icon" },
-    ],
-    shortcut: "/favicon.ico",
-  },
 };
 
 const translations = Object.fromEntries(

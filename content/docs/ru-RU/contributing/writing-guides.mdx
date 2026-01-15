@@ -2,85 +2,85 @@
 title: Написание руководств
 ---
 
-## Создание файла руководства
+## Создание гайд файла
 
-Чтобы начать писать руководство, необходимо создать файл с расширением `.mdx`. Вам нужно создать этот файл внутри папки `/content/docs/ru`, теперь это зависит от того, в каком разделе вы хотите сделать руководство, так что вы можете решить, какую папку вы должны положить его после этого.
+Чтобы начать писать гайд, необходимо создать файл с расширением `.mdx`. Вам нужно создать этот файл внутри папки `/content/docs/ru`, теперь это зависит от того, в каком разделе вы хотите сделать гайд, так что вы можете решить, какую папку вы должны положить его после этого.
 
-Предположим, я хочу создать руководство по основам java, тогда я помещу его в `/content/docs/ru/guides/java-basics`. You'll have to do some digging to find out where you want to place it.
+Предположим, я хочу создать руководство по основам java, тогда я помещу его в `/content/docs/ru/guides/java-basics`. Вам придется немного поискать, чтобы понять, где именно вы хотите это разместить.
 
 <Callout>
-  If there's already a guide in the section you want to write about, you can just press on the "Edit On GitHub" button on our website and it'll take you to the folder, now you can write in the same folder to have your guide appear in the same section.
+  Если в разделе, о котором вы хотите написать, уже есть руководство, вы можете просто нажать кнопку "Edit On GitHub" на нашем сайте. Это перенаправит вас в нужную папку, и вы сможете писать в ней же, чтобы ваше руководство появилось в том же разделе.
 </Callout>
 
 ## Frontmatter
 
-Frontmatter is the metadata of your guide, it tells our website how to display your guide. This needs to be at the very top of the file, which starts with `---` and ends with `---`.
+Frontmatter — это метаданные вашего руководства; они сообщают нашему сайту, как отображать ваше руководство. Это должно быть в самом верху файла, который начинается с `---` и заканчивается `---`.
 
-Here's an example:
+Вот пример:
 
 ```mdx
 ---
-title: "Java Basics"
-description: "Learn the basics of Java programming."
+title: "База Джавы"
+description: "Научимся базовым принципам программировании на Джава."
 authors:
-    - name: "Your Name"
+    - name: "Ваше имя"
       url: "https://yourwebsite.com"
 ---
 ```
 
-Now as you can see, it's pretty self explanatory, you just need to fill in the details for your specific guide. If you don't have a URL you want to link yourself to, just don't write that whole line. Additionally, the authors section is optional, so if you don't want to add it, you can just leave it out although we encourage you to do so and credit yourself.
+Как видите, здесь всё довольно очевидно: вам просто нужно заполнить данные для вашего конкретного руководства. Если у вас нет URL-адреса, на который вы хотели бы ссылаться, просто не пишите эту строку целиком. Кроме того, раздел authors (авторы) является необязательным. Если вы не хотите его добавлять, можете просто пропустить его, хотя мы рекомендуем указать себя как автора.
 
-The indentation in the frontmatter is important, so make sure to keep it consistent with the example.
+Отступы в Frontmatter важны, поэтому убедитесь, что они соответствуют примеру.
 
-## Content Structure
+## Структура контента
 
-You should structure the content of your guide in a clear and organized manner. Here are some tips on how to do that:
+Вы должны структурировать содержание вашего руководства четко и организованно. Вот несколько советов, как это сделать:
 
-- **Introduction:** Start with an overview of the topic and what the reader can expect to learn.
-- **Prerequisites:** List any prerequisites or prior knowledge the reader should have before diving into the guide.
-- **Step-by-Step Instructions:** Break down the content into clear, actionable steps. Use headings and subheadings to organize the information.
-- **Code Examples:** Include code snippets to illustrate key points. Make sure to explain each example thoroughly.
-- **Conclusion:** Summarize the main points and encourage the reader to explore further or try out what they've learned.
+- **Введение:** Начните с обзора темы и того, чему читатель сможет научиться.
+- **Требования:** Перечислите все предварительные требования или базовые знания, которыми должен обладать читатель перед изучением руководства.
+- **Пошаговые инструкции:** Разделите контент на четкие, действительные шаги. Используйте заголовки и подзаголовки для организации информации.
+- **Примеры кода:** Включите фрагменты кода для иллюстрации ключевых моментов. Обязательно подробно объясняйте каждый пример.
+- **Заключение:** Подведите итог основным моментам и побудите читателя изучать тему дальше или опробовать то, чему он научился.
 
-Now if you're writing a really big section, you should split this into multiple pages so that it's easier for the reader to digest the information. No one wants to read a big wall of text all at once!
+Если вы пишете действительно большой раздел, стоит разбить его на несколько страниц, чтобы читателю было легче усваивать информацию. Никто не хочет читать огромную стену текста за один раз!
 
-When we write guides, we should also think of how people will consume them, and many people prefer to skim content rather than read it in detail. This is why it's better to split information into multiple pages, so it looks like a smaller amount of information to the reader. Also, consider using bullet points, numbered lists, and other formatting techniques to make the content more scannable.
+При написании руководств мы также должны думать о том, как люди будут их потреблять: многие предпочитают бегло просматривать контент, а не вчитываться в детали. Поэтому лучше разбивать информацию на несколько страниц — так читателю будет казаться, что объем информации меньше. Также рассмотрите возможность использования маркированных, нумерованных списков и других приемов форматирования, чтобы сделать контент более удобным для беглого просмотра.
 
 ## Форматирование
 
-We use [Markdown](https://www.markdownguide.org/) for formatting our guides. Here are some key points to keep in mind:
+Мы используем [Markdown](https://www.markdownguide.org/) для форматирования наших гайдов. Вот несколько ключевых моментов, о которых следует помнить:
 
-- Use headings (`#`, `##`, `###`) to organize your content.
-- Use bullet points and numbered lists for clarity.
+- Используйте заголовки (`#`, `##`, `###`), чтобы упорядочить содержимое.
+- Используйте маркированные и нумерованные списки для наглядности.
 - Use code blocks (\`\`\`) for code snippets.
-- Use links to reference other guides or external resources.
+- Используйте ссылки для упоминания других руководств или внешних ресурсов.
 
-This is the same type of formatting you'll see on most documentation websites, and also social media platforms like Discord.
+Это тот же тип форматирования, который вы видите на большинстве сайтов с документацией, а также на социальных платформах, таких как Discord.
 
-You can also make a Callout to highlight important information or tips. Use the following syntax:
+Вы также можете использовать выноски (Callouts), чтобы выделить важную информацию или советы. Используйте следующий синтаксис:
 
 ```mdx
 <Callout>
-    This is a callout message.
+    Сообщение с выноской.
 </Callout>
 ```
 
 <Callout>
-  This is a callout message.
+  Это сообщение выноски (callout)
 </Callout>
 
-You can change the color of the callout by adding a `type` attribute. Например:
+Вы можете изменить цвет выноски (callout), добавив атрибут 'type'. Например:
 
 ```mdx
 <Callout type="info">
-    This is an info callout.
+    Это выноска с информацией.
 </Callout>
 ```
 
-Available types are: `info`, `warning`, `error`, and `success`.
+Доступные типы: `info`, `warning`, `error` и `success`.
 
 ## Заключение
 
-Вот и все! Теперь вы --- мастер в написании руководств. Главное помните, вам не нужно в совершенстве владеть английским, пишите руководство так, как объясняли бы тему кому-либо и не стесняйтесь просить обратную связь или помощь, если вам она нужна.
+Вот и все! Теперь вы --- гайд мастер. Главное помните, вам не нужно в совершенстве владеть английским, пишите руководство так, как объясняли бы тему кому-либо и не стесняйтесь просить обратную связь или помощь, если она вам понадобится.
 
-Happy writing!
+Удачи в написании!

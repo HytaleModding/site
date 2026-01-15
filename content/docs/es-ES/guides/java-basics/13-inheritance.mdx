@@ -1,16 +1,16 @@
 ---
-title: 13 - Herencia
-description: Aprende cómo crear jerarquías de clases y reutilizar el código de manera efectiva.
+title: 13 - Inheritance
+description: Learn how to create class hierarchies and reuse code effectively.
 ---
 
-La herencia te permite crear nuevas clases basadas en las existentes. La nueva clase hereda todas las propiedades y métodos de la clase padre, y puede añadir sus propias o modificar las heredadas.
+Inheritance lets you create new classes based on existing ones. The new class inherits all the properties and methods of the parent class, and can add its own or modify inherited ones.
 
-## ¿Qué es la herencia?
+## What is Inheritance?
 
-Piense en la herencia como un árbol genealógico. Un hijo hereda rasgos de su padre, pero también puede tener sus propios rasgos únicos.
+Think of inheritance like a family tree. A child inherits traits from their parent, but can also have their own unique traits.
 
 ```java
-//  Clase padre (superclase)
+// Parent class (superclass)
 public class Entity {
     protected String name;
     protected int health;
@@ -26,7 +26,7 @@ public class Entity {
     }
 }
 
-// Clase hija (subclase)
+// Child class (subclass)
 public class Player extends Entity {
     private int level;
     
@@ -42,37 +42,37 @@ public class Player extends Entity {
 }
 ```
 
-<Callout type="info" title="Terminología de Herencia">
-  - **Superclase/Padre**: La clase de la que se está heredando (Entidad)
-  - **Subclase/Hija**: La clase heredada (Player)
-  - **extends**: Palabra clave para heredar de una clase
-  - **super**: palabra clave para acceder a los miembros de la clase padre
+<Callout type="info" title="Inheritance Terminology">
+  - **Superclass/Parent**: The class being inherited from (Entity)
+  - **Subclass/Child**: The class inheriting (Player)
+  - **extends**: Keyword to inherit from a class
+  - **super**: Keyword to access parent class members
 
   ```java
   public class Monster extends Entity {
       // Monster IS-A Entity
-      // Monster hereda de Entity
-      // Entity es el padre, Monstruo es el hijo
+      // Monster inherits from Entity
+      // Entity is the parent, Monster is the child
   }
   ```
 </Callout>
 
-## La palabra clave extendida
+## The extends Keyword
 
-Usa `extends` para heredar de una clase:
+Use `extends` to inherit from a class:
 
 ```java
 public class Animal {
     protected String name;
     
     public void makeSound() {
-        System.out.println(name + " hace un sonido");
+        System.out.println(name + " makes a sound");
     }
 }
 
 public class Dog extends Animal {
     public void wagTail() {
-        System.out.println(name + " mueve la cola");
+        System.out.println(name + " wags tail");
     }
 }
 
@@ -80,17 +80,17 @@ public class Main {
     public static void main(String[] args) {
         Dog dog = new Dog();
         dog.name = "Buddy";
-        dog.makeSound();  // Heredado de Animal
-        dog.wagTail();    // Método propio de Dog
+        dog.makeSound();  // Inherited from Animal
+        dog.wagTail();    // Dog's own method
     }
 }
 ```
 
-## La palabra clave `super`
+## The super Keyword
 
-`super` se refiere a la clase padre:
+`super` refers to the parent class:
 
-### Llamando al Constructor Padre
+### Calling Parent Constructor
 
 ```java
 public class Entity {
@@ -105,34 +105,33 @@ public class Player extends Entity {
     private int level;
     
     public Player(String name, int level) {
-        super(name);  // Llamar al constructor de la clase padre PRIMERO
+        super(name);  // Call parent constructor FIRST
         this.level = level;
     }
 }
-
 ```
 
-<Callout type="warning" title="Reglas del Constructor">
-  - `super()` Debe ser la primera instrucción en el constructor del hijo.
-  - Si no llama a `super()`, Java automáticamente llama al constructor padre sin argumento
-  - Si el padre no tiene un constructor sin argumentos, DEBE llamar a `super()` con argumentos
+<Callout type="warning" title="Constructor Rules">
+  - `super()` must be the **first** statement in child constructor
+  - If you don't call `super()`, Java automatically calls the no-argument parent constructor
+  - If parent has no no-argument constructor, you MUST call `super()` with arguments
 
   ```java
-  // Incorrecto - super() no es el primero
+  // Wrong - super() not first
   public Player(String name, int level) {
       this.level = level;
-      super(name);  // Error !
+      super(name);  // Error!
   }
 
-  // Correcto
+  // Correct
   public Player(String name, int level) {
-      super(name);  // Primera instrucción
+      super(name);  // First statement
       this.level = level;
   }
   ```
 </Callout>
 
-### Llamando a Métodos Padres
+### Calling Parent Methods
 
 ```java
 public class Entity {
@@ -140,43 +139,43 @@ public class Entity {
     
     public void takeDamage(int damage) {
         health -= damage;
-        System.out.println("¡La entidad ha sufrido daños!");
+        System.out.println("Entity took damage!");
     }
 }
 
 public class Player extends Entity {
     @Override
     public void takeDamage(int damage) {
-        super.takeDamage(damage);  // Llamar a la versión principal
+        super.takeDamage(damage);  // Call parent version
         if (health < 20) {
-            System.out.println("Advertencia: ¡salud baja!");
+            System.out.println("Warning: Low health!");
         }
     }
 }
 ```
 
-## Sobrescritura de métodos
+## Method Overriding
 
-Las clases hijas pueden sustituir a los métodos de las clases padre:
+Child classes can replace parent methods:
 
 ```java
 public class Entity {
     public void attack() {
-        System.out.println("¡La entidad está atacando!");
+        System.out.println("Entity attacks!");
     }
 }
 
 public class Player extends Entity {
-    @Override  // Es una buena práctica utilizar esta anotación.
+    @Override  // Good practice to use this annotation
     public void attack() {
-        System.out.println("¡El jugador balancea su espada!");
+        System.out.println("Player swings sword!");
     }
 }
 
 public class Monster extends Entity {
     @Override
     public void attack() {
-        System.out.println("¡El monstruo muerde!");
+        System.out.println("Monster bites!");
     }
 }
 
@@ -185,51 +184,51 @@ public class Main {
         Player player = new Player();
         Monster monster = new Monster();
         
-        player.attack();   // "¡El jugador balancea su espada!"
-        monster.attack();  // "¡El monstruo muerde!"
+        player.attack();   // "Player swings sword!"
+        monster.attack();  // "Monster bites!"
     }
 }
 ```
 
-<Callout type="info" title="@Anulación de anotación">
-  Usa siempre `@Override` cuando se sobreescriban métodos:
+<Callout type="info" title="@Override Annotation">
+  Always use `@Override` when overriding methods:
 
-  - Ayuda a capturar errores tipográficos (si el método no existe en el padre, obtienes un error)
-  - Hace el código más claro
-  - Buena documentación
+  - Helps catch typos (if method doesn't exist in parent, you get an error)
+  - Makes code clearer
+  - Good documentation
 
   ```java
-  // Sin @Override - El error tipográfico no siempre se nota.
-  public void attac() {  // Error tipográfico. Crea un nuevo método en lugar de reemplazarlo.
+  // Without @Override - typo not caught
+  public void attac() {  // Typo! Creates new method instead
       // ...
   }
 
-  // Con @Override - Error detectado inmediatamente
+  // With @Override - error caught immediately
   @Override
-  public void attac() {  // Error: El método no existe en el padre
+  public void attac() {  // Error: method doesn't exist in parent
       // ...
   }
   ```
 </Callout>
 
-## Modificadores de acceso en herencia
+## Access Modifiers in Inheritance
 
-- `public` - Accesible en todas partes
-- `protected` - Accesible en clase y subclases
-- `private` - Solo en la clase (no heredado)
+- `public` - Accessible everywhere
+- `protected` - Accessible in class and subclasses
+- `private` - Only in the class (not inherited)
 
 ```java
 public class Parent {
-    public int publicVar;      // El hijo puede acceder
-    protected int protectedVar; // El hijo puede acceder
-    private int privateVar;     // El hijo no puede acceder
+    public int publicVar;      // Child can access
+    protected int protectedVar; // Child can access
+    private int privateVar;     // Child CANNOT access
     
     private void privateMethod() {
-        // El hijo no puede llamar
+        // Child cannot call this
     }
     
     protected void protectedMethod() {
-        // El hijo puede llamar
+        // Child can call this
     }
 }
 
@@ -237,20 +236,20 @@ public class Child extends Parent {
     public void test() {
         publicVar = 10;      // OK
         protectedVar = 20;   // OK
-        privateVar = 30;     // ¡Error!
+        privateVar = 30;     // Error!
         
         protectedMethod();   // OK
-        privateMethod();     // ¡Error!
+        privateMethod();     // Error!
     }
 }
 ```
 
-## Ejemplos prácticos
+## Practical Examples
 
-### Jerarquía de entidades del juego
+### Game Entity Hierarchy
 
 ```java
-// Clase base para todas las entidades
+// Base class for all entities
 public class Entity {
     protected String name;
     protected int health;
@@ -266,7 +265,7 @@ public class Entity {
     public void takeDamage(int damage) {
         health -= damage;
         if (health < 0) health = 0;
-        System.out.println(name + " a recibido " + damage + " Daño. Vida:" + health);
+        System.out.println(name + " took " + damage + " damage. Health: " + health);
     }
     
     public boolean isAlive() {
@@ -277,11 +276,11 @@ public class Entity {
         this.x = x;
         this.y = y;
         this.z = z;
-        System.out.println(name + " desplazado a (" + x + ", " + y + ", " + z + ")");
+        System.out.println(name + " moved to (" + x + ", " + y + ", " + z + ")");
     }
 }
 
-// El jugador hereda de la entidad
+// Player extends Entity
 public class Player extends Entity {
     private int level;
     private int experience;
@@ -296,7 +295,7 @@ public class Player extends Entity {
     
     public void gainExperience(int amount) {
         experience += amount;
-        System.out.println("Ganaste " + amount + " XP");
+        System.out.println("Gained " + amount + " XP");
         
         if (experience >= level * 100) {
             levelUp();
@@ -308,19 +307,19 @@ public class Player extends Entity {
         maxHealth += 10;
         health = maxHealth;
         mana += 5;
-        System.out.println("¡Has subido de Nivel! Ahora nivel " + level);
+        System.out.println("Level up! Now level " + level);
     }
     
     @Override
     public void takeDamage(int damage) {
         super.takeDamage(damage);
         if (health < maxHealth * 0.25) {
-            System.out.println("⚠ ADVERTENCIA: ¡Salud baja!");
+            System.out.println("⚠ WARNING: Low health!");
         }
     }
 }
 
-// Monstruo hereda de Entidad
+// Monster extends Entity
 public class Monster extends Entity {
     private int attackPower;
     private String type;
@@ -332,7 +331,7 @@ public class Monster extends Entity {
     }
     
     public int attack() {
-        System.out.println(name + " ataca!");
+        System.out.println(name + " attacks!");
         return attackPower;
     }
     
@@ -340,17 +339,17 @@ public class Monster extends Entity {
     public void takeDamage(int damage) {
         super.takeDamage(damage);
         if (!isAlive()) {
-            System.out.println(name + " Ha sido derrotado!");
+            System.out.println(name + " was defeated!");
         }
     }
 }
 
-// El jefe hereda del monstruo (herencia multinivel)
+// Boss extends Monster (multi-level inheritance)
 public class Boss extends Monster {
     private int phase;
     
     public Boss(String name, int health, int attackPower) {
-        super(name, health, attackPower, "Jefe");
+        super(name, health, attackPower, "Boss");
         this.phase = 1;
     }
     
@@ -358,10 +357,10 @@ public class Boss extends Monster {
     public void takeDamage(int damage) {
         super.takeDamage(damage);
         
-        // Cambio de fase al 50% de la vida
+        // Change phase at 50% health
         if (phase == 1 && health < maxHealth / 2) {
             phase = 2;
-            System.out.println(name + " Entra en la FASE 2!");
+            System.out.println(name + " enters PHASE 2!");
         }
     }
     
@@ -370,17 +369,17 @@ public class Boss extends Monster {
         int damage = super.attack();
         if (phase == 2) {
             damage *= 2;
-            System.out.println("¡ATAQUE FEROZ!");
+            System.out.println("ENRAGED ATTACK!");
         }
         return damage;
     }
 }
 ```
 
-### Jerarquía de elemento
+### Item Hierarchy
 
 ```java
-// Clase base de Objeto
+// Base Item class
 public class Item {
     protected String name;
     protected int value;
@@ -393,7 +392,7 @@ public class Item {
     }
     
     public void use() {
-        System.out.println("Usando " + name);
+        System.out.println("Using " + name);
     }
     
     public String getInfo() {
@@ -401,7 +400,7 @@ public class Item {
     }
 }
 
-// Arma hereda de Objeto
+// Weapon extends Item
 public class Weapon extends Item {
     private int damage;
     private int durability;
@@ -415,20 +414,20 @@ public class Weapon extends Item {
     @Override
     public void use() {
         if (durability > 0) {
-            System.out.println("Atacando con " + name + " causando " + damage + " de daño!");
+            System.out.println("Attacking with " + name + " for " + damage + " damage!");
             durability--;
         } else {
-            System.out.println(name + " está roto!");
+            System.out.println(name + " is broken!");
         }
     }
     
     @Override
     public String getInfo() {
-        return super.getInfo() + ", Daño: " + damage + ", Durabilidad: " + durability;
+        return super.getInfo() + ", Damage: " + damage + ", Durability: " + durability;
     }
 }
 
-// Consumible heredado de Objeto
+// Consumable extends Item
 public class Consumable extends Item {
     private int healAmount;
     private int uses;
@@ -442,20 +441,20 @@ public class Consumable extends Item {
     @Override
     public void use() {
         if (uses > 0) {
-            System.out.println("Usado " + name + ", restauró " + healAmount + " de salud!");
+            System.out.println("Used " + name + ", restored " + healAmount + " health!");
             uses--;
         } else {
-            System.out.println("¡No queda " + name + "!");
+            System.out.println("No " + name + " left!");
         }
     }
     
     @Override
     public String getInfo() {
-        return super.getInfo() + ", Restaura: " + healAmount + ", Usos: " + uses;
+        return super.getInfo() + ", Heals: " + healAmount + ", Uses: " + uses;
     }
 }
 
-// Armadura hereda de Objeto
+// Armor extends Item
 public class Armor extends Item {
     private int defense;
     private String slot;
@@ -468,76 +467,72 @@ public class Armor extends Item {
     
     @Override
     public void use() {
-        System.out.println("Equipado " + name + " (+" + defense + " defensa)");
+        System.out.println("Equipped " + name + " (+" + defense + " defense)");
     }
     
     @Override
     public String getInfo() {
-        return super.getInfo() + ", Defensa: " + defense + ", Ranura: " + slot;
+        return super.getInfo() + ", Defense: " + defense + ", Slot: " + slot;
     }
 }
-
 ```
 
-## Polimorfismo
+## Polymorphism
 
-Los objetos secundarios pueden tratarse como objetos principales:
+Child objects can be treated as parent objects:
 
 ```java
-Entity entity1 = new Player("Alicia");
-Entity entity2 = new Monster("Goblin", 50, 10, "Hostil");
-Entity entity3 = new Boss("Dragón", 500, 50);
+Entity entity1 = new Player("Alice");
+Entity entity2 = new Monster("Goblin", 50, 10, "Hostile");
+Entity entity3 = new Boss("Dragon", 500, 50);
 
-// Todos pueden usar los métodos de Entity
+// All can use Entity methods
 entity1.takeDamage(10);
 entity2.takeDamage(10);
 entity3.takeDamage(10);
 
-// Arreglo de diferentes tipos
+// Array of different types
 Entity[] entities = {
     new Player("Bob"),
-    new Monster("Zombi", 30, 8, "Hostil"),
-    new Monster("Araña", 20, 5, "Hostil")
+    new Monster("Zombie", 30, 8, "Hostile"),
+    new Monster("Spider", 20, 5, "Hostile")
 };
 
-// Procesar todas las entidades de la misma manera
+// Process all entities the same way
 for (Entity entity : entities) {
     entity.takeDamage(5);
 }
-
 ```
 
-<Callout type="info" title="Ventajas del polimorfismo">
-  El polimorfismo te permite escribir código que funciona con tipos padre pero maneja correctamente los tipos hijo:
+<Callout type="info" title="Polymorphism Benefits">
+  Polymorphism lets you write code that works with parent types but handles child types correctly:
 
   ```java
   public void damageEntity(Entity entity, int damage) {
       entity.takeDamage(damage);
-      // Funciona para Player, Monster, Boss, etc.
-      // Cada uno usa su propia versión de takeDamage()
+      // Works for Player, Monster, Boss, etc.
+      // Each uses their own version of takeDamage()
   }
 
-  // Se puede llamar con cualquier tipo de Entity
-  damageEntity(new Player("Alicia"), 10);
-  damageEntity(new Monster("Goblin", 50, 10, "Hostil"), 10);
-  damageEntity(new Boss("Dragón", 500, 50), 10);
-
+  // Can call with any Entity type
+  damageEntity(new Player("Alice"), 10);
+  damageEntity(new Monster("Goblin", 50, 10, "Hostile"), 10);
+  damageEntity(new Boss("Dragon", 500, 50), 10);
   ```
 </Callout>
 
-## La clase de objeto
+## The Object Class
 
-Todas las clases en Java heredan automáticamente de `Object`:
+All classes in Java automatically inherit from `Object`:
 
 ```java
 public class MyClass {
-    // Hereda automáticamente de Object
-    // Tiene métodos como toString(), equals(), etc.
+    // Automatically extends Object
+    // Has methods like toString(), equals(), etc.
 }
-
 ```
 
-Métodos comunes de objetos que se deben sobrescribir:
+Common Object methods to override:
 
 ```java
 public class Player {
@@ -546,7 +541,7 @@ public class Player {
     
     @Override
     public String toString() {
-        return "Jugador: " + name + " (Nv. " + level + ")";
+        return "Player: " + name + " (Lv. " + level + ")";
     }
     
     @Override
@@ -558,20 +553,19 @@ public class Player {
         return false;
     }
 }
-
 ```
 
 ## Final Classes and Methods
 
-`final` evita la herencia o la sobrescritura:
+`final` prevents inheritance or overriding:
 
 ```java
-// Clase final – no puede ser extendida
+// Final class - cannot be extended
 public final class SpecialItem {
-    // Ninguna clase puede extender esta clase
+    // No class can extend this
 }
 
-// Método final – no puede ser sobrescrito
+// Final method - cannot be overridden
 public class Entity {
     public final void printName() {
         System.out.println(name);
@@ -580,64 +574,56 @@ public class Entity {
 
 public class Player extends Entity {
     @Override
-    public void printName() {  // ¡Error! El método es final
-        // No se puede sobrescribir
+    public void printName() {  // Error! Method is final
+        // Cannot override
     }
 }
-
 ```
 
-## Errores comunes
+## Common Mistakes
 
-````java
 ```java
-// Incorrecto – Olvidar llamar a super()
+// Wrong - Forgetting super()
 public class Player extends Entity {
     public Player(String name) {
-        // ¡Error! Entity no tiene un constructor sin argumentos
+        // Error! Entity has no no-arg constructor
     }
 }
 
-// Correcto
+// Correct
 public class Player extends Entity {
     public Player(String name) {
-        super(name, 100);  // Llama al constructor de la clase padre
+        super(name, 100);  // Call parent constructor
     }
 }
 
-// Incorrecto – Acceder a miembros privados
+// Wrong - Accessing private members
 public class Child extends Parent {
     public void test() {
-        privateVar = 10;  // ¡Error! private no se hereda
+        privateVar = 10;  // Error! private is not inherited
     }
 }
 
-// Correcto – Usar protected
+// Correct - Use protected
 public class Parent {
-    protected int protectedVar;  // La clase hija puede acceder
+    protected int protectedVar;  // Child can access
 }
 
-// Incorrecto – Herencia múltiple (no permitida en Java)
-public class Child extends Parent1, Parent2 {  // ¡Error!
+// Wrong - Multiple inheritance (not allowed in Java)
+public class Child extends Parent1, Parent2 {  // Error!
 }
 
-// Correcto – Solo herencia simple
+// Correct - Single inheritance only
 public class Child extends Parent {
 }
 ```
 
-````
+## Practice Exercises
 
-## Ejercicios prácticos
+1. **Vehicle Hierarchy**: Create a `Vehicle` class with properties like speed and fuel. Create `Car` and `Motorcycle` subclasses with their own unique features.
 
-1. **Jerarquía de Vehículos**: Crea una clase `Vehicle` con propiedades como velocidad y combustible.
-   Crea las subclases `Car` y `Motorcycle` con sus propias características únicas.
+2. **Shape Calculator**: Create a `Shape` class with a `calculateArea()` method. Create `Circle`, `Rectangle`, and `Triangle` subclasses that override this method.
 
-2. **Calculadora de Formas**: Crea una clase `Shape` con un método `calculateArea()`.
-   Crea las subclases `Circle`, `Rectangle` y `Triangle` que sobrescriban este método.
+3. **RPG Characters**: Create a `Character` class. Extend it to make `Warrior`, `Mage`, and `Archer` classes with unique abilities.
 
-3. **Personajes RPG**: Crea una clase `Character`.
-   Extiéndela para crear las clases `Warrior`, `Mage` y `Archer` con habilidades únicas.
-
-4. **Sonidos de Animales**: Crea una clase `Animal` con un método `makeSound()`.
-   Crea varias subclases de animales que sobrescriban este método.
+4. **Animal Sounds**: Create an `Animal` class with a `makeSound()` method. Create various animal subclasses that override this method.

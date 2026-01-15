@@ -1,5 +1,5 @@
 {
-  "displayName": "Engelsk",
+  "displayName": "Denmark",
   "nav": {
     "title": "Hytale Modding",
     "documentation": "Dokumentation",
@@ -18,7 +18,14 @@
     "documentation": "Dokumenter",
     "forum": "Forum",
     "discord": "Deltag i fællesskabet!",
-    "memberCount": "{count} Medlemmer"
+    "memberCount": "{count} Medlemmer",
+    "countdown": "Hytale releases in {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale is out!"
   },
   "sponsors": {
     "title": "Støt Os",

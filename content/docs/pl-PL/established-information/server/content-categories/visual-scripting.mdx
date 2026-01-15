@@ -1,45 +1,45 @@
 ---
-title: Skryptowanie wizualne
-description: Wprowadzenie do tego, co wiemy o systemie skryptowania wizualnego w Hytale w momencie pisania tego tekstu.
+title: Visual Scripting
+description: An introduction to what we know of Hytale's visual scripting system as of writing this.
 ---
 
-# Skryptowanie wizualne
+# Visual Scripting
 
-Hytale planuje wspierać skryptowanie wizualne jako metodę udostępniania zaawansowanej logiki i przepływu sterowania szerszemu gronu odbiorców. System ten nie będzie dostępny w dniu premiery, ale powinien pojawić się krótko po niej.
+Hytale plans to support Visual Scripting as a method to make advanced logic and control flow accessible to a wider audience. This system will not be available at launch, but should be available shortly after launch.
 
-## Przegląd
+## Overview
 
-Skryptowanie wizualne w Hytale zostało zaprojektowane tak, aby działać podobnie do Blueprintów w Unreal Engine. Pozwala projektantom tworzyć złożone zachowania poprzez interfejs graficzny, który odpowiada ich sposobowi myślenia o logice gry, bez konieczności bezpośredniego pisania kodu.
+Visual Scripting in Hytale is designed to function similarly to Blueprints in Unreal Engine. It allows designers to create complex behaviors through a visual interface that matches how they think about game logic, without needing to write code directly.
 
-### Kluczowe funkcje
+### Key Features
 
-* **Podzbiór funkcjonalności Javy**: Skryptowanie wizualne pozwala na wykonanie części tego, co jest możliwe za pomocą wtyczek Java.
-* **Przyjazne dla projektantów**: „Projektanci zyskują możliwości dzięki językowi wizualnemu, który odpowiada ich sposobowi myślenia o zachowaniach”.
-* **Rozszerzalne przez programistów**: Programiści mogą rozszerzać i optymalizować system, dodając nowe węzły wizualne oraz implementacje krytyczne pod kątem wydajności.
-* **Bezpieczne środowisko udostępniania**: Zapewnia odizolowane, bezpieczne środowisko do dzielenia się logiką między moderami.
+* **Subset of Java functionality**: Visual Scripting can do a subset of what is possible with Java plugins
+* **Designer-friendly**: "Designers are empowered through a visual language that matches how they think about behaviors"
+* **Programmer extensible**: Programmers can extend and optimize the system by adding new visual nodes and performance-sensitive implementations
+* **Safe sharing environment**: Provides a sandboxed, safe environment for sharing logic between modders
 
-## Przewagi nad tradycyjnym kodowaniem
+## Advantages Over Traditional Coding
 
-Skryptowanie wizualne sprawia, że tworzenie własnej logiki jest bardziej przystępne dzięki usunięciu powszechnych przeszkód napotykanych podczas pracy w Javie:
+Visual Scripting makes writing custom logic more accessible by removing common hurdles found when developing in Java:
 
-* **Brak skomplikowanej konfiguracji środowiska**: Nie trzeba martwić się o instalowanie odpowiednich narzędzi ani konfigurowanie środowisk programistycznych.
-* **Tworzenie bez składni**: Eliminuje potrzebę uczenia się i zapamiętywania składni programistycznej.
-* **Bezpieczniejsze udostępniania**: Złośliwe oprogramowanie w skryptowaniu wizualnym powinno być praktycznie niemożliwe.
-* **Większa inkluzywność**: Obniża barierę wejścia dla osób niebędących programistami.
+* **No complex environment setup**: No need to worry about installing the right tools or configuring development environments
+* **Syntax-free development**: Removes the need to learn and remember programming syntax
+* **Safer sharing**: Malware in visual scripting should be virtually impossible
+* **More inclusive**: Lowers the barrier to entry for non-programmers
 
-## Relacja z Javą
+## Relationship with Java
 
-Skryptowanie wizualne i wtyczki Java są zaprojektowane do współpracy:
+Visual Scripting and Java plugins are designed to work in tandem:
 
-* **Java rozszerza skryptowanie wizualne**: Programiści mogą tworzyć nowe węzły wizualne za pomocą Javy.
-* **Optymalizacja wydajności**: Choć skryptowanie wizualne może nie być tak zoptymalizowane jak bezpośrednia Java, programiści mogą implementować logikę krytyczną dla wydajności w Javie i udostępniać ją jako węzły wizualne.
-* **To co najlepsze z obu światów**: Pozwala większości logiki pozostać w przystępnym środowisku skryptowania wizualnego, przy jednoczesnym zachowaniu optymalizacji dla kosztownych operacji.
+* **Java extends Visual Scripting**: Programmers can create new visual nodes using Java
+* **Performance optimization**: While Visual Scripting may not be as optimized as Java directly, programmers can implement performance-critical logic in Java and expose it as visual nodes
+* **Best of both worlds**: Allows the majority of logic to remain in the accessible Visual Scripting environment while keeping expensive operations optimized
 
-Hytale zdecydowanie zaleca skryptowanie wizualne, ponieważ jest ono zarówno bardziej przystępne, jak i bezpieczniejsze do udostępniania i pobierania. Jednak pozostanie wyłącznie przy Javie wciąż będzie możliwe dla osób, które to preferują.
+Hytale strongly recommends Visual Scripting since it is both more accessible and safer to share and download. However, staying purely in Java will still work for those who prefer it.
 
-## Skryptowanie wizualne 3D
+## 3D Visual Scripting
 
-Jedną z unikalnych cech Hytale jest przeniesienie skryptowania wizualnego bezpośrednio do świata 3D:
+One of Hytale's unique features is bringing visual scripting directly into the 3D world:
 
 * **In-world editing**: Link levers, doors, spawners, triggers, and other elements directly inside the game
 * **Adventure map creation**: Excellent for building adventure maps and encounters without leaving Hytale

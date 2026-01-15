@@ -40,7 +40,10 @@ Store<EntityStore> store = world.getEntityStore().getStore();
 Once you have the `EntityStore` instance, you can start to create a entity and give it components. Entities are just instances of `Holder<EntityStore>` with several components attached to them.
 
 <Callout type="warning">
-    To use the `store` variable we got above, we need to run this inside the world. You can do so by using the `world.execute()` method:
+    To interact with the `World` instance, some methods require you to run the code inside the world's execution context. 
+    The logic under the hood enqueues each task to be executed in the world's thread. To do this, you can use the `world.execute()` method.
+
+    In our case, we will be using the `world.execute()` method to spawn the entity in the world. For convenience, in this guide we will be putting all the code below inside the lambda function, but it's not required.
 
     ```java
     world.execute(() -> {
@@ -67,10 +70,10 @@ Model model = Model.createScaledModel(modelAsset, 1.0f);
 
 The `TransformComponent` is the component that tells Hytale where to place your entity, what it's location is. You can get this in multiple ways. 
 
-1. Getting the Transform Component from the `Player` object
+1. Getting the Transform Component from the player - note that this requires fetching the player's EntityStore reference first.
 
 ```java
-TransformComponent transform = store.getComponent(context.senderAsPlayerRef(), EntityModule.get().getTransformComponentType());
+TransformComponent transform = store.getComponent(playerRef.getReference(), EntityModule.get().getTransformComponentType());
 ```
 
 2. Generating a new TransformComponent
@@ -106,8 +109,13 @@ holder.ensureComponent(Interactable.getComponentType()); // if you want your ent
 
 ## Spawning the Entity
 
-Finally, we can spawn the entity in the world by calling the `spawnEntity` method on the `EntityStore` instance:
+Finally, we can add the entity to the world by calling the `addEntity` method on the `EntityStore` instance:
+
+<Callout type="warning">
+    As a reminder, a part of the logic is to enqueue the entity spawn task inside the world in its thread. Because of this, this part **needs** to be run inside `world.execute()` method.
+</Callout>
+
 
 ```java
-store.spawnEntity(holder, AddReason.SPAWN);
+store.addEntity(holder, AddReason.SPAWN);
 ```

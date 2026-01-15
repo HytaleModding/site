@@ -504,52 +504,52 @@ Data.x = 1000; // Errore: non è possibile accedere alle variabili d'istanza in 
 
 ### Campi statici
 
-Uno campo statico o 'static field' rappresenta un dato di proprietà della classe piuttosto che dell'oggetto Uno campo statico o 'static field' rappresenta un dato di proprietà della classe piuttosto che dell'oggetto I campi statici sono anche memorizzati in una porzione di memoria specifica che viene condivisa tra tutte le istanze oggetto che vengono create. Uno campo statico o 'static field' rappresenta un dato di proprietà della classe piuttosto che dell'oggetto I campi statici sono anche memorizzati in una porzione di memoria specifica che viene condivisa tra tutte le istanze oggetto che vengono create.
+A static field represents a data member owned by the class type rather then the object. Static fields are also stored in a specific memory location that's been shared between all the object instances that are created.
 
-Si dichiara come segue:
+It is declared as following:
 
 ```java
-/* (modificatore di accesso) (facoltativo) */ static /* final/volatile (facoltativo) */ nomeDelCampo;
+/* (access modifier) (optional) */ static /* final/volatile (optional) */ fieldName;
 ```
 
-Prendiamo lo stesso esempio di classe Data e aggiungiamo questo costruttore:
+Let's take the same Data class example and add this constructor:
 
 ```java
 public Data() {
-    y++; // ricorda che questo equivale a: Data.y++;
+    y++; // remember that's the same as Data.y++;
 }
 ```
 
 ```java
-// Ogni instanza di Data avrà una copia privata (istanziata) del membro x
-// Tuttavia punterà alla stessa posizione di memoria per il membro y
+// Every instance of Data will have a private copy of the instanced member x
+// However it will point to the same location in memory for the member y
 Data d1 = new Data(); // y = 1001
 d1.x = 5;
 Data d2 = new Data(); // y = 1002
 d2.x = 25;
 Data d3 = new Data(); // y = 1003
-// ... e così via
+// ... and so on
 ```
 
-### Metodi statici
+### Static Methods
 
-I metodi statici rappresentano essenzialmente una funzione di un certa classe
+Static methods essentially represent a function member of a certain class type
 
-Dalla classe Data ricorda la funzione (metodo istantaneo) `foo` e (metodo statico) `bar`
+From the Data class remember the function (instanced method) `foo` and (static method) `bar`
 
-Si può accedere a tali metodi tramite:
+One can access those methods via:
 
 ```java
 Data d1 = new Data();
 
-d1.foo(); // Metodo instanziato: Accessibile SOLO dall'oggetto istanziato
+d1.foo(); // Instanced method: Accessible ONLY by an object
 
-Data.bar(); // Metodo statico: accessibile senza oggetto
+Data.bar(); // Static method: accessible without an object
 ```
 
-### Inizializzatore Statico
+### Static Initializer
 
-Usa un blocco *static initializer* per eseguire la logica d'inizializzazione quando la classe è caricata la prima volta:
+Use a *static initializer* block to run initialization logic when the class is first loaded:
 
 ```java
 class OtherData {
@@ -558,10 +558,10 @@ class OtherData {
     private static String msg;
 
     static {
-        msg = "Inizializzazione..."
-        System.out. println(msg);
+        msg = "Initialization..."
+        System.out.println(msg);
         b = 4;
-        // ... inizializzazione complessa che non può essere fatta in una singola espressione
+        // ... complex initialization that can't be done in a single expression
     }
 }
 ```

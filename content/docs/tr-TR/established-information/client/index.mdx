@@ -1,38 +1,38 @@
 ---
-title: Hytale İstemcisi
-description: Hytale İstemcisine Ait Bilgiler
+title: The Hytale Client
+description: Information regarding the Hytale client.
 ---
 
 <Callout>
-  İstemci C# ile yazılmış olup dağıtımdan önce makine koduna derlenmiştir ve modlanmaya açık değildir. Tek oyunculu mod, yerel bir sunucu üzerinde çalışır. Tüm modların sunucu API'sını kullanması zorunludur.
+  The client is written in C#, compiled to machine code before distribution, and not moddable. Single-player runs on a local server. All mods must go through the server API.
 </Callout>
 
-# İstemci Taraflı Mod Yok
+# No Client-Side Mods
 
-İstemci tarafında modlama yoktur.
+There is no client-side modding.
 
-> Herhangi bir istemci modunu desteklemeyi düşünmüyoruz. - Slikey
+> We don't intend to support any client mods - Slikey
 
-## Neden?
+## Why?
 
-1. Ek bir dosya indirmenize gerek yok.
-   * Hytale, "her sunucunun farklı bir modlu istemci gerektirdiği parçalanmış bir ekosistemden kaçınmak" istiyor.
+1. No need to download externally.
+   * Hytale wants to "avoid a fragmented ecosystem where every server requires a different modded client".
 
-2. İstemci güvenliği.
-   * Üçüncü taraf sitelerden alınan `.jar` dosyalarını istemcide çalıştırmak, kolayca kötü amaçlı yazılım bulaşmasına yol açabilir.
-   > [Oyuncuları] diğer bazı mod platformlarında karşılaşılan güvenlik ve emniyet riskleriyle karşı karşıya bırakmak istemiyoruz
+2. Client security.
+   * Running `.jar` files from third-party sites on the client can easily introduce malware.
+   > [We don't want to expose players] to the security and safety risks that exist on some other modding platform.
 
-3. İstemci kararlılığı.
-   * Hytale, istemci modlamasının imkansız olduğu diğer platformlara geçebilir; bu nedenle süreci en baştan doğru yönlendirmek için bu alanı erkenden kısıtlıyorlar.
-   > Diğer blok oyunlarında istemci modları kullanılarak elde edilen sonuçların, bizim sunucu taraflı modlama sistemimizle kolayca elde edilebileceğine inanıyoruz. Diğer blok oyunlarında yeni bloklar, NPC'ler, arayüzler vb. eklemek için bir istemci modu yüklemeniz gerekir; Hytale tüm bunları sadece sunucuyu dinleyerek yapar. Sunucu, oyun deneyiminizi eklemek ve değiştirmek için istemciyi geçici ve güvenli bir şekilde ‘modlar’ Bizim modellerimizi, müziklerimizi, dünya oluşturma sistemimizi, dövüş sistemimizi veya başka hiçbir şeyi kullanmadan Orbis’in tamamen kendi versiyonunu oluşturabilirsiniz Kontrol sizde; istemciye hiç dokunmadan her şeyi söküp atabilir (veya baştan yaratabilir) ve tamamen değiştirebilirsiniz. Roblox'un nasıl çalıştığını düşün... Uygulamanızı (istemcinizi) hiçbir zaman değiştirmek zorunda kalmazsınız. Sadece istediğiniz bir deneyime tıklarsınız ve kurulumun kendisine mod yüklemeden ihtiyacınız olan her şeye sahip olursunuz. - Slikey
+3. Client stability.
+   * Hytale may move to other platforms on which client modding is impossible, so they're locking it down early to set the right direction early.
+   > We believe that the results that people get in other block games using client mods can be easily achieved using our server-sided modding. In other block games you have to install a client mod in order to get new blocks, NPCs, UI, etc.Hytale does all of that just by listening to the server. The server will basically "mod" the client temporarily in a really safe way to add and modify your gameplay experience. You could make your very own version of Orbis, using none of our models, music, world generation, combat or anything. You have control and you can rip it all out without ever touching the client. Think about how Roblox works.. You never change your App. You just click on an experience you want and you get all you need without modding your installation itself. - Slikey
 
-## İstemci Modları Gerekmez
+## Client Mods are Not Needed
 
-İstemci modları için tipik kullanım örnekleri şunlardır:
+The typical use cases for client mods are:
 
-* Kozmetik değişiklikler (kaynak paketleri, shaderlar, pelerinler vb.): Görseller istemciye değil, sunucuya aittir.
-* Performans: Ana oyun, gerekli performans kontrollerini kendisi sunacaktır.
-* Erişilebilirlik: Ana oyun, kutudan çıktığı haliyle erişilebilir olacaktır.
+* Cosmetic changes (resource packs, shaders, capes, etc.): servers own visuals, not the client.
+* Performance: the base game will offer necessary performance controls.
+* Accessibility: the base game will be accessible on its own.
 * User Interface: servers own UI, not the client.
 
 ### Client-Side Prediction
@@ -43,26 +43,27 @@ Hytale uses data-driven client-side prediction to mitigate lag, as all interacti
 
 The team is exploring allowing execution of code by the client (which is distinct from modding the client; this is code sent from the server), though this is not guaranteed.
 
-# Modeller
+# Models
 
-İstemci ve varlık hattı, Hytale için özel bir format olan .blockymodel dosyasını kabul eder. Resmi Blockbench eklentisi, bu formatta dışa aktarma yapmanıza olanak tanıyacaktır.
+The client and assets pipeline accepts `.blockymodel`, a custom format for Hytale. The official Blockbench plugin will allow you to export to this format.
 
-# Teknik İstemci Detayları
+# Client Technical Details
 
-İstemcinin her zaman desteklenen tek bir güncel sürümü olacaktır.
+There will only ever be one current, supported version of the client.
 
-> Java sürümü tarafımızca güncel tutulacaktır ve şu anda en son sürümü (Java 25) kullanmaktayız. Hypixel sunucu ağımızda tecrübe ettiğimiz sürüm karmaşasının önüne geçmek için oyun sürümü seçilebilir olmayacaktır. Çok oyunculu ağların, 15'ten fazla istemci sürümünü desteklemek zorunda kalmamasını ve oyuncuların oyunun en son sürümüne sahip olduğuna güvenebilmesini sağlamak istiyoruz. - Slikey
+> Java version will be kept updated by us and right now we are on the latest version (Java 25)
+> The game version will not be selectable to avoid the version jungle we experienced on our hypixel server network. We simply want to make sure that multiplayer networks can rely on players having the latest version of the game to not have to support 15+ versions of the client. - Slikey
 
-İstemci çok kanallı (multithreaded) bir yapıya sahiptir.
+The client is multithreaded.
 
 ## GUI
 
 The GUI is built from C# bindings using Noesis.
 
-## İnşa Sistemi
+## Build System
 
-Hytale, istemciyi oluşturmak için C# kodunu dağıtım amacıyla makine koduna çeviren NativeAOT ("Ahead of Time" – Zamanından Önce) teknolojisini kullanır. Bu durum, makine kodu tersine mühendisliğe tabi tutulmadığı sürece modların sunucu API'sini kullanmak zorunda olduğu anlamına gelir.
+Hytale uses NativeAOT ("Ahead of Time") to build the client, which compiles C# to machine code for distribution. This means that, without reverse-engineering the machine code, mods will have to go through the server API.
 
-# Diğer Bilgiler
+# Other Information
 
-İstemcinin, sunucularla etkileşim kurmak için kendine ait bir sürümleme sistemi ve protokolü vardır.
+The client has its own versioning and protocol to interact with servers.

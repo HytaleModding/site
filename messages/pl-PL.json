@@ -1,41 +1,48 @@
 {
   "displayName": "Polski",
   "nav": {
-    "title": "Modyfikacje Hytale",
+    "title": "Hytale Modding",
     "documentation": "Dokumentacja",
     "sponsors": "Sponsorzy",
     "search": "Szukaj"
   },
   "home": {
-    "title": "#1 Źródło do modyfikacji Hytale {flipwords}",
+    "title": "#1 Zasób do Modyfikowania Hytale {flipwords}",
     "flipwords": [
       "Poradniki",
       "Dokumentacja",
       "Narzędzia",
       "Samouczki"
     ],
-    "description": "Najlepsze zasoby społeczności do modyfikowania Hytale, zawierające kompleksowe poradniki, obszerną dokumentację oraz istotne narzędzia, przydatne do rozpoczęcia swojej przygody z modowaniem.",
-    "documentation": "Dokumenty",
+    "description": "Najlepsze zasoby społeczności do modowania Hytale, zawierające kompleksowe poradniki, obszerną dokumentację oraz narzędzia przydatne do rozpoczęcia swojej przygody z modowaniem.",
+    "documentation": "Dokumentacja",
     "forum": "Forum",
-    "discord": "Dołącz do społeczności",
-    "memberCount": "{count} Członkowie"
+    "discord": "Dołącz do społeczności!",
+    "memberCount": "{count} Członków",
+    "countdown": "Premiera Hytale za {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale już dostępny!"
   },
   "sponsors": {
-    "title": "Wesprzyj nas",
-    "description": "HytaleModding jest projektem społeczności open source, a część zarządzania społecznością wymaga zapłaty za usługi, serwery i infrastrukturę, jak na przykład hostowanie tej strony internetowej. Jeśli chcesz wesprzeć projekt, rozważ zostanie sponsorem! Używamy OpenCollective aby śledzić, jak środki są wykorzystywane do wspierania społeczności.",
-    "ourSponsors": "Nasi sponsorzy"
+    "title": "Wesprzyj Nas",
+    "description": "HytaleModding jest projektem społeczności open source, a elementem zarządzania społecznością jest płacenie za usługi, serwery i infrastrukturę, jak na przykład hostowanie tej strony internetowej. Jeśli chciałbyś wesprzeć projekt, rozważ zostanie sponsorem! Używamy OpenCollective, żebyś widział, jak nasze środki są wykorzystywane do wspierania społeczności.",
+    "ourSponsors": "Nasi Sponsorzy"
   },
   "misc": {
     "loading": "Wczytywanie…",
     "failedToLoad": "Nie udało się wczytać.",
-    "gitInfoUnavailable": "Informacja o Git niedostępna",
+    "gitInfoUnavailable": "Informacje z Git'a niedostępne",
     "credit": "Napisane przez",
     "supportUs": "Wesprzyj Nas"
   },
   "meta": {
     "established_information": {
       "title": "Ustalone informacje",
-      "separator": "Kategorie szczególne",
+      "separator": "Określone Kategorie",
       "server": {
         "title": "Serwer",
         "content_categories": {
@@ -46,7 +53,7 @@
         }
       },
       "client": {
-        "title": "Użytkownik"
+        "title": "Klient"
       },
       "gameplay": {
         "title": "Rozgrywka"

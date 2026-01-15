@@ -1,51 +1,51 @@
 ---
-title: 02 - Оператори та вирази
-description: Вступ до операторів та виразів у програмуванні на Java.
+title: 02 - Operators and Expressions
+description: An introduction to operators and expressions in Java programming.
 ---
 
-Оператори - це символи, які виконують операції над змінними та значеннями. Вони є дієсловами програмування - вони приводять речі до виконання!
+Operators are symbols that perform operations on variables and values. They're the verbs of programming - they make things happen!
 
-## Арифметичні оператори
+## Arithmetic Operators
 
-Використовуються для математичних обчислень:
+Used for mathematical calculations:
 
 ```java
 int a = 10;
 int b = 5;
 
-int sum = a + b;        // Додавання: 15
-int difference = a - b; // Віднімання: 5
-int product = a * b;    // Множення: 50
-int quotient = a / b;   // Ділення: 2
-int remainder = a % b;  // Модуль (залишок): 0
+int sum = a + b;        // Addition: 15
+int difference = a - b; // Subtraction: 5
+int product = a * b;    // Multiplication: 50
+int quotient = a / b;   // Division: 2
+int remainder = a % b;  // Modulus (remainder): 0
 ```
 
-<Callout type="info" title="Примітка щодо ділення">
-  При діленні цілих чисел Java виконує цілочисельне ділення, що означає відкидання будь-якої десяткової частини. Наприклад, `7 / 2` дасть результат `3`, а не `3.5`.
+<Callout type="info" title="Division Note">
+  When dividing integers, Java performs integer division, which means it discards any decimal part. For example, `7 / 2` would result in `3`, not `3.5`.
 
   ```java
-  int x = 7 / 2;       // 3 (а не 3,5!) - Цілочисельне ділення
-  double y = 7.0 / 2;  // 3,5 - Принаймні одне подвійне число дає подвійний результат
-  double z = (double) 7 / 2;  // 3,5 - Конвертація типів також працює
+  int x = 7 / 2;       // 3 (not 3.5!) - Integer division
+  double y = 7.0 / 2;  // 3.5 - At least one double gives double result
+  double z = (double) 7 / 2;  // 3.5 - Casting works too
   ```
 </Callout>
 
-### Модуль (%) - Оператор залишку
+### Modulus (%) - The remainder Operator
 
-Оператор модуля повертає залишок від ділення:
+The modulus operator returns the remainder of a division operation:
 
 ```java
-int remainder = 10 % 3; // 1 (оскільки 10 поділене на 3 дорівнює 3 із залишком 1)
+int remainder = 10 % 3; // 1 (because 10 divided by 3 is 3 with a remainder of 1)
 ```
 
-## Складні оператори присвоювання
+## Compound Assignment Operators
 
-Ці оператори поєднують арифметичну операцію з присвоюванням:
+These operators combine an arithmetic operation with assignment:
 
 ```java
 int a = 10;
 
-a = a + 5;  // Старий спосіб
+a = a + 5;  // The old way
 
 a += 5;     // a = a + 5
 a -= 3;     // a = a - 3
@@ -54,75 +54,75 @@ a /= 4;     // a = a / 4
 a %= 3;     // a = a % 3
 ```
 
-## Оператори збільшення та зменшення
+## Increment and Decrement Operators
 
-Використовуються для збільшення або зменшення значення змінної на 1:
+Used to increase or decrease a variable's value by 1:
 
 ```java
 int a = 5;
-a++; // Збільшення: a стає 6
-a--; // Зменшення: a знову стає 5
+a++; // Increment: a becomes 6
+a--; // Decrement: a becomes 5 again
 ```
 
-<Callout type="info" title="Префікс проти постфіксу">
+<Callout type="info" title="Prefix vs Postfix">
   ```java
   int a = 5;
-  int b = a++; // b дорівнює 5, a тепер дорівнює 6
-  int c = ++a; // a дорівнює 7, c тепер дорівнює 7
+  int b = a++; // b is 5, a is now 6
+  int c = ++a; // a is 7, c is now 7
   ```
 </Callout>
 
-## Оператори порівняння
+## Comparison Operators
 
-Використовуються для порівняння двох значень, повертаючи результат у вигляді логічного значення (`true` або `false`):
+Used to compare two values, returning a boolean result (`true` or `false`):
 
 ```java
 int a = 10;
 int b = 5;
 
-a == b // false - Рівний
-a != b // true  - Не рівний
-a > b  // true  - Більший за
-a < b  // false - Менший за
-a >= b // true  - Більший або рівний
-a <= b // false - Менший або рівний
+a == b // false - Equal to
+a != b // true  - Not equal to
+a > b  // true  - Greater than
+a < b  // false - Less than
+a >= b // true  - Greater than or equal to
+a <= b // false - Less than or equal to
 ```
 
-## Логічні оператори
+## Logical Operators
 
-Використовуються для об'єднання декількох логічних виразів:
+Used to combine multiple boolean expressions:
 
 ```java
 boolean x = true;
 boolean y = false;
 
-x && y // false - Логічне І
-x || y // true  - Логічне АБО
-!x     // false - Логічне НЕ
+x && y // false - Logical AND
+x || y // true  - Logical OR
+!x     // false - Logical NOT
 ```
 
-### Комбінування логічних операторів
+### Combining Logical Operators
 
 ```java
-boolean result = (a > b) && (b < 10); // true, якщо обидві умови є істинними
+boolean result = (a > b) && (b < 10); // true if both conditions are true
 ```
 
-## Об'єднання рядків
+## String Concatenation
 
-Оператор `+` також може використовуватися для конкатенації (об'єднання) рядків:
+The `+` operator can also be used to concatenate (join) strings:
 
 ```java
-String greeting = "Привіт, " + "світ!"; // "Привіт, світ!"
-String name = "Анна";
-String greetingWithName = "Привіт, " + name + "!"; // "Привіт, Анна!"
+String greeting = "Hello, " + "world!"; // "Hello, world!"
+String name = "Alice";
+String greetingWithName = "Hello, " + name + "!"; // "Hello, Alice!"
 ```
 
-## Пріоритет операторів
+## Operator Precedence
 
-Пріоритет операторів означає, який оператор обчислюється першим у рядку коду. Вважайте це аналогом математичних правил (спочатку дужки, потім степені/корені, потім ділення/множення (зліва направо), і нарешті додавання/віднімання)!
+Operator Precendence means which operator gets evaluated first in an line of code. Think of it like BODMAS/PEMDAS in math!
 
 ```java
-int result = 10 + 5 * 2; // результат дорівнює 20, а не 30
+int result = 10 + 5 * 2; // result is 20, not 30
 ```
 
-{/* практику буде додано пізніше */}
+{/* practice to be added */}

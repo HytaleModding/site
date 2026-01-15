@@ -18,7 +18,14 @@
     "documentation": "Документация",
     "forum": "Форум",
     "discord": "Присоединись нашей коммьюнити!",
-    "memberCount": "{count} Участников"
+    "memberCount": "{count} Участников",
+    "countdown": "Hytale releases in {countdown}",
+    "countdownUnits": {
+      "hours": "ч",
+      "minutes": "мин",
+      "seconds": "сек"
+    },
+    "hytaleReleased": "Hytale вышел!"
   },
   "sponsors": {
     "title": "Поддержи нас",

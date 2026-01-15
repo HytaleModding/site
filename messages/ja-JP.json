@@ -11,14 +11,21 @@
     "flipwords": [
       "ガイド",
       "ドキュメント",
-      "Resources",
+      "ツール",
       "チュートリアル"
     ],
-    "description": "The number one community resource for modding Hytale, featuring comprehensive guides, detailed documentation, and essential tools to kickstart your modding journey.",
+    "description": "HytaleのModdingに関する最大のコミュニティによるリソース。包括的なガイド、詳細なドキュメント、Moddingの度を始めるために必要なツールが揃っています。",
     "documentation": "ドキュメント",
     "forum": "フォーラム",
     "discord": "コミュニティに参加する",
-    "memberCount": "{count}人のメンバー"
+    "memberCount": "{count}人のメンバー",
+    "countdown": "Hytale releases in {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale is out!"
   },
   "sponsors": {
     "title": "支援する",

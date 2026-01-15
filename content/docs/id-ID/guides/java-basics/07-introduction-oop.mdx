@@ -1,37 +1,37 @@
 ---
-title: 07 - Pengantar Pemrograman Berorientasi Objek
-description: Pelajari dasar-dasar class dan objek di Java.
+title: 07 - Introduction to Object-Oriented Programming
+description: Learn the fundamentals of classes and objects in Java.
 ---
 
-Pemrograman Berorientasi Objek (OOP) adalah fondasi dari Java dan modding Hytale. Alih-alih hanya memiliki variabel dan method yang bertebaran, kita mengaturnya ke dalam **class** dan **objek**.
+Object-Oriented Programming (OOP) is the foundation of Java and Hytale modding. Instead of just having variables and methods floating around, we organize them into **classes** and **objects**.
 
-## Apa itu Class?
+## What is a Class?
 
-Class adalah cetak biru (blueprint) untuk membuat objek. Anggap saja seperti resep atau cetakan.
+A class is a blueprint for creating objects. Think of it like a recipe or a template.
 
 ```java
 public class Player {
-    // Properti (data)
+    // Properties (data)
     String name;
     int health;
     int level;
     
-    // Perilaku (method)
+    // Behavior (methods)
     public void takeDamage(int damage) {
         health -= damage;
-        System.out.println(name + " menerima " + damage + " damage!");
+        System.out.println(name + " took " + damage + " damage!");
     }
 }
 ```
 
-## Apa itu Object?
+## What is an Object?
 
-Objek adalah wujud nyata (instance) yang dibuat dari sebuah class. Jika class adalah cetak biru, objek adalah benda nyata yang dibangun dari cetak biru tersebut.
+An object is an instance created from a class. If a class is a blueprint, an object is the actual thing built from that blueprint.
 
 ```java
 public class Main {
     public static void main(String[] args) {
-        // Buat objek dari class Player
+        // Create objects from the Player class
         Player player1 = new Player();
         player1.name = "Alice";
         player1.health = 100;
@@ -42,23 +42,23 @@ public class Main {
         player2.health = 80;
         player2.level = 3;
         
-        // Gunakan objeknya
-        player1.takeDamage(20);  // Alice menerima 20 damage!
-        player2.takeDamage(15);  // Bob menerima 15 damage!
+        // Use the objects
+        player1.takeDamage(20);  // Alice took 20 damage!
+        player2.takeDamage(15);  // Bob took 15 damage!
     }
 }
 ```
 
 <Callout type="info" title="Class vs Object">
-  **Class** = Cetak Biru (ide tentang pemain)
-  **Objek** = Benda Nyata (Alice, Bob, pemain spesifik)
+  **Class** = Blueprint (the idea of a player)
+  **Object** = Actual thing (Alice, Bob, specific players)
 
-  Satu class bisa membuat banyak objek, sama seperti satu resep bisa membuat banyak kue!
+  One class can create many objects, just like one recipe can make many cakes!
 </Callout>
 
-## Membuat Class Sederhana
+## Creating a Simple Class
 
-Mari kita buat class Sword (Pedang) untuk Hytale:
+Let's create a `Sword` class for Hytale:
 
 ```java
 public class Sword {
@@ -67,17 +67,17 @@ public class Sword {
     int damage;
     int durability;
     
-    // Method untuk menggunakan pedang
+    // Method to use the sword
     public void attack(String target) {
-        System.out.println("Menyerang " + target + " sebesar " + damage + " damage!");
+        System.out.println("Attacking " + target + " for " + damage + " damage!");
         durability -= 1;
         
         if (durability <= 0) {
-            System.out.println(name + " rusak!");
+            System.out.println(name + " broke!");
         }
     }
     
-    // Method untuk info display
+    // Method to display info
     public void displayInfo() {
         System.out.println("Weapon: " + name);
         System.out.println("Damage: " + damage);
@@ -86,7 +86,7 @@ public class Sword {
 }
 ```
 
-Menggunakan class tersebut:
+Using the class:
 
 ```java
 public class Main {
@@ -104,9 +104,9 @@ public class Main {
 }
 ```
 
-## Konstruktor
+## Constructors
 
-Daripada mengatur properti satu per satu, gunakan **konstruktor** untuk menginisialisasi objek:
+Instead of setting properties one by one, use a **constructor** to initialize objects:
 
 ```java
 public class Sword {
@@ -114,7 +114,7 @@ public class Sword {
     int damage;
     int durability;
     
-    // Konstruktor
+    // Constructor
     public Sword(String weaponName, int weaponDamage, int weaponDurability) {
         name = weaponName;
         damage = weaponDamage;
@@ -128,12 +128,12 @@ public class Sword {
 }
 ```
 
-Sekarang membuat pedang jadi lebih mudah:
+Now creating swords is easier:
 
 ```java
 public class Main {
     public static void main(String[] args) {
-        // Jauh lebih rapi!
+        // Much cleaner!
         Sword ironSword = new Sword("Iron Sword", 15, 100);
         Sword diamondSword = new Sword("Diamond Sword", 25, 200);
         
@@ -143,24 +143,24 @@ public class Main {
 }
 ```
 
-<Callout type="info" title="Aturan Konstruktor">
-  * Nama harus sama persis dengan nama class
-  * Tidak ada tipe kembalian (bahkan tidak pakai `void`)
-  * Dipanggil secara otomatis saat kamu menggunakan kata kunci new
-  * Bisa memiliki banyak konstruktor (overloading)
+<Callout type="info" title="Constructor Rules">
+  * Same name as the class
+  * No return type (not even `void`)
+  * Called automatically when you use `new`
+  * Can have multiple constructors (overloading)
 
   ```java
   public class Item {
       String name;
       int value;
       
-      // Konstruktor dengan semua parameter
+      // Constructor with all parameters
       public Item(String name, int value) {
           this.name = name;
           this.value = value;
       }
       
-      // Konstruktor hanya dengan nama
+      // Constructor with just name
       public Item(String name) {
           this.name = name;
           this.value = 0;  // Default value
@@ -169,9 +169,9 @@ public class Main {
   ```
 </Callout>
 
-## Kata Kunci `this`
+## The `this` Keyword
 
-`this` merujuk pada objek saat ini. Gunakan ini untuk memperjelas ketika nama parameter sama dengan nama properti:
+`this` refers to the current object. Use it to clarify when parameter names match property names:
 
 ```java
 public class Player {
@@ -179,24 +179,24 @@ public class Player {
     int health;
     
     public Player(String name, int health) {
-        this.name = name;      // this.name = propertinya
-        this.health = health;  // name = parameternya
+        this.name = name;      // this.name = the property
+        this.health = health;  // name = the parameter
     }
 }
 ```
 
-Tanpa `this`, Java akan bingung:
+Without `this`, Java gets confused:
 
 ```java
 public Player(String name, int health) {
-    name = name;      // ❌ Nama yang mana? Ambigu!
-    health = health;  // ❌ Health yang mana? Ambigu!
+    name = name;      // ❌ Which name? Ambiguous!
+    health = health;  // ❌ Which health? Ambiguous!
 }
 ```
 
-## Contoh Praktis
+## Practical Examples
 
-### Class Item
+### Item Class
 
 ```java
 public class Item {
@@ -232,7 +232,7 @@ public class Main {
     public static void main(String[] args) {
         Item potion = new Item("Health Potion", "Consumable", 5, 0.5);
         
-        potion.use();  // Menggunakan Health Potion. Sisa: 4
+        potion.use();  // Used Health Potion. Remaining: 4
         System.out.println("Total weight: " + potion.getTotalWeight()); // 2.0
     }
 }
@@ -295,7 +295,7 @@ public class Main {
 }
 ```
 
-### Class Block
+### Block Class
 
 ```java
 public class Block {
@@ -314,7 +314,7 @@ public class Block {
     }
     
     public void breakBlock() {
-        System.out.println("Menghancurkan blok " + type + " di (" + x + ", " + y + ", " + z + ")");
+        System.out.println("Breaking " + type + " block at (" + x + ", " + y + ", " + z + ")");
         System.out.println("Hardness: " + hardness);
     }
     
@@ -328,51 +328,51 @@ public class Block {
 }
 ```
 
-## Access Modifier (Pratinjau)
+## Access Modifiers (Preview)
 
-Kamu sudah melihat `public` - itu berarti "siapa saja bisa mengakses ini". Kita akan belajar lebih lanjut tentang kontrol akses nanti, tapi ini sekilas infonya:
+You've seen `public` - it means "anyone can access this". We'll learn more about access control later, but here's a preview:
 
 ```java
 public class Example {
-    public String publicVar;      // Siapa saja bisa mengakses
-    private String privateVar;    // Hanya class ini yang bisa mengakses
-    // (tanpa modifier) String defaultVar; // Akses paket (Package)
+    public String publicVar;      // Anyone can access
+    private String privateVar;    // Only this class can access
+    /* (no modifier) */ String defaultVar; // Package access
 }
 ```
 
-Untuk saat ini, gunakan public untuk semuanya. Kita akan belajar kapan harus menggunakan `private` di artikel berikutnya.
+For now, use `public` for everything. We'll learn when to use `private` in the next article.
 
-<Callout type="info" title="Kenapa Menggunakan Class?">
-  Class membantumu:
+<Callout type="info" title="Why Use Classes?">
+  Classes help you:
 
-  * **Mengatur** data dan method yang terkait secara bersamaan
-  * **Menggunakan ulang** kode dengan mudah (membuat banyak objek dari satu class)
-  * **Memodelkan** benda dunia nyata (pemain, item, monster)
-  * **Memelihara** kode (perubahan di satu tempat mempengaruhi semua objek)
+  * **Organize** related data and methods together
+  * **Reuse** code easily (create many objects from one class)
+  * **Model** real-world things (players, items, monsters)
+  * **Maintain** code (changes in one place affect all objects)
 
-  Tanpa class, mengelola 100 pemain akan membutuhkan 100 variabel terpisah untuk setiap properti. Dengan class, cukup 100 objek Player!
+  Without classes, managing 100 players would require 100 separate variables for each property. With classes, it's just 100 Player objects!
 </Callout>
 
-## Latihan Praktik
+## Practice Exercises
 
-1. **Buat Class `Potion` (Ramuan)**:
-   * Properti: name, healAmount, uses
-   * Konstruktor untuk mengatur semua properti
-   * Method `drink()` yang menyembuhkan dan mengurangi uses
-   * Method `isEmpty()` yang mengembalikan true jika uses kurang dari atau sama dengan 0
+1. **Create a `Potion` Class**:
+   * Properties: name, healAmount, uses
+   * Constructor to set all properties
+   * Method `drink()` that heals and decreases uses
+   * Method `isEmpty()` that returns true if uses less than or equal to 0
 
-2. **Buat Class `Chest` (Peti)**:
-   * Properti: isLocked, itemCount, capacity
-   * Konstruktor
-   * Method `addItem()` yang mengecek kapasitas
-   * Method `unlock()` yang mengatur isLocked menjadi false
-   * Method `isFull()` yang mengecek jika itemCount >= capacity
+2. **Create a `Chest` Class**:
+   * Properties: isLocked, itemCount, capacity
+   * Constructor
+   * Method `addItem()` that checks capacity
+   * Method `unlock()` that sets isLocked to false
+   * Method `isFull()` that checks if itemCount >= capacity
 
-3. **Buat Class `Villager` (Penduduk Desa)**:
-   * Properti: name, profession, tradeCount
-   * Konstruktor
-   * Method `greet()` yang mencetak salam
-   * Method `trade()` yang menaikkan tradeCount
-   * Method `getInfo()` yang menampilkan semua properti
+3. **Create a `Villager` Class**:
+   * Properties: name, profession, tradeCount
+   * Constructor
+   * Method `greet()` that prints a greeting
+   * Method `trade()` that increases tradeCount
+   * Method `getInfo()` that displays all properties
 
-4. **Buat Beberapa Objek**: Menggunakan class apa pun yang kamu buat, ciptakan 3 objek berbeda dan uji semua method-nya.
+4. **Create Multiple Objects**: Using any class you made, create 3 different objects and test all their methods.

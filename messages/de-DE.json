@@ -18,7 +18,14 @@
     "documentation": "Dokumentation",
     "forum": "Forum",
     "discord": "Werde Teil unserer Community!",
-    "memberCount": "{count} Mitglieder"
+    "memberCount": "{count} Mitglieder",
+    "countdown": "Hytale erscheint in {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale ist da!"
   },
   "sponsors": {
     "title": "Unterstütze uns",

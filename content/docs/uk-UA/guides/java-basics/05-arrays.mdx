@@ -1,123 +1,123 @@
 ---
-title: 05 - Масиви
-description: Дізнайтеся, як зберігати та керувати колекціями даних за допомогою масивів.
+title: 05 - Arrays
+description: Learn how to store and manage collections of data using arrays.
 ---
 
-Масиви дозволяють зберігати кілька значень одного типу в одній змінній. Уявіть масив як ряд ящиків, у кожному з яких знаходиться один предмет.
+Arrays let you store multiple values of the same type in a single variable. Think of an array as a row of boxes, each holding one item.
 
-## Створення масивів
+## Creating Arrays
 
-### Спосіб 1: Окреме оголошення та ініціалізація
+### Method 1: Declare and Initialize Separately
 
 ```java
-int[] numbers;           // Оголошення
-numbers = new int[5];    // Створити масив з 5 місцями
+int[] numbers;           // Declare
+numbers = new int[5];    // Create array with 5 spaces
 ```
 
-### Спосіб 2: Одночасно
+### Method 2: All at Once
 
 ```java
 int[] numbers = new int[5];
 ```
 
-### Спосіб 3: З початковими значеннями
+### Method 3: With Initial Values
 
 ```java
 int[] numbers = {10, 20, 30, 40, 50};
 ```
 
-<Callout type="info" title="Розмір масиву">
-  Після створення масиву його розмір є **фіксованим**. Ви не можете додавати або видаляти елементи пізніше!
+<Callout type="info" title="Array Size">
+  Once you create an array, its size is **fixed**. You can't add or remove elements later!
 
   ```java
-  int[] inventory = new int[9];  // Завжди має рівно 9 місць
+  int[] inventory = new int[9];  // Always has exactly 9 slots
   ```
 </Callout>
 
-## Доступ до елементів масиву
+## Accessing Array Elements
 
-Масиви використовують **індексні** номери, починаючи з **0**:
+Arrays use **index** numbers starting from **0**:
 
 ```java
-String[] players = {"Анна", "Богдан", "Василь"};
+String[] players = {"Alice", "Bob", "Charlie"};
 
-System.out.println(players[0]); // "Анна"
-System.out.println(players[1]); // "Богдан"
-System.out.println(players[2]); // "Василь"
+System.out.println(players[0]); // "Alice"
+System.out.println(players[1]); // "Bob"
+System.out.println(players[2]); // "Charlie"
 ```
 
-### Візуальне представлення
+### Visual Representation
 
-| Індекс   | 0      | 1        | 2        |
-| -------- | ------ | -------- | -------- |
-| Значення | "Анна" | "Богдан" | "Василь" |
+| Index | 0       | 1     | 2         |
+| ----- | ------- | ----- | --------- |
+| Value | "Alice" | "Bob" | "Charlie" |
 
-## Зміна значень масиву
+## Modifying Array Values
 
 ```java
 int[] health = {100, 80, 90};
 
-health[1] = 60;  // Змінити здоров'я Богдана на 60
+health[1] = 60;  // Change Bob's health to 60
 
 System.out.println(health[0]); // 100
 System.out.println(health[1]); // 60
 System.out.println(health[2]); // 90
 ```
 
-## Довжина масиву
+## Array Length
 
-Використовуйте `.length`, щоб отримати розмір масиву:
+Use `.length` to get the size of an array:
 
 ```java
 int[] scores = {45, 67, 89, 92, 55};
 System.out.println(scores.length); // 5
 ```
 
-<Callout type="warning" title="Довжина не є методом">
-  Зверніть увагу, що тут немає дужок! Тут `array.length`, а не `array.length()`.
+<Callout type="warning" title="Length is Not a Method">
+  Notice there are no parentheses! It's `array.length`, not `array.length()`.
 </Callout>
 
-## Проходження циклом по масивах
+## Looping Through Arrays
 
-### Використання циклу for
+### Using For Loop
 
 ```java
-String[] items = {"Меч", "Щит", "Зілля"};
+String[] items = {"Sword", "Shield", "Potion"};
 
 for (int i = 0; i < items.length; i++) {
     System.out.println(items[i]);
 }
 ```
 
-### Використання розширеного циклу for (for-each)
+### Using Enhanced For Loop (For-Each)
 
 ```java
-String[] items = {"Меч", "Щит", "Зілля"};
+String[] items = {"Sword", "Shield", "Potion"};
 
 for (String item : items) {
     System.out.println(item);
 }
 ```
 
-<Callout type="info" title="Розширений цикл for">
-  Розширений цикл for є простішим і безпечнішим, але ви не можете змінювати масив або дізнатися поточний індекс.
+<Callout type="info" title="Enhanced For Loop">
+  The enhanced for loop is simpler and safer, but you can't modify the array or know the current index.
 
   ```java
-  // Коли потрібен індекс
+  // When you need the index
   for (int i = 0; i < items.length; i++) {
       System.out.println(i + ": " + items[i]);
   }
 
-  // Коли потрібні лише значення
+  // When you just need the values
   for (String item : items) {
       System.out.println(item);
   }
   ```
 </Callout>
 
-## Багатовимірні масиви
+## Multidimensional Arrays
 
-Масиви можуть містити інші масиви, створюючи сітку:
+Arrays can hold other arrays, creating a grid:
 
 ```java
 int[][] grid = {
@@ -131,7 +131,7 @@ System.out.println(grid[1][2]); // 6
 System.out.println(grid[2][1]); // 8
 ```
 
-### Візуальне представлення
+### Visual Representation
 
 |       | 0 | 1 | 2 |
 | ----- | - | - | - |
@@ -139,7 +139,7 @@ System.out.println(grid[2][1]); // 8
 | **1** | 4 | 5 | 6 |
 | **2** | 7 | 8 | 9 |
 
-### Проходження циклом по двовимірних масивах
+### Looping Through 2D Arrays
 
 ```java tab="Code"
 int[][] grid = {
@@ -160,29 +160,29 @@ for (int row = 0; row < grid.length; row++) {
 4 5 6
 ```
 
-## Практичні приклади
+## Practical Examples
 
-### Система інвентарю гравця
+### Player Inventory System
 
 ```java
-String[] inventory = new String[9]; // 9 слотів панелі швидкого доступу
+String[] inventory = new String[9]; // 9 hotbar slots
 
-// Додати предмети
-inventory[0] = "Діамантовий меч";
-inventory[1] = "Щит";
-inventory[8] = "Їжа";
+// Add items
+inventory[0] = "Diamond Sword";
+inventory[1] = "Shield";
+inventory[8] = "Food";
 
-// Відобразити інвентар
+// Display inventory
 for (int i = 0; i < inventory.length; i++) {
     if (inventory[i] != null) {
-        System.out.println("Слот " + i + ": " + inventory[i]);
+        System.out.println("Slot " + i + ": " + inventory[i]);
     } else {
-        System.out.println("Слот " + i + ": Порожньо");
+        System.out.println("Slot " + i + ": Empty");
     }
 }
 ```
 
-### Знайти найвищий показник
+### Find Highest Score
 
 ```java
 int[] scores = {45, 92, 67, 88, 55, 71};
@@ -194,10 +194,10 @@ for (int i = 1; i < scores.length; i++) {
     }
 }
 
-System.out.println("Найвищий показник: " + highest);
+System.out.println("Highest score: " + highest);
 ```
 
-### Обчислити середнє значення
+### Calculate Average
 
 ```java
 double[] temperatures = {23.5, 25.0, 22.8, 24.3, 26.1};
@@ -208,26 +208,26 @@ for (double temp : temperatures) {
 }
 
 double average = sum / temperatures.length;
-System.out.println("Середня температура: " + average);
+System.out.println("Average temperature: " + average);
 ```
 
-### Блок-сітка (двовимірний масив)
+### Block Grid (2D Array)
 
 ```java
 String[][] terrain = new String[5][5];
 
-// Заповнити травою
+// Fill with grass
 for (int x = 0; x < 5; x++) {
     for (int z = 0; z < 5; z++) {
-        terrain[x][z] = "трава";
+        terrain[x][z] = "grass";
     }
 }
 
-// Розмістити каміння
-terrain[2][2] = "каміння";
-terrain[1][3] = "каміння";
+// Place some stone
+terrain[2][2] = "stone";
+terrain[1][3] = "stone";
 
-// Відобразити сітку
+// Display grid
 for (int x = 0; x < terrain.length; x++) {
     for (int z = 0; z < terrain[x].length; z++) {
         System.out.print(terrain[x][z] + " ");
@@ -236,26 +236,26 @@ for (int x = 0; x < terrain.length; x++) {
 }
 ```
 
-## Загальні операції з масивами
+## Common Array Operations
 
-### Копіювання масиву
+### Copy an Array
 
 ```java
 int[] original = {1, 2, 3, 4, 5};
 int[] copy = original.clone();
 
-// Або вручну
+// Or manually
 int[] copy2 = new int[original.length];
 for (int i = 0; i < original.length; i++) {
     copy2[i] = original[i];
 }
 ```
 
-### Пошук значення
+### Search for a Value
 
 ```java
-String[] items = {"Меч", "Щит", "Зілля", "Лук"};
-String target = "Зілля";
+String[] items = {"Sword", "Shield", "Potion", "Bow"};
+String target = "Potion";
 int foundIndex = -1;
 
 for (int i = 0; i < items.length; i++) {
@@ -266,17 +266,17 @@ for (int i = 0; i < items.length; i++) {
 }
 
 if (foundIndex != -1) {
-    System.out.println("Знайдено по індексу: " + foundIndex);
+    System.out.println("Found at index: " + foundIndex);
 } else {
-    System.out.println("Не знайдено");
+    System.out.println("Not found");
 }
 ```
 
-### Підрахунок входжень
+### Count Occurrences
 
 ```java
-String[] blocks = {"каміння", "ґрунт", "каміння", "трава", "каміння"};
-String searchFor = "каміння";
+String[] blocks = {"stone", "dirt", "stone", "grass", "stone"};
+String searchFor = "stone";
 int count = 0;
 
 for (String block : blocks) {
@@ -285,19 +285,19 @@ for (String block : blocks) {
     }
 }
 
-System.out.println(searchFor + " з'являється " + count + " раз(-ів)");
+System.out.println(searchFor + " appears " + count + " times");
 ```
 
-## Обмеження масиву
+## Array Limitations
 
-<Callout type="warning" title="Фіксований розмір">
-  Масиви не можуть збільшуватися або зменшуватися. Якщо вам потрібна гнучкість, ви дізнаєтеся про `ArrayList` пізніше!
+<Callout type="warning" title="Fixed Size">
+  Arrays can't grow or shrink. If you need flexibility, you'll learn about `ArrayList` later!
 
   ```java
   int[] numbers = new int[5];
-  // Не можна додати 6-й елемент!
+  // Can't add a 6th element!
 
-  // Якщо вам потрібно більше місця, створіть новий масив
+  // If you need more space, create a new array
   int[] bigger = new int[10];
   for (int i = 0; i < numbers.length; i++) {
       bigger[i] = numbers[i];

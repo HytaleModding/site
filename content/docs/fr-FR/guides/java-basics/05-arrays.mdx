@@ -1,137 +1,137 @@
 ---
-title: 05 - Tableaux
-description: Apprenez à stocker et gérer les collections de données en utilisant des tableaux.
+title: 05 - Arrays
+description: Learn how to store and manage collections of data using arrays.
 ---
 
-Les tableaux vous permettent de stocker plusieurs valeurs du même type dans une seule variable. Pensez à un tableau comme une ligne de boîtes, chacune contenant un élément.
+Arrays let you store multiple values of the same type in a single variable. Think of an array as a row of boxes, each holding one item.
 
-## Créer des tableaux
+## Creating Arrays
 
-### Méthode 1 : Déclarer et initialiser séparément
-
-```java
-int[] nombres;           // Déclaration
-nombres = new int[5];    // Crée un tableau avec 5 espaces
-```
-
-### Méthode 2 : Tout en une fois
+### Method 1: Declare and Initialize Separately
 
 ```java
-int[] nombres = new int[5];
+int[] numbers;           // Declare
+numbers = new int[5];    // Create array with 5 spaces
 ```
 
-### Méthode 3 : Avec des valeurs initiales
+### Method 2: All at Once
 
 ```java
-int[] nombres = { 10, 20, 30, 40, 50 };
+int[] numbers = new int[5];
 ```
 
-<Callout type="info" title="Taille de tableau">
-  Une fois que vous avez créé un tableau, sa taille est **fixe**. Vous ne pouvez pas rajouter ou supprimer des éléments plus tard !
+### Method 3: With Initial Values
+
+```java
+int[] numbers = {10, 20, 30, 40, 50};
+```
+
+<Callout type="info" title="Array Size">
+  Once you create an array, its size is **fixed**. You can't add or remove elements later!
 
   ```java
-  int[] inventaire = new int[9];  // A toujours exactement 9 emplacements
+  int[] inventory = new int[9];  // Always has exactly 9 slots
   ```
 </Callout>
 
-## Accès aux éléments du tableau
+## Accessing Array Elements
 
-Les tableaux utilisent des nombres **indices** à partir de **0** :
-
-```java
-String[] joueurs = { "Alice", "Bob", "Charlie" };
-
-System.out.println(joueurs[0]); // "Alice"
-System.out.println(joueurs[1]); // "Bob"
-System.out.println(joueurs[2]); // "Charlie"
-```
-
-### Représentation visuelle
-
-| Indice | 0       | 1     | 2         |
-| ------ | ------- | ----- | --------- |
-| Valeur | "Alice" | "Bob" | "Charlie" |
-
-## Modifier les valeurs du tableau
+Arrays use **index** numbers starting from **0**:
 
 ```java
-int[] vie = { 100, 80, 90 };
+String[] players = {"Alice", "Bob", "Charlie"};
 
-vie[1] = 60;  // Change la vie de Bob et la met à 60
-
-System.out.println(vie[0]); // 100
-System.out.println(vie[1]); // 60
-System.out.println(vie[2]); // 90
+System.out.println(players[0]); // "Alice"
+System.out.println(players[1]); // "Bob"
+System.out.println(players[2]); // "Charlie"
 ```
 
-## Longueur de tableau
+### Visual Representation
 
-Utilisez `.length` pour obtenir la taille d'un tableau
+| Index | 0       | 1     | 2         |
+| ----- | ------- | ----- | --------- |
+| Value | "Alice" | "Bob" | "Charlie" |
+
+## Modifying Array Values
+
+```java
+int[] health = {100, 80, 90};
+
+health[1] = 60;  // Change Bob's health to 60
+
+System.out.println(health[0]); // 100
+System.out.println(health[1]); // 60
+System.out.println(health[2]); // 90
+```
+
+## Array Length
+
+Use `.length` to get the size of an array:
 
 ```java
 int[] scores = {45, 67, 89, 92, 55};
 System.out.println(scores.length); // 5
 ```
 
-<Callout type="warning" title="Length n'est pas une méthode">
-  Remarquez qu'il n'y a pas de parenthèses ! C'est `array.length`, et pas `array.length()`.
+<Callout type="warning" title="Length is Not a Method">
+  Notice there are no parentheses! It's `array.length`, not `array.length()`.
 </Callout>
 
-## Boucler à travers des tableaux
+## Looping Through Arrays
 
-### En utilisant la boucle for
+### Using For Loop
 
 ```java
-String[] objets = { "Épée", "Bouclier", "Potion" };
+String[] items = {"Sword", "Shield", "Potion"};
 
-for (int i = 0; i < objets.length; i++) {
-    System.out.println(objets[i]);
+for (int i = 0; i < items.length; i++) {
+    System.out.println(items[i]);
 }
 ```
 
-### En utilisant les boucles for améliorées (for-each)
+### Using Enhanced For Loop (For-Each)
 
 ```java
-String[] objets = { "Épée", "Bouclier", "Potion" };
+String[] items = {"Sword", "Shield", "Potion"};
 
-for (String objet : objets) {
-    System.out.println(objet);
+for (String item : items) {
+    System.out.println(item);
 }
 ```
 
-<Callout type="info" title="Boucles for améliorées">
-  La boucle for améliorée est plus simple et plus sûre, mais vous ne pouvez pas modifier le tableau ou connaitre l'indice actuel.
+<Callout type="info" title="Enhanced For Loop">
+  The enhanced for loop is simpler and safer, but you can't modify the array or know the current index.
 
   ```java
-  // Quand vous avez besoin de l'indice
-  for (int i = 0; i < objets.length; i++) {
-      System.out.println(i + ": " + objets[i]);
+  // When you need the index
+  for (int i = 0; i < items.length; i++) {
+      System.out.println(i + ": " + items[i]);
   }
 
-  // Quand vous avez juste besoin des valeurs
-  for (String objet : objets) {
-      System.out.println(objet);
+  // When you just need the values
+  for (String item : items) {
+      System.out.println(item);
   }
   ```
 </Callout>
 
-## Tableaux multidimensionnels
+## Multidimensional Arrays
 
-Les tableaux peuvent contenir d'autres tableaux, formant des grilles :
+Arrays can hold other arrays, creating a grid:
 
 ```java
-int[][] grille = {
-    { 1, 2, 3 },
-    { 4, 5, 6 },
-    { 7, 8, 9 }
+int[][] grid = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
 };
 
-System.out.println(grille[0][0]); // 1
-System.out.println(grille[1][2]); // 6
-System.out.println(grille[2][1]); // 8
+System.out.println(grid[0][0]); // 1
+System.out.println(grid[1][2]); // 6
+System.out.println(grid[2][1]); // 8
 ```
 
-### Représentation visuelle
+### Visual Representation
 
 |       | 0 | 1 | 2 |
 | ----- | - | - | - |
@@ -139,17 +139,17 @@ System.out.println(grille[2][1]); // 8
 | **1** | 4 | 5 | 6 |
 | **2** | 7 | 8 | 9 |
 
-### Boucler sur des tableaux à 2 dimensions
+### Looping Through 2D Arrays
 
 ```java tab="Code"
-int[][] grille = {
-    { 1, 2, 3 },
-    { 4, 5, 6 }
+int[][] grid = {
+    {1, 2, 3},
+    {4, 5, 6}
 };
 
-for (int ligne = 0; ligne < grille.length; ligne++) {
-    for (int col = 0; col < grille[ligne].length; col++) {
-        System.out.print(grille[ligne][col] + " ");
+for (int row = 0; row < grid.length; row++) {
+    for (int col = 0; col < grid[row].length; col++) {
+        System.out.print(grid[row][col] + " ");
     }
     System.out.println();
 }
@@ -160,74 +160,74 @@ for (int ligne = 0; ligne < grille.length; ligne++) {
 4 5 6
 ```
 
-## Exemples pratiques
+## Practical Examples
 
-### Système d'inventaire du joueur
+### Player Inventory System
 
 ```java
-String[] inventaire = new String[9]; // 9 emplacements dans la barre de raccourcis
+String[] inventory = new String[9]; // 9 hotbar slots
 
-// Ajouter des items
-inventaire[0] = "Épée en diamant";
-inventaire[1] = "Bouclier";
-inventaire[8] = "Nourriture";
+// Add items
+inventory[0] = "Diamond Sword";
+inventory[1] = "Shield";
+inventory[8] = "Food";
 
-// Afficher l'inventaire
-for (int i = 0; i < inventaire.length; i++) {
-    if (inventaire[i] != null) {
-        System.out.println("Emplacement " + i + ": " + inventaire[i]);
+// Display inventory
+for (int i = 0; i < inventory.length; i++) {
+    if (inventory[i] != null) {
+        System.out.println("Slot " + i + ": " + inventory[i]);
     } else {
-        System.out.println("Emplacement " + i + ": Vide");
+        System.out.println("Slot " + i + ": Empty");
     }
 }
 ```
 
-### Trouver le score le plus élevé
+### Find Highest Score
 
 ```java
-int[] scores = { 45, 92, 67, 88, 55, 71 };
-int plusGrand = scores[0];
+int[] scores = {45, 92, 67, 88, 55, 71};
+int highest = scores[0];
 
 for (int i = 1; i < scores.length; i++) {
-    if (scores[i] > plusGrand) {
-        plusGrand = scores[i];
+    if (scores[i] > highest) {
+        highest = scores[i];
     }
 }
 
-System.out.println("Score le plus élevé : " + plusGrand);
+System.out.println("Highest score: " + highest);
 ```
 
-### Calculer la moyenne
+### Calculate Average
 
 ```java
-double[] temperatures = { 23.5, 25.0, 22.8, 24.3, 26.1 };
-double somme = 0;
+double[] temperatures = {23.5, 25.0, 22.8, 24.3, 26.1};
+double sum = 0;
 
 for (double temp : temperatures) {
-    somme += temp;
+    sum += temp;
 }
 
-double moyenne = somme / temperatures.length;
-System.out.println("Température moyenne : " + moyenne);
+double average = sum / temperatures.length;
+System.out.println("Average temperature: " + average);
 ```
 
-### Grille de blocs (Tableau 2D)
+### Block Grid (2D Array)
 
 ```java
 String[][] terrain = new String[5][5];
 
-// Remplir avec de l'herbe
+// Fill with grass
 for (int x = 0; x < 5; x++) {
     for (int z = 0; z < 5; z++) {
-        terrain[x][z] = "herbe";
+        terrain[x][z] = "grass";
     }
 }
 
-// Placer un peu de pierre
-terrain[2][2] = "pierre";
-terrain[1][3] = "pierre";
+// Place some stone
+terrain[2][2] = "stone";
+terrain[1][3] = "stone";
 
-// Afficher la grille
+// Display grid
 for (int x = 0; x < terrain.length; x++) {
     for (int z = 0; z < terrain[x].length; z++) {
         System.out.print(terrain[x][z] + " ");
@@ -236,71 +236,71 @@ for (int x = 0; x < terrain.length; x++) {
 }
 ```
 
-## Opérations courantes sur les tableaux
+## Common Array Operations
 
-### Copier un tableau
+### Copy an Array
 
 ```java
-int[] original = { 1, 2, 3, 4, 5 };
-int[] copie = original.clone();
+int[] original = {1, 2, 3, 4, 5};
+int[] copy = original.clone();
 
-// Ou manuellement
-int[] copie2 = new int[original.length];
+// Or manually
+int[] copy2 = new int[original.length];
 for (int i = 0; i < original.length; i++) {
-    copie2[i] = original[i];
+    copy2[i] = original[i];
 }
 ```
 
-### Rechercher une valeur
+### Search for a Value
 
 ```java
-String[] objets = { "Épée", "Bouclier", "Potion", "Arc" };
-String cible = "Potion";
-int indiceTrouve = -1;
+String[] items = {"Sword", "Shield", "Potion", "Bow"};
+String target = "Potion";
+int foundIndex = -1;
 
-for (int i = 0; i < objets.length; i++) {
-    if (objets[i].equals(cible)) {
-        indiceTrouve = i;
+for (int i = 0; i < items.length; i++) {
+    if (items[i].equals(target)) {
+        foundIndex = i;
         break;
     }
 }
 
-if (indiceTrouve != -1) {
-    System.out.println("Trouvé à l'indice : " + indiceTrouve );
+if (foundIndex != -1) {
+    System.out.println("Found at index: " + foundIndex);
 } else {
-    System.out.println("Pas trouvé");
+    System.out.println("Not found");
 }
 ```
 
-### Compter les occurrences
+### Count Occurrences
 
 ```java
-String[] blocs = { "pierre", "terre", "pierre", "herbe", "pierre" };
-String rechercher = "pierre";
-int compteur = 0;
+String[] blocks = {"stone", "dirt", "stone", "grass", "stone"};
+String searchFor = "stone";
+int count = 0;
 
-for (String bloc : blocs) {
-    if (bloc.equals(rechercher)) {
-        compteur ++;
+for (String block : blocks) {
+    if (block.equals(searchFor)) {
+        count++;
     }
 }
 
-System.out.println(rechercher + " apparaît " + compteur + " fois");
+System.out.println(searchFor + " appears " + count + " times");
 ```
 
-## Limitations des tableaux
+## Array Limitations
 
-<Callout type="warning" title="Taille fixe">
-  Les tableaux ne peuvent pas s'agrandir ou se rétrécir. Si vous avez besoin de flexibilité, vous apprendrez les `ArrayList` plus tard !
+<Callout type="warning" title="Fixed Size">
+  Arrays can't grow or shrink. If you need flexibility, you'll learn about `ArrayList` later!
 
   ```java
-  int[] nombres = new int[5];
-  // On ne peut pas ajouter un 6e élément !
+  int[] numbers = new int[5];
+  // Can't add a 6th element!
 
-  // Si vous avez besoin de plus d'espace, créez un nouveau tableau
-  int[] plusGrand = new int[10];
-  for (int i = 0; i < nombres.length; i++) {
-      plusGrand[i] = nombres[i];
+  // If you need more space, create a new array
+  int[] bigger = new int[10];
+  for (int i = 0; i < numbers.length; i++) {
+      bigger[i] = numbers[i];
   }
   ```
 </Callout>

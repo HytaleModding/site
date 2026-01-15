@@ -18,11 +18,18 @@
     "documentation": "الوثائق",
     "forum": "المُنتدى",
     "discord": "انضم إلى مجتمعنا!",
-    "memberCount": "عدد الاعضاء: {count} "
+    "memberCount": "عدد الاعضاء: {count} ",
+    "countdown": "Hytale releases in {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale is out!"
   },
   "sponsors": {
     "title": "إدعمنا",
-    "description": "",
+    "description": "HytaleModding is an open-source community project, and part of managing the community involves paying for services, servers and infrastructure, like hosting this website. If you would like to support the project, consider becoming a sponsor! We use OpenCollective so you can see how funds are being used to support the community.",
     "ourSponsors": "Our Sponsors"
   },
   "misc": {

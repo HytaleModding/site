@@ -1,68 +1,68 @@
 ---
-title: 10 - Гибкие массивы и коллекции
-description: Изучите как использовать гибкие массивы в Java.
+title: 10 - ArrayList and Collections
+description: Learn to use flexible, resizable collections in Java.
 ---
 
-Массивы имеют фиксированный размер, но что если вам нужно добавить или удалить элементы? Для этого используют `ArrayList` - это массив, который гибко изменяет размеры под ваши данные.
+Arrays have a fixed size, but what if you need to add or remove elements? That's where `ArrayList` comes in - a resizable collection that grows and shrinks automatically.
 
-## Основы ArrayList
+## ArrayList Basics
 
 ```java
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        // Создайте гибкий массив строк
+        // Create an ArrayList of Strings
         ArrayList<String> players = new ArrayList<>();
         
         // Add elements
-        players.add("Алиса");
-        players.add("Боб");
-        players.add("Чарли");
+        players.add("Alice");
+        players.add("Bob");
+        players.add("Charlie");
         
-        System.out.println(players);  // [Алиса, Боб, Чарли]
+        System.out.println(players);  // [Alice, Bob, Charlie]
     }
 }
 ```
 
-<Callout type="info" title="Гибкий массив против обычного массива">
-  | **Массив**                                                      | **Гибкий массив** (ArrayList)                                   |
-  | --------------------------------------------------------------- | --------------------------------------------------------------- |
-  | Фиксированный размер                                            | Изменяемый (увеличивается/уменьшается)                          |
-  | Может использовать примитивные типы данных (int, double, и др.) | Могут содержать только объекты (Integer, Double, String, и др.) |
-  | Быстрый доступ                                                  | Больше возможностей (add, remove, и др.)                        |
-  | `int[] numbers = new int[10];`                                  | `ArrayList<Integer> numbers = new ArrayList<>();`               |
+<Callout type="info" title="ArrayList vs Array">
+  | **Array**                               | **ArrayList**                                         |
+  | --------------------------------------- | ----------------------------------------------------- |
+  | Fixed size                              | Resizable (grows/shrinks)                             |
+  | Can hold primitives (int, double, etc.) | Can only hold objects (Integer, Double, String, etc.) |
+  | Faster access                           | More features (add, remove, etc.)                     |
+  | `int[] numbers = new int[10];`          | `ArrayList<Integer> numbers = new ArrayList<>();`     |
 </Callout>
 
-## Создание ArrayList
+## Creating ArrayLists
 
 ```java
 import java.util.ArrayList;
 
-// Пустой ArrayList
+// Empty ArrayList
 ArrayList<String> items = new ArrayList<>();
 
-// С начальными значениями (Java 9+)
+// With initial values (Java 9+)
 ArrayList<String> colors = new ArrayList<>(List.of("Red", "Green", "Blue"));
 
-// Других типов
+// Different types
 ArrayList<Integer> numbers = new ArrayList<>();
 ArrayList<Double> prices = new ArrayList<>();
 ArrayList<Boolean> flags = new ArrayList<>();
 ```
 
-<Callout type="warning" title="Примитивные типы данных в ArrayList">
-  Вы не можете использовать примитивные типы данных. Используйте их объекты:
+<Callout type="warning" title="Primitives in ArrayList">
+  You can't use primitives directly. Use their wrapper classes:
 
   ```java
-  // Неправильно
+  // Wrong
   ArrayList<int> numbers = new ArrayList<>();
 
-  // Правильно - нужно использовать объект
+  // Correct - Use wrapper class
   ArrayList<Integer> numbers = new ArrayList<>();
   ```
 
-  Объекты для примитивных типов:
+  Wrapper classes:
 
   - `int` → `Integer`
   - `double` → `Double`
@@ -70,99 +70,99 @@ ArrayList<Boolean> flags = new ArrayList<>();
   - `char` → `Character`
 </Callout>
 
-## Обычные методы ArrayList
+## Common ArrayList Methods
 
-### Добавление элементов
+### Adding Elements
 
 ```java
 ArrayList<String> items = new ArrayList<>();
 
-items.add("Меч");           // Добавлено в конце массива
-items.add("Щит");
-items.add(0, "Шлем");       // Добавлено с индексом 0 (в самое начало)
+items.add("Sword");           // Add to end
+items.add("Shield");
+items.add(0, "Helmet");       // Add at specific index
 
-System.out.println(items);    // [Шлем, Меч, Щит]
+System.out.println(items);    // [Helmet, Sword, Shield]
 ```
 
-### Получение элементов
+### Accessing Elements
 
 ```java
 ArrayList<String> items = new ArrayList<>();
-items.add("Меч");
-items.add("Щит");
+items.add("Sword");
+items.add("Shield");
 
-String first = items.get(0);    // "Меч"
-String second = items.get(1);   // "Щит"
+String first = items.get(0);    // "Sword"
+String second = items.get(1);   // "Shield"
 
 int size = items.size();        // 2
 ```
 
-### Удаление элементов
+### Removing Elements
 
 ```java
 ArrayList<String> items = new ArrayList<>();
-items.add("Меч");
-items.add("Щит");
-items.add("Зелье");
+items.add("Sword");
+items.add("Shield");
+items.add("Potion");
 
-items.remove(1);               // Удаление по индексу (Щит)
-items.remove("Зелье");        // Удаление по значению
+items.remove(1);               // Remove by index (Shield)
+items.remove("Potion");        // Remove by value
 
-System.out.println(items);     // [Меч]
+System.out.println(items);     // [Sword]
 ```
 
-### Проверка содержимого
+### Checking Contents
 
 ```java
 ArrayList<String> items = new ArrayList<>();
-items.add("Меч");
-items.add("Щит");
+items.add("Sword");
+items.add("Shield");
 
-boolean hasSword = items.contains("Меч");     // true
-boolean hasAxe = items.contains("Топор");         // false
+boolean hasSword = items.contains("Sword");     // true
+boolean hasAxe = items.contains("Axe");         // false
 
 boolean isEmpty = items.isEmpty();              // false
 int size = items.size();                        // 2
 ```
 
-### Изменение элементов
+### Modifying Elements
 
 ```java
 ArrayList<String> items = new ArrayList<>();
-items.add("Деревянный меч");
+items.add("Wooden Sword");
 
-items.set(0, "Железный меч");    // Заменяет по индексу 0
+items.set(0, "Iron Sword");    // Replace at index 0
 
-System.out.println(items);     // [Железный меч]
+System.out.println(items);     // [Iron Sword]
 ```
 
-### Очистка всех элементов
+### Clearing All Elements
 
 ```java
 ArrayList<String> items = new ArrayList<>();
-items.add("Меч");
-items.add("Щит");
+items.add("Sword");
+items.add("Shield");
 
-items.clear();                 // Удаляет всё
+items.clear();                 // Remove everything
 System.out.println(items);     // []
 ```
 
-## Зацикливание по ArrayList
+## Looping Through ArrayList
 
-### Использование for для цикла
+### Using For Loop
 
 ```java
 ArrayList<String> players = new ArrayList<>();
-players.add("Алиса");
-players.add("Боб");
-players.add("Чарли");
+players.add("Alice");
+players.add("Bob");
+players.add("Charlie");
 
 for (int i = 0; i < players.size(); i++) {
     System.out.println(players.get(i));
 }
 ```
 
-### For-each
+### Using Enhanced For Loop
 
 ```java
 for (String player : players) {
@@ -170,15 +170,15 @@ for (String player : players) {
 }
 ```
 
-### ForEach с лямбда-выражением
+### Using forEach (Java 8+)
 
 ```java
 players.forEach(player -> System.out.println(player));
 ```
 
-## Примеры для практики
+## Practical Examples
 
-### Система инвентаря игрока
+### Player Inventory System
 
 ```java
 import java.util.ArrayList;
@@ -194,27 +194,27 @@ public class Inventory {
     
     public boolean addItem(String item) {
         if (items.size() >= maxSize) {
-            System.out.println("Инвентарь полон!");
+            System.out.println("Inventory full!");
             return false;
         }
         
         items.add(item);
-        System.out.println("Добавлен: " + item);
+        System.out.println("Added: " + item);
         return true;
     }
     
     public boolean removeItem(String item) {
         if (items.remove(item)) {
-            System.out.println("Удалён: " + item);
+            System.out.println("Removed: " + item);
             return true;
         }
         
-        System.out.println("Предмет не найден!");
+        System.out.println("Item not found!");
         return false;
     }
     
     public void displayInventory() {
-        System.out.println("=== Инвентарь (" + items.size() + "/" + maxSize + ") ===");
+        System.out.println("=== Inventory (" + items.size() + "/" + maxSize + ") ===");
         for (int i = 0; i < items.size(); i++) {
             System.out.println((i + 1) + ". " + items.get(i));
         }
@@ -229,23 +229,23 @@ public class Inventory {
     }
 }
 
-// Использование
+// Usage
 public class Main {
     public static void main(String[] args) {
         Inventory inv = new Inventory(5);
         
-        inv.addItem("Меч");
-        inv.addItem("Щит");
-        inv.addItem("Зелье");
+        inv.addItem("Sword");
+        inv.addItem("Shield");
+        inv.addItem("Potion");
         inv.displayInventory();
         
-        inv.removeItem("Щит");
+        inv.removeItem("Shield");
         inv.displayInventory();
     }
 }
 ```
 
-### Система заданий
+### Quest System
 
 ```java
 import java.util.ArrayList;
@@ -262,34 +262,34 @@ public class QuestManager {
     public void startQuest(String questName) {
         if (!activeQuests.contains(questName)) {
             activeQuests.add(questName);
-            System.out.println("Задание начато: " + questName);
+            System.out.println("Quest started: " + questName);
         } else {
-            System.out.println("Задание уже начато!");
+            System.out.println("Quest already active!");
         }
     }
     
     public void completeQuest(String questName) {
         if (activeQuests.remove(questName)) {
             completedQuests.add(questName);
-            System.out.println("Задание завершено: " + questName);
+            System.out.println("Quest completed: " + questName);
         } else {
-            System.out.println("Задание не найдено в активных квестах!");
+            System.out.println("Quest not found in active quests!");
         }
     }
     
     public void displayQuests() {
-        System.out.println("\n=== Активный задания ===");
+        System.out.println("\n=== Active Quests ===");
         if (activeQuests.isEmpty()) {
-            System.out.println("Нет активных квестов");
+            System.out.println("No active quests");
         } else {
             for (String quest : activeQuests) {
                 System.out.println("- " + quest);
             }
         }
         
-        System.out.println("\n=== Завершённые задания ===");
+        System.out.println("\n=== Completed Quests ===");
         if (completedQuests.isEmpty()) {
-            System.out.println("Нет завершённых заданий");
+            System.out.println("No completed quests");
         } else {
             for (String quest : completedQuests) {
                 System.out.println("" + quest);
@@ -303,7 +303,7 @@ public class QuestManager {
 }
 ```
 
-### Система таблицы лидеров
+### Leaderboard System
 
 ```java
 import java.util.ArrayList;
@@ -321,26 +321,26 @@ public class Leaderboard {
     public void addScore(String player, int score) {
         players.add(player);
         scores.add(score);
-        System.out.println(player + " набрал " + score + " очков!");
+        System.out.println(player + " scored " + score + " points!");
     }
     
     public void displayTop(int count) {
-        System.out.println("\n=== Топ " + count + " игроков ===");
+        System.out.println("\n=== Top " + count + " Players ===");
         
-        // Создание копии для сортировки
+        // Create copies to sort
         ArrayList<Integer> sortedScores = new ArrayList<>(scores);
         ArrayList<String> sortedPlayers = new ArrayList<>(players);
         
-        // Сортировка пузырьком (Смена 
+        // Bubble sort (simple for learning)
         for (int i = 0; i < sortedScores.size() - 1; i++) {
             for (int j = 0; j < sortedScores.size() - i - 1; j++) {
                 if (sortedScores.get(j) < sortedScores.get(j + 1)) {
-                    // Смена баллами
+                    // Swap scores
                     int tempScore = sortedScores.get(j);
                     sortedScores.set(j, sortedScores.get(j + 1));
                     sortedScores.set(j + 1, tempScore);
                     
-                    // Смена игроков
+                    // Swap players
                     String tempPlayer = sortedPlayers.get(j);
                     sortedPlayers.set(j, sortedPlayers.get(j + 1));
                     sortedPlayers.set(j + 1, tempPlayer);
@@ -348,17 +348,17 @@ public class Leaderboard {
             }
         }
         
-        // Отображение результатов
+        // Display top scores
         int limit = Math.min(count, sortedScores.size());
         for (int i = 0; i < limit; i++) {
             System.out.println((i + 1) + ". " + sortedPlayers.get(i) + 
-                             " - " + sortedScores.get(i) + " очков");
+                             " - " + sortedScores.get(i) + " points");
         }
     }
 }
 ```
 
-### Счётчик количества игроков онлайн
+### Online Players Tracker
 
 ```java
 import java.util.ArrayList;
@@ -373,14 +373,14 @@ public class OnlinePlayersTracker {
     public void playerJoin(String playerName) {
         if (!onlinePlayers.contains(playerName)) {
             onlinePlayers.add(playerName);
-            broadcast(playerName + " присоединился к игре");
+            broadcast(playerName + " joined the game");
             updatePlayerCount();
         }
     }
     
     public void playerLeave(String playerName) {
         if (onlinePlayers.remove(playerName)) {
-            broadcast(playerName + " покинул игру");
+            broadcast(playerName + " left the game");
             updatePlayerCount();
         }
     }
@@ -394,25 +394,25 @@ public class OnlinePlayersTracker {
     }
     
     public void listPlayers() {
-        System.out.println("\n=== Игроков онлайн: (" + getPlayerCount() + ") ===");
+        System.out.println("\n=== Online Players (" + getPlayerCount() + ") ===");
         for (String player : onlinePlayers) {
             System.out.println("• " + player);
         }
     }
     
     private void broadcast(String message) {
-        System.out.println("[Сервер] " + message);
+        System.out.println("[Server] " + message);
     }
     
     private void updatePlayerCount() {
-        System.out.println("Игроков онлайн: " + getPlayerCount());
+        System.out.println("Players online: " + getPlayerCount());
     }
 }
 ```
 
-## ArrayList кастомных объектов
+## ArrayList of Custom Objects
 
-Вы можете хранить свои собственные классы в ArrayLists:
+You can store your own classes in ArrayLists:
 
 ```java
 public class Player {
@@ -434,7 +434,7 @@ public class Player {
     
     @Override
     public String toString() {
-        return name + " (Ур. " + level + ")";
+        return name + " (Lv. " + level + ")";
     }
 }
 
@@ -442,28 +442,28 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Player> players = new ArrayList<>();
         
-        players.add(new Player("Алиса", 10));
-        players.add(new Player("Боб", 15));
-        players.add(new Player("Чарли", 8));
+        players.add(new Player("Alice", 10));
+        players.add(new Player("Bob", 15));
+        players.add(new Player("Charlie", 8));
         
-        // Отобразить всех игроков
+        // Display all players
         for (Player player : players) {
             System.out.println(player);
         }
         
-        // Найти игрока по имени
+        // Find player by name
         for (Player player : players) {
-            if (player.getName().equals("Боб")) {
-                System.out.println("Найден: " + player);
+            if (player.getName().equals("Bob")) {
+                System.out.println("Found: " + player);
             }
         }
     }
 }
 ```
 
-## Полезные операции с ArrayList
+## Useful ArrayList Operations
 
-### Преобразовать в массив
+### Convert to Array
 
 ```java
 ArrayList<String> list = new ArrayList<>();
@@ -473,58 +473,58 @@ list.add("B");
 String[] array = list.toArray(new String[0]);
 ```
 
-### Преобразовать массив в ArrayList
+### Convert Array to ArrayList
 
 ```java
 String[] array = {"A", "B", "C"};
 ArrayList<String> list = new ArrayList<>(Arrays.asList(array));
 ```
 
-### Скопировать ArrayList
+### Copy an ArrayList
 
 ```java
 ArrayList<String> original = new ArrayList<>();
 original.add("A");
 original.add("B");
 
-// Поверхностное копирование (Копируются только значения)
+// Shallow copy
 ArrayList<String> copy = new ArrayList<>(original);
 ```
 
-### Найти индекс элемента
+### Find Index of Element
 
 ```java
 ArrayList<String> items = new ArrayList<>();
 items.add("Sword");
 items.add("Shield");
 
-int index = items.indexOf("Щит");  // 1
-int notFound = items.indexOf("Топор");  // -1
+int index = items.indexOf("Shield");  // 1
+int notFound = items.indexOf("Axe");  // -1
 ```
 
-## Практические упражнения
+## Practice Exercises
 
-1. **Корзина покупок**: Создайте систему корзины покупок
-   - Добавьте предметы
-   - Удалите предметы
-   - Посчитайте общее количество предметов
-   - Очистить корзину
+1. **Shopping Cart**: Create a shopping cart system:
+   - Add items
+   - Remove items
+   - Calculate total items
+   - Clear cart
 
-2. **Список друзей**: Создайте систему управления друзьями
-   - Добавить друга
-   - Удалить друга
-   - Проверьте, является ли кто-то вашим другом
-   - Отобразите всех друзей
+2. **Friend List**: Create a friend management system:
+   - Add friend
+   - Remove friend
+   - Check if someone is a friend
+   - Display all friends
 
-3. **Список дел**: Создайте список дел:
-   - Добавьте задачу
-   - Пометьте задачу как выполненная (переместите в список выполненных)
-   - Отобразите активные задачи
-   - Отобразите выполненные задачи
+3. **Todo List**: Build a todo list:
+   - Add task
+   - Mark task as complete (move to completed list)
+   - Display active tasks
+   - Display completed tasks
 
-4. **Хорошие результаты**: Создайте систему высоких результатов:
-   - Добавьте результаты
-   - Отобразите 5 лучших результатов по порядку
-   - Удалите самый низкий результат из 10 существующих
+4. **High Scores**: Create a high score system:
+   - Add scores
+   - Display top 5 scores in order
+   - Remove lowest score if more than 10 scores exist
 
 ---

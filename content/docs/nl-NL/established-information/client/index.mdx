@@ -52,7 +52,7 @@ The client and assets pipeline accepts `.blockymodel`, a custom format for Hytal
 There will only ever be one current, supported version of the client.
 
 > Java version will be kept updated by us and right now we are on the latest version (Java 25)
-> The game version will not be selectable to avoid the version jungle we experienced on our hypixel server network.  - Slikey
+> The game version will not be selectable to avoid the version jungle we experienced on our hypixel server network. We simply want to make sure that multiplayer networks can rely on players having the latest version of the game to not have to support 15+ versions of the client. - Slikey
 
 The client is multithreaded.
 
@@ -64,6 +64,6 @@ The GUI is built from C# bindings using Noesis.
 
 Hytale uses NativeAOT ("Ahead of Time") to build the client, which compiles C# to machine code for distribution. This means that, without reverse-engineering the machine code, mods will have to go through the server API.
 
-# Andere Informatie
+# Other Information
 
 The client has its own versioning and protocol to interact with servers.

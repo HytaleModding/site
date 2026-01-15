@@ -18,10 +18,10 @@ Sebuah variabel memiliki tiga komponen utama:
 Di Java, kamu harus mendeklarasikan variabel sebelum menggunakannya, seperti kamu membutuhkan kotak sebelum memasukkan sesuatu ke dalamnya. Sintaksnya adalah:
 
 ```java
-int age;
-age = 18;
+int age; // A declaration
+age = 18; // An assignment
 
-int age = 18; // Deklarasi dan penugasan dalam satu baris
+int age = 18; // Declaration and assignment in one line, also considered an initialization
 ```
 
 ## Tipe Data Primitif
@@ -44,7 +44,7 @@ Terkadang kamu mungkin tidak ingin variabel tetap pada tipe yang sama. Kamu bisa
 
 ```java
 int num = 10;
-double decimalNum = (double) num; // 10.0 - berjalan secara otomatis
+double decimalNum = num; // 10.0 - works automatically
 ```
 
 ### Manual (Casting)

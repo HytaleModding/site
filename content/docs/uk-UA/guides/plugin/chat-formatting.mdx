@@ -1,0 +1,47 @@
+---
+title: Formatting the chat
+description: Learn how to format the chat using the PlayerChatEvent
+authors:
+  - name: oskarscot
+    link: https://oskar.scot
+---
+
+![chat format example](/assets/guides/chat-example.png)
+
+The chat uses the PlayerChatEvent, it contains the formatter, the PlayerRef for the sender, the content as well as a list of targets (it's safe to assume the targets is the list of players who can see the chat message)
+You can cancel this event as well as modify the content and the formatter.
+
+```java
+public class ChatFormatter {
+
+  public static void onPlayerChat(PlayerChatEvent event) {
+    PlayerRef sender = event.getSender();
+    if(event.getContent().equalsIgnoreCase("poo")) {
+      event.setCancelled(true);
+      sender.sendMessage(Message.raw("Hey, you cannot say that!").color(Color.RED));
+    }
+
+    if(event.getContent().equalsIgnoreCase("you stink")) {
+      event.setContent("i stink");
+    }
+
+    event.setFormatter((playerRed, message) ->
+        Message.join(
+            Message.raw("[COOL] ").color(Color.RED),
+            Message.raw(sender.getUsername()).color(Color.YELLOW),
+            Message.raw(" : " + message).color(Color.PINK)
+        ));
+
+  }
+}
+```
+
+The formatter is the following interface:
+
+```java
+  public interface Formatter {
+    @Nonnull
+    Message format(@Nonnull PlayerRef playerRef, @Nonnull String message);
+  }
+}
+```

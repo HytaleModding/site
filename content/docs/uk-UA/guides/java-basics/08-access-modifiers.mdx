@@ -1,11 +1,11 @@
 ---
-title: 08 - Інкапсуляція та модифікатори доступу
-description: Дізнайтеся, як захистити та контролювати доступ до даних вашого класу.
+title: 08 - Encapsulation and Access Modifiers
+description: Learn how to protect and control access to your class data.
 ---
 
-Інкапсуляція полягає у приховуванні внутрішніх деталей класу та контролі доступу до його даних і їх модифікації. Це запобігає появі помилок і робить ваш код більш зручним для обслуговування.
+Encapsulation is about hiding the internal details of a class and controlling how its data is accessed and modified. This prevents bugs and makes your code more maintainable.
 
-## Проблема без інкапсуляції
+## The Problem Without Encapsulation
 
 ```java
 public class Player {
@@ -20,33 +20,33 @@ public class Main {
         player.health = 100;
         player.maxHealth = 100;
         
-        // Ой! Хтось може порушити правила
-        player.health = 500;      // Здоров'я перевищує максимум!
-        player.health = -50;      // Негативне здоров'я!
-        player.name = "";         // Порожнє ім'я!
+        // Oops! Someone can break the rules
+        player.health = 500;      // Health over maximum!
+        player.health = -50;      // Negative health!
+        player.name = "";         // Empty name!
     }
 }
 ```
 
-Без захисту будь-хто може встановити недопустимі значення!
+Without protection, anyone can set invalid values!
 
-## Модифікатори доступу
+## Access Modifiers
 
-Java має ключові слова, які контролюють, хто може отримати доступ до членів вашого класу:
+Java has keywords that control who can access your class members:
 
-| Модифікатор | Клас | Пакет | Підклас | Світ |
-| ----------- | ---- | ----- | ------- | ---- |
-| `public`    | ✓    | ✓     | ✓       | ✓    |
-| `protected` | ✓    | ✓     | ✓       | ✗    |
-| (none)      | ✓    | ✓     | ✗       | ✗    |
-| `private`   | ✓    | ✗     | ✗       | ✗    |
+| Modifier    | Class | Package | Subclass | World |
+| ----------- | ----- | ------- | -------- | ----- |
+| `public`    | ✓     | ✓       | ✓        | ✓     |
+| `protected` | ✓     | ✓       | ✓        | ✗     |
+| (none)      | ✓     | ✓       | ✗        | ✗     |
+| `private`   | ✓     | ✗       | ✗        | ✗     |
 
-**Наразі зосередьтеся на**:
+**For now, focus on:**
 
-* `public` - доступ для всіх
-* `private` - доступ тільки для цього класу
+* `public` - Anyone can access
+* `private` - Only this class can access
 
-## Робимо властивості приватними
+## Making Properties Private
 
 ```java
 public class Player {
@@ -62,16 +62,16 @@ public class Player {
 }
 ```
 
-Тепер ви не можете отримати прямий доступ до властивостей:
+Now you can't access properties directly:
 
 ```java
-Player player = new Player("Анна", 100);
-player.health = 500;  // ❌ Помилка! health є приватною властивістю
+Player player = new Player("Alice", 100);
+player.health = 500;  // ❌ Error! health is private
 ```
 
-## Методи-отримувачі та методи-встановлювачі
+## Getters and Setters
 
-Щоб отримати доступ до приватних властивостей, створіть **методи-отримувачі** та **методи-встановлювачі**:
+To access private properties, create **getter** and **setter** methods:
 
 ```java
 public class Player {
@@ -85,12 +85,12 @@ public class Player {
         this.maxHealth = maxHealth;
     }
     
-    // Метод-отримувач - повертає значення
+    // Getter - returns the value
     public int getHealth() {
         return health;
     }
     
-    // Метод-встановлювач - встановлює значення з перевіркою
+    // Setter - sets the value with validation
     public void setHealth(int health) {
         if (health < 0) {
             this.health = 0;
@@ -111,24 +111,24 @@ public class Player {
 }
 ```
 
-Тепер ви можете безпечно взаємодіяти з об'єктом:
+Now you can safely interact with the object:
 
 ```java
-Player player = new Player("Анна", 100);
+Player player = new Player("Alice", 100);
 
-player.setHealth(150);  // Автоматично обмежується 100
+player.setHealth(150);  // Automatically capped at 100
 System.out.println(player.getHealth());  // 100
 
-player.setHealth(-20);  // Автоматично встановлюється на 0
+player.setHealth(-20);  // Automatically set to 0
 System.out.println(player.getHealth());  // 0
 ```
 
-<Callout type="info" title="Іменування методів-отримувачів і методів-встановлювачів">
-  Дотримуйтесь правил іменування Java:
+<Callout type="info" title="Getter and Setter Naming">
+  Follow Java naming conventions:
 
-  * **Метод-отримувач**: `get` + ім'я властивості (з великої літери)
-  * **Метод-встановлювач**: `set` + ім'я властивості (з великої літери)
-  * **Логічний (boolean)**: `is` + ім'я властивості (з великої літери)
+  * **Getter**: `get` + property name (capitalized)
+  * **Setter**: `set` + property name (capitalized)
+  * **Boolean**: `is` + property name (capitalized)
 
   ```java
   private int health;
@@ -145,9 +145,9 @@ System.out.println(player.getHealth());  // 0
   ```
 </Callout>
 
-## Переваги інкапсуляції
+## Benefits of Encapsulation
 
-### 1. Перевірка
+### 1. Validation
 
 ```java
 public class Item {
@@ -170,13 +170,13 @@ public class Item {
 }
 ```
 
-### 2. Властивості тільки для читання
+### 2. Read-Only Properties
 
-Іноді вам не потрібен метод-встановлювач:
+Sometimes you don't want a setter:
 
 ```java
 public class Monster {
-    private String id;  // Ніколи не повинен змінюватися
+    private String id;  // Should never change
     private int health;
     
     public Monster(String id, int health) {
@@ -184,7 +184,7 @@ public class Monster {
         this.health = health;
     }
     
-    // Тільки метод-отримувач - без метода-встановлювача!
+    // Getter only - no setter!
     public String getId() {
         return id;
     }
@@ -199,9 +199,9 @@ public class Monster {
 }
 ```
 
-### 3. Обчислювані властивості
+### 3. Computed Properties
 
-Методи-отримувачі не обов'язково повинні повертати поле напряму:
+Getters don't have to return a field directly:
 
 ```java
 public class Player {
@@ -212,21 +212,21 @@ public class Player {
         return health;
     }
     
-    // Обчислювана властивість
+    // Computed property
     public double getHealthPercentage() {
         return (health * 100.0) / maxHealth;
     }
     
-    // Обчислювана властивість
+    // Computed property
     public boolean isLowHealth() {
         return getHealthPercentage() < 25;
     }
 }
 ```
 
-## Практичні приклади
+## Practical Examples
 
-### Предмет із міцністю
+### Item with Durability
 
 ```java
 public class Tool {
@@ -244,26 +244,26 @@ public class Tool {
     
     public void use() {
         if (broken) {
-            System.out.println(name + " зламаний!");
+            System.out.println(name + " is broken!");
             return;
         }
         
         durability--;
-        System.out.println(name + " використано. Міцність: " + durability);
+        System.out.println(name + " used. Durability: " + durability);
         
         if (durability <= 0) {
             broken = true;
-            System.out.println(name + " зламався!");
+            System.out.println(name + " broke!");
         }
     }
     
     public void repair() {
         durability = maxDurability;
         broken = false;
-        System.out.println(name + " відремонтований!");
+        System.out.println(name + " repaired!");
     }
     
-    // Методи-отримувачі
+    // Getters
     public String getName() {
         return name;
     }
@@ -282,7 +282,7 @@ public class Tool {
 }
 ```
 
-### Приклад банківського рахунку
+### Bank Account Example
 
 ```java
 public class PlayerWallet {
@@ -297,18 +297,18 @@ public class PlayerWallet {
     public void addGold(int amount) {
         if (amount > 0) {
             gold += amount;
-            System.out.println("Додано " + amount + " золота");
+            System.out.println("Added " + amount + " gold");
         }
     }
     
     public boolean spendGold(int amount) {
         if (amount > gold) {
-            System.out.println("Недостатньо золота!");
+            System.out.println("Not enough gold!");
             return false;
         }
         
         gold -= amount;
-        System.out.println("Витрачено " + amount + " золота");
+        System.out.println("Spent " + amount + " gold");
         return true;
     }
     
@@ -323,7 +323,7 @@ public class PlayerWallet {
 }
 ```
 
-### Система захищених блоків
+### Protected Block System
 
 ```java
 public class ProtectedBlock {
@@ -352,13 +352,13 @@ public class ProtectedBlock {
     public void unlock(String playerName) {
         if (playerName.equals(owner)) {
             locked = false;
-            System.out.println("Блок доступний");
+            System.out.println("Block unlocked");
         } else {
-            System.out.println("Ви не володієте цим блоком!");
+            System.out.println("You don't own this block!");
         }
     }
     
-    // Тільки методи-отримувачі - позиція і власник не повинні змінюватися
+    // Getters only - position and owner shouldn't change
     public int getX() {
         return x;
     }
@@ -381,36 +381,36 @@ public class ProtectedBlock {
 }
 ```
 
-## Коли використовувати приватний, а коли публічний
+## When to Use Private vs Public
 
-<Callout type="info" title="Загальні правила">
-  **За замовчуванням робіть все приватним!** Робіть публічним тільки те, до чого потрібен доступ ззовні.
+<Callout type="info" title="General Rules">
+  **Make it private by default!** Only make things public if they need to be accessed from outside.
 
-  **Приватний:**
+  **Private:**
 
-  * Внутрішні дані (стан, положення, інвентар)
-  * Допоміжні методи, що використовуються тільки в класі
-  * Все, що потребує перевірки
+  * Internal data (health, position, inventory)
+  * Helper methods used only within the class
+  * Anything that needs validation
 
-  **Публічний:**
+  **Public:**
 
-  * Методи, що визначають поведінку класу
-  * Конструктор
-  * Методи, які повинні викликати інші класи
+  * Methods that define the class's behavior
+  * Constructor
+  * Methods other classes need to call
 
   ```java
   public class Example {
-      // Приватний - внутрішні дані
+      // Private - internal data
       private int internalCounter;
       private String secretKey;
       
-      // Публічний - частина інтерфейсу
+      // Public - part of the interface
       public void doSomething() {
-          // Використовує приватний допоміжний метод
+          // Uses private helper method
           validateData();
       }
       
-      // Приватний - внутрішній допоміжний
+      // Private - internal helper
       private void validateData() {
           // ...
       }
@@ -418,15 +418,15 @@ public class ProtectedBlock {
   ```
 </Callout>
 
-## Ключове слово `final`
+## The `final` Keyword
 
-`final` означає, що змінну не можна змінити після її встановлення:
+`final` means a variable can't be changed after it's set:
 
 ```java
 public class Player {
-    private final String id;  // Не можна змінити після створення
-    private String name;      // Можна змінювати
-    private int health;       // Можна змінювати
+    private final String id;  // Can't change after creation
+    private String name;      // Can change
+    private int health;       // Can change
     
     public Player(String id, String name) {
         this.id = id;
@@ -437,7 +437,7 @@ public class Player {
         return id;
     }
     
-    // Немає setId() - це final!
+    // No setId() - it's final!
     
     public String getName() {
         return name;
@@ -449,107 +449,107 @@ public class Player {
 }
 ```
 
-## Ключове слово `static`
+## The `static` Keyword
 
-### Статичні компоненти
+### Static Members
 
-Клас може визначати два типи компонентів:
+A class can define two kinds of members:
 
-* **Компоненти екземпляру** - належать кожному об'єкту (кожен екземпляр має свою власну копію).
+* **Instance members** — owned by each object (each instance has its own copy).
 
-* **Статичні компоненти** - належать класу (одна спільна копія для всього типу).
+* **Static members** — owned by the class (one shared copy for the entire type).
 
-Простіше кажучи: компоненти екземпляру належать об'єктам; статичні компоненти належать самому класу і є спільними для всіх об'єктів цього типу.
+Put simply: instance members belong to objects; static members belong to the class itself and are shared by all objects of that type.
 
-#### Оголошення
+#### Declaration
 
 ```java
-    /* (модифікатор доступу) */ static ... memberName; 
+    /* (access modifier) */ static ... memberName; 
 ```
 
-#### Приклад
+#### Example
 
 ```java
 class Data {
-    public int x; // Компонент екземпляру
-    public static int y = 1000; // Статичний компонент
+    public int x; // Instanced member
+    public static int y = 1000; // Static member
 
-    // Компонент екземпляру:
-    // може отримати доступ як до статичних, так і до нестатичних компонентів
+    // Instanced member:
+    // can access to both static and non-static members
     public void foo() {
-        x = 100; // OK - те саме, що this.x = 100;
-        y = 100; // OK - те саме, що Data.y = 200;
+        x = 100; // OK - same as this.x = 100;
+        y = 100; // OK - same as Data.y = 200;
     }
 
-    // Статичний компонент:
-    // не може отримати доступ до нестатичних змінних
+    // Static member:
+    // cannot access to non-static variables
     public static void bar() {
-        x = 100; // Помилка: нестатична змінна x не може бути посиланням зі статичного контексту
+        x = 100; // Error: non-static variable x cannot be renference from a static context
         y = 100; // OK
     }
 }
 ```
 
-#### Доступ до статичних компонентів
+#### Accessing static members
 
 ```java
 Data data = new Data();
 data.x = 1000; // OK
 
-data.y = 1000; // майже OK - не дуже рекомендується; краще використовувати Data.y
-Data.y = 1000; // OK - найкраща практика
+data.y = 1000; // OK-ish - not really suggested; it's better to use Data.y
+Data.y = 1000; // OK - best practice
 
-Data.x = 1000; // Помилка: неможливо отримати доступ до змінних екземпляру в статичному контексті
+Data.x = 1000; // Error: cannot access instanced variables in a static context
 ```
 
-### Статичні поля
+### Static Fields
 
-Статичне поле представляє компонент даних, що належить типу класу, а не об'єкту. Статичні поля також зберігаються в певному місці пам'яті, яке є спільним для всіх створених екземплярів об'єкта.
+A static field represents a data member owned by the class type rather then the object. Static fields are also stored in a specific memory location that's been shared between all the object instances that are created.
 
-Воно оголошується наступним чином:
+It is declared as following:
 
 ```java
-/* (модифікатор доступу) (опціонально) */ static /* final/volatile (опціонально) */ fieldName;
+/* (access modifier) (optional) */ static /* final/volatile (optional) */ fieldName;
 ```
 
-Візьмемо той самий приклад класу Data і додамо цей конструктор:
+Let's take the same Data class example and add this constructor:
 
 ```java
 public Data() {
-    y++; // пам'ятайте, що це те саме, що Data.y++;
+    y++; // remember that's the same as Data.y++;
 }
 ```
 
 ```java
-// Кожен екземпляр Data матиме приватну копію компоненту екземпляра x
-// Однак він буде вказувати на те саме місце в пам'яті для компоненту y
+// Every instance of Data will have a private copy of the instanced member x
+// However it will point to the same location in memory for the member y
 Data d1 = new Data(); // y = 1001
 d1.x = 5;
 Data d2 = new Data(); // y = 1002
 d2.x = 25;
 Data d3 = new Data(); // y = 1003
-// ... і так далі
+// ... and so on
 ```
 
-### Статичні методи
+### Static Methods
 
-Статичні методи по суті представляють собою функціональний компонент певного типу класу
+Static methods essentially represent a function member of a certain class type
 
-З класу Data згадайте функцію (метод екземпляра) `foo` і (статичний метод) `bar`
+From the Data class remember the function (instanced method) `foo` and (static method) `bar`
 
-Доступ до цих методів можна отримати за допомогою:
+One can access those methods via:
 
 ```java
 Data d1 = new Data();
 
-d1.foo(); // Метод екземпляра: доступний ТІЛЬКИ об'єкту
+d1.foo(); // Instanced method: Accessible ONLY by an object
 
-Data.bar(); // Статичний метод: доступний без об'єкта
+Data.bar(); // Static method: accessible without an object
 ```
 
-### Статичний ініціалізатор
+### Static Initializer
 
-Використовуйте *статичний ініціалізатор* для виконання логіки ініціалізації під час першого завантаження класу:
+Use a *static initializer* block to run initialization logic when the class is first loaded:
 
 ```java
 class OtherData {
@@ -558,38 +558,38 @@ class OtherData {
     private static String msg;
 
     static {
-        msg = "Ініціалізація..."
+        msg = "Initialization..."
         System.out.println(msg);
         b = 4;
-        // ... складна ініціалізація, яку неможливо виконати одним виразом
+        // ... complex initialization that can't be done in a single expression
     }
 }
 ```
 
-## Практичні вправи
+## Practice Exercises
 
-1. **Створіть клас `BankAccount`**:
-   * Приватні властивості: accountNumber, balance
-   * Конструктор для встановлення номера рахунку
-   * Методи: deposit(), withdraw(), getBalance()
-   * Перевірка: не можна зняти більше, ніж є на рахунку
-   * Номер рахунку повинен бути тільки для читання
+1. **Create a `BankAccount` Class**:
+   * Private properties: accountNumber, balance
+   * Constructor to set account number
+   * Methods: deposit(), withdraw(), getBalance()
+   * Validation: can't withdraw more than balance
+   * Account number should be read-only
 
-2. **Створіть клас `Door`**:
-   * Приватні властивості: isLocked, keyCode
-   * Конструктор для встановлення пароля
-   * Методи: lock(), unlock(String code), isLocked()
-   * unlock() працює тільки з правильним паролем
-   * Пароль повинен бути приватним (не розголошуйте його!)
+2. **Create a `Door` Class**:
+   * Private properties: isLocked, keyCode
+   * Constructor to set the key code
+   * Methods: lock(), unlock(String code), isLocked()
+   * unlock() only works with correct code
+   * Code should be private (don't expose it!)
 
-3. **Створіть клас `PlayerStats`**:
-   * Приватні властивості: strength, defense, speed
-   * Конструктор для встановлення всіх показників
-   * Методи-отримувачі для всіх показників
-   * Метод: getPowerLevel(), що повертає strength + defense + speed
-   * Показники не можуть бути від'ємними або перевищувати 100
+3. **Create a `PlayerStats` Class**:
+   * Private properties: strength, defense, speed
+   * Constructor to set all stats
+   * Getters for all stats
+   * Method: getPowerLevel() that returns strength + defense + speed
+   * Stats can't be negative or over 100
 
-4. **Модифікуйте клас**: Візьміть один із класів з попереднього уроку та додайте належну інкапсуляцію:
-   * Зробіть всі властивості приватними
-   * Додайте відповідні методи-отримувачі та методи-встановлювачі
-   * Додайте перевірку там, де це необхідно
+4. **Refactor a Class**: Take one of your classes from the previous lesson and add proper encapsulation:
+   * Make all properties private
+   * Add appropriate getters and setters
+   * Add validation where needed

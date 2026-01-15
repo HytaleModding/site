@@ -1,17 +1,17 @@
 ---
-title: Veri Varlıkları
-description: Hytale'deki veri varlıkları ve bunların oyun içi davranışları ve içerik oluşturmayı nasıl etkilediği hakkında bilgiler.
+title: Data Assets
+description: Information about data assets in Hytale and how they drive gameplay behavior and content creation.
 ---
 
-# Veri Varlıkları
+# Data Assets
 
-Veri Varlıkları, Hytale'deki oyun davranışını ve temel içeriği yönlendiren JSON dosyalarıdır. Kod yazmaya gerek kalmadan oyun öğeleri oluşturmak ve değiştirmek için güçlü, veri odaklı bir yaklaşım sunuyorlar.
+Data Assets are JSON files which drive gameplay behavior and core content in Hytale. They provide a powerful, data-driven approach to creating and modifying game elements without needing to write code.
 
-## Veri Varlıkları Nedir?
+## What Are Data Assets?
 
-Veri Varlıkları, JSON yapılandırma dosyaları aracılığıyla temel oyun öğelerini oluşturmanıza veya değiştirmenize olanak tanır:
+Data Assets allow you to create or modify fundamental game elements through JSON configuration files:
 
-* **Bloklar**: Yeni blok türlerini ve özelliklerini tanımlayın.
+* **Blocks**: Define new block types and their properties
 * **Items**: Create custom items with unique behaviors
 * **NPCs**: Configure non-player characters and their AI
 * **World generation**: Control how the world is generated
@@ -23,38 +23,38 @@ Data Assets are analogous to Minecraft's data pack JSON files, but with signific
 
 This expanded data-driven approach gives modders much more power to customize the game without needing to dive into complex programming.
 
-## Geliştime Araçları
+## Development Tools
 
-JSON düzenlemenin elle yapıldığında zahmetli ve hataya açık olabileceğinin farkında olan Hytale, Veri Varlıklarıyla çalışmayı daha erişilebilir hale getirmek için çeşitli araçlar sunmayı planlıyor:
+Recognizing that JSON editing can be tedious and error-prone when done by hand, Hytale plans to provide multiple tools to make working with Data Assets more accessible:
 
-### Düğüm Düzenleyici
+### Node Editor
 
-Hytale, veri varlığı yönetimini daha kullanıcı dostu hale getirmek için bir "Düğüm Düzenleyici" geliştiriyor:
+Hytale is developing a "Node Editor" to make Data Asset management more user-friendly:
 
-* **Görsel arayüz**: Veri ilişkileriyle çalışmak için grafiksel bir yol sağlar.
-* **Özelleştirme odaklı**: Özellikle NPC'leri, etkileşimleri ve dünya oluşturmayı özelleştirmek için faydalıdır.
-* **Entegre iş akışı**: Birleşik bir içerik oluşturma paketi için doğrudan Hytale Varlık Düzenleyicisi içinde çalışır.
-* **Erişilebilirlik**: Karmaşık veri ilişkilerinin anlaşılmasını ve değiştirilmesini kolaylaştırır.
+* **Visual interface**: Provides a graphical way to work with data relationships
+* **Customization focus**: Particularly helpful for customizing NPCs, interactions, and world generation
+* **Integrated workflow**: Works directly within the Hytale Asset Editor for a unified creator suite
+* **Accessibility**: Makes complex data relationships easier to understand and modify
 
-### Ek Araçlar
+### Additional Tools
 
-Hytale, Düğüm Düzenleyicisinin ötesinde şunları desteklemeyi planlıyor:
+Beyond the Node Editor, Hytale plans to support:
 
-* **Görsel JSON oluşturucular**: Sözdizimi yazmadan JSON oluşturmak için grafiksel arayüzler.
-* **Form tabanlı düzenleyiciler**: Uygun JSON'u otomatik olarak üreten yapılandırılmış formlar.
-* **Çoklu iş akışı seçenekleri**: Farklı konfor seviyeleri ve kullanım durumları için farklı araçlar.
+* **Visual JSON generators**: Graphical interfaces for creating JSON without writing syntax
+* **Form-based editors**: Structured forms that generate the appropriate JSON automatically
+* **Multiple workflow options**: Different tools for different comfort levels and use cases
 
-## Güç ve Basitlik
+## Power and Simplicity
 
-Veri varlıklarının etkinliği, basitlikleriyle kanıtlanmaktadır. Örneğin, Hytale'da yırtıcı kuşlara binilebilir hale getirmek için yalnızca 4 satırlık JSON yapılandırması gerektiği bildiriliyor; bu da sistemin ne kadar güçlü ve aynı zamanda erişilebilir olacak şekilde tasarlandığını gösteriyor.
+The effectiveness of Data Assets is demonstrated by their simplicity. For example, making raptors rideable in Hytale reportedly requires only 4 lines of JSON configuration - showcasing how powerful yet accessible the system is designed to be.
 
-Güç ve erişilebilirlik arasındaki bu denge, Hytale'ın modlama felsefesinin merkezinde yer alıyor: etkili bir şekilde kullanmak için programlama uzmanlığı gerektirmeyen profesyonel düzeyde araçlar sağlamak.
+This balance between power and accessibility is central to Hytale's modding philosophy: providing professional-grade tools that don't require programming expertise to use effectively.
 
-## Diğer Sistemlerle Entegrasyon
+## Integration with Other Systems
 
-Veri Varlıkları, Hytale'ın diğer geliştirme yaklaşımlarıyla sorunsuz bir şekilde çalışır:
+Data Assets work seamlessly with Hytale's other development approaches:
 
-* **Görsel Komut Dosyası Oluşturma**: Veri Varlıklarında tanımlanan verilere referans verebilir ve bunları işleyebilir.
+* **Visual Scripting**: Can reference and manipulate data defined in Data Assets
 * **Java plugins**: Can read from and modify Data Assets for more complex behaviors
 * **Asset Editor**: Provides a unified interface for managing both visual assets and their data configurations
 

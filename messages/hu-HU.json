@@ -18,7 +18,14 @@
     "documentation": "Dokumentáció",
     "forum": "Fórum",
     "discord": "Csatlakozz a közösséghez!",
-    "memberCount": "{count} tag"
+    "memberCount": "{count} tag",
+    "countdown": "Hytale megjelenésig {countdown}",
+    "countdownUnits": {
+      "hours": "ó",
+      "minutes": "p",
+      "seconds": "mp\n"
+    },
+    "hytaleReleased": "Megjelent a Hytale!"
   },
   "sponsors": {
     "title": "Támogatás",

@@ -1,86 +1,86 @@
 ---
-title: Skriva guider
+title: Writing Guides
 ---
 
-## Skapa en guidefil
+## Creating a guide file
 
-För att börja skriva en guide måste du skapa en fil med tillägget `.mdx`. Du måste skapa denna fil i katalogen '/content/docs/en', nu beror det på vilket avsnitt du vill göra guiden, så du kan bestämma vilken mapp du ska lägga in den i efter det.
+To start writing a guide, you need to create a file with extension `.mdx`. You need to create this file inside the `/content/docs/en` directory, now it depends in which section you want to make the guide, so you can decide which folder you should put it in after that.
 
-Anta att jag vill göra en java basics guide, jag skulle lägga den i `/content/docs/en/guides/java-basics`. Du måste gräva lite för att ta reda på var du vill placera den.
+Suppose I want to make a java basics guide, I'd put it in `/content/docs/en/guides/java-basics`. You'll have to do some digging to find out where you want to place it.
 
 <Callout>
-  Om det redan finns en guide i sektionen du vill skriva om kan du bara trycka på "Edit On GitHub" knappen på vår hemsida och så tar den dig till mappen. Nu kan du skriva i samma mapp så du kan få din guide i samma sektion.
+  If there's already a guide in the section you want to write about, you can just press on the "Edit On GitHub" button on our website and it'll take you to the folder, now you can write in the same folder to have your guide appear in the same section.
 </Callout>
 
 ## Frontmatter
 
-Frontmatter är metadata i din guide, den talar om för vår webbplats hur du kan visa din guide. Detta måste vara högst upp i filen, som börjar med `---` och slutar med `---`.
+Frontmatter is the metadata of your guide, it tells our website how to display your guide. This needs to be at the very top of the file, which starts with `---` and ends with `---`.
 
-Här är ett exempel:
+Here's an example:
 
 ```mdx
 ---
 title: "Java Basics"
-description: "Lär dig grunderna av java."
+description: "Learn the basics of Java programming."
 authors:
-    - name: "Ditt namn"
-      url: "https://dinhemsida.com"
+    - name: "Your Name"
+      url: "https://yourwebsite.com"
 ---
 ```
 
-Nu som du kan se, det är ganska självförklarande, du behöver bara fylla i detaljerna för din specifika guide. Om du inte har en URL som du vill länka till så skriv inte den raden. Dessutom är författarsektionen frivillig, så om du inte vill lägga till den kan du kan bara utelämna det, även om vi uppmuntrar dig att göra det.
+Now as you can see, it's pretty self explanatory, you just need to fill in the details for your specific guide. If you don't have a URL you want to link yourself to, just don't write that whole line. Additionally, the authors section is optional, so if you don't want to add it, you can just leave it out although we encourage you to do so and credit yourself.
 
-Indragen i frontmatter är viktigt, så håll koll på att hålla det i linje med exemplet.
+The indentation in the frontmatter is important, so make sure to keep it consistent with the example.
 
-## Innehållets struktur
+## Content Structure
 
-Du bör strukturera innehållet i din guide på ett tydligt och organiserat sätt. Här är några tips på hur man gör det:
+You should structure the content of your guide in a clear and organized manner. Here are some tips on how to do that:
 
-- **Introduktion:** Börja med en översikt över ämnet och vad läsaren kan förvänta sig att lära sig.
-- **Förkunskapskrav:** Lista alla förutsättningar eller förkunskaper läsaren bör ha innan de dyker in i guiden.
-- **Steg-för-steg-instruktioner:** Bryta ner innehållet i tydliga, åtgärdbara steg. Använd rubriker och underrubriker för att organisera informationen.
-- **Kodexempel:** Inkludera kodutdrag för att illustrera nyckelpunkter. Se till att förklara varje exempel ordentligt.
-- \*\*Slutsats: \*\* Sammanfatta huvudpunkterna och uppmuntra läsaren att utforska vidare eller prova vad de har lärt sig.
+- **Introduction:** Start with an overview of the topic and what the reader can expect to learn.
+- **Prerequisites:** List any prerequisites or prior knowledge the reader should have before diving into the guide.
+- **Step-by-Step Instructions:** Break down the content into clear, actionable steps. Use headings and subheadings to organize the information.
+- **Code Examples:** Include code snippets to illustrate key points. Make sure to explain each example thoroughly.
+- **Conclusion:** Summarize the main points and encourage the reader to explore further or try out what they've learned.
 
-Om du nu skriver en riktigt stor sektion så borde du dela in denna i flera sidor så det är enklare för läsaren att ta in informationen. Ingen vill läsa en vägg av text bara sådär!
+Now if you're writing a really big section, you should split this into multiple pages so that it's easier for the reader to digest the information. No one wants to read a big wall of text all at once!
 
-När vi skriver guider borde vi också tänka på hur folk konsumerar de, och många människor föredrar att skumläsa innehållet istället för att läsa det i detalj. Detta är varför det är viktigt att dela information in i flera sidor, så det ser ut som en mindre mängd information för läsaren. Överväg även att använda punkter, numrerade listor eller andra formateringstekniker för att göra innehållet mer avläsningsbart.
+When we write guides, we should also think of how people will consume them, and many people prefer to skim content rather than read it in detail. This is why it's better to split information into multiple pages, so it looks like a smaller amount of information to the reader. Also, consider using bullet points, numbered lists, and other formatting techniques to make the content more scannable.
 
-## Formatering
+## Formatting
 
-Vi använder [Markdown](https://www.markdownguide.org/) för att formatera våra guider. Här är några viktiga punkter att tänka på:
+We use [Markdown](https://www.markdownguide.org/) for formatting our guides. Here are some key points to keep in mind:
 
-- Använd rubriker (`#`, `##`, `###`) för att organisera ditt innehåll.
-- Använd punkter och numrerade listor för tydlighet.
-- Använd kodblock (\`\`\`) för kodsnippets.
-- Använd länkar för att referera till andra guider eller externa resurser.
+- Use headings (`#`, `##`, `###`) to organize your content.
+- Use bullet points and numbered lists for clarity.
+- Use code blocks (\`\`\`) for code snippets.
+- Use links to reference other guides or external resources.
 
-Detta är samma typ av formatering som du ser på de flesta dokumentationswebbplatser, och även sociala medieplattformar som Discord.
+This is the same type of formatting you'll see on most documentation websites, and also social media platforms like Discord.
 
-Du kan också göra en Callout för att lyfta fram viktig information eller tips. Använd följande syntax:
+You can also make a Callout to highlight important information or tips. Use the following syntax:
 
 ```mdx
 <Callout>
-    Detta är ett callout-meddelande.
+    This is a callout message.
 </Callout>
 ```
 
 <Callout>
-  Detta är ett callout-meddelande.
+  This is a callout message.
 </Callout>
 
-Du kan ändra färgen på callout genom att lägga till en `type`-attribut. Till exempel:
+You can change the color of the callout by adding a `type` attribute. For example:
 
 ```mdx
 <Callout type="info">
-    Detta är en informations-callout.
+    This is an info callout.
 </Callout>
 ```
 
-Tillgängliga typer är: `info`, `warning`, `error`, och `success`.
+Available types are: `info`, `warning`, `error`, and `success`.
 
-## Sammanfattning
+## Conclusion
 
-Det är allt! Du är nu en mästare på att skriva guider. Kom bara ihåg, tro inte att du behöver vara perfekt med din engelska, skriv guiden på vilket sätt du kommer att förklara ämnet för någon, och tveka inte att be om feedback eller hjälp om du behöver det.
+That's all! You are now a master at writing guides. Just remember, do not think you need to be perfect with your English, write the guide the way you will explain the topic to someone, and don't hesitate to ask for feedback or help if you need it.
 
-Gott skrivande!
+Happy writing!

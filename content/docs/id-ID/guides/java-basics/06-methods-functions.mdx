@@ -1,94 +1,94 @@
 ---
-title: 06 - Methods (Fungsi)
-description: Pelajari cara mengatur dan menggunakan kembali kode dengan method.
+title: 06 - Methods (Functions)
+description: Learn how to organize and reuse code with methods.
 ---
 
-Method adalah blok kode yang dapat digunakan kembali untuk melakukan tugas tertentu. Method membantumu menghindari penulisan kode berulang dan membuat programmu lebih mudah dipahami.
+Methods are reusable blocks of code that perform specific tasks. They help you avoid repeating code and make your programs easier to understand.
 
-## Apa itu Method?
+## What is a Method?
 
-Anggap method sebagai sebuah resep. Kamu mendefinisikannya sekali, lalu menggunakannya kapan pun kamu butuhkan.
+Think of a method as a recipe. You define it once, then use it whenever you need it.
 
 ```java tab="Code"
 public class Game {
     public static void main(String[] args) {
-        greet();        // Panggil method
-        greet();        // Panggil lagi!
+        greet();        // Call the method
+        greet();        // Call it again!
     }
     
-    // Definisi Method
+    // Method definition
     public static void greet() {
-        System.out.println("Selamat datang di Hytale!");
+        System.out.println("Welcome to Hytale!");
     }
 }
 ```
 
 ```text tab="Output"
-Selamat datang di Hytale
-Selamat datang di Hytale
+Welcome to Hytale!
+Welcome to Hytale!
 ```
 
-## Struktur Method
+## Method Structure
 
 ```java
 public static void methodName() {
 //  ^      ^     ^      ^       ^
 //  |      |     |      |       |
-// akses  static tipe  nama  parameter
-// modifier      kembalian
-    // Code ditulis disini
+// access static return name  parameters
+// modifier       type
+    // Code goes here
 }
 ```
 
-Kita akan belajar arti `public` dan `static` nanti. Untuk sekarang, gunakan saja dulu.
+We'll learn what `public` and `static` mean later. For now, just use them.
 
-## Method dengan Parameter
+## Methods with Parameters
 
-Parameter membiarkanmu mengirim data ke dalam method:
+Parameters let you pass data into methods:
 
 ```java
 public static void greetPlayer(String name) {
-    System.out.println("Halo, " + name + "!");
+    System.out.println("Hello, " + name + "!");
 }
 
 public static void main(String[] args) {
-    greetPlayer("Alice");  // Halo, Alice!
-    greetPlayer("Bob");    // Halo, Bob!
+    greetPlayer("Alice");  // Hello, Alice!
+    greetPlayer("Bob");    // Hello, Bob!
 }
 ```
 
-### Banyak Parameter
+### Multiple Parameters
 
 ```java
 public static void dealDamage(String target, int damage) {
-    System.out.println(target + " menerima " + damage + " damage!");
+    System.out.println(target + " takes " + damage + " damage!");
 }
 
 public static void main(String[] args) {
-    dealDamage("Zombie", 20);    // Zombie menerima 20 damage!
-    dealDamage("Skeleton", 15);  // Skeleton menerima 15 damage!
+    dealDamage("Zombie", 20);    // Zombie takes 20 damage!
+    dealDamage("Skeleton", 15);  // Skeleton takes 15 damage!
 }
 ```
 
-<Callout type="info" title="Urutan Parameter Itu Penting">
-  Saat memanggil method, argumen harus sesuai dengan urutan parameter:
+<Callout type="info" title="Parameter Order Matters">
+  When calling a method, arguments must match the parameter order:
 
   ```java
   public static void createItem(String name, int quantity, double price) {
       // ...
   }
 
-  // Benar
+  // Correct
   createItem("Sword", 1, 50.0);
 
-  // Salah - Urutan itu penting!
+  // Wrong - Order matters!
   createItem(1, "Sword", 50.0);  // Error!
   ```
 </Callout>
 
-## Method dengan Nilai Kembalian/Return Values
+## Methods with Return Values
 
-Method dapat mengirim data kembali menggunakan return:
+Methods can send data back using `return`:
 
 ```java
 public static int add(int a, int b) {
@@ -102,13 +102,13 @@ public static void main(String[] args) {
 }
 ```
 
-Tipe kembalian (return type) harus cocok dengan apa yang kamu kembalikan:
+The return type must match what you return:
 
-* `void` - Tidak mengembalikan apa-apa
-* `int` - Mengembalikan integer (bilangan bulat)
-* `double` - Mengembalikan desimal
-* `boolean` - Mengembalikan true/false
-* `String` - Mengembalikan teks
+* `void` - Returns nothing
+* `int` - Returns an integer
+* `double` - Returns a decimal
+* `boolean` - Returns true/false
+* `String` - Returns text
 
 ```java
 public static String getItemName() {
@@ -124,20 +124,20 @@ public static double calculateDamage(int attack, double multiplier) {
 }
 ```
 
-<Callout type="warning" title="Return Menghentikan Eksekusi">
-  Setelah method mencapai `return`, ia langsung berhenti. Kode setelah `return` tidak akan dijalankan!
+<Callout type="warning" title="Return Stops Execution">
+  Once a method hits `return`, it immediately exits. Code after `return` won't run!
 
   ```java
   public static int getValue() {
       return 10;
-      System.out.println("This never runs!");  // Kode yang tidak terjangkau!
+      System.out.println("This never runs!");  // Unreachable code!
   }
   ```
 </Callout>
 
-## Contoh Praktis
+## Practical Examples
 
-### Sistem Kesehatan/Health System
+### Health System
 
 ```java tab="Code"
 public static void displayHealth(String name, int health, int maxHealth) {
@@ -157,7 +157,7 @@ Player: 75/100 (75.0%)
 Boss: 450/500 (90.0%)
 ```
 
-### Kalkulator Damage
+### Damage Calculator
 
 ```java tab="Code"
 public static int calculateDamage(int baseAttack, int weaponDamage, boolean isCritical) {
@@ -174,12 +174,12 @@ public static void main(String[] args) {
     int damage1 = calculateDamage(10, 15, false);  // 25
     int damage2 = calculateDamage(10, 15, true);   // 50
     
-    System.out.println("Serangan normal: " + damage1);
-    System.out.println("Serangan kritis: " + damage2);
+    System.out.println("Normal hit: " + damage1);
+    System.out.println("Critical hit: " + damage2);
 }
 ```
 
-### Persyaratan Level
+### Level Requirements
 
 ```java tab="Code"
 public static int getXPForLevel(int level) {
@@ -196,15 +196,15 @@ public static void main(String[] args) {
     int playerLevel = 4;
     
     if (canLevelUp(playerXP, playerLevel)) {
-        System.out.println("Kamu bisa naik level!");
+        System.out.println("You can level up!");
     } else {
         int needed = getXPForLevel(playerLevel + 1) - playerXP;
-        System.out.println("Butuh " + needed + " XP lagi");
+        System.out.println("Need " + needed + " more XP");
     }
 }
 ```
 
-### Kalkulator Jarak
+### Distance Calculator
 
 ```java tab="Code"
 public static double calculateDistance(int x1, int y1, int x2, int y2) {
@@ -219,16 +219,16 @@ public static boolean isInRange(int x1, int y1, int x2, int y2, double range) {
 }
 
 public static void main(String[] args) {
-    // Cek apakah musuh dalam jangkauan serangan
+    // Check if enemy is in attack range
     if (isInRange(0, 0, 5, 5, 10.0)) {
-        System.out.println("Target dalam jangkauan!");
+        System.out.println("Target in range!");
     }
 }
 ```
 
 ## Method Overloading
 
-Kamu bisa memiliki beberapa method dengan nama yang sama tapi parameter berbeda:
+You can have multiple methods with the same name but different parameters:
 
 ```java
 public static void displayMessage(String message) {
@@ -242,33 +242,33 @@ public static void displayMessage(String message, int times) {
 }
 
 public static void main(String[] args) {
-    displayMessage("Hello");           // Memanggil versi pertama
-    displayMessage("Hello", 3);        // Memanggil versi kedua
+    displayMessage("Hello");           // Calls first version
+    displayMessage("Hello", 3);        // Calls second version
 }
 ```
 
-<Callout type="info" title="Aturan Method Overloading">
-  Method dianggap berbeda jika memiliki:
+<Callout type="info" title="Method Overloading Rules">
+  Methods are considered different if they have:
 
-  * Jumlah parameter berbeda
-  * Tipe parameter berbeda
-  * Urutan parameter berbeda
+  * Different number of parameters
+  * Different types of parameters
+  * Different order of parameters
 
   ```java
   public static void test(int a) { }
-  public static void test(int a, int b) { }        // Jumlah berbeda
-  public static void test(double a) { }            // Tipe berbeda
-  public static void test(String a, int b) { }     // Tipe-tipe berbeda
-  public static void test(int a, String b) { }     // Urutan berbeda
+  public static void test(int a, int b) { }        // Different count
+  public static void test(double a) { }            // Different type
+  public static void test(String a, int b) { }     // Different types
+  public static void test(int a, String b) { }     // Different order
 
-  // Salah - Hanya tipe kembalian yang berbeda
+  // Wrong - Only return type is different
   public static int test(int a) { }
   ```
 </Callout>
 
-## Pola Umum dalam Modding Hytale
+## Common Patterns in Hytale Modding
 
-### Pembuatan Item
+### Item Creation
 
 ```java
 public static Item createItem(String name, int durability) {
@@ -287,16 +287,16 @@ public static Item createPickaxe() {
 }
 ```
 
-### Validasi Penempatan Blok
+### Block Placement Validation
 
 ```java
 public static boolean canPlaceBlock(int x, int y, int z) {
-    // Cek apakah posisi valid
+    // Check if position is valid
     if (y < 0 || y > 255) {
         return false;
     }
     
-    // Cek apakah blok sudah ada
+    // Check if block already exists
     if (isBlockAt(x, y, z)) {
         return false;
     }
@@ -306,15 +306,15 @@ public static boolean canPlaceBlock(int x, int y, int z) {
 
 public static void placeBlock(int x, int y, int z, String type) {
     if (canPlaceBlock(x, y, z)) {
-        // Tempatkan blok
-        System.out.println("Menempatkan " + type + " di (" + x + ", " + y + ", " + z + ")");
+        // Place the block
+        System.out.println("Placed " + type + " at (" + x + ", " + y + ", " + z + ")");
     } else {
-        System.out.println("Tidak bisa menaruh blok di sana!");
+        System.out.println("Cannot place block there!");
     }
 }
 ```
 
-### Cek Status Pemain
+### Player State Checks
 
 ```java
 public static boolean isLowHealth(int health, int maxHealth) {
@@ -325,88 +325,88 @@ public static String getHealthStatus(int health, int maxHealth) {
     double percentage = (health * 100.0) / maxHealth;
     
     if (percentage >= 75) {
-        return "Sehat";
+        return "Healthy";
     } else if (percentage >= 50) {
-        return "Terluka";
+        return "Injured";
     } else if (percentage >= 25) {
-        return "Kritis";
+        return "Critical";
     } else {
-        return "Hampir Mati";
+        return "Near Death";
     }
 }
 ```
 
-## Praktik Terbaik
+## Best Practices
 
-<Callout type="info" title="Penamaan Method">
-  Gunakan nama berbasis kata kerja yang deskriptif yang menjelaskan apa yang dilakukan method tersebut:
+<Callout type="info" title="Method Naming">
+  Use descriptive verb-based names that explain what the method does:
 
   ```java
-  // Bagus
+  // Good
   public static void calculateDamage() { }
   public static boolean isPlayerAlive() { }
   public static String getItemName() { }
   public static void displayInventory() { }
 
-  // Buruk
-  public static void dmg() { }        // Terlalu pendek
-  public static void method1() { }    // Tidak Deskriptif
-  public static void stuff() { }      // Terlalu samar
+  // Bad
+  public static void dmg() { }        // Too short
+  public static void method1() { }    // Not descriptive
+  public static void stuff() { }      // Too vague
   ```
 </Callout>
 
-## Latihan Praktik
+## Practice Exercises
 
-1. **Konverter Suhu**: Tulis method untuk mengonversi:
-   * Celsius ke Fahrenheit: `(C × 9/5) + 32`
-   * Fahrenheit ke Celsius: `(F - 32) × 5/9`
+1. **Temperature Converter**: Write methods to convert:
+   * Celsius to Fahrenheit: `(C × 9/5) + 32`
+   * Fahrenheit to Celsius: `(F - 32) × 5/9`
 
-2. **Kalkulator Lingkaran**: Buat method yang menghitung:
-   * Luas: `π × radius²`
-   * Keliling: `2 × π × radius`
-   * Gunakan Math.PI untuk π
+2. **Circle Calculator**: Create methods that calculate:
+   * Area: `π × radius²`
+   * Circumference: `2 × π × radius`
+   * Use `Math.PI` for π
 
-3. **Durabilitas Item**: Tulis method-method ini:
-   * `damageItem(int current, int damage)` - mengembalikan durabilitas baru
-   * `isBroken(int durability)` - mengembalikan true jika durabilitas kurang dari atau sama dengan 0
-   * `repairItem(int current, int max)` - mengembalikan durabilitas maksimal
+3. **Item Durability**: Write these methods:
+   * `damageItem(int current, int damage)` - returns new durability
+   * `isBroken(int durability)` - returns true if durability is less than or equal to 0
+   * `repairItem(int current, int max)` - returns max durability
 
-4. **Validator Password**: Buat method yang mengecek apakah password valid:
-   * Minimal panjang 8 karakter
-   * Mengandung setidaknya satu angka
-   * Mengembalikan true jika valid, false jika tidak
+4. **Password Validator**: Create a method that checks if a password is valid:
+   * At least 8 characters long
+   * Contains at least one number
+   * Returns true if valid, false otherwise
 
-## Kesalahan Umum
+## Common Mistakes
 
 ```java
-// Salah - Lupa pernyataan return
+// Wrong - Forgetting return statement
 public static int getValue() {
     int x = 10;
-    // Lupa return!
+    // Forgot to return!
 } !
 
-// Benar
+// Correct
 public static int getValue() {
     int x = 10;
     return x;
 }
 
-// Salah - Tipe return salah
+// Wrong - Wrong return type
 public static int getText() {
     return "Hello";  // Error! Should return int, not String
 }
 
-// Benar
+// Correct
 public static String getText() {
     return "Hello";
 }
 
-// Salah - Tidak memanggil method
+// Wrong - Not calling the method
 public static void main(String[] args) {
-    greet;  // Error! Kurang tanda ()
+    greet;  // Error! Missing ()
 }
 
-// Benar
+// Correct
 public static void main(String[] args) {
     greet();
 }

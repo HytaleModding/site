@@ -1,61 +1,61 @@
 ---
-title: 12 - Обработка исключений
-description: Узнайте, как обрабатывать ошибки в ваших программах Java.
+title: 12 - Exception Handling
+description: Learn how to handle errors gracefully in your Java programs.
 ---
 
-Исключения - это ошибки, возникающие во время работы программы. Вместо вылета, вы можете "поймать" эти ошибки и обрабатывать их.
+Exceptions are errors that occur while your program is running. Instead of crashing, you can "catch" these errors and handle them gracefully.
 
-## Что такое исключение?
+## What is an Exception?
 
-Исключение - событие, которое нарушает работу вашей программы:
+An exception is an event that disrupts the normal flow of your program:
 
 ```java
 String text = null;
-System.out.println(text.length());  // NullPointerException - сбой!
+System.out.println(text.length());  // NullPointerException - crashes!
 ```
 
-Без обработки, это ошибка сломает ваш мод и игру!
+Without handling, this crashes your mod and breaks the game!
 
-## Блоки Try-Catch
+## Try-Catch Blocks
 
-Используйте `try-catch` для обработки исключений:
+Use `try-catch` to handle exceptions:
 
 ```java
 try {
-    // Код, который может выдать исключение (ошибку)
+    // Code that might throw an exception
     String text = null;
     System.out.println(text.length());
 } catch (NullPointerException e) {
-    // Код, который ловит это исключение
-    System.out.println("ОШИБКА: Текст был пуст!");
+    // Code to handle the error
+    System.out.println("Error: text was null!");
 }
 
-System.out.println("Программа продолжает работу...");
+System.out.println("Program continues...");
 ```
 
-<Callout type="info" title="Как работает Try-Catch">
-  1. Код в блоке `try` запускается как обычно
-  2. Если произошло исключение, выполнение перепрыгивает к блоку «catch»
-  3. После блока `catch` программа продолжает работу как обычно
-  4. Если не произошло исключения, блок «catch» пропускается
+<Callout type="info" title="How Try-Catch Works">
+  1. Code in `try` block runs normally
+  2. If an exception occurs, execution jumps to `catch` block
+  3. After `catch` block, program continues normally
+  4. If no exception occurs, `catch` block is skipped
 
   ```java
   try {
-      // Попытка совершить что-то рискованное
-      int result = 10 / 0;  // деление на ноль!
+      // Try to do something risky
+      int result = 10 / 0;  // Division by zero!
   } catch (ArithmeticException e) {
-      // "Ловим" исключение
-      System.out.println("Деление на ноль невозможно!");
+      // Handle the error
+      System.out.println("Can't divide by zero!");
   }
-  // программа продолжает работать
+  // Program keeps running
   ```
 </Callout>
 
-## Часто используемые типы исключений
+## Common Exception Types
 
 ### NullPointerException
 
-Доступ к методам/свойствам в null объектах:
+Accessing methods/properties on null objects:
 
 ```java
 String name = null;
@@ -63,51 +63,51 @@ String name = null;
 try {
     int length = name.length();
 } catch (NullPointerException e) {
-    System.out.println("Имя равно null");
+    System.out.println("Name is null!");
 }
 ```
 
 ### ArrayIndexOutOfBoundsException
 
-Доступ к неверному индексу массивов:
+Accessing invalid array index:
 
 ```java
 int[] numbers = {1, 2, 3};
 
 try {
-    int value = numbers[10];  // Индекса 10 не существует!
+    int value = numbers[10];  // Index 10 doesn't exist!
 } catch (ArrayIndexOutOfBoundsException e) {
-    System.out.println("Недопустимый индекс массива!");
+    System.out.println("Invalid array index!");
 }
 ```
 
 ### NumberFormatException
 
-Преобразование недопустимых строк в числа:
+Converting invalid strings to numbers:
 
 ```java
 try {
-    int number = Integer.parseInt("abc");  // Не число!
+    int number = Integer.parseInt("abc");  // Not a number!
 } catch (NumberFormatException e) {
-    System.out.println("Недопустимый формат числа");
+    System.out.println("Invalid number format!");
 }
 ```
 
 ### ArithmeticException
 
-Математические ошибки, такие как деление на ноль:
+Math errors like division by zero:
 
 ```java
 try {
     int result = 10 / 0;
 } catch (ArithmeticException e) {
-    System.out.println("Математическая ошибка!");
+    System.out.println("Math error!");
 }
 ```
 
-## Несколько Блоков Catch
+## Multiple Catch Blocks
 
-Различные исключения обрабатываются по-разному:
+Handle different exceptions differently:
 
 ```java
 String input = "abc";
@@ -117,78 +117,78 @@ try {
     int result = 100 / number;
     System.out.println(result);
 } catch (NumberFormatException e) {
-    System.out.println("Недопустимое число!");
+    System.out.println("Invalid number!");
 } catch (ArithmeticException e) {
-    System.out.println("Нельзя делить на ноль!");
+    System.out.println("Cannot divide by zero!");
 }
 ```
 
-## Перехват Нескольких Типов Исключений
+## Catching Multiple Exception Types
 
-Перехватывает несколько исключений в одном блоке:
+Catch multiple exceptions in one block:
 
 ```java
 try {
-    // Какой-то рискованный код
+    // Some risky code
 } catch (NumberFormatException | ArithmeticException e) {
-    System.out.println("Произошла математическая ошибка!");
+    System.out.println("Math-related error occurred!");
 }
 ```
 
-## Блок Finally
+## The Finally Block
 
-Код, который **всегда** выполняется, независимо от того, возникает исключение или нет:
+Code that **always** runs, whether exception occurs or not:
 
 ```java
 try {
-    System.out.println("Открытие файла...");
-    // Код, который должен привести к исключению
+    System.out.println("Opening file...");
+    // Code that might fail
 } catch (Exception e) {
-    System.out.println("Ошибка: " + e.getMessage());
+    System.out.println("Error: " + e.getMessage());
 } finally {
-    System.out.println("Закрытие файла...");
-    // Это выполняется ВСЕГДА - подходит для очистки чего-либо
+    System.out.println("Closing file...");
+    // This ALWAYS runs - good for cleanup
 }
 ```
 
-<Callout type="" title="Когда Использовать Finally">
-  Используйте `finally` для задач очистки, которые должны выполняться всегда:
+<Callout type="info" title="When to Use Finally">
+  Use `finally` for cleanup tasks that must always happen:
 
-  - Закрытие файлов
-  - Освобождение ресурсов
-  - Сохранение данных
-  - Логирование
+  - Closing files
+  - Releasing resources
+  - Saving data
+  - Logging
 
   ```java
   FileReader file = null;
   try {
       file = new FileReader("data.txt");
-      // Чтение файла
+      // Read file
   } catch (Exception e) {
-      System.out.println("Ошибка чтения файла");
+      System.out.println("Error reading file");
   } finally {
       if (file != null) {
-          file.close();  // Всегда закрывайте файл!
+          file.close();  // Always close the file!
       }
   }
   ```
 </Callout>
 
-## Получение Информации Об Исключении
+## Getting Exception Information
 
-Объект исключения содержит полезную информацию:
+The exception object contains useful information:
 
 ```java
 try {
     int result = Integer.parseInt("xyz");
 } catch (NumberFormatException e) {
-    System.out.println("Сообщение: " + e.getMessage());
-    System.out.println("Тип: " + e.getClass().getName());
-    e.printStackTrace();  // Печатает полную информацию об ошибке
+    System.out.println("Message: " + e.getMessage());
+    System.out.println("Type: " + e.getClass().getName());
+    e.printStackTrace();  // Print full error details
 }
 ```
 
-## Практические примеры
+## Practical Examples
 
 ### Safe Player Input
 
@@ -223,7 +223,7 @@ public class PlayerInput {
 }
 ```
 
-### Безопасное Обновление Прочности Предмета
+### Safe Item Durability Update
 
 ```java
 public class Item {
@@ -240,7 +240,7 @@ public class Item {
     public void damage(int amount) {
         try {
             if (amount < 0) {
-                throw new IllegalArgumentException("Прочность не бывает отрицательной!");
+                throw new IllegalArgumentException("Damage cannot be negative!");
             }
             
             durability -= amount;
@@ -249,10 +249,10 @@ public class Item {
                 durability = 0;
             }
             
-            System.out.println(name + " прочность: " + durability + "/" + maxDurability);
+            System.out.println(name + " durability: " + durability + "/" + maxDurability);
             
             if (durability == 0) {
-                System.out.println(name + " сломался!");
+                System.out.println(name + " broke!");
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
@@ -261,7 +261,7 @@ public class Item {
 }
 ```
 
-### Безопасная Загрузка Конфига
+### Safe Config Loading
 
 ```java
 import java.util.HashMap;
@@ -491,14 +491,14 @@ public class Player {
   ```
 </Callout>
 
-## Практические упражнения
+## Practice Exercises
 
-1. **Безопасное Деление**: Создайте метод, который делит два числа. Красиво обработайте деление на ноль (division by zero) и неверный ввод (invalid input).
+1. **Safe Division Calculator**: Create a method that divides two numbers. Handle division by zero and invalid input gracefully.
 
-2. **Установка Уровня Игрока**: Создайте метод, который устанавливает уровень игрока (1-100). Вызовите исключение при ошибке и обработайте его в main.
+2. **Player Level Setter**: Create a method that sets player level (1-100). Throw an exception if invalid, and handle it in main.
 
-3. **Безопасный доступ к массиву**: Создайте метод, который будет безопасно обращаться к элементам массива. Возвратите null если индекс некорректен, вместо краша.
+3. **Safe Array Access**: Create a method that safely accesses array elements. Return null if index is invalid instead of crashing.
 
-4. **Парсер Конфига**: Прочтите строку конфига типа "maxPlayers=10" и соберите информацию с нее. Обработайте некорректные форматы красиво.
+4. **Config Parser**: Read a config string like "maxPlayers=10" and parse it. Handle invalid formats gracefully.
 
-5. **Поверка Имени Файла**: Создайте метод, который проверяет корректность имени файла (нет специальных символов, не пустое). Вызовите исключение для некорректных имен.
+5. **File Name Validator**: Create a method that checks if a filename is valid (no special characters, not empty). Throw exceptions for invalid names.

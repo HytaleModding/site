@@ -1,7 +1,7 @@
 {
   "displayName": "Română",
   "nav": {
-    "title": "Hytale Modding",
+    "title": "Moduri Hytale",
     "documentation": "Documentation",
     "sponsors": "Sponsors",
     "search": "Search"
@@ -11,14 +11,21 @@
     "flipwords": [
       "Guides",
       "Documentation",
-      "Resources",
+      "Unelte",
       "Tutorials"
     ],
     "description": "Cea mai bună resursă făcută de comunitate pentru a moda Hytale, prezentat cu ghiduri și documentație în detaliu, și unelte esențiale pentru a începe aventura ta cu modarea Hytale.",
     "documentation": "Docs",
     "forum": "Forum",
     "discord": "Join the community!",
-    "memberCount": "{count} Members"
+    "memberCount": "{count} Members",
+    "countdown": "Hytale releases in {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale is out!"
   },
   "sponsors": {
     "title": "Support Us",

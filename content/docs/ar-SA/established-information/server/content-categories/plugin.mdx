@@ -1,33 +1,48 @@
 ---
-title: التعديل باستخدام جافا (إضافات الخادم(السيرفر))
-description: نظرة تمهيدية على نظام التعديل باستخدام جافا في هايتيل وفق المعلومات المتاحة حتى الآن.
+title: Java Modding (Server Plugins)
+description: An introduction to what we know of Hytale's Java-based modding system as of writing this article.
 ---
 
-توفّر هايتيل نظام تعديل (مودنج) يعتمد على جافا يمكّن المعدّلين (المودرز) من تصميم سلوكيات وتفاعلات وآليات لعب مخصصة. رغم أن التفاصيل الكاملة للنظام لم تُنشر بعد بسبب استمرار تطوير اللعبة وعدم صدورها، يمكن استعراض المعلومات المتاحة حاليًا.
+Hytale's modding capabilities include a Java-based modding system that allows modders
+to create custom behaviors, interactions, and game mechanics. While the full details of
+this system are not publicly documented as the game is still in development and not
+released, we can summarize what is currently known about it.
 
-### تفاصيل مهمة عن نظام التعديل (المودنج) في هايتيل
+### Important Details of Modding in Hytale
 
-يعتمد نظام التعديل (المودنج) في هايتيل على الخادم (السيرفر) بدلًا من العميل (الكلاينت)، حيث تُشغَّل التعديلات (المودات) على الخادم (السيرفر) ويتصل اللاعبون مباشرة للاستمتاع بالمحتوى المخصص دون الحاجة إلي تنزيلات إضافية. يوفّر هذا النهج تجربة موحّدة لكل اللاعبين على الخوادم المعدّلة (السيرفرات الموديد).
+Hytale's modding goes on server side and not client side, meaning that mods/plugins are
+hosted on the server and players connect to these modded servers to experience the custom content
+without needing to install anything on their end. This approach ensures a consistent experience
+for all players on a modded server.
 
-### لمحة عامة عن التعديل (المودنغ) باستخدام جافا
+### Overview of Java-Based Modding
 
-يعتمد نظام التعديل (المودنغ) على جانب الخادم (السيرفر) في هايتيل على جافا، مما يجعل إضافات الخادم (السيرفر) عبارة عن ملفات JAR.
+The server-side modding system in Hytale is based on Java, making the server plugins JAR files.
 
-نفترض أن هذا تم تصميمه بحيث يمكن لمعدّلي (لمودرز) ماينكرافت الانتقال بسهولة إلى التعديل (المودنج) في هايتيل، حيث أن تعديل ماينكرافت يعتمد أيضًا بشكل رئيسي على جافا. يتيح ذلك للمعدّلين (المودرز) المتمرسين في جافا الاستفادة من معرفتهم الحالية عند إنشاء تعديلات (مودات) لهايتيل.
+We're guessing this is done so that Minecraft modders can easily transition to Hytale modding,
+as Minecraft modding is also primarily Java-based. This allows modders familiar with Java
+to leverage their existing knowledge when creating mods for Hytale.
 
-#### ملاحظات حول اللعب الفردي
+#### Singleplayer Concerns
 
-على الرغم من الاسم، يمكن استخدام إضافات الخادم (السيرفر) أيضًا في وضع اللعب الفردي.
-يعمل وضع اللعب الفردي في هايتيل على تشغيل نسخة خادم (سيرفر) محلي، مما يسمح للاعبين باستخدام إضافات الخادم (السيرفر) حتى عند اللعب بمفردهم. وهذا يعني أن التعديلات (المودات) التي تُنشأ كإضافات خادم (سيرفر) يمكنها تحسين تجربة اللعب الفردي أيضًا.
+Despite the name, server plugins can also be used in singleplayer mode.
+Hytale's singleplayer mode runs a local server instance, allowing players to use server plugins
+even when playing alone. This means that mods created as server plugins can enhance the singleplayer experience as well.
 
-### نظام الMixin
+### Mixin System
 
-استُخدم نظام الMixin في تعديل ماينكرافت لتوفير القدرة لتعديل الكود الأصلي للعبة وتغيير أو إعادة توجيه القيم والمنطق. نظام قوي للغاية لكنه هش إلى حد ما، يعتمد على ثبات كود المصدر وإصدار اللعبة إلى حد كبير.
+Mixins were used in Minecraft modding to directly modify the game’s code, even able to overwrite
+or redirect logic and values. An extremely powerful but somewhat brittle system which depends
+on the source code/game version staying pretty much the same.
 
-لا تتوفر لدينا معلومات رسمية حول نظام السMixins في هايتيل. على الرغم من ذلك، لدينا أسباب للاعتقاد بأنه لن تكون هناك حاجة لدعمها للأسباب التالية:
+We have no official information on Mixins in Hytale. Despite that, we have reason to believe they will not
+need to be supported for the following reasons:
 
-1. في لعبة مصممة بشكل جيد، يمكن حل 95% من حالات استخدام Mixin باستخدام واجهة برمجة تطبيقات (API) جيدة.
-   في الواقع، العديد من واجهات برمجة التطبيقات (APIs) في مودات ماينكرافت تستخدم Mixin لتوفير الAPI نفسها، حتى لا يضطر المطورون الذين يستخدمون هذه الAPIs لكتابة الMixin بأنفسهم.
-   * عادةً ما يشمل ذلك استبدال القيم الثابتة في الكود وإعادة تعريف السلوكيات المضمنة.
-   * يفضّل أن تعتمد هايتيل على API أو على البيانات لكليهما.
-2. يمكن أن تكون واجهات برمجة التطبيقات (APIs) أكثر مرونة واستقرارًا من نسخة اللعبة نفسها. يمكننا اعتماد نظام إصدارات منفصل لواجهة برمجة التطبيقات (API)، مما يعني أن نفس الكود لن يحتاج للتعديل عبر عدة تحديثات إلا عند حدوث تغييرات جوهرية في الAPI.
+1. For a properly designed game, 95% of Mixin use cases can be solved with a good API instead.
+   In fact, many Minecraft modding APIs simply mixin to provide the API so the developers using
+   those APIs don’t have to write the mixin themselves.
+   * This is typically replacing hardcoded values and overwriting hardcoded behaviors.
+   * Hytale should ideally make these both API or data-driven.
+2. APIs can also be much more resilient than the game version. We can have a separate API
+   version system which means the same code will not need to be modified across multiple updates
+   until the API changes in a breaking way.

@@ -1,0 +1,111 @@
+---
+title: Setting Up Your Development Environment
+description: Learn how to set up your development environment for modding Hytale.
+authors:
+  - name: Neil Revin
+    link: https://itsneil.dev
+---
+
+This guide will walk you through setting up a complete development environment for Hytale modding, including all necessary tools and dependencies.
+
+## Prerequisites
+
+Before we begin, make sure you have:
+
+- A computer running Windows 10/11, macOS, or Linux
+- At least 8GB of RAM
+- 10GB of free disk space
+- Administrative privileges on your system
+
+## Required Software
+
+### 1. Java Development Kit (JDK)
+
+Hytale modding requires Java 25 or later. We recommend using OpenJDK.
+
+#### Windows
+
+1. Download OpenJDK 25 from [Adoptium](https://adoptium.net/)
+2. Run the installer with default settings
+3. Verify installation by opening Command Prompt and running:
+
+```bash
+java -version
+```
+
+#### macOS
+
+```bash
+# Using Homebrew
+brew install openjdk@25
+```
+
+#### Linux (Ubuntu/Debian)
+
+```bash
+sudo apt update
+sudo apt install openjdk-25-jdk
+```
+
+### 2. Integrated Development Environment (IDE)
+
+We recommend IntelliJ IDEA Community Edition for Hytale modding.
+
+1. Download from [JetBrains website](https://www.jetbrains.com/idea/download/)
+2. Install with default settings
+3. Launch and complete the initial setup wizard
+
+### 3) Maven
+
+1. Visit the official website: https://maven.apache.org/download.cgi
+2. Download this file: `apache-maven-3.9.12-bin.zip` (Binary zip archive)
+3. Unzip it
+4. Add the `apache-maven-3.9.12/bin/` folder to your PATH
+
+You can now try the command `mvn -version` to verify Maven is installed correctly. Make sure to do this in a fresh new terminal instead of one you had opened from before!
+
+## Setting Up Your Workspace
+
+### 1. Add HytaleServer.jar Dependency
+
+Before you can start modding, you need to add the HytaleServer.jar file as a dependency:
+
+1. **Download HytaleServer.jar** using the [Hytale Downloader](https://support.hytale.com/hc/en-us/articles/45326769420827-Hytale-Server-Manual)
+2. **Add to IntelliJ IDEA**:
+   - Click on **"File"** at the top left
+   - Go to **"Project Structure"**
+   - Go to **"Libraries"**
+   - Click on the **+ icon**
+   - Select the **HytaleServer.jar** you downloaded
+
+### 2) Clone the Plugin Template
+
+Instead of creating an empty directory, we'll use the official Hytale plugin template:
+
+```bash
+# Clone the template repository
+git clone https://github.com/HytaleModding/plugin-template.git MyFirstMod
+cd MyFirstMod
+```
+
+### 3. Open in IntelliJ IDEA
+
+1. Open IntelliJ IDEA
+2. Click "Open" and navigate to your `MyFirstMod` directory
+3. IntelliJ will automatically detect it as a Maven project
+4. Wait for the project to index and dependencies to download
+
+## Next Steps
+
+Now that you have your development environment set up with the plugin template:
+
+1. **Customize the template** - Edit the `pom.xml` and `manifest.json` file to change your mod's name and details
+2. **Explore the code structure** - Familiarize yourself with the template's organization
+3. **Start modding** - Begin writing your first Hytale plugin!
+
+The plugin template includes:
+
+- Pre-configured Gradle build system
+- Example plugin structure
+- Essential dependencies
+- Development tools configuration

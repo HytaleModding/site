@@ -1,11 +1,11 @@
 ---
-title: 08 - Datenkapselung und Access Modifier
-description: Lerne, wie du deine Klassendaten schützen und kontrollieren kannst.
+title: 08 - Encapsulation and Access Modifiers
+description: Learn how to protect and control access to your class data.
 ---
 
-Bei der Datenkapselung geht es darum, die internen Details einer Klasse zu verbergen und zu kontrollieren, wie auf die Daten zugegriffen wird und wie diese verändert werden. Dies verhindert Bugs und macht deinen Code wartungsfähiger.
+Encapsulation is about hiding the internal details of a class and controlling how its data is accessed and modified. This prevents bugs and makes your code more maintainable.
 
-## Das Problem ohne Datenkapselung
+## The Problem Without Encapsulation
 
 ```java
 public class Player {
@@ -20,33 +20,33 @@ public class Main {
         player.health = 100;
         player.maxHealth = 100;
         
-        // Oops! Jemand kann die Regeln brechen
-        player.health = 500;      // Leben über dem Maximum!
-        player.health = -50;      // Negative Leben!
-        player.name = "";         // Leerer Name!
+        // Oops! Someone can break the rules
+        player.health = 500;      // Health over maximum!
+        player.health = -50;      // Negative health!
+        player.name = "";         // Empty name!
     }
 }
 ```
 
-Ohne Schutz kann jeder ungültige Werte festlegen!
+Without protection, anyone can set invalid values!
 
-## Access Modifier
+## Access Modifiers
 
-Java hat Schlüsselwörter, die kontrollieren, wer auf deine Klassenmitglieder zugreifen kann:
+Java has keywords that control who can access your class members:
 
-| Modifier    | Klasse | Paket | Unterklasse | Welt |
-| ----------- | ------ | ----- | ----------- | ---- |
-| `public`    | ✓      | ✓     | ✓           | ✓    |
-| `protected` | ✓      | ✓     | ✓           | ✗    |
-| (keins)     | ✓      | ✓     | ✗           | ✗    |
-| `private`   | ✓      | ✗     | ✗           | ✗    |
+| Modifier    | Class | Package | Subclass | World |
+| ----------- | ----- | ------- | -------- | ----- |
+| `public`    | ✓     | ✓       | ✓        | ✓     |
+| `protected` | ✓     | ✓       | ✓        | ✗     |
+| (none)      | ✓     | ✓       | ✗        | ✗     |
+| `private`   | ✓     | ✗       | ✗        | ✗     |
 
-**Fokussiere dich erstmal auf:**
+**For now, focus on:**
 
-* `public` - Jeder kann darauf zugreifen
-* `private` - Nur diese Klasse hat Zugriff
+* `public` - Anyone can access
+* `private` - Only this class can access
 
-## Eigenschaften privat machen
+## Making Properties Private
 
 ```java
 public class Player {
@@ -62,16 +62,16 @@ public class Player {
 }
 ```
 
-Jetzt kannst du nicht mehr direkt auf die Eigenschaften zugreifen:
+Now you can't access properties directly:
 
 ```java
 Player player = new Player("Alice", 100);
-player.health = 500;  // ❌ Fehler! health ist private
+player.health = 500;  // ❌ Error! health is private
 ```
 
-## Getter und Setter
+## Getters and Setters
 
-Erstelle **getter** und **setter** Methoden um auf private Objekte zuzugreifen:
+To access private properties, create **getter** and **setter** methods:
 
 ```java
 public class Player {
@@ -85,12 +85,12 @@ public class Player {
         this.maxHealth = maxHealth;
     }
     
-    // Getter - Gib den Wert aus
+    // Getter - returns the value
     public int getHealth() {
         return health;
     }
     
-    // Setter - Setzt den Wert mit Bestätigung
+    // Setter - sets the value with validation
     public void setHealth(int health) {
         if (health < 0) {
             this.health = 0;
@@ -111,24 +111,24 @@ public class Player {
 }
 ```
 
-Jetzt kannst du sicher mit dem Objekt interagieren:
+Now you can safely interact with the object:
 
 ```java
 Player player = new Player("Alice", 100);
 
-player.setHealth(150);  // Automatisch auf 100 begrenzt
+player.setHealth(150);  // Automatically capped at 100
 System.out.println(player.getHealth());  // 100
 
-player.setHealth(-20);  // Automatisch auf 0 gesetzt
+player.setHealth(-20);  // Automatically set to 0
 System.out.println(player.getHealth());  // 0
 ```
 
-<Callout type="info" title="Benennung der Getter und Setter">
-  Den Java-Namenskonventionen folgend:
+<Callout type="info" title="Getter and Setter Naming">
+  Follow Java naming conventions:
 
-  * **Getter**: `get` + Eigenschaftsname (groß)
-  * **Setter**: `set` + Eigenschaftsname (groß)
-  * **Boolean**: `is` + Eigenschaftsname (groß)
+  * **Getter**: `get` + property name (capitalized)
+  * **Setter**: `set` + property name (capitalized)
+  * **Boolean**: `is` + property name (capitalized)
 
   ```java
   private int health;
@@ -145,9 +145,9 @@ System.out.println(player.getHealth());  // 0
   ```
 </Callout>
 
-## Vorteile der Datenkapselung
+## Benefits of Encapsulation
 
-### 1. Validierung
+### 1. Validation
 
 ```java
 public class Item {
@@ -170,13 +170,13 @@ public class Item {
 }
 ```
 
-### 2. Read-Only Eigenschaften
+### 2. Read-Only Properties
 
-Manchmal will man keinen Setter:
+Sometimes you don't want a setter:
 
 ```java
 public class Monster {
-    private String id;  // Soll nie verändert werden
+    private String id;  // Should never change
     private int health;
     
     public Monster(String id, int health) {
@@ -184,7 +184,7 @@ public class Monster {
         this.health = health;
     }
     
-    // Nur Getter - Kein Setter!
+    // Getter only - no setter!
     public String getId() {
         return id;
     }
@@ -199,9 +199,9 @@ public class Monster {
 }
 ```
 
-### 3. Berechnete Eigenschaften
+### 3. Computed Properties
 
-Getter müssen ein Feld nicht direkt zurückgeben:
+Getters don't have to return a field directly:
 
 ```java
 public class Player {
@@ -212,21 +212,21 @@ public class Player {
         return health;
     }
     
-    // Berechnete Eigenschaft
+    // Computed property
     public double getHealthPercentage() {
         return (health * 100.0) / maxHealth;
     }
     
-    // Berechnete Eigenschaft
+    // Computed property
     public boolean isLowHealth() {
         return getHealthPercentage() < 25;
     }
 }
 ```
 
-## Praxisbeispiele
+## Practical Examples
 
-### Item mit Haltbarkeit
+### Item with Durability
 
 ```java
 public class Tool {
@@ -263,7 +263,7 @@ public class Tool {
         System.out.println(name + " repaired!");
     }
     
-    // Getter
+    // Getters
     public String getName() {
         return name;
     }
@@ -282,7 +282,7 @@ public class Tool {
 }
 ```
 
-### Bankkonto
+### Bank Account Example
 
 ```java
 public class PlayerWallet {
@@ -323,7 +323,7 @@ public class PlayerWallet {
 }
 ```
 
-### Geschützter-Block-System
+### Protected Block System
 
 ```java
 public class ProtectedBlock {
@@ -358,7 +358,7 @@ public class ProtectedBlock {
         }
     }
     
-    // Nur Getter - Position und Besitzer sollten sich nicht ändern
+    // Getters only - position and owner shouldn't change
     public int getX() {
         return x;
     }
@@ -381,36 +381,36 @@ public class ProtectedBlock {
 }
 ```
 
-## Wann privat und wann public verwendet wird
+## When to Use Private vs Public
 
-<Callout type="info" title="Allgemeine Regeln">
-  **Verwende standardmäßig private!** Verwende public nur, wenn Dinge von außen zugänglich sein müssen.
+<Callout type="info" title="General Rules">
+  **Make it private by default!** Only make things public if they need to be accessed from outside.
 
-  **private:**
+  **Private:**
 
-  * Interne Daten (Gesundheit, Position, Inventar)
-  * Hilfsmethoden, die nur innerhalb der Klasse verwendet werden
-  * Alles, was Validierung benötigt
+  * Internal data (health, position, inventory)
+  * Helper methods used only within the class
+  * Anything that needs validation
 
-  **public:**
+  **Public:**
 
-  * Methoden, die das Verhalten der Klasse definieren
-  * Konstruktoren
-  * Methoden, die andere Klassen aufrufen müssen
+  * Methods that define the class's behavior
+  * Constructor
+  * Methods other classes need to call
 
   ```java
   public class Example {
-      // private - Interne Daten
+      // Private - internal data
       private int internalCounter;
       private String secretKey;
       
-      // public - Teil des Interfaces
+      // Public - part of the interface
       public void doSomething() {
           // Uses private helper method
           validateData();
       }
       
-      // private - Interne Hilfsmethode
+      // Private - internal helper
       private void validateData() {
           // ...
       }
@@ -418,15 +418,15 @@ public class ProtectedBlock {
   ```
 </Callout>
 
-## Das `final` Schlüsselwort
+## The `final` Keyword
 
-`final` bedeutet, dass eine Variable nicht geändert werden kann, nachdem sie gesetzt wurde:
+`final` means a variable can't be changed after it's set:
 
 ```java
 public class Player {
-    private final String id;  // Kann nach Erstellung nicht verändert werden
-    private String name;      // Kann verändert werden
-    private int health;       // Kann verändert werden
+    private final String id;  // Can't change after creation
+    private String name;      // Can change
+    private int health;       // Can change
     
     public Player(String id, String name) {
         this.id = id;
@@ -437,7 +437,7 @@ public class Player {
         return id;
     }
     
-    // Kein setId() - Id ist final!
+    // No setId() - it's final!
     
     public String getName() {
         return name;
@@ -449,7 +449,7 @@ public class Player {
 }
 ```
 
-## Das `static` Schlüsselwort
+## The `static` Keyword
 
 ### Static Members
 
@@ -566,7 +566,7 @@ class OtherData {
 }
 ```
 
-## Übungsaufgaben
+## Practice Exercises
 
 1. **Create a `BankAccount` Class**:
    * Private properties: accountNumber, balance

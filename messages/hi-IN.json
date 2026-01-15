@@ -11,14 +11,21 @@
     "flipwords": [
       "गाइड",
       "प्रलेखन",
-      "संसाधन",
+      "Tools",
       "Tutorials"
     ],
     "description": "मॉडिंग के लिए नंबर वन कम्युनिटी रिसोर्स Hytale, जिसमें\nपूरी गाइड, डिटेल्ड डॉक्यूमेंटेशन और आपकी मॉडिंग जर्नी को शुरू करने के लिए ज़रूरी टूल्स हैं।",
     "documentation": "प्रलेखन",
     "forum": "Forum",
     "discord": "कम्युनिटी में शामिल हों!\n",
-    "memberCount": "{गिनती} सदस्य"
+    "memberCount": "{गिनती} सदस्य",
+    "countdown": "Hytale releases in {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale is out!"
   },
   "sponsors": {
     "title": "Support Us",

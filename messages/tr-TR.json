@@ -18,7 +18,14 @@
     "documentation": "Belgeler",
     "forum": "Forum",
     "discord": "Topluluğa katıl!",
-    "memberCount": "{count} Üye"
+    "memberCount": "{count} Üye",
+    "countdown": "Hytale {countdown} içinde çıkıyor",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale çıktı!"
   },
   "sponsors": {
     "title": "Bizi destekleyin",

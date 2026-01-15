@@ -18,7 +18,14 @@
     "documentation": "Документація",
     "forum": "Форум",
     "discord": "Приєднуйтеся до спільноти!",
-    "memberCount": "{count} учасників"
+    "memberCount": "{count} учасників",
+    "countdown": "Hytale вийде через {countdown}",
+    "countdownUnits": {
+      "hours": "г",
+      "minutes": "хв",
+      "seconds": "с"
+    },
+    "hytaleReleased": "Hytale вийшов!"
   },
   "sponsors": {
     "title": "Підтримати нас",
@@ -34,8 +41,8 @@
   },
   "meta": {
     "established_information": {
-      "title": "Встановлена інформація",
-      "separator": "Спеціальні категорії",
+      "title": "Основна інформація",
+      "separator": "Особливі категорії",
       "server": {
         "title": "Сервер",
         "content_categories": {

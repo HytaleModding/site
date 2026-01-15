@@ -1,0 +1,55 @@
+---
+title: Creating Commands
+description: Learn how to create custom commands for your Hytale mod.
+authors:
+  - name: Neil Revin
+    link: https://itsneil.dev
+  - name: oskarscot
+    link: https://oskar.scot
+---
+
+In this guide, you will learn how to create custom commands for your Hytale mod.
+
+## The `AbstractPlayerCommand` Class
+
+To create a command, you can extend the `AbstractPlayerCommand` class. You need to provide a constructor that calls the `BaseCommand` constructor with the command name, description, and whether the command requires confirmation (--confirm while running the command).
+
+You can override the `execute` function to implement the command's behavior. It gives you access to the CommandContext which is always a player in this case, the EntityStore, the Reference store, the player reference as well as the World in which the command is being executed.
+It's important to know that `AbstractPlayerCommand` extends `AbstractAsyncCommand` meaning that commands do not execute on the main server thread.
+
+You can use the `Store` along with the `Ref` to access all entity components like the `Player` component, `UUIDComponent` or `TransformComponent`.
+
+```java
+public class ExampleCommand extends AbstractPlayerCommand {
+
+  public ExampleCommand() {
+    super("test", "Super test command!");
+  }
+
+  @Override
+  protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {
+    Player player = store.getComponent(ref, Player.getComponentType()); // also a component
+    UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
+    TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
+    player.sendMessage(Message.raw("Player#getUuid() : " + player.getUuid())); // returns UUID from UUIDComponent
+    player.sendMessage(Message.raw("UUIDComponent : " + component.getUuid()));
+    player.sendMessage(Message.raw("equal : " + player.getUuid().equals(component.getUuid()))); // they're both the same
+    player.sendMessage(Message.raw("Transform : " + transform.getPosition()));
+  }
+
+}
+```
+
+## Registering the Command
+
+For any command
+
+```java
+public class MyPlugin extends JavaPlugin {
+
+    @Override
+    public void setup() {
+        this.getCommandRegistry().registerCommand(new ExampleCommand());
+    }
+}
+```

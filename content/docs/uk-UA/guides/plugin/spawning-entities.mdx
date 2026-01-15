@@ -1,0 +1,113 @@
+---
+title: Spawning Entities
+description: Learn how to spawn Entities in Hytale
+authors:
+  - name: Neil Revin
+    link: https://itsneil.dev
+---
+
+In this guide, you will learn how to spawn entities in Hytale. It is **highly recommended** to familiarize yourself with the Entity Component System (ECS) before proceeding with this guide. You can find the ECS guide [here](./ecs).
+
+## Getting the World Object
+
+You need to first get the `World` object before proceeding with spawning entities. You can get this object in a few ways:
+
+### Using the `Player` Object
+
+You can use the `Player` object to get the `World` object by calling the `getWorld()` method on the `Player` instance.
+
+```java
+World world = player.getWorld();
+```
+
+### Using the `Universe` Class
+
+You can use the `Universe` class to get the `World` object by calling the `getWorld(string UUID)` method on the `Universe` instance.
+
+```java
+World world = Universe.get().getWorld("your-world-uuid");
+```
+
+Once you have the world object, you need to get a instance of `Store<EntityStore>`, you can do so by:
+
+```java
+Store<EntityStore> store = world.getEntityStore().getStore();
+```
+
+## Creating Entities
+
+Once you have the `EntityStore` instance, you can start to create a entity and give it components. Entities are just instances of `Holder<EntityStore>` with several components attached to them.
+
+<Callout type="warning">
+  To use the `store` variable we got above, we need to run this inside the world. You can do so by using the `world.execute()` method:
+
+  ```java
+  world.execute(() -> {
+      // run all the code below in this context
+  })
+  ```
+</Callout>
+
+Let's start by creating a blank holder:
+
+```java
+Holder<EntityStore> holder = EntityStore.REGISTRY.newHolder();
+```
+
+## Getting a Model
+
+You now need a model for your Entity. You can find a list of all entities [here](../../server/entities), we're going to use the Minecart entity for this example:
+
+```java
+ModelAsset modelAsset = ModelAsset.getAssetMap().getAsset("Minecart");
+Model model = Model.createScaledModel(modelAsset, 1.0f);
+```
+
+### The Transform Component
+
+The `TransformComponent` is the component that tells Hytale where to place your entity, what it's location is. You can get this in multiple ways.
+
+1. Getting the Transform Component from the `Player` object
+
+```java
+TransformComponent transform = store.getComponent(context.senderAsPlayerRef(), EntityModule.get().getTransformComponentType());
+```
+
+2. Generating a new TransformComponent
+
+```java
+Vector3d vector3d = new Vector3d(0, 0, 0); // position
+Vector3f vector3f = new Vector3f(0, 0, 0); // rotation
+TransformComponent transform = new TransformComponent(vector3d, vector3f);
+```
+
+## Adding Components to our Entity
+
+Now we need to add all the components we made above to our entity, here's all the components we need to add one by one:
+
+```java
+
+holder.addComponent(TransformComponent.getComponentType(), new TransformComponent(vector3d, new Vector3f(0, 0, 0)));
+holder.addComponent(PersistentModel.getComponentType(), new PersistentModel(model.toReference()));
+holder.addComponent(ModelComponent.getComponentType(), new ModelComponent(model));
+holder.addComponent(BoundingBox.getComponentType(), new BoundingBox(model.getBoundingBox()));
+holder.addComponent(NetworkId.getComponentType(), new NetworkId(store.getExternalData().takeNextNetworkId()));
+holder.addComponent(Interactions.getComponentType(), new Interactions()); // you need to add interactions here if you want your entity to be interactable
+```
+
+### Ensuring Hytale's Components are present
+
+These act as "configuration" or "default" components that Hytale expects to be present on all entities.
+
+```java
+holder.ensureComponent(UUIDComponent.getComponentType());
+holder.ensureComponent(Interactable.getComponentType()); // if you want your entity to be interactable
+```
+
+## Spawning the Entity
+
+Finally, we can spawn the entity in the world by calling the `spawnEntity` method on the `EntityStore` instance:
+
+```java
+store.spawnEntity(holder, AddReason.SPAWN);
+```

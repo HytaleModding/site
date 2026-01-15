@@ -1,26 +1,26 @@
 ---
-title: 11 - HashMap и хранилище "ключ - значение"
-description: Научитесь хранить и извлекать (получать) данные используя пары "ключ - значение"
+title: 11 - HashMap and Key-Value Storage
+description: Learn to store and retrieve data using key-value pairs.
 ---
 
-`HashMap` хранит информацию в парах "ключ - значение", подобно обычному словарю из реальной жизни. Вы ищете слово (ключ) чтобы найти его определение (значение). Это идеально подходит для данных игрока, свойств предмета и настроек конфигурации.
+A `HashMap` stores data in key-value pairs, like a real-world dictionary. You look up a word (key) to find its definition (value). This is perfect for player data, item properties, and configuration settings.
 
-## Основы HashMap
+## HashMap Basics
 
 ```java
 import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        // Создаем HashMap (String keys, Integer values)
+        // Create a HashMap (String keys, Integer values)
         HashMap<String, Integer> playerLevels = new HashMap<>();
         
-        // Добавляем пары "ключ - значение"
+        // Add key-value pairs
         playerLevels.put("Alice", 10);
         playerLevels.put("Bob", 15);
         playerLevels.put("Charlie", 8);
         
-        // Получаем значение по ключу
+        // Get a value by key
         int aliceLevel = playerLevels.get("Alice");  // 10
         
         System.out.println("Alice is level " + aliceLevel);
@@ -29,52 +29,52 @@ public class Main {
 ```
 
 <Callout type="info" title="HashMap vs ArrayList">
-  | **HashMap**                   | **ArrayList**                      |
-  | ----------------------------- | ---------------------------------- |
-  | Неупорядоченный               | Упорядочен по индексу (0, 1, 2...) |
-  | Доступ по ключу (любого типа) | Доступ по индексу                  |
-  | Подходит для поиска значений  | Подходит для списков предметов     |
-  | Каждый ключ уникален          | Может иметь дубликаты              |
+  | **HashMap**                     | **ArrayList**                 |
+  | ------------------------------- | ----------------------------- |
+  | Unordered                       | Ordered by index (0, 1, 2...) |
+  | Access by key (can be any type) | Access by position            |
+  | Good for looking up values      | Good for lists of items       |
+  | Each key is unique              | Can have duplicates           |
 
   ```java
-  // ArrayList - доступ по числу (индексу)
+  // ArrayList - access by number
   ArrayList<String> players = new ArrayList<>();
   players.add("Alice");
   String player = players.get(0);  // Get first player
 
-  // HashMap - доступ по имени
+  // HashMap - access by name
   HashMap<String, Integer> levels = new HashMap<>();
   levels.put("Alice", 10);
-  int level = levels.get("Alice");  // Получить уровень Alice
+  int level = levels.get("Alice");  // Get Alice's level
   ```
 </Callout>
 
-## Методы в HashMap
+## Common HashMap Methods
 
-### Добавление и обновление
+### Adding and Updating
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 
-scores.put("Alice", 100);     // Добавляем новое значение
+scores.put("Alice", 100);     // Add new entry
 scores.put("Bob", 150);
-scores.put("Alice", 200);     // Обновляем уже существующее (у Alice теперь 200)
+scores.put("Alice", 200);     // Update existing (Alice now 200)
 ```
 
-### Получение значений
+### Getting Values
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 scores.put("Alice", 100);
 
 int score = scores.get("Alice");        // 100
-Integer missing = scores.get("Dave");   // null (не существует)
+Integer missing = scores.get("Dave");   // null (doesn't exist)
 
-// Получаем значение по умолчанию
-int score2 = scores.getOrDefault("Dave", 0);  // 0 (вернет значение по умолчанию)
+// Get with default value
+int score2 = scores.getOrDefault("Dave", 0);  // 0 (returns default)
 ```
 
-### Проверка ключей/значений
+### Checking for Keys/Values
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
@@ -87,21 +87,21 @@ boolean has100 = scores.containsValue(100);        // true
 boolean has200 = scores.containsValue(200);        // false
 ```
 
-### Удаление элементов
+### Removing Entries
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
 scores.put("Alice", 100);
 scores.put("Bob", 150);
 
-scores.remove("Alice");           // Удалить по ключу
+scores.remove("Alice");           // Remove by key
 System.out.println(scores);       // {Bob=150}
 
-scores.clear();                   // Удалить всё
+scores.clear();                   // Remove everything
 System.out.println(scores);       // {}
 ```
 
-### Размер и проверка на пустоту
+### Size and Empty Check
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
@@ -111,9 +111,9 @@ int size = scores.size();         // 1
 boolean empty = scores.isEmpty(); // false
 ```
 
-## Перебор HashMap
+## Looping Through HashMap
 
-### Перебор ключей
+### Loop Through Keys
 
 ```java
 HashMap<String, Integer> scores = new HashMap<>();
@@ -124,19 +124,19 @@ scores.put("Charlie", 75);
 for (String name : scores.keySet()) {
     System.out.println(name);
 }
-// Вывод: Alice, Bob, Charlie (порядок может меняться)
+// Output: Alice, Bob, Charlie (order may vary)
 ```
 
-### Перебор значений
+### Loop Through Values
 
 ```java
 for (Integer score : scores.values()) {
     System.out.println(score);
 }
-// Вывод: 100, 150, 75 (порядок может меняться)
+// Output: 100, 150, 75 (order may vary)
 ```
 
-### Перебор пар (ключи и значения)
+### Loop Through Both Keys and Values
 
 ```java
 for (String name : scores.keySet()) {
@@ -144,7 +144,7 @@ for (String name : scores.keySet()) {
     System.out.println(name + ": " + score);
 }
 
-// или используя entrySet (эффективнее)
+// Or using entrySet (more efficient)
 for (var entry : scores.entrySet()) {
     String name = entry.getKey();
     int score = entry.getValue();
@@ -152,8 +152,8 @@ for (var entry : scores.entrySet()) {
 }
 ```
 
-<Callout type="info" title="Порядок HashMap">
-  HashMap **не сохраняет** порядок вставки! Если вам нужен порядок, используйте `LinkedHashMap`:
+<Callout type="info" title="HashMap Order">
+  HashMap does **not** maintain insertion order! If you need order, use `LinkedHashMap`:
 
   ```java
   import java.util.LinkedHashMap;
@@ -163,17 +163,17 @@ for (var entry : scores.entrySet()) {
   orderedScores.put("Bob", 150);
   orderedScores.put("Charlie", 75);
 
-  // Будет выводить в порядке вставки
+  // Will print in insertion order
   for (String name : orderedScores.keySet()) {
       System.out.println(name);
   }
-  // Вывод: Alice, Bob, Charlie (гарантированный порядок)
+  // Output: Alice, Bob, Charlie (guaranteed order)
   ```
 </Callout>
 
-## Практические примеры
+## Practical Examples
 
-### Система статистики игрока
+### Player Statistics System
 
 ```java
 import java.util.HashMap;
@@ -183,12 +183,12 @@ public class PlayerStats {
     
     public PlayerStats() {
         this.stats = new HashMap<>();
-        // Задаём значения по умолчанию
-        stats.put("здоровье", 100);
-        stats.put("мана", 50);
-        stats.put("сила", 10);
-        stats.put("защита", 5);
-        stats.put("скорость", 8);
+        // Initialize default stats
+        stats.put("health", 100);
+        stats.put("mana", 50);
+        stats.put("strength", 10);
+        stats.put("defense", 5);
+        stats.put("speed", 8);
     }
     
     public int getStat(String statName) {
@@ -205,29 +205,29 @@ public class PlayerStats {
     }
     
     public void displayStats() {
-        System.out.println("=== Статистика игрока ===");
+        System.out.println("=== Player Stats ===");
         for (var entry : stats.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 }
 
-// Использование
+// Usage
 public class Main {
     public static void main(String[] args) {
         PlayerStats stats = new PlayerStats();
         stats.displayStats();
         
-        stats.modifyStat("сила", 5);
-        stats.modifyStat("здоровье", -20);
+        stats.modifyStat("strength", 5);
+        stats.modifyStat("health", -20);
         
-        System.out.println("\nПосле изменений:");
+        System.out.println("\nAfter modifications:");
         stats.displayStats();
     }
 }
 ```
 
-### База свойств предметов
+### Item Properties Database
 
 ```java
 import java.util.HashMap;
@@ -241,10 +241,10 @@ public class ItemDatabase {
     
     public void addItem(String itemName) {
         HashMap<String, Object> properties = new HashMap<>();
-        properties.put("урон", 0);
-        properties.put("прочность", 100);
-        properties.put("редкость", "Обычный");
-        properties.put("стакается", true);
+        properties.put("damage", 0);
+        properties.put("durability", 100);
+        properties.put("rarity", "Common");
+        properties.put("stackable", true);
         
         items.put(itemName, properties);
     }
@@ -264,7 +264,7 @@ public class ItemDatabase {
     
     public void displayItem(String itemName) {
         if (!items.containsKey(itemName)) {
-            System.out.println("Имя не найдено!");
+            System.out.println("Item not found!");
             return;
         }
         
@@ -276,21 +276,21 @@ public class ItemDatabase {
     }
 }
 
-// Использование
+// Usage
 public class Main {
     public static void main(String[] args) {
         ItemDatabase db = new ItemDatabase();
         
-        db.addItem("Железный меч");
-        db.setProperty("Железный меч", "урон", 15);
-        db.setProperty("Железный меч", "редкость", "Необычный");
+        db.addItem("Iron Sword");
+        db.setProperty("Iron Sword", "damage", 15);
+        db.setProperty("Iron Sword", "rarity", "Uncommon");
         
-        db.displayItem("Железный меч");
+        db.displayItem("Iron Sword");
     }
 }
 ```
 
-### Управление настройками
+### Configuration Manager
 
 ```java
 import java.util.HashMap;
@@ -304,7 +304,7 @@ public class GameConfig {
     }
     
     private void loadDefaults() {
-        settings.put("diffculty", "normal");
+        settings.put("difficulty", "normal");
         settings.put("musicVolume", "50");
         settings.put("sfxVolume", "50");
         settings.put("renderDistance", "10");
@@ -334,7 +334,7 @@ public class GameConfig {
     }
     
     public void displaySettings() {
-        System.out.println("=== Настройки игры ===");
+        System.out.println("=== Game Settings ===");
         for (var entry : settings.entrySet()) {
             System.out.println(entry.getKey() + " = " + entry.getValue());
         }
@@ -342,7 +342,7 @@ public class GameConfig {
 }
 ```
 
-### Инвентарь игрока
+### Player Inventory with Quantities
 
 ```java
 import java.util.HashMap;
@@ -358,25 +358,25 @@ public class Inventory {
     
     public boolean addItem(String itemName, int quantity) {
         if (items.size() >= maxSlots && !items.containsKey(itemName)) {
-            System.out.println("Инвентарь полон!");
+            System.out.println("Inventory full!");
             return false;
         }
         
         int current = items.getOrDefault(itemName, 0);
         items.put(itemName, current + quantity);
-        System.out.println("Добавлен " + quantity + "x " + itemName);
+        System.out.println("Added " + quantity + "x " + itemName);
         return true;
     }
     
     public boolean removeItem(String itemName, int quantity) {
         if (!items.containsKey(itemName)) {
-            System.out.println("Данный предмет не существует!");
+            System.out.println("Don't have that item!");
             return false;
         }
         
         int current = items.get(itemName);
         if (current < quantity) {
-            System.out.println("Не хватает " + itemName);
+            System.out.println("Not enough " + itemName);
             return false;
         }
         
@@ -386,7 +386,7 @@ public class Inventory {
             items.put(itemName, current - quantity);
         }
         
-        System.out.println("Удален " + quantity + "x " + itemName);
+        System.out.println("Removed " + quantity + "x " + itemName);
         return true;
     }
     
@@ -399,9 +399,9 @@ public class Inventory {
     }
     
     public void displayInventory() {
-        System.out.println("\n=== Инвентарь (" + items.size() + "/" + maxSlots + " slots) ===");
+        System.out.println("\n=== Inventory (" + items.size() + "/" + maxSlots + " slots) ===");
         if (items.isEmpty()) {
-            System.out.println("Пусто");
+            System.out.println("Empty");
         } else {
             for (var entry : items.entrySet()) {
                 System.out.println(entry.getKey() + " x" + entry.getValue());
@@ -417,7 +417,7 @@ public class Main {
         
         inv.addItem("Wood", 64);
         inv.addItem("Stone", 32);
-        inv.addItem("Wood", 20);  // Добавляет к существующему 
+        inv.addItem("Wood", 20);  // Adds to existing
         
         inv.displayInventory();
         
@@ -427,7 +427,7 @@ public class Main {
 }
 ```
 
-### Менеджер задержки (cooldown)
+### Cooldown Manager
 
 ```java
 import java.util.HashMap;
@@ -485,9 +485,9 @@ public class CooldownManager {
 }
 ```
 
-## HashMap с пользовательскими объектами
+## HashMap with Custom Objects
 
-Храните свои собственные классы как значения:
+Store your own classes as values:
 
 ```java
 public class Player {
@@ -501,7 +501,7 @@ public class Player {
         this.health = 100;
     }
     
-    // Геттеры и Сеттеры...
+    // Getters and setters...
     
     @Override
     public String toString() {
@@ -523,46 +523,46 @@ public class Main {
 }
 ```
 
-## Вложенные HashMaps
+## Nested HashMaps
 
-HashMaps могут содержать другие HashMaps
+HashMaps can contain other HashMaps:
 
 ```java
-// Храните несколько настроек у игрока
+// Store multiple properties per player
 HashMap<String, HashMap<String, Integer>> playerData = new HashMap<>();
 
-// Создайте игрока 
+// Add player with stats
 HashMap<String, Integer> aliceStats = new HashMap<>();
 aliceStats.put("level", 10);
 aliceStats.put("health", 100);
 aliceStats.put("mana", 50);
 playerData.put("Alice", aliceStats);
 
-// Получите информацию
+// Access nested data
 int aliceLevel = playerData.get("Alice").get("level");
 System.out.println("Alice's level: " + aliceLevel);
 ```
 
-## Практические задачи
+## Practice Exercises
 
-1. **Телефонная книга**: создайте телефонную книжку которая хранит имена и номера телефонов. Добавьте методы для:
-   - Добавления контакта
-   - Поиску номера по имени
-   - Удалению контакта
-   - Отображению всех контактов
+1. **Phone Book**: Create a phone book that stores names and phone numbers. Add methods to:
+   - Add contact
+   - Find number by name
+   - Delete contact
+   - Display all contacts
 
-2. **Магазин предметов**: Создайте магазин где у предметов есть имена и цена. Добавьте методы для:
-   - Добавление студента с оценкой
-   - Обновлениями оценок
-   - Вычисление среднего балла
-   - Поиска высшей оценки
+2. **Grade Manager**: Store student names and grades. Create methods to:
+   - Add student with grade
+   - Update grade
+   - Calculate class average
+   - Find highest grade
 
-3. **Счётчик слов**: Напишите программу, которая считает сколько раз каждое слово появлялось в предложении используя HashMap.
+3. **Word Counter**: Write a program that counts how many times each word appears in a sentence using a HashMap.
 
-4. **Магазин предметов**: Создайте магазин где у предметов есть имена и цена. Добавьте методы для:
-   - Добавления предмета и его цены
-   - Получение цены предмета
-   - Применения скидок ко всем предметам
-   - Отображения всех предметов и их цену
+4. **Item Shop**: Create a shop where items have names and prices. Add methods to:
+   - Add item with price
+   - Get item price
+   - Apply discount to all items
+   - Display all items and prices
 
 ---

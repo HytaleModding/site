@@ -1,41 +1,41 @@
 ---
-title: Hytale Klientas
-description: Informacija apie Hytale klientą.
+title: The Hytale Client
+description: Information regarding the Hytale client.
 ---
 
 <Callout>
-  Klientas yra parašytas su C# ir kompiliuotas iki mašininio kodo prieš išplatinimą, todėl nėra modifikuojamas. Vieno žaidėjo režimas veikia vietiniame serveryje. Visos modifikacijos turi praeiti per serverio API.
+  The client is written in C#, compiled to machine code before distribution, and not moddable. Single-player runs on a local server. All mods must go through the server API.
 </Callout>
 
-# Nėra kliento-pusės modifikacijų.
+# No Client-Side Mods
 
-Nėra kliento-pusės modifikavimo.
+There is no client-side modding.
 
-> Mes neketiname palaikyti jokių klientų modifikacijų - Slikey
+> We don't intend to support any client mods - Slikey
 
-## Kodėl?
+## Why?
 
-1. Nieko nereikia atsiųsti iš kitur.
-   * Hytale nori „išvengti suskaidytos ekosistemos, kurioje kiekvienam serveriui reikalingas skirtingas modifikuotas klientas“.
+1. No need to download externally.
+   * Hytale wants to "avoid a fragmented ecosystem where every server requires a different modded client".
 
-2. Kliento saugumas.
-   * Kliento kompiuteryje paleidus `.jar` failus iš trečiųjų šalių svetainių, galima lengvai įdiegti kenkėjiškas programas.
-   > [Nenorime, kad žaidėjai susidurtų] su saugumo ir apsaugos rizika, kuri egzistuoja kitose modifikacijų platformose.
+2. Client security.
+   * Running `.jar` files from third-party sites on the client can easily introduce malware.
+   > [We don't want to expose players] to the security and safety risks that exist on some other modding platform.
 
-3. Kliento stabilumas.
-   * Hytale gali persikelti į kitas platformas, kuriose neįmanoma modifikuoti klientų, todėl jie iš anksto tai apriboja, kad iš anksto nustatyti teisingą kryptį,
-   > Tikime, kad rezultatus, kuriuos žmonės gauna kituose blokų žaidimuose naudodami kliento modifikacijas, galima lengvai pasiekti naudojant mūsų serverio modifikacijas. Kituose blokų žaidimuose reikia įdiegti kliento modifikaciją, kad gautumėte naujų blokų, NPC, UI ir pan. „Hytale“ visa tai daro tiesiog pagal serverį. Serveris iš esmės laikinai „modifikuos“ klientą tikrai saugiu būdu, kad pridėtų prie ir pakeistų jūsų žaidimo patirtį. Jūs galite susikurti savo „Orbis“ versiją, nenaudodami jokių mūsų modelių, muzikos, pasaulio generavimo, kovos mechanikų ar ko nors kito. Jūs kontroliuojate situaciją ir galite viską išplėšti nė karto neprisiliesdami prie kliento. Pagalvokite apie kaip veikia Robloxas... Jūs nepakeičiate savo programos. Jums tereikia spustelėti norimą patirtį ir gausite viską, ko jums reikia, nemodifikuodami pačios instaliacijos. - Slikey
+3. Client stability.
+   * Hytale may move to other platforms on which client modding is impossible, so they're locking it down early to set the right direction early.
+   > We believe that the results that people get in other block games using client mods can be easily achieved using our server-sided modding. In other block games you have to install a client mod in order to get new blocks, NPCs, UI, etc.Hytale does all of that just by listening to the server. The server will basically "mod" the client temporarily in a really safe way to add and modify your gameplay experience. You could make your very own version of Orbis, using none of our models, music, world generation, combat or anything. You have control and you can rip it all out without ever touching the client. Think about how Roblox works.. You never change your App. You just click on an experience you want and you get all you need without modding your installation itself. - Slikey
 
-## Kliento modifikacijos nėra reikalingos
+## Client Mods are Not Needed
 
-Tipiniai kliento modifikacijų naudojimo atvejai yra šie:
+The typical use cases for client mods are:
 
-* Kosmetiniai pakeitimai (resursų paketai, 'shaders', 'capes' ir kt.): vizualiai priklauso serveriams, o ne klientui.
-* Našumas: pagrindinis žaidimas turės reikalingus nustatymus.
-* Prieinamumas: pagrindinis žaidimas bus prieinamas.
-* Naudotojo sąsaja (UI): Priklauso serveriui, o ne klientui.
+* Cosmetic changes (resource packs, shaders, capes, etc.): servers own visuals, not the client.
+* Performance: the base game will offer necessary performance controls.
+* Accessibility: the base game will be accessible on its own.
+* User Interface: servers own UI, not the client.
 
-### Kliento-Pusės Prognozavimas
+### Client-Side Prediction
 
 Hytale uses data-driven client-side prediction to mitigate lag, as all interactions take place on the server and are relayed back to the client. This is already present for some systems but currently limited, though further integration is planned for the future. It's also planned to work with the visual scripting system in the future for further optimization.
 
