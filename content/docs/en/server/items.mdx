@@ -1,0 +1,38 @@
+---
+title: "Items"
+description: "List of all Items extracted from the Hytale asset directory (Server/Item JSON)"
+icon: "List"
+full: true
+---
+
+This page contains a list of all **Items** available to be used as a key in the **AssetMap**.
+
+## What counts as an “Item”
+
+An item is any `.json` file under the configured **Item root** (typically `Assets/Server/Item/`) that:
+
+- Parses as valid JSON
+- Is a JSON **object** (dictionary)
+- Has an item id in one of these fields (first match wins):
+- `Id`, `ItemId`, `itemId`, or `id`
+
+If an item has `TranslationProperties.Name`, that value is treated as the translation key. Display names are resolved from translations when possible; otherwise they fall back to the translation key or a humanized item id.
+
+## Classification and gameplay-safe filtering
+
+Each file is classified by relative path:
+
+- `debug`, `template`, `editor`, `prototype`, `hypixel`, `qa`
+- `gameplay-safe` is `true` only if none of the above apply
+- `block-migration` is set only for `Block/Migrations/`
+
+## Item list
+
+{/*
+This list is expected to be generated from the scanner output (items.db or items.html).
+Populate it with the unique Item IDs (keys) produced by the scan.
+*/}
+
+- {/* ItemId_Example_01 */}
+- {/* ItemId_Example_02 */}
+- {/* ItemId_Example_03 */}
