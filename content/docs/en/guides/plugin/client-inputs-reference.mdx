@@ -1,0 +1,93 @@
+---
+title: "Packets: Client-to-Server Reference"
+description: "Complete reference for every packet the client can send to the server."
+authors:
+    - name: "Vibe Theory & musava"
+      url: "https://discord.com/users/145420279294722048"
+---
+Please see [Listening to Packets Guide](https://forum.hytalemodding.dev/d/17-listening-to-packets) for further details
+
+Packet are found in the decompiled server source: `"decompiled/sources/com/hypixel/hytale/protocol/packets"`
+
+---
+
+## Player Packets
+
+Packets sent by the client for player actions, movement, and state updates.
+
+| Packet Name | ID | Fields |
+|-------------|-----|--------|
+| `SetClientId` | 100 | `clientId` |
+| `SetGameMode` | 101 | `gameMode` |
+| `SetMovementStates` | 102 | `movementStates` |
+| `SetBlockPlacementOverride` | 103 | `enabled` |
+| `JoinWorld` | 104 | `clearWorld`, `fadeInOut`, `worldUuid` |
+| `ClientReady` | 105 | `readyForChunks`, `readyForGameplay` |
+| `LoadHotbar` | 106 | `inventoryRow` |
+| `SaveHotbar` | 107 | `inventoryRow` |
+| `ClientMovement` | 108 | `movementStates`, `relativePosition`, `absolutePosition`, `bodyOrientation`, `lookOrientation`, `teleportAck`, `wishMovement`, `velocity`, `mountedTo`, `riderMovementStates` |
+| `ClientTeleport` | 109 | `teleportId`, `modelTransform`, `resetVelocity` |
+| `UpdateMovementSettings` | 110 | `movementSettings` |
+| `MouseInteraction` | 111 | `clientTimestamp`, `activeSlot`, `itemInHandId`, `screenPoint`, `mouseButton`, `mouseMotion`, `worldInteraction` |
+| `DamageInfo` | 112 | `damageSourcePosition`, `damageAmount`, `damageCause` |
+| `ReticleEvent` | 113 | `eventIndex` |
+| `DisplayDebug` | 114 | `shape`, `matrix`, `color`, `time`, `fade`, `frustumProjection` |
+| `ClearDebugShapes` | 115 | *(none)* |
+| `SyncPlayerPreferences` | 116 | `showEntityMarkers`, `armorItemsPreferredPickupLocation`, `weaponAndToolItemsPreferredPickupLocation`, `usableItemsItemsPreferredPickupLocation`, `solidBlockItemsPreferredPickupLocation`, `miscItemsPreferredPickupLocation`, `allowNPCDetection`, `respondToHit` |
+| `ClientPlaceBlock` | 117 | `position`, `rotation`, `placedBlockId` |
+| `UpdateMemoriesFeatureStatus` | 118 | `isFeatureUnlocked` |
+| `RemoveMapMarker` | 119 | `markerId` |
+
+## Inventory Packets
+
+Packets sent by the client for inventory management and item manipulation.
+
+| Packet Name | ID | Fields |
+|-------------|-----|--------|
+| `UpdatePlayerInventory` | 170 | `storage`, `armor`, `hotbar`, `utility`, `builderMaterial`, `tools`, `backpack`, `sortType` |
+| `SetCreativeItem` | 171 | `inventorySectionId`, `slotId`, `item`, `override` |
+| `DropCreativeItem` | 172 | `item` |
+| `SmartGiveCreativeItem` | 173 | `item`, `moveType` |
+| `DropItemStack` | 174 | `inventorySectionId`, `slotId`, `quantity` |
+| `MoveItemStack` | 175 | `fromSectionId`, `fromSlotId`, `quantity`, `toSectionId`, `toSlotId` |
+| `SmartMoveItemStack` | 176 | `fromSectionId`, `fromSlotId`, `quantity`, `moveType` |
+| `SetActiveSlot` | 177 | `inventorySectionId`, `activeSlot` |
+| `SwitchHotbarBlockSet` | 178 | `itemId` |
+| `InventoryAction` | 179 | `inventorySectionId`, `inventoryActionType`, `actionData` |
+
+## Window Packets
+
+Packets sent by the client for UI window interactions.
+
+| Packet Name | ID | Fields |
+|-------------|-----|--------|
+| `OpenWindow` | 200 | `id`, `windowType`, `windowData`, `inventory`, `extraResources` |
+| `UpdateWindow` | 201 | `id`, `windowData`, `inventory`, `extraResources` |
+| `CloseWindow` | 202 | `id` |
+| `SendWindowAction` | 203 | `id`, `action` |
+| `ClientOpenWindow` | 204 | `type` |
+
+## Other Client Packets
+
+Additional client-to-server packets.
+
+| Packet Name | ID | Fields |
+|-------------|-----|--------|
+| `ClientReferral` | 18 | `hostTo`, `data` |
+| `SetUpdateRate` | 29 | `updatesPerSecond` |
+| `SetTimeDilation` | 30 | `timeDilation` |
+| `SetChunk` | 131 | `x`, `y`, `z`, `localLight`, `globalLight`, `data` |
+| `SetChunkHeightmap` | 132 | `x`, `z`, `heightmap` |
+| `SetChunkTintmap` | 133 | `x`, `z`, `tintmap` |
+| `SetChunkEnvironments` | 134 | `x`, `z`, `environments` |
+| `SetFluids` | 136 | `x`, `y`, `z`, `data` |
+| `SetPaused` | 158 | `paused` |
+| `SetEntitySeed` | 160 | `entitySeed` |
+| `SetPage` | 216 | `page`, `canCloseThroughInteraction` |
+| `SetServerAccess` | 252 | `access`, `password` |
+| `SetMachinimaActorModel` | 261 | `model`, `sceneName`, `actorName` |
+| `SetServerCamera` | 280 | `clientCameraView`, `isLocked`, `cameraSettings` |
+| `SetFlyCameraMode` | 283 | `entering` |
+| `SyncInteractionChains` | 290 | `updates` |
+
+*From Hytale Server build `2026.01.13-dcad8778f`*
