@@ -1,6 +1,6 @@
 ---
 title: Browsing the server.jar code
-description: Learn how to patch the server.jar and browse the source code.
+description: Learn how to decompile the HytaleServer.jar and browse the source code.
 authors:
     - name: "musava_ribica"
       url: "https://github.com/IamMusavaRibica"
@@ -18,6 +18,12 @@ If anything goes wrong, please ping the author in [this post](https://discord.co
 
 
 ## Instructions
+
+If you prefer watching over reading, check out the awesome video walkthrough made by Hyphen45. Note that the written instructions have since been improved, but the process remains the same.
+
+<iframe src="https://www.youtube.com/embed/j8dgR_0Hde8" allowFullScreen />
+
+After watching, check out the *Adding HytaleServer as a dependency* section below.
 
 * Clone the repository `git clone https://github.com/HytaleModding/patcher.git`, and enter the directory using `cd patcher`
 
@@ -90,6 +96,7 @@ Then, in your plugin project add this dependency and also copy other dependencie
     <artifactId>HytaleServer-stripped</artifactId>
     <version>1.0-SNAPSHOT</version>
     <scope>provided</scope>
+    <!-- other dependencies too... -->
 </dependency>
 ```
 
