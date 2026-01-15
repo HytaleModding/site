@@ -39,13 +39,13 @@ Due to the use of `packets` not key inputs, you cannot assign your custom Fireba
 | Left Mouse | LMB | `InteractionType.Primary` | Attack/break |
 | Right Mouse | RMB | `InteractionType.Secondary` | Use/place |
 | Weapon Ability | Q | `InteractionType.Ability1` | Active - weapon special |
-| Ability Slot 2 | — | `InteractionType.Ability2` | Unused placeholder |
-| Ability Slot 3 | — | `InteractionType.Ability3` | Unused placeholder |
-| Interact | E | `InteractionType.Use` | Interact with world |
+| Ability Slot 2 | E | `InteractionType.Ability2` | Unused placeholder |
+| Ability Slot 3 | R | `InteractionType.Ability3` | Unused placeholder |
+| Interact | F | `InteractionType.Use` | Interact with world |
 | Pick Block | MMB | `InteractionType.Pick` | Copy block type |
-| Dodge | — | `InteractionType.Dodge` | Dodge roll mechanic |
+| Dodge | LCTRL | `InteractionType.Dodge` | Dodge roll mechanic |
 
-**Note:** Only `Ability1` (Q key) is actively used for weapon abilities. `Ability2` and `Ability3` exist in the enum but have no default keybinds and nothing in the codebase references them: they appear to be reserved for future use.
+**Note:** Only `Ability1` (Q key) is actively used for weapon abilities. `Ability2` and `Ability3` exist in the enum but nothing in the codebase references them: they appear to be reserved for future use.
 
 These are the only keyboard actions the server sees.
 
