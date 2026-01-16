@@ -52,9 +52,9 @@ We recommend IntelliJ IDEA Community Edition for Hytale modding.
 
 ### 3. Maven
 
-1. Visit the official website: https://maven.apache.org/download.cgi  
+1. Visit the official website: https://maven.apache.org/download.cgi
 2. Download this file: `apache-maven-3.9.12-bin.zip` (Binary zip archive)
-3. Unzip it 
+3. Unzip it
 4. Add the `apache-maven-3.9.12/bin/` folder to your PATH
 
 You can now try the command `mvn -version` to verify Maven is installed correctly. Make sure to do this in a fresh new terminal instead of one you had opened from before!
@@ -103,6 +103,32 @@ mvn install:install-file -Dfile=[ROUTE TO HytaleServer.jar] -DgroupId=com.hypixe
 ```
 
 Replace `[ROUTE TO HytaleServer.jar]` with the actual path to the `HytaleServer.jar` file on your system.
+
+<Callout type="warning">
+If you are using Powershell you may stumble accross the following error:
+```
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  0.192 s
+[INFO] Finished at: ***************
+[INFO] ------------------------------------------------------------------------
+[ERROR] Unknown lifecycle phase ".hypixel.hytale". You must specify a valid lifecycle phase or a goal in the format <plugin-prefix>:<goal> or <plugin-group-id>:<plugin-artifact-id>[:<plugin-version>]:<goal>. Available lifecycle phases are: pre-clean, clean, post-clean, validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy, pre-site, site, post-site, site-deploy. -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/LifecyclePhaseNotFoundException
+```
+
+This has something to do with how powershell struggles with the parameters when they are not wrapped inside strings. To solve this issue just wrap every parameter with `"`.
+
+```bash
+mvn install:install-file -Dfile="[ROUTE TO HytaleServer.jar]" -DgroupId="com.hypixel.hytale" -DartifactId="HytaleServer-parent" -Dversion="1.0-SNAPSHOT" -Dpackaging="jar"
+```
+</Callout>
 
 ## Next Steps
 
