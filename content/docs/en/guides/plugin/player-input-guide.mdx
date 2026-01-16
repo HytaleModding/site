@@ -18,8 +18,6 @@ Hytale Servers **do not receive raw keyboard input.** Instead, clients send `pac
 ## Keybind Limitations
 Due to the use of `packets` not key inputs, you cannot assign your custom Fireball spell to X. 
 
-*There is a workaround addressed below, but first let's understand the baseline:*
-
 **You CANNOT:**
 - Add new keybinds (keyboard mapping is client-side)
 - Remap existing keys
@@ -53,54 +51,11 @@ These are the only keyboard actions the server sees.
 
 ## Intercepting Packets
 
-This is the work around to Custom Player Keybinds. By intercepting the input packets you can redirect the event trigger to your own class. There is a **major caveat with this strategy:** This will override the default Key Mapping unless you otherwise redirect it.
+There is potential for a workaround where packets are intercepted from the client and redirected to your own custom class files. However, this is still under active testing. As it stands, all previous attempts have ran into roadblocks.
+- The Client enacts a lot of hard restrictions: Builder menu is a client UI, builder tools have a client-side gamemode check, etc
+This guide will be actively updated as discovers as made.
 
-See [Client Input Reference](https://hytalemodding.dev/en/docs/guides/plugin/client-inputs-reference) for a comprehensive list of all client-to-server packets.
-
-For instance, intercepting Q to use for custom Fireball spell = Hytale Weapon Abilities becoming unusable.
-
-This is because you aren't intercepting Q, but rather `InteractionType.Ability1`. You would need to redirect a different packet into those recreated abilities in your own mod (this will also of course hijack another packet). The Client Input Reference above shows all packets. *Pro Tip: Builder tools when not in creative are a great starting point.*
-
-
-### Example: Builder Tools -> Combat Abilities
-This is one of the better systems to capture, as it intercepts packets not even used during standard play.
-
-```java
-// 1. Grant permission on join (in PlayerReadyEvent handler)
-PermissionsModule.get().addUserPermission(
-    playerRef.getUuid(),
-    Set.of("hytale.editor.builderTools")
-);
-
-// 2. Intercept in packet handler
-void handleBuilderToolAction(BuilderToolGeneralAction packet, PlayerRef playerRef) {
-    Ref<EntityStore> ref = playerRef.getReference();
-    if (ref == null) return;
-    
-    Store<EntityStore> store = ref.getStore();
-    Player playerComponent = (Player) store.getComponent(ref, Player.getComponentType());
-    
-    if (playerComponent.getGameMode() != GameMode.Creative) {
-        // Hijack for abilities
-        switch (packet.action) {
-            case ActivateToolMode -> castFireball(playerRef);   // B pressed
-            case DeactivateToolMode -> endFireball(playerRef);  // B released
-            case HistoryUndo -> castRewind(playerRef);          // Ctrl+Z
-            case HistoryRedo -> castHaste(playerRef);           // Ctrl+Y
-            case SelectionCopy -> castClone(playerRef);         // Ctrl+C
-        }
-        return;  // Don't run actual builder tool logic
-    }
-    // Creative players get normal behavior
-    super.handleBuilderToolAction(packet, playerRef);
-}
-```
-
-You can do this with anything, so a custom keybind for UI, gameplay, etc. 
-
-**Critical Note:** If the player changes keybinds you won't know, so your guides have to reference Default Hytale Controls. Also if they change key binds due to your mod (disliking Ctrl+C as an ability for example) the setting follows them, and may impact their experience outside of your ecosystem. Important to consider while choosing packets.
-
-### 
+There is also a possibility this is one of the categories Hypixel plans to expand API access on in the future, as a lot of what appears to be live CTS packet handling is stubbed from presumably an old system. Further findings will be shared as they are made.
 
 ---
 
