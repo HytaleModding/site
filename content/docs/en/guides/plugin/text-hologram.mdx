@@ -60,7 +60,6 @@ import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.ProjectileComponent;
 import com.hypixel.hytale.server.core.entity.nameplate.Nameplate;
-import com.hypixel.hytale.server.core.modules.entity.component.Intangible;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -92,7 +91,6 @@ public class TitleHologramCommand extends CommandBase {
             holder.putComponent(ProjectileComponent.getComponentType(), projectileComponent);
             holder.putComponent(TransformComponent.getComponentType(), new TransformComponent(playerTransform.getPosition().clone(), playerTransform.getRotation().clone()));
             holder.ensureComponent(UUIDComponent.getComponentType());
-            holder.ensureComponent(Intangible.getComponentType());
 
             if (projectileComponent.getProjectile() == null) {
                 projectileComponent.initialize();
@@ -129,8 +127,6 @@ This retrieves:
 | `world`           | The world the player is currently in  |
 | `playerTransform` | The player’s position and rotation    |
 
-This allows the hologram to be spawned **exactly where the player is standing**.
-
 ---
 
 ### 2. Spawning on the World Thread
@@ -151,8 +147,7 @@ Holder<EntityStore> holder = EntityStore.REGISTRY.newHolder();
 ProjectileComponent projectileComponent = new ProjectileComponent("Projectile");
 ```
 
-The projectile is only used as a **valid entity shell**.
-It will never move or behave like a real projectile.
+The projectile is only used as a valid entity shell. It will never move or behave like a real projectile.
 
 ---
 
@@ -162,19 +157,13 @@ It will never move or behave like a real projectile.
 holder.putComponent(ProjectileComponent.getComponentType(), projectileComponent);
 holder.putComponent(TransformComponent.getComponentType(), new TransformComponent(playerTransform.getPosition().clone(), playerTransform.getRotation().clone()));
 holder.ensureComponent(UUIDComponent.getComponentType());
-holder.ensureComponent(Intangible.getComponentType());
 ```
-
-This builds an invisible, stationary entity at the player’s position.
 
 | Component             | Purpose                                          |
 | --------------------- | ------------------------------------------------ |
 | `ProjectileComponent` | Provides a valid entity shell                    |
 | `TransformComponent`  | Sets the entity’s position and rotation          |
 | `UUIDComponent`       | Gives the entity a unique identity               |
-| `Intangible`          | Makes the entity non-collidable and unselectable |
-
-The hologram will appear exactly at the player’s position and cannot be interacted with physically.
 
 ---
 
@@ -212,8 +201,6 @@ holder.addComponent(
     new Nameplate("Testing Holograms")
 );
 ```
-
-These final components make the hologram visible and give it its text.
 
 | Component             | Purpose                         |
 | --------------------- | ------------------------------- |
