@@ -1,105 +1,69 @@
 ---
-title: "Player Input and Keybind Guide"
-description: "How to handle player input."
+title: "Player Input Guide"
+description: "Learn how to handle player input."
 authors:
-    - name: "Vibe Theory"
-      url: "https://discord.com/users/145420279294722048"
+    - name: "Neil Revin"
+      url: https://itsneil.dev
+    - name: "Zoon20X"
 ---
-## The Basics
 
 Hytale servers don't receive raw keyboard input. The client interprets keypresses and sends packets describing what action the player wants to perform. You need to intercept these packets or events to create custom behavior.
 
-Other Useful and Related Guides:
+We can use the `SyncInteractionChains` to check when a player interacts. This has a few InteractionTypes, which are listed at the end of this guide.
 
-- [Packets: Client-to-Server Reference](https://hytalemodding.dev/en/docs/guides/plugin/client-inputs-reference)
-
-## Custom Keybinds
-
-Some packets are interceptable and can be used to trigger your own use-cases. This section will link to detailed guides on all interception methods as they become documented.
-
-1. [Customizing Hotbar Actions](https://hytalemodding.dev/en/docs/guides/plugin/customizing-hotbar-actions)
-
-## Limitations
-
-**Cannot do:**
-- Add new keybinds (client-side)
-- Detect keys that don't send packets (Escape for example)
-
-**Can do:**
-- Intercept existing interaction types and redirect them
-- Listen for mouse events
-- Repurpose unused slots (like hotbar slot 9)
-
-## Mouse Events
-
-For mouse input, use the event system instead of packet interception:
+We can use the following code to intercept the SyncInteractionChains packet, and run our code whenever a user interacts using the "F" keybind.
 
 ```java
-getEventRegistry().register(PlayerMouseButtonEvent.class, event -> {
-    MouseButtonEvent mouse = event.getMouseButton();
+public class PacketListener implements PacketWatcher {
+    @Override
+    public void accept(PacketHandler packetHandler, Packet packet) {
+        if (packet.getId() != 290) {
+            return;
+        }
+        SyncInteractionChains interactionChains = (SyncInteractionChains) packet;
+        SyncInteractionChain[] updates = interactionChains.updates;
 
-    if (mouse.mouseButtonType == MouseButtonType.Left
-            && mouse.state == MouseButtonState.Pressed) {
-
-        Entity target = event.getTargetEntity();
-        Vector3i block = event.getTargetBlock();
-        Item item = event.getItemInHand();
-
-        // Cancel the click
-        // event.setCancelled(true);
+        for (SyncInteractionChain item : updates) {
+            PlayerAuthentication playerAuthentication = packetHandler.getAuth();
+            String uuid = playerAuthentication.getUuid().toString();
+            InteractionType interactionType = item.interactionType;
+            if(interactionType == InteractionType.Use){
+                // code here
+            }
+        }
     }
-});
-```
-
-### Mouse Button Types
-
-```java
-MouseButtonType.Left
-MouseButtonType.Middle
-MouseButtonType.Right
-MouseButtonType.X1
-MouseButtonType.X2
-```
-
-### Mouse Button States
-
-```java
-MouseButtonState.Pressed
-MouseButtonState.Released
-```
-
-### Double-Click Detection
-
-The `clicks` field tracks consecutive clicks:
-
-```java
-if (mouse.clicks >= 2) {
-    // Double-clicked
 }
 ```
 
-## Available Player Events
 
-| Event | When It Fires |
-|-------|---------------|
-| `PlayerConnectEvent` | Player connecting |
-| `PlayerDisconnectEvent` | Player disconnecting |
-| `PlayerReadyEvent` | Player fully loaded |
-| `PlayerChatEvent` | Chat message sent |
-| `PlayerInteractEvent` | Interaction with world/entities |
-| `PlayerMouseButtonEvent` | Mouse button press/release |
-| `PlayerMouseMotionEvent` | Mouse movement |
-| `PlayerCraftEvent` | Item crafted |
-| `AddPlayerToWorldEvent` | Player added to world |
-| `DrainPlayerFromWorldEvent` | Player removed from world |
+### Interaction Types
 
-## Imports
+You will majorly use the `Primary`, `Secondary` and `Use` interaction types. The `Primary` Interaction Type is triggered when a player left clicks, `Secondary` is triggered when a player right clicks, and `Use` is triggered when a player uses an item.
 
-```java
-import com.hypixel.hytale.protocol.MouseButtonType;
-import com.hypixel.hytale.protocol.MouseButtonState;
-import com.hypixel.hytale.protocol.MouseButtonEvent;
-import com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent;
-```
+Here's a list of all Interaction Types:
 
-*From Hytale Server build `2026.01.13-dcad8778f`*
+- Primary (0)
+- Secondary (1)
+- Ability1 (2)
+- Ability2 (3)
+- Ability3 (4)
+- Use (5)
+- Pick (6)
+- Pickup (7)
+- CollisionEnter (8)
+- CollisionLeave (9)
+- Collision (10)
+- EntityStatEffect (11)
+- SwapTo (12)
+- SwapFrom (13)
+- Death (14)
+- Wielding (15)
+- ProjectileSpawn (16)
+- ProjectileHit (17)
+- ProjectileMiss (18)
+- ProjectileBounce (19)
+- Held (20)
+- HeldOffhand (21)
+- Equipped (22)
+- Dodge (23)
+- GameModeSwap (24)
