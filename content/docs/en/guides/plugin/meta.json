@@ -2,6 +2,7 @@
   "title": "Server Plugins",
   "pages": [
     "setting-up-env.mdx",
+    "build-and-test.mdx",
     "browsing-serverjar.mdx",
     "creating-commands.mdx",
     "creating-events.mdx",
