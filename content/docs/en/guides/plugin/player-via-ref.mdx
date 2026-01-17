@@ -1,0 +1,44 @@
+---
+title: "Get Player by PlayerRef"
+description: "Learn how to get the Player by PlayerRef."
+authors:
+    - name: "JaXnPriVate"
+      link: "https://byte-store.de/"
+---
+
+## Overview
+
+In Haytale, there are two different types of player objects: the pure player object and the reference object.
+
+### PlayerRef
+Represents the server-side session of a player.
+Holds identity (UUID, username), network connection, language, chunk tracking, and communication.
+Exists even when the player is not currently in a world.
+
+### Player
+Represents the in-game entity of the player.
+Contains gameplay logic such as movement, physics, inventory, game mode, interactions, and damage.
+Exists only while the player is spawned in a world.
+
+## Get Player Object
+
+Here is a small code snippet to retrieve the player object when the player is online.
+
+```java
+    /**
+     * Retrieves the player instance associated with the given player reference.
+     *
+     * @param playerRef the reference object representing the player
+     * @return the Player instance corresponding to the provided player reference
+     */
+    public static Player getPlayerByRef(PlayerRef playerRef) {
+        // Get Entity Stores.
+        Ref<EntityStore> targetRef = playerRef.getReference();
+
+        // Get Target Store.
+        Store<EntityStore> targetStore = targetRef.getStore();
+
+        // Get Target Player Component.
+        return  (Player) targetStore.getComponent(targetRef, Player.getComponentType());
+    }
+```
