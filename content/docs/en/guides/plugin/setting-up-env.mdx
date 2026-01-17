@@ -34,14 +34,14 @@ java -version
 ```bash
 # Using Homebrew
 brew install openjdk@25
-
-# Add OpenJDK to your PATH (required for java command to work)
-echo 'export PATH="$(brew --prefix)/opt/openjdk@25/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
 ```
 
 <Callout type="info">
-If `java --version` shows "Unable to locate a Java Runtime", run the PATH commands above. This adds OpenJDK to your shell configuration (`~/.zshrc`).
+If `java --version` shows "Unable to locate a Java Runtime", add OpenJDK to your PATH:
+```bash
+echo 'export PATH="$(brew --prefix)/opt/openjdk@25/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
 </Callout>
 
 #### Linux (Ubuntu/Debian)
@@ -49,10 +49,6 @@ If `java --version` shows "Unable to locate a Java Runtime", run the PATH comman
 sudo apt update
 sudo apt install openjdk-25-jdk
 ```
-
-<Callout type="info">
-If `java --version` doesn't work after installation, you may need to log out and back in, or run `source ~/.bashrc` to refresh your shell environment.
-</Callout>
 
 ### 2. Integrated Development Environment (IDE)
 
