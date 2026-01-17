@@ -16,10 +16,17 @@ authors:
 Video Tutorials:
  - CustomUIHud Tutorial: https://www.youtube.com/watch?v=u4pGShklEKs
  - InteractiveCustomUIPage Tutorial: https://www.youtube.com/watch?v=NOFWQt9wEbk
+ - Useful Information & Resources: https://www.youtube.com/watch?v=AaNk_g9vb50
 
 Examples:
  - Simple InteractiveCustomUIPage Example: https://github.com/underscore95/Hytale-Sandbox-Plugin/tree/ui-pages
  - Complicated InteractiveCustomUIPage Example: https://github.com/Buuz135/AdminUI/tree/main
+
+Visual UI Editor: https://hytale.ellie.au/
+Create UI from Java: https://www.curseforge.com/hytale/mods/hyui
+
+Show multiple custom HUDs at the same time: https://www.curseforge.com/hytale/mods/multiplehud 
+Example MultipleHUD code: https://github.com/underscore95/Hytale-Sandbox-Plugin/tree/multiple-huds
 
 ## .ui files
 
@@ -88,8 +95,8 @@ uiCommandBuilder.append("MyUI.ui"); // This file must be located at resources/Co
 
 You can get the HudManager using `Player#getHudManager`.
  - Use `HudManager#setCustomHud` to show UI.
- - Use `HudManager#hideHudComponent` to hide UI.
- - https://www.curseforge.com/hytale/mods/multiplehud allows showing multiple custom HUDs
+ - Use `HudManager#hideHudComponents` to hide default Hytale UI.
+ - Set a custom hud with an empty build method to hide custom UI, or use MultipleHUD
 
 ## UI Pages
 
@@ -199,10 +206,11 @@ public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<Entity
 You must always either switch to a new UI or call `sendUpdate();` otherwise the Hytale client will display "Loading..." forever and prevent the user from interacting with your UI.
 This will be familiar if you have ever made commands in a Discord bot, where you have to acknowledge interactions.
 
-### Opening UI pages
+### Showing & Hiding UI pages
 
 ```
 player.getPageManager().openCustomPage(ref, store, MyUI(playerRef));
+player.getPageManager().setPage(ref, store, Page.None);
 ```
 
 ## Dynamically Updating UI
@@ -220,9 +228,10 @@ public void updateText(String newText) {
 
 ## Common Issues
 
-### Failed to apply custom ui hud commands
+### Failed to apply Custom UI HUD commands
 
 This means your .ui file has something wrong with it.
+Enabling Diagnostic Mode in Hytale settings might give more information.
 
 ### Could not find document XXXXX for Custom UI Append command
 
