@@ -19,7 +19,7 @@ This documentation aims to help you get started and master Hytale modding.
 
 If you'd like to contribute to this website, you can follow our [Contributing Guide](./CONTRIBUTING.md), or follow the version on our website:
 
-- [Setting Up/Basics](https://hytalemodding.dev/en/docs/contributing)
+- [Setting Up/Basics](https://hytalemodding.dev/en/docs/guides/plugin/setting-up-env)
 - [PR Guidelines](https://hytalemodding.dev/en/docs/contributing/pr-guidelines)
 - [Writing Guides](https://hytalemodding.dev/en/docs/contributing/writing-guides)
 
