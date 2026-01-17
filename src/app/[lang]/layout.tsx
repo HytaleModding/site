@@ -4,8 +4,10 @@ import { i18n } from "@/lib/i18n";
 import Script from "next/script";
 import englishTranslations from "@/../messages/en.json";
 import { Geist, Geist_Mono } from "next/font/google";
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { cn } from "@/lib/utils";
+import fallbackMessages from "@/../messages/en.json";
+import { headers } from "next/headers";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -15,25 +17,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 });
-
-export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-  ),
-  keywords: [
-    "hytale modding",
-    "hytale",
-    "hytale plugins",
-    "hytale mods",
-    "how to mod hytale",
-    "modding tutorial",
-    "modding guides",
-    "hytale modding guides",
-    "hytale modding tutorial",
-    "how to start modding Hytale",
-    "how to make a mod",
-  ],
-};
 
 const translations = Object.fromEntries(
   i18n.languages.map((lang) => {
@@ -70,4 +53,42 @@ export default async function RootLayout({
       </body>
     </html>
   );
+}
+
+const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ lang: string }> },
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const { lang } = await params;
+  const otherLangs = i18n.languages.filter((l) => l !== lang);
+
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || `/${lang}`;
+
+  // Remove the language prefix from pathname to get the page path
+  const pagePath = pathname.replace(`/${lang}`, "");
+
+  const messages = require(`@/../messages/${lang}.json`);
+
+  return {
+    metadataBase: new URL(siteUrl),
+    keywords: messages.meta?.keywords || fallbackMessages.meta.keywords,
+
+    alternates: {
+      canonical: `${siteUrl}/${lang}${pagePath}`,
+      languages: {
+        ...Object.fromEntries(
+          otherLangs.map((l) => [l, `${siteUrl}/${l}${pagePath}`]),
+        ),
+      },
+    },
+
+    openGraph: {
+      type: "website",
+      siteName: "Hytale Modding",
+      url: `${siteUrl}/${lang}${pagePath}`,
+    },
+  };
 }

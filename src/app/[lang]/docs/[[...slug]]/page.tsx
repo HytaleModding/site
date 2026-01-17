@@ -8,7 +8,7 @@ import {
 } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 import { getMDXComponents } from "@/mdx-components";
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { createRelativeLink } from "fumadocs-ui/mdx";
 import { branch } from "@/git-info.json";
 import { ViewTransition } from "react";
@@ -94,6 +94,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(
   props: PageProps<"/[lang]/docs/[[...slug]]">,
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const params = await props.params;
   const page = source.getPage(params.slug, params.lang);
@@ -102,31 +103,19 @@ export async function generateMetadata(
   const slug = params.slug || [];
   const imageUrl = `/api/og/docs/${params.lang}${slug.length > 0 ? "/" + slug.join("/") : ""}`;
   const pageKeywords = (page.data as any).keywords || [];
-  const globalKeywords = [
-    "hytale modding",
-    "hytale",
-    "hytale plugins",
-    "hytale mods",
-    "how to mod hytale",
-    "modding tutorial",
-    "modding guides",
-    "hytale modding guides",
-    "hytale modding tutorial",
-    "how to start modding Hytale",
-    "how to make a mod",
-  ];
+  const parentMetadata = await parent;
+  const parentKeywords = parentMetadata.keywords || [];
 
-  if (ogLanguageBlacklist.includes(params.lang))
-    return {
-      title: page.data.title,
-      description: page.data.description,
-      keywords: [...globalKeywords, ...pageKeywords],
-    };
+  const baseMetadata = {
+    title: page.data.title,
+    description: page.data.description,
+    keywords: [...parentKeywords, ...pageKeywords],
+  };
+
+  if (ogLanguageBlacklist.includes(params.lang)) return baseMetadata;
   else
     return {
-      title: page.data.title,
-      description: page.data.description,
-      keywords: [...globalKeywords, ...pageKeywords],
+      ...baseMetadata,
       openGraph: {
         images: [
           {
