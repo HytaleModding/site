@@ -41,6 +41,45 @@ public class ExampleCommand extends AbstractPlayerCommand {
 }
 ```
 
+## Adding Arguments
+
+You may want your command to have arguments. To do this, you can use the `withRequiredArg` method. 
+
+```java
+public class ExampleCommand extends AbstractPlayerCommand {
+
+  public ExampleCommand() {
+    super("test", "Super test command!");
+  }
+
+  RequiredArg<String> messageArg = this.withRequiredArg("argument_name", "Argument Description", ArgTypes.STRING);
+
+  @Override
+  protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {
+
+    String message = messageArg.get(commandContext); // get the argument text by the player
+    player.sendMessage(Message.raw("Message Argument: " + message));
+  }
+
+}
+```
+
+
+### Optional Arguments
+
+Adding a optional argument is the same, only change is the method used to create it. You can use the `withOptionalArg` method.
+
+### ArgTypes
+
+The following ArgTypes are available (only lists common types):
+
+- `ArgTypes.STRING`
+- `ArgTypes.INTEGER`
+- `ArgTypes.BOOLEAN`
+- `ArgTypes.FLOAT`
+- `ArgTypes.DOUBLE`
+- `ArgTypes.UUID`
+
 ## Registering the Command
 
 For any command 
