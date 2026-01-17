@@ -2,11 +2,11 @@
 
 **An unofficial community-maintained documentation site for Hytale modding.**
 
-This project provides comprehensive guides, documentation, and resources for modding [Hytale](https://hytale.com/) - a voxel-based sandbox RPG game built from the ground up with modding and user-generated content at its core.
+This project provides comprehensive guides, documentation, and resources for modding [Hytale](https://hytale.com/)-a voxel-based sandbox RPG game built from the ground up with modding and user-generated content at its core.
 
 ## About Hytale Modding
 
-Hytale is designed with a server-first modding approach, allowing anyone to create and share mods without requiring players to download external client modifications. Whether you're interested in:
+Hytale is built with a server-first modding approach, enabling anyone to create and share mods without requiring players to install external client modifications. Whether you’re interested in:
 
 - **Server Plugins** - Java-based programming for deep gameplay modifications
 - **Data Assets** - JSON-driven content like blocks, items, NPCs, and world generation
