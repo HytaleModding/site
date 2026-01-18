@@ -11,6 +11,9 @@
 /build
 *.tsbuildinfo
 
+# intellij
+.idea/
+
 # misc
 .DS_Store
 *.pem
