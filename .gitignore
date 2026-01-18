@@ -11,6 +11,9 @@
 /build
 *.tsbuildinfo
 
+# JetBrains IDEs
+.idea/
+
 # misc
 .DS_Store
 *.pem
