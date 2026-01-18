@@ -1,0 +1,11 @@
+---
+title: Energy Beam
+description: propreties of energy beams
+---
+
+There are 3 variables comming into play with an energy beam : 
+- Resistance (lenght/range) : How far the beam can reach. Will vary depending on how much energy is left in the linked E-Absorber
+- Power : The strength of the beam in terms of tool tier (1=wood, 2=stone, etc.)
+- Type : Determines what spells can be cast (visual mana only)
+
+When two or more beams encounters each other, only they will cancel each other out. To calculate what will be the result, subtract the resistance of each beam. The one with the remaining positive resistance will be the one remaining. It's resistance will be reduced by the resistance of the supressed beam.
