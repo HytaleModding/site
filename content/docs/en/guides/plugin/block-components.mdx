@@ -48,11 +48,57 @@ public class ExampleBlock implements Component<ChunkStore> {
 }
 ```
 
-ExampleBlock stores the behavior for the block. Here, it simply places an Ice Block at `x + 1` relative to its current position when it ticks.
+ExampleBlock is a custom component that stores the behavior and data for your ticking block. Here, it simply places an Ice Block at x + 1 relative to its current position when it ticks.
 
 ---
 
-### 2. ExampleSystem - handles ticking
+### 2. ExampleInitializer - marks blocks as ticking when placed
+
+```java
+public class ExampleInitializer extends RefSystem {
+
+    @Override
+    public void onEntityAdded(@Nonnull Ref ref, @Nonnull AddReason reason, @Nonnull Store store, @Nonnull CommandBuffer commandBuffer) {
+        BlockModule.BlockStateInfo info = (BlockModule.BlockStateInfo) commandBuffer.getComponent(ref, BlockModule.BlockStateInfo.getComponentType());
+        if (info == null) return;
+
+        ExampleBlock generator = (ExampleBlock) commandBuffer.getComponent(ref, ExamplePlugin.get().getExampleBlockComponentType());
+        if (generator != null) {
+            int x = ChunkUtil.xFromBlockInColumn(info.getIndex());
+            int y = ChunkUtil.yFromBlockInColumn(info.getIndex());
+            int z = ChunkUtil.zFromBlockInColumn(info.getIndex());
+
+            WorldChunk worldChunk = (WorldChunk) commandBuffer.getComponent(info.getChunkRef(), WorldChunk.getComponentType());
+            if (worldChunk != null) {
+				worldChunk.setTicking(x, y, z, true);
+            }
+        }
+    }
+
+    @Override
+    public void onEntityRemove(@Nonnull Ref ref, @Nonnull RemoveReason reason, @Nonnull Store store, @Nonnull CommandBuffer commandBuffer) {
+    }
+
+    @Override
+    public Query getQuery() {
+        return Query.and(BlockModule.BlockStateInfo.getComponentType(), ExamplePlugin.get().getExampleBlockComponentType());
+    }
+}
+```
+
+ExampleSystemInitializer is a RefSystem that reacts when block entities with the ExampleBlock component are added or removed. This is crucial for marking blocks as ticking when they're first placed.
+
+**Key Points:**
+
+* Tells the game that this block should tick, allowing `ExampleSystem` to process it.
+
+```java
+worldChunk.setTicking(x, y, z, true);
+```
+
+---
+
+### 3. ExampleSystem - handles ticking
 
 ```java
 public class ExampleSystem extends EntityTickingSystem {
@@ -104,6 +150,9 @@ public class ExampleSystem extends EntityTickingSystem {
 }
 ```
 
+ExampleSystem is an EntityTickingSystem that runs every tick to execute the logic for all ticking blocks with the ExampleBlock component.
+
+**Key Points:**
 
 * **Get the block component**
 
@@ -132,7 +181,7 @@ return BlockTickStrategy.CONTINUE;
 
 ---
 
-### 3. ExamplePlugin - registers components and systems
+### 4. ExamplePlugin - registers components and systems
 
 ```java
 public class ExamplePlugin extends JavaPlugin {
@@ -164,7 +213,9 @@ public class ExamplePlugin extends JavaPlugin {
 }
 ```
 
-### 4. Configure In-Game
+---
+
+### 5. Configure In-Game
 
 ![block-component-1](/assets/guides/block-component-1.png)
 
