@@ -80,7 +80,7 @@ It cannot be interacted with.
 Create a Java class that extends `CustomUIHud` and overrides the `build` function.
 
 The `build` function has a `UICommandBuilder` parameter, this allows you to add .ui files to the HUD.
-```
+```java
 uiCommandBuilder.append("MyUI.ui"); // This file must be located at resources/Common/UI/Custom/MyUI.ui
 ```
 
@@ -137,7 +137,7 @@ Group {
 
 InteractiveCustomUIPage takes a generic argument, this is a class containing any UI data you want the client to send to the server.
 
-```
+```java
 public static class Data {
   public static final BuilderCodec<Data> CODEC = BuilderCodec.builder(Data.class, Data::new)
     .append(new KeyedCodec<>("@MyInput", Codec.STRING), (data, value) -> data.value = value, data -> data.value).add()
@@ -155,17 +155,17 @@ InteractiveCustomUIPage constructor takes a PlayerRef, CustomPageLifetime, and `
 Example value in the Data class above.
 
 This passes the Class and a lambda function that constructs the Data object, the server uses this to deserialize the JSON.:
-```
+```java
 BuilderCodec.builder(Data.class, Data::new)
 ```
 
 This provides a setter and getter lambda function to the field that should contain whatever @MyInput is set to:
-```
+```java
 .append(new KeyedCodec<>("@MyInput", Codec.STRING), (data, value) -> data.value = value, data -> data.value).add()
 ```
 
 The following build method is used:
-```
+```java
 @Override
 public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder uiCommandBuilder, @Nonnull UIEventBuilder uiEventBuilder, @Nonnull Store<EntityStore> store) {
   uiCommandBuilder.append("MyUI.ui");
@@ -174,18 +174,18 @@ public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder uiCom
 ```
 
 This says we are listening for whenever the value of #MyInput changes:
-```
+```java
 CustomUIEventBindingType.ValueChanged, "#MyInput"
 ```
 
 You may be wondering where `@MyInput` in the codec previously came from, it is defined here.
 This creates the codec value `@MyInput` and maps it to `#MyInput.Value`:
-```
+```java
 EventData.of("@MyInput", "#MyInput.Value")
 ```
 
 The following `handleDataEvent` will be overridden, take care to override the one that has a `Data` parameter rather than `String raw` (this is the raw json).
-```
+```java
 @Override
 public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, Data data) {
   super.handleDataEvent(ref, store, data);
@@ -201,7 +201,7 @@ This will be familiar if you have ever made commands in a Discord bot, where you
 
 ### Opening UI pages
 
-```
+```java
 player.getPageManager().openCustomPage(ref, store, MyUI(playerRef));
 ```
 
@@ -211,7 +211,7 @@ In many cases you want to update your UI at run time.
 
 Here is an example of updating a Label's (with id MyLabel) text content, this method should be added to your UI Java class:
 
-```
+```java
 public void updateText(String newText) {
   UICommandBuilder uiCommandBuilder = new UICommandBuilder();
   uiCommandBuilder.set("#MyLabel.TextSpans", Message.raw(newText));
