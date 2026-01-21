@@ -192,6 +192,22 @@ Argument validators are a way to check the command before the command gets execu
 ---
 ## Permissions
 
+This allows the server to control who has access to specific commands. You add the permissions code into the commands constructor. You need to use the `requirePermission` method.
+
+```java
+...
+    // Constructor
+    public ServerRulesCommand() {
+        super("rules", "Lists the servers rules");
+
+        // Only players with this permission can use this command
+        requirePermission(HytalePermissions.fromCommand("rules"));
+    }
+...
+```
+TODO: Example on how to give permissions to players
+
+
 --- 
 ## Command Variants
 
