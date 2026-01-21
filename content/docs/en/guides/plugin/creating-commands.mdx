@@ -22,7 +22,7 @@ You can see information on the following topics:
     - Argument Validators
 - Permissions
 - Command Variants
-- Subcommands
+- Subcommands and Command Collections
 - Registering the Command
 - Video Link
 
@@ -219,12 +219,49 @@ This allows the server to control who has access to specific commands. You add t
 ```
 TODO: Example on how to give permissions to players
 
-
 --- 
 ## Command Variants
 
 --- 
-## Sub Commands
+## Sub Commands and Command Collections
+
+You can create a collection of commands using an `AbstractCommandCollection`. This does not allow the top level command to actually do anything. All commands must be implemented on the same level. But you can implement a `CommandCollection` of `CommandCollections`.
+
+The following shows a sudo example of the following layout
+```
+/admin
+    |--user
+    |    |--rules
+    |    |--teleport
+    |
+    |--server
+          |--restart
+```
+```java
+public class RulesCommand excends AbstractPlayerCommand {
+    // See Example above
+}
+// Teleport command here
+// Restart command here
+...
+// User Collection
+public class UserCommandCollection extends AbstractCommandCollection {
+    public UserCommandCollection () {
+        super("user", "User commands");
+        addSubCommand(new RulesCommand());
+        addSubCommand(new TeleportCommand());
+    }
+}
+// Server Collection here
+...
+public class AdminCommand extends AbstractCommandCollection { 
+    public AdminCommand () {
+        super("admin", "Admin commands");
+        addSubCommand(new UserCommandCollection());
+        addSybCommand(new ServerCommandCollection);
+    }
+}
+```
 
 ---
 
