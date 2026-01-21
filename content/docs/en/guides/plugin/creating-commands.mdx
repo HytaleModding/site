@@ -17,13 +17,16 @@ You can see information on the following topics:
     - AbstractPlayerCommand
     - AbstractTargetPlayerCommand
     - AbstractTargetEntityCommand
-- Arguments 
-- Argument Validators
+- Arguments
+    - Argument Types
+    - Argument Validators
 - Permissions
 - Command Variants
 - Subcommands
+- Registering the Command
 
-## The `AbstractAsyncCommand` Class
+## Command Types
+### The `AbstractAsyncCommand` Class
 The most basic command is an `AbstractAsyncCommand`. Unlike the other commands AbstractAsyncCommand's ececute funtion is called `executeAsync` and returns a `completeableFuture`
 
 *WARN* `AbstractAsyncCommand` runs on its own background thread. This means it is not tied to any world instance. Because of this it can not edit any Stores or Refs without getting the desired world first as the world needs to ececute the command in its thread. To access this data any of the other command types would be prefered and are likely what you will want to use instead.
@@ -45,13 +48,13 @@ public class ServerRulesCommand extends AbstractAsyncCommand {
     // arg1: conetext - info about who ran the command. Server console?, Some player? 
     @Override
     protected CompleteableFuture<Void> executeAsync(CommandContext context) {
-        context.sendMessage(Message.raw("The only rule is there are no rules"));
+        context.sendMessage(Message.raw("The only rule is there are no rules."));
         return CompleteableFuture.completedFuture(null);
     }
 }
 ```
 
-*NOTE:* Remember to add the command to the command registry in your main plugin class.
+*NOTE:* Remember to add the command to the command registry in your main plugin class to be able to use the command.
 ```java
 public class TutorialCommandsPlugin extends JavaPlugin {
     public TutorialCommandsPlugin(@Nonnull JavaPluginInit) { super(init); }
@@ -67,9 +70,10 @@ public class TutorialCommandsPlugin extends JavaPlugin {
     }
 }
 ```
----
 
-## The `AbstractPlayerCommand` Class
+### The `AbstractPlayerCommand` Class
+
+The `AbstractPlayerCommand` is similar to the `AbstractAsyncCommand` but it is tied to a specific Player and World. This allows the command to edit those additional objects that we could not edit before. The limits are that the command is still directly tied to the player running the command. If you would instead like to target a different player or item use `AbstractTargetPlayerCommand` and `AbstractTargetEntityCommand` respectively.
 
 To create a command, you can extend the `AbstractPlayerCommand` class. You need to provide a constructor that calls the `BaseCommand` constructor with the command name, description, and whether the command requires confirmation (--confirm while running the command).
 
@@ -102,10 +106,19 @@ public class ExampleCommand extends AbstractPlayerCommand {
 }
 ```
 
+### The `AbstractTargetPlayerCommand` Class
+Like the `AbstractPlayerCommand` but adds a `--player <value: string>` argument to allow the user to specify which player they are targeting. 
+Is automatically threaded so you override the `execute` command instead of `executeAsync`.
+
+### The `AbstractTargetEntityCommand` Class
+Uses a Ray to see what the player is looking at and tries to run the command on that entity. It is thread safe and will run on whatever world thread that includes the targeted entity. 
+
+--- 
+
 ## Adding Arguments
-#### Command Argument Types
-- `withRequiredArg`    // Must be provided
-- `withOptionalArg`    // Returns null if not provided
+### Command Argument Types
+- `withRequiredArg`    // Must be provided and are parsed left -> right in the command
+- `withOptionalArg`    // Returns null if not provided. Needs to have the --<key> <value> pair when running the command. `EX: --player Joe` 
 - `withDefaultArg`     // Returns a default value if not provided
 - `withFlagArg`        // boolean switch (--silent)
 
@@ -135,6 +148,14 @@ public class ExampleCommand extends AbstractPlayerCommand {
 
 Adding a optional argument is the same, only change is the method used to create it. You can use the `withOptionalArg` method.
 
+### Default Arguments 
+
+Adding a default argument has an additional arguemnt for the default value. You need to use `withDefaultArg` method. 
+
+### Flag Arguemnts
+
+Similar as above but the flags return is either true if it exists or false/null if it does not. You need to use `withFlagArg` method.
+
 ### ArgTypes
 
 The following ArgTypes are available (only lists common types):
@@ -145,6 +166,39 @@ The following ArgTypes are available (only lists common types):
 - `ArgTypes.FLOAT`
 - `ArgTypes.DOUBLE`
 - `ArgTypes.UUID`
+
+### Argument Validators
+
+Argument validators are a way to check the command before the command gets executed. They are added with the `addValidator` method on an argument. They also provide a nice output to the user when an input value is invalid. 
+
+```java
+...
+    // Common check types
+    OptionalArg<Integer> healAmount = withOptionalArg("amount", "Heal Amount", ArgTypes.INTEGER)
+        .addValidator(Validators.greaterThan(0))
+        .addValidator(Validators.lessThan(1000));
+
+    // Custom check
+    OptionalArg<Integer> healAmount = withOptionalArg("amount", "Heal Amount", ArgTypes.INTEGER)
+            .addValidator( value -> {
+                if (value != null && value <= 0) {
+                    return ValidationResult.error("ammount argument must be a positive number");
+                }
+                return ValidationResult.success();
+            });
+...
+```
+
+---
+## Permissions
+
+--- 
+## Command Variants
+
+--- 
+## Sub Commands
+
+---
 
 ## Registering the Command
 
