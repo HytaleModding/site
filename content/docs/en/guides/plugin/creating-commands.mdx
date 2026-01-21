@@ -11,16 +11,64 @@ authors:
 ---
 
 In this guide, you will learn how to create custom commands for your Hytale mod.
-- Command Types AbstractPlayerCommand, AbstractTargetPlayerCommand, 
-- Arguments & Validators
+You can see information on the following topics:
+- Command types
+    - AbstractAsyncCommand
+    - AbstractPlayerCommand
+    - AbstractTargetPlayerCommand
+    - AbstractTargetEntityCommand
+- Arguments 
+    - 
+- Argument Validators
+    - 
 - Permissions
-- Variants & Subcommands
+- Command Variants & Subcommands
 
-## Command Types
-- AbstractPlayerCommand
-- 
-- 
-- 
+## The `AbstractAsyncCommand` Class
+The most basic command is an `AbstractAsyncCommand`. Unlike the other commands AbstractAsyncCommand's ececute funtion is called `executeAsync` and returns a `completeableFuture`
+
+`AbstractAsyncCommand` runs on its own background thread. This means by default it is not tied to any world instance. Because of this it can not edit any Stores or Refs without getting the desired world first as the world needs to ececute the command in its thread. To access this data any of the other command types would be prefered and are likely what you will be using instead.
+
+The main purpose for a command like this would be for something that can happen everywhere and is not tied to a world. For example a `serverRules` command to tell the user thats running the command what are the servers rules are nomatter what world they are in. 
+
+```java
+// Command that can be run that lists the server rules in chat to the player
+public class ServerRulesCommand extends AbstractAsyncCommand {
+
+    // Constructor
+    public ServerRulesCommand() {
+        // Pass any needed info to AbstractAsyncCommand
+        // super(<The command>, <Command description>)
+        super("rules", "Lists the servers rules");
+    }
+
+    // Run the command
+    // arg1: conetext - info about who ran the command. Server console?, Some player? 
+    @Override
+    protected CompleteableFuture<Void> executeAsync(CommandContext context) {
+        context.sendMessage(Message.raw("The only rule is there are no rules"));
+        return CompleteableFuture.completedFuture(null);
+    }
+}
+```
+
+Remember to add the command to the command registry in your main plugin class!
+```java
+public class TutorialCommandsPlugin extends JavaPlugin {
+    public TutorialCommandsPlugin(@Nonnull JavaPluginInit) { super(init); }
+
+    
+    @Override
+    protected void setup() {
+        CommandRegistry registry = getCommandRegistry()
+
+        // ServerRulesCommand - List rules for the server
+        // Usage: /rules
+        commandRegistry.registerCommand(new ServerRulesCommand())
+    }
+}
+```
+
 ## The `AbstractPlayerCommand` Class
 
 To create a command, you can extend the `AbstractPlayerCommand` class. You need to provide a constructor that calls the `BaseCommand` constructor with the command name, description, and whether the command requires confirmation (--confirm while running the command).
