@@ -44,7 +44,13 @@ public class ExampleCommand extends AbstractPlayerCommand {
 ```
 
 ## Adding Arguments
+#### Command Argument Types
+- `withRequiredArg`    // Must be provided
+- `withOptionalArg`    // Returns null if not provided
+- `withDefaultArg`     // Returns a default value if not provided
+- `withFlagArg`        // boolean switch (--silent)
 
+### Required Arguments
 You may want your command to have arguments. To do this, you can use the `withRequiredArg` method. 
 
 ```java
@@ -65,7 +71,6 @@ public class ExampleCommand extends AbstractPlayerCommand {
 
 }
 ```
-
 
 ### Optional Arguments
 
