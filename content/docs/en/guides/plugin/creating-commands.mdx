@@ -24,6 +24,7 @@ You can see information on the following topics:
 - Command Variants
 - Subcommands
 - Registering the Command
+- Video Link
 
 ## Command Types
 ### The `AbstractAsyncCommand` Class
@@ -192,7 +193,7 @@ Argument validators are a way to check the command before the command gets execu
 ---
 ## Permissions
 
-This allows the server to control who has access to specific commands. You add the permissions code into the commands constructor. You need to use the `requirePermission` method.
+This allows the server to control who has access to specific commands. You add the permissions code into the commands constructor. You need to use the `requirePermission` method. You can list multiple permissions if the command requires the player to have multiple to be able to run. You can also use or blocks to allow running the command if the user has one of the defined permissions.
 
 ```java
 ...
@@ -201,7 +202,18 @@ This allows the server to control who has access to specific commands. You add t
         super("rules", "Lists the servers rules");
 
         // Only players with this permission can use this command
-        requirePermission(HytalePermissions.fromCommand("rules"));
+        requirePermission (HytalePermissions.fromCommand("rules"));
+
+        // Add multiple permission if the player needs multiple to access the command
+        requirePermission (HytalePermissions.fromCommand("moderator"));
+
+        // Use or block if it requires one of a list of permissions roles
+        requirePermission (
+            PermissionRules.or (
+                HytalePermissions.fromCommand("moderator"),
+                HytalePermissions.fromCommand("admin")
+            )
+        );
     }
 ...
 ```
@@ -229,6 +241,8 @@ public class MyPlugin extends JavaPlugin {
     }
 }
 ```
+--- 
 
+## Video Link
 *Special Thanks to [TroubleDev](https://www.youtube.com/@TroubleDEV) for his excelent video guide on all of these features.*
 *Video Link: [TroubleDev - Hytale's Command API Explained](https://www.youtube.com/watch?v=KnmhG9MDMgo)*
