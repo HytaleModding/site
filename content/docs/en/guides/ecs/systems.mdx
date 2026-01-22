@@ -115,25 +115,12 @@ public class PermissionAttachmentSystem extends RefChangeSystem<EntityStore, Per
     return EntityStoreRegistry.get().getPermissionAttachmentComponentType();
   }
 
-  private PermissibleProvider getProvider() {
-    for (PermissionProvider provider : PermissionsModule.get().getProviders()) {
-      if (provider instanceof PermissibleProvider) {
-        return (PermissibleProvider) provider;
-      }
-    }
-    LOGGER.atWarning().log("PermissibleProvider not found in PermissionsModule!");
-    return null;
-  }
-
   @Override
   public void onComponentAdded(@Nonnull Ref<EntityStore> ref, @Nonnull PermissionAttachment permissionAttachment, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
     UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
     UUID playerUuid = component.getUuid();
 
-    PermissibleProvider provider = getProvider();
-    if (provider != null) {
-      provider.updateCache(playerUuid, permissionAttachment.getPermissions(), permissionAttachment.getGroups());
-    }
+    // PermissionAttachment component was added to a new entity
   }
 
   @Override
@@ -141,14 +128,7 @@ public class PermissionAttachmentSystem extends RefChangeSystem<EntityStore, Per
     UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
     UUID playerUuid = component.getUuid();
 
-    PermissionRepository repository = PermissiblePlugin.getInstance().getInternalPermissionRepository();
-    repository.savePlayerPermissions(playerUuid, newAttachment.getPermissions());
-    repository.savePlayerGroups(playerUuid, newAttachment.getGroups());
-
-    PermissibleProvider provider = getProvider();
-    if (provider != null) {
-      provider.updateCache(playerUuid, newAttachment.getPermissions(), newAttachment.getGroups());
-    }
+    // PermissionAttachment component was updated using replaceComponent or putComponent
   }
 
   @Override
@@ -156,10 +136,7 @@ public class PermissionAttachmentSystem extends RefChangeSystem<EntityStore, Per
     UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
     UUID playerUuid = component.getUuid();
 
-    PermissibleProvider provider = getProvider();
-    if (provider != null) {
-      provider.removeFromCache(playerUuid);
-    }
+    // PermissionAttachment component was removed from an entity
   }
 
   @Nullable
@@ -171,7 +148,7 @@ public class PermissionAttachmentSystem extends RefChangeSystem<EntityStore, Per
 ```
 
 In this system we listen for changes on the `PermissionAttachment` component inside of the `EntityStore`. This gives us access to `onComponentAdded`, `onComponentSet` and `onComponentRemoved` which in this example caches and persists permission data
-which is stored on a player inside of a custom `PermissionAttachment` component. This example comes from [Permissible](https://github.com/oskarscot/Permissible) permissions plugin where you can find more examples of heavy ECS usage.
+which is stored on a player inside of a custom `PermissionAttachment` component.
 
 
 
