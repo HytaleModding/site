@@ -97,7 +97,7 @@ Is automatically threaded so you override the `execute` command instead of `exec
 
 ### The `AbstractTargetEntityCommand` Class
 Uses a Ray to see what the player is looking at and tries to run the command on that entity. It is thread safe and will run on whatever world thread that includes the targeted entity. The following shows an example and how the ref provided just becomes a ref to the entity the player was looking at. 
-```
+```java
 ...
 @Override protected void execute (CommandContext context,
                                     Store<EntityStore> store,
