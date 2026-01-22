@@ -101,6 +101,8 @@ Uses a Ray to see what the player is looking at and tries to run the command on 
 --- 
 
 ## Adding Arguments
+Arguments are additional fields that the user can input when running a command. The different types of arguments along with small snipits and a large example can be seen below. 
+
 ### Command Argument Types
 - `withRequiredArg`    // Must be provided and are parsed left -> right in the command
 - `withOptionalArg`    // Returns null if not provided. Needs to have the --<key> <value> pair when running the command. `EX: --player Joe` 
@@ -259,16 +261,23 @@ Use `/perm --help` in game to see usage.
 
 --- 
 ## Command Variants
-If you want variants of the same command without doing argument parsing you can instead use `addUsageVariant(new OtherCommandClass())` in the original commands constructor. 
+If you want variants of the same command without doing argument parsing you can instead use `addUsageVariant(new OtherCommandClass())` in the original commands constructor.
 
 The only difference is in the `OtherCommandClass()` constrcutor you don't pass the command name to the super class.
+<Context="info">
+You can also use `addAliases("some_alias", "some_other_alias")` as a way to add shorthand or other ways to write the same command. 
+</Context>
+An example of both is below.
+
 ```java
 public class GiveCommand extends AbstractPlayerCommand {
     private final RequiredArg<String> itemArg;
     public GiveCommand () {
         super("give", "Give item to yourself");
         this.itemArg = withRequiredArg("item", "Item", ArgTypes.STRING);
-        addUsageVariant(new GiveOtherCommand())
+        addUsageVariant(new GiveOtherCommand());
+
+        addAliases("gv", "gMe");
     }
     // Give commands execute should be here
     ...
