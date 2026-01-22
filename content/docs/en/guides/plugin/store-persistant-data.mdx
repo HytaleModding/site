@@ -6,6 +6,8 @@ authors:
       url: "https://github.com/ArcticRaven"
     - name: "Neil Revin"
       url: "https://itsneil.dev/"
+    - name: "oskarscot"
+      url: "https://oskar.scot"
 ---
 
 Here is how to store persistent data using a custom component on a Player.
@@ -105,7 +107,7 @@ public class YourPlugin extends JavaPlugin {
 
 Your component will be stored within the `Store<EntityStore>` when added to the player. In the provided example,
 we'll fetch this data off the player using the `ensureAndGetComponent()` method, which will add the component to
-the player if it does not exist.
+the player if it does not exist with the default values.
 
 ```java
 public class IncompleteCustomCommand extends AbstractPlayerCommand {
@@ -123,7 +125,7 @@ public class IncompleteCustomCommand extends AbstractPlayerCommand {
         @NonNullDecl World world
     ) {
         YourPlayerData customData = store.ensureAndGetComponent(ref, YourPlugin.instance().getYourPlayerDataComponent());
-
+        // ensureAndGetComponent adds the component to the ref, with the default values defined inside your component.
  		// use your data
     }
 }
@@ -131,5 +133,7 @@ public class IncompleteCustomCommand extends AbstractPlayerCommand {
 
 And that's it! Your data will now be saved and loaded automatically with the player.
 
-## Conclusion
-Using custom components to store persistent data on players is a powerful way to maintain state across sessions. By following the steps outlined above, you can easily create, register, and utilize your own data structures within the Hytale modding framework. This approach ensures that your data is seamlessly integrated with the game's existing systems, providing a robust solution for managing player-specific information. Happy modding!
+Using custom components to store persistent data on players is a powerful way to maintain state across sessions. 
+By following the steps outlined above, you can easily create, register, and utilize your own data structures within the Hytale ECS framework. 
+This approach ensures that your data is seamlessly integrated with the game's existing systems.
+For more information about Hytale's Entity Component System visit the [Hytale ECS Theory](https://hytalemodding.dev/en/docs/plugin/plugin/hytale-ecs-theory) guide.
