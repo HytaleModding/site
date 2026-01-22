@@ -1,0 +1,1543 @@
+---
+title: Density
+description: Defines a 3D decimal value field.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+### Constant
+
+Outputs a constant value.
+
+Expected Inputs: 0
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Value",
+      description: "Decimal number.",
+    },
+  ]}
+/>
+
+---
+
+### SimplexNoise2D
+
+Outputs a value in the range \[-1, 1] from a 2D simplex noise field that varies on the x/z plane. For more details on how simplex noise works and what every parameter does to the output you can visit [this page](https://cmaher.github.io/posts/working-with-simplex-noise/).;
+
+This node automatically caches the value per x/z column.
+
+Expected Inputs: 0
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Lacunarity",
+      description:
+        "Positive floating point number. Impacts the scale of each consecutive octave. A good starting value would be 2.0, which results in each consecutive octave having details that are 2x smaller than the previous. Higher values result in grainier noise.",
+    },
+    {
+      name: "Persistence",
+      description:
+        "Positive floating point number. Multiplies the intensity of each consecutive octave. A good starting value would be 0.5, which results in each consecutive octave being half as strong as the previous.",
+    },
+    {
+      name: "Scale",
+      description:
+        "Positive floating point number. Represents the field's period distance in blocks. Greater values stretch the noise field outward. A good starting value would be 50.",
+    },
+    {
+      name: "Octaves",
+      description:
+        "Integer greater than 0. Greater values result in more detail. A good starting value would be 4. Requiring values over 10 are uncommon.",
+    },
+    {
+      name: "Seed",
+      description: "A string.",
+    },
+  ]}
+/>
+
+---
+
+### SimplexNoise3D
+
+Outputs a value in the range \[-1, 1] from a 3D simplex noise field that varies on the x/y/z space. For more details on how simplex noise works and what every parameter does to the output you can visit [this page](https://cmaher.github.io/posts/working-with-simplex-noise/).
+
+Expected Inputs: 0
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Lacunarity",
+      description:
+        "Positive floating point number. Impacts the scale of each consecutive octave. A good starting value would be 2.0, which results in each consecutive octave having details that are 2x smaller than the previous. Higher values result in grainier noise.",
+    },
+    {
+      name: "Persistence",
+      description:
+        "Positive floating point number. Multiplies the intensity of each consecutive octave. A good starting value would be 0.5, which results in each consecutive octave being half as strong as the previous.",
+    },
+    {
+      name: "ScaleXZ",
+      description:
+        "Positive floating point number. Represents the field’s period distance in blocks on the horizontal XZ plane. Greater values stretch the noise field outward. A good starting value would be 50.",
+    },
+    {
+      name: "ScaleY",
+      description:
+        "Positive floating point number. Represents the field’s period distance in blocks on the vertical Y axis. Greater values stretch the noise field outward. A good starting value would be 50.",
+    },
+    {
+      name: "Octaves",
+      description:
+        "Integer greater than 0. Greater values result in more detail. A good starting value would be 4. Requiring values over 10 are uncommon.",
+    },
+    {
+      name: "Seed",
+      description: "A string.",
+    },
+  ]}
+/>
+
+---
+
+### PositionsCellNoise
+
+Produces a 2D/3D density field in which the value is determined by each coordinate’s distance from a field of Positions. You can use this asset to generate advanced Cell noise with control over the exact placement of the Cell’s through the Positions asset. You can also configure how the distance is interpreted to produce the output. You can use the traditional Cell noise ReturnTypes or create your own curves. You can also sample the Cell value from another Density field asset.
+
+![Example of PositionsCellNoise setup](/assets/official-documentation/worldgen/technical-hytale-generator/density/positions-cell-noise.png)
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Positions",
+      description:
+        "Positions slot. This provides the Positions of each cell's core.",
+    },
+    {
+      name: "ReturnType",
+      description:
+        "ReturnType slot. This determines how the distance from each Position point is interpreted to produce the density field.",
+    },
+    {
+      name: "DistanceFunction",
+      description:
+        "DistanceFunction slot. This determines how the distance is calculated.",
+    },
+    {
+      name: "MaxDistance",
+      description:
+        "Floating point value. The maximum distance around each Position that it has an effect on the Density field. A good starting value is putting it a bit over half the distance between two of your Position points. Greater values have a greater impact on performance.",
+    },
+  ]}
+/>
+
+#### ReturnType
+
+Determines how each Position point affects the Densty field around it, or how the Cell looks.
+
+Below are the different types you can use.
+
+**CellValue**
+
+The Density value is constant inside each cell and is sampled from the provided Densty field.
+
+The images below show a 2D and a 3D output of the CellValue return type.
+
+![2D CellValue example](/assets/official-documentation/worldgen/technical-hytale-generator/density/cell-value-2d.png)
+
+![3D CellValue example](/assets/official-documentation/worldgen/technical-hytale-generator/density/cell-value-3d.png)
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Density",
+      description:
+        "Density asset slot. The Density value of each cell is sampled from this field at the cell's core Position point.",
+    },
+    {
+      name: "DefaultValue",
+      description:
+        "Floating point number. This value is used outside of cells. This can happen when the field's MaxDistance value is smaller than the distance between some Positions.",
+    },
+  ]}
+/>
+
+**Density**
+
+The cell is populated with a Density field. The Density field is picked from a list of Delimiters. The Delimiters are picked if the ChoiceDensity field is within their range. The ChoiceDensity field’s value is sampled at the origin position of the cell.
+
+Below is a screenshot showing a simple example of how you can anchor any Density field you design to the origin of the cell using the Anchor Density node. Below the screenshot you can see the configuration I used for that.
+
+![Anchored Density example](/assets/official-documentation/worldgen/technical-hytale-generator/density/anchored-density.png)
+
+![Anchored Density configuration](/assets/official-documentation/worldgen/technical-hytale-generator/density/anchored-density-configuration.png)
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Density",
+      description:
+        "Density asset slot. The Density value of each cell is sampled from this field at the cell's core Position point.",
+    },
+    {
+      name: "DefaultValue",
+      description:
+        "Floating point number. This value is used outside of cells. This can happen when the field's MaxDistance value is smaller than the distance between some Positions.",
+    },
+  ]}
+/>
+
+**Curve**
+
+The Curve ReturnType allows you to use a Curve asset to define the value of the Density field in terms of its distance from the Positions.
+
+{/* I did double check this one and the link did point to the same image we used above. Maybe accidental? */}
+![Example of Curve ReturnType](/assets/official-documentation/worldgen/technical-hytale-generator/density/positions-cell-noise.png)
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Curve",
+      description:
+        "Curve asset slot. The Density value of each cell is defined by the curve. The curve's input is the distance in blocks between the closest Position, and the Curve's output becomes the field's value.",
+    },
+  ]}
+/>
+
+**Distance**
+
+The Distance ReturnType works like the traditional CellNoise’s “Distance” return type.
+
+![Example of Distance](/assets/official-documentation/worldgen/technical-hytale-generator/density/distance.png)
+
+It has no parameters.
+
+**Distance2**
+
+The Distance2 ReturnType works like the traditional CellNoise’s “Distance2” return type.
+
+![Example of Distance2](/assets/official-documentation/worldgen/technical-hytale-generator/density/distance2.png)
+
+It has no parameters.
+
+**Distance2Add**
+
+The Distance2Add ReturnType works like the traditional CellNoise's "Distance2Add" return type.
+
+![Example of Distance2Add](/assets/official-documentation/worldgen/technical-hytale-generator/density/distance2add.png)
+
+It has no parameters.
+
+**Distance2Sub**
+
+The Distance2Sub ReturnType works like the traditional CellNoise's "Distance2Sub" return type.
+
+![Example of Distance2Sub](/assets/official-documentation/worldgen/technical-hytale-generator/density/distance2sub.png)
+
+It has no parameters.
+
+**Distance2Mul**
+
+The Distance2Mul ReturnType works like the traditional CellNoise's "Distance2Mul" return type.
+
+![Example of Distance2Mul](/assets/official-documentation/worldgen/technical-hytale-generator/density/distance2mul.png)
+
+It has no parameters.
+
+**Distance2Div**
+
+The Distance2Div ReturnType works like the traditional CellNoise's "Distance2Div" return type.
+
+![Example of Distance2Div](/assets/official-documentation/worldgen/technical-hytale-generator/density/distance2div.png)
+
+It has no parameters.
+
+#### DistanceFunction
+
+Determines the way in which the distance to the closest Position is calculated. Currently there are two types: Euclidean and Manhattan.
+
+Below is an example of the Euclidean DistanceFunction:
+
+```json
+{
+  "Type": "Euclidean"
+}
+```
+
+Both types don’t have parameters.
+
+---
+
+### Distance
+
+The Distance outputs a value in function of the distance from the origin {0, 0, 0} of the field. The provided Curve asset maps the distance to the output Density value.
+
+Expected Inputs: 0
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Curve",
+      description:
+        "A Curve asset slot, maps the Distance from the origin to a Density value.",
+    },
+  ]}
+/>
+
+---
+
+### Ellipsoid
+
+The Ellipsoid is a deformed Sphere. You can use a Scale vector to stretch and compress the Sphere in different directions. You can spin it by giving it a new Y axis and a spin angle (in degrees).
+
+The order of deformations done to the Sphere is as follows:
+
+1. Stretch and compress using the Scale vector.
+2. Align its Y axis to the provided one.
+3. Spin it around the new Y axis.
+
+Below is an example Ellipsoid and its assets.
+
+![Example of Ellipsoid](/assets/official-documentation/worldgen/technical-hytale-generator/density/ellipsoid.png)
+
+![Example of Ellipsoid configuration](/assets/official-documentation/worldgen/technical-hytale-generator/density/ellipsoid-configuration.png)
+
+Expected Inputs: 0
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Curve",
+      description:
+        "A Curve asset slot, maps the Distance from the origin to a Density value.",
+    },
+    {
+      name: "Scale",
+      description:
+        "A 3D vector asset slot. Determines how much to stretch the Sphere in each direction.",
+    },
+    {
+      name: "X",
+      description: "A floating point number.",
+    },
+    {
+      name: "Y",
+      description: "A floating point number.",
+    },
+    {
+      name: "Z",
+      description: "A floating point number.",
+    },
+    {
+      name: "Spin",
+      description:
+        "A floating point number. Determines the angle in degrees by which to spin the Ellipsoid around its Y axis.",
+    },
+  ]}
+/>
+
+---
+
+### Cube
+
+The Cube outputs a Density value in function of the distance from the origin axis of the field. The provided Curve asset maps the distance to the output Density value.
+
+Expected Inputs: 0
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Curve",
+      description:
+        "A Curve asset slot, maps the Distance from the origin to a Density value.",
+    },
+  ]}
+/>
+
+---
+
+### Cuboid
+
+The Cuboid is a deformed Cube. You can use a Scale vector to stretch and compress the Cube in different directions. You can spin it by giving it a new Y axis and a spin angle (in degrees).
+
+The order of deformations done to the Cube is as follows:
+
+4. Stretch and compress using the Scale vector.
+5. Align its Y axis to the provided one.
+6. Spin it around the new Y axis.
+
+Below is an example cuboid and its assets.
+
+![Example of Cuboid](/assets/official-documentation/worldgen/technical-hytale-generator/density/cuboid.png)
+
+![Example of Cuboid configuration](/assets/official-documentation/worldgen/technical-hytale-generator/density/cuboid-configuration.png)
+
+Expected Inputs: 0
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Curve",
+      description:
+        "A Curve asset slot, maps the Distance from the origin to a Density value.",
+    },
+    {
+      name: "Scale",
+      description:
+        "A 3D vector asset slot. Determines how much to stretch the Cube in each direction.",
+    },
+    {
+      name: "X",
+      description: "A floating point number.",
+    },
+    {
+      name: "Y",
+      description: "A floating point number.",
+    },
+    {
+      name: "Z",
+      description: "A floating point number.",
+    },
+    {
+      name: "Spin",
+      description:
+        "A floating point number. Determines the angle in degrees by which to spin the Ellipsoid around its Y axis.",
+    },
+    {
+      name: "NewYAxis",
+      description:
+        "Point3D asset slot. Let's you rotate the field around its origin.",
+    },
+  ]}
+/>
+
+---
+
+### Cylinder
+
+The Cylinder generates a cylindrical shape, crazy I know. You can spin it by giving it a new Y axis and a spin angle (in degrees).
+
+The AxialCurve determines the Density value along its Y axis (not the world’s Y axis). The AxialCurve takes positive inputs anywhere above the Cylinder’s XZ-plane and it takes negative values anywhere below it.
+
+The RadialCurve determines the Density value in function of the distance from the Y axis. This basically can determine how thick the Cylinder is.
+
+Below is an example cuboid and its assets.
+
+![Example of Cylinder](/assets/official-documentation/worldgen/technical-hytale-generator/density/cylinder.png)
+
+![Example of Cylinder configuration](/assets/official-documentation/worldgen/technical-hytale-generator/density/cylinder-configuration.png)
+
+Expected Inputs: 0
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "AxialCurve",
+      description:
+        "A Curve asset slot, maps the Distance from the Cylinder's XZ-plane to a Density value.",
+    },
+    {
+      name: "RadialCurve",
+      description:
+        "A Curve asset slot, maps the Distance from the Cylinder's Y axis to a Density value.",
+    },
+    {
+      name: "Spin",
+      description:
+        "A floating point number. Determines the angle in degrees by which to spin the Ellipsoid around its original Y axis.",
+    },
+    {
+      name: "NewYAxis",
+      description:
+        "Point3D asset slot. In combination with the spin, this lets you rotate the Cylinder around its origin by aligning its original Y-axis with the provided one.",
+    },
+  ]}
+/>
+
+---
+
+### Axis
+
+The Axis outputs a Density value in function of the distance from a provided Axis line that passes through the origin {0, 0, 0} of the field or through the anchor point if the IsAnchored flag is true. The provided Curve asset maps the distance to the output Density value.
+
+Expected Inputs: 0
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Axis",
+      description:
+        "3D vector asset slot determining the axis from which the distance is used.",
+    },
+    {
+      name: "X",
+      description: "Floating point number.",
+    },
+    {
+      name: "Y",
+      description: "Floating point number.",
+    },
+    {
+      name: "Z",
+      description: "Floating point number.",
+    },
+    {
+      name: "Curve",
+      description:
+        "Curve asset slot. Determines the Density value at any distance from the axis.",
+    },
+    {
+      name: "IsAnchored",
+      description:
+        "Boolean. If true, the Axis node will anchor itself to the closest anchor. Although you could use an Anchor node to anchor an Axis Density node, this internal method doesn't produce some artifacts.",
+    },
+  ]}
+/>
+
+---
+
+### Plane
+
+The Plane Density node allows you to define a Density field in function of the distance from a user-defined plane that passes through the field’s origin {0, 0, 0} or through the anchor if the flag `IsAnchored` is enabled. You can granularly define the Density value using a Curve asset. The PlaneNormal vector determines the direction the plane is facing.
+
+![Example of Plane](/assets/official-documentation/worldgen/technical-hytale-generator/density/plane.png)
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "PlaneNormal",
+      description:
+        "3D vector asset slot determining the direction the plane is facing.",
+    },
+    {
+      name: "X",
+      description: "Floating point number.",
+    },
+    {
+      name: "Y",
+      description: "Floating point number.",
+    },
+    {
+      name: "Z",
+      description: "Floating point number.",
+    },
+    {
+      name: "Curve",
+      description:
+        "Curve asset slot. Determines the Density value at any distance from the plane.",
+    },
+  ]}
+/>
+
+---
+
+### Shell
+
+The Shell Density node allows you to define regions of the shell around the origin {0, 0, 0} of the field based on the direction and the distance from origin. The angles, thickness and Density values of the shell are fully configurable through Curve assets.
+
+The diagram below shows the anatomy of the Shell node and how its AngleCurve and its DistanceCurve are multiplied to obtain the result in the screenshot.
+
+![Example of Shell](/assets/official-documentation/worldgen/technical-hytale-generator/density/shell.png)
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Axis",
+      description:
+        "3D vector asset slot determining the axis against which the angle is calculated.",
+    },
+    {
+      name: "X",
+      description: "Floating point number.",
+    },
+    {
+      name: "Y",
+      description: "Floating point number.",
+    },
+    {
+      name: "Z",
+      description: "Floating point number.",
+    },
+    {
+      name: "Mirror",
+      description:
+        "Boolean value. If true then the angle is mirrored in both directions of the axis.",
+    },
+    {
+      name: "AngleCurve",
+      description:
+        "Curve asset slot. Determines the Density value at any given angle from the axis.",
+    },
+    {
+      name: "DistanceCurve",
+      description:
+        "Curve asset slot. Determines the Density value at any distance from the origin.",
+    },
+  ]}
+/>
+
+---
+
+### CurveMapper
+
+This node maps the input to a Curve.
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Curve",
+      description: "The curve.",
+    },
+  ]}
+/>
+
+---
+
+### Mix
+
+Mixes two inputs. How much of each input to use in the mix is gauged by a third input called the gauge:
+
+- Where the Gauge is less or equal to 0.0: only Density A is used.
+- Where the Gauge is more or equal to 1.0: only Density B is used.
+- Where the Gauge is between 0.0 and 1.0: Density A and B are mixed proportional to the Gauge.
+
+Expected Inputs: 3
+
+1. Density A.
+2. Density B.
+3. Gauge.
+
+Parameters: None
+
+---
+
+### MultiMix
+
+Mixes multiple inputs. How much of each input to use in the mix is gauged by the last input called the Gauge.
+
+The inputs are ordered top-down (in the node editor) and each input is assigned an index: starting with 0 for the top one and incrementing downwards.
+
+The keys let you pin the different inputs to Gauge values. Where the Gauge input's value approaches a Key's value, the input referenced by that Key is stronger in the final result.
+
+{/* <figure><img src="../../.gitbook/assets/image (44).png" alt=""><figcaption></figcaption></figure> */}
+
+Expected Inputs: unlimimied, the last one is the Gauge.
+
+Parameters: None
+
+---
+
+### Sum
+
+The output is the sum of all the inputs.
+
+Expected Inputs: \[0, infinite)
+
+This node has no parameters.
+
+---
+
+### Multiplier
+
+The output is the multiplication of all the inputs.
+
+The Multiplier node skips the remaining inputs after an input provides a Density value of 0. This can help you optimize your Density performance by ordering the Multiplier inputs with the cheapest mask first.
+
+![Example of Multiplier optimization](/assets/official-documentation/worldgen/technical-hytale-generator/density/multiplier-optimization.png)
+
+The image below is an example where I put the edge's shell first in the Multiplier's input list, and the noise second. I configured the shell to be 0 where I want to mask it out. As a result, the noise (more expensive than the shell) is not calculated for large volumes of space where the shell mask is 0, and I got a performance improvement of \~40%. This is because around that percentage of the volume in that setup was masked out by the shell.
+
+![Example of Multiplier optimization configuration](/assets/official-documentation/worldgen/technical-hytale-generator/density/multiplier-optimization-configuration.png)
+
+Expected Inputs: \[0, infinite)
+
+This node has no parameters.
+
+---
+
+### Max
+
+The output is the greatest value of all the inputs. If no inputs are provided it is 0.
+
+Expected Inputs: \[0, infinite)
+
+This node has no parameters.
+
+---
+
+### Min
+
+The output is the smallest value of all the inputs. If no inputs are provided it is 0.
+
+Expected Inputs: \[0, infinite)
+
+This node has no parameters.
+
+---
+
+### SmoothMax
+
+The output is a smoothed maximum between the two inputs. The diagram below compares a smooth maximum and a normal maximum of functions f and g. The normal maximum has sharp angles where f and g cross.
+
+![Example of SmoothMax](/assets/official-documentation/worldgen/technical-hytale-generator/density/smooth-max.png)
+
+Expected Inputs: 2
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Range",
+      description:
+        "Positive floating point number. Greater values result in more smoothing. A good starter value could be 0.2.",
+    },
+  ]}
+/>
+
+---
+
+### SmoothMin
+
+The output is a smoothed minimum between the two inputs. This node works the same as SmoothMax, please read that node’s description.
+
+Expected Inputs: 2
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Range",
+      description:
+        "Positive floating point number. Greater values result in more smoothing. A good starter value could be 0.2.",
+    },
+  ]}
+/>
+
+---
+
+### Clamp
+
+This node ensures that the output is within the provided range which is defined by the two wall parameters. Input values that are inside the range don’t change and inputs values outside the range are brought back to the range’s extreme.
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "WallA",
+      description: "Any floating point number.",
+    },
+    {
+      name: "WallB",
+      description: "Any floating point number.",
+    },
+  ]}
+/>
+
+---
+
+### SmoothClamp
+
+This node ensures that the output is within the provided range which is defined by the two wall parameters. The concept is similar to the Clamp node documented above, but the output is smoothed to the limits by the provided range value.
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "WallA",
+      description: "Any floating point number.",
+    },
+    {
+      name: "WallB",
+      description: "Any floating point number.",
+    },
+    {
+      name: "Range",
+      description:
+        "Floating point values above 0, larger values result in smoother transition when the input approaches or exceeds the walls.",
+    },
+  ]}
+/>
+
+---
+
+### Abs
+
+The output is the absolute value of the input.
+
+Expected Inputs: 1
+
+This node has no parameters.
+
+---
+
+### XValue
+
+The local X coordinate.
+
+Expected Inputs: 0
+
+Parameters: None
+
+---
+
+### YValue
+
+The local Y coordinate.
+
+Expected Inputs: 0
+
+Parameters: None
+
+---
+
+### ZValue
+
+The local Z coordinate.
+
+Expected Inputs: 0
+
+Parameters: None
+
+---
+
+### XOverride
+
+Overrides the X coordinate the input sees.
+
+Expected Inputs: 1
+
+Parameters: None
+
+---
+
+### YOverride
+
+Overrides the Y coordinate the input sees.
+
+Expected Inputs: 1
+
+Parameters: None
+
+---
+
+### ZOverride
+
+Overrides the Z coordinate the input sees.
+
+Expected Inputs: 1
+
+Parameters: None
+
+---
+
+### Cache
+
+Caches the input for the current coordinates. The capacity determines how many coordinates' can be cached before having to drop the oldest one.
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Capacity",
+      description:
+        "Positive Integer. Determines how many coordinates this cache can hold at once. A safe value is 3.",
+    },
+  ]}
+/>
+
+---
+
+### Angle
+
+The angle in degrees between two vectors, one of which is procedurally generated by a VectorProvider.
+
+Expected Inputs: 0
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Vector",
+      description: "3D vector.",
+    },
+    {
+      name: "VectorProvider",
+      description: "Procedural vector.",
+    },
+  ]}
+/>
+
+---
+
+### Sqrt
+
+The output is the square root value of the input.
+
+For negative inputs, this node uses a modified function to always return values that make sense and are useful. The following graph shows in blue the values for positive inputs, and in red the values for negative inputs.
+
+![Example of Sqrt](/assets/official-documentation/worldgen/technical-hytale-generator/density/sqrt.png)
+
+Expected Inputs: 1
+
+This node has no parameters.
+
+---
+
+### Inverter
+
+The output is the input multiplied by -1.
+
+Expected Inputs: 1
+
+This node has no parameters.
+
+---
+
+### Pow
+
+The output is the input taken to the power of the given exponent.
+
+For negative inputs, this node uses a modified function to always return values that make sense and are useful.;
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Exponent",
+      description: "Any value, A good starting value would be 2.",
+    },
+  ]}
+/>
+
+---
+
+### Scale
+
+Stretches or contracts the input Density field. The input’s Density field is scaled by the factor’s provided for each axis. Values above 1 stretches the field and values below 1 contract it. Values under 0 flip the field.
+
+The image below shows a Density field before and after passing it through a Scale node: The node is configured to only scale up the X direction.
+
+![Example of Scale](/assets/official-documentation/worldgen/technical-hytale-generator/density/scale.png)
+
+You can also scale on a non-orthogonal axis by using Rotator nodes in combination with a Scale node, like this:
+
+![Example of Scale with Rotator](/assets/official-documentation/worldgen/technical-hytale-generator/density/scale-rotator.png)
+
+![Example of Scale with Rotator configuration](/assets/official-documentation/worldgen/technical-hytale-generator/density/scale-rotator-configuration.png)
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "X",
+      description: "A floating point number.",
+    },
+    {
+      name: "Y",
+      description: "A floating point number.",
+    },
+    {
+      name: "Z",
+      description: "A floating point number.",
+    },
+  ]}
+/>
+
+---
+
+### DistanceToBiomeEdge
+
+Outputs the distance to the nearest biome edge in blocks.
+
+Expected Inputs: 0
+
+Parameters: None
+
+---
+
+### Terrain
+
+Outputs the world's interpolated terrain Density.;
+
+This should only be used as part of a biome's MaterialProvider nodes. This won't work if used in the Terrain's Density nodes.
+
+Expected Inputs: 0
+
+Parameters: None
+
+---
+
+### Rotator
+
+Aligns the input Density field so that its Y axis is aligned with the provided axis, and spins it around the new axis by the provided angle.
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "NewYAxis",
+      description: "3D vector asset.",
+    },
+    {
+      name: "X",
+      description: "Floating point number.",
+    },
+    {
+      name: "Y",
+      description: "Floating point number.",
+    },
+    {
+      name: "Z",
+      description: "Floating point number.",
+    },
+    {
+      name: "SpinAngle",
+      description:
+        "Floating point number. The angle in degrees to spin the field around the new axis.",
+    },
+  ]}
+/>
+
+---
+
+### Slider
+
+Slides the input Density field in the direction of the provided vector.
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "SlideX",
+      description: "A floating point number.",
+    },
+    {
+      name: "SlideY",
+      description: "A floating point number.",
+    },
+    {
+      name: "SlideZ",
+      description: "A floating point number.",
+    },
+  ]}
+/>
+
+---
+
+### PositionsPinch
+
+Pinches or expands the first input’s Density field around the Positions. The intensity and look of the effect is determined by the PinchCurve. The range of the effect around each position is determined by the MaxDistance.
+
+If the NormalizeDistance is true, then the curve’s input and output’s unit is normalized to the MaxDistance. In other words, for half of the MaxDistance, the curve’s input and output will be 0.5, and at the full MaxDistance, it would be 1. Otherwise if false, the curve’s values will represent the absolute distance in terms of blocks for both its input and output.
+
+Below is an example configuration of a pinch, and the resulting terrain.
+
+![Example of PositionsPinch](/assets/official-documentation/worldgen/technical-hytale-generator/density/positions-pinch.png)
+
+![Example of PositionsPinch configuration](/assets/official-documentation/worldgen/technical-hytale-generator/density/positions-pinch-configuration.png)
+
+Below is an example configuration of a pull and the resulting terrain.
+
+![Example of PositionsPull](/assets/official-documentation/worldgen/technical-hytale-generator/density/positions-pull.png)
+
+![Example of PositionsPull configuration](/assets/official-documentation/worldgen/technical-hytale-generator/density/positions-pull-configuration.png)
+
+![Graph of PositionsPull's curve](/assets/official-documentation/worldgen/technical-hytale-generator/density/positions-pull-curve.png)
+
+The PositionsMinY and PositionsMaxY parameters limit the vertical range queried from the Positions field. The default values are 0.0 and 0.0001 to let in all the Positions at Y:0.
+
+Expected Inputs: 1
+
+<ParameterList
+  parameters={[
+    {
+      name: "Positions",
+      description:
+        "Positions asset slot. The Positions are the anchors that pinch and expand the Density field around them.",
+    },
+    {
+      name: "PinchCurve",
+      description:
+        "Curve asset slot. The curve determines how the Density field is pinched or expanded depending on how close it is to a position.",
+    },
+    {
+      name: "MaxDistance",
+      description:
+        "Positive floating point number. The value represents how big the area of effect is in block units.",
+    },
+    {
+      name: "NormalizeDistance",
+      description:
+        "Boolean value, default is true. If true then the Curve’s input and output unit is normalized to the MaxDistance value, otherwise if false the Curve’s input and output unit is in blocks.",
+    },
+    {
+      name: "HorizontalPinch",
+      description:
+        "Boolean value, default is false. If true, the input is pinched horizontally only.",
+    },
+    {
+      name: "PositionsMaxY",
+      description:
+        "Floating point number. Determines the upper Y level bound of the region queried from the Positions field. Any Positions that are at or above this value are ignored.",
+    },
+    {
+      name: "PositionsMinY",
+      description:
+        "Floating point number. Determines the lower Y level bound of the region queried from the Positions field. Any Positions that are below this value are ignored.",
+    },
+  ]}
+/>
+
+---
+
+### PositionsTwist
+
+Twists the first input’s Density field around the Positions. The intensity and look of the effect is determined by the TwistCurve. The range of the effect around each position is determined by the MaxDistance.
+
+If the NormalizeDistance is true, then the curve’s input unit is normalized to the MaxDistance. In other words, for half of the MaxDistance, the curve’s input will be 0.5, and at the full MaxDistance, it would be 1. Otherwise if false, the curve’s values will represent the absolute distance in terms of blocks.
+
+The output of the curve is always in degrees. This means that to produce a full twist around the axis, the curve must output 360 (degrees).
+
+Below is an example configuration of a simple twist, and the resulting terrain.
+
+![Example of PositionsTwist](/assets/official-documentation/worldgen/technical-hytale-generator/density/positions-twist.png)
+
+![Example configuration of a simple twist](/assets/official-documentation/worldgen/technical-hytale-generator/density/positions-twist-configuration.png)
+
+Below is an example configuration of a double twist where part of the curve twists in one direction and part in the other direction, and the resulting terrain.
+
+![Example of PositionsTwist double twist](/assets/official-documentation/worldgen/technical-hytale-generator/density/positions-twist-double.png)
+
+![Example configuration of a double twist](/assets/official-documentation/worldgen/technical-hytale-generator/density/positions-twist-double-configuration.png)
+
+Expected Inputs: 1
+
+<ParameterList
+  parameters={[
+    {
+      name: "Positions",
+      description:
+        "Positions asset slot. The Positions are the anchors that pinch and expand the Density field around them.",
+    },
+    {
+      name: "TwistCurve",
+      description:
+        "Curve asset slot. The curve determines how the Density field is twisted depending on how close it is to a position.",
+    },
+    {
+      name: "TwistAxis",
+      description:
+        "Vector asset slot. the axis around which the twisting happens.",
+    },
+    {
+      name: "X",
+      description: "Floating point number.",
+    },
+    {
+      name: "Y",
+      description: "Floating point number.",
+    },
+    {
+      name: "Z",
+      description: "Floating point number.",
+    },
+    {
+      name: "MaxDistance",
+      description:
+        "Positive floating point number. The value represents how big the area of effect is in block units.",
+    },
+    {
+      name: "NormalizeDistance",
+      description:
+        "Boolean value, default is true. If true then the Curve’s input unit is normalized to the MaxDistance value, otherwise if false the Curve’s input unit is in blocks.",
+    },
+  ]}
+/>
+
+---
+
+### GradientWarp
+
+Warps the first input based on the gradient of the second input Density field. This works similar to the legacy warping functionality, except it also works in 3D and you can plug any Density field into it.
+
+This implementation is relatively expensive because it calculates the gradient of the input Density field. I recommend optimizing the use of this node by isolating and minimizing its use space. A fast version of this node can be implemented which would let you only use Simplex noise to warp. This will depend on the feedback and priorities.
+
+This node incorporates a Cache2D so you don’t need to use a Cache2D node on its output.
+
+Expected Inputs: 2
+
+- Input 1: Density field to be warped.
+- Input 2: Density field that warps the first field.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "SampleRange",
+      description:
+        "Floating point number greater than 0. I recommend keeping this value at 1.",
+    },
+    {
+      name: "WarpFactor",
+      description:
+        "A floating point number greater than 0. With greater values you get more warping.",
+    },
+    {
+      name: "2D",
+      description:
+        "Boolean, if true the output of this node is 2D. An internal Cache2D is used.",
+    },
+    {
+      name: "YFor2D",
+      description:
+        "Floating point coordinate, default is 0. the Y coordinate used from the input to calculate the gradient from.",
+    },
+  ]}
+/>
+
+---
+
+### FastGradientWarp
+
+This is a faster implementation of the GradientWarp node. It warps the input Density field using an internal simplex noise generator.
+
+Expected Inputs: 1
+
+- Input 1: Density field to be warped.
+
+<ParameterList
+  parameters={[
+    {
+      name: "WarpScale",
+      description:
+        "Floating point number greater than 0. This determines the scale of the internal warper noise field.",
+    },
+    {
+      name: "WarpLacunarity",
+      description:
+        "Decimal number greater than 0. The lacunarity of the internal simplex field.",
+    },
+    {
+      name: "WarpPersistence",
+      description:
+        "Decimal number greater than 0. The persistence of the internal simplex field.",
+    },
+    {
+      name: "WarpOctaves",
+      description: "Integer greater than 0. The internal field’s octaves.",
+    },
+    {
+      name: "WarpFactor",
+      description:
+        "Decimal number greater than 0. Themaximum distance coordinates can be warped.",
+    },
+  ]}
+/>
+
+---
+
+### VectorWarp
+
+Warps the input along the provided vector. The amount of warping is determined by the intensity of the second input Density field and the WarpFactor.
+
+For example, if your warp field (second input) has a value of 0.5 and the WarpFactor is 15, then the number of blocks the first input will be warped by in the direction of the vector is 7.5 units (blocks),15 x 0.5 = 7.5.
+
+Below is a PositionsCellNoise (Distance2Div) passed through a VectorWarp. The warping field is a normal simplex, the WarpVector is sideways {1, 0, 1} and the WarpFactor is 15.
+
+![Example of VectorWarp](/assets/official-documentation/worldgen/technical-hytale-generator/density/vector-warp.png)
+
+Expected Inputs: 2
+
+- Input 1: Density field to be warped.
+- Input 2: Density field that warps the first field.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "WarpFactor",
+      description:
+        "A floating point number greater than 0. With greater values you get more warping.",
+    },
+    {
+      name: "WarpVector",
+      description:
+        "Vector asset slot. Can be any vector. This determines the direction in which the warping happens. Negative values of the factor or the warping density field will result in flipped warping direction.",
+    },
+    {
+      name: "X",
+      description: "Floating point number.",
+    },
+    {
+      name: "Y",
+      description: "Floating point number.",
+    },
+    {
+      name: "Z",
+      description: "Floating point number.",
+    },
+  ]}
+/>
+
+---
+
+### Anchor
+
+Anchors the origin of the child field (input) to the contextual Anchor if it exists. It basically puts the {0, 0, 0} origin of the child Density at the position of the Anchor.;
+
+For a contextual Anchor to exist, a parent of this node must produce an Anchor. The Density ReturnType node, for example, leaves the cell's center as a contextual Anchor in its Density child’s context.;
+
+You can also reverse the effect later down the line to move the origin back to the world’s origin like in the screenshot below. The field is unanchored when it reaches the bottom branch of the Sum, but the top branch is still anchored.
+
+{/* <figure><img src="../../.gitbook/assets/image (45).png" alt=""><figcaption></figcaption></figure> */}
+
+_Example: Say you have a Density field that creates a ball around its origin {0, 0, 0}. You also have a PositionsCellNoise with a Density return type, which leaves an anchor point at its cell's center. If you anchor the ball Density to the cell, the ball will generate around the cell's center._
+
+{/* <figure><img src="../../.gitbook/assets/image (46).png" alt=""><figcaption></figcaption></figure> */}
+
+Expected Inputs: 1
+
+<ParameterList
+  parameters={[
+    {
+      name: "Reverse",
+      description:
+        "Boolean. If true, the node will reverse the origin of the child to the world’s origin, or the origin before the previous Anchor node.",
+    },
+  ]}
+/>
+
+---
+
+### Normalizer
+
+It normalizes the input. The scale is defined by the FromMin, FromMax, ToMin and ToMax parameters. The diagrams below show how those four parameters can be intuitively used to normalize the input.
+
+![Example of Normalizer](/assets/official-documentation/worldgen/technical-hytale-generator/density/normalizer.png)
+
+Note that the FromMin and FromMax can be any values, in this example I decided to place them at the extremes of the input’s range.
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "FromMin",
+      description: "Any floating point number.",
+    },
+    {
+      name: "FromMax",
+      description: "Any floating point number.",
+    },
+    {
+      name: "ToMin",
+      description: "Any floating point number.",
+    },
+    {
+      name: "ToMax",
+      description: "Any floating point number.",
+    },
+  ]}
+/>
+
+---
+
+### BaseHeight
+
+This node lets you reference a BaseHeight from the WorldStructure. It can operate in 2 mondes:
+
+- Distance OFF: output the Y value of the BaseHeight at each X/Z position
+- Distance ON: output the distance between the queried position and the BaseHeight.
+
+In Distance mode ON, the output is measured in blocks (coordinate units). The value is positive if the query position is above the BaseHeight, and negative if it is below the BaseHeight. Below is an example of that.
+
+![Example of BaseHeight distance](/assets/official-documentation/worldgen/technical-hytale-generator/density/base-height-distance.png)
+
+Expected Inputs: 0
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "BaseHeightName",
+      description: "String, name of the BaseHeight to reference.",
+    },
+    {
+      name: "Distance",
+      description:
+        "Boolean value, toggles whether to output the raw Y coordinate of the BaseHeight or the distance from the BaseHeight from the query position.",
+    },
+  ]}
+/>
+
+---
+
+### Switch
+
+This node lets you switch between multiple Density branches based on the contextual SwitchState. The SwitchState is a string that can be placed in the context of a Density tree using a SwitchState Density node. The default SwitchState of a Density tree is “Default”.
+
+Below is an example where I use a Default branch, alongside two other branches.
+
+![Example of Switch](/assets/official-documentation/worldgen/technical-hytale-generator/density/switch.png)
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "SwitchCases",
+      description: "Switch Case asset slots.",
+    },
+    {
+      name: "CaseState",
+      description:
+        "String. The name of the contextual SwitchCase required for this branch.",
+    },
+    {
+      name: "Density",
+      description: "Density asset slot.",
+    },
+  ]}
+/>
+
+---
+
+### SwitchState
+
+Sets the contextual SwitchState for the downstream Density branch.
+
+See the Switch documentation above for an example use case.
+
+![Example of SwitchState](/assets/official-documentation/worldgen/technical-hytale-generator/density/switch-state.png)
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "SwitchState",
+      description:
+        "String, name of the SwitchState to set for the children of this node.",
+    },
+  ]}
+/>
+
+---
+
+### Imported
+
+Imports an exported Density asset.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Name",
+      description: "String. The exported Density.",
+    },
+  ]}
+/>
+
+---
+
+### Exported
+
+Allows exporting a Density field as a single instance. Enabling the SingleInstance on this node ensures all importers share the same logic.;
+
+By default a completely different instance is create for every Imported node. When there are multiple Imported nodes that import the same exported key, a new instance of that exported Density tree will be created for each one of the Imported nodes. SingleInstance ensures all importers share the same underlying instance of the node tree.
+
+This node can be used to optimize caching when an exported Density is imported multiple times in the same context and contains caches. The caches would be shared between the different imported instances.
+
+_Important: This is still an experimental feature and could cause unexpected behaviors if misused._
+
+Expected Inputs: 1
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "SingleInstance",
+      description:
+        "Boolean. Enable to share the exported for all Imported nodes referencing this key.",
+    },
+    {
+      name: "Density",
+      description: "Density slot.",
+    },
+  ]}
+/>

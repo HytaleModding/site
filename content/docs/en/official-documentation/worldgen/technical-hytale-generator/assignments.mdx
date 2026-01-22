@@ -1,0 +1,137 @@
+---
+title: Assignments
+description: Assigns Props to each position in a Positions field.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+### Constant
+
+Assigns a Prop to all positions.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Prop",
+      description: "Prop slot",
+    },
+  ]}
+/>
+
+---
+
+### FieldFunction
+
+Allows you to select which props to assign based on a Density field and your configured delimiters. The Density's value at each position determines which delimiter's Prop to assign.;
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "FieldFunction",
+      description: "Density slot.",
+    },
+    {
+      name: "Delimiters",
+      description:
+        "list of noise value delimiters attaching Props to value ranges of the Density field.",
+    },
+    {
+      name: "Min",
+      description: "decimal number. Lower inclusive bound of the delimiter.",
+    },
+    {
+      name: "Max",
+      description: "decimal number. Higher exclusive bound of the delimiter.",
+    },
+    {
+      name: "Assignments",
+      description:
+        "Assignments asset slot. The assignment provigint he Props to use.",
+    },
+  ]}
+/>
+
+---
+
+### Sandwich
+
+Allows you to select which props to assign based on their vertical (world Y) position and your configured delimiters. Depending on each position’s height in the world the Prop of the matching delimiter will be assigned.
+
+![Image showcasing sandwich tool](/assets/official-documentation/worldgen/technical-hytale-generator/assignments/sandwich.png)
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Delimiters",
+      description: "list of world height delimiter assets.",
+    },
+    {
+      name: "MinY",
+      description: "decimal number. Lower inclusive bound of the delimiter.",
+    },
+    {
+      name: "MaxY",
+      description: "decimal number. Higher exclusive bound of the delimiter.",
+    },
+    {
+      name: "Assignments",
+      description: "Assignments asset slot.",
+    },
+  ]}
+/>
+
+---
+
+### Weighted
+
+Picks which Prop to assign randomly based on weights and a seed.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Seed",
+      description: "string.",
+    },
+    {
+      name: "SkipChance",
+      description:
+        "decimal number between 0.0 and 1.0. Determines the chance to skip a position completely without assigning it a Prop.",
+    },
+    {
+      name: "WeightedAssignments",
+      description: "List of weighted Assignments slots.",
+    },
+    {
+      name: "Assignments",
+      description: "Assignments asset slot.",
+    },
+  ]}
+/>
+
+---
+
+### Imported
+
+Imports an exported Assignments.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Name",
+      description: "string. The exported Assignments.",
+    },
+  ]}
+/>

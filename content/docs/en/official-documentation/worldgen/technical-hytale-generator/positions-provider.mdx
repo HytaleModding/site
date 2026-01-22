@@ -1,0 +1,363 @@
+---
+title: Positions Provider
+description: Determines an infinite 3D positions field.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+### Mesh2D
+
+Generates a mesh of random points on a 2D plane. You can set the points’ Y value.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "PointGenerator",
+      description:
+        "slot for a point generator asset. See the PointGenerator section below.",
+    },
+    {
+      name: "PointsY",
+      description: "the vertical Y position of every point.",
+    },
+  ]}
+/>
+
+#### PointGenerator
+
+Generates a random point distribution in space.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Jitter",
+      description:
+        "decimal number in the range [0, 0.5]. More Jitter results in more random point distribution. A good starting point is 0.2.",
+    },
+    {
+      name: "ScaleX",
+      description: "positive decimal number. Scales the distribution.",
+    },
+    {
+      name: "ScaleY",
+      description: "positive decimal number. Scales the distribution.",
+    },
+    {
+      name: "ScaleZ",
+      description: "positive decimal number. Scales the distribution.",
+    },
+    {
+      name: "Seed",
+      description: "the seed of this point generator.",
+    },
+  ]}
+/>
+
+---
+
+### Mesh3D
+
+Generates a mesh of random points in 3D space.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "PointGenerator",
+      description:
+        "slot for a point generator asset. See the PointGenerator section below.",
+    },
+  ]}
+/>
+
+---
+
+### List
+
+Allows you to manually define a static list of positions in world coordinates.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Positions",
+      description: "list of 3D positions.",
+    },
+    {
+      name: "X",
+      description: "integer.",
+    },
+    {
+      name: "Y",
+      description: "integer.",
+    },
+    {
+      name: "Z",
+      description: "integer.",
+    },
+  ]}
+/>
+
+---
+
+### Anchor
+
+Anchors the origin of the child Positions field to the contextual Anchor, if one exists. For a contextual Anchor to exist, a parent of this node must produce an Anchor.
+
+You can also reverse the effect later down the line to move the origin back to the world’s origin like in the screenshot below.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Reverse",
+      description:
+        "Boolean. If true, the node will reverse the origin of the child to the world's origin, or the origin before the previous Anchor node.",
+    },
+  ]}
+/>
+
+---
+
+### Sphere
+
+Masks out the positions that are farther than the provided range from its origin.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Range",
+      description:
+        "decimal number. The maximum distance from the origin within which that Positions are kept.",
+    },
+  ]}
+/>
+
+---
+
+### FieldFunction
+
+Enables masking out positions using Density. The delimiters determine the regions of the Density field where positions are kept.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "FieldFunction",
+      description: "slot for a Density input.",
+    },
+    {
+      name: "Delimiters",
+      description: "list of Density value delimiters:",
+    },
+    {
+      name: "Min",
+      description: "decimal number. Lower bound of the delimiter.",
+    },
+    {
+      name: "Max",
+      description: "deimal number. Higher bound of the delimiter.",
+    },
+    {
+      name: "Positions",
+      description:
+        "PositionsProvider slot. The positions on which the mask is being applied.",
+    },
+  ]}
+/>
+
+---
+
+### Occurrence
+
+Discards a percentage of input positions based on a Density field. The value of the Density field at each position determines the chance that position has to be kept.;
+
+- Positions where the Density value is below or equal to 0.0 have a 0% chance of being kept.
+- Positions where the Density value is above or equal to 1.0 have a 100% chance of being kept.
+- Positions where the Density value is between 0.0 and 1.0 have a proportional percentage chance of being kept. _Example: 0.4 -> 40%._
+
+Below is a picture that shows a simple noise field used to create regions with rare oak trees and regions with dense oak trees.
+
+![Example of Occurrence PositionsProvider](/assets/official-documentation/worldgen/technical-hytale-generator/positions-provider/occurrence-example-1.png)
+
+![Example of Occurrence PositionsProvider2](/assets/official-documentation/worldgen/technical-hytale-generator/positions-provider/occurrence-example-2.png)
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "FieldFunction",
+      description:
+        "Density slot. Determines the chance of keeping the positions.",
+    },
+    {
+      name: "Seed",
+      description: "string. Determines the outcome.",
+    },
+    {
+      name: "Positions",
+      description: "PositionProvider slot.",
+    },
+  ]}
+/>
+
+---
+
+### Offset
+
+Offsets the positions by the provided vector.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "OffsetX",
+      description: "decimal number. Vector's x.",
+    },
+    {
+      name: "OffsetY",
+      description: "decimal number. Vector's y.",
+    },
+    {
+      name: "OffsetZ",
+      description: "decimal number. Vector's z.",
+    },
+    {
+      name: "Positions",
+      description: "PositionProvider slot. Positions to offset.",
+    },
+  ]}
+/>
+
+---
+
+### BaseHeight
+
+Vertically offsets the Positions inside the configured vertical region by the amount of blocks determined by the BaseHeight . All Positions outside the region are discarded.
+
+A typical application of this would be to grab Positions at Y:0, and offset them up by the BaseHeight to come closer to a terrain feature. Further adjustments can then be made using an Offset PositionsProvider. The diagram below illustrates that.
+
+{/* <figure><img src="../../.gitbook/assets/image (48).png" alt=""><figcaption></figcaption></figure> */}
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "BaseHeightName",
+      description: "string. Name of the BaseHeight to reference.",
+    },
+    {
+      name: "MaxYRead",
+      description:
+        "decimal number. Exclusive limit of the region to grab the Positions from the input.",
+    },
+    {
+      name: "MinYRead",
+      description:
+        "decimal number. Inclusive limit of the region to grab the Positions from the input.",
+    },
+  ]}
+/>
+
+---
+
+### Union
+
+Combines all the positions into a single Positioins field.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "Positions",
+      description: "list of PositionProvider slots.",
+    },
+  ]}
+/>
+
+---
+
+### SimpleHoritontal
+
+Keeps only the positions that are within the provided range.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "RangeY",
+      description: "The range to keep the position in.",
+    },
+    {
+      name: "Positions",
+      description: "PositionProvider slot.",
+    },
+  ]}
+/>
+
+---
+
+### Cache
+
+Caches the output provided by the Positions slot to improve performance in certain situations. This asset can be useful to improve performance when a Positions asset is expensive and queried numerous times.
+
+How effective this Cache is depended heavily on the use case, the provided child Positions asset and the order in which it is queried. You can get the best performance out of this Cache asset by trial and error. An example of a good use-case for this asset is at the root of an expensive Positions tree used by a Positions2D/Positions3D Density node.
+
+I recommend that you don’t use this cache everywhere in your Positions trees but rather choose a great place at (or close to) the root of your Positions asset tree. That said, feel free to experiment.
+
+This cache functions by saving 3D sections of space containing the Positions (points) generated by the child slot. The sections are cubes, and their size is determined by the asset’s SectionSize parameter. The number of sections allowed to be saved in the cache is determined by the CacheSize asset parameter. A safe starting value for the SectionSize parameter would be 32, and a safe starting value for the CacheSize would be 50.
+
+#### Parameters:
+
+<ParameterList
+  parameters={[
+    {
+      name: "SectionsSize",
+      description:
+        "integer greater than 0, safe starting value would be 32. Determines the lateral size of the section's cubic volume in blocks.",
+    },
+    {
+      name: "CacheSize",
+      description:
+        "integer 0 or greater; safe starting value would be 50. Determines the number of Sections that are allowed to be saved in memory. If provided a value of 0, then the cache is ignored, and the Positions are directly sourced from the child Positions slot.",
+    },
+    {
+      name: "Positions",
+      description:
+        "PositionProvider slot. The output of this Positions asset is cached.",
+    },
+  ]}
+/>
+
+---
+
+### Imported
+
+Imports an exported PositionProvider.
+
+<ParameterList
+  parameters={[
+    {
+      name: "Name",
+      description: "string. The exported PositionsProvider.",
+    },
+  ]}
+/>

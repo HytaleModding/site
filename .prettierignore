@@ -1,2 +1,3 @@
 /content/docs/**/*.mdx
+!/content/docs/en/official-documentation/**
 /messages/*-*.json

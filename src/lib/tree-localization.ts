@@ -9,8 +9,6 @@ export function localizePageTree(
 ): DocsLayoutProps["tree"] {
   let translations = FallbackLanguage;
 
-  console.log("Loading translations for lang:", lang);
-
   if (lang !== "en") {
     const langFilePath = path.join(process.cwd(), "messages", `${lang}.json`);
     if (fs.existsSync(langFilePath)) {
