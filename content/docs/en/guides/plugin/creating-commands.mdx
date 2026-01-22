@@ -27,13 +27,13 @@ You can see information on the following topics:
 
 ## Command Types
 ### The `AbstractAsyncCommand` Class
-The most basic command is an `AbstractAsyncCommand`. Unlike the other commands AbstractAsyncCommand's ececute funtion is called `executeAsync` and returns a `completeableFuture`
+The most basic command is an `AbstractAsyncCommand`. It has very minimal data available to access and interact with. All commands require the user to pass data to the `BaseCommand` constructor using `super`. You will amost always be passing `super(<Command String>, <Command Description>)` unless you are creating [Command Variants](#command-variants)
 
 <Callout type="warning">
-`AbstractAsyncCommand` runs on its own background thread. This means it is not tied to any world instance. Because of this it can not edit any Stores or Refs without getting the desired world first as the world needs to ececute the command in its thread. To access this data any of the other command types would be prefered and are likely what you will want to use instead.
+`AbstractAsyncCommand` runs on its own background thread. This means its execute is not tied to any world instance and because of this it can not edit any **Stores** or **Refs** without getting the desired world first. To access this data any of the other command types would be prefered and are likely what you will want to use instead.
 </Callout>
 
-The main purpose for a command like this would be for something that can happen everywhere and is not tied to a specific world. For example a `serverRules` command to tell the user thats running the command what are the servers rules are nomatter what world they are in.
+The main purpose for a command like this would be for something that can happen everywhere and is not tied to a specific world. For example a `serverRules` command to tell the user thats running the command in chat what are the servers rules are nomatter what world they are in.
 
 ```java
 // Command that can be run that lists the server rules in chat to the player
@@ -41,13 +41,12 @@ public class ServerRulesCommand extends AbstractAsyncCommand {
 
     // Constructor
     public ServerRulesCommand() {
-        // Pass any needed info to AbstractAsyncCommand
         // super(<The command>, <Command description>)
         super("rules", "Lists the servers rules");
     }
 
     // Run the command
-    // arg1: conetext - info about who ran the command. Server console?, Some player?
+    // conetext - info about who ran the command. Server console?, Some player?
     @Override
     protected CompletableFuture<Void> executeAsync(@Nonnull CommandContext context) {
         context.sendMessage(Message.raw("The only rule is there are no rules."));
@@ -58,7 +57,7 @@ public class ServerRulesCommand extends AbstractAsyncCommand {
 
 ### The `AbstractPlayerCommand` Class
 
-The `AbstractPlayerCommand` is similar to the `AbstractAsyncCommand` but it is tied to a specific Player and World. This allows the command to edit those additional objects that we could not edit before. The limits are that the command is still directly tied to the player running the command. If you would instead like to target a different player or item use `AbstractTargetPlayerCommand` and `AbstractTargetEntityCommand` respectively.
+The `AbstractPlayerCommand` is similar to the `AbstractAsyncCommand` but it is tied to a specific Player and World. This allows the command to edit those additional objects that we could not edit before. The limits are that the command is always tied to the player running the command. If you would instead like to target a different player or item use `AbstractTargetPlayerCommand` and `AbstractTargetEntityCommand` respectively.
 
 To create a command, you can extend the `AbstractPlayerCommand` class. You need to provide a constructor that calls the `BaseCommand` constructor with the command name, description, and whether the command requires confirmation (--confirm while running the command).
 
@@ -109,16 +108,32 @@ Uses a Ray to see what the player is looking at and tries to run the command on 
 - `withFlagArg`        // boolean switch (--debug)
 
 ### Required Arguments
-Add a required argument to the command that throws an error if its not present. To do this, you can use the `withRequiredArg` method. 
+Add a required argument to the command that throws an error if its not present. To do this, you can use the `withRequiredArg` method.
+Required args are parsed left to right in the command and don't use a leading flag.
+```java
+this.healthArg = this.withRequiredArg("health", "Amount to heal player", ArgTypes.FLOAT);
+```
 
 ### Optional Arguments
 Adding a optional argument is the same, only change is the method used to create it. You can use the `withOptionalArg` method.
+```java
+// Optional args reguare the user the input `--<key> <value>` so the following would require `--message "Good Luck"` 
+this.messageArg = this.withOptionalArg("message", "Message to print while healing", ArgTypes.STRING);
+```
 
 ### Default Arguments 
-Adding a default argument has an additional arguemnt for the default value. You need to use `withDefaultArg` method. 
+Adding a default argument has two additional arguemnt for the default value and default value description. You need to use `withDefaultArg` method. 
+```java
+// args <Command String> <Description> <Default Value> <Desc of default value>
+this.healthArg = this.withDefaultArg("health", "Amount to heal player", ArgTypes.FLOAT, (float)100, "Desc of Default: 100");
+```
 
 ### Flag Arguemnts
-Similar as above but the flags return is either true if it exists or false/null if it does not. You need to use `withFlagArg` method.
+Similar as above but the flags return is either true if it exists or false if it does not. You need to use `withFlagArg` method.
+```java
+// No type needed due to being a bool
+this.debugArg = this.withFlagArg("debug", "Add debug logs");
+```
 
 ### ArgTypes
 The following ArgTypes are available (only lists common types):
@@ -131,7 +146,9 @@ The following ArgTypes are available (only lists common types):
 - `ArgTypes.UUID`
 
 ### Example Command Arg Types
-Shows all Command arguemnt types with different input types
+Shows all Command arguemnt types with different various input types. 
+
+**NOTE:** When getting the value of an argument during execute you need to pass the context with `someArg.get(commandContext)`. Where `commandContext` is the first variable in the execute funtion. 
 
 ```java
 // Example usage: /healplayer --health 50 --message "Feels Good" --debug
@@ -143,33 +160,38 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
     public HealPlayerCommand() {
         super("healplayer", "Healing a player for an <input> ammount of HP (default: 100)");
 
-        // Abstract targetPlayerCommand passes the player that ran the command by default you can use `--player <value>` to specify someone else
+        // Abstract TargetPlayerCommand passes the player that ran the command by default and implements
+        // the use of `--player <value>` to specify someone else
 
         // args <Command String> <Description> <Default Value> <Desc of default value>
         this.healthArg = this.withDefaultArg("health", "Amount to heal player", ArgTypes.FLOAT, (float)100, "Desc of Default: 100");
 
-        // Or you could do the following making the health value required instead of with a default. You would need to change the decleration to RequiredArg<Float>
-        // this.healthArg = this.withRequiredArg("player", "Player Ref", ArgTypes.PLAYER_REF);
+        // Or you could do the following making the health value required instead of with a default. 
+        //    You would need to change the decleration to RequiredArg<Float>
+        // this.healthArg = this.withRequiredArg("health", "Amount to heal player", ArgTypes.FLOAT);
 
+        // Optional args reguare the user the input `--<key> <value>` so the following would require `--message "Good Luck"` 
         this.messageArg = this.withOptionalArg("message", "Message to print while healing", ArgTypes.STRING);
 
+        // No type needed due to being a bool
         this.debugArg = this.withFlagArg("debug", "Add debug logs");
     }
 
     @Override
     protected void execute(@NonNullDecl CommandContext commandContext, @NullableDecl Ref<EntityStore> ref, @NonNullDecl Ref<EntityStore> ref1, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world, @NonNullDecl Store<EntityStore> store) {
 
-        if (this.debugArg.get(commandContext) == true) {
+        if (this.debugArg.get(commandContext) == true) { // <-- See commandContext passed to argument here
             commandContext.sendMessage(Message.raw("We are debugging"));
         }
 
+        // Health is stored in a generic stat map to allowing mods/future contect to easily add more stats if desired. 
         EntityStatMap stats = store.getComponent(ref, EntityStatMap.getComponentType());
         int healthIdx = DefaultEntityStatTypes.getHealth();
         EntityStatValue health = stats.get(healthIdx);
 
         float missing = health.getMax() - health.get();
 
-        if (this.debugArg.get(commandContext) == true) {
+        if (this.debugArg.get(commandContext) == true) { // <-- See commandContext passed to argument here
             commandContext.sendMessage(Message.raw("Missing:  " + missing + " health"));
             commandContext.sendMessage(Message.raw("Adding:  " + healthArg.get(commandContext) + " health to "));
             commandContext.sendMessage(Message.raw(messageArg.get(commandContext)));
@@ -177,7 +199,7 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
             commandContext.sendMessage(Message.raw("Default Health Value: "+healthArg.getDefaultValue()));
         }
 
-        stats.addStatValue(healthIdx, healthArg.get(commandContext));
+        stats.addStatValue(healthIdx, healthArg.get(commandContext)); // <-- See commandContext passed to argument here
     }
 }
 ```
@@ -210,7 +232,7 @@ This allows the server to control who has access to specific commands. You add t
 
 ```java
 ...
-    // Constructor
+    // Commands Constructor
     public HealPlayerCommand() {
         super("healplayer", "heal a player a given amount of HP");
 
@@ -218,9 +240,9 @@ This allows the server to control who has access to specific commands. You add t
         requirePermission (HytalePermissions.fromCommand("rules"));
 
         // Add multiple permission if the player needs multiple to access the command
-        requirePermission (HytalePermissions.fromCommand("moderator"));
+        requirePermission (HytalePermissions.fromCommand("usercomands"));
 
-        // Use or block if it requires one from a list of permissions roles
+        // Use OR block if it requires one from a list of permissions roles
         requirePermission (
             PermissionRules.or (
                 HytalePermissions.fromCommand("moderator"),
@@ -232,6 +254,7 @@ This allows the server to control who has access to specific commands. You add t
 ```
 <Callout="info">
 You can add players to permissions groups and custom permissions using the `/perm` command.
+Use `/perm --help` in game to see usage.
 </Callout>
 
 --- 
