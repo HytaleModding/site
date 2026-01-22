@@ -158,7 +158,7 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
     @Override
     protected void execute(@NonNullDecl CommandContext commandContext, @NullableDecl Ref<EntityStore> ref, @NonNullDecl Ref<EntityStore> ref1, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world, @NonNullDecl Store<EntityStore> store) {
 
-        if (this.debugArg.get(commandContext) != null) {
+        if (this.debugArg.get(commandContext) == true) {
             commandContext.sendMessage(Message.raw("We are debugging"));
         }
 
@@ -168,7 +168,7 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
 
         float missing = health.getMax() - health.get();
 
-        if (this.debugArg.get(commandContext) != null) {
+        if (this.debugArg.get(commandContext) == true) {
             commandContext.sendMessage(Message.raw("Missing:  " + missing + " health"));
             commandContext.sendMessage(Message.raw("Adding:  " + healthArg.get(commandContext) + " health to "));
             commandContext.sendMessage(Message.raw(messageArg.get(commandContext)));
