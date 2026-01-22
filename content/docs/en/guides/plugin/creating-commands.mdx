@@ -47,11 +47,11 @@ public class ServerRulesCommand extends AbstractAsyncCommand {
     }
 
     // Run the command
-    // arg1: conetext - info about who ran the command. Server console?, Some player? 
+    // arg1: conetext - info about who ran the command. Server console?, Some player?
     @Override
-    protected CompleteableFuture<Void> executeAsync(CommandContext context) {
+    protected CompletableFuture<Void> executeAsync(@Nonnull CommandContext context) {
         context.sendMessage(Message.raw("The only rule is there are no rules."));
-        return CompleteableFuture.completedFuture(null);
+        return CompletableFuture.completedFuture(null);
     }
 }
 ```
