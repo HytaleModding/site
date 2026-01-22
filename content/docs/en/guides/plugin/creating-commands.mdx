@@ -133,12 +133,12 @@ The following ArgTypes are available (only lists common types):
 // TODO: Check this
 - `ArgTypes.World`
 
-### Example of all Command arguemnt types with different input types
+### Example
+Shows all Command arguemnt types with different input types
 
 ```java
-// Example usage: /healplayer --player john --value 50 --message "Feels Good" --debug
+// Example usage: /healplayer --health 50 --message "Feels Good" --debug
 public class HealPlayerCommand extends AbstractTargetPlayerCommand {
-    private final RequiredArg<String> playerArg;
     private final DefaultArg<Float> healthArg;
     private final OptionalArg<String> messageArg;
     private final FlagArg debugArg;
@@ -146,16 +146,16 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
     public HealPlayerCommand() {
         super("healplayer", "Healing a player for an <input> ammount of HP (default: 100)");
 
-        // args <Command String> <Description> <Arg Type>
-        this.playerArg = this.withRequiredArg("name", "Player Name", ArgTypes.STRING);
+        // Abstract targetPlayerCommand passes the player that ran the command by default you can use `--player <value>` to specify someone else
 
         // args <Command String> <Description> <Default Value> <Desc of default value>
         this.healthArg = this.withDefaultArg("health", "Amount to heal player", ArgTypes.FLOAT, (float)100, "Desc of Default: 100");
 
-        // args <Command String> <Description> <ArgType>
+        // Or you could do the following making the health value required instead of with a default. You would need to change the decleration to RequiredArg<Float>
+        // this.healthArg = this.withRequiredArg("player", "Player Ref", ArgTypes.PLAYER_REF);
+
         this.messageArg = this.withOptionalArg("message", "Message to print while healing", ArgTypes.STRING);
 
-        // args <Command String> <Description>
         this.debugArg = this.withFlagArg("debug", "Add debug logs");
     }
 
@@ -171,14 +171,16 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
         EntityStatValue health = stats.get(healthIdx);
 
         float missing = health.getMax() - health.get();
+
         if (this.debugArg != null) {
-            commandContext.sendMessage(Message.raw("Player Arg:  " + playerArg + " health"));
             commandContext.sendMessage(Message.raw("Missing:  " + missing + " health"));
-            commandContext.sendMessage(Message.raw("Adding:  " + health + " health to "));
-            commandContext.sendMessage(Message.raw(messageArg.toString()));
+            commandContext.sendMessage(Message.raw("Adding:  " + healthArg.get(commandContext) + " health to "));
+            commandContext.sendMessage(Message.raw(messageArg.get(commandContext)));
+            commandContext.sendMessage(Message.raw("Input Value: " + healthArg.get(commandContext) + " Default"));
+            commandContext.sendMessage(Message.raw("Default Health Value: "+healthArg.getDefaultValue()));
         }
 
-        stats.addStatValue(healthIdx, healthArg.getDefaultValue());
+        stats.addStatValue(healthIdx, healthArg.get(commandContext));
     }
 }
 ```
