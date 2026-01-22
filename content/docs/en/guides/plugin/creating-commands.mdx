@@ -17,9 +17,8 @@ You can see information on the following topics:
     - [AbstractPlayerCommand](#the-abstracttargetplayercommand-class)
     - [AbstractTargetPlayerCommand](#the-abstracttargetplayercommand-class)
     - [AbstractTargetEntityCommand](#the-abstracttargetentitycommand-class)
-- Arguments
-    - [Argument Types](#command-argument-types)
-    - [Argument Validators](#argument-validators)
+- [Arguments](#adding-arguments)
+- [Argument Validators](#argument-validators)
 - [Permissions](#permissions)
 - [Command Variants](#command-variants)
 - [Subcommands and Command Collections](#sub-commands-and-command-collections)
@@ -30,7 +29,9 @@ You can see information on the following topics:
 ### The `AbstractAsyncCommand` Class
 The most basic command is an `AbstractAsyncCommand`. Unlike the other commands AbstractAsyncCommand's ececute funtion is called `executeAsync` and returns a `completeableFuture`
 
-*WARN* `AbstractAsyncCommand` runs on its own background thread. This means it is not tied to any world instance. Because of this it can not edit any Stores or Refs without getting the desired world first as the world needs to ececute the command in its thread. To access this data any of the other command types would be prefered and are likely what you will want to use instead.
+<Callout type="warning">
+`AbstractAsyncCommand` runs on its own background thread. This means it is not tied to any world instance. Because of this it can not edit any Stores or Refs without getting the desired world first as the world needs to ececute the command in its thread. To access this data any of the other command types would be prefered and are likely what you will want to use instead.
+</Callout>
 
 The main purpose for a command like this would be for something that can happen everywhere and is not tied to a specific world. For example a `serverRules` command to tell the user thats running the command what are the servers rules are nomatter what world they are in.
 
@@ -51,23 +52,6 @@ public class ServerRulesCommand extends AbstractAsyncCommand {
     protected CompleteableFuture<Void> executeAsync(CommandContext context) {
         context.sendMessage(Message.raw("The only rule is there are no rules."));
         return CompleteableFuture.completedFuture(null);
-    }
-}
-```
-
-*NOTE:* Remember to add the command to the command registry in your main plugin class to be able to use the command.
-```java
-public class TutorialCommandsPlugin extends JavaPlugin {
-    public TutorialCommandsPlugin(@Nonnull JavaPluginInit) { super(init); }
-
-    
-    @Override
-    protected void setup() {
-        CommandRegistry registry = getCommandRegistry()
-
-        // ServerRulesCommand - List rules for the server
-        // Usage: /rules
-        commandRegistry.registerCommand(new ServerRulesCommand())
     }
 }
 ```
@@ -121,44 +105,21 @@ Uses a Ray to see what the player is looking at and tries to run the command on 
 - `withRequiredArg`    // Must be provided and are parsed left -> right in the command
 - `withOptionalArg`    // Returns null if not provided. Needs to have the --<key> <value> pair when running the command. `EX: --player Joe` 
 - `withDefaultArg`     // Returns a default value if not provided
-- `withFlagArg`        // boolean switch (--silent)
+- `withFlagArg`        // boolean switch (--debug)
 
 ### Required Arguments
-You may want your command to have arguments. To do this, you can use the `withRequiredArg` method. 
-
-```java
-public class ExampleCommand extends AbstractPlayerCommand {
-
-  public ExampleCommand() {
-    super("test", "Super test command!");
-  }
-
-  RequiredArg<String> messageArg = this.withRequiredArg("argument_name", "Argument Description", ArgTypes.STRING);
-
-  @Override
-  protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {
-
-    String message = messageArg.get(commandContext); // get the argument text by the player
-    player.sendMessage(Message.raw("Message Argument: " + message));
-  }
-
-}
-```
+Add a required argument to the command that throws an error if its not present. To do this, you can use the `withRequiredArg` method. 
 
 ### Optional Arguments
-
 Adding a optional argument is the same, only change is the method used to create it. You can use the `withOptionalArg` method.
 
 ### Default Arguments 
-
 Adding a default argument has an additional arguemnt for the default value. You need to use `withDefaultArg` method. 
 
 ### Flag Arguemnts
-
 Similar as above but the flags return is either true if it exists or false/null if it does not. You need to use `withFlagArg` method.
 
 ### ArgTypes
-
 The following ArgTypes are available (only lists common types):
 
 - `ArgTypes.STRING`
@@ -167,19 +128,55 @@ The following ArgTypes are available (only lists common types):
 - `ArgTypes.FLOAT`
 - `ArgTypes.DOUBLE`
 - `ArgTypes.UUID`
+- `ArgTypes.PLAYER_REF`
 
-### Argument Validators
+// TODO: Check this
+- `ArgTypes.World`
 
-Argument validators are a way to check the command before the command gets executed. They are added with the `addValidator` method on an argument. They also provide a nice output to the user when an input value is invalid. 
+### Example of all Command arguemnt types with different input types
+
+```java
+// Example usage: /healplayer --player john --value 50 --message "Feels Good" --debug
+public class HealPlayerCommand extends AbstractTargetPlayerCommand {
+    private RequiredArg<String> playerArg;
+    private DefaultArg<Integer> healthArg;
+    private OptionalArg<String> messageArg
+    private FlagArg<Boolean> debugArg;
+    
+    public ExampleCommand() {
+        super("healplayer", "Healing a player for an <input> ammount of HP (default: 100)");
+
+        this.playerArg = this.withRequiredArg("player", "Player Reference", ArgTypes.PLAYER_REF);
+        this.healthArg = this.withDefaultArg("amount", "Health to add to players", ArgTypes.INTEGER, "100");
+        this.messageArg = this.withOptionalArg("message", "Message to print while healing", ArgTypes.STRING);
+        this.debugArg = this.withFlagArg("debug", "Add debug logs", ArgTypes.STRING);
+    }
+
+    @Override
+    protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {
+        if (this.debug) {
+             player.sendMessage(Message.raw("We are debugging " + message));
+        }
+
+        // TODO: Update this!
+        String message = messageArg.get(commandContext); // get the argument text by the player
+        player.sendMessage(Message.raw("Message Argument: " + message));
+    }
+
+}
+```
+
+## Argument Validators
+Argument validators are a way to check the command before the command gets executed. They are added with the `addValidator` method on an argument when calling `withXxxArg`. They provide a nice output to the user when an input value is invalid. 
 
 ```java
 ...
-    // Common check types
+    // Common check types example
     OptionalArg<Integer> healAmount = withOptionalArg("amount", "Heal Amount", ArgTypes.INTEGER)
         .addValidator(Validators.greaterThan(0))
         .addValidator(Validators.lessThan(1000));
 
-    // Custom check
+    // Custom check example
     OptionalArg<Integer> healAmount = withOptionalArg("amount", "Heal Amount", ArgTypes.INTEGER)
             .addValidator( value -> {
                 if (value != null && value <= 0) {
@@ -198,8 +195,8 @@ This allows the server to control who has access to specific commands. You add t
 ```java
 ...
     // Constructor
-    public ServerRulesCommand() {
-        super("rules", "Lists the servers rules");
+    public HealPlayerCommand() {
+        super("healplayer", "heal a player a given amount of HP");
 
         // Only players with this permission can use this command
         requirePermission (HytalePermissions.fromCommand("rules"));
@@ -207,7 +204,7 @@ This allows the server to control who has access to specific commands. You add t
         // Add multiple permission if the player needs multiple to access the command
         requirePermission (HytalePermissions.fromCommand("moderator"));
 
-        // Use or block if it requires one of a list of permissions roles
+        // Use or block if it requires one from a list of permissions roles
         requirePermission (
             PermissionRules.or (
                 HytalePermissions.fromCommand("moderator"),
@@ -266,7 +263,8 @@ The following shows a sudo example of the following layout
 ```
 ```java
 public class RulesCommand excends AbstractPlayerCommand {
-    // See Example above
+    // See Example above for making commands
+    // ...
 }
 // Teleport command here
 // Restart command here
@@ -293,15 +291,18 @@ public class AdminCommand extends AbstractCommandCollection {
 ---
 
 ## Registering the Command
-
 For any command 
-
 ```java
 public class MyPlugin extends JavaPlugin {
 
     @Override
     public void setup() {
+        // One way to add commands
         this.getCommandRegistry().registerCommand(new ExampleCommand());
+
+        // Another way to add commands:
+        CommandRegistry registry = getCommandRegistry();
+        registry.registerCommand(new ExampleCommand());
     }
 }
 ```
