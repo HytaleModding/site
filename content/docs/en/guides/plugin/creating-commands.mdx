@@ -96,7 +96,34 @@ Is automatically threaded so you override the `execute` command instead of `exec
 [See Example below](#example-command-arg-types)
 
 ### The `AbstractTargetEntityCommand` Class
-Uses a Ray to see what the player is looking at and tries to run the command on that entity. It is thread safe and will run on whatever world thread that includes the targeted entity. 
+Uses a Ray to see what the player is looking at and tries to run the command on that entity. It is thread safe and will run on whatever world thread that includes the targeted entity. The following shows an example and how the ref provided just becomes a ref to the entity the player was looking at. 
+```
+...
+@Override protected void execute (CommandContext context,
+                                    Store<EntityStore> store,
+                                    Ref<EntityStore> ref,
+                                    World world) {
+
+    EntityStatMap stats = store.getComponent(ref, EntityStatMap.getComponentType());
+    // Need to verify were looking at something with stats
+    if (stats != null) {
+        context.sendMessage(Message.raw("This entity has no stats!"));
+        return;
+    }
+
+    int healthIdx = DefaultEntityStatTypes.getHealth();
+    EntityStatValue health = stats.get(healthIdx);
+
+    // Need to verify were looking at something with health
+    if (health != null) {
+        context.sendMessage(Message.raw("This entity has no health!"));
+        return;
+    }
+
+    stats.addValue(healthIdx, 100);
+}
+...
+```
 
 --- 
 
@@ -301,7 +328,7 @@ public static class GiveOtherCommand extends AbstractAsyncCommand {
 
 You can create a collection of commands using an `AbstractCommandCollection`. This does not allow the top level command to actually do anything. All commands must be implemented on the same level. But you can implement a `CommandCollection` of `CommandCollections`.
 
-The following shows a sudo example of the following layout
+The following shows an example of a layout and rough code outline on how to set it up. 
 ```
 /admin
     |--user
