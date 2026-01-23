@@ -3,15 +3,78 @@ title: "Spawning NPCs"
 description: "Learn how to easily spawn NPCs using the NPCPlugin helper."
 ---
 
-While you can manually spawn entities using `Holder<EntityStore>` as described in the [Spawning Entities](./spawning-entities) guide, the `NPCPlugin` provides a more convenient way to spawn Non-Player Characters (NPCs) with built-in functionality.
+In this guide, you will learn how to spawn Non-Player Characters (NPCs) using the `NPCPlugin` helper. This is a more convenient alternative to manually spawning entities with `Holder<EntityStore>` as described in the [Spawning Entities](./spawning-entities) guide.
+
+It is **highly recommended** to familiarize yourself with the Entity Component System (ECS) before proceeding. You can find the ECS guide [here](./ecs).
 
 ## Using NPCPlugin
 
-The `NPCPlugin` simplifies the process of creating an entity, attaching a model, and handling initial setup. It returns a `Pair` containing the entity reference and the NPC interface.
+The `NPCPlugin` simplifies the process of creating an entity, attaching a model, and handling initial setup. It abstracts away much of the boilerplate required when constructing a `Holder` manually.
 
-### Example Command
+### Spawning the NPC
 
-The following example demonstrates how to create a command that spawns a "Kweebec Sapling" NPC at the player's location and sets up its inventory.
+To spawn an NPC, you use the `NPCPlugin.get().spawnNPC(...)` method. This handles the creation of the entity, assigning the model, and positioning it in the world.
+
+```java
+Pair<Ref<EntityStore>, INonPlayerCharacter> result = NPCPlugin.get().spawnNPC(store, "Kweebec_Sapling", null, position, rotation);
+```
+
+**Parameters:**
+*   `store`: The entity store where the NPC will exist.
+*   `"Kweebec_Sapling"`: The key/name of the entity model/type.
+*   `null`: Optional configuration (passed as null here).
+*   `position`: Where to spawn the NPC.
+*   `rotation`: How the NPC is oriented.
+
+### Handling the Result
+
+The method returns a `Pair`. You should always check if the result is `not null` to ensure the spawn was successful.
+
+*   `result.first()`: Returns the `Ref<EntityStore>`, which is the reference to the entity in the ECS. You need this to add components or modify the entity later.
+*   `result.second()`: Returns the `INonPlayerCharacter` interface, providing NPC-specific methods.
+
+```java
+if (result != null) {
+    Ref<EntityStore> npcRef = result.first();
+    INonPlayerCharacter npc = result.second();
+    
+    // Proceed with customization...
+    setupNPCInventory(npcRef, store);
+}
+```
+
+## Customizing the NPC
+
+Once spawned, you can customize the NPC, for example, by modifying its inventory.
+
+### Accessing the Inventory
+
+First, retrieve the `NPCEntity` component to access inventory settings.
+
+```java
+NPCEntity npcComponent = store.getComponent(npcRef, Objects.requireNonNull(NPCEntity.getComponentType()));
+
+// Initialize inventory size (e.g., 3 rows, 9 columns, 0 offset)
+npcComponent.setInventorySize(3, 9, 0);
+```
+
+### Adding Items
+
+You can then access the `Inventory` object to add items or equip armor.
+
+```java
+Inventory inventory = npcComponent.getInventory();
+
+// Add a Thorium Mace to the first slot of the hotbar
+inventory.getHotbar().addItemStackToSlot((short) 0, new ItemStack("Weapon_Mace_Thorium", 1));
+
+// Equip a Thorium Helmet using the InventoryHelper
+InventoryHelper.useArmor(inventory.getArmor(), "Armor_Thorium_Head");
+```
+
+## Full Example Command
+
+Here is the complete code for a command that spawns a "Kweebec Sapling" NPC at the player's location and sets up its inventory.
 
 ```java
 import com.example.npc.NPCPlugin; // Adjust imports as necessary
@@ -38,12 +101,6 @@ public class SpawnNpcCommand extends AbstractPlayerCommand {
         Vector3f rotation = new Vector3f(0, 0, 0);
 
         // Use the NPCPlugin helper to spawn the NPC.
-        // Parameters:
-        // 1. store: The entity store where the NPC will exist
-        // 2. "Kweebec_Sapling": The key/name of the entity model/type
-        // 3. null: (Optional configuration, passed as null here)
-        // 4. position: Where to spawn the NPC
-        // 5. rotation: How the NPC is oriented
         Pair<Ref<EntityStore>, INonPlayerCharacter> result = NPCPlugin.get().spawnNPC(store, "Kweebec_Sapling", null,
                 position, rotation);
 
@@ -91,24 +148,16 @@ public class SpawnNpcCommand extends AbstractPlayerCommand {
 }
 ```
 
-## Code Breakdown
+## Registering the Command
 
-### 1. Spawning the NPC
-The core of this method is the call to `NPCPlugin.get().spawnNPC(...)`.
+Finally, do not forget to register the command in your main plugin class:
+
 ```java
-Pair<Ref<EntityStore>, INonPlayerCharacter> result = NPCPlugin.get().spawnNPC(store, "Kweebec_Sapling", null, position, rotation);
+public class MyHytaleMod extends JavaPlugin {
+
+    @Override
+    protected void setup() {
+        this.getCommandRegistry().registerCommand(new SpawnNpcCommand());
+    }
+}
 ```
-This single line replaces much of the boilerplate required when constructing a `Holder` manually. It handles creating the entity, assigning the model, and positioning it in the world.
-
-### 2. Handling the Result
-The method returns a `Pair`. You should always check if the result is not null, which indicates a successful spawn.
-- `result.first()`: Gives you the `Ref<EntityStore>`, which is the reference to the entity in the ECS. You need this to add components or modify the entity later.
-- `result.second()`: Gives you the `INonPlayerCharacter` interface, which provides NPC-specific methods.
-
-### 3. Inventory Management
-The example also shows how to customize the NPC:
-- **Retrieving Components**: `store.getComponent(npcRef, ...)` is used to get the `NPCEntity` component.
-- **Setting Inventory Size**: `npcComponent.setInventorySize(3, 9, 0)` defines the storage capacity.
-- **Equipping Items**: You can access the `Inventory` object to add items (`addItemStackToSlot`) or equip armor (`InventoryHelper.useArmor`).
-
-This approach is much faster for standard NPC requirements than manually composing every component.
