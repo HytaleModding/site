@@ -1,6 +1,6 @@
 ---
-title: Formatting the chat
-description: Learn how to format the chat using the PlayerChatEvent
+title: Formater le chat
+description: Apprenez à formater le chat en utilisant le PlayerChatEvent
 authors:
   - name: oskarscot
     link: https://oskar.scot
@@ -8,8 +8,8 @@ authors:
 
 ![chat format example](/assets/guides/chat-example.png)
 
-The chat uses the PlayerChatEvent, it contains the formatter, the PlayerRef for the sender, the content as well as a list of targets (it's safe to assume the targets is the list of players who can see the chat message)
-You can cancel this event as well as modify the content and the formatter.
+Le chat utilise le PlayerChatEvent, il contient le formateur, le PlayerRef pour l'expéditeur, le contenu ainsi qu'une liste de cibles (on peut supposer en toute sécurité que les cibles sont la liste des joueurs qui peuvent voir le message du chat)
+Vous pouvez annuler cet événement ainsi que modifier le contenu et le formateur.
 
 ```java
 public class ChatFormatter {
@@ -36,7 +36,7 @@ public class ChatFormatter {
 }
 ```
 
-The formatter is the following interface:
+Le formateur est l'interface suivante :
 
 ```java
   public interface Formatter {

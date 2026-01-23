@@ -1,13 +1,13 @@
 ---
-title: 13 - Inheritance
-description: Learn how to create class hierarchies and reuse code effectively.
+title: 13 - Héritage
+description: Apprenez à créer des hiérarchies de classes et à réutiliser le code efficacement.
 ---
 
-Inheritance lets you create new classes based on existing ones. The new class inherits all the properties and methods of the parent class, and can add its own or modify inherited ones.
+L'héritage vous permet de créer de nouvelles classes basées sur des classes existantes. La nouvelle classe hérite de toutes les propriétés et méthodes de la classe parente, et peut ajouter les siennes ou modifier celles héritées.
 
-## What is Inheritance?
+## Qu'est-ce que l'Héritage ?
 
-Think of inheritance like a family tree. A child inherits traits from their parent, but can also have their own unique traits.
+Pensez à l'héritage comme un arbre généalogique. Un enfant hérite des traits de son parent, mais peut aussi avoir ses propres traits uniques.
 
 ```java
 // Parent class (superclass)
@@ -42,24 +42,24 @@ public class Player extends Entity {
 }
 ```
 
-<Callout type="info" title="Inheritance Terminology">
-  - **Superclass/Parent**: The class being inherited from (Entity)
-  - **Subclass/Child**: The class inheriting (Player)
-  - **extends**: Keyword to inherit from a class
-  - **super**: Keyword to access parent class members
+<Callout type="info" title="Terminologie de l'Héritage">
+  - **Superclasse/Parent** : La classe dont on hérite (Entity)
+  - **Sous-classe/Enfant** : La classe qui hérite (Player)
+  - **extends** : Mot-clé pour hériter d'une classe
+  - **super** : Mot-clé pour accéder aux membres de la classe parente
 
   ```java
   public class Monster extends Entity {
-      // Monster IS-A Entity
-      // Monster inherits from Entity
-      // Entity is the parent, Monster is the child
+      // Monster EST-UN Entity
+      // Monster hérite de Entity
+      // Entity est le parent, Monster est l'enfant
   }
   ```
 </Callout>
 
-## The extends Keyword
+## Le Mot-clé extends
 
-Use `extends` to inherit from a class:
+Utilisez `extends` pour hériter d'une classe :
 
 ```java
 public class Animal {
@@ -86,11 +86,11 @@ public class Main {
 }
 ```
 
-## The super Keyword
+## Le Mot-clé super
 
-`super` refers to the parent class:
+`super` fait référence à la classe parente :
 
-### Calling Parent Constructor
+### Appeler le Constructeur Parent
 
 ```java
 public class Entity {
@@ -111,10 +111,10 @@ public class Player extends Entity {
 }
 ```
 
-<Callout type="warning" title="Constructor Rules">
-  - `super()` must be the **first** statement in child constructor
-  - If you don't call `super()`, Java automatically calls the no-argument parent constructor
-  - If parent has no no-argument constructor, you MUST call `super()` with arguments
+<Callout type="warning" title="Règles des Constructeurs">
+  - `super()` doit être la **première** instruction dans le constructeur enfant
+  - Si vous n'appelez pas `super()`, Java appelle automatiquement le constructeur parent sans argument
+  - Si le parent n'a pas de constructeur sans argument, vous DEVEZ appeler `super()` avec des arguments
 
   ```java
   // Wrong - super() not first
@@ -131,7 +131,7 @@ public class Player extends Entity {
   ```
 </Callout>
 
-### Calling Parent Methods
+### Appeler les Méthodes Parentes
 
 ```java
 public class Entity {
@@ -154,9 +154,9 @@ public class Player extends Entity {
 }
 ```
 
-## Method Overriding
+## Redéfinition de Méthode
 
-Child classes can replace parent methods:
+Les classes enfants peuvent remplacer les méthodes parentes :
 
 ```java
 public class Entity {
@@ -190,12 +190,12 @@ public class Main {
 }
 ```
 
-<Callout type="info" title="@Override Annotation">
-  Always use `@Override` when overriding methods:
+<Callout type="info" title="Annotation @Override">
+  Utilisez toujours `@Override` lors de la redéfinition de méthodes :
 
-  - Helps catch typos (if method doesn't exist in parent, you get an error)
-  - Makes code clearer
-  - Good documentation
+  - Aide à détecter les fautes de frappe (si la méthode n'existe pas dans le parent, vous obtenez une erreur)
+  - Rend le code plus clair
+  - Bonne documentation
 
   ```java
   // Without @Override - typo not caught
@@ -211,11 +211,11 @@ public class Main {
   ```
 </Callout>
 
-## Access Modifiers in Inheritance
+## Modificateurs d'Accès dans l'Héritage
 
-- `public` - Accessible everywhere
-- `protected` - Accessible in class and subclasses
-- `private` - Only in the class (not inherited)
+- `public` - Accessible partout
+- `protected` - Accessible dans la classe et les sous-classes
+- `private` - Seulement dans la classe (non hérité)
 
 ```java
 public class Parent {
@@ -244,9 +244,9 @@ public class Child extends Parent {
 }
 ```
 
-## Practical Examples
+## Exemples Pratiques
 
-### Game Entity Hierarchy
+### Hiérarchie d'Entités de Jeu
 
 ```java
 // Base class for all entities
@@ -376,7 +376,7 @@ public class Boss extends Monster {
 }
 ```
 
-### Item Hierarchy
+### Hiérarchie d'Objets
 
 ```java
 // Base Item class
@@ -477,9 +477,9 @@ public class Armor extends Item {
 }
 ```
 
-## Polymorphism
+## Polymorphisme
 
-Child objects can be treated as parent objects:
+Les objets enfants peuvent être traités comme des objets parents :
 
 ```java
 Entity entity1 = new Player("Alice");
@@ -504,8 +504,8 @@ for (Entity entity : entities) {
 }
 ```
 
-<Callout type="info" title="Polymorphism Benefits">
-  Polymorphism lets you write code that works with parent types but handles child types correctly:
+<Callout type="info" title="Avantages du Polymorphisme">
+  Le polymorphisme vous permet d'écrire du code qui fonctionne avec des types parents mais gère correctement les types enfants :
 
   ```java
   public void damageEntity(Entity entity, int damage) {
@@ -521,9 +521,9 @@ for (Entity entity : entities) {
   ```
 </Callout>
 
-## The Object Class
+## La Classe Object
 
-All classes in Java automatically inherit from `Object`:
+Toutes les classes en Java héritent automatiquement de `Object` :
 
 ```java
 public class MyClass {
@@ -532,7 +532,7 @@ public class MyClass {
 }
 ```
 
-Common Object methods to override:
+Méthodes Object courantes à redéfinir :
 
 ```java
 public class Player {
@@ -555,9 +555,9 @@ public class Player {
 }
 ```
 
-## Final Classes and Methods
+## Classes et Méthodes Finales
 
-`final` prevents inheritance or overriding:
+`final` empêche l'héritage ou la redéfinition :
 
 ```java
 // Final class - cannot be extended
@@ -580,7 +580,7 @@ public class Player extends Entity {
 }
 ```
 
-## Common Mistakes
+## Erreurs Courantes
 
 ```java
 // Wrong - Forgetting super()
@@ -618,12 +618,12 @@ public class Child extends Parent {
 }
 ```
 
-## Practice Exercises
+## Exercices Pratiques
 
-1. **Vehicle Hierarchy**: Create a `Vehicle` class with properties like speed and fuel. Create `Car` and `Motorcycle` subclasses with their own unique features.
+1. **Hiérarchie de Véhicules** : Créez une classe `Vehicle` avec des propriétés comme vitesse et carburant. Créez des sous-classes `Car` et `Motorcycle` avec leurs propres fonctionnalités uniques.
 
-2. **Shape Calculator**: Create a `Shape` class with a `calculateArea()` method. Create `Circle`, `Rectangle`, and `Triangle` subclasses that override this method.
+2. **Calculateur de Formes** : Créez une classe `Shape` avec une méthode `calculateArea()`. Créez des sous-classes `Circle`, `Rectangle` et `Triangle` qui redéfinissent cette méthode.
 
-3. **RPG Characters**: Create a `Character` class. Extend it to make `Warrior`, `Mage`, and `Archer` classes with unique abilities.
+3. **Personnages RPG** : Créez une classe `Character`. Étendez-la pour créer des classes `Warrior`, `Mage` et `Archer` avec des capacités uniques.
 
-4. **Animal Sounds**: Create an `Animal` class with a `makeSound()` method. Create various animal subclasses that override this method.
+4. **Sons d'Animaux** : Créez une classe `Animal` avec une méthode `makeSound()`. Créez diverses sous-classes d'animaux qui redéfinissent cette méthode.

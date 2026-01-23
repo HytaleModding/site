@@ -1,64 +1,64 @@
 ---
-title: Browsing the server.jar code
-description: Learn how to patch the server.jar and browse the source code.
+title: Parcourir le code du server.jar
+description: Apprenez à patcher le server.jar et à parcourir le code source.
 ---
 
-The ~~patcher~~ allows you to more easily prepare an environment for exploring the Hytale Server without publishing the decompiled code.
+Le ~~patcher~~ vous permet de préparer plus facilement un environnement pour explorer le serveur Hytale sans publier le code décompilé.
 
-## Setup
+## Configuration
 
-- Clone the patcher `git clone https://github.com/HytaleModding/patcher.git`, and enter the directory. `cd patcher`
+- Clonez le patcher `git clone https://github.com/HytaleModding/patcher.git`, et entrez dans le répertoire. `cd patcher`
 
-- Create a Python virtual environment in the `.venv` folder. The command for this varies by platform but it is probably
-  one of these:
+- Créez un environnement virtuel Python dans le dossier `.venv`. La commande pour cela varie selon la plateforme mais c'est probablement
+  l'une de celles-ci :
 
   - `python -m venv .venv`
   - `python3 -m venv .venv` (Linux)
   - `py -3.13 -m venv .venv` (Windows)
 
-  In the last one, specifying the version is recommended if you have multiple Pythons installed.
+  Dans la dernière, spécifier la version est recommandé si vous avez plusieurs versions de Python installées.
 
-- Activate the virtual environment:
-  - Windows: `".venv\Scripts\activate"`  (including the quotes)
+- Activez l'environnement virtuel :
+  - Windows: `".venv\Scripts\activate"`  (incluant les guillemets)
   - Linux/Mac: `source .venv/bin/activate`
-  - From now on, you are running python commands from inside the venv, hence you must use `python` instead of `py` or `python3` to invoke python.
+  - À partir de maintenant, vous exécutez les commandes python depuis l'intérieur du venv, vous devez donc utiliser `python` au lieu de `py` ou `python3` pour invoquer python.
 
-- Inside the venv, you have to install the dependencies
+- À l'intérieur du venv, vous devez installer les dépendances
   - `pip install -r requirements.txt`
 
-- Install these dependencies and ensure they are on PATH:
+- Installez ces dépendances et assurez-vous qu'elles sont dans le PATH :
   - `git`
-  - `java` you need JDK 25 or newer
-  - `jar` (comes with JDK inside the bin folder)
+  - `java` vous avez besoin du JDK 25 ou plus récent
+  - `jar` (fourni avec le JDK dans le dossier bin)
   - `mvn`
 
-## Usage
+## Utilisation
 
-Put your HytaleServer.jar in the same root directory of this repo or specify an environment variable `HYTALESERVER_JAR_PATH` with the path to your HytaleServer.jar
+Placez votre HytaleServer.jar dans le même répertoire racine de ce dépôt ou spécifiez une variable d'environnement `HYTALESERVER_JAR_PATH` avec le chemin vers votre HytaleServer.jar
 
-Then run this:
+Ensuite exécutez ceci :
 
 ```shell
 python run.py setup
 ```
 
-It will
+Cela va
 
-- copy the HytaleServer.jar into `work/download`
-  - (on Windows) fix `META-INF/license` name collision
-- decompile it using Fernflower and save the output to `work/decompile`
-- set up a Maven project in `hytale-server` with the decompiled code
+- copier le HytaleServer.jar dans `work/download`
+  - (sur Windows) corriger la collision de nom `META-INF/license`
+- le décompiler en utilisant Fernflower et sauvegarder la sortie dans `work/decompile`
+- configurer un projet Maven dans `hytale-server` avec le code décompilé
 
-You can then open the `hytale-server` folder in your favorite IDE and begin exploring the code. For _IntelliJ IDEA_,
-you must first set up the SDK. After opening the project (you can open the `pom.xml` file, IDEA will prompt you to open
-the entire project) press Ctrl+Alt+Shift+S and under _Project_ configure SDK and Language level to _25_.
+Vous pouvez ensuite ouvrir le dossier `hytale-server` dans votre IDE favori et commencer à explorer le code. Pour _IntelliJ IDEA_,
+vous devez d'abord configurer le SDK. Après avoir ouvert le projet (vous pouvez ouvrir le fichier `pom.xml`, IDEA vous demandera d'ouvrir
+le projet entier) appuyez sur Ctrl+Alt+Shift+S et sous _Project_ configurez SDK et Language level à _25_.
 
-If IDEA does not offer an option to run the main file, right-click the `src` folder -> Mark Directory As -> Sources Root
-then reload the maven project:\
+Si IDEA n'offre pas d'option pour exécuter le fichier principal, faites un clic droit sur le dossier `src` -> Mark Directory As -> Sources Root
+puis rechargez le projet maven :\
 ![_readme_images/img.png](/assets/reload-maven.png)\
-It is located in the "m" icon on the right side:\
+Il est situé dans l'icône "m" sur le côté droit :\
 ![_readme_images/m.png](/assets/maven.png)\
-If you don't see it, enable it under View -> Tool Windows -> Maven.\
+Si vous ne le voyez pas, activez-le sous View -> Tool Windows -> Maven.\
 ![_readme_images/tool_windows.png](/assets/view-windowtools-maven.png)
 
-This decompiled code is likely broken. But it is somewhat usable for exploration. Try Ctrl+Shift+F and search PacketAdapters
+Ce code décompilé est probablement cassé. Mais il est quelque peu utilisable pour l'exploration. Essayez Ctrl+Shift+F et recherchez PacketAdapters

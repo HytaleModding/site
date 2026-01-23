@@ -1,73 +1,73 @@
 ---
-title: Player Input and Keybind Guide
-description: How to handle player input.
+title: Guide des Entrées et Raccourcis Clavier du Joueur
+description: Comment gérer les entrées du joueur.
 authors:
   - name: Vibe Theory
     url: https://discord.com/users/145420279294722048
 ---
 
-## The Basics
+## Les Bases
 
-Hytale Servers **do not receive raw keyboard input.** Instead, clients send `packets` of Interaction types:
+Les serveurs Hytale **ne reçoivent PAS les entrées clavier brutes.** Au lieu de cela, les clients envoient des `paquets` de types d'interaction :
 
-- **Mouse events** - clicks with target info
-- **Movement states** - 22 boolean flags (walking, jumping, etc.)
-- **Interaction types** - what action the player is performing
-
----
-
-## Keybind Limitations
-
-Due to the use of `packets` not key inputs, you cannot assign your custom Fireball spell to X.
-
-_There is a workaround addressed below, but first let's understand the baseline:_
-
-**You CANNOT:**
-
-- Add new keybinds (keyboard mapping is client-side)
-- Remap existing keys
-- Add more than 3 ability slots
-
-**You CAN:**
-
-- Intercept `packets` and hijack their purpose
-- Use 3 built-in ability slots (`Ability1`, `Ability2`, `Ability3`)
-- Make abilities item-dependent (wand = fireball, sword = slash)
-- Detect hold vs tap, double-click, toggle (via timing)
-- Full mouse control (all 5 buttons, press/release, drag)
-
-### Fixed Input Slots
-
-| Action         | Default Key | Server Receives             | Notes                   |
-| -------------- | ----------- | --------------------------- | ----------------------- |
-| Left Mouse     | LMB         | `InteractionType.Primary`   | Attack/break            |
-| Right Mouse    | RMB         | `InteractionType.Secondary` | Use/place               |
-| Weapon Ability | Q           | `InteractionType.Ability1`  | Active - weapon special |
-| Ability Slot 2 | —           | `InteractionType.Ability2`  | Unused placeholder      |
-| Ability Slot 3 | —           | `InteractionType.Ability3`  | Unused placeholder      |
-| Interact       | E           | `InteractionType.Use`       | Interact with world     |
-| Pick Block     | MMB         | `InteractionType.Pick`      | Copy block type         |
-| Dodge          | —           | `InteractionType.Dodge`     | Dodge roll mechanic     |
-
-**Note:** Only `Ability1` (Q key) is actively used for weapon abilities. `Ability2` and `Ability3` exist in the enum but have no default keybinds and nothing in the codebase references them: they appear to be reserved for future use.
-
-These are the only keyboard actions the server sees.
+- **Événements de souris** - clics avec informations de cible
+- **États de mouvement** - 22 drapeaux booléens (marche, saut, etc.)
+- **Types d'interaction** - quelle action le joueur effectue
 
 ---
 
-## Intercepting Packets
+## Limitations des Raccourcis Clavier
 
-This is the work around to Custom Player Keybinds. By intercepting the input packets you can redirect the event trigger to your own class. There is a **major caveat with this strategy:** This will override the default Key Mapping unless you otherwise redirect it.
+En raison de l'utilisation de `paquets` et non d'entrées de touches, vous ne pouvez pas assigner votre sort Boule de Feu personnalisé à X.
 
-See [Client Input Reference](https://hytalemodding.dev/en/docs/guides/plugin/client-inputs-reference) for a comprehensive list of all client-to-server packets.
+_Il existe une solution de contournement abordée ci-dessous, mais comprenons d'abord la base :_
 
-For instance, intercepting Q to use for custom Fireball spell = Hytale Weapon Abilities becoming unusable.
+**Vous NE POUVEZ PAS :**
 
-This is because you aren't intercepting Q, but rather `InteractionType.Ability1`. You would need to redirect a different packet into those recreated abilities in your own mod (this will also of course hijack another packet). The Client Input Reference above shows all packets. _Pro Tip: Builder tools when not in creative are a great starting point._
+- Ajouter de nouveaux raccourcis clavier (le mappage du clavier est côté client)
+- Remapper les touches existantes
+- Ajouter plus de 3 emplacements de capacité
 
-### Example: Builder Tools -> Combat Abilities
+**Vous POUVEZ :**
 
-This is one of the better systems to capture, as it intercepts packets not even used during standard play.
+- Intercepter les `paquets` et détourner leur objectif
+- Utiliser 3 emplacements de capacité intégrés (`Ability1`, `Ability2`, `Ability3`)
+- Rendre les capacités dépendantes des objets (baguette = boule de feu, épée = tranche)
+- Détecter maintien vs appui, double-clic, bascule (via le timing)
+- Contrôle complet de la souris (tous les 5 boutons, pression/relâchement, glisser)
+
+### Emplacements d'Entrée Fixes
+
+| Action         | Touche par Défaut | Le Serveur Reçoit           | Notes                   |
+| -------------- | ----------------- | --------------------------- | ----------------------- |
+| Souris Gauche  | LMB               | `InteractionType.Primary`   | Attaque/casser          |
+| Souris Droite  | RMB               | `InteractionType.Secondary` | Utiliser/placer         |
+| Capacité Arme  | Q                 | `InteractionType.Ability1`  | Actif - spécial d'arme  |
+| Emplacement 2  | —                 | `InteractionType.Ability2`  | Placeholder inutilisé   |
+| Emplacement 3  | —                 | `InteractionType.Ability3`  | Placeholder inutilisé   |
+| Interagir      | E                 | `InteractionType.Use`       | Interagir avec le monde |
+| Sélection Bloc | MMB               | `InteractionType.Pick`      | Copier type de bloc     |
+| Esquive        | —                 | `InteractionType.Dodge`     | Mécanique d'esquive     |
+
+**Note :** Seul `Ability1` (touche Q) est activement utilisé pour les capacités d'arme. `Ability2` et `Ability3` existent dans l'énumération mais n'ont pas de raccourcis par défaut et rien dans le code ne les référence : ils semblent être réservés pour une utilisation future.
+
+Ce sont les seules actions clavier que le serveur voit.
+
+---
+
+## Intercepter les Paquets
+
+C'est la solution de contournement pour les raccourcis clavier personnalisés du joueur. En interceptant les paquets d'entrée, vous pouvez rediriger le déclencheur d'événement vers votre propre classe. Il y a un **avertissement majeur avec cette stratégie :** Cela remplacera le mappage de touches par défaut à moins que vous ne le redirigiez autrement.
+
+Voir [Référence des Entrées Client](https://hytalemodding.dev/en/docs/guides/plugin/client-inputs-reference) pour une liste complète de tous les paquets client-serveur.
+
+Par exemple, intercepter Q pour utiliser un sort Boule de Feu personnalisé = Les capacités d'arme Hytale deviennent inutilisables.
+
+C'est parce que vous n'interceptez pas Q, mais plutôt `InteractionType.Ability1`. Vous devriez rediriger un paquet différent vers ces capacités recréées dans votre propre mod (cela détournera bien sûr aussi un autre paquet). La référence des entrées client ci-dessus montre tous les paquets. _Conseil Pro : Les outils de construction lorsqu'ils ne sont pas en mode créatif sont un excellent point de départ._
+
+### Exemple : Outils de Construction -> Capacités de Combat
+
+C'est l'un des meilleurs systèmes à capturer, car il intercepte des paquets qui ne sont même pas utilisés pendant le jeu standard.
 
 ```java
 // 1. Grant permission on join (in PlayerReadyEvent handler)
@@ -100,19 +100,19 @@ void handleBuilderToolAction(BuilderToolGeneralAction packet, PlayerRef playerRe
 }
 ```
 
-You can do this with anything, so a custom keybind for UI, gameplay, etc.
+Vous pouvez faire cela avec n'importe quoi, donc un raccourci clavier personnalisé pour l'interface utilisateur, le gameplay, etc.
 
-**Critical Note:** If the player changes keybinds you won't know, so your guides have to reference Default Hytale Controls. Also if they change key binds due to your mod (disliking Ctrl+C as an ability for example) the setting follows them, and may impact their experience outside of your ecosystem. Important to consider while choosing packets.
+**Note Critique :** Si le joueur change les raccourcis clavier, vous ne le saurez pas, donc vos guides doivent référencer les contrôles Hytale par défaut. De plus, s'ils changent les raccourcis clavier en raison de votre mod (n'aimant pas Ctrl+C comme capacité par exemple), le paramètre les suit et peut impacter leur expérience en dehors de votre écosystème. Important à considérer lors du choix des paquets.
 
 ###
 
 ---
 
-## Mouse Inputs
+## Entrées de Souris
 
-Some useful info about mouse inputs
+Quelques informations utiles sur les entrées de souris
 
-### Listening to Mouse Clicks
+### Écouter les Clics de Souris
 
 ```java
 @Override
@@ -135,7 +135,7 @@ protected void setup() {
 
 ---
 
-### Mouse Button Types
+### Types de Boutons de Souris
 
 ```java
 MouseButtonType.Left    // Primary click
@@ -152,18 +152,18 @@ MouseButtonState.Released  // Button up
 
 ---
 
-### What You Get From Mouse Events
+### Ce Que Vous Obtenez des Événements de Souris
 
-| Property            | Type             | Description                     |
-| ------------------- | ---------------- | ------------------------------- |
-| `getMouseButton()`  | MouseButtonEvent | Button type, state, click count |
-| `getTargetEntity()` | Entity           | Entity under cursor (or null)   |
-| `getTargetBlock()`  | Vector3i         | Block position under cursor     |
-| `getItemInHand()`   | Item             | Currently held item             |
-| `getScreenPoint()`  | Vector2f         | Cursor screen position          |
-| `getPlayer()`       | Player           | The player who clicked          |
+| Propriété           | Type             | Description                           |
+| ------------------- | ---------------- | ------------------------------------- |
+| `getMouseButton()`  | MouseButtonEvent | Type de bouton, état, nombre de clics |
+| `getTargetEntity()` | Entity           | Entité sous le curseur (ou null)      |
+| `getTargetBlock()`  | Vector3i         | Position du bloc sous le curseur      |
+| `getItemInHand()`   | Item             | Objet actuellement tenu               |
+| `getScreenPoint()`  | Vector2f         | Position du curseur à l'écran         |
+| `getPlayer()`       | Player           | Le joueur qui a cliqué                |
 
-**Double-click detection:**
+**Détection de double-clic :**
 
 ```java
 if (mouse.clicks >= 2) {
@@ -184,37 +184,37 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerMouseMotionEvent
 
 ---
 
-### Available Player Events
+### Événements de Joueur Disponibles
 
-All player events that can be registered via `getEventRegistry()`:
+Tous les événements de joueur qui peuvent être enregistrés via `getEventRegistry()` :
 
-| Event                        | Description                     |
-| ---------------------------- | ------------------------------- |
-| `PlayerConnectEvent`         | Player connecting to server     |
-| `PlayerDisconnectEvent`      | Player disconnecting            |
-| `PlayerSetupConnectEvent`    | Connection setup phase          |
-| `PlayerSetupDisconnectEvent` | Disconnect setup phase          |
-| `PlayerReadyEvent`           | Player fully loaded and ready   |
-| `PlayerChatEvent`            | Chat message sent               |
-| `PlayerInteractEvent`        | Interaction with world/entities |
-| `PlayerMouseButtonEvent`     | Mouse button press/release      |
-| `PlayerMouseMotionEvent`     | Mouse movement                  |
-| `PlayerCraftEvent`           | Item crafted                    |
-| `AddPlayerToWorldEvent`      | Player added to a world         |
-| `DrainPlayerFromWorldEvent`  | Player removed from world       |
-
----
-
-## Tips
-
-- **1 ability slot active**: Only `Ability1` (Q) is currently used - make it item-dependent
-- **Cancel events**: Use `event.setCancelled(true)` to block the action
-- **Movement states**: Check these in systems for continuous monitoring
-- **Double-click**: Check `mouse.clicks >= 2`
-- **Hold vs tap**: Track press/release timing yourself
-- **Target info**: Events include what block/entity the player was targeting
-- **No move event**: Poll `TransformComponent` or check `MovementStates` instead
+| Événement                    | Description                          |
+| ---------------------------- | ------------------------------------ |
+| `PlayerConnectEvent`         | Joueur se connectant au serveur      |
+| `PlayerDisconnectEvent`      | Joueur se déconnectant               |
+| `PlayerSetupConnectEvent`    | Phase de configuration de connexion  |
+| `PlayerSetupDisconnectEvent` | Phase de configuration déconnexion   |
+| `PlayerReadyEvent`           | Joueur complètement chargé et prêt   |
+| `PlayerChatEvent`            | Message de chat envoyé               |
+| `PlayerInteractEvent`        | Interaction avec monde/entités       |
+| `PlayerMouseButtonEvent`     | Pression/relâchement bouton souris   |
+| `PlayerMouseMotionEvent`     | Mouvement de la souris               |
+| `PlayerCraftEvent`           | Objet fabriqué                       |
+| `AddPlayerToWorldEvent`      | Joueur ajouté à un monde             |
+| `DrainPlayerFromWorldEvent`  | Joueur retiré du monde               |
 
 ---
 
-_From Hytale Server build `2026.01.13-dcad8778f`_
+## Conseils
+
+- **1 emplacement de capacité actif** : Seul `Ability1` (Q) est actuellement utilisé - rendez-le dépendant de l'objet
+- **Annuler les événements** : Utilisez `event.setCancelled(true)` pour bloquer l'action
+- **États de mouvement** : Vérifiez-les dans les systèmes pour une surveillance continue
+- **Double-clic** : Vérifiez `mouse.clicks >= 2`
+- **Maintien vs appui** : Suivez vous-même le timing pression/relâchement
+- **Informations de cible** : Les événements incluent quel bloc/entité le joueur ciblait
+- **Pas d'événement de mouvement** : Interrogez `TransformComponent` ou vérifiez `MovementStates` à la place
+
+---
+
+_Depuis Hytale Server build `2026.01.13-dcad8778f`_

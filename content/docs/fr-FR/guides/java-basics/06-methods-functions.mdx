@@ -1,13 +1,13 @@
 ---
-title: 06 - Methods (Functions)
-description: Learn how to organize and reuse code with methods.
+title: 06 - Méthodes (Fonctions)
+description: Apprenez à organiser et réutiliser le code avec les méthodes.
 ---
 
-Methods are reusable blocks of code that perform specific tasks. They help you avoid repeating code and make your programs easier to understand.
+Les méthodes sont des blocs de code réutilisables qui effectuent des tâches spécifiques. Elles vous aident à éviter de répéter du code et rendent vos programmes plus faciles à comprendre.
 
-## What is a Method?
+## Qu'est-ce qu'une Méthode ?
 
-Think of a method as a recipe. You define it once, then use it whenever you need it.
+Pensez à une méthode comme une recette. Vous la définissez une fois, puis l'utilisez chaque fois que vous en avez besoin.
 
 ```java tab="Code"
 public class Game {
@@ -28,7 +28,7 @@ Welcome to Hytale!
 Welcome to Hytale!
 ```
 
-## Method Structure
+## Structure d'une Méthode
 
 ```java
 public static void methodName() {
@@ -40,11 +40,11 @@ public static void methodName() {
 }
 ```
 
-We'll learn what `public` and `static` mean later. For now, just use them.
+Nous apprendrons ce que signifient `public` et `static` plus tard. Pour l'instant, utilisez-les simplement.
 
-## Methods with Parameters
+## Méthodes avec Paramètres
 
-Parameters let you pass data into methods:
+Les paramètres vous permettent de passer des données dans les méthodes :
 
 ```java
 public static void greetPlayer(String name) {
@@ -57,7 +57,7 @@ public static void main(String[] args) {
 }
 ```
 
-### Multiple Parameters
+### Paramètres Multiples
 
 ```java
 public static void dealDamage(String target, int damage) {
@@ -70,8 +70,8 @@ public static void main(String[] args) {
 }
 ```
 
-<Callout type="info" title="Parameter Order Matters">
-  When calling a method, arguments must match the parameter order:
+<Callout type="info" title="L'Ordre des Paramètres Compte">
+  Lors de l'appel d'une méthode, les arguments doivent correspondre à l'ordre des paramètres :
 
   ```java
   public static void createItem(String name, int quantity, double price) {
@@ -81,14 +81,14 @@ public static void main(String[] args) {
   // Correct
   createItem("Sword", 1, 50.0);
 
-  // Wrong - Order matters!
+  // Incorrect - L'ordre compte !
   createItem(1, "Sword", 50.0);  // Error!
   ```
 </Callout>
 
-## Methods with Return Values
+## Méthodes avec Valeurs de Retour
 
-Methods can send data back using `return`:
+Les méthodes peuvent renvoyer des données en utilisant `return` :
 
 ```java
 public static int add(int a, int b) {
@@ -102,13 +102,13 @@ public static void main(String[] args) {
 }
 ```
 
-The return type must match what you return:
+Le type de retour doit correspondre à ce que vous retournez :
 
-* `void` - Returns nothing
-* `int` - Returns an integer
-* `double` - Returns a decimal
-* `boolean` - Returns true/false
-* `String` - Returns text
+* `void` - Ne retourne rien
+* `int` - Retourne un entier
+* `double` - Retourne un décimal
+* `boolean` - Retourne vrai/faux
+* `String` - Retourne du texte
 
 ```java
 public static String getItemName() {
@@ -124,8 +124,8 @@ public static double calculateDamage(int attack, double multiplier) {
 }
 ```
 
-<Callout type="warning" title="Return Stops Execution">
-  Once a method hits `return`, it immediately exits. Code after `return` won't run!
+<Callout type="warning" title="Return Arrête l'Exécution">
+  Une fois qu'une méthode atteint `return`, elle se termine immédiatement. Le code après `return` ne s'exécutera pas !
 
   ```java
   public static int getValue() {
@@ -135,9 +135,9 @@ public static double calculateDamage(int attack, double multiplier) {
   ```
 </Callout>
 
-## Practical Examples
+## Exemples Pratiques
 
-### Health System
+### Système de Santé
 
 ```java tab="Code"
 public static void displayHealth(String name, int health, int maxHealth) {
@@ -157,7 +157,7 @@ Player: 75/100 (75.0%)
 Boss: 450/500 (90.0%)
 ```
 
-### Damage Calculator
+### Calculateur de Dégâts
 
 ```java tab="Code"
 public static int calculateDamage(int baseAttack, int weaponDamage, boolean isCritical) {
@@ -179,7 +179,7 @@ public static void main(String[] args) {
 }
 ```
 
-### Level Requirements
+### Exigences de Niveau
 
 ```java tab="Code"
 public static int getXPForLevel(int level) {
@@ -204,7 +204,7 @@ public static void main(String[] args) {
 }
 ```
 
-### Distance Calculator
+### Calculateur de Distance
 
 ```java tab="Code"
 public static double calculateDistance(int x1, int y1, int x2, int y2) {
@@ -226,9 +226,9 @@ public static void main(String[] args) {
 }
 ```
 
-## Method Overloading
+## Surcharge de Méthode
 
-You can have multiple methods with the same name but different parameters:
+Vous pouvez avoir plusieurs méthodes avec le même nom mais des paramètres différents :
 
 ```java
 public static void displayMessage(String message) {
@@ -247,12 +247,12 @@ public static void main(String[] args) {
 }
 ```
 
-<Callout type="info" title="Method Overloading Rules">
-  Methods are considered different if they have:
+<Callout type="info" title="Règles de Surcharge de Méthode">
+  Les méthodes sont considérées comme différentes si elles ont :
 
-  * Different number of parameters
-  * Different types of parameters
-  * Different order of parameters
+  * Un nombre différent de paramètres
+  * Des types de paramètres différents
+  * Un ordre de paramètres différent
 
   ```java
   public static void test(int a) { }
@@ -261,14 +261,14 @@ public static void main(String[] args) {
   public static void test(String a, int b) { }     // Different types
   public static void test(int a, String b) { }     // Different order
 
-  // Wrong - Only return type is different
+  // Incorrect - Seul le type de retour est différent
   public static int test(int a) { }
   ```
 </Callout>
 
-## Common Patterns in Hytale Modding
+## Modèles Courants dans le Modding Hytale
 
-### Item Creation
+### Création d'Objet
 
 ```java
 public static Item createItem(String name, int durability) {
@@ -287,7 +287,7 @@ public static Item createPickaxe() {
 }
 ```
 
-### Block Placement Validation
+### Validation de Placement de Bloc
 
 ```java
 public static boolean canPlaceBlock(int x, int y, int z) {
@@ -314,7 +314,7 @@ public static void placeBlock(int x, int y, int z, String type) {
 }
 ```
 
-### Player State Checks
+### Vérifications d'État du Joueur
 
 ```java
 public static boolean isLowHealth(int health, int maxHealth) {
@@ -336,50 +336,50 @@ public static String getHealthStatus(int health, int maxHealth) {
 }
 ```
 
-## Best Practices
+## Meilleures Pratiques
 
-<Callout type="info" title="Method Naming">
-  Use descriptive verb-based names that explain what the method does:
+<Callout type="info" title="Nommage des Méthodes">
+  Utilisez des noms descriptifs basés sur des verbes qui expliquent ce que fait la méthode :
 
   ```java
-  // Good
+  // Bon
   public static void calculateDamage() { }
   public static boolean isPlayerAlive() { }
   public static String getItemName() { }
   public static void displayInventory() { }
 
-  // Bad
+  // Mauvais
   public static void dmg() { }        // Too short
   public static void method1() { }    // Not descriptive
   public static void stuff() { }      // Too vague
   ```
 </Callout>
 
-## Practice Exercises
+## Exercices Pratiques
 
-1. **Temperature Converter**: Write methods to convert:
-   * Celsius to Fahrenheit: `(C × 9/5) + 32`
-   * Fahrenheit to Celsius: `(F - 32) × 5/9`
+1. **Convertisseur de Température** : Écrivez des méthodes pour convertir :
+   * Celsius vers Fahrenheit : `(C × 9/5) + 32`
+   * Fahrenheit vers Celsius : `(F - 32) × 5/9`
 
-2. **Circle Calculator**: Create methods that calculate:
-   * Area: `π × radius²`
-   * Circumference: `2 × π × radius`
-   * Use `Math.PI` for π
+2. **Calculateur de Cercle** : Créez des méthodes qui calculent :
+   * Aire : `π × rayon²`
+   * Circonférence : `2 × π × rayon`
+   * Utilisez `Math.PI` pour π
 
-3. **Item Durability**: Write these methods:
-   * `damageItem(int current, int damage)` - returns new durability
-   * `isBroken(int durability)` - returns true if durability is less than or equal to 0
-   * `repairItem(int current, int max)` - returns max durability
+3. **Durabilité d'Objet** : Écrivez ces méthodes :
+   * `damageItem(int current, int damage)` - retourne la nouvelle durabilité
+   * `isBroken(int durability)` - retourne vrai si la durabilité est inférieure ou égale à 0
+   * `repairItem(int current, int max)` - retourne la durabilité maximale
 
-4. **Password Validator**: Create a method that checks if a password is valid:
-   * At least 8 characters long
-   * Contains at least one number
-   * Returns true if valid, false otherwise
+4. **Validateur de Mot de Passe** : Créez une méthode qui vérifie si un mot de passe est valide :
+   * Au moins 8 caractères
+   * Contient au moins un chiffre
+   * Retourne vrai si valide, faux sinon
 
-## Common Mistakes
+## Erreurs Courantes
 
 ```java
-// Wrong - Forgetting return statement
+// Incorrect - Oubli de l'instruction return
 public static int getValue() {
     int x = 10;
     // Forgot to return!
@@ -391,7 +391,7 @@ public static int getValue() {
     return x;
 }
 
-// Wrong - Wrong return type
+// Incorrect - Mauvais type de retour
 public static int getText() {
     return "Hello";  // Error! Should return int, not String
 }
@@ -401,7 +401,7 @@ public static String getText() {
     return "Hello";
 }
 
-// Wrong - Not calling the method
+// Incorrect - Ne pas appeler la méthode
 public static void main(String[] args) {
     greet;  // Error! Missing ()
 }

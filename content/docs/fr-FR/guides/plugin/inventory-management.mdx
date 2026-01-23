@@ -1,26 +1,26 @@
 ---
-title: Inventory Management
-description: Learn how to manage player inventories in your Hytale mod.
+title: Gestion de l'Inventaire
+description: Apprenez à gérer les inventaires des joueurs dans votre mod Hytale.
 authors:
   - name: Neil Revin
     link: https://itsneil.dev
 ---
 
-In this guide, you'll learn how to manage player inventories in your Hytale mod.
+Dans ce guide, vous apprendrez comment gérer les inventaires des joueurs dans votre mod Hytale.
 
-## Accessing the Player Inventory
+## Accéder à l'Inventaire du Joueur
 
-To access the Inventory of a `Player`, you can use the `getInventory()` method which returns the `Inventory` object.
+Pour accéder à l'Inventory d'un `Player`, vous pouvez utiliser la méthode `getInventory()` qui retourne l'objet `Inventory`.
 
 ```java
 Inventory inventory = player.getInventory();
 ```
 
-## Opening Inventories
+## Ouvrir des Inventaires
 
-You can open different types of inventories, these inventories are known as "Pages". You can also add custom pages, this will be covered in a guide later on.
+Vous pouvez ouvrir différents types d'inventaires, ces inventaires sont connus sous le nom de "Pages". Vous pouvez également ajouter des pages personnalisées, cela sera couvert dans un guide ultérieur.
 
-You can use the `Page` enum to reference existing inventories, currently the following pages are available:
+Vous pouvez utiliser l'énumération `Page` pour référencer les inventaires existants, actuellement les pages suivantes sont disponibles :
 
 - `Page.None`
 - `Page.Bench`
@@ -37,22 +37,22 @@ Store<EntityStore> store = player.getWorld().getEntityStore().getStore();
 pageManager.setPage(player.getReference(), store, Page.Inventory);
 ```
 
-## `ItemStack` Class
+## Classe `ItemStack`
 
-You can create and manipulate items in a player's inventory using the `ItemStack` class. This class represents a stack of items, and provides methods for managing the quantity and type of items in the stack.
+Vous pouvez créer et manipuler des objets dans l'inventaire d'un joueur en utilisant la classe `ItemStack`. Cette classe représente une pile d'objets, et fournit des méthodes pour gérer la quantité et le type d'objets dans la pile.
 
-### Creating an ItemStack
+### Créer un ItemStack
 
-To create an `ItemStack`, you need to specify the material type and the quantity of items in the stack.
+Pour créer un `ItemStack`, vous devez spécifier le type de matériau et la quantité d'objets dans la pile.
 
 ```java
 ItemStack item = new ItemStack("Stone"); 
 ItemStack withQuantity = new ItemStack("Stone", 64);
 ```
 
-#### Adding custom metadata
+#### Ajouter des métadonnées personnalisées
 
-You can also add custom metadata to a `ItemStack` by passing a `BsonDocument` when creating it.
+Vous pouvez également ajouter des métadonnées personnalisées à un `ItemStack` en passant un `BsonDocument` lors de sa création.
 
 ```java
 BsonDocument metadata = new BsonDocument();
@@ -60,7 +60,7 @@ metadata.append("customData", new BsonString("value"));
 ItemStack item = new ItemStack("Stone", 64, metadata);
 ```
 
-### Setting a durability
+### Définir une durabilité
 
 ```java
 ItemStack stackWithDurability = new ItemStack(
@@ -72,9 +72,9 @@ ItemStack stackWithDurability = new ItemStack(
 );
 ```
 
-## Getting the `ItemContainer`
+## Obtenir l'`ItemContainer`
 
-The `Inventory` class provides methods to get multiple `ItemContainer` objects, like:
+La classe `Inventory` fournit des méthodes pour obtenir plusieurs objets `ItemContainer`, comme :
 
 - `.getStorage()`
 - `.getArmor()`
@@ -82,7 +82,7 @@ The `Inventory` class provides methods to get multiple `ItemContainer` objects, 
 - `.getHotbar()`
 - `.getUtility()`
 
-There are also combined methods like:
+Il existe également des méthodes combinées comme :
 
 - `.getCombinedEverything()`
 - `.getCombinedArmorHotbarStorage()`
@@ -92,31 +92,31 @@ There are also combined methods like:
 - `.getCombinedArmorHotbarUtilityStorage()`
 - `.getCombinedHotbarUtilityConsumableStorage()`
 
-## Adding `ItemStack` objects to the Inventory
+## Ajouter des objets `ItemStack` à l'Inventaire
 
-To add an `ItemStack` to a player's inventory, you can use the `addItemStack()` method of the `Inventory` class.
+Pour ajouter un `ItemStack` à l'inventaire d'un joueur, vous pouvez utiliser la méthode `addItemStack()` de la classe `Inventory`.
 
 ```java
 Inventory inventory = player.getInventory();
 inventory.addItemStack(item);
 ```
 
-Or you can specify a certain slot to add it to:
+Ou vous pouvez spécifier un certain emplacement pour l'ajouter :
 
 ```java
 inventory.addItemStackToSlot((short) 4, stack)
 ```
 
-## Removing `ItemStack` objects from the Inventory
+## Retirer des objets `ItemStack` de l'Inventaire
 
-To remove an `ItemStack` from a player's inventory, you can use the `removeItemStack()` method of the `Inventory` class.
+Pour retirer un `ItemStack` de l'inventaire d'un joueur, vous pouvez utiliser la méthode `removeItemStack()` de la classe `Inventory`.
 
 ```java
 Inventory inventory = player.getInventory();
 inventory.removeItemStack(item);
 ```
 
-Or you can specify a certain slot to remove it from:
+Ou vous pouvez spécifier un certain emplacement pour le retirer :
 
 ```java
 inventory.removeItemStackFromSlot((short) 4);

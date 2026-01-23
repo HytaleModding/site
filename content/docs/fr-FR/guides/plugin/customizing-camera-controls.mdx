@@ -1,16 +1,16 @@
 ---
-title: Customizing Camera Controls
-description: Intro to custom camera modding.
+title: Personnaliser les Contrôles de Caméra
+description: Introduction au modding de caméra personnalisée.
 authors:
   - name: Vibe Theory
     url: https://discord.com/users/145420279294722048
 ---
 
-## The Basics
+## Les Bases
 
-Hytale provides great camera customizability! Heres the essentials to get started.
+Hytale offre une grande personnalisabilité de la caméra ! Voici l'essentiel pour commencer.
 
-Camera is controlled by sending a `SetServerCamera` packet with `ServerCameraSettings`:
+La caméra est contrôlée en envoyant un paquet `SetServerCamera` avec `ServerCameraSettings` :
 
 ```java
 ServerCameraSettings settings = new ServerCameraSettings();
@@ -23,9 +23,9 @@ playerRef.getPacketHandler().writeNoCache(
 );
 ```
 
-This gives you a simple third-person camera. The presets below show more complete configurations.
+Cela vous donne une simple caméra à la troisième personne. Les préréglages ci-dessous montrent des configurations plus complètes.
 
-**Reset to default:**
+**Réinitialiser par défaut :**
 
 ```java
 playerRef.getPacketHandler().writeNoCache(
@@ -35,9 +35,9 @@ playerRef.getPacketHandler().writeNoCache(
 
 ---
 
-## Camera Presets
+## Préréglages de Caméra
 
-### Top-Down (RTS/ARPG Style)
+### Vue de Dessus (Style RTS/ARPG)
 
 _Source: `com.hypixel.hytale.server.core.command.commands.player.camera.PlayerCameraTopdownCommand`_
 
@@ -59,7 +59,7 @@ settings.mouseInputType = MouseInputType.LookAtPlane;
 settings.planeNormal = new Vector3f(0.0f, 1.0f, 0.0f);       // Ground plane
 ```
 
-### Side-Scroller (2D Platformer Style)
+### Défilement Latéral (Style Plateforme 2D)
 
 _Source: `com.hypixel.hytale.server.core.command.commands.player.camera.PlayerCameraSideScrollerCommand`_
 
@@ -79,38 +79,38 @@ settings.mouseInputType = MouseInputType.LookAtPlane;
 settings.planeNormal = new Vector3f(0.0f, 0.0f, 1.0f);         // Side plane
 ```
 
-## Common Settings Explained
+## Paramètres Courants Expliqués
 
 ### Position & Rotation
 
-- **`positionLerpSpeed`** (0.0-1.0): How smoothly the camera follows the player. Lower = smoother but slower response.
-- **`rotationLerpSpeed`** (0.0-1.0): How smoothly the camera rotates. Lower = smoother but slower response.
-- **`distance`**: Camera distance from player. Higher = zoomed out more.
-- **`rotation`**: Camera angle as `Direction(yaw, pitch, roll)` in radians.
-- **`rotationType`**: How rotation is calculated. `RotationType.Custom` uses your `rotation` value.
+- **`positionLerpSpeed`** (0.0-1.0) : Avec quelle fluidité la caméra suit le joueur. Plus bas = plus fluide mais réponse plus lente.
+- **`rotationLerpSpeed`** (0.0-1.0) : Avec quelle fluidité la caméra tourne. Plus bas = plus fluide mais réponse plus lente.
+- **`distance`** : Distance de la caméra par rapport au joueur. Plus haut = plus dézoomé.
+- **`rotation`** : Angle de la caméra en tant que `Direction(yaw, pitch, roll)` en radians.
+- **`rotationType`** : Comment la rotation est calculée. `RotationType.Custom` utilise votre valeur `rotation`.
 
-### Movement Alignment
+### Alignement du Mouvement
 
-- **`movementForceRotationType`**:
-- `MovementForceRotationType.AttachedToHead` = movement follows where player looks
-- `MovementForceRotationType.Custom` = use `movementForceRotation` value
-- **`movementForceRotation`**: When using `Custom`, this sets the direction for W/S movement. Match yaw with camera but keep pitch at 0.
+- **`movementForceRotationType`** :
+- `MovementForceRotationType.AttachedToHead` = le mouvement suit où le joueur regarde
+- `MovementForceRotationType.Custom` = utilise la valeur `movementForceRotation`
+- **`movementForceRotation`** : Lors de l'utilisation de `Custom`, cela définit la direction pour le mouvement W/S. Faites correspondre le yaw avec la caméra mais gardez le pitch à 0.
 
-### Input & Display
+### Entrée & Affichage
 
-- **`displayCursor`**: Show/hide mouse cursor.
-- **`mouseInputType`**:
-- `MouseInputType.LookAtPlane` = mouse moves cursor on a plane (good for top-down)
-- `MouseInputType.LookAtTarget` = mouse rotates camera
-- **`planeNormal`**: For `LookAtPlane`, defines which plane the mouse moves on. `(0,1,0)` = ground plane.
+- **`displayCursor`** : Afficher/masquer le curseur de la souris.
+- **`mouseInputType`** :
+- `MouseInputType.LookAtPlane` = la souris déplace le curseur sur un plan (bon pour la vue de dessus)
+- `MouseInputType.LookAtTarget` = la souris fait pivoter la caméra
+- **`planeNormal`** : Pour `LookAtPlane`, définit sur quel plan la souris se déplace. `(0,1,0)` = plan du sol.
 
-### Advanced
+### Avancé
 
-- **`positionDistanceOffsetType`**:
-- `DistanceOffset` = simple distance offset
-- `DistanceOffsetRaycast` = prevents camera clipping through walls
-- **`eyeOffset`**: Offset camera from player's eye position.
-- **`movementMultiplier`**: Scale movement on each axis. `(1,1,0)` = lock Z-axis for 2D movement.
+- **`positionDistanceOffsetType`** :
+- `DistanceOffset` = décalage de distance simple
+- `DistanceOffsetRaycast` = empêche la caméra de traverser les murs
+- **`eyeOffset`** : Décaler la caméra de la position des yeux du joueur.
+- **`movementMultiplier`** : Mettre à l'échelle le mouvement sur chaque axe. `(1,1,0)` = verrouiller l'axe Z pour un mouvement 2D.
 
 ---
 
@@ -130,16 +130,16 @@ import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
 
 ---
 
-## Tips
+## Conseils
 
-- **Zoom:** Adjust `distance` (higher = further out)
-- **Smoothness:** `positionLerpSpeed` and `rotationLerpSpeed` control how quickly the camera catches up to its target
-- **Wall clipping:** Use `PositionDistanceOffsetType.DistanceOffsetRaycast`
-- **Lock camera:** Set `isLocked = true` in the packet to prevent player changes
-- **2D movement:** Set `movementMultiplier` to zero out an axis
-- **Isometric cameras:** Always set `movementForceRotation` to match camera yaw for proper movement alignment
-- **Angle calculations:** Use `Math.toRadians(degrees)` or `degrees * Math.PI / 180.0` to convert degrees to radians
+- **Zoom :** Ajustez `distance` (plus haut = plus éloigné)
+- **Fluidité :** `positionLerpSpeed` et `rotationLerpSpeed` contrôlent la rapidité avec laquelle la caméra rattrape sa cible
+- **Traversée de murs :** Utilisez `PositionDistanceOffsetType.DistanceOffsetRaycast`
+- **Verrouiller la caméra :** Définissez `isLocked = true` dans le paquet pour empêcher les changements du joueur
+- **Mouvement 2D :** Définissez `movementMultiplier` pour mettre à zéro un axe
+- **Caméras isométriques :** Définissez toujours `movementForceRotation` pour correspondre au yaw de la caméra pour un alignement de mouvement approprié
+- **Calculs d'angles :** Utilisez `Math.toRadians(degrees)` ou `degrees * Math.PI / 180.0` pour convertir les degrés en radians
 
 ---
 
-_From Hytale Server build `2026.01.13-dcad8778f`_
+_Depuis Hytale Server build `2026.01.13-dcad8778f`_

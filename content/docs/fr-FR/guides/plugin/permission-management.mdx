@@ -1,6 +1,6 @@
 ---
-title: Permission Management
-description: Learn how to manage permission nodes and groups in your Hytale plugin.
+title: Gestion des Permissions
+description: Apprenez à gérer les nœuds de permission et les groupes dans votre plugin Hytale.
 authors:
   - name: Neil Revin
     link: https://itsneil.dev
@@ -10,29 +10,29 @@ authors:
     link: https://discord.com/users/292656109939064833
 ---
 
-In this guide, you'll learn how to manage permission nodes and groups in your Hytale plugin.
+Dans ce guide, vous apprendrez comment gérer les nœuds de permission et les groupes dans votre plugin Hytale.
 
-## The `PermissionsModule` class
+## La classe `PermissionsModule`
 
-The `PermissionsModule` class is responsible for managing permission nodes and groups in your plugin. It provides methods to check, grant and revoke permissions and groups for players. It allows the following operations
+La classe `PermissionsModule` est responsable de la gestion des nœuds de permission et des groupes dans votre plugin. Elle fournit des méthodes pour vérifier, accorder et révoquer des permissions et des groupes pour les joueurs. Elle permet les opérations suivantes :
 
-- Add permissions to user
-- Remove permissions from user
-- Add permissions to group (this also creates the group if it doesn't exist)
-- Remove permissions from group
-- Add user to group
-- Remove user from group
-- List all groups for a user
-- Check if a user has a permission (it checks both user and group permissions for the given player UUID)
+- Ajouter des permissions à un utilisateur
+- Retirer des permissions d'un utilisateur
+- Ajouter des permissions à un groupe (cela crée également le groupe s'il n'existe pas)
+- Retirer des permissions d'un groupe
+- Ajouter un utilisateur à un groupe
+- Retirer un utilisateur d'un groupe
+- Lister tous les groupes d'un utilisateur
+- Vérifier si un utilisateur possède une permission (vérifie à la fois les permissions de l'utilisateur et du groupe pour l'UUID du joueur donné)
 
-With this class you cannot:
+Avec cette classe, vous ne pouvez pas :
 
-- List all defined groups
-- Remove a group
+- Lister tous les groupes définis
+- Supprimer un groupe
 
-### Adding Permission Nodes
+### Ajouter des Nœuds de Permission
 
-You need a `Set<String>` containing all the permission nodes you want to add, these are added on top of the already existing permission nodes the user may have, it is not a replacement.
+Vous avez besoin d'un `Set<String>` contenant tous les nœuds de permission que vous souhaitez ajouter. Ceux-ci sont ajoutés en plus des nœuds de permission déjà existants que l'utilisateur peut avoir, ce n'est pas un remplacement.
 
 ```java
 Set<String> permissions = new HashSet<>();
@@ -40,9 +40,9 @@ PermissionsModule perms = PermissionsModule.get();
 perms.addUserPermission(playerUUID, permissions);
 ```
 
-### Removing Permission Nodes
+### Retirer des Nœuds de Permission
 
-Same as above, we just use the `removeUserPermission` method instead to remove permission nodes.
+Comme ci-dessus, nous utilisons simplement la méthode `removeUserPermission` à la place pour retirer des nœuds de permission.
 
 ```java
 Set<String> permissions = new HashSet<>();
@@ -50,7 +50,7 @@ PermissionsModule perms = PermissionsModule.get();
 perms.removeUserPermission(playerUUID, permissions);
 ```
 
-### Add permissions to group
+### Ajouter des permissions à un groupe
 
 ```java
 String groupName = "testGroup";
@@ -59,7 +59,7 @@ PermissionsModule perms = PermissionsModule.get();
 perms.addGroupPermission(groupName, permissions);
 ```
 
-### Remove permissions from group
+### Retirer des permissions d'un groupe
 
 ```java
 String groupName = "testGroup";
@@ -68,7 +68,7 @@ PermissionsModule perms = PermissionsModule.get();
 perms.removeGroupPermission(groupName, permissions);
 ```
 
-### Add user to group
+### Ajouter un utilisateur à un groupe
 
 ```java
 String groupName = "testGroup";
@@ -77,7 +77,7 @@ PermissionsModule perms = PermissionsModule.get();
 perms.addUserToGroup(playerUUID, groupName);
 ```
 
-### Remove user from group
+### Retirer un utilisateur d'un groupe
 
 ```java
 String groupName = "testGroup";
@@ -86,32 +86,32 @@ PermissionsModule perms = PermissionsModule.get();
 perms.removeUserFromGroup(playerUUID, groupName);
 ```
 
-### List all groups for a user
+### Lister tous les groupes d'un utilisateur
 
 ```java
 PermissionsModule perms = PermissionsModule.get();
 perms.getGroupsForUser(playerUUID);
 ```
 
-### Check Permission Nodes
+### Vérifier les Nœuds de Permission
 
-To check if a player has a specific permission node, you can use the `hasPermission` method.
+Pour vérifier si un joueur possède un nœud de permission spécifique, vous pouvez utiliser la méthode `hasPermission`.
 
 ```java
 boolean hasPermission = PermissionsModule.hasPermission(playerUUID, "permission.node");
 ```
 
-### Additional: Defining your own storage provider for permissions and groups
+### Supplément : Définir votre propre fournisseur de stockage pour les permissions et les groupes
 
-Apparently we could implement our own storage provider for permissions and groups as file storage is not very reliable.
+Apparemment, nous pourrions implémenter notre propre fournisseur de stockage pour les permissions et les groupes car le stockage de fichiers n'est pas très fiable.
 
-First we need to define a provider class that implements PermissionProvider:
+Tout d'abord, nous devons définir une classe de fournisseur qui implémente PermissionProvider :
 
 ```java
 public class DatabasePermissionProvider implements PermissionProvider
 ```
 
-Then we just implement the required methods using a database implementation. To force our plugin to use this new provider we just need to add to the provider list our fresh DatabasePermissionProvider.
+Ensuite, nous implémentons simplement les méthodes requises en utilisant une implémentation de base de données. Pour forcer notre plugin à utiliser ce nouveau fournisseur, nous devons simplement ajouter notre nouveau DatabasePermissionProvider à la liste des fournisseurs.
 
 ```java
 perms.getProviders().addFirst(new DatabasePermissionProvider());

@@ -5,7 +5,7 @@ description: Informations sur modélisation 3D, le texturage et les assets artis
 
 # Modélisation / Texturage
 
-Hytale fournit un support complet pour la modélisation 3D et la création de textures, avec des outils spécialisés et des workflows conçus pour préserver le style visuel unique du jeu tout en donnant aux créateurs les moyens de s’exprimer.
+Hytale fournit un support complet pour la modélisation 3D et la création de textures, avec des outils spécialisés et des workflows conçus pour préserver le style visuel unique du jeu tout en donnant aux créateurs les moyens de s'exprimer.
 
 ## Les outils de Mod actuel
 
@@ -17,7 +17,7 @@ Hytale utilise **Blockbench** comme outil principal pour la modélisation 3D et 
 * **Plugin spécial** : Hytale disposera d'un plugin Blockbench dédié, à publier dès que possible
 * **Compatibilité directe** : Le plugin permet aux créateurs de « créer des modèles compatibles avec Hytale, des textures, et des animations directement dans Blockbench »
 * **Remplace les anciens outils** : Remplace entièrement l'ancien créateur de modèle de Hytale pour mieux soutenir les workflows créatifs établis dans la communauté
-* **Fonctions de sécurité** : permet uniquement d’ajouter des éléments compatibles avec le moteur du jeu, sans risque de casser quoi que ce soit
+* **Fonctions de sécurité** : permet uniquement d'ajouter des éléments compatibles avec le moteur du jeu, sans risque de casser quoi que ce soit
 
 ## Les contraintes des modèles
 
@@ -41,7 +41,7 @@ La grande majorité des modèles dans Hytale sont limitées à des types précis
 
 Ces contraintes remplissent plusieurs fonctions :
 
-* **Optiomisation des performances** : assure des performances de rendu et de jeu efficaces
+* **Optimisation des performances** : assure des performances de rendu et de jeu efficaces
 * **Style artistique cohérent** : Maintient l'esthétique visuelle distincte d'Hytale
 * **Intégration transparente** : Rend les mods plus cohérents avec le jeu de base
 
@@ -58,7 +58,7 @@ Hytale utilise différentes densités de pixels selon le type de contenu :
 
 ### Flexibilité
 
-* **Mauvaise gestion de la densité** : Utiliser une densité incorrecte peut faire apparaître des assets à la mauvaise taille, mais cela ne provoquera pas d’échec à l’importation
+* **Mauvaise gestion de la densité** : Utiliser une densité incorrecte peut faire apparaître des assets à la mauvaise taille, mais cela ne provoquera pas d'échec à l'importation
 * **Aucune restriction stricte** : la densité de pixels, la rotation et la mise à l'échelle ne sont pas restreintes
 * **Un système permissif** : Les outils sont conçus pour être flexibles tout en maintenant la compatibilité
 
@@ -80,44 +80,44 @@ L'éditeur d'assets inclut de solides outils de création de particules.
 * **Création en jeu** : Les particules sont créées directement en jeu en utilisant l'éditeur d'assets
 * **Norme de l'industrie** : La logique de particules est robuste et similaire aux systèmes de particules de Unity/Unreal
 * **Basé sur les événements** : Les particules peuvent être générées lors d'événements ou d'interactions (comme l'ouverture d'une porte)
-* **Attachement aux entités** : il est possible de fixer des particules à des entités via des points d’attache spécifiques.
+* **Attachement aux entités** : il est possible de fixer des particules à des entités via des points d'attache spécifiques.
 * **Mouvement dynamique** : prend en charge les particules qui se déplacent avec leurs points d'ancrage
 * **Délais** : prend en charge les effets de particules et les délais basés sur le temps.
 
 ## Matériaux
 
-### Accent sur l’optimisation
+### Accent sur l'optimisation
 
 Hytale adopte une approche différente des matériaux par rapport aux autres moteurs de jeux :
 
 * **Pré-optimisé** : les matériaux sont très optimisés et les artistes ne peuvent pas créer de matériaux personnalisés
-* **Priorité à la performance** : cette contrainte garantit des performances cohérentes pour l’ensemble du contenu.
-* \**Système mis en valeur* : maintient la cohérence visuelle tout en maximisant l'efficacité
+* **Priorité à la performance** : cette contrainte garantit des performances cohérentes pour l'ensemble du contenu.
+* **Système mis en valeur** : maintient la cohérence visuelle tout en maximisant l'efficacité
 
 ## Meilleures pratiques
 
-### Asset Optimization
+### Optimisation des assets
 
-Key considerations from Hytale's development team:
+Considérations clés de l'équipe de développement de Hytale :
 
-* **Mindful resource usage**: Be conscious of how many blocks/quads you use and texture file sizes
-* **Avoid bloat**: Goal is to prevent unnecessary asset bloat that could impact performance
-* **Efficiency focus**: Balance visual quality with technical constraints
+* **Utilisation consciente des ressources** : Soyez attentif au nombre de blocs/quads que vous utilisez et à la taille des fichiers de texture
+* **Éviter le gonflement** : L'objectif est de prévenir le gonflement inutile des assets qui pourrait impacter les performances
+* **Focus sur l'efficacité** : Équilibrer la qualité visuelle avec les contraintes techniques
 
-### Future Documentation
+### Documentation future
 
-* **Best practice guide**: A comprehensive "best practice" guide for art and modeling will be released at some point
-* **Flexible boundaries**: Most creative goals can be achieved without breaking anything in the system
-* **Community-driven workflows**: Tools are designed to support established creative workflows in the modding community
+* **Guide des meilleures pratiques** : Un guide complet des « meilleures pratiques » pour l'art et la modélisation sera publié à un moment donné
+* **Limites flexibles** : La plupart des objectifs créatifs peuvent être atteints sans rien casser dans le système
+* **Workflows pilotés par la communauté** : Les outils sont conçus pour supporter les workflows créatifs établis dans la communauté de modding
 
-## Integration with Development Pipeline
+## Intégration avec le pipeline de développement
 
-The modeling and texture art workflow integrates seamlessly with Hytale's broader development ecosystem:
+Le workflow de modélisation et d'art de texture s'intègre parfaitement avec l'écosystème de développement plus large de Hytale :
 
-* **Asset Editor compatibility**: Models created in Blockbench work directly with the Hytale Asset Editor
-* **Data Asset integration**: 3D models can be configured and customized through Data Assets
-* **Visual Scripting support**: Models can be controlled and animated through Visual Scripting
-* **Java plugin extensibility**: Advanced model behaviors can be implemented through Java plugins
-* **Particle integration**: Models can have particles attached at specific points for enhanced visual effects
+* **Compatibilité avec l'éditeur d'assets** : Les modèles créés dans Blockbench fonctionnent directement avec l'éditeur d'assets de Hytale
+* **Intégration des data assets** : Les modèles 3D peuvent être configurés et personnalisés via les data assets
+* **Support du scripting visuel** : Les modèles peuvent être contrôlés et animés via le scripting visuel
+* **Extensibilité des plugins Java** : Les comportements avancés des modèles peuvent être implémentés via des plugins Java
+* **Intégration des particules** : Les modèles peuvent avoir des particules attachées à des points spécifiques pour des effets visuels améliorés
 
-This integrated approach ensures that 3D modeling and texture art aren't isolated creative processes, but core components of Hytale's comprehensive development environment.
+Cette approche intégrée garantit que la modélisation 3D et l'art de texture ne sont pas des processus créatifs isolés, mais des composants essentiels de l'environnement de développement complet de Hytale.

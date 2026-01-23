@@ -1,401 +1,401 @@
 ---
-title: Client-to-Server Inputs Reference
-description: Complete reference for every packet the client can send to the server.
+title: Référence des Entrées Client-Serveur
+description: Référence complète pour chaque paquet que le client peut envoyer au serveur.
 authors:
   - name: Vibe Theory
     url: https://discord.com/users/145420279294722048
 ---
 
-## Overview
+## Aperçu
 
-This is a comprehensive list of **every packet a client can send to the server.** The client sends abstract actions, not raw keyboard input. The server never sees "W pressed" - only the resulting movement states or action requests.
-This list is not exclusive to key inputs, but rather all packets.
+Ceci est une liste complète de **chaque paquet qu'un client peut envoyer au serveur.** Le client envoie des actions abstraites, pas des entrées clavier brutes. Le serveur ne voit jamais "W pressé" - seulement les états de mouvement résultants ou les demandes d'action.
+Cette liste n'est pas exclusive aux entrées de touches, mais plutôt à tous les paquets.
 
-Formatting is packet.flag, ie `MovementStates.idle` or `ClientPlaceBlock.position`
+Le formatage est paquet.drapeau, c'est-à-dire `MovementStates.idle` ou `ClientPlaceBlock.position`
 
 ---
 
-## Data Structures
+## Structures de Données
 
 ### Enums vs Structs
 
-Packets use two types of flag/value structures:
+Les paquets utilisent deux types de structures de drapeaux/valeurs :
 
-| Type       | Structure                     | Size   | Serialization                           |
-| ---------- | ----------------------------- | ------ | --------------------------------------- |
-| **Enum**   | Single value from fixed set   | 1 byte | Integer value of selected enum constant |
-| **Struct** | Multiple fields sent together | Varies | Each field serialized sequentially      |
+| Type       | Structure                                | Taille  | Sérialisation                                    |
+| ---------- | ---------------------------------------- | ------- | ------------------------------------------------ |
+| **Enum**   | Valeur unique d'un ensemble fixe        | 1 octet | Valeur entière de la constante enum sélectionnée |
+| **Struct** | Plusieurs champs envoyés ensemble        | Variable| Chaque champ sérialisé séquentiellement          |
 
 ### MovementStates (Struct)
 
-Movement booleans.
+Booléens de mouvement.
 
-| Flag              | Description                 |
-| ----------------- | --------------------------- |
-| `idle`            | Not moving                  |
-| `walking`         | Walking speed               |
-| `running`         | Running speed               |
-| `sprinting`       | Sprint speed                |
-| `jumping`         | Currently jumping           |
-| `falling`         | In freefall                 |
-| `crouching`       | Sneaking/crouched           |
-| `flying`          | Creative flight             |
-| `onGround`        | Touching ground             |
-| `inFluid`         | In water/liquid             |
-| `swimming`        | Swimming motion             |
-| `climbing`        | On ladder/climbable         |
-| `gliding`         | Using glider                |
-| `rolling`         | Dodge roll                  |
-| `sitting`         | Seated                      |
-| `sleeping`        | In bed                      |
-| `mounting`        | Getting on mount            |
-| `mantling`        | Climbing ledge              |
-| `sliding`         | Sliding down slope          |
-| `horizontalIdle`  | Not moving horizontally     |
-| `forcedCrouching` | Forced crouch (low ceiling) |
-| `swimJumping`     | Jumping while swimming      |
+| Drapeau           | Description                      |
+| ----------------- | -------------------------------- |
+| `idle`            | Ne bouge pas                     |
+| `walking`         | Vitesse de marche                |
+| `running`         | Vitesse de course                |
+| `sprinting`       | Vitesse de sprint                |
+| `jumping`         | Actuellement en train de sauter  |
+| `falling`         | En chute libre                   |
+| `crouching`       | Accroupi/furtif                  |
+| `flying`          | Vol créatif                      |
+| `onGround`        | Touche le sol                    |
+| `inFluid`         | Dans l'eau/liquide               |
+| `swimming`        | Mouvement de nage                |
+| `climbing`        | Sur échelle/grimpable            |
+| `gliding`         | Utilise le planeur               |
+| `rolling`         | Roulade d'esquive                |
+| `sitting`         | Assis                            |
+| `sleeping`        | Dans un lit                      |
+| `mounting`        | Monte sur une monture            |
+| `mantling`        | Escalade un rebord               |
+| `sliding`         | Glisse sur une pente             |
+| `horizontalIdle`  | Ne bouge pas horizontalement     |
+| `forcedCrouching` | Accroupi forcé (plafond bas)     |
+| `swimJumping`     | Saute en nageant                 |
 
 ### InteractionType (Enum)
 
-Major interactions.
+Interactions majeures.
 
-| Value | Name               | Player Input | Description                              |
-| ----- | ------------------ | ------------ | ---------------------------------------- |
-| 0     | `Primary`          | LMB          | Primary action - attack, break block     |
-| 1     | `Secondary`        | RMB          | Secondary action - use item, place block |
-| 2     | `Ability1`         | Q            | Weapon/item ability                      |
-| 3     | `Ability2`         | —            | Reserved (no default binding)            |
-| 4     | `Ability3`         | —            | Reserved (no default binding)            |
-| 5     | `Use`              | E            | World interaction - containers, NPCs     |
-| 6     | `Pick`             | MMB          | Pick block                               |
-| 7     | `Pickup`           | —            | Item pickup (system)                     |
-| 8     | `CollisionEnter`   | —            | Collision started (system)               |
-| 9     | `CollisionLeave`   | —            | Collision ended (system)                 |
-| 10    | `Collision`        | —            | Ongoing collision (system)               |
-| 11    | `EntityStatEffect` | —            | Stat effect applied (system)             |
-| 12    | `SwapTo`           | —            | Item swapped to (system)                 |
-| 13    | `SwapFrom`         | —            | Item swapped from (system)               |
-| 14    | `Death`            | —            | Entity death (system)                    |
-| 15    | `Wielding`         | —            | Wielding state (system)                  |
-| 16    | `ProjectileSpawn`  | —            | Projectile spawned (system)              |
-| 17    | `ProjectileHit`    | —            | Projectile hit (system)                  |
-| 18    | `ProjectileMiss`   | —            | Projectile missed (system)               |
-| 19    | `ProjectileBounce` | —            | Projectile bounced (system)              |
-| 20    | `Held`             | —            | Item held (system)                       |
-| 21    | `HeldOffhand`      | —            | Item held offhand (system)               |
-| 22    | `Equipped`         | —            | Item equipped (system)                   |
-| 23    | `Dodge`            | —            | Dodge roll action                        |
-| 24    | `GameModeSwap`     | —            | Game mode changed (system)               |
+| Valeur | Nom                | Entrée Joueur | Description                                  |
+| ------ | ------------------ | ------------- | -------------------------------------------- |
+| 0      | `Primary`          | LMB           | Action primaire - attaque, casser bloc       |
+| 1      | `Secondary`        | RMB           | Action secondaire - utiliser objet, placer   |
+| 2      | `Ability1`         | Q             | Capacité d'arme/objet                        |
+| 3      | `Ability2`         | —             | Réservé (pas de liaison par défaut)          |
+| 4      | `Ability3`         | —             | Réservé (pas de liaison par défaut)          |
+| 5      | `Use`              | E             | Interaction monde - conteneurs, PNJ          |
+| 6      | `Pick`             | MMB           | Sélectionner bloc                            |
+| 7      | `Pickup`           | —             | Ramassage d'objet (système)                  |
+| 8      | `CollisionEnter`   | —             | Collision commencée (système)                |
+| 9      | `CollisionLeave`   | —             | Collision terminée (système)                 |
+| 10     | `Collision`        | —             | Collision en cours (système)                 |
+| 11     | `EntityStatEffect` | —             | Effet de stat appliqué (système)             |
+| 12     | `SwapTo`           | —             | Objet échangé vers (système)                 |
+| 13     | `SwapFrom`         | —             | Objet échangé depuis (système)               |
+| 14     | `Death`            | —             | Mort d'entité (système)                      |
+| 15     | `Wielding`         | —             | État de maniement (système)                  |
+| 16     | `ProjectileSpawn`  | —             | Projectile généré (système)                  |
+| 17     | `ProjectileHit`    | —             | Projectile touché (système)                  |
+| 18     | `ProjectileMiss`   | —             | Projectile manqué (système)                  |
+| 19     | `ProjectileBounce` | —             | Projectile rebondi (système)                 |
+| 20     | `Held`             | —             | Objet tenu (système)                         |
+| 21     | `HeldOffhand`      | —             | Objet tenu main secondaire (système)         |
+| 22     | `Equipped`         | —             | Objet équipé (système)                       |
+| 23     | `Dodge`            | —             | Action de roulade d'esquive                  |
+| 24     | `GameModeSwap`     | —             | Mode de jeu changé (système)                 |
 
 ### BuilderToolAction (Enum)
 
-Builder tool general actions.
+Actions générales des outils de construction.
 
-| Value | Name                 | Default Key | Description                    |
-| ----- | -------------------- | ----------- | ------------------------------ |
-| 0     | `SelectionPosition1` | —           | Set first corner of selection  |
-| 1     | `SelectionPosition2` | —           | Set second corner of selection |
-| 2     | `SelectionCopy`      | Ctrl+C      | Copy selection to clipboard    |
-| 3     | `HistoryUndo`        | Ctrl+Z      | Undo last operation            |
-| 4     | `HistoryRedo`        | Ctrl+Y      | Redo last undone operation     |
-| 5     | `ActivateToolMode`   | B           | Enter builder tool mode        |
-| 6     | `DeactivateToolMode` | B           | Exit builder tool mode         |
+| Valeur | Nom                  | Touche Défaut | Description                              |
+| ------ | -------------------- | ------------- | ---------------------------------------- |
+| 0      | `SelectionPosition1` | —             | Définir premier coin de sélection        |
+| 1      | `SelectionPosition2` | —             | Définir deuxième coin de sélection       |
+| 2      | `SelectionCopy`      | Ctrl+C        | Copier sélection dans presse-papiers     |
+| 3      | `HistoryUndo`        | Ctrl+Z        | Annuler dernière opération               |
+| 4      | `HistoryRedo`        | Ctrl+Y        | Refaire dernière opération annulée       |
+| 5      | `ActivateToolMode`   | B             | Entrer en mode outil de construction     |
+| 6      | `DeactivateToolMode` | B             | Sortir du mode outil de construction     |
 
 ### InventoryActionType (Enum)
 
-Bulk inventory operations.
+Opérations d'inventaire en masse.
 
-| Value | Name         | Description                                     |
-| ----- | ------------ | ----------------------------------------------- |
-| 0     | `TakeAll`    | Take all items from container to inventory      |
-| 1     | `PutAll`     | Put all matching items into container           |
-| 2     | `QuickStack` | Quick stack matching items into container       |
-| 3     | `Sort`       | Sort container (actionData specifies sort type) |
+| Valeur | Nom          | Description                                                |
+| ------ | ------------ | ---------------------------------------------------------- |
+| 0      | `TakeAll`    | Prendre tous les objets du conteneur vers l'inventaire    |
+| 1      | `PutAll`     | Mettre tous les objets correspondants dans le conteneur   |
+| 2      | `QuickStack` | Empiler rapidement les objets correspondants dans conteneur|
+| 3      | `Sort`       | Trier conteneur (actionData spécifie type de tri)          |
 
 ### CustomPageEventType (Enum)
 
-3 values for custom UI page events.
+3 valeurs pour les événements de page UI personnalisée.
 
-| Value | Name          | Description                        |
-| ----- | ------------- | ---------------------------------- |
-| 0     | `Acknowledge` | Client acknowledging page action   |
-| 1     | `Data`        | Client sending data back to server |
-| 2     | `Dismiss`     | Client dismissed/closed page       |
+| Valeur | Nom           | Description                                    |
+| ------ | ------------- | ---------------------------------------------- |
+| 0      | `Acknowledge` | Client accusant réception action de page       |
+| 1      | `Data`        | Client renvoyant données au serveur            |
+| 2      | `Dismiss`     | Client a fermé/rejeté la page                  |
 
 ---
 
-## Key → Packet Reference
+## Référence Touche → Paquet
 
-Summary of all default Key Mappings.
+Résumé de tous les mappages de touches par défaut.
 
-| Key               | Packet                     | Package      | Notes                                             |
+| Touche            | Paquet                     | Package      | Notes                                             |
 | ----------------- | -------------------------- | ------------ | ------------------------------------------------- |
-| W/A/S/D           | `ClientMovement`           | player       | Movement states in packet                         |
-| Space             | `ClientMovement`           | player       | `jumping` state                                   |
-| Shift             | `ClientMovement`           | player       | `crouching` state                                 |
-| Shift (mounted)   | `DismountNPC`              | interaction  | When riding a mount                               |
+| W/A/S/D           | `ClientMovement`           | player       | États de mouvement dans le paquet                 |
+| Espace            | `ClientMovement`           | player       | État `jumping`                                    |
+| Shift             | `ClientMovement`           | player       | État `crouching`                                  |
+| Shift (monté)     | `DismountNPC`              | interaction  | Quand sur une monture                             |
 | LMB               | `MouseInteraction`         | player       | `Primary` (0)                                     |
 | RMB               | `MouseInteraction`         | player       | `Secondary` (1)                                   |
 | Q                 | `MouseInteraction`         | player       | `Ability1` (2)                                    |
-| Q (hold)          | `DropItemStack`            | inventory    | When holding item                                 |
+| Q (maintenu)      | `DropItemStack`            | inventory    | Quand tient un objet                              |
 | E                 | `MouseInteraction`         | player       | `Use` (5)                                         |
 | MMB               | `MouseInteraction`         | player       | `Pick` (6)                                        |
-| 1-9               | `SetActiveSlot`            | inventory    | Direct slot selection                             |
-| Scroll            | `SetActiveSlot`            | inventory    | Hotbar scrolling                                  |
-| Scroll (on block) | `SwitchHotbarBlockSet`     | inventory    | Block variant cycling                             |
-| M                 | `UpdateWorldMapVisible`    | worldmap     | Map toggle                                        |
+| 1-9               | `SetActiveSlot`            | inventory    | Sélection directe d'emplacement                   |
+| Molette           | `SetActiveSlot`            | inventory    | Défilement barre d'action                         |
+| Molette (sur bloc)| `SwitchHotbarBlockSet`     | inventory    | Cycle de variantes de blocs                       |
+| M                 | `UpdateWorldMapVisible`    | worldmap     | Basculer carte                                    |
 | B                 | `BuilderToolGeneralAction` | buildertools | `ActivateToolMode` (5) / `DeactivateToolMode` (6) |
 | Ctrl+C            | `BuilderToolGeneralAction` | buildertools | `SelectionCopy` (2)                               |
 | Ctrl+Z            | `BuilderToolGeneralAction` | buildertools | `HistoryUndo` (3)                                 |
 | Ctrl+Y            | `BuilderToolGeneralAction` | buildertools | `HistoryRedo` (4)                                 |
-| ESC               | `SetPaused`                | world        | Singleplayer only                                 |
-| ESC (window open) | `CloseWindow`              | window       | Closes active window                              |
-| Enter             | `ChatMessage`              | interface_   | Sends chat/command                                |
+| ESC               | `SetPaused`                | world        | Solo uniquement                                   |
+| ESC (fenêtre)     | `CloseWindow`              | window       | Ferme fenêtre active                              |
+| Entrée            | `ChatMessage`              | interface_   | Envoie chat/commande                              |
 
 ---
 
 ## Player
 
-Core player action packets. These are the most commonly used packets for gameplay logic - combat systems, custom abilities, movement validation, and interaction handling.
+Paquets d'action joueur principaux. Ce sont les paquets les plus couramment utilisés pour la logique de jeu - systèmes de combat, capacités personnalisées, validation de mouvement et gestion d'interaction.
 
-| Packet                  | ID  | Fields                                                                                                                                                                                                                                                              | Description                                                                                                                                                       |
-| ----------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ClientMovement`        | 100 | `absolutePosition`, `relativePosition`, `movementStates`, `bodyOrientation`, `lookOrientation`, `velocity`, `wishMovement`, `teleportAck`                                                                                                                           | Continuous position/rotation updates. Contains either absolute position or relative delta. `teleportAck` confirms server teleports. Uses `MovementStates` struct. |
-| `MouseInteraction`      | 22  | `interactionType`, `targetEntity`, `targetBlock`, `screenPoint`                                                                                                                                                                                                     | Mouse button actions with target information. Uses `InteractionType` enum.                                                                                        |
-| `ClientPlaceBlock`      | 104 | `position`, `rotation`, `placedBlockId`                                                                                                                                                                                                                             | Client placing a block. Contains position, rotation, and the specific block variant being placed.                                                                 |
-| `ClientReady`           | 105 | `readyForChunks`, `readyForGameplay`                                                                                                                                                                                                                                | Client signaling ready state. `readyForChunks` = ready to receive world data, `readyForGameplay` = fully loaded.                                                  |
-| `SyncPlayerPreferences` | 116 | `showEntityMarkers`, `armorItemsPreferredPickupLocation`, `weaponAndToolItemsPreferredPickupLocation`, `usableItemsItemsPreferredPickupLocation`, `solidBlockItemsPreferredPickupLocation`, `miscItemsPreferredPickupLocation`, `allowNPCDetection`, `respondToHit` | Client syncing player settings to server. Includes item pickup preferences and UI settings.                                                                       |
-| `LoadHotbar`            | 180 | `index`                                                                                                                                                                                                                                                             | Load a saved hotbar preset by index.                                                                                                                              |
-| `SaveHotbar`            | 181 | `index`                                                                                                                                                                                                                                                             | Save current hotbar to preset slot.                                                                                                                               |
+| Paquet                  | ID  | Champs                                                                                                                                                                                                                                                              | Description                                                                                                                                                                                      |
+| ----------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ClientMovement`        | 100 | `absolutePosition`, `relativePosition`, `movementStates`, `bodyOrientation`, `lookOrientation`, `velocity`, `wishMovement`, `teleportAck`                                                                                                                           | Mises à jour continues position/rotation. Contient soit position absolue soit delta relatif. `teleportAck` confirme téléportations serveur. Utilise struct `MovementStates`.                     |
+| `MouseInteraction`      | 22  | `interactionType`, `targetEntity`, `targetBlock`, `screenPoint`                                                                                                                                                                                                     | Actions de bouton de souris avec informations de cible. Utilise enum `InteractionType`.                                                                                                         |
+| `ClientPlaceBlock`      | 104 | `position`, `rotation`, `placedBlockId`                                                                                                                                                                                                                             | Client plaçant un bloc. Contient position, rotation et variante de bloc spécifique placée.                                                                                                      |
+| `ClientReady`           | 105 | `readyForChunks`, `readyForGameplay`                                                                                                                                                                                                                                | Client signalant état prêt. `readyForChunks` = prêt à recevoir données monde, `readyForGameplay` = complètement chargé.                                                                         |
+| `SyncPlayerPreferences` | 116 | `showEntityMarkers`, `armorItemsPreferredPickupLocation`, `weaponAndToolItemsPreferredPickupLocation`, `usableItemsItemsPreferredPickupLocation`, `solidBlockItemsPreferredPickupLocation`, `miscItemsPreferredPickupLocation`, `allowNPCDetection`, `respondToHit` | Client synchronisant paramètres joueur vers serveur. Inclut préférences ramassage objets et paramètres UI.                                                                                      |
+| `LoadHotbar`            | 180 | `index`                                                                                                                                                                                                                                                             | Charger un préréglage de barre d'action sauvegardé par index.                                                                                                                                   |
+| `SaveHotbar`            | 181 | `index`                                                                                                                                                                                                                                                             | Sauvegarder barre d'action actuelle dans emplacement préréglage.                                                                                                                                 |
 
 ---
 
 ## Inventory
 
-Item and slot management packets. Useful for custom inventory rules, item restrictions, ability triggers via hotbar slots, and tracking player item usage.
+Paquets de gestion d'objets et emplacements. Utile pour règles d'inventaire personnalisées, restrictions d'objets, déclencheurs de capacité via emplacements barre d'action, et suivi utilisation objets joueur.
 
-| Packet                  | ID  | Fields                                                               | Description                                                                               |
-| ----------------------- | --- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `SetActiveSlot`         | 177 | `inventorySectionId`, `activeSlot`                                   | Player changing active hotbar slot via keys 1-9 or scroll wheel.                          |
-| `MoveItemStack`         | 175 | `fromSectionId`, `fromSlotId`, `quantity`, `toSectionId`, `toSlotId` | Dragging item from one slot to another.                                                   |
-| `SmartMoveItemStack`    | 176 | `fromSectionId`, `fromSlotId`, `quantity`, `moveType`                | Shift-click auto-move. `moveType` determines destination logic.                           |
-| `DropItemStack`         | 174 | `inventorySectionId`, `slotId`, `quantity`                           | Dropping item from inventory. Triggered by Q key (hold).                                  |
-| `SwitchHotbarBlockSet`  | 178 | `itemId`                                                             | Cycling through block variants using scroll wheel while holding a block item.             |
-| `InventoryAction`       | 179 | `inventorySectionId`, `inventoryActionType`, `actionData`            | Bulk inventory operations from UI buttons. Uses `InventoryActionType` enum.               |
-| `SetCreativeItem`       | 171 | `inventorySectionId`, `slotId`, `item`, `override`                   | Set/spawn item in creative inventory. `override` determines if existing item is replaced. |
-| `DropCreativeItem`      | 172 | `item`                                                               | Drop item spawned from creative menu into world.                                          |
-| `SmartGiveCreativeItem` | 173 | `item`, `moveType`                                                   | Auto-place creative item (equip armor, add to hotbar, etc).                               |
+| Paquet                  | ID  | Champs                                                       | Description                                                                                  |
+| ----------------------- | --- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `SetActiveSlot`         | 177 | `inventorySectionId`, `activeSlot`                           | Joueur changeant emplacement actif barre d'action via touches 1-9 ou molette.                |
+| `MoveItemStack`         | 175 | `fromSectionId`, `fromSlotId`, `quantity`, `toSectionId`, `toSlotId` | Glisser objet d'un emplacement à un autre.                                                  |
+| `SmartMoveItemStack`    | 176 | `fromSectionId`, `fromSlotId`, `quantity`, `moveType`        | Déplacement auto Shift-clic. `moveType` détermine logique de destination.                   |
+| `DropItemStack`         | 174 | `inventorySectionId`, `slotId`, `quantity`                   | Lâcher objet de l'inventaire. Déclenché par touche Q (maintenue).                           |
+| `SwitchHotbarBlockSet`  | 178 | `itemId`                                                     | Cycle à travers variantes de blocs avec molette en tenant un objet bloc.                     |
+| `InventoryAction`       | 179 | `inventorySectionId`, `inventoryActionType`, `actionData`    | Opérations inventaire en masse depuis boutons UI. Utilise enum `InventoryActionType`.        |
+| `SetCreativeItem`       | 171 | `inventorySectionId`, `slotId`, `item`, `override`           | Définir/générer objet dans inventaire créatif. `override` détermine si objet existant remplacé.|
+| `DropCreativeItem`      | 172 | `item`                                                       | Lâcher objet généré depuis menu créatif dans le monde.                                       |
+| `SmartGiveCreativeItem` | 173 | `item`, `moveType`                                           | Placer auto objet créatif (équiper armure, ajouter à barre d'action, etc).                   |
 
 ---
 
 ## Interaction
 
-Combat and entity interaction sync packets. Used for combat validation, combo systems, mount control, and NPC interaction tracking.
+Paquets de synchronisation combat et interaction entité. Utilisés pour validation combat, systèmes de combo, contrôle de monture et suivi interaction PNJ.
 
-| Packet                  | ID  | Fields      | Description                                                                                           |
-| ----------------------- | --- | ----------- | ----------------------------------------------------------------------------------------------------- |
-| `SyncInteractionChains` | 290 | `updates[]` | Synchronizes ongoing attack/ability chains between client and server for animation and hit detection. |
-| `DismountNPC`           | 294 | —           | Player requesting to dismount. Triggered by Shift key while mounted.                                  |
+| Paquet                  | ID  | Champs      | Description                                                                                                      |
+| ----------------------- | --- | ----------- | ---------------------------------------------------------------------------------------------------------------- |
+| `SyncInteractionChains` | 290 | `updates[]` | Synchronise chaînes d'attaque/capacité en cours entre client et serveur pour animation et détection de coup.    |
+| `DismountNPC`           | 294 | —           | Joueur demandant à descendre. Déclenché par touche Shift en étant monté.                                        |
 
 ---
 
 ## Interface
 
-Chat, language, and custom UI packets. Essential for command systems, chat moderation, custom menus, shops, dialogs, and any server-driven UI.
+Paquets de chat, langue et UI personnalisée. Essentiels pour systèmes de commandes, modération chat, menus personnalisés, boutiques, dialogues et toute UI pilotée par serveur.
 
-| Packet            | ID  | Fields         | Description                                                                                                                                               |
-| ----------------- | --- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ChatMessage`     | 211 | `message`      | Player chat message or command. Messages starting with `/` are processed as commands. Messages starting with `.` (local commands) are rejected by server. |
-| `UpdateLanguage`  | 212 | `language`     | Player changed language preference.                                                                                                                       |
-| `CustomPageEvent` | 219 | `type`, `data` | Response to server-defined custom UI page. Uses `CustomPageEventType` enum. `data` is optional string payload (max 4MB).                                  |
+| Paquet            | ID  | Champs         | Description                                                                                                                                                            |
+| ----------------- | --- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ChatMessage`     | 211 | `message`      | Message de chat joueur ou commande. Messages commençant par `/` traités comme commandes. Messages commençant par `.` (commandes locales) rejetés par serveur.         |
+| `UpdateLanguage`  | 212 | `language`     | Joueur a changé préférence de langue.                                                                                                                                  |
+| `CustomPageEvent` | 219 | `type`, `data` | Réponse à page UI personnalisée définie par serveur. Utilise enum `CustomPageEventType`. `data` est charge utile chaîne optionnelle (max 4MB).                        |
 
 ---
 
 ## Window
 
-Container and window management packets. Useful for custom container logic, crafting systems, trading interfaces, and tracking when players open/close menus.
+Paquets de gestion conteneur et fenêtre. Utile pour logique conteneur personnalisée, systèmes d'artisanat, interfaces d'échange et suivi ouverture/fermeture menus joueurs.
 
-| Packet             | ID  | Fields         | Description                                                                           |
-| ------------------ | --- | -------------- | ------------------------------------------------------------------------------------- |
-| `ClientOpenWindow` | 200 | `type`         | Client requesting to open a window. Only certain window types are client-requestable. |
-| `SendWindowAction` | 201 | `id`, `action` | Client sending an action/interaction to an open window.                               |
-| `CloseWindow`      | 202 | `id`           | Client closing a window (ESC key or close button).                                    |
+| Paquet             | ID  | Champs         | Description                                                                                |
+| ------------------ | --- | -------------- | ------------------------------------------------------------------------------------------ |
+| `ClientOpenWindow` | 200 | `type`         | Client demandant ouvrir une fenêtre. Seuls certains types de fenêtre sont demandables.    |
+| `SendWindowAction` | 201 | `id`, `action` | Client envoyant une action/interaction à une fenêtre ouverte.                              |
+| `CloseWindow`      | 202 | `id`           | Client fermant une fenêtre (touche ESC ou bouton fermer).                                 |
 
 ---
 
 ## Worldmap
 
-Map visibility and navigation packets. Can be used as an extra keybind (M key detection), custom map overlays, teleportation systems, or death marker tracking.
+Paquets de visibilité et navigation carte. Peut être utilisé comme raccourci clavier supplémentaire (détection touche M), superpositions carte personnalisées, systèmes de téléportation ou suivi marqueurs de mort.
 
-| Packet                       | ID  | Fields     | Description                                                                            |
-| ---------------------------- | --- | ---------- | -------------------------------------------------------------------------------------- |
-| `UpdateWorldMapVisible`      | 243 | `visible`  | Player opened or closed world map. Toggled by M key.                                   |
-| `RemoveMapMarker`            | 246 | `markerId` | Remove a marker from the map (death markers, custom markers).                          |
-| `TeleportToWorldMapMarker`   | 244 | `id`       | Request teleport to a map marker. Requires `allowTeleportToMarkers` permission.        |
-| `TeleportToWorldMapPosition` | 245 | `x`, `y`   | Request teleport to map coordinates. Requires `allowTeleportToCoordinates` permission. |
+| Paquet                       | ID  | Champs     | Description                                                                                    |
+| ---------------------------- | --- | ---------- | ---------------------------------------------------------------------------------------------- |
+| `UpdateWorldMapVisible`      | 243 | `visible`  | Joueur a ouvert ou fermé carte du monde. Basculé par touche M.                                |
+| `RemoveMapMarker`            | 246 | `markerId` | Retirer un marqueur de la carte (marqueurs de mort, marqueurs personnalisés).                 |
+| `TeleportToWorldMapMarker`   | 244 | `id`       | Demander téléportation vers un marqueur de carte. Nécessite permission `allowTeleportToMarkers`.|
+| `TeleportToWorldMapPosition` | 245 | `x`, `y`   | Demander téléportation vers coordonnées carte. Nécessite permission `allowTeleportToCoordinates`.|
 
 ---
 
 ## Entities
 
-Entity-related movement packets. Used for custom mount physics, mount-specific abilities, or vehicle control systems.
+Paquets de mouvement liés aux entités. Utilisés pour physique de monture personnalisée, capacités spécifiques à la monture ou systèmes de contrôle de véhicule.
 
-| Packet          | ID  | Fields                                                  | Description                                                              |
-| --------------- | --- | ------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `MountMovement` | 166 | `absolutePosition`, `bodyOrientation`, `movementStates` | Position and movement states for the mount entity when player is riding. |
+| Paquet          | ID  | Champs                                                  | Description                                                                        |
+| --------------- | --- | ------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `MountMovement` | 166 | `absolutePosition`, `bodyOrientation`, `movementStates` | Position et états de mouvement pour l'entité monture quand joueur est en train de monter.|
 
 ---
 
 ## Camera
 
-Camera control packets. Useful for spectator systems, cinematic sequences, or admin observation tools.
+Paquets de contrôle caméra. Utile pour systèmes de spectateur, séquences cinématiques ou outils d'observation admin.
 
-| Packet                 | ID  | Fields     | Description                                                                    |
-| ---------------------- | --- | ---------- | ------------------------------------------------------------------------------ |
-| `RequestFlyCameraMode` | 282 | `entering` | Request to enter or exit fly camera mode. Requires `hytale.flyCam` permission. |
+| Paquet                 | ID  | Champs     | Description                                                                                 |
+| ---------------------- | --- | ---------- | ------------------------------------------------------------------------------------------- |
+| `RequestFlyCameraMode` | 282 | `entering` | Demander entrer ou sortir mode caméra volante. Nécessite permission `hytale.flyCam`.       |
 
 ---
 
 ## Buildertools
 
-Creative mode building tool packets. Requires `hytale.editor.builderTools` permission. Can be granted to non-creative players to enable these packets as extra keybinds (B, Ctrl+Z/Y/C), or used to track/validate creative building operations.
+Paquets d'outils de construction mode créatif. Nécessite permission `hytale.editor.builderTools`. Peut être accordé aux joueurs non-créatifs pour activer ces paquets comme raccourcis clavier supplémentaires (B, Ctrl+Z/Y/C), ou utilisé pour suivre/valider opérations de construction créative.
 
-### General Actions
+### Actions Générales
 
-| Packet                     | ID  | Fields   | Description                                                 |
-| -------------------------- | --- | -------- | ----------------------------------------------------------- |
-| `BuilderToolGeneralAction` | 412 | `action` | General builder tool action. Uses `BuilderToolAction` enum. |
+| Paquet                     | ID  | Champs   | Description                                                          |
+| -------------------------- | --- | -------- | -------------------------------------------------------------------- |
+| `BuilderToolGeneralAction` | 412 | `action` | Action générale outil de construction. Utilise enum `BuilderToolAction`.|
 
-### Entity Manipulation
+### Manipulation d'Entité
 
-| Packet                              | ID  | Fields                             | Description                                 |
-| ----------------------------------- | --- | ---------------------------------- | ------------------------------------------- |
-| `BuilderToolEntityAction`           | 401 | `entityId`, `action`               | Entity tool action (Freeze, Clone, Remove). |
-| `BuilderToolSetEntityTransform`     | 402 | `entityId`, `position`, `rotation` | Set entity position and rotation.           |
-| `BuilderToolSetEntityScale`         | 420 | `entityId`, `scale`                | Set entity scale.                           |
-| `BuilderToolSetEntityLight`         | 422 | `entityId`, `light`                | Set entity light properties.                |
-| `BuilderToolSetEntityPickupEnabled` | 421 | `entityId`, `enabled`              | Toggle whether entity can be picked up.     |
-| `BuilderToolSetNPCDebug`            | 423 | `entityId`, `debug`                | Toggle NPC debug mode.                      |
+| Paquet                              | ID  | Champs                             | Description                                      |
+| ----------------------------------- | --- | ---------------------------------- | ------------------------------------------------ |
+| `BuilderToolEntityAction`           | 401 | `entityId`, `action`               | Action outil entité (Geler, Cloner, Retirer).    |
+| `BuilderToolSetEntityTransform`     | 402 | `entityId`, `position`, `rotation` | Définir position et rotation entité.             |
+| `BuilderToolSetEntityScale`         | 420 | `entityId`, `scale`                | Définir échelle entité.                          |
+| `BuilderToolSetEntityLight`         | 422 | `entityId`, `light`                | Définir propriétés lumière entité.               |
+| `BuilderToolSetEntityPickupEnabled` | 421 | `entityId`, `enabled`              | Basculer si entité peut être ramassée.           |
+| `BuilderToolSetNPCDebug`            | 423 | `entityId`, `debug`                | Basculer mode debug PNJ.                         |
 
-### Selection Tools
+### Outils de Sélection
 
-| Packet                                    | ID  | Fields      | Description                                |
-| ----------------------------------------- | --- | ----------- | ------------------------------------------ |
-| `BuilderToolSelectionUpdate`              | 409 | `selection` | Update selection bounds.                   |
-| `BuilderToolSelectionTransform`           | 405 | `transform` | Transform (move/rotate) current selection. |
-| `BuilderToolSelectionToolAskForClipboard` | 410 | —           | Request clipboard data from server.        |
+| Paquet                                    | ID  | Champs      | Description                                     |
+| ----------------------------------------- | --- | ----------- | ----------------------------------------------- |
+| `BuilderToolSelectionUpdate`              | 409 | `selection` | Mettre à jour limites de sélection.             |
+| `BuilderToolSelectionTransform`           | 405 | `transform` | Transformer (déplacer/pivoter) sélection actuelle.|
+| `BuilderToolSelectionToolAskForClipboard` | 410 | —           | Demander données presse-papiers depuis serveur. |
 
-### Block Operations
+### Opérations de Blocs
 
-| Packet                     | ID  | Fields            | Description                               |
-| -------------------------- | --- | ----------------- | ----------------------------------------- |
-| `BuilderToolExtrudeAction` | 403 | `axis`, `amount`  | Extrude selection along axis.             |
-| `BuilderToolLineAction`    | 414 | `start`, `end`    | Draw a line of blocks between two points. |
-| `BuilderToolStackArea`     | 404 | `count`, `offset` | Stack/repeat selection multiple times.    |
+| Paquet                     | ID  | Champs            | Description                                        |
+| -------------------------- | --- | ----------------- | -------------------------------------------------- |
+| `BuilderToolExtrudeAction` | 403 | `axis`, `amount`  | Extruder sélection le long d'un axe.               |
+| `BuilderToolLineAction`    | 414 | `start`, `end`    | Dessiner une ligne de blocs entre deux points.     |
+| `BuilderToolStackArea`     | 404 | `count`, `offset` | Empiler/répéter sélection plusieurs fois.          |
 
-### Clipboard
+### Presse-papiers
 
-| Packet                       | ID  | Fields                | Description                  |
-| ---------------------------- | --- | --------------------- | ---------------------------- |
-| `BuilderToolRotateClipboard` | 406 | `axis`, `direction`   | Rotate clipboard contents.   |
-| `BuilderToolPasteClipboard`  | 407 | `position`, `options` | Paste clipboard at position. |
+| Paquet                       | ID  | Champs                | Description                             |
+| ---------------------------- | --- | --------------------- | --------------------------------------- |
+| `BuilderToolRotateClipboard` | 406 | `axis`, `direction`   | Pivoter contenu presse-papiers.         |
+| `BuilderToolPasteClipboard`  | 407 | `position`, `options` | Coller presse-papiers à la position.    |
 
-### Tool Configuration
+### Configuration d'Outil
 
-| Packet                                  | ID  | Fields              | Description                                  |
-| --------------------------------------- | --- | ------------------- | -------------------------------------------- |
-| `BuilderToolArgUpdate`                  | 400 | `toolId`, `args`    | Update tool-specific arguments/settings.     |
-| `BuilderToolSetTransformationModeState` | 408 | `mode`              | Set transformation mode (move/rotate/scale). |
-| `BuilderToolOnUseInteraction`           | 413 | `position`, `block` | Tool use interaction at position.            |
+| Paquet                                  | ID  | Champs              | Description                                                 |
+| --------------------------------------- | --- | ------------------- | ----------------------------------------------------------- |
+| `BuilderToolArgUpdate`                  | 400 | `toolId`, `args`    | Mettre à jour arguments/paramètres spécifiques à l'outil.   |
+| `BuilderToolSetTransformationModeState` | 408 | `mode`              | Définir mode de transformation (déplacer/pivoter/échelle).  |
+| `BuilderToolOnUseInteraction`           | 413 | `position`, `block` | Interaction utilisation outil à la position.                |
 
 ### Prefab
 
-| Packet                 | ID  | Fields | Description                         |
-| ---------------------- | --- | ------ | ----------------------------------- |
-| `PrefabUnselectPrefab` | 417 | —      | Deselect currently selected prefab. |
+| Paquet                 | ID  | Champs | Description                                  |
+| ---------------------- | --- | ------ | -------------------------------------------- |
+| `PrefabUnselectPrefab` | 417 | —      | Désélectionner prefab actuellement sélectionné.|
 
 ---
 
 ## Machinima
 
-Cinematic/machinima system packets. Used for in-game cinematics, cutscenes, or replay systems.
+Paquets système cinématique/machinima. Utilisés pour cinématiques en jeu, scènes coupées ou systèmes de replay.
 
-| Packet                       | ID  | Fields                                                | Description                                                                     |
-| ---------------------------- | --- | ----------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `RequestMachinimaActorModel` | 260 | `modelId`, `sceneName`, `actorName`                   | Request a model for use in machinima scene.                                     |
-| `UpdateMachinimaScene`       | 261 | `player`, `sceneName`, `frame`, `updateType`, `scene` | Update machinima scene state. Can target specific player or broadcast with `*`. |
+| Paquet                       | ID  | Champs                                                | Description                                                                                          |
+| ---------------------------- | --- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `RequestMachinimaActorModel` | 260 | `modelId`, `sceneName`, `actorName`                   | Demander un modèle pour utilisation dans scène machinima.                                            |
+| `UpdateMachinimaScene`       | 261 | `player`, `sceneName`, `frame`, `updateType`, `scene` | Mettre à jour état scène machinima. Peut cibler joueur spécifique ou diffuser avec `*`.             |
 
 ---
 
 ## Connection
 
-Initial connection handshake packets. Used for custom connection validation, protocol checks, or connection-time logging.
+Paquets de poignée de main connexion initiale. Utilisés pour validation connexion personnalisée, vérifications protocole ou journalisation au moment de la connexion.
 
-| Packet       | ID | Fields                                                       | Description                                                                                              |
-| ------------ | -- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
-| `Connect`    | 0  | `protocolHash`, `language`, `uuid`, `username`, `clientType` | First packet sent. Contains protocol version for compatibility check, player identity, and client type.  |
-| `Disconnect` | 1  | `type`, `reason`                                             | Client notifying server it's disconnecting. Type indicates reason category (quit, timeout, kicked, etc). |
-| `Pong`       | 3  | `timestamp`                                                  | Response to server Ping for latency measurement and keepalive.                                           |
+| Paquet       | ID | Champs                                                       | Description                                                                                                                  |
+| ------------ | -- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| `Connect`    | 0  | `protocolHash`, `language`, `uuid`, `username`, `clientType` | Premier paquet envoyé. Contient version protocole pour vérification compatibilité, identité joueur et type de client.       |
+| `Disconnect` | 1  | `type`, `reason`                                             | Client notifiant serveur qu'il se déconnecte. Type indique catégorie de raison (quitter, timeout, expulsé, etc).            |
+| `Pong`       | 3  | `timestamp`                                                  | Réponse au Ping serveur pour mesure latence et maintien en vie.                                                             |
 
 ---
 
 ## Auth
 
-Authentication packets. Used during the connection handshake for secure servers or password-protected servers.
+Paquets d'authentification. Utilisés pendant la poignée de main de connexion pour serveurs sécurisés ou serveurs protégés par mot de passe.
 
-| Packet             | ID | Fields           | Description                                                                      |
-| ------------------ | -- | ---------------- | -------------------------------------------------------------------------------- |
-| `AuthToken`        | 12 | `token`, `nonce` | Client's authentication token for secure servers. Part of mutual auth handshake. |
-| `PasswordResponse` | 15 | `password`       | Client's response to server password prompt.                                     |
+| Paquet             | ID | Champs           | Description                                                                                       |
+| ------------------ | -- | ---------------- | ------------------------------------------------------------------------------------------------- |
+| `AuthToken`        | 12 | `token`, `nonce` | Jeton d'authentification client pour serveurs sécurisés. Partie de poignée de main auth mutuelle. |
+| `PasswordResponse` | 15 | `password`       | Réponse client à l'invite de mot de passe serveur.                                               |
 
 ---
 
 ## Setup
 
-Initial setup phase packets. Sent after connection but before gameplay. Used for enforcing render distance limits, tracking client capabilities, or custom loading logic.
+Paquets de phase de configuration initiale. Envoyés après connexion mais avant jeu. Utilisés pour imposer limites distance rendu, suivre capacités client ou logique de chargement personnalisée.
 
-| Packet          | ID | Fields                    | Description                                                                                               |
-| --------------- | -- | ------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `RequestAssets` | 23 | `assets[]`                | Client requesting specific assets (textures, models, sounds) from the server. Array of asset identifiers. |
-| `ViewRadius`    | 32 | `value`                   | Client's requested view/render distance in blocks. Server may clamp this.                                 |
-| `PlayerOptions` | 33 | `skinData`, `preferences` | Player cosmetics and client preferences sent during setup.                                                |
+| Paquet          | ID | Champs                    | Description                                                                                                                |
+| --------------- | -- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `RequestAssets` | 23 | `assets[]`                | Client demandant ressources spécifiques (textures, modèles, sons) depuis serveur. Tableau d'identifiants de ressources.   |
+| `ViewRadius`    | 32 | `value`                   | Distance de vue/rendu demandée par client en blocs. Serveur peut limiter cela.                                            |
+| `PlayerOptions` | 33 | `skinData`, `preferences` | Cosmétiques joueur et préférences client envoyées pendant configuration.                                                   |
 
 ---
 
 ## World
 
-World state packets. The pause packet only functions in singleplayer.
+Paquets d'état du monde. Le paquet pause ne fonctionne qu'en solo.
 
-| Packet      | ID  | Fields   | Description                                                         |
-| ----------- | --- | -------- | ------------------------------------------------------------------- |
-| `SetPaused` | 158 | `paused` | Pause/unpause game. Only processed in singleplayer with one player. |
+| Paquet      | ID  | Champs   | Description                                                                  |
+| ----------- | --- | -------- | ---------------------------------------------------------------------------- |
+| `SetPaused` | 158 | `paused` | Mettre en pause/reprendre jeu. Traité uniquement en solo avec un joueur.    |
 
 ---
 
 ## Serveraccess
 
-LAN/server access configuration packets. Only functional for singleplayer world owners configuring LAN access.
+Paquets de configuration accès LAN/serveur. Fonctionnel uniquement pour propriétaires monde solo configurant accès LAN.
 
-| Packet               | ID  | Fields               | Description                                                     |
-| -------------------- | --- | -------------------- | --------------------------------------------------------------- |
-| `UpdateServerAccess` | 251 | `hosts[]`, `access`  | Update LAN server visibility settings. Singleplayer owner only. |
-| `SetServerAccess`    | 252 | `access`, `password` | Set LAN access mode and password. Singleplayer owner only.      |
+| Paquet               | ID  | Champs               | Description                                                                  |
+| -------------------- | --- | -------------------- | ---------------------------------------------------------------------------- |
+| `UpdateServerAccess` | 251 | `hosts[]`, `access`  | Mettre à jour paramètres visibilité serveur LAN. Propriétaire solo uniquement.|
+| `SetServerAccess`    | 252 | `access`, `password` | Définir mode accès LAN et mot de passe. Propriétaire solo uniquement.        |
 
 ---
 
-## Server Events
+## Événements Serveur
 
-Packets with corresponding server-side events:
+Paquets avec événements côté serveur correspondants :
 
-| Packet             | Package    | Event                         | Cancellable |
-| ------------------ | ---------- | ----------------------------- | ----------- |
-| `MouseInteraction` | player     | `PlayerInteractEvent`         | Yes         |
-| `SetActiveSlot`    | inventory  | `SwitchActiveSlotEvent`       | Yes         |
-| `DropItemStack`    | inventory  | `DropItemEvent.PlayerRequest` | Yes         |
-| `ChatMessage`      | interface_ | `PlayerChatEvent`             | Yes         |
-| `Connect`          | connection | `PlayerSetupConnectEvent`     | Yes         |
-| `Disconnect`       | connection | `PlayerDisconnectEvent`       | No          |
-| `ClientReady`      | player     | `PlayerReadyEvent`            | No          |
+| Paquet             | Package    | Événement                     | Annulable |
+| ------------------ | ---------- | ----------------------------- | --------- |
+| `MouseInteraction` | player     | `PlayerInteractEvent`         | Oui       |
+| `SetActiveSlot`    | inventory  | `SwitchActiveSlotEvent`       | Oui       |
+| `DropItemStack`    | inventory  | `DropItemEvent.PlayerRequest` | Oui       |
+| `ChatMessage`      | interface_ | `PlayerChatEvent`             | Oui       |
+| `Connect`          | connection | `PlayerSetupConnectEvent`     | Oui       |
+| `Disconnect`       | connection | `PlayerDisconnectEvent`       | Non       |
+| `ClientReady`      | player     | `PlayerReadyEvent`            | Non       |
 
 ---
 
@@ -461,4 +461,4 @@ import com.hypixel.hytale.protocol.packets.connection.Disconnect;
 import com.hypixel.hy
 ```
 
-_From Hytale Server build `2026.01.13-dcad8778f`_
+_Depuis Hytale Server build `2026.01.13-dcad8778f`_

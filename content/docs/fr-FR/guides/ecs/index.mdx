@@ -1,72 +1,72 @@
 ---
-title: Entity Component System
-description: A basic introduction into ECS (Entity Component System)
+title: Système Entité-Composant
+description: Une introduction de base à l'ECS (Entity Component System)
 ---
 
 <Callout type="warning">
-  This guide requires basic understanding of OOP concepts such as inheritance.
+  Ce guide nécessite une compréhension de base des concepts de POO tels que l'héritage.
 
-  Please make sure you have a good understading of these concepts before reading this guide.
+  Veuillez vous assurer d'avoir une bonne compréhension de ces concepts avant de lire ce guide.
 </Callout>
 
 <Callout type="info">
-  This guide is currently only on the theory of ECS and will not have code examples.
+  Ce guide porte actuellement uniquement sur la théorie de l'ECS et n'aura pas d'exemples de code.
 
-  Code examples are intentionally omitted to avoid confusion about how Hytale’s ECS may be implemented.
+  Les exemples de code sont intentionnellement omis pour éviter toute confusion sur la façon dont l'ECS de Hytale pourrait être implémenté.
 </Callout>
 
 # Introduction
 
-An Entity Component System otherwise known as ECS is a design pattern in game development.
+Un Système Entité-Composant, autrement connu sous le nom d'ECS, est un patron de conception dans le développement de jeux.
 
-ECS is made up of Entities, which reference Components and Systems that operates on Entities.
+L'ECS est composé d'Entités, qui référencent des Composants, et de Systèmes qui opèrent sur les Entités.
 
-It also focuses on composition over inheritance, eliminating rigid hierarchy, helps separate behavior and data and makes reusability easier.
+Il se concentre aussi sur la composition plutôt que l'héritage, éliminant la hiérarchie rigide, aide à séparer le comportement et les données, et rend la réutilisation plus facile.
 
-# Composition Over Inheritance
+# Composition plutôt qu'héritage
 
-Before getting into understanding what ECS is made of, lets understand what is the ECS philosophy.
+Avant d'entrer dans la compréhension de ce dont l'ECS est fait, comprenons quelle est la philosophie de l'ECS.
 
-We can describe composition as "has X" and inheritance as "is X".
-When we inherite a class in Java, we inherite all of its attribues and methods.
-While in composotion we can choose for each object what it refrence and what systems will work on it.
+Nous pouvons décrire la composition comme « a un X » et l'héritage comme « est un X ».
+Quand nous héritons d'une classe en Java, nous héritons de tous ses attributs et méthodes.
+Alors qu'en composition, nous pouvons choisir pour chaque objet ce qu'il référence et quels systèmes travailleront dessus.
 
-# Entities, Components and Systems
+# Entités, Composants et Systèmes
 
-## Entities
+## Entités
 
-An Entity is just a unique identifier.
+Une Entité est juste un identifiant unique.
 
-- It contains no data.
-- It contains no logic
+- Elle ne contient pas de données.
+- Elle ne contient pas de logique.
 
-Think of entities as nouns that can be described using components
+Pensez aux entités comme des noms qui peuvent être décrits en utilisant des composants.
 
-## Components
+## Composants
 
-Components are just plain data containers.
+Les Composants sont juste des conteneurs de données simples.
 
-- They store only data
-- They contain no behavior or logic
-- They describe traits or aspects of an entity
+- Ils ne stockent que des données.
+- Ils ne contiennent pas de comportement ni de logique.
+- Ils décrivent des traits ou aspects d'une entité.
 
-Examples of components:
+Exemples de composants :
 
-- A 'Position' component that stores X, Y and Z coordinates
-- A 'Velocity'  component that stores the speed along the each axis
-- A 'Health' component that stores the current health of the entity
+- Un composant 'Position' qui stocke les coordonnées X, Y et Z
+- Un composant 'Velocity' qui stocke la vitesse le long de chaque axe
+- Un composant 'Health' qui stocke la santé actuelle de l'entité
 
-Think of components as adjectives that describe an entity
+Pensez aux composants comme des adjectifs qui décrivent une entité.
 
-## Systems
+## Systèmes
 
-Systems contains the logic for your game (or in this case, a mod).
+Les Systèmes contiennent la logique de votre jeu (ou dans ce cas, d'un mod).
 
-- It Operates on all entities that have a specific set of components
-- It Does not store entity data itself
-- It Applies behavior by reading and modifying component data
+- Ils opèrent sur toutes les entités qui ont un ensemble spécifique de composants.
+- Ils ne stockent pas les données des entités eux-mêmes.
+- Ils appliquent le comportement en lisant et modifiant les données des composants.
 
-For example:
+Par exemple :
 
-- A "WinConditionSystem" may process every Entity that contains the components "Position" and "Velocity"
-- If an entity reaches the position `(0, 0, 0)`, the system will trigger a "You Won!" message.
+- Un « WinConditionSystem » pourrait traiter chaque Entité qui contient les composants « Position » et « Velocity »
+- Si une entité atteint la position `(0, 0, 0)`, le système déclenchera un message « Vous avez gagné ! ».

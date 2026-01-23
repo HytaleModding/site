@@ -1,33 +1,33 @@
 ---
-title: Setting Up Your Development Environment
-description: Learn how to set up your development environment for modding Hytale.
+title: Configuration de Votre Environnement de Développement
+description: Apprenez à configurer votre environnement de développement pour le modding Hytale.
 authors:
   - name: Neil Revin
     link: https://itsneil.dev
 ---
 
-This guide will walk you through setting up a complete development environment for Hytale modding, including all necessary tools and dependencies.
+Ce guide vous accompagnera dans la configuration d'un environnement de développement complet pour le modding Hytale, incluant tous les outils et dépendances nécessaires.
 
-## Prerequisites
+## Prérequis
 
-Before we begin, make sure you have:
+Avant de commencer, assurez-vous d'avoir :
 
-- A computer running Windows 10/11, macOS, or Linux
-- At least 8GB of RAM
-- 10GB of free disk space
-- Administrative privileges on your system
+- Un ordinateur fonctionnant sous Windows 10/11, macOS ou Linux
+- Au moins 8 Go de RAM
+- 10 Go d'espace disque libre
+- Des privilèges administrateur sur votre système
 
-## Required Software
+## Logiciels Requis
 
 ### 1. Java Development Kit (JDK)
 
-Hytale modding requires Java 25 or later. We recommend using OpenJDK.
+Le modding Hytale nécessite Java 25 ou ultérieur. Nous recommandons d'utiliser OpenJDK.
 
 #### Windows
 
-1. Download OpenJDK 25 from [Adoptium](https://adoptium.net/)
-2. Run the installer with default settings
-3. Verify installation by opening Command Prompt and running:
+1. Téléchargez OpenJDK 25 depuis [Adoptium](https://adoptium.net/)
+2. Exécutez l'installateur avec les paramètres par défaut
+3. Vérifiez l'installation en ouvrant l'Invite de commandes et en exécutant :
 
 ```bash
 java -version
@@ -36,7 +36,7 @@ java -version
 #### macOS
 
 ```bash
-# Using Homebrew
+# En utilisant Homebrew
 brew install openjdk@25
 ```
 
@@ -47,40 +47,40 @@ sudo apt update
 sudo apt install openjdk-25-jdk
 ```
 
-### 2. Integrated Development Environment (IDE)
+### 2. Environnement de Développement Intégré (IDE)
 
-We recommend IntelliJ IDEA Community Edition for Hytale modding.
+Nous recommandons IntelliJ IDEA Community Edition pour le modding Hytale.
 
-1. Download from [JetBrains website](https://www.jetbrains.com/idea/download/)
-2. Install with default settings
-3. Launch and complete the initial setup wizard
+1. Téléchargez depuis le [site web de JetBrains](https://www.jetbrains.com/idea/download/)
+2. Installez avec les paramètres par défaut
+3. Lancez et complétez l'assistant de configuration initiale
 
 ### 3) Maven
 
-1. Visit the official website: https://maven.apache.org/download.cgi
-2. Download this file: `apache-maven-3.9.12-bin.zip` (Binary zip archive)
-3. Unzip it
-4. Add the `apache-maven-3.9.12/bin/` folder to your PATH
+1. Visitez le site officiel : https://maven.apache.org/download.cgi
+2. Téléchargez ce fichier : `apache-maven-3.9.12-bin.zip` (Archive zip binaire)
+3. Décompressez-le
+4. Ajoutez le dossier `apache-maven-3.9.12/bin/` à votre PATH
 
-You can now try the command `mvn -version` to verify Maven is installed correctly. Make sure to do this in a fresh new terminal instead of one you had opened from before!
+Vous pouvez maintenant essayer la commande `mvn -version` pour vérifier que Maven est correctement installé. Assurez-vous de le faire dans un nouveau terminal plutôt que dans un que vous aviez ouvert auparavant !
 
-## Setting Up Your Workspace
+## Configuration de Votre Espace de Travail
 
-### 1. Add HytaleServer.jar Dependency
+### 1. Ajouter la Dépendance HytaleServer.jar
 
-Before you can start modding, you need to add the HytaleServer.jar file as a dependency:
+Avant de pouvoir commencer le modding, vous devez ajouter le fichier HytaleServer.jar comme dépendance :
 
-1. **Download HytaleServer.jar** using the [Hytale Downloader](https://support.hytale.com/hc/en-us/articles/45326769420827-Hytale-Server-Manual)
-2. **Add to IntelliJ IDEA**:
-   - Click on **"File"** at the top left
-   - Go to **"Project Structure"**
-   - Go to **"Libraries"**
-   - Click on the **+ icon**
-   - Select the **HytaleServer.jar** you downloaded
+1. **Téléchargez HytaleServer.jar** en utilisant le [Hytale Downloader](https://support.hytale.com/hc/en-us/articles/45326769420827-Hytale-Server-Manual)
+2. **Ajoutez à IntelliJ IDEA** :
+   - Cliquez sur **"File"** en haut à gauche
+   - Allez dans **"Project Structure"**
+   - Allez dans **"Libraries"**
+   - Cliquez sur l'**icône +**
+   - Sélectionnez le **HytaleServer.jar** que vous avez téléchargé
 
-### 2) Clone the Plugin Template
+### 2) Cloner le Template de Plugin
 
-Instead of creating an empty directory, we'll use the official Hytale plugin template:
+Au lieu de créer un répertoire vide, nous utiliserons le template de plugin Hytale officiel :
 
 ```bash
 # Clone the template repository
@@ -88,24 +88,24 @@ git clone https://github.com/HytaleModding/plugin-template.git MyFirstMod
 cd MyFirstMod
 ```
 
-### 3. Open in IntelliJ IDEA
+### 3. Ouvrir dans IntelliJ IDEA
 
-1. Open IntelliJ IDEA
-2. Click "Open" and navigate to your `MyFirstMod` directory
-3. IntelliJ will automatically detect it as a Maven project
-4. Wait for the project to index and dependencies to download
+1. Ouvrez IntelliJ IDEA
+2. Cliquez sur "Open" et naviguez vers votre répertoire `MyFirstMod`
+3. IntelliJ le détectera automatiquement comme un projet Maven
+4. Attendez que le projet s'indexe et que les dépendances se téléchargent
 
-## Next Steps
+## Prochaines Étapes
 
-Now that you have your development environment set up with the plugin template:
+Maintenant que votre environnement de développement est configuré avec le template de plugin :
 
-1. **Customize the template** - Edit the `pom.xml` and `manifest.json` file to change your mod's name and details
-2. **Explore the code structure** - Familiarize yourself with the template's organization
-3. **Start modding** - Begin writing your first Hytale plugin!
+1. **Personnalisez le template** - Éditez les fichiers `pom.xml` et `manifest.json` pour changer le nom et les détails de votre mod
+2. **Explorez la structure du code** - Familiarisez-vous avec l'organisation du template
+3. **Commencez le modding** - Commencez à écrire votre premier plugin Hytale !
 
-The plugin template includes:
+Le template de plugin inclut :
 
-- Pre-configured Gradle build system
-- Example plugin structure
-- Essential dependencies
-- Development tools configuration
+- Système de build Gradle pré-configuré
+- Structure de plugin d'exemple
+- Dépendances essentielles
+- Configuration des outils de développement

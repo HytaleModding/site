@@ -1,11 +1,11 @@
 ---
-title: Teleporting the player
-description: Learn how to teleport the player.
+title: Téléporter le joueur
+description: Apprenez à téléporter le joueur.
 ---
 
-To teleport players in Hytale, you will need to get a `World` object so we can safely run the teleport on the world thread. The world thread manages all entity updates, so modifying entities off-thread can crash the server or cause inconsistent state.
-Next, we get the entity store and make a `Teleport` object.
-We add a `Teleport` component to the player’s entity reference in the entity store. This triggers the teleportation logic for that player.
+Pour téléporter des joueurs dans Hytale, vous devrez obtenir un objet `World` afin que nous puissions exécuter la téléportation en toute sécurité sur le thread du monde. Le thread du monde gère toutes les mises à jour d'entités, donc modifier des entités hors du thread peut crasher le serveur ou causer un état incohérent.
+Ensuite, nous obtenons l'entity store et créons un objet `Teleport`.
+Nous ajoutons un composant `Teleport` à la référence d'entité du joueur dans l'entity store. Cela déclenche la logique de téléportation pour ce joueur.
 
 ```java
 public static void teleportPlayer(Player player, int x, int y, int z) {

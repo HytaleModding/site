@@ -1,6 +1,6 @@
 ---
-title: Creating Events
-description: Learn how to create custom events for your Hytale mod.
+title: Créer des Événements
+description: Apprenez à créer des événements personnalisés pour votre mod Hytale.
 authors:
   - name: Neil Revin
     link: https://itsneil.dev
@@ -8,11 +8,11 @@ authors:
     link: https://ellie.au
 ---
 
-## Event Class
+## Classe Event
 
-You can import a Event class and create a function with the Event as a argument. [Click here](../../server/events) to look at all available events.
+Vous pouvez importer une classe Event et créer une fonction avec l'Event comme argument. [Cliquez ici](../../server/events) pour voir tous les événements disponibles.
 
-Example plugin when a player is ready (joins a server):
+Exemple de plugin lorsqu'un joueur est prêt (rejoint un serveur) :
 
 ```java
 
@@ -26,9 +26,9 @@ public class ExampleEvent {
 }
 ```
 
-## Registering the Event
+## Enregistrer l'Événement
 
-You need to register all events you make in the Main plugin class, usually in the `setup` function.
+Vous devez enregistrer tous les événements que vous créez dans la classe principale du plugin, généralement dans la fonction `setup`.
 
 ```java
 public class MyPlugin extends JavaPlugin {
@@ -40,10 +40,10 @@ public class MyPlugin extends JavaPlugin {
 }
 ```
 
-## ESC Event Classes
+## Classes d'Événements ESC
 
-For events that fall under the [ESC Events](../../server/events#ecsevent) list you will need to instead create and register an entity event system.
-An example is included below that will cancel the crafting of a recipe if it uses fibre as an input.
+Pour les événements qui relèvent de la liste [ESC Events](../../server/events#ecsevent), vous devrez plutôt créer et enregistrer un système d'événements d'entité.
+Un exemple est inclus ci-dessous qui annulera la fabrication d'une recette si elle utilise de la fibre comme entrée.
 
 ```java
 class ExampleCancelCraft extends EntityEventSystem<EntityStore, CraftRecipeEvent.Pre> {
@@ -75,9 +75,9 @@ class ExampleCancelCraft extends EntityEventSystem<EntityStore, CraftRecipeEvent
 }
 ```
 
-## Registering ESC Events
+## Enregistrer les Événements ESC
 
-You will need to register the system in your plugin:
+Vous devrez enregistrer le système dans votre plugin :
 
 ```java
 public class MyPlugin extends JavaPlugin {

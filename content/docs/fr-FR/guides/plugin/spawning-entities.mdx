@@ -1,79 +1,79 @@
 ---
-title: Spawning Entities
-description: Learn how to spawn Entities in Hytale
+title: Faire Apparaître des Entités
+description: Apprenez à faire apparaître des entités dans Hytale
 authors:
   - name: Neil Revin
     link: https://itsneil.dev
 ---
 
-In this guide, you will learn how to spawn entities in Hytale. It is **highly recommended** to familiarize yourself with the Entity Component System (ECS) before proceeding with this guide. You can find the ECS guide [here](./ecs).
+Dans ce guide, vous apprendrez comment faire apparaître des entités dans Hytale. Il est **fortement recommandé** de vous familiariser avec le système de composants d'entité (ECS) avant de poursuivre ce guide. Vous pouvez trouver le guide ECS [ici](./ecs).
 
-## Getting the World Object
+## Obtenir l'Objet World
 
-You need to first get the `World` object before proceeding with spawning entities. You can get this object in a few ways:
+Vous devez d'abord obtenir l'objet `World` avant de procéder à l'apparition d'entités. Vous pouvez obtenir cet objet de plusieurs façons :
 
-### Using the `Player` Object
+### Utiliser l'Objet `Player`
 
-You can use the `Player` object to get the `World` object by calling the `getWorld()` method on the `Player` instance.
+Vous pouvez utiliser l'objet `Player` pour obtenir l'objet `World` en appelant la méthode `getWorld()` sur l'instance `Player`.
 
 ```java
 World world = player.getWorld();
 ```
 
-### Using the `Universe` Class
+### Utiliser la Classe `Universe`
 
-You can use the `Universe` class to get the `World` object by calling the `getWorld(string UUID)` method on the `Universe` instance.
+Vous pouvez utiliser la classe `Universe` pour obtenir l'objet `World` en appelant la méthode `getWorld(string UUID)` sur l'instance `Universe`.
 
 ```java
 World world = Universe.get().getWorld("your-world-uuid");
 ```
 
-Once you have the world object, you need to get a instance of `Store<EntityStore>`, you can do so by:
+Une fois que vous avez l'objet world, vous devez obtenir une instance de `Store<EntityStore>`, vous pouvez le faire ainsi :
 
 ```java
 Store<EntityStore> store = world.getEntityStore().getStore();
 ```
 
-## Creating Entities
+## Créer des Entités
 
-Once you have the `EntityStore` instance, you can start to create a entity and give it components. Entities are just instances of `Holder<EntityStore>` with several components attached to them.
+Une fois que vous avez l'instance `EntityStore`, vous pouvez commencer à créer une entité et lui donner des composants. Les entités ne sont que des instances de `Holder<EntityStore>` avec plusieurs composants attachés.
 
 <Callout type="warning">
-  To use the `store` variable we got above, we need to run this inside the world. You can do so by using the `world.execute()` method:
+  Pour utiliser la variable `store` que nous avons obtenue ci-dessus, nous devons exécuter ceci à l'intérieur du world. Vous pouvez le faire en utilisant la méthode `world.execute()` :
 
   ```java
   world.execute(() -> {
-      // run all the code below in this context
+      // exécutez tout le code ci-dessous dans ce contexte
   })
   ```
 </Callout>
 
-Let's start by creating a blank holder:
+Commençons par créer un holder vide :
 
 ```java
 Holder<EntityStore> holder = EntityStore.REGISTRY.newHolder();
 ```
 
-## Getting a Model
+## Obtenir un Modèle
 
-You now need a model for your Entity. You can find a list of all entities [here](../../server/entities), we're going to use the Minecart entity for this example:
+Vous avez maintenant besoin d'un modèle pour votre entité. Vous pouvez trouver une liste de toutes les entités [ici](../../server/entities), nous allons utiliser l'entité Minecart pour cet exemple :
 
 ```java
 ModelAsset modelAsset = ModelAsset.getAssetMap().getAsset("Minecart");
 Model model = Model.createScaledModel(modelAsset, 1.0f);
 ```
 
-### The Transform Component
+### Le Composant Transform
 
-The `TransformComponent` is the component that tells Hytale where to place your entity, what it's location is. You can get this in multiple ways.
+Le `TransformComponent` est le composant qui indique à Hytale où placer votre entité, quelle est sa localisation. Vous pouvez l'obtenir de plusieurs façons.
 
-1. Getting the Transform Component from the `Player` object
+1. Obtenir le Transform Component depuis l'objet `Player`
 
 ```java
 TransformComponent transform = store.getComponent(context.senderAsPlayerRef(), EntityModule.get().getTransformComponentType());
 ```
 
-2. Generating a new TransformComponent
+2. Générer un nouveau TransformComponent
 
 ```java
 Vector3d vector3d = new Vector3d(0, 0, 0); // position
@@ -81,9 +81,9 @@ Vector3f vector3f = new Vector3f(0, 0, 0); // rotation
 TransformComponent transform = new TransformComponent(vector3d, vector3f);
 ```
 
-## Adding Components to our Entity
+## Ajouter des Composants à notre Entité
 
-Now we need to add all the components we made above to our entity, here's all the components we need to add one by one:
+Maintenant nous devons ajouter tous les composants que nous avons créés ci-dessus à notre entité, voici tous les composants que nous devons ajouter un par un :
 
 ```java
 
@@ -95,18 +95,18 @@ holder.addComponent(NetworkId.getComponentType(), new NetworkId(store.getExterna
 holder.addComponent(Interactions.getComponentType(), new Interactions()); // you need to add interactions here if you want your entity to be interactable
 ```
 
-### Ensuring Hytale's Components are present
+### S'assurer que les Composants de Hytale sont présents
 
-These act as "configuration" or "default" components that Hytale expects to be present on all entities.
+Ceux-ci agissent comme des composants de "configuration" ou "par défaut" que Hytale s'attend à trouver sur toutes les entités.
 
 ```java
 holder.ensureComponent(UUIDComponent.getComponentType());
 holder.ensureComponent(Interactable.getComponentType()); // if you want your entity to be interactable
 ```
 
-## Spawning the Entity
+## Faire Apparaître l'Entité
 
-Finally, we can spawn the entity in the world by calling the `spawnEntity` method on the `EntityStore` instance:
+Enfin, nous pouvons faire apparaître l'entité dans le monde en appelant la méthode `spawnEntity` sur l'instance `EntityStore` :
 
 ```java
 store.spawnEntity(holder, AddReason.SPAWN);

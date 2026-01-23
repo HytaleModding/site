@@ -1,6 +1,6 @@
 ---
-title: Hytale ECS Basics
-description: In this guide you will learn about the basics of Hytale's powerful ECS system as well as create your own component, a system, and work together with other systems to create gameplay logic.
+title: Les bases de l'ECS Hytale
+description: Dans ce guide, vous apprendrez les bases du puissant système ECS de Hytale ainsi qu'à créer votre propre composant, un système, et à travailler avec d'autres systèmes pour créer une logique de gameplay.
 authors:
   - name: oskarscot
     link: https://oskar.scot
@@ -8,31 +8,31 @@ authors:
 
 ## Store
 
-The `Store` class is the core of Hytale's ECS system, it's responsible for storing entities, if you ever need to access an entity, you need access to the store. It utilises a concept called Archetypes where data is grouped together in chunks. For example if we have 100 Trorks, they will be chunked together along with their components so that they're closely packed together and faster to retrieve.
+La classe `Store` est le cœur du système ECS de Hytale, elle est responsable du stockage des entités. Si vous avez besoin d'accéder à une entité, vous avez besoin d'accéder au store. Elle utilise un concept appelé Archétypes où les données sont regroupées en chunks. Par exemple, si nous avons 100 Trorks, ils seront regroupés ensemble avec leurs composants afin d'être étroitement packés ensemble et plus rapides à récupérer.
 
 ## EntityStore
 
-When looking through Hytale's server code you will find that `Store` will be of type `EntityStore`. This name can be misleading as it might suggest that it's a `Store` for entities. But didn't we just say that the base `Store` already stores entities? The `EntityStore` class implements `WorldProvider` meaning that `EntityStore` is responsible for accessing entities in a specific Hytale `World`. It maintains internal maps `entitiesByUuid` and `networkIdToRef`, allowing you to find a specific entity by its persistent ID or its networking ID.
+En parcourant le code serveur de Hytale, vous trouverez que `Store` sera de type `EntityStore`. Ce nom peut être trompeur car il pourrait suggérer que c'est un `Store` pour les entités. Mais n'avons-nous pas dit que le `Store` de base stocke déjà les entités ? La classe `EntityStore` implémente `WorldProvider`, ce qui signifie que `EntityStore` est responsable de l'accès aux entités dans un `World` Hytale spécifique. Elle maintient des maps internes `entitiesByUuid` et `networkIdToRef`, vous permettant de trouver une entité spécifique par son ID persistant ou son ID réseau.
 
-Every Entity has a `UUIDComponent` as well as a `NetworkId` which are used by the `EntityStore` to lookup entities inside of the `Store`.
+Chaque Entité a un `UUIDComponent` ainsi qu'un `NetworkId` qui sont utilisés par l'`EntityStore` pour rechercher des entités à l'intérieur du `Store`.
 
-## Ref (Reference)
+## Ref (Référence)
 
-For those familiar with languages like C++, you probably already can guess what this class is purely by the name of it. However, a Ref is a safe "handle" or pointer to an entity. You should **NEVER** store a direct reference to an entity object, you use a Ref instead. It tracks whether an entity is still alive. If you call `validate()` on a Ref for an entity that has been deleted, it throws an exception.
+Pour ceux familiers avec des langages comme C++, vous pouvez probablement déjà deviner ce qu'est cette classe juste par son nom. Cependant, une Ref est un « handle » ou pointeur sûr vers une entité. Vous ne devriez **JAMAIS** stocker une référence directe à un objet entité, vous utilisez une Ref à la place. Elle trace si une entité est toujours vivante. Si vous appelez `validate()` sur une Ref pour une entité qui a été supprimée, elle lance une exception.
 
-## Player Components
+## Composants du joueur
 
-In Hytale, a "Player" is not just one object. It is a single entity composed of multiple specialized components. Understanding the difference between `Player` and `PlayerRef` is crucial for modding.
+Dans Hytale, un « Joueur » n'est pas qu'un seul objet. C'est une seule entité composée de plusieurs composants spécialisés. Comprendre la différence entre `Player` et `PlayerRef` est crucial pour le modding.
 
 ### PlayerRef
 
-Despite its name, PlayerRef is a Component, not a handle. It represents the player's connection and identity. It's a special component which stays active as long as the player is connected to the server, even if the player switches worlds. The key data that it stores are the player's username, UUID, language as well as the packet handler.
+Malgré son nom, PlayerRef est un Composant, pas un handle. Il représente la connexion et l'identité du joueur. C'est un composant spécial qui reste actif tant que le joueur est connecté au serveur, même si le joueur change de monde. Les données clés qu'il stocke sont le nom d'utilisateur du joueur, l'UUID, la langue ainsi que le gestionnaire de paquets.
 
 ### Player
 
-The `Player` component represents the player's physical presence. It only exists when the player is actually spawned in a world. Providing access to gameplay specific data, this component differs per world.
+Le composant `Player` représente la présence physique du joueur. Il n'existe que lorsque le joueur est réellement spawné dans un monde. Fournissant l'accès aux données spécifiques au gameplay, ce composant diffère par monde.
 
-To interact with an entity, you use the `Store` to retrieve its components via their `ComponentType`. Because Hytale uses a decoupled system, you don't call `entity.getHealth()`. Instead, you ask the `Store` for the health data associated with that entity's `Ref`.
+Pour interagir avec une entité, vous utilisez le `Store` pour récupérer ses composants via leur `ComponentType`. Parce que Hytale utilise un système découplé, vous n'appelez pas `entity.getHealth()`. Au lieu de cela, vous demandez au `Store` les données de santé associées à la `Ref` de cette entité.
 
 ```java
 @Override
@@ -46,11 +46,11 @@ protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<En
 }
 ```
 
-In here we use the `Store<EntityStore>` to access the `Player` component using the `Ref<EntityStore>`. We can do the same for other components like the `UUIDComponent` or the `TransformComponent` to retrieve the entity Transform containing the position and rotation.
+Ici nous utilisons le `Store<EntityStore>` pour accéder au composant `Player` en utilisant la `Ref<EntityStore>`. Nous pouvons faire la même chose pour d'autres composants comme l'`UUIDComponent` ou le `TransformComponent` pour récupérer le Transform de l'entité contenant la position et la rotation.
 
-## Components
+## Composants
 
-Components are pure data containers. They hold state but contain no logic. In Hytale, components must implement `Component<EntityStore>` and provide a clone method for the ECS to copy them when needed.
+Les Composants sont de purs conteneurs de données. Ils contiennent l'état mais ne contiennent aucune logique. Dans Hytale, les composants doivent implémenter `Component<EntityStore>` et fournir une méthode clone pour que l'ECS puisse les copier quand nécessaire.
 
 ```java
 public class PoisonComponent implements Component<EntityStore> {
@@ -118,15 +118,15 @@ public class PoisonComponent implements Component<EntityStore> {
 }
 ```
 
-The default constructor is required for the registration factory. The copy constructor is used by `clone()` which the ECS calls internally when it needs to duplicate component data.
+Le constructeur par défaut est requis pour la factory d'enregistrement. Le constructeur de copie est utilisé par `clone()` que l'ECS appelle en interne quand il a besoin de dupliquer les données d'un composant.
 
-## Systems
+## Systèmes
 
-Systems are where the logic lives. While components are pure data containers, systems operate on entities that match specific component queries. The ECS scheduler runs systems each tick, passing in only the entities that have the components the system cares about.
+Les Systèmes sont là où vit la logique. Alors que les composants sont de purs conteneurs de données, les systèmes opèrent sur les entités qui correspondent à des requêtes de composants spécifiques. L'ordonnanceur ECS exécute les systèmes à chaque tick, en passant uniquement les entités qui ont les composants dont le système se soucie.
 
 ### EntityTickingSystem
 
-The most common system type. It runs every tick and processes each entity matching its query individually.
+Le type de système le plus courant. Il s'exécute à chaque tick et traite chaque entité correspondant à sa requête individuellement.
 
 ```java
 public class PoisonSystem extends EntityTickingSystem<EntityStore> {
@@ -174,11 +174,11 @@ public class PoisonSystem extends EntityTickingSystem<EntityStore> {
 }
 ```
 
-The `tick` method receives `dt` which is delta time since the last tick. This lets you accumulate time for interval-based logic rather than counting ticks. The `ArchetypeChunk` gives you access to the entity's components via the index, and `getReferenceTo` returns the `Ref` you need for issuing commands.
+La méthode `tick` reçoit `dt` qui est le delta time depuis le dernier tick. Cela vous permet d'accumuler du temps pour une logique basée sur des intervalles plutôt que de compter les ticks. L'`ArchetypeChunk` vous donne accès aux composants de l'entité via l'index, et `getReferenceTo` retourne la `Ref` dont vous avez besoin pour émettre des commandes.
 
 ### TickingSystem
 
-Runs once per tick globally, not per-entity. Use this for world-wide updates or logic that doesn't target specific entities.
+S'exécute une fois par tick globalement, pas par entité. Utilisez ceci pour des mises à jour à l'échelle du monde ou une logique qui ne cible pas des entités spécifiques.
 
 ```java
 public class GlobalUpdateSystem extends TickingSystem<EntityStore> {
@@ -192,7 +192,7 @@ public class GlobalUpdateSystem extends TickingSystem<EntityStore> {
 
 ### DelayedEntitySystem
 
-Like `EntityTickingSystem` but with a built-in delay. The constructor takes a float representing seconds between executions.
+Comme `EntityTickingSystem` mais avec un délai intégré. Le constructeur prend un float représentant les secondes entre les exécutions.
 
 ```java
 public class HealthRegenSystem extends DelayedEntitySystem<EntityStore> {
@@ -204,7 +204,7 @@ public class HealthRegenSystem extends DelayedEntitySystem<EntityStore> {
   @Override
   public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
       @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
-    // Runs every 1 second per matching entity
+    // S'exécute toutes les 1 seconde par entité correspondante
   }
 
   @Nonnull
@@ -215,24 +215,24 @@ public class HealthRegenSystem extends DelayedEntitySystem<EntityStore> {
 }
 ```
 
-## Queries
+## Requêtes
 
-Queries filter which entities a system processes. The ECS only passes entities to your system's `tick` method if they have all the components specified in the query.
+Les Requêtes filtrent quelles entités un système traite. L'ECS ne passe des entités à la méthode `tick` de votre système que si elles ont tous les composants spécifiés dans la requête.
 
 ```java
-// Single component - any entity with PoisonComponent
+// Composant unique - toute entité avec PoisonComponent
 Query.and(poisonComponentType)
 
-// Multiple components - entities with both
+// Plusieurs composants - entités avec les deux
 Query.and(poisonComponentType, Player.getComponentType())
 
-// Exclusion - players that aren't dead
+// Exclusion - joueurs qui ne sont pas morts
 Query.and(Player.getComponentType(), Query.not(DeathComponent.getComponentType()))
 ```
 
 ## CommandBuffer
 
-The `CommandBuffer` queues changes to entities. Use it instead of modifying the store directly to ensure thread safety and proper ordering. You'll use it to add components, remove components, and execute damage.
+Le `CommandBuffer` met en file d'attente les changements aux entités. Utilisez-le au lieu de modifier le store directement pour garantir la sécurité des threads et un ordre correct. Vous l'utiliserez pour ajouter des composants, supprimer des composants et exécuter des dégâts.
 
 ```java
 commandBuffer.addComponent(ref, componentType, new MyComponent());
@@ -242,9 +242,9 @@ commandBuffer.removeComponent(ref, componentType);
 MyComponent comp = commandBuffer.getComponent(ref, componentType);
 ```
 
-## SystemGroups and Dependencies
+## SystemGroups et Dépendances
 
-Systems can declare which group they belong to and what dependencies they have. This controls execution order which is critical for systems that interact.
+Les Systèmes peuvent déclarer à quel groupe ils appartiennent et quelles dépendances ils ont. Ceci contrôle l'ordre d'exécution, ce qui est critique pour les systèmes qui interagissent.
 
 ```java
 @Nullable
@@ -254,7 +254,7 @@ public SystemGroup<EntityStore> getGroup() {
 }
 ```
 
-For more complex ordering you can override `getDependencies`:
+Pour un ordre plus complexe, vous pouvez surcharger `getDependencies` :
 
 ```java
 @Nonnull
@@ -266,11 +266,11 @@ public Set<Dependency<EntityStore>> getDependencies() {
 }
 ```
 
-The damage system is a good example of why ordering matters. Hytale's damage pipeline has four stages: GatherDamageGroup collects damage sources, FilterDamageGroup applies reductions and cancellations, then damage is applied to health, and finally InspectDamageGroup handles side effects like particles and sounds. If these ran in the wrong order you'd play death animations before the entity dies or apply armor reduction after health is already subtracted.
+Le système de dégâts est un bon exemple de pourquoi l'ordre compte. Le pipeline de dégâts de Hytale a quatre étapes : GatherDamageGroup collecte les sources de dégâts, FilterDamageGroup applique les réductions et annulations, puis les dégâts sont appliqués à la santé, et enfin InspectDamageGroup gère les effets secondaires comme les particules et les sons. Si ceux-ci s'exécutaient dans le mauvais ordre, vous joueriez des animations de mort avant que l'entité ne meure ou appliqueriez la réduction d'armure après que la santé ait déjà été soustraite.
 
-## Registering Components and Systems
+## Enregistrer les Composants et Systèmes
 
-Components and systems must be registered during plugin setup. The `EntityStoreRegistry` handles this.
+Les Composants et systèmes doivent être enregistrés pendant la configuration du plugin. L'`EntityStoreRegistry` gère cela.
 
 ```java
 public final class ExamplePlugin extends JavaPlugin {
@@ -304,11 +304,11 @@ public final class ExamplePlugin extends JavaPlugin {
 }
 ```
 
-The `registerComponent` method returns a `ComponentType` which acts as a key for accessing that component type throughout your plugin. Store it as a field and pass it to any systems that need it. The second argument is a factory for creating default instances.
+La méthode `registerComponent` retourne un `ComponentType` qui agit comme une clé pour accéder à ce type de composant dans tout votre plugin. Stockez-le comme un champ et passez-le à tous les systèmes qui en ont besoin. Le deuxième argument est une factory pour créer des instances par défaut.
 
-## Practical Example: Poison System
+## Exemple pratique : Système de poison
 
-Putting it all together, here's a complete poison effect. When applied to any entity, it deals damage at a set interval until it expires and removes itself.
+En mettant tout ensemble, voici un effet de poison complet. Quand il est appliqué à n'importe quelle entité, il inflige des dégâts à un intervalle défini jusqu'à expiration et se supprime lui-même.
 
 ```java
 package scot.oskar.hytaletemplate.components;
@@ -453,7 +453,7 @@ package scot.oskar.hytaletemplate.commands;
 public class ExampleCommand extends AbstractPlayerCommand {
 
   public ExampleCommand() {
-    super("test", "Super test command!");
+    super("test", "Super commande de test !");
   }
 
   @Override
@@ -462,7 +462,7 @@ public class ExampleCommand extends AbstractPlayerCommand {
     Player player = store.getComponent(ref, Player.getComponentType());
     PoisonComponent poison = new PoisonComponent(3f, 0.5f, 8);
     store.addComponent(ref, ExamplePlugin.get().getPoisonComponentType(), poison);
-    player.sendMessage(Message.raw("You have been poisoned!").color(Color.GREEN).bold(true));
+    player.sendMessage(Message.raw("Vous avez été empoisonné !").color(Color.GREEN).bold(true));
   }
 }
 ```
@@ -501,6 +501,6 @@ public final class ExamplePlugin extends JavaPlugin {
 }
 ```
 
-The query uses only `poisonComponentType` which means the system will process any entity with a `PoisonComponent`, not just players. This makes it flexible for poisoning NPCs, mobs, or any living entity. The system places itself in the `GatherDamageGroup` so the damage it creates flows through the full damage pipeline including armor reduction and invulnerability checks.
+La requête utilise uniquement `poisonComponentType`, ce qui signifie que le système traitera n'importe quelle entité avec un `PoisonComponent`, pas seulement les joueurs. Cela le rend flexible pour empoisonner des PNJ, des mobs ou n'importe quelle entité vivante. Le système se place dans le `GatherDamageGroup` afin que les dégâts qu'il crée passent par le pipeline complet de dégâts incluant la réduction d'armure et les vérifications d'invulnérabilité.
 
-To be continued.
+À suivre.

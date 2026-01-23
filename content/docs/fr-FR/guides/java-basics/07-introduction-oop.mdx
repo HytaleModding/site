@@ -1,13 +1,13 @@
 ---
-title: 07 - Introduction to Object-Oriented Programming
-description: Learn the fundamentals of classes and objects in Java.
+title: 07 - Introduction à la Programmation Orientée Objet
+description: Apprenez les fondamentaux des classes et objets en Java.
 ---
 
-Object-Oriented Programming (OOP) is the foundation of Java and Hytale modding. Instead of just having variables and methods floating around, we organize them into **classes** and **objects**.
+La Programmation Orientée Objet (POO) est le fondement de Java et du modding Hytale. Au lieu d'avoir simplement des variables et des méthodes qui flottent, nous les organisons en **classes** et **objets**.
 
-## What is a Class?
+## Qu'est-ce qu'une Classe ?
 
-A class is a blueprint for creating objects. Think of it like a recipe or a template.
+Une classe est un plan pour créer des objets. Pensez-y comme une recette ou un modèle.
 
 ```java
 public class Player {
@@ -24,9 +24,9 @@ public class Player {
 }
 ```
 
-## What is an Object?
+## Qu'est-ce qu'un Objet ?
 
-An object is an instance created from a class. If a class is a blueprint, an object is the actual thing built from that blueprint.
+Un objet est une instance créée à partir d'une classe. Si une classe est un plan, un objet est la chose réelle construite à partir de ce plan.
 
 ```java
 public class Main {
@@ -49,16 +49,16 @@ public class Main {
 }
 ```
 
-<Callout type="info" title="Class vs Object">
-  **Class** = Blueprint (the idea of a player)
-  **Object** = Actual thing (Alice, Bob, specific players)
+<Callout type="info" title="Classe vs Objet">
+  **Classe** = Plan (l'idée d'un joueur)
+  **Objet** = Chose réelle (Alice, Bob, joueurs spécifiques)
 
-  One class can create many objects, just like one recipe can make many cakes!
+  Une classe peut créer de nombreux objets, tout comme une recette peut faire de nombreux gâteaux !
 </Callout>
 
-## Creating a Simple Class
+## Créer une Classe Simple
 
-Let's create a `Sword` class for Hytale:
+Créons une classe `Sword` pour Hytale :
 
 ```java
 public class Sword {
@@ -86,7 +86,7 @@ public class Sword {
 }
 ```
 
-Using the class:
+Utilisation de la classe :
 
 ```java
 public class Main {
@@ -104,9 +104,9 @@ public class Main {
 }
 ```
 
-## Constructors
+## Constructeurs
 
-Instead of setting properties one by one, use a **constructor** to initialize objects:
+Au lieu de définir les propriétés une par une, utilisez un **constructeur** pour initialiser les objets :
 
 ```java
 public class Sword {
@@ -128,7 +128,7 @@ public class Sword {
 }
 ```
 
-Now creating swords is easier:
+Maintenant créer des épées est plus facile :
 
 ```java
 public class Main {
@@ -143,11 +143,11 @@ public class Main {
 }
 ```
 
-<Callout type="info" title="Constructor Rules">
-  * Same name as the class
-  * No return type (not even `void`)
-  * Called automatically when you use `new`
-  * Can have multiple constructors (overloading)
+<Callout type="info" title="Règles des Constructeurs">
+  * Même nom que la classe
+  * Pas de type de retour (même pas `void`)
+  * Appelé automatiquement quand vous utilisez `new`
+  * Peut avoir plusieurs constructeurs (surcharge)
 
   ```java
   public class Item {
@@ -169,9 +169,9 @@ public class Main {
   ```
 </Callout>
 
-## The `this` Keyword
+## Le Mot-clé `this`
 
-`this` refers to the current object. Use it to clarify when parameter names match property names:
+`this` fait référence à l'objet actuel. Utilisez-le pour clarifier quand les noms de paramètres correspondent aux noms de propriétés :
 
 ```java
 public class Player {
@@ -185,7 +185,7 @@ public class Player {
 }
 ```
 
-Without `this`, Java gets confused:
+Sans `this`, Java est confus :
 
 ```java
 public Player(String name, int health) {
@@ -194,9 +194,9 @@ public Player(String name, int health) {
 }
 ```
 
-## Practical Examples
+## Exemples Pratiques
 
-### Item Class
+### Classe Item
 
 ```java
 public class Item {
@@ -238,7 +238,7 @@ public class Main {
 }
 ```
 
-### Monster Class
+### Classe Monster
 
 ```java
 public class Monster {
@@ -295,7 +295,7 @@ public class Main {
 }
 ```
 
-### Block Class
+### Classe Block
 
 ```java
 public class Block {
@@ -328,9 +328,9 @@ public class Block {
 }
 ```
 
-## Access Modifiers (Preview)
+## Modificateurs d'Accès (Aperçu)
 
-You've seen `public` - it means "anyone can access this". We'll learn more about access control later, but here's a preview:
+Vous avez vu `public` - cela signifie "tout le monde peut y accéder". Nous en apprendrons plus sur le contrôle d'accès plus tard, mais voici un aperçu :
 
 ```java
 public class Example {
@@ -340,39 +340,39 @@ public class Example {
 }
 ```
 
-For now, use `public` for everything. We'll learn when to use `private` in the next article.
+Pour l'instant, utilisez `public` pour tout. Nous apprendrons quand utiliser `private` dans le prochain article.
 
-<Callout type="info" title="Why Use Classes?">
-  Classes help you:
+<Callout type="info" title="Pourquoi Utiliser des Classes ?">
+  Les classes vous aident à :
 
-  * **Organize** related data and methods together
-  * **Reuse** code easily (create many objects from one class)
-  * **Model** real-world things (players, items, monsters)
-  * **Maintain** code (changes in one place affect all objects)
+  * **Organiser** les données et méthodes connexes ensemble
+  * **Réutiliser** le code facilement (créer de nombreux objets à partir d'une classe)
+  * **Modéliser** des choses du monde réel (joueurs, objets, monstres)
+  * **Maintenir** le code (les changements à un endroit affectent tous les objets)
 
-  Without classes, managing 100 players would require 100 separate variables for each property. With classes, it's just 100 Player objects!
+  Sans classes, gérer 100 joueurs nécessiterait 100 variables séparées pour chaque propriété. Avec les classes, ce ne sont que 100 objets Player !
 </Callout>
 
-## Practice Exercises
+## Exercices Pratiques
 
-1. **Create a `Potion` Class**:
-   * Properties: name, healAmount, uses
-   * Constructor to set all properties
-   * Method `drink()` that heals and decreases uses
-   * Method `isEmpty()` that returns true if uses less than or equal to 0
+1. **Créer une Classe `Potion`** :
+   * Propriétés : name, healAmount, uses
+   * Constructeur pour définir toutes les propriétés
+   * Méthode `drink()` qui soigne et diminue les utilisations
+   * Méthode `isEmpty()` qui retourne vrai si les utilisations sont inférieures ou égales à 0
 
-2. **Create a `Chest` Class**:
-   * Properties: isLocked, itemCount, capacity
-   * Constructor
-   * Method `addItem()` that checks capacity
-   * Method `unlock()` that sets isLocked to false
-   * Method `isFull()` that checks if itemCount >= capacity
+2. **Créer une Classe `Chest`** :
+   * Propriétés : isLocked, itemCount, capacity
+   * Constructeur
+   * Méthode `addItem()` qui vérifie la capacité
+   * Méthode `unlock()` qui définit isLocked à faux
+   * Méthode `isFull()` qui vérifie si itemCount >= capacity
 
-3. **Create a `Villager` Class**:
-   * Properties: name, profession, tradeCount
-   * Constructor
-   * Method `greet()` that prints a greeting
-   * Method `trade()` that increases tradeCount
-   * Method `getInfo()` that displays all properties
+3. **Créer une Classe `Villager`** :
+   * Propriétés : name, profession, tradeCount
+   * Constructeur
+   * Méthode `greet()` qui affiche un message de bienvenue
+   * Méthode `trade()` qui augmente tradeCount
+   * Méthode `getInfo()` qui affiche toutes les propriétés
 
-4. **Create Multiple Objects**: Using any class you made, create 3 different objects and test all their methods.
+4. **Créer Plusieurs Objets** : En utilisant n'importe quelle classe que vous avez créée, créez 3 objets différents et testez toutes leurs méthodes.

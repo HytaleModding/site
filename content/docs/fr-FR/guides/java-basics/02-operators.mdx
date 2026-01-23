@@ -1,51 +1,51 @@
 ---
-title: 02 - Operators and Expressions
-description: An introduction to operators and expressions in Java programming.
+title: 02 - Opérateurs et expressions
+description: Une introduction aux opérateurs et expressions en programmation Java.
 ---
 
-Operators are symbols that perform operations on variables and values. They're the verbs of programming - they make things happen!
+Les opérateurs sont des symboles qui effectuent des opérations sur les variables et les valeurs. Ce sont les verbes de la programmation - ils font bouger les choses !
 
-## Arithmetic Operators
+## Opérateurs arithmétiques
 
-Used for mathematical calculations:
+Utilisés pour les calculs mathématiques :
 
 ```java
 int a = 10;
 int b = 5;
 
 int sum = a + b;        // Addition: 15
-int difference = a - b; // Subtraction: 5
+int difference = a - b; // Soustraction: 5
 int product = a * b;    // Multiplication: 50
 int quotient = a / b;   // Division: 2
-int remainder = a % b;  // Modulus (remainder): 0
+int remainder = a % b;  // Modulo (reste): 0
 ```
 
-<Callout type="info" title="Division Note">
-  When dividing integers, Java performs integer division, which means it discards any decimal part. For example, `7 / 2` would result in `3`, not `3.5`.
+<Callout type="info" title="Note sur la division">
+  Lors de la division d'entiers, Java effectue une division entière, ce qui signifie qu'elle supprime toute partie décimale. Par exemple, `7 / 2` donnerait `3`, pas `3.5`.
 
   ```java
-  int x = 7 / 2;       // 3 (not 3.5!) - Integer division
-  double y = 7.0 / 2;  // 3.5 - At least one double gives double result
-  double z = (double) 7 / 2;  // 3.5 - Casting works too
+  int x = 7 / 2;       // 3 (pas 3.5!) - Division entière
+  double y = 7.0 / 2;  // 3.5 - Au moins un double donne un résultat double
+  double z = (double) 7 / 2;  // 3.5 - Le cast fonctionne aussi
   ```
 </Callout>
 
-### Modulus (%) - The remainder Operator
+### Modulo (%) - L'opérateur de reste
 
-The modulus operator returns the remainder of a division operation:
+L'opérateur modulo retourne le reste d'une opération de division :
 
 ```java
-int remainder = 10 % 3; // 1 (because 10 divided by 3 is 3 with a remainder of 1)
+int remainder = 10 % 3; // 1 (parce que 10 divisé par 3 est 3 avec un reste de 1)
 ```
 
-## Compound Assignment Operators
+## Opérateurs d'assignation composés
 
-These operators combine an arithmetic operation with assignment:
+Ces opérateurs combinent une opération arithmétique avec une assignation :
 
 ```java
 int a = 10;
 
-a = a + 5;  // The old way
+a = a + 5;  // L'ancienne façon
 
 a += 5;     // a = a + 5
 a -= 3;     // a = a - 3
@@ -54,62 +54,62 @@ a /= 4;     // a = a / 4
 a %= 3;     // a = a % 3
 ```
 
-## Increment and Decrement Operators
+## Opérateurs d'incrémentation et de décrémentation
 
-Used to increase or decrease a variable's value by 1:
+Utilisés pour augmenter ou diminuer la valeur d'une variable de 1 :
 
 ```java
 int a = 5;
-a++; // Increment: a becomes 6
-a--; // Decrement: a becomes 5 again
+a++; // Incrémentation: a devient 6
+a--; // Décrémentation: a redevient 5
 ```
 
-<Callout type="info" title="Prefix vs Postfix">
+<Callout type="info" title="Préfixe vs Suffixe">
   ```java
   int a = 5;
-  int b = a++; // b is 5, a is now 6
-  int c = ++a; // a is 7, c is now 7
+  int b = a++; // b est 5, a est maintenant 6
+  int c = ++a; // a est 7, c est maintenant 7
   ```
 </Callout>
 
-## Comparison Operators
+## Opérateurs de comparaison
 
-Used to compare two values, returning a boolean result (`true` or `false`):
+Utilisés pour comparer deux valeurs, retournant un résultat booléen (`true` ou `false`) :
 
 ```java
 int a = 10;
 int b = 5;
 
-a == b // false - Equal to
-a != b // true  - Not equal to
-a > b  // true  - Greater than
-a < b  // false - Less than
-a >= b // true  - Greater than or equal to
-a <= b // false - Less than or equal to
+a == b // false - Égal à
+a != b // true  - Différent de
+a > b  // true  - Supérieur à
+a < b  // false - Inférieur à
+a >= b // true  - Supérieur ou égal à
+a <= b // false - Inférieur ou égal à
 ```
 
-## Logical Operators
+## Opérateurs logiques
 
-Used to combine multiple boolean expressions:
+Utilisés pour combiner plusieurs expressions booléennes :
 
 ```java
 boolean x = true;
 boolean y = false;
 
-x && y // false - Logical AND
-x || y // true  - Logical OR
-!x     // false - Logical NOT
+x && y // false - ET logique
+x || y // true  - OU logique
+!x     // false - NON logique
 ```
 
-### Combining Logical Operators
+### Combiner les opérateurs logiques
 
 ```java
-boolean result = (a > b) && (b < 10); // true if both conditions are true
+boolean result = (a > b) && (b < 10); // true si les deux conditions sont vraies
 ```
 
-## String Concatenation
+## Concaténation de chaînes
 
-The `+` operator can also be used to concatenate (join) strings:
+L'opérateur `+` peut aussi être utilisé pour concaténer (joindre) des chaînes :
 
 ```java
 String greeting = "Hello, " + "world!"; // "Hello, world!"
@@ -117,12 +117,12 @@ String name = "Alice";
 String greetingWithName = "Hello, " + name + "!"; // "Hello, Alice!"
 ```
 
-## Operator Precedence
+## Priorité des opérateurs
 
-Operator Precendence means which operator gets evaluated first in an line of code. Think of it like BODMAS/PEMDAS in math!
+La priorité des opérateurs signifie quel opérateur est évalué en premier dans une ligne de code. Pensez-y comme BODMAS/PEMDAS en mathématiques !
 
 ```java
-int result = 10 + 5 * 2; // result is 20, not 30
+int result = 10 + 5 * 2; // le résultat est 20, pas 30
 ```
 
-{/* practice to be added */}
+{/* exercices pratiques à ajouter */}

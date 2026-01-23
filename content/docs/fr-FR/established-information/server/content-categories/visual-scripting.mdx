@@ -1,59 +1,59 @@
 ---
-title: Visual Scripting
-description: An introduction to what we know of Hytale's visual scripting system as of writing this.
+title: Scripting visuel
+description: Une introduction à ce que nous savons du système de scripting visuel de Hytale au moment de la rédaction.
 ---
 
-# Visual Scripting
+# Scripting visuel
 
-Hytale plans to support Visual Scripting as a method to make advanced logic and control flow accessible to a wider audience. This system will not be available at launch, but should be available shortly after launch.
+Hytale prévoit de supporter le scripting visuel comme méthode pour rendre la logique avancée et le flux de contrôle accessibles à un public plus large. Ce système ne sera pas disponible au lancement, mais devrait être disponible peu après.
 
-## Overview
+## Aperçu
 
-Visual Scripting in Hytale is designed to function similarly to Blueprints in Unreal Engine. It allows designers to create complex behaviors through a visual interface that matches how they think about game logic, without needing to write code directly.
+Le scripting visuel dans Hytale est conçu pour fonctionner de manière similaire aux Blueprints dans Unreal Engine. Il permet aux concepteurs de créer des comportements complexes via une interface visuelle qui correspond à leur façon de penser la logique du jeu, sans avoir besoin d'écrire du code directement.
 
-### Key Features
+### Fonctionnalités clés
 
-* **Subset of Java functionality**: Visual Scripting can do a subset of what is possible with Java plugins
-* **Designer-friendly**: "Designers are empowered through a visual language that matches how they think about behaviors"
-* **Programmer extensible**: Programmers can extend and optimize the system by adding new visual nodes and performance-sensitive implementations
-* **Safe sharing environment**: Provides a sandboxed, safe environment for sharing logic between modders
+* **Sous-ensemble des fonctionnalités Java** : Le scripting visuel peut faire un sous-ensemble de ce qui est possible avec les plugins Java
+* **Adapté aux concepteurs** : « Les concepteurs sont responsabilisés grâce à un langage visuel qui correspond à leur façon de penser les comportements »
+* **Extensible par les programmeurs** : Les programmeurs peuvent étendre et optimiser le système en ajoutant de nouveaux nœuds visuels et des implémentations sensibles aux performances
+* **Environnement de partage sûr** : Fournit un environnement sandboxé et sûr pour partager la logique entre moddeurs
 
-## Advantages Over Traditional Coding
+## Avantages par rapport au codage traditionnel
 
-Visual Scripting makes writing custom logic more accessible by removing common hurdles found when developing in Java:
+Le scripting visuel rend l'écriture de logique personnalisée plus accessible en supprimant les obstacles courants rencontrés lors du développement en Java :
 
-* **No complex environment setup**: No need to worry about installing the right tools or configuring development environments
-* **Syntax-free development**: Removes the need to learn and remember programming syntax
-* **Safer sharing**: Malware in visual scripting should be virtually impossible
-* **More inclusive**: Lowers the barrier to entry for non-programmers
+* **Pas de configuration d'environnement complexe** : Pas besoin de s'inquiéter de l'installation des bons outils ou de la configuration des environnements de développement
+* **Développement sans syntaxe** : Supprime le besoin d'apprendre et de retenir la syntaxe de programmation
+* **Partage plus sûr** : Les malwares dans le scripting visuel devraient être pratiquement impossibles
+* **Plus inclusif** : Abaisse la barrière à l'entrée pour les non-programmeurs
 
-## Relationship with Java
+## Relation avec Java
 
-Visual Scripting and Java plugins are designed to work in tandem:
+Le scripting visuel et les plugins Java sont conçus pour fonctionner en tandem :
 
-* **Java extends Visual Scripting**: Programmers can create new visual nodes using Java
-* **Performance optimization**: While Visual Scripting may not be as optimized as Java directly, programmers can implement performance-critical logic in Java and expose it as visual nodes
-* **Best of both worlds**: Allows the majority of logic to remain in the accessible Visual Scripting environment while keeping expensive operations optimized
+* **Java étend le scripting visuel** : Les programmeurs peuvent créer de nouveaux nœuds visuels en utilisant Java
+* **Optimisation des performances** : Bien que le scripting visuel ne soit pas aussi optimisé que Java directement, les programmeurs peuvent implémenter la logique critique pour les performances en Java et l'exposer comme nœuds visuels
+* **Le meilleur des deux mondes** : Permet à la majorité de la logique de rester dans l'environnement accessible du scripting visuel tout en gardant les opérations coûteuses optimisées
 
-Hytale strongly recommends Visual Scripting since it is both more accessible and safer to share and download. However, staying purely in Java will still work for those who prefer it.
+Hytale recommande fortement le scripting visuel car il est à la fois plus accessible et plus sûr à partager et télécharger. Cependant, rester purement en Java fonctionnera toujours pour ceux qui le préfèrent.
 
-## 3D Visual Scripting
+## Scripting visuel 3D
 
-One of Hytale's unique features is bringing visual scripting directly into the 3D world:
+L'une des fonctionnalités uniques de Hytale est d'amener le scripting visuel directement dans le monde 3D :
 
-* **In-world editing**: Link levers, doors, spawners, triggers, and other elements directly inside the game
-* **Adventure map creation**: Excellent for building adventure maps and encounters without leaving Hytale
-* **Similar to DOOM SnapMap**: Provides a familiar workflow for those who have used similar systems
-* **Fully integrated**: Works seamlessly with the asset and scripting stack
+* **Édition dans le monde** : Liez des leviers, des portes, des générateurs, des déclencheurs et d'autres éléments directement dans le jeu
+* **Création de cartes d'aventure** : Excellent pour construire des cartes d'aventure et des rencontres sans quitter Hytale
+* **Similaire au SnapMap de DOOM** : Fournit un workflow familier pour ceux qui ont utilisé des systèmes similaires
+* **Entièrement intégré** : Fonctionne parfaitement avec la pile d'assets et de scripting
 
-## No Text-Based Scripting
+## Pas de scripting textuel
 
-Hytale has made a deliberate decision not to include text-based scripting languages. Their reasoning:
+Hytale a pris la décision délibérée de ne pas inclure de langages de scripting textuels. Leur raisonnement :
 
-* **False compromise**: Text-based scripting is often introduced to "help non-programmers" but still requires learning programming concepts
-* **Complexity increase**: Programmers end up juggling two languages where one is less powerful
-* **Still requires syntax**: Designers still need to learn syntax and programming concepts
-* **Less inclusive**: Doesn't truly solve the accessibility problem
-* **Fragmentation**: Avoids "fragmenting logic across multiple 'half-languages'"
+* **Faux compromis** : Le scripting textuel est souvent introduit pour « aider les non-programmeurs » mais nécessite toujours l'apprentissage de concepts de programmation
+* **Augmentation de la complexité** : Les programmeurs finissent par jongler avec deux langages dont l'un est moins puissant
+* **Nécessite toujours de la syntaxe** : Les concepteurs doivent toujours apprendre la syntaxe et les concepts de programmation
+* **Moins inclusif** : Ne résout pas vraiment le problème d'accessibilité
+* **Fragmentation** : Évite de « fragmenter la logique à travers plusieurs "demi-langages" »
 
-Instead, Hytale believes visual scripting is a better approach that truly makes game logic accessible to a wider audience while maintaining the power and flexibility needed
+Au lieu de cela, Hytale croit que le scripting visuel est une meilleure approche qui rend vraiment la logique du jeu accessible à un public plus large tout en maintenant la puissance et la flexibilité nécessaires.

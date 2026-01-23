@@ -1,13 +1,13 @@
 ---
-title: 09 - Working with Strings
-description: Master text manipulation and string operations in Java.
+title: 09 - Travailler avec les Chaînes de Caractères
+description: Maîtrisez la manipulation de texte et les opérations sur les chaînes en Java.
 ---
 
-Strings are one of the most commonly used types in Java. They're essential for handling player names, chat messages, item descriptions, and like everything you see.
+Les chaînes de caractères sont l'un des types les plus couramment utilisés en Java. Elles sont essentielles pour gérer les noms de joueurs, les messages de chat, les descriptions d'objets et tout ce que vous voyez.
 
-## String Basics
+## Bases des Chaînes
 
-Strings are objects that store text:
+Les chaînes sont des objets qui stockent du texte :
 
 ```java
 String name = "Simon";
@@ -15,8 +15,8 @@ String message = "Welcome to Hytale!";
 String empty = "";
 ```
 
-<Callout type="warning" title="Strings are Immutable">
-  Once created, a String **cannot be changed**. Methods that seem to modify a string actually create a new one!
+<Callout type="warning" title="Les Chaînes sont Immuables">
+  Une fois créée, une String **ne peut pas être modifiée**. Les méthodes qui semblent modifier une chaîne en créent en réalité une nouvelle !
 
   ```java
   String text = "Hello";
@@ -28,9 +28,9 @@ String empty = "";
   ```
 </Callout>
 
-## String Methods
+## Méthodes de Chaîne
 
-### Length
+### Longueur
 
 ```java
 String name = "Alice";
@@ -38,7 +38,7 @@ int length = name.length();
 System.out.println(length);  // 5
 ```
 
-### Changing Case
+### Changer la Casse
 
 ```java
 String text = "Hello World";
@@ -46,7 +46,7 @@ String upper = text.toUpperCase();  // "HELLO WORLD"
 String lower = text.toLowerCase();  // "hello world"
 ```
 
-### Checking Contents
+### Vérifier le Contenu
 
 ```java
 String message = "Welcome to Hytale";
@@ -58,7 +58,7 @@ boolean starts = message.startsWith("Welcome");  // true
 boolean ends = message.endsWith("Hytale");  // true
 ```
 
-### Extracting Parts
+### Extraire des Parties
 
 ```java
 String text = "Hello World";
@@ -70,8 +70,8 @@ String sub1 = text.substring(0, 5);   // "Hello"
 String sub2 = text.substring(6);      // "World"
 ```
 
-<Callout type="info" title="Substring Indices">
-  `substring(start, end)` includes `start` but excludes `end`:
+<Callout type="info" title="Indices de Substring">
+  `substring(start, end)` inclut `start` mais exclut `end` :
 
   ```java
   String text = "Hytale";
@@ -83,7 +83,7 @@ String sub2 = text.substring(6);      // "World"
   ```
 </Callout>
 
-### Replacing Text
+### Remplacer du Texte
 
 ```java
 String text = "I love Minecraft";
@@ -94,7 +94,7 @@ String noSpaces = "Hello World".replace(" ", "");
 System.out.println(noSpaces);  // "HelloWorld"
 ```
 
-### Trimming Whitespace
+### Supprimer les Espaces
 
 ```java
 String messy = "  Hello World  ";
@@ -102,7 +102,7 @@ String clean = messy.trim();
 System.out.println(clean);  // "Hello World" (no spaces at ends)
 ```
 
-### Splitting Strings
+### Diviser les Chaînes
 
 ```java
 String command = "give player sword 5";
@@ -114,10 +114,10 @@ System.out.println(parts[2]);  // "sword"
 System.out.println(parts[3]);  // "5"
 ```
 
-## String Comparison
+## Comparaison de Chaînes
 
-<Callout type="warning" title="Never Use == for Strings">
-  Always use `.equals()` to compare string contents!
+<Callout type="warning" title="N'utilisez Jamais == pour les Chaînes">
+  Utilisez toujours `.equals()` pour comparer le contenu des chaînes !
 
   ```java
   String name1 = "Steve";
@@ -140,7 +140,7 @@ System.out.println(parts[3]);  // "5"
   ```
 </Callout>
 
-### Comparing Order
+### Comparer l'Ordre
 
 ```java
 String a = "Apple";
@@ -156,9 +156,9 @@ if (a.compareTo(b) < 0) {
 }
 ```
 
-## String Concatenation
+## Concaténation de Chaînes
 
-### Using + Operator
+### Utiliser l'Opérateur +
 
 ```java
 String first = "Hello";
@@ -169,15 +169,15 @@ int score = 100;
 String message = "Score: " + score;  // "Score: 100"
 ```
 
-### Using concat()
+### Utiliser concat()
 
 ```java
 String result = "Hello".concat(" World");  // "Hello World"
 ```
 
-### Building Long Strings
+### Construire de Longues Chaînes
 
-For many concatenations, use `StringBuilder`:
+Pour de nombreuses concaténations, utilisez `StringBuilder` :
 
 ```java
 StringBuilder builder = new StringBuilder();
@@ -193,8 +193,8 @@ System.out.println(result);
 // "Player: Alice, Level: 10, Health: 100"
 ```
 
-<Callout type="info" title="Why StringBuilder?">
-  Regular concatenation creates many temporary strings:
+<Callout type="info" title="Pourquoi StringBuilder ?">
+  La concaténation régulière crée de nombreuses chaînes temporaires :
 
   ```java
   // Inefficient - Creates many temporary strings
@@ -211,12 +211,12 @@ System.out.println(result);
   String result = sb.toString();
   ```
 
-  Use `StringBuilder` when building strings in loops!
+  Utilisez `StringBuilder` lors de la construction de chaînes dans des boucles !
 </Callout>
 
-## Practical Examples
+## Exemples Pratiques
 
-### Parse Player Command
+### Analyser une Commande de Joueur
 
 ```java
 public class CommandParser {
@@ -241,7 +241,7 @@ public class CommandParser {
 }
 ```
 
-### Format Player Display Name
+### Formater le Nom d'Affichage du Joueur
 
 ```java
 public class PlayerFormatter {
@@ -268,7 +268,7 @@ public class PlayerFormatter {
 }
 ```
 
-### Validate Username
+### Valider un Nom d'Utilisateur
 
 ```java
 public class UsernameValidator {
@@ -304,7 +304,7 @@ public class UsernameValidator {
 }
 ```
 
-### Item Description Builder
+### Constructeur de Description d'Objet
 
 ```java
 public class ItemDescription {
@@ -343,7 +343,7 @@ public class ItemDescription {
 }
 ```
 
-### Chat Message Filter
+### Filtre de Message de Chat
 
 ```java
 public class ChatFilter {
@@ -370,9 +370,9 @@ public class ChatFilter {
 }
 ```
 
-## String Formatting
+## Formatage de Chaînes
 
-### Using String.format()
+### Utiliser String.format()
 
 ```java
 String name = "Alice";
@@ -385,8 +385,8 @@ System.out.println(formatted);
 // "Alice is level 10 with 85.5% health"
 ```
 
-<Callout type="info" title="Format Specifiers">
-  Common format codes:
+<Callout type="info" title="Spécificateurs de Format">
+  Codes de format courants :
 
   - `%s` - String
   - `%d` - Integer
@@ -403,9 +403,9 @@ System.out.println(formatted);
   ```
 </Callout>
 
-## Common String Operations
+## Opérations Courantes sur les Chaînes
 
-### Check if String is Empty
+### Vérifier si une Chaîne est Vide
 
 ```java
 String text = "";
@@ -421,7 +421,7 @@ if (text == null || text.trim().isEmpty()) {
 }
 ```
 
-### Count Occurrences
+### Compter les Occurrences
 
 ```java
 public static int countOccurrences(String text, String target) {
@@ -441,7 +441,7 @@ int count = countOccurrences("hello hello world", "hello");
 System.out.println(count);  // 2
 ```
 
-### Reverse a String
+### Inverser une Chaîne
 
 ```java
 public static String reverse(String text) {
@@ -454,7 +454,7 @@ String reversed = reverse("Hello");
 System.out.println(reversed);  // "olleH"
 ```
 
-### Check if Palindrome
+### Vérifier si c'est un Palindrome
 
 ```java
 public static boolean isPalindrome(String text) {
@@ -468,26 +468,26 @@ System.out.println(isPalindrome("racecar"));     // true
 System.out.println(isPalindrome("hello"));       // false
 ```
 
-## Practice Exercises
+## Exercices Pratiques
 
-1. **Username Checker**: Write a method that checks if a username:
-   - Is between 3 and 16 characters
-   - Contains only letters, numbers, and underscores
-   - Doesn't start with a number
-   - Returns true if valid, false otherwise
+1. **Vérificateur de Nom d'Utilisateur** : Écrivez une méthode qui vérifie si un nom d'utilisateur :
+   - Est entre 3 et 16 caractères
+   - Contient uniquement des lettres, chiffres et underscores
+   - Ne commence pas par un chiffre
+   - Retourne vrai si valide, faux sinon
 
-2. **Command Parser**: Parse this command format: `/teleport x y z`
-   - Extract the coordinates
-   - Convert them to integers
-   - Return an array of the three values
+2. **Analyseur de Commande** : Analysez ce format de commande : `/teleport x y z`
+   - Extrayez les coordonnées
+   - Convertissez-les en entiers
+   - Retournez un tableau des trois valeurs
 
-3. **Chat Formatter**: Create a method that formats chat messages:
-   - Input: player name, rank, message
-   - Output: `"[RANK] PlayerName: message"`
-   - If no rank, just show `"PlayerName: message"`
+3. **Formateur de Chat** : Créez une méthode qui formate les messages de chat :
+   - Entrée : nom du joueur, rang, message
+   - Sortie : `"[RANG] NomJoueur: message"`
+   - Si pas de rang, affichez juste `"NomJoueur: message"`
 
-4. **Word Counter**: Count how many words are in a sentence (words are separated by spaces)
+4. **Compteur de Mots** : Comptez combien de mots il y a dans une phrase (les mots sont séparés par des espaces)
 
-5. **Title Case**: Convert a string to title case:
-   - Input: `"hello world"`
-   - Output: `"Hello World"`
+5. **Casse de Titre** : Convertissez une chaîne en casse de titre :
+   - Entrée : `"hello world"`
+   - Sortie : `"Hello World"`

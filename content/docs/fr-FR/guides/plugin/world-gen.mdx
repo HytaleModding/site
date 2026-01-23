@@ -1,32 +1,32 @@
 ---
-title: World Generation System
-description: Learn how to create custom world generation features for your Hytale mod.
+title: Système de Génération de Monde
+description: Apprenez à créer des fonctionnalités de génération de monde personnalisées pour votre mod Hytale.
 authors:
   - name: Neil Revin
     link: https://itsneil.dev
 ---
 
-# Overview
+# Aperçu
 
-This section covers Hytale's procedural world generation systems that creates environments, biomes, and structures dynamically as players explore the world.
+Cette section couvre les systèmes de génération de monde procédurale de Hytale qui créent des environnements, des biomes et des structures de manière dynamique à mesure que les joueurs explorent le monde.
 
-Hytale’s world generation is organized into three interconnected systems:
+La génération de monde de Hytale est organisée en trois systèmes interconnectés :
 
-- **Zones** - Large-scale regions that define overall world structure
-- **Biomes** - Terrain characteristics and environmental properties within zones
-- **Caves** - Underground structures and networks generated within zones
+- **Zones** - Régions à grande échelle qui définissent la structure globale du monde
+- **Biomes** - Caractéristiques du terrain et propriétés environnementales au sein des zones
+- **Grottes** - Structures souterraines et réseaux générés au sein des zones
 
-These systems work together to create a rich, varied world with smooth transitions and coherent regional themes.
+Ces systèmes fonctionnent ensemble pour créer un monde riche et varié avec des transitions fluides et des thèmes régionaux cohérents.
 
-## Getting Started
+## Pour Commencer
 
-1. Zone System - Large regions
-2. Biome System - Terrain and environment within zones
-3. Cave System - Underground structures and networks within zones
+1. Système de Zones - Grandes régions
+2. Système de Biomes - Terrain et environnement au sein des zones
+3. Système de Grottes - Structures souterraines et réseaux au sein des zones
 
-## Implementation Details
+## Détails d'Implémentation
 
-### Zone Lookup and Generation
+### Recherche et Génération de Zones
 
 ```java
 
@@ -47,7 +47,7 @@ if (caveGen != null) {
 }
 ```
 
-### Creating a Custom Zone
+### Créer une Zone Personnalisée
 
 ```java
 // Configure zone discovery
@@ -86,11 +86,11 @@ Zone customZone = new Zone(
 );
 ```
 
-## System Integration
+## Intégration des Systèmes
 
-### Zone & Biome Integration
+### Intégration Zone & Biome
 
-Each zone defines its own biome pattern:
+Chaque zone définit son propre motif de biome :
 
 ```java
 Zone zone = zoneGen.generate(seed, x, z).getZone();
@@ -98,9 +98,9 @@ BiomePatternGenerator biomeGen = zone.biomePatternGenerator();
 Biome biome = biomeGen.generateBiomeAt(zoneResult, seed, x, z);
 ```
 
-### Zone & Cave Integration
+### Intégration Zone & Grotte
 
-Eacdh zone defines it's own cave patterns:
+Chaque zone définit ses propres motifs de grottes :
 
 ```java
 Zone zone = /* ... */;
@@ -111,9 +111,9 @@ if (caveGen != null) {
 }
 ```
 
-### Biome & Cave Integration
+### Intégration Biome & Grotte
 
-Caves use biome masks for placement control:
+Les grottes utilisent des masques de biome pour le contrôle du placement :
 
 ```java
 // Cave type with biome restrictions
@@ -127,9 +127,9 @@ if (CaveBiomeMaskFlags.canGenerate(flags)) {
 }
 ```
 
-### Border Transitions
+### Transitions de Frontières
 
-All systems respect zone boundaries:
+Tous les systèmes respectent les limites des zones :
 
 ```java
 ZoneGeneratorResult result = zoneGen.generate(seed, x, z);

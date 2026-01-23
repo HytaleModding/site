@@ -1,6 +1,6 @@
 ---
-title: Creating Commands
-description: Learn how to create custom commands for your Hytale mod.
+title: Créer des Commandes
+description: Apprenez à créer des commandes personnalisées pour votre mod Hytale.
 authors:
   - name: Neil Revin
     link: https://itsneil.dev
@@ -8,16 +8,16 @@ authors:
     link: https://oskar.scot
 ---
 
-In this guide, you will learn how to create custom commands for your Hytale mod.
+Dans ce guide, vous apprendrez comment créer des commandes personnalisées pour votre mod Hytale.
 
-## The `AbstractPlayerCommand` Class
+## La Classe `AbstractPlayerCommand`
 
-To create a command, you can extend the `AbstractPlayerCommand` class. You need to provide a constructor that calls the `BaseCommand` constructor with the command name, description, and whether the command requires confirmation (--confirm while running the command).
+Pour créer une commande, vous pouvez étendre la classe `AbstractPlayerCommand`. Vous devez fournir un constructeur qui appelle le constructeur `BaseCommand` avec le nom de la commande, la description, et si la commande nécessite une confirmation (--confirm lors de l'exécution de la commande).
 
-You can override the `execute` function to implement the command's behavior. It gives you access to the CommandContext which is always a player in this case, the EntityStore, the Reference store, the player reference as well as the World in which the command is being executed.
-It's important to know that `AbstractPlayerCommand` extends `AbstractAsyncCommand` meaning that commands do not execute on the main server thread.
+Vous pouvez surcharger la fonction `execute` pour implémenter le comportement de la commande. Elle vous donne accès au CommandContext qui est toujours un joueur dans ce cas, à l'EntityStore, au Reference store, à la référence du joueur ainsi qu'au World dans lequel la commande est exécutée.
+Il est important de savoir que `AbstractPlayerCommand` étend `AbstractAsyncCommand`, ce qui signifie que les commandes ne s'exécutent pas sur le thread principal du serveur.
 
-You can use the `Store` along with the `Ref` to access all entity components like the `Player` component, `UUIDComponent` or `TransformComponent`.
+Vous pouvez utiliser le `Store` avec le `Ref` pour accéder à tous les composants d'entité comme le composant `Player`, `UUIDComponent` ou `TransformComponent`.
 
 ```java
 public class ExampleCommand extends AbstractPlayerCommand {
@@ -40,9 +40,9 @@ public class ExampleCommand extends AbstractPlayerCommand {
 }
 ```
 
-## Registering the Command
+## Enregistrer la Commande
 
-For any command
+Pour toute commande
 
 ```java
 public class MyPlugin extends JavaPlugin {

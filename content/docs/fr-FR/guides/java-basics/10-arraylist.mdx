@@ -1,11 +1,11 @@
 ---
-title: 10 - ArrayList and Collections
-description: Learn to use flexible, resizable collections in Java.
+title: 10 - ArrayList et Collections
+description: Apprenez à utiliser des collections flexibles et redimensionnables en Java.
 ---
 
-Arrays have a fixed size, but what if you need to add or remove elements? That's where `ArrayList` comes in - a resizable collection that grows and shrinks automatically.
+Les tableaux ont une taille fixe, mais que faire si vous devez ajouter ou supprimer des éléments ? C'est là qu'intervient `ArrayList` - une collection redimensionnable qui grandit et rétrécit automatiquement.
 
-## ArrayList Basics
+## Bases d'ArrayList
 
 ```java
 import java.util.ArrayList;
@@ -25,16 +25,16 @@ public class Main {
 }
 ```
 
-<Callout type="info" title="ArrayList vs Array">
-  | **Array**                               | **ArrayList**                                         |
+<Callout type="info" title="ArrayList vs Tableau">
+  | **Tableau**                             | **ArrayList**                                         |
   | --------------------------------------- | ----------------------------------------------------- |
-  | Fixed size                              | Resizable (grows/shrinks)                             |
-  | Can hold primitives (int, double, etc.) | Can only hold objects (Integer, Double, String, etc.) |
-  | Faster access                           | More features (add, remove, etc.)                     |
+  | Taille fixe                             | Redimensionnable (grandit/rétrécit)                   |
+  | Peut contenir des primitives (int, etc.)| Peut seulement contenir des objets (Integer, etc.)   |
+  | Accès plus rapide                       | Plus de fonctionnalités (add, remove, etc.)           |
   | `int[] numbers = new int[10];`          | `ArrayList<Integer> numbers = new ArrayList<>();`     |
 </Callout>
 
-## Creating ArrayLists
+## Créer des ArrayLists
 
 ```java
 import java.util.ArrayList;
@@ -51,8 +51,8 @@ ArrayList<Double> prices = new ArrayList<>();
 ArrayList<Boolean> flags = new ArrayList<>();
 ```
 
-<Callout type="warning" title="Primitives in ArrayList">
-  You can't use primitives directly. Use their wrapper classes:
+<Callout type="warning" title="Primitives dans ArrayList">
+  Vous ne pouvez pas utiliser les primitives directement. Utilisez leurs classes wrapper :
 
   ```java
   // Wrong
@@ -62,7 +62,7 @@ ArrayList<Boolean> flags = new ArrayList<>();
   ArrayList<Integer> numbers = new ArrayList<>();
   ```
 
-  Wrapper classes:
+  Classes wrapper :
 
   - `int` → `Integer`
   - `double` → `Double`
@@ -70,9 +70,9 @@ ArrayList<Boolean> flags = new ArrayList<>();
   - `char` → `Character`
 </Callout>
 
-## Common ArrayList Methods
+## Méthodes Courantes d'ArrayList
 
-### Adding Elements
+### Ajouter des Éléments
 
 ```java
 ArrayList<String> items = new ArrayList<>();
@@ -84,7 +84,7 @@ items.add(0, "Helmet");       // Add at specific index
 System.out.println(items);    // [Helmet, Sword, Shield]
 ```
 
-### Accessing Elements
+### Accéder aux Éléments
 
 ```java
 ArrayList<String> items = new ArrayList<>();
@@ -97,7 +97,7 @@ String second = items.get(1);   // "Shield"
 int size = items.size();        // 2
 ```
 
-### Removing Elements
+### Supprimer des Éléments
 
 ```java
 ArrayList<String> items = new ArrayList<>();
@@ -111,7 +111,7 @@ items.remove("Potion");        // Remove by value
 System.out.println(items);     // [Sword]
 ```
 
-### Checking Contents
+### Vérifier le Contenu
 
 ```java
 ArrayList<String> items = new ArrayList<>();
@@ -125,7 +125,7 @@ boolean isEmpty = items.isEmpty();              // false
 int size = items.size();                        // 2
 ```
 
-### Modifying Elements
+### Modifier des Éléments
 
 ```java
 ArrayList<String> items = new ArrayList<>();
@@ -136,7 +136,7 @@ items.set(0, "Iron Sword");    // Replace at index 0
 System.out.println(items);     // [Iron Sword]
 ```
 
-### Clearing All Elements
+### Effacer Tous les Éléments
 
 ```java
 ArrayList<String> items = new ArrayList<>();
@@ -147,9 +147,9 @@ items.clear();                 // Remove everything
 System.out.println(items);     // []
 ```
 
-## Looping Through ArrayList
+## Parcourir un ArrayList
 
-### Using For Loop
+### Utiliser une Boucle For
 
 ```java
 ArrayList<String> players = new ArrayList<>();
@@ -162,7 +162,7 @@ for (int i = 0; i < players.size(); i++) {
 }
 ```
 
-### Using Enhanced For Loop
+### Utiliser une Boucle For Améliorée
 
 ```java
 for (String player : players) {
@@ -170,15 +170,15 @@ for (String player : players) {
 }
 ```
 
-### Using forEach (Java 8+)
+### Utiliser forEach (Java 8+)
 
 ```java
 players.forEach(player -> System.out.println(player));
 ```
 
-## Practical Examples
+## Exemples Pratiques
 
-### Player Inventory System
+### Système d'Inventaire de Joueur
 
 ```java
 import java.util.ArrayList;
@@ -245,7 +245,7 @@ public class Main {
 }
 ```
 
-### Quest System
+### Système de Quêtes
 
 ```java
 import java.util.ArrayList;
@@ -292,7 +292,7 @@ public class QuestManager {
             System.out.println("No completed quests");
         } else {
             for (String quest : completedQuests) {
-                System.out.println("" + quest);
+                System.out.println("✓ " + quest);
             }
         }
     }
@@ -303,7 +303,7 @@ public class QuestManager {
 }
 ```
 
-### Leaderboard System
+### Système de Classement
 
 ```java
 import java.util.ArrayList;
@@ -358,7 +358,7 @@ public class Leaderboard {
 }
 ```
 
-### Online Players Tracker
+### Suivi des Joueurs en Ligne
 
 ```java
 import java.util.ArrayList;
@@ -410,9 +410,9 @@ public class OnlinePlayersTracker {
 }
 ```
 
-## ArrayList of Custom Objects
+## ArrayList d'Objets Personnalisés
 
-You can store your own classes in ArrayLists:
+Vous pouvez stocker vos propres classes dans des ArrayLists :
 
 ```java
 public class Player {
@@ -461,9 +461,9 @@ public class Main {
 }
 ```
 
-## Useful ArrayList Operations
+## Opérations Utiles sur ArrayList
 
-### Convert to Array
+### Convertir en Tableau
 
 ```java
 ArrayList<String> list = new ArrayList<>();
@@ -473,14 +473,14 @@ list.add("B");
 String[] array = list.toArray(new String[0]);
 ```
 
-### Convert Array to ArrayList
+### Convertir un Tableau en ArrayList
 
 ```java
 String[] array = {"A", "B", "C"};
 ArrayList<String> list = new ArrayList<>(Arrays.asList(array));
 ```
 
-### Copy an ArrayList
+### Copier un ArrayList
 
 ```java
 ArrayList<String> original = new ArrayList<>();
@@ -491,7 +491,7 @@ original.add("B");
 ArrayList<String> copy = new ArrayList<>(original);
 ```
 
-### Find Index of Element
+### Trouver l'Index d'un Élément
 
 ```java
 ArrayList<String> items = new ArrayList<>();
@@ -502,29 +502,29 @@ int index = items.indexOf("Shield");  // 1
 int notFound = items.indexOf("Axe");  // -1
 ```
 
-## Practice Exercises
+## Exercices Pratiques
 
-1. **Shopping Cart**: Create a shopping cart system:
-   - Add items
-   - Remove items
-   - Calculate total items
-   - Clear cart
+1. **Panier d'Achat** : Créez un système de panier d'achat :
+   - Ajouter des objets
+   - Supprimer des objets
+   - Calculer le total des objets
+   - Vider le panier
 
-2. **Friend List**: Create a friend management system:
-   - Add friend
-   - Remove friend
-   - Check if someone is a friend
-   - Display all friends
+2. **Liste d'Amis** : Créez un système de gestion d'amis :
+   - Ajouter un ami
+   - Supprimer un ami
+   - Vérifier si quelqu'un est un ami
+   - Afficher tous les amis
 
-3. **Todo List**: Build a todo list:
-   - Add task
-   - Mark task as complete (move to completed list)
-   - Display active tasks
-   - Display completed tasks
+3. **Liste de Tâches** : Construisez une liste de tâches :
+   - Ajouter une tâche
+   - Marquer une tâche comme terminée (déplacer vers la liste terminée)
+   - Afficher les tâches actives
+   - Afficher les tâches terminées
 
-4. **High Scores**: Create a high score system:
-   - Add scores
-   - Display top 5 scores in order
-   - Remove lowest score if more than 10 scores exist
+4. **Meilleurs Scores** : Créez un système de meilleurs scores :
+   - Ajouter des scores
+   - Afficher les 5 meilleurs scores dans l'ordre
+   - Supprimer le score le plus bas s'il y a plus de 10 scores
 
 ---

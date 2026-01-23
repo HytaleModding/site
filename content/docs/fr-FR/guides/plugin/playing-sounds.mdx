@@ -1,34 +1,34 @@
 ---
-title: Playing Sounds
-description: Learn how to Play Sounds with your Hytale Plugin
+title: Jouer des Sons
+description: Apprenez à jouer des sons avec votre plugin Hytale
 authors:
   - name: Neil Revin
     link: https://itsneil.dev
 ---
 
-In this guide, you will learn how to play sounds to a player.
+Dans ce guide, vous apprendrez comment jouer des sons pour un joueur.
 
-## Sound Indexes
+## Index de Sons
 
-We currently have a lot of Sounds available to be used as a key in the AssetMap, [click here](../../server/sounds) to see the full list of available sounds.
+Nous avons actuellement beaucoup de sons disponibles pour être utilisés comme clé dans l'AssetMap, [cliquez ici](../../server/sounds) pour voir la liste complète des sons disponibles.
 
-You can use the `getAssetMap()` method from the `SoundEvent` class to get the index of a specified sound:
+Vous pouvez utiliser la méthode `getAssetMap()` de la classe `SoundEvent` pour obtenir l'index d'un son spécifié :
 
 ```java
 int index = SoundEvent.getAssetMap().getIndex("SFX_Cactus_Large_Hit");
 ```
 
-## The Transform Component
+## Le Composant Transform
 
-The `TransformComponent` is the component that tells Hytale where to play the sound. You can get this in multiple ways.
+Le `TransformComponent` est le composant qui indique à Hytale où jouer le son. Vous pouvez l'obtenir de plusieurs façons.
 
-1. Getting the Transform Component from the `Player` object
+1. Obtenir le Transform Component depuis l'objet `Player`
 
 ```java
 TransformComponent transform = store.getComponent(context.senderAsPlayerRef(), EntityModule.get().getTransformComponentType());
 ```
 
-2. Generating a new TransformComponent (although this is not recommended, as if your player is not close enough they won't hear the sound)
+2. Générer un nouveau TransformComponent (bien que cela ne soit pas recommandé, car si votre joueur n'est pas assez proche, il n'entendra pas le son)
 
 ```java
 Vector3d vector3d = new Vector3d(0, 0, 0); // position
@@ -38,19 +38,19 @@ TransformComponent transform = new TransformComponent(vector3d, vector3f);
 
 ### PlayerRef
 
-You need a Player Reference, which is a instance of `Ref<EntityStore>`. If you have the `Player` object, you can use the `getReference()` method to get a Player Reference
+Vous avez besoin d'une référence de joueur, qui est une instance de `Ref<EntityStore>`. Si vous avez l'objet `Player`, vous pouvez utiliser la méthode `getReference()` pour obtenir une référence de joueur
 
 ### World
 
-You need a World reference, as the sound needs to be played inside the `execute()` method from the `World` class.
+Vous avez besoin d'une référence World, car le son doit être joué à l'intérieur de la méthode `execute()` de la classe `World`.
 
 ### SoundCategory
 
-There is a `SoundCategory` enum that defines different sound categories, such as `Music`, `Ambient`, `SFX` and `UI`. You can use these categories to specify the type of sound you are playing.
+Il existe une énumération `SoundCategory` qui définit différentes catégories de sons, telles que `Music`, `Ambient`, `SFX` et `UI`. Vous pouvez utiliser ces catégories pour spécifier le type de son que vous jouez.
 
-## Playing Sounds
+## Jouer des Sons
 
-You can use the `SoundUtil` class to play sounds, using the `playSoundEvent3dToPlayer` method.
+Vous pouvez utiliser la classe `SoundUtil` pour jouer des sons, en utilisant la méthode `playSoundEvent3dToPlayer`.
 
 ```java
 int index = SoundEvent.getAssetMap().getIndex("SFX_Cactus_Large_Hit");

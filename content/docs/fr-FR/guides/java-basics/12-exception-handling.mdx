@@ -1,24 +1,24 @@
 ---
-title: 12 - Exception Handling
-description: Learn how to handle errors gracefully in your Java programs.
+title: 12 - Gestion des Exceptions
+description: Apprenez à gérer les erreurs avec élégance dans vos programmes Java.
 ---
 
-Exceptions are errors that occur while your program is running. Instead of crashing, you can "catch" these errors and handle them gracefully.
+Les exceptions sont des erreurs qui se produisent pendant l'exécution de votre programme. Au lieu de planter, vous pouvez "attraper" ces erreurs et les gérer avec élégance.
 
-## What is an Exception?
+## Qu'est-ce qu'une Exception ?
 
-An exception is an event that disrupts the normal flow of your program:
+Une exception est un événement qui perturbe le flux normal de votre programme :
 
 ```java
 String text = null;
 System.out.println(text.length());  // NullPointerException - crashes!
 ```
 
-Without handling, this crashes your mod and breaks the game!
+Sans gestion, cela fait planter votre mod et casse le jeu !
 
-## Try-Catch Blocks
+## Blocs Try-Catch
 
-Use `try-catch` to handle exceptions:
+Utilisez `try-catch` pour gérer les exceptions :
 
 ```java
 try {
@@ -33,11 +33,11 @@ try {
 System.out.println("Program continues...");
 ```
 
-<Callout type="info" title="How Try-Catch Works">
-  1. Code in `try` block runs normally
-  2. If an exception occurs, execution jumps to `catch` block
-  3. After `catch` block, program continues normally
-  4. If no exception occurs, `catch` block is skipped
+<Callout type="info" title="Comment Fonctionne Try-Catch">
+  1. Le code dans le bloc `try` s'exécute normalement
+  2. Si une exception se produit, l'exécution saute au bloc `catch`
+  3. Après le bloc `catch`, le programme continue normalement
+  4. Si aucune exception ne se produit, le bloc `catch` est ignoré
 
   ```java
   try {
@@ -51,11 +51,11 @@ System.out.println("Program continues...");
   ```
 </Callout>
 
-## Common Exception Types
+## Types d'Exceptions Courants
 
 ### NullPointerException
 
-Accessing methods/properties on null objects:
+Accès aux méthodes/propriétés sur des objets null :
 
 ```java
 String name = null;
@@ -69,7 +69,7 @@ try {
 
 ### ArrayIndexOutOfBoundsException
 
-Accessing invalid array index:
+Accès à un index de tableau invalide :
 
 ```java
 int[] numbers = {1, 2, 3};
@@ -83,7 +83,7 @@ try {
 
 ### NumberFormatException
 
-Converting invalid strings to numbers:
+Conversion de chaînes invalides en nombres :
 
 ```java
 try {
@@ -95,7 +95,7 @@ try {
 
 ### ArithmeticException
 
-Math errors like division by zero:
+Erreurs mathématiques comme la division par zéro :
 
 ```java
 try {
@@ -105,9 +105,9 @@ try {
 }
 ```
 
-## Multiple Catch Blocks
+## Blocs Catch Multiples
 
-Handle different exceptions differently:
+Gérez différentes exceptions différemment :
 
 ```java
 String input = "abc";
@@ -123,9 +123,9 @@ try {
 }
 ```
 
-## Catching Multiple Exception Types
+## Attraper Plusieurs Types d'Exceptions
 
-Catch multiple exceptions in one block:
+Attrapez plusieurs exceptions dans un seul bloc :
 
 ```java
 try {
@@ -135,9 +135,9 @@ try {
 }
 ```
 
-## The Finally Block
+## Le Bloc Finally
 
-Code that **always** runs, whether exception occurs or not:
+Code qui s'exécute **toujours**, qu'une exception se produise ou non :
 
 ```java
 try {
@@ -151,13 +151,13 @@ try {
 }
 ```
 
-<Callout type="info" title="When to Use Finally">
-  Use `finally` for cleanup tasks that must always happen:
+<Callout type="info" title="Quand Utiliser Finally">
+  Utilisez `finally` pour les tâches de nettoyage qui doivent toujours se produire :
 
-  - Closing files
-  - Releasing resources
-  - Saving data
-  - Logging
+  - Fermer des fichiers
+  - Libérer des ressources
+  - Sauvegarder des données
+  - Journalisation
 
   ```java
   FileReader file = null;
@@ -174,9 +174,9 @@ try {
   ```
 </Callout>
 
-## Getting Exception Information
+## Obtenir des Informations sur l'Exception
 
-The exception object contains useful information:
+L'objet exception contient des informations utiles :
 
 ```java
 try {
@@ -188,9 +188,9 @@ try {
 }
 ```
 
-## Practical Examples
+## Exemples Pratiques
 
-### Safe Player Input
+### Entrée de Joueur Sécurisée
 
 ```java
 import java.util.Scanner;
@@ -223,7 +223,7 @@ public class PlayerInput {
 }
 ```
 
-### Safe Item Durability Update
+### Mise à Jour Sécurisée de la Durabilité d'Objet
 
 ```java
 public class Item {
@@ -261,7 +261,7 @@ public class Item {
 }
 ```
 
-### Safe Config Loading
+### Chargement Sécurisé de Configuration
 
 ```java
 import java.util.HashMap;
@@ -316,7 +316,7 @@ public class ConfigLoader {
 }
 ```
 
-### Safe Array Access
+### Accès Sécurisé aux Tableaux
 
 ```java
 public class Inventory {
@@ -352,7 +352,7 @@ public class Inventory {
 }
 ```
 
-### Command Parser with Error Handling
+### Analyseur de Commande avec Gestion d'Erreurs
 
 ```java
 public class CommandParser {
@@ -418,9 +418,9 @@ public class CommandParser {
 }
 ```
 
-## Throwing Exceptions
+## Lancer des Exceptions
 
-You can throw your own exceptions:
+Vous pouvez lancer vos propres exceptions :
 
 ```java
 public class Player {
@@ -438,13 +438,13 @@ public class Player {
 }
 ```
 
-<Callout type="info" title="When to Throw Exceptions">
-  Throw exceptions when:
+<Callout type="info" title="Quand Lancer des Exceptions">
+  Lancez des exceptions quand :
 
-  - Method receives invalid input
-  - Operation cannot be completed
-  - Preconditions are not met
-  - Something unexpected happens
+  - La méthode reçoit une entrée invalide
+  - L'opération ne peut pas être complétée
+  - Les préconditions ne sont pas remplies
+  - Quelque chose d'inattendu se produit
 
   ```java
   public void damagePlayer(int damage) {
@@ -463,20 +463,20 @@ public class Player {
   ```
 </Callout>
 
-## Checked vs Unchecked Exceptions
+## Exceptions Vérifiées vs Non Vérifiées
 
-<Callout type="warning" title="Exception Types">
-  **Unchecked Exceptions** (RuntimeException):
+<Callout type="warning" title="Types d'Exceptions">
+  **Exceptions Non Vérifiées** (RuntimeException) :
 
-  - Don't need to be caught
-  - Usually programming errors
-  - Examples: NullPointerException, ArrayIndexOutOfBoundsException
+  - N'ont pas besoin d'être attrapées
+  - Généralement des erreurs de programmation
+  - Exemples : NullPointerException, ArrayIndexOutOfBoundsException
 
-  **Checked Exceptions**:
+  **Exceptions Vérifiées** :
 
-  - Must be caught or declared
-  - Usually external errors (files, network)
-  - Examples: IOException, FileNotFoundException
+  - Doivent être attrapées ou déclarées
+  - Généralement des erreurs externes (fichiers, réseau)
+  - Exemples : IOException, FileNotFoundException
 
   ```java
   // Unchecked - no need to catch
@@ -491,14 +491,14 @@ public class Player {
   ```
 </Callout>
 
-## Practice Exercises
+## Exercices Pratiques
 
-1. **Safe Division Calculator**: Create a method that divides two numbers. Handle division by zero and invalid input gracefully.
+1. **Calculateur de Division Sécurisé** : Créez une méthode qui divise deux nombres. Gérez la division par zéro et les entrées invalides avec élégance.
 
-2. **Player Level Setter**: Create a method that sets player level (1-100). Throw an exception if invalid, and handle it in main.
+2. **Définisseur de Niveau de Joueur** : Créez une méthode qui définit le niveau du joueur (1-100). Lancez une exception si invalide, et gérez-la dans main.
 
-3. **Safe Array Access**: Create a method that safely accesses array elements. Return null if index is invalid instead of crashing.
+3. **Accès Sécurisé aux Tableaux** : Créez une méthode qui accède en toute sécurité aux éléments d'un tableau. Retournez null si l'index est invalide au lieu de planter.
 
-4. **Config Parser**: Read a config string like "maxPlayers=10" and parse it. Handle invalid formats gracefully.
+4. **Analyseur de Configuration** : Lisez une chaîne de configuration comme "maxPlayers=10" et analysez-la. Gérez les formats invalides avec élégance.
 
-5. **File Name Validator**: Create a method that checks if a filename is valid (no special characters, not empty). Throw exceptions for invalid names.
+5. **Validateur de Nom de Fichier** : Créez une méthode qui vérifie si un nom de fichier est valide (pas de caractères spéciaux, pas vide). Lancez des exceptions pour les noms invalides.

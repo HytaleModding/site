@@ -1,36 +1,36 @@
 ---
-title: Server Code Insights
-description: Slikey shared some insights about server code on 12/15/2025. This document covers key points and takeaways from that discussion.
+title: Aperçus du code serveur
+description: Slikey a partagé quelques aperçus sur le code serveur le 15/12/2025. Ce document couvre les points clés et les conclusions de cette discussion.
 ---
 
 <Callout type="info" title="Note">
-  The following information is based on insights shared by Technical Director Slikey on December 15, 2025 on the Hytale Discord Server. It provides an overview of the server code architecture and plugin capabilities.
+  Les informations suivantes sont basées sur les aperçus partagés par le Directeur Technique Slikey le 15 décembre 2025 sur le serveur Discord de Hytale. Elles fournissent une vue d'ensemble de l'architecture du code serveur et des capacités des plugins.
 
-  Majority of this document is just straight quotes from Slikey with minimal commentary. It is more over to preserve the information shared rather than reword it.
+  La majorité de ce document est constituée de citations directes de Slikey avec un minimum de commentaires. C'est plutôt pour préserver l'information partagée que pour la reformuler.
 </Callout>
 
-# Server Source Code
+# Code source du serveur
 
-The server will be released as shared source - we will have the source code with no obfuscation and all their comments.
+Le serveur sera publié en source partagée - nous aurons le code source sans obfuscation et tous leurs commentaires.
 
-### License
+### Licence
 
-The license permits usage for any **hytale related** things, so as long as you dont use the server / source to make your own game or sell their algorithms.
+La licence permet l'utilisation pour tout ce qui est **lié à Hytale**, donc tant que vous n'utilisez pas le serveur / le code source pour faire votre propre jeu ou vendre leurs algorithmes.
 
-# Permission system
+# Système de permissions
 
-After being asked in the Hytale Modding server, Lead Architect Zero has replied:
+Après avoir été interrogé sur le serveur Hytale Modding, l'Architecte Principal Zero a répondu :
 
-It's quite basic, so don't expect much but yes we do have a permissions system built in. It also support implementing your own backend. Ex. if you wanted to store it in a database.
+C'est assez basique, donc n'attendez pas grand-chose, mais oui nous avons un système de permissions intégré. Il supporte aussi l'implémentation de votre propre backend. Par ex. si vous vouliez le stocker dans une base de données.
 
-![Premission Source Snippet](/assets/premission-system.png)
+![Extrait du code de permission](/assets/premission-system.png)
 
-# World Gen Implementation
+# Implémentation de la génération de monde
 
-The following block of text is directly from Lead Architect Zero:
+Le bloc de texte suivant provient directement de l'Architecte Principal Zero :
 
-You can totally implement a custom world gen in a plugin super easy. So if you want a totally different config or logic for generating terrain you can add that into a plugin and then configure a world to use that,
-We have some stuff load prefabs and there is existing code in the current world generators that could possibly be reused but no APIs specifically for the details of the generation itself.
+Vous pouvez totalement implémenter une génération de monde personnalisée dans un plugin super facilement. Donc si vous voulez une configuration ou une logique totalement différente pour générer le terrain, vous pouvez l'ajouter dans un plugin puis configurer un monde pour l'utiliser.
+Nous avons certaines choses qui chargent des prefabs et il y a du code existant dans les générateurs de monde actuels qui pourrait possiblement être réutilisé mais pas d'APIs spécifiquement pour les détails de la génération elle-même.
 
 ```java
 public interface IWorldGenProvider {
@@ -59,35 +59,35 @@ public interface IWorldGen {
 }
 ```
 
-# Server Code Snippets
+# Extraits de code serveur
 
-Some code snippets from a plugin they made were also shared. The following snippets are directly quoted from Technical Director Slikey:
+Quelques extraits de code d'un plugin qu'ils ont fait ont aussi été partagés. Les extraits suivants sont des citations directes du Directeur Technique Slikey :
 
-## BlockSpawner Plugin
+## Plugin BlockSpawner
 
-Alright, I'll drop some code snippets here for a simple plugin called "BlockSpawner" which will turn into a "random" block when put into the world based on the configured rules
+D'accord, je vais lâcher quelques extraits de code ici pour un simple plugin appelé « BlockSpawner » qui se transformera en un bloc « aléatoire » quand il est placé dans le monde selon les règles configurées.
 
-There is more code here in general but it shows the Asset System and the plugin layout. You can see that the asset system defines "Codecs" which are used to serialize and deserialize data. Using these codecs we can generate schemas.
-Let's say you connect to a server and open the asset editor: the server will send those schemas - so every single asset type defined server side, even you own, now become part of the asset editor on the client - no need to do anything, you just get to enjoy the editor UI for making your assets that you defined
+Il y a plus de code ici en général mais ça montre le système d'Assets et la disposition du plugin. Vous pouvez voir que le système d'assets définit des « Codecs » qui sont utilisés pour sérialiser et désérialiser les données. En utilisant ces codecs nous pouvons générer des schémas.
+Disons que vous vous connectez à un serveur et ouvrez l'éditeur d'assets : le serveur enverra ces schémas - donc chaque type d'asset défini côté serveur, même les vôtres, devient maintenant partie de l'éditeur d'assets sur le client - pas besoin de faire quoi que ce soit, vous profitez simplement de l'interface de l'éditeur pour créer vos assets que vous avez définis.
 
-![Block Spawner Code 1](/assets/blockspawner-code-1.png)
-![Block Spawner Code 2](/assets/blockspawner-code-2.png)
-![Block Spawner Code 3](/assets/blockspawner-code-3.png)
-![Block Spawner Manifest](/assets/blockspawner-manifest.png)
+![Code Block Spawner 1](/assets/blockspawner-code-1.png)
+![Code Block Spawner 2](/assets/blockspawner-code-2.png)
+![Code Block Spawner 3](/assets/blockspawner-code-3.png)
+![Manifest Block Spawner](/assets/blockspawner-manifest.png)
 
-> i guess this part also shows a bit how we use constants to store some language keys - Slikey
-> (in reference to the image below)
+> je suppose que cette partie montre aussi un peu comment nous utilisons des constantes pour stocker des clés de langue - Slikey
+> (en référence à l'image ci-dessous)
 
-![Constants to store Language Keys](/assets/constants.png)
+![Constantes pour stocker les clés de langue](/assets/constants.png)
 
-> you can completely customize the chunk storage provider, we for example made one that is just empty where it doesnt load any chunks from disk
-> you could add an MySQLChunkStorageProvider and it could read the data from a database
-> and the same goes for worldgen, you can simply implement this interface to generate a world generator - slikey
+> vous pouvez complètement personnaliser le fournisseur de stockage de chunks, nous par exemple en avons fait un qui est juste vide où il ne charge aucun chunk depuis le disque
+> vous pourriez ajouter un MySQLChunkStorageProvider et il pourrait lire les données depuis une base de données
+> et c'est pareil pour la génération de monde, vous pouvez simplement implémenter cette interface pour générer un générateur de monde - slikey
 
 ![Chunks 1](/assets/chunks-1.png)
 ![Chunks 2](/assets/chunks-2.png)
 ![Chunks 3](/assets/chunks-3.png)
 
-> i mean here are all the weapons defined, you tell me, obviously you will discover limitations but i think there is plenty of room to make changes - this stuff is actually hard though, there is a lot of QoL to have happen here
+> je veux dire ici sont définies toutes les armes, vous me direz, évidemment vous découvrirez des limitations mais je pense qu'il y a beaucoup de place pour faire des changements - ce truc est en fait difficile cependant, il y a beaucoup de qualité de vie à avoir ici.
 
-![Weapons 1](/assets/weapons-1.png)
+![Armes 1](/assets/weapons-1.png)

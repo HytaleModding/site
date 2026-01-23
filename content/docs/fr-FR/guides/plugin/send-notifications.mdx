@@ -1,32 +1,32 @@
 ---
-title: Sending notifications
-description: Learn how to send notifications (similar to item pickup) with your Hytale Plugin
+title: Envoyer des notifications
+description: Apprenez à envoyer des notifications (similaires à la collecte d'objets) avec votre plugin Hytale
 authors:
   - name: BeerBag
 ---
 
-## Overview
+## Aperçu
 
-In this guide, you will learn how to send notifications to players, similar to
-the notification received when picking up an item from the ground.
+Dans ce guide, vous apprendrez comment envoyer des notifications aux joueurs, similaires à
+la notification reçue lors de la collecte d'un objet au sol.
 
 ![notification-example](/assets/guides/notification-example.png)
 
-## Structure of a Notification
+## Structure d'une Notification
 
-A notification consists of three main components:
+Une notification se compose de trois composants principaux :
 
-1. **Primary Message**: The main `Message` displayed in the notification.
-2. **Secondary Message**: Additional `Message`, displayed below the primary message.
-3. **Icon**: An item icon that visually represents the notification, shown on
-   the left side.
+1. **Message Principal** : Le `Message` principal affiché dans la notification.
+2. **Message Secondaire** : `Message` supplémentaire, affiché sous le message principal.
+3. **Icône** : Une icône d'objet qui représente visuellement la notification, affichée sur
+   le côté gauche.
 
-## Sending Notifications
+## Envoyer des Notifications
 
-You can use the `NotificationUtil` class to send notifications to players.
-You will need access to the `PacketHandler` of the player, which can be obtained
-from the `PlayerRef` using the `getPacketHandler()` method (in this example,
-we get the `PlayerRef` from the `Universe` using the player's UUID).
+Vous pouvez utiliser la classe `NotificationUtil` pour envoyer des notifications aux joueurs.
+Vous aurez besoin d'accéder au `PacketHandler` du joueur, qui peut être obtenu
+depuis le `PlayerRef` en utilisant la méthode `getPacketHandler()` (dans cet exemple,
+nous obtenons le `PlayerRef` depuis l'`Universe` en utilisant l'UUID du joueur).
 
 ```java
 public static void onPlayerReady(PlayerReadyEvent event) {
