@@ -1,6 +1,9 @@
 ---
 title: "Spawning NPCs"
 description: "Learn how to easily spawn NPCs using the NPCPlugin helper."
+authors:
+    - name: "Corin"
+      link: "https://github.com/Corin-alt"
 ---
 
 In this guide, you will learn how to spawn Non-Player Characters (NPCs) using the `NPCPlugin` helper. This is a more convenient alternative to manually spawning entities with `Holder<EntityStore>` as described in the [Spawning Entities](./spawning-entities) guide.
@@ -71,6 +74,8 @@ inventory.getHotbar().addItemStackToSlot((short) 0, new ItemStack("Weapon_Mace_T
 // Equip a Thorium Helmet using the InventoryHelper
 InventoryHelper.useArmor(inventory.getArmor(), "Armor_Thorium_Head");
 ```
+
+> **Note:** `InventoryHelper` is a utility class provided directly by the Hytale API.
 
 ## Full Example Command
 
