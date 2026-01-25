@@ -119,3 +119,39 @@ Finally, we can add the entity to the world by calling the `addEntity` method on
 ```java
 store.addEntity(holder, AddReason.SPAWN);
 ```
+
+## Making the entity persist
+Hytale automatically saves all entities, but the `NetworkId` component (required for players to be able to see the entity) needs to be manually added every time the entity is loaded.
+### Using a system
+If you have a component that is unique to your entities, this can be done by creating and registering a custom system as follows:
+```java
+public class AddNetworkIdToMyEntitySystem extends HolderSystem<EntityStore> {
+    private final ComponentType<EntityStore, MyEntityComponent> myEntityComponentType = MyEntityComponent.getComponentType();
+    private final ComponentType<EntityStore, NetworkId> networkIdComponentType = NetworkId.getComponentType();
+    private final Query<EntityStore> query = Query.and(this.myEntityComponentType, Query.not(this.networkIdComponentType));
+
+    @Override
+    public void onEntityAdd(@NotNull Holder<EntityStore> holder, @NotNull AddReason reason, @NotNull Store<EntityStore> store) {
+        if (!holder.getArchetype().contains(NetworkId.getComponentType())) {
+            holder.addComponent(NetworkId.getComponentType(), new NetworkId(store.getExternalData().takeNextNetworkId()));
+        }
+    }
+
+    @Override
+    public void onEntityRemoved(@NotNull Holder<EntityStore> holder, @NotNull RemoveReason reason, @NotNull Store<EntityStore> store) {}
+
+    @Override
+    public @Nullable Query<EntityStore> getQuery() {
+        return query;
+    }
+}
+```
+In your plugin's `setup()` function
+```java
+this.getEntityStoreRegistry().registerSystem(new AddNetworkIdToMyEntitySystem())
+```
+### Using PropComponent
+Alternatively you can add `PropComponent` to your entity. Hytale adds `PropComponent` to entities spawned with the Entity Tool, and such entities automatically get `NetworkId` and `PrefabCopyableComponent` (which makes the entity work with prefabs).
+<Callout type="warning">
+    There is no guarantee, that Hytale will not add some other behavior to this component in the future, which may break your entity, so be careful if you decide to rely on it.
+</Callout>
