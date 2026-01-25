@@ -62,7 +62,7 @@ The `AbstractPlayerCommand` is similar to the `AbstractAsyncCommand` but it is t
 To create a command, you can extend the `AbstractPlayerCommand` class. You need to provide a constructor that calls the `BaseCommand` constructor with the command name, description, and whether the command requires confirmation (--confirm while running the command).
 
 You can override the `execute` function to implement the command's behavior. It gives you access to the CommandContext which is always a player in this case, the EntityStore, the Reference store, the player reference as well as the World in which the command is being executed.
-It's important to know that `AbstractPlayerCommand` extends `AbstractAsyncCommand` meaning that commands do not execute on the main server thread.
+Unlike `AbstractAsyncCommand` commands using `AbstractPlayerCommand` run on the world thread, which means they can safely access the `Store` and `Ref`s. This also means that long running actions (like IO) can lead to lag or server lockup.
 
 You can use the `Store` along with the `Ref` to access all entity components like the `Player` component, `UUIDComponent` or `TransformComponent`.
 
