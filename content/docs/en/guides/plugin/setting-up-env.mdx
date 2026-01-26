@@ -63,7 +63,8 @@ We recommend IntelliJ IDEA Community Edition for Hytale modding.
 2. Install with default settings
 3. Launch and complete the initial setup wizard
 
-### 3. Maven
+### 3. Java Build Tool
+We recommend using Apache Maven for managing dependencies and building your Hytale plugins. (Alternatively you can use Gradle, but this guide focuses on Maven.)
 
 1. Visit the official website: https://maven.apache.org/download.cgi
 2. Download this file: `apache-maven-3.9.12-bin.zip` (Binary zip archive)
@@ -84,64 +85,66 @@ git clone https://github.com/HytaleModding/plugin-template.git MyFirstMod
 cd MyFirstMod
 ```
 
-### 2. Open in IntelliJ IDEA
+If you don't have Git installed, you can download the ZIP file from the repository page and extract it to a folder named `MyFirstMod`.
+
+### 2. Open Plugin in your IDEA
 
 1. Open IntelliJ IDEA
 2. Click "Open" and navigate to your `MyFirstMod` directory
 3. IntelliJ will automatically detect it as a Maven project
 4. Wait for the project to index and dependencies to download
 
-### 3. Add HytaleServer.jar Dependency
+### 3. Hytale Dependency
 
-Before you can start modding, you need to add the HytaleServer.jar file as a dependency:
+Before you can start modding, you need to make sure that your plugin has the necessary dependencies to interact with Hytale's API. The plugin template already includes the Hytale server dependency in its `pom.xml` file. Depending on the version of Hytale you want to target, you may need to adjust the version number in the `pom.xml` file:
+```xml
+<project>
+    <repositories>
+        <!-- Hytale release repository -->
+        <repository>
+            <id>hytale-release</id>
+            <url>https://maven.hytale.com/release</url>
+        </repository>
+        <!-- Hytale pre-release repository -->
+        <repository>
+            <id>hytale-pre-release</id>
+            <url>https://maven.hytale.com/pre-release</url>
+        </repository>
+    </repositories>
 
-1. **Download HytaleServer.jar** using the [Hytale Downloader](https://support.hytale.com/hc/en-us/articles/45326769420827-Hytale-Server-Manual)
-2. **Add to IntelliJ IDEA**:
-   - Click on **"File"** at the top left
-   - Go to **"Project Structure"**
-   - Go to **"Libraries"**
-   - Click on the **+ icon**
-   - Select the **HytaleServer.jar** you downloaded
+    <dependencies>
+        <dependency>
+            <groupId>com.hypixel.hytale</groupId>
+            <artifactId>Server</artifactId>
+            <!-- Replace with latest version, Hytale provides jars for the last five releases -->
+            <version>2026.01.22-6f8bdbdc4</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
+```
 
-### 4. Add the HytaleServer to your Artifacts
+<Callout type="info">
+If you are using Gradle instead of Maven, ensure your `build.gradle` file includes the Hytale repositories and dependencies accordingly. As example:
+```
+repositories {
+    mavenCentral()
+    maven {
+        name = "hytale-release"
+        url = uri("https://maven.hytale.com/release")
+    }
+    maven {
+        name = "hytale-pre-release"
+        url = uri("https://maven.hytale.com/pre-release")
+    }
+}
 
-<Callout type="warning">
-This is a temporary workaround until Hypixel provides an official Maven repository for HytaleServer.jar
+dependencies {
+    compileOnly("com.hypixel.hytale:Server:2026.01.22-6f8bdbdc4")
+}
+```
 </Callout>
 
-Run this command in your console
-
-```bash
-mvn install:install-file -Dfile=[ROUTE TO HytaleServer.jar] -DgroupId=com.hypixel.hytale -DartifactId=HytaleServer-parent -Dversion=1.0-SNAPSHOT -Dpackaging=jar
-```
-
-Replace `[ROUTE TO HytaleServer.jar]` with the actual path to the `HytaleServer.jar` file on your system.
-
-<Callout type="warning">
-If you are using Powershell you may stumble accross the following error:
-```
-[INFO] --------------------------------[ jar ]---------------------------------
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  0.192 s
-[INFO] Finished at: ***************
-[INFO] ------------------------------------------------------------------------
-[ERROR] Unknown lifecycle phase ".hypixel.hytale". You must specify a valid lifecycle phase or a goal in the format <plugin-prefix>:<goal> or <plugin-group-id>:<plugin-artifact-id>[:<plugin-version>]:<goal>. Available lifecycle phases are: pre-clean, clean, post-clean, validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy, pre-site, site, post-site, site-deploy. -> [Help 1]
-[ERROR]
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR]
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/LifecyclePhaseNotFoundException
-```
-
-This has something to do with how powershell struggles with the parameters when they are not wrapped inside strings. To solve this issue just wrap every parameter with `"`.
-
-```bash
-mvn install:install-file -Dfile="[ROUTE TO HytaleServer.jar]" -DgroupId="com.hypixel.hytale" -DartifactId="HytaleServer-parent" -Dversion="1.0-SNAPSHOT" -Dpackaging="jar"
-```
-</Callout>
 
 ## Next Steps
 

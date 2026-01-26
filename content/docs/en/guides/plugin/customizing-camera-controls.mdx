@@ -75,6 +75,32 @@ settings.rotationType = RotationType.Custom;
 settings.mouseInputType = MouseInputType.LookAtPlane;
 settings.planeNormal = new Vector3f(0.0f, 0.0f, 1.0f);         // Side plane
 ```
+
+### Isometric Character Camera (Diablo style)
+
+```java
+ServerCameraSettings settings = new ServerCameraSettings();
+settings.positionLerpSpeed = 0.2f;
+settings.rotationLerpSpeed = 0.2f;
+settings.isFirstPerson = false;
+settings.distance = 6f;
+settings.allowPitchControls = false;
+settings.displayCursor = true;
+// Force the camera's rotation to be set by the server.
+settings.applyLookType = ApplyLookType.Rotation;
+// Notify that we provide a custom rotation in "settings.rotation"
+settings.rotationType = RotationType.Custom;
+
+// Set the typical isometric rotation to the camera
+Direction direction = new Direction(
+    (float) Math.toRadians(45f),  // yaw
+    (float) Math.toRadians(-35f), // pitch
+    0f                            // roll
+);
+settings.rotation = rotation;
+settings.movementForceRotation = rotation;
+```
+
 ## Common Settings Explained
 
 ### Position & Rotation
