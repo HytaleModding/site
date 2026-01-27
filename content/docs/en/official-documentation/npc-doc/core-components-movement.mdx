@@ -1,0 +1,163 @@
+---
+title: NPC Core Components - Movement
+description: Official documentation for NPC movement core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (movement)
+
+## Crouch: Action (Stable) [#action_crouch]
+
+Set NPC crouching state
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Crouch (Stable)
+
+- True for crouching, false for non-crouching
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
+
+## InAir: Sensor (Stable) [#sensor_inair]
+
+Return true if NPC is not on ground. No target is returned.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
+
+## MotionController: Sensor (Experimental) [#sensor_motioncontroller]
+
+Test if specific motion controller is active.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - MotionController (Experimental)
+
+- Motion controller name to test for
+- **Type**: `String`, **Required**
+- **Constraint**: String must be not empty
+
+[(Top)](#top)
+
+## Nav: Sensor (Stable) [#sensor_nav]
+
+Queries navigation state
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - NavStates (Stable)
+
+- Trigger when path finder is in one of the states or empty to match all
+- **Type**: `FlagSet`, **Optional** (Default: []), **Computable**
+- **Flag Values**:
+  - `PROGRESSING`: Moving or computing a path
+  - `INIT`: Doing nothing
+  - `AT_GOAL`: Reached target
+  - `BLOCKED`: Can't advance any further
+  - `ABORTED`: Search stopped but target not reached
+  - `DEFER`: Delaying/unable to advance
+
+#### - ThrottleDuration (Stable)
+
+- Minimum time in seconds the path finder isn't able to reach target or 0 to ignore
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - TargetDelta (Stable)
+
+- Minimum distance target has moved since path was computed or 0 to ignore
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+[(Top)](#top)
+
+## OnGround: Sensor (Stable) [#sensor_onground]
+
+Return true if NPC is on ground. No target is returned.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
+
+## OverrideAltitude: Action (Stable) [#action_overridealtitude]
+
+Temporarily override the preferred altitude of a flying NPC. Must be refreshed each tick
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - DesiredAltitudeRange (Stable)
+
+- The desired altitude range
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+[(Top)](#top)
+
+## RecomputePath: Action (Stable) [#action_recomputepath]
+
+Force recomputation of path finder solution
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+[(Top)](#top)

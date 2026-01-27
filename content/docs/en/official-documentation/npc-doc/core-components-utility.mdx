@@ -1,0 +1,427 @@
+---
+title: NPC Core Components - Utility
+description: Official documentation for NPC utility core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (utility)
+
+## AdjustPosition: Sensor (Stable) [#sensor_adjustposition]
+
+Perform adjustments to the wrapped sensor's returned position
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Sensor (Stable)
+
+- Sensor to wrap
+- **Type**: `ObjectRef`, **Required**, **Object Type**: Sensor
+
+#### - Offset (Stable)
+
+- The offset to apply to the returned position from the sensor
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+
+### Provides
+
+- Vector position
+
+[(Top)](#top)
+
+## And: Sensor (Stable) [#sensor_and]
+
+Evaluate all sensors and execute action only when all sensor signal true. Target is provided by first sensor.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Sensors (Stable)
+
+- List of sensors
+- **Type**: `Array`, **Required**, **Element Type**: Sensor
+- **Constraint**: Array must not be empty
+
+#### - AutoUnlockTargetSlot (Stable)
+
+- A target slot to unlock when sensor doesn't match anymore
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+[(Top)](#top)
+
+## Any: Sensor (Stable) [#sensor_any]
+
+Sensor always signals true but doesn't return a target.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
+
+## Eval: Sensor (Experimental) [#sensor_eval]
+
+Evaluate javascript expression and test truth value. Current values accessible are 'health' and 'blocked'.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Expression (Experimental)
+
+- Javascript expression
+- **Type**: `String`, **Required**
+- **Constraint**: String must be not empty
+
+[(Top)](#top)
+
+## Flag: Sensor (Stable) [#sensor_flag]
+
+Test if a named flag is set or not
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Name (Stable)
+
+- The name of the flag
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - Set (Stable)
+
+- Whether the flag should be set or not
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
+
+## Not: Sensor (WorkInProgress) [#sensor_not]
+
+Return true when the given sensor test fails.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Sensor (Stable)
+
+- Sensor to test
+- **Type**: `ObjectRef`, **Required**, **Object Type**: Sensor
+
+#### - UseTargetSlot (Stable)
+
+- A locked target slot to feed to action (if available)
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - AutoUnlockTargetSlot (Stable)
+
+- A target slot to unlock when sensor doesn't match anymore
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+[(Top)](#top)
+
+## Nothing: Action (Stable) [#action_nothing]
+
+Do nothing. Used often as placeholder.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+[(Top)](#top)
+
+## Or: Sensor (Stable) [#sensor_or]
+
+Evaluate sensors and execute action when at least one sensor signals true. Target is provided by first sensor signalling true.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Sensors (Stable)
+
+- List of sensors
+- **Type**: `Array`, **Required**, **Element Type**: Sensor
+- **Constraint**: Array must not be empty
+
+#### - AutoUnlockTargetSlot (Stable)
+
+- A target slot to unlock when sensor doesn't match anymore
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+[(Top)](#top)
+
+## Random: Action (Stable) [#action_random]
+
+Execute a single random action from a list of weighted actions.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Actions (Stable)
+
+- List of possible actions
+- **Type**: `Array`, **Required**, **Element Type**: WeightedAction
+
+[(Top)](#top)
+
+## Random: Sensor (Stable) [#sensor_random]
+
+Alternates between returning true and false for specified random durations
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - TrueDurationRange (Stable)
+
+- The duration range to pick a random period to return true
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - FalseDurationRange (Stable)
+
+- The duration range to pick a random period to return false
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+[(Top)](#top)
+
+## ResetInstructions: Action (Stable) [#action_resetinstructions]
+
+Force reset instructionList, either by name, or as a whole
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Instructions (Stable)
+
+- The instructionList to reset. If left empty, will reset all instructionList
+- **Type**: `Array`, **Optional** (Default: null), **Computable**, **Element Type**: String
+- **Constraint**: Strings in array must not be empty
+
+[(Top)](#top)
+
+## Sequence: Action (Stable) [#action_sequence]
+
+Execute list of actions.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Blocking (Stable)
+
+- Do not execute an action unless the previous action could execute
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Atomic (Stable)
+
+- Only execute actions if all actions can be executed
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Actions (Stable)
+
+- List of actions
+- **Type**: `ObjectRef`, **Required**, **Object Type**: ActionList
+
+[(Top)](#top)
+
+## SetFlag: Action (Stable) [#action_setflag]
+
+Set a named flag to a boolean value
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Name (Stable)
+
+- The name of the flag
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - SetTo (Stable)
+
+- The value to set the flag to
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
+
+## Switch: Sensor (Stable) [#sensor_switch]
+
+Check if a computed boolean is true
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Switch (Stable)
+
+- The switch to check
+- **Type**: `Boolean`, **Required**, **Computable**
+
+[(Top)](#top)
+
+## Timeout: Action (Stable) [#action_timeout]
+
+Delay an action by a time which is randomly picked between a given minimum and maximum value.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Delay (Stable)
+
+- Range of time to delay in seconds
+- **Type**: `Array`, **Optional** (Default: [1.0, 1.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - DelayAfter (Stable)
+
+- Delay after executing the action
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Action (Stable)
+
+- Optional action to delay
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: Action
+
+[(Top)](#top)
+
+## ValueProviderWrapper: Sensor (Stable) [#sensor_valueproviderwrapper]
+
+Wraps a sensor and passes down some additional parameter overrides pulled from the value store
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - PassValues (Stable)
+
+- Used to enable/disable passing of values in components
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Sensor (Stable)
+
+- Sensor to wrap
+- **Type**: `ObjectRef`, **Required**, **Object Type**: Sensor
+
+#### - ValueToParameterMappings (Stable)
+
+- The mappings of values to override parameters
+- **Type**: `Array`, **Required**, **Element Type**: ValueToParameterMapping
+- **Constraint**: Array must not be empty
+
+[(Top)](#top)

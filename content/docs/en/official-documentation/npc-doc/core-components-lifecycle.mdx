@@ -1,0 +1,237 @@
+---
+title: NPC Core Components - Lifecycle
+description: Official documentation for NPC lifecycle core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (lifecycle)
+
+## Age: Sensor (Stable) [#sensor_age]
+
+Triggers when the age of the NPC falls between a certain range. Range is defined in terms of period (e.g. 1Y2M3W4D - 1 year, 2 months, 3 weeks, 4 days) or duration (e.g. 2DT3H4M - 2 days, 3 hours, 4 minutes)
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - AgeRange (Stable)
+
+- The age range within which to trigger
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: TemporalAmount
+- **Constraint**: Values must be greater or equal than a few seconds, less or equal than 5879611 years, in strictly ascending order and either all Periods or all Durations
+
+[(Top)](#top)
+
+## DelayDespawn: Action (Stable) [#action_delaydespawn]
+
+Delay the despawning cycle for some amount of time
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Time (Stable)
+
+- How long to set the to delay
+- **Type**: `Double`, **Required**
+- **Constraint**: Value must be greater than 0
+
+#### - Shorten (Stable)
+
+- Set the delay to either the current delay or the given time. Whatever is smaller.
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+[(Top)](#top)
+
+## Despawn: Action (Stable) [#action_despawn]
+
+Trigger the NPC to start the despawning cycle. If the script contains a despawn sensor it will run that action/motion before removing.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Force (Stable)
+
+- Force the NPC to remove automatically
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+[(Top)](#top)
+
+## Die: Action (Stable) [#action_die]
+
+Kill the NPC
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+[(Top)](#top)
+
+## Remove: Action (Stable) [#action_remove]
+
+Erase the target entity from the world (no death animation).
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - UseTarget (Stable)
+
+- Use the sensor-provided target for the action
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+### Constraints
+
+- If UseTarget is true, must be attached to a sensor that provides one of player target, NPC target
+
+[(Top)](#top)
+
+## Role: Action (Stable) [#action_role]
+
+Change the Role of the NPC
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Role (Stable)
+
+- The name of the Role to change to
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - ChangeAppearance (Stable)
+
+- Whether the appearance of the new Role should be used
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - State (Stable)
+
+- State name to set
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String must be a valid state string. A main state must be included before the period (e.g. Main.Test). State strings consist of a main state and a sub state (e.g. Main.Test). If nested within a substate, the main state may be omitted (e.g. .Test) when referencing.
+
+[(Top)](#top)
+
+## Spawn: Action (Experimental) [#action_spawn]
+
+Spawn an NPC
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - SpawnDirection (Experimental)
+
+- Direction of spawn cone relative to view direction (in degrees)
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than -180 and less or equal than 180
+
+#### - SpawnAngle (Experimental)
+
+- Cone width of spawn direction (in degrees)
+- **Type**: `Double`, **Optional** (Default: 360.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - FanOut (Experimental)
+
+- Fan NPCs out equally over angle
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - DistanceRange (Stable)
+
+- Distance from spawner to spawn
+- **Type**: `Array`, **Optional** (Default: [1.0, 1.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater than 0, less or equal than 128and in weakly ascending order
+
+#### - CountRange (Stable)
+
+- Number of NPCs to spawn
+- **Type**: `Array`, **Optional** (Default: [5, 5]), **Computable**, **Element Type**: integer
+- **Constraint**: Values must be greater than 0, less or equal than 100and in weakly ascending order
+
+#### - DelayRange (Stable)
+
+- Time between consecutive spawns in seconds
+- **Type**: `Array`, **Optional** (Default: [0.25, 0.25]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - Kind (Experimental)
+
+- NPC role to spawn
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - Flock (Stable)
+
+- Flock definition to spawn
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - LaunchAtTarget (WorkInProgress)
+
+- Launch the spawned NPC at target position/entity
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - PitchHigh (Stable)
+
+- If launching at a target, use high pitch
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - LaunchSpread (Stable)
+
+- The radius of the circle centred on the target within which to spread thrown NPCs
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - JoinFlock (Stable)
+
+- Whether to join the parent NPC's flock
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - SpawnState (Stable)
+
+- An optional state to set on the spawned NPC if it exists
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - SpawnSubState (Stable)
+
+- An optional substate to set on the spawned NPC if it exists
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+### Constraints
+
+- If LaunchAtTarget is true, must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
+
+[(Top)](#top)

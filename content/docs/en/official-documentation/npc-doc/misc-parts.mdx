@@ -1,0 +1,2503 @@
+---
+title: NPC Misc Parts
+description: Official documentation for NPC misc parts.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Misc Parts
+
+## ActionList: ActionList (Stable) [#actionlist_actionlist]
+
+An array of actions to be executed
+
+- List of actions
+- **Type**: `Array`, **Required**, **Element Type**: Action
+
+[(Top)](#top)
+
+## Aim: HeadMotion (Stable) [#headmotion_aim]
+
+Aim at target considering weapon in hand.
+
+### Attributes
+
+#### - Spread (Experimental)
+
+- Random targeting error
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 5
+
+#### - HitProbability (Experimental)
+
+- Probability of shot being straight on target
+- **Type**: `Double`, **Optional** (Default: 0.33), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - Deflection (Experimental)
+
+- Compute deflection for moving targets
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - RelativeTurnSpeed (Stable)
+
+- The relative turn speed modifier
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
+
+[(Top)](#top)
+
+## AimCharge: BodyMotion (Stable) [#bodymotion_aimcharge]
+
+Aim the NPC at a target position for performing a charge based on aiming information and ensure that the charge is possible before it's executed.
+
+### Attributes
+
+#### - RelativeTurnSpeed (Stable)
+
+- The relative turn speed modifier
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
+
+[(Top)](#top)
+
+## Altitude: IEntityFilter (Stable) [#ientityfilter_altitude]
+
+Matches targets if they're within the defined range above the ground
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - AltitudeRange (Stable)
+
+- The range above the ground to match
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+[(Top)](#top)
+
+## And: IEntityFilter (Stable) [#ientityfilter_and]
+
+Logical AND of a list of filters
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Filters (Stable)
+
+- List of filters
+- **Type**: `Array`, **Required**, **Element Type**: IEntityFilter
+- **Constraint**: Array must not be empty
+
+[(Top)](#top)
+
+## Attitude: ISensorEntityPrioritiser (Stable) [#isensorentityprioritiser_attitude]
+
+Prioritises return entities by attitude
+
+### Attributes
+
+#### - AttitudesByPriority (Stable)
+
+- A prioritised list of attitudes
+- **Type**: `FlagArray`, **Required**, **Computable**
+- **Flag Values**:
+  - `HOSTILE`: is hostile towards the target
+  - `REVERED`: reveres the target
+  - `FRIENDLY`: is friendly towards the target
+  - `IGNORE`: is ignoring the target
+  - `NEUTRAL`: is neutral towards the target
+- **Constraint**: Array must not contain duplicates
+
+[(Top)](#top)
+
+## Attitude: IEntityFilter (Stable) [#ientityfilter_attitude]
+
+Matches the attitude towards the locked target
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Attitudes (Stable)
+
+- The attitudes to match
+- **Type**: `FlagSet`, **Required**, **Computable**
+- **Flag Values**:
+  - `HOSTILE`: is hostile towards the target
+  - `REVERED`: reveres the target
+  - `FRIENDLY`: is friendly towards the target
+  - `IGNORE`: is ignoring the target
+  - `NEUTRAL`: is neutral towards the target
+
+### Constraints
+
+[(Top)](#top)
+
+## Combat: IEntityFilter (Stable) [#ientityfilter_combat]
+
+Check the target's combat state. This includes whether they're attacking at all, if they're using a particular attack, etc
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Sequence (Stable)
+
+- The attack ID to check for.
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - TimeElapsedRange (Stable)
+
+- The acceptable elapsed time range in seconds.
+- **Type**: `Array`, **Optional** (Default: [0.0, 3.4028234663852886E38]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 3.4028234663852886e+38and in weakly ascending order
+
+#### - Mode (Stable)
+
+- Type of combat to trigger on
+- **Type**: `Flag`, **Optional** (Default: Attacking), **Computable**
+- **Flag Values**:
+  - `Ranged`: Ranged
+  - `Charging`: Weapon charging
+  - `Melee`: Melee
+  - `Blocking`: Blocking
+  - `Sequence`: Combat sequence
+  - `Attacking`: Attacking
+  - `Any`: Any
+  - `None`: None
+
+### Constraints
+
+- If Mode is Sequence, the asset Sequencemust be provided
+
+[(Top)](#top)
+
+## CombatTargets: ISensorEntityCollector (Stable) [#isensorentitycollector_combattargets]
+
+A collector which processes matched friendly and hostile targets and adds them to the NPC's short-term combat memory.
+
+[(Top)](#top)
+
+## Flee: BodyMotion (Experimental) [#bodymotion_flee]
+
+Move away from a target using path finding or steering
+
+### Attributes
+
+#### - RelativeSpeed (Stable)
+
+- Maximum relative speed the NPC should move
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+#### - RelativeSpeedWaypoint (Stable)
+
+- Maximum relative speed the NPC should move close to waypoints
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 1
+
+#### - WaypointRadius (Stable)
+
+- Radius to slow down around waypoints
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0.1
+
+#### - UseBestPath (Stable)
+
+- Use best partial path if goal can't be reached
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - ThrottleDelayRange (Stable)
+
+- Time to delay after no path finding solution found
+- **Type**: `Array`, **Optional** (Default: [3.0, 5.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - ThrottleIgnoreCount (Stable)
+
+- How often no valid path solution can be found before throttling delay is applied
+- **Type**: `Integer`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - BuildOptimisedPath (Stable)
+
+- Try to reduce number of nodes of generated path
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - AvoidBlockDamage (Stable)
+
+- Should avoid environmental damage from blocks
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - RelaxedMoveConstraints (Stable)
+
+- NPC can do movements like wading (depends on motion controller type)
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - BlendHeading (Stable)
+
+- Relative rotation angle into next waypoint when arriving at current waypoint
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - PathSmoothing (Stable)
+
+- Try to smooth followed path. Larger values smooth more.
+- **Type**: `Integer`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - RejectionWeight (Stable)
+
+- Weight of rejection vector pushing entity closer to original path
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - UseSteering (Stable)
+
+- Use simple/cheap steering if available
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - SkipSteering (Experimental)
+
+- Skip steering if target not reachable
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - UsePathfinder (Stable)
+
+- Use path finder
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - MinPathLength (Experimental)
+
+- Minimum length of path required when not able to reach target (should be greater equal 2)
+- **Type**: `Double`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - DiagonalMoves (Stable)
+
+- Allow diagonal moves
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - StepsPerTick (Stable)
+
+- Steps per iteration
+- **Type**: `Integer`, **Optional** (Default: 50.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxPathLength (Stable)
+
+- Max path steps before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 200.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxOpenNodes (Stable)
+
+- Max open nodes before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 200.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxTotalNodes (Stable)
+
+- Max total node before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 900.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Debug (Stable)
+
+- Debugging flags
+- **Type**: `String`, **Optional** (Default: )
+
+#### - DesiredAltitudeWeight (Stable)
+
+- How much this NPC prefers being within the desired height range. 0 means it doesn't care much, 1 means it will do its best to get there fast. Values below 0 mean the default in the motion controller will be used.
+- **Type**: `Double`, **Optional** (Default: -1.0), **Computable**
+- **Constraint**: Value must be greater or equal than -1 and less or equal than 1
+
+#### - WaitDistance (Experimental)
+
+- Minimum distance target needs to move before recomputing path when no path can be found
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - RecomputeDistance (Experimental)
+
+- Maximum distance target can move before path is recomputed or 0 to supress recomputation
+- **Type**: `Double`, **Optional** (Default: 10.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - ReprojectDistance (Experimental)
+
+- Maximum distance target can move before position is reprojected
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - AdjustRangeByHitboxSize (Stable)
+
+- Correct range by hitbox sizes of involved entities
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - RecomputeConeAngle (Experimental)
+
+- Recompute path when target leaves cone from initial position to target
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - SlowDownDistance (Stable)
+
+- Distance from target when NPC should start to slowdown
+- **Type**: `Double`, **Optional** (Default: 8.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - StopDistance (Stable)
+
+- Distance from target when NPC should halt
+- **Type**: `Double`, **Optional** (Default: 10.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Falloff (Stable)
+
+- Rate how fast the slowdown should happen relative to distance
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - HoldDirectionTimeRange (Stable)
+
+- How often to change heading
+- **Type**: `Array`, **Optional** (Default: [2.0, 5.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - ChangeDirectionViewSector (Stable)
+
+- The view sector the NPC uses to decide if it should switch direction
+- **Type**: `Double`, **Optional** (Default: 230.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - DirectionJitter (Stable)
+
+- How much jitter in degrees to add to the heading the NPC uses
+- **Type**: `Double`, **Optional** (Default: 45.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 180
+
+#### - ErraticDistance (Stable)
+
+- If the player is closer than this distance, the NPC will behave more erratically using the additional jitter parameter
+- **Type**: `Double`, **Optional** (Default: 4.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - ErraticExtraJitter (Stable)
+
+- Extra jitter to add to the NPC heading on top of the standard when the target is too close
+- **Type**: `Double`, **Optional** (Default: 45.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 180
+
+#### - ErraticChangeDurationMultiplier (Stable)
+
+- A multiplier to decrease the duration between direction changes when the target is too close
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 1
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
+- SlowDownDistance must be less or equal than StopDistance
+
+[(Top)](#top)
+
+## Flock: BodyMotion (Experimental) [#bodymotion_flock]
+
+Flocking - WIP
+
+### Constraints
+
+[(Top)](#top)
+
+## Flock: IEntityFilter (Stable) [#ientityfilter_flock]
+
+Test for flock membership and related properties
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - FlockStatus (Stable)
+
+- Test for NPC status in relation to flock
+- **Type**: `Flag`, **Optional** (Default: Any)
+- **Flag Values**:
+  - `Leader`: Is leader of a flock
+  - `Follower`: Is part of a flock but not leader
+  - `NotMember`: Is not part of a flock
+  - `Member`: Is part of a flock
+  - `Any`: Don't care
+
+#### - FlockPlayerStatus (Stable)
+
+- Test for Player status for flock NPC is member
+- **Type**: `Flag`, **Optional** (Default: Any)
+- **Flag Values**:
+  - `NotMember`: Player is not member of a flock
+  - `Member`: Player is member of a flock
+  - `Any`: Don't care
+
+#### - Size (Stable)
+
+- Check for a certain range of NPCs in the flock
+- **Type**: `Array`, **Optional** (Default: null), **Element Type**: integer
+
+#### - CheckCanJoin (Stable)
+
+- If true, will filter entities in a flock the executor can join
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+[(Top)](#top)
+
+## HashMap: HashMap (Stable) [#hashmap_hashmap]
+
+Non-empty list of motion controllers.
+
+- List of motion controllers
+- **Type**: `Array`, **Required**, **Element Type**: MotionController
+- **Constraint**: Array must not be empty
+
+[(Top)](#top)
+
+## HeightDifference: IEntityFilter (Stable) [#ientityfilter_heightdifference]
+
+Matches entities within the given height range
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - HeightDifference (Stable)
+
+- The height range to test entities in. Extends into negatives for positions below the NPC
+- **Type**: `Array`, **Optional** (Default: [-1.7976931348623157E308, 1.7976931348623157E308]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than -1.7976931348623157e+308, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - UseEyePosition (Stable)
+
+- Use eye position for height difference checks
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+### Constraints
+
+[(Top)](#top)
+
+## InsideBlock: IEntityFilter (Stable) [#ientityfilter_insideblock]
+
+Matches if the entity is inside any of the blocks in the BlockSet
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - BlockSet (Stable)
+
+- The BlockSet to match against
+- **Type**: `Asset`, **Required**, **Computable**
+
+[(Top)](#top)
+
+## Instruction: Instruction (WorkInProgress) [#instruction_instruction]
+
+An instruction with Sensor, and Motions and Actions, or a list of nested instructions.
+
+### Attributes
+
+#### - Name (Stable)
+
+- Optional name for descriptor
+- **Type**: `String`, **Optional** (Default: null)
+
+#### - Tag (Experimental)
+
+- Internal identifier tag for debugging
+- **Type**: `String`, **Optional** (Default: null)
+- **Constraint**: String value must be either null or not empty
+
+#### - Enabled (Stable)
+
+- Whether this instruction should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Sensor (Stable)
+
+- Sensor for testing if instruction can be applied. If not supplied, will always match
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: Sensor
+
+#### - BodyMotion (Stable)
+
+- Body motion to be executed
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: BodyMotion
+
+#### - HeadMotion (Stable)
+
+- Head motion to be executed
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: HeadMotion
+
+#### - Actions (Stable)
+
+- Actions to be executed
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: ActionList
+
+#### - ActionsBlocking (Stable)
+
+- Do not execute an action unless the previous action could execute
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - ActionsAtomic (Stable)
+
+- Only execute actions if all actions can be executed
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Instructions (Stable)
+
+- Optional nested list of instructions
+- **Type**: `Array`, **Optional** (Default: null), **Element Type**: Instruction
+
+#### - Continue (WorkInProgress)
+
+- Continue after this instruction was executed
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Weight (Stable)
+
+- Weighted chance of picking this instruction in a random instruction
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - TreeMode (Stable)
+
+- Whether this instruction and its contents should be treated like a traditional behaviour tree, i.e. will continue if all child instructions fail
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - InvertTreeModeResult (Stable)
+
+- Whether or not to invert the result of TreeMode evaluation when passing up to parent TreeMode instructions
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+### Constraints
+
+- At most one or none of BodyMotion, Instructions must be provided
+- At most one or none of HeadMotion, Instructions must be provided
+- At most one or none of Actions, Instructions must be provided
+- If TreeMode is true, Continue must be false
+
+[(Top)](#top)
+
+## Inventory: IEntityFilter (Stable) [#ientityfilter_inventory]
+
+Test various conditions relating to entity inventory. This includes whether it contains a specific item, item count, and free slots
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Items (Stable)
+
+- A list of glob item patterns to match
+- **Type**: `AssetArray`, **Optional** (Default: [*]), **Computable**, **Element Type**: Item
+
+#### - CountRange (Stable)
+
+- The range of number of items that need to match the patterns
+- **Type**: `Array`, **Optional** (Default: [1, 2147483647]), **Computable**, **Element Type**: integer
+- **Constraint**: Values must be greater or equal than 0, less or equal than 2147483647and in weakly ascending order
+
+#### - FreeSlotRange (Stable)
+
+- The range designating the number of required free slots. Setting min and max to zero would check if full
+- **Type**: `Array`, **Optional** (Default: [0, 2147483647]), **Computable**, **Element Type**: integer
+- **Constraint**: Values must be greater or equal than 0, less or equal than 2147483647and in weakly ascending order
+
+[(Top)](#top)
+
+## ItemInHand: IEntityFilter (Stable) [#ientityfilter_iteminhand]
+
+Check if entity is holding an item
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Items (Stable)
+
+- A list of glob item patterns to match
+- **Type**: `AssetArray`, **Required**, **Computable**, **Element Type**: Item
+
+#### - Hand (Stable)
+
+- Which hand to check
+- **Type**: `Flag`, **Optional** (Default: Both), **Computable**
+- **Flag Values**:
+  - `OffHand`: The off-hand
+  - `Main`: The main hand
+  - `Both`: Both hands
+
+[(Top)](#top)
+
+## Land: BodyMotion (Experimental) [#bodymotion_land]
+
+Try to land at the given position using a seek like motion
+
+### Attributes
+
+#### - RelativeSpeed (Stable)
+
+- Maximum relative speed the NPC should move
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+#### - RelativeSpeedWaypoint (Stable)
+
+- Maximum relative speed the NPC should move close to waypoints
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 1
+
+#### - WaypointRadius (Stable)
+
+- Radius to slow down around waypoints
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0.1
+
+#### - UseBestPath (Stable)
+
+- Use best partial path if goal can't be reached
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - ThrottleDelayRange (Stable)
+
+- Time to delay after no path finding solution found
+- **Type**: `Array`, **Optional** (Default: [3.0, 5.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - ThrottleIgnoreCount (Stable)
+
+- How often no valid path solution can be found before throttling delay is applied
+- **Type**: `Integer`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - BuildOptimisedPath (Stable)
+
+- Try to reduce number of nodes of generated path
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - AvoidBlockDamage (Stable)
+
+- Should avoid environmental damage from blocks
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - RelaxedMoveConstraints (Stable)
+
+- NPC can do movements like wading (depends on motion controller type)
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - BlendHeading (Stable)
+
+- Relative rotation angle into next waypoint when arriving at current waypoint
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - PathSmoothing (Stable)
+
+- Try to smooth followed path. Larger values smooth more.
+- **Type**: `Integer`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - RejectionWeight (Stable)
+
+- Weight of rejection vector pushing entity closer to original path
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - UseSteering (Stable)
+
+- Use simple/cheap steering if available
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - SkipSteering (Experimental)
+
+- Skip steering if target not reachable
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - UsePathfinder (Stable)
+
+- Use path finder
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - MinPathLength (Experimental)
+
+- Minimum length of path required when not able to reach target (should be greater equal 2)
+- **Type**: `Double`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - DiagonalMoves (Stable)
+
+- Allow diagonal moves
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - StepsPerTick (Stable)
+
+- Steps per iteration
+- **Type**: `Integer`, **Optional** (Default: 50.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxPathLength (Stable)
+
+- Max path steps before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 200.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxOpenNodes (Stable)
+
+- Max open nodes before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 200.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxTotalNodes (Stable)
+
+- Max total node before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 900.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Debug (Stable)
+
+- Debugging flags
+- **Type**: `String`, **Optional** (Default: )
+
+#### - DesiredAltitudeWeight (Stable)
+
+- How much this NPC prefers being within the desired height range. 0 means it doesn't care much, 1 means it will do its best to get there fast. Values below 0 mean the default in the motion controller will be used.
+- **Type**: `Double`, **Optional** (Default: -1.0), **Computable**
+- **Constraint**: Value must be greater or equal than -1 and less or equal than 1
+
+#### - WaitDistance (Experimental)
+
+- Minimum distance target needs to move before recomputing path when no path can be found
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - RecomputeDistance (Experimental)
+
+- Maximum distance target can move before path is recomputed or 0 to supress recomputation
+- **Type**: `Double`, **Optional** (Default: 10.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - ReprojectDistance (Experimental)
+
+- Maximum distance target can move before position is reprojected
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - AdjustRangeByHitboxSize (Stable)
+
+- Correct range by hitbox sizes of involved entities
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - RecomputeConeAngle (Experimental)
+
+- Recompute path when target leaves cone from initial position to target
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - Reachable (Experimental)
+
+- Target must be reachable so that hitboxes can overlap
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - HeightDifference (Experimental)
+
+- Height difference allowed to target
+- **Type**: `Array`, **Optional** (Default: [-1.0, 1.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than -1.7976931348623157e+308, less or equal than 1.7976931348623157e+308and in strictly ascending order
+
+#### - SlowDownDistance (Stable)
+
+- Distance when to slow down when approaching
+- **Type**: `Double`, **Optional** (Default: 8.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - StopDistance (Stable)
+
+- Distance to stop at
+- **Type**: `Double`, **Optional** (Default: 10.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - AbortDistance (Stable)
+
+- Distance to abort behaviour
+- **Type**: `Double`, **Optional** (Default: 96.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Falloff (Stable)
+
+- Deceleration when approaching target
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - SwitchToSteeringDistance (Stable)
+
+- Distance below NPC can test if target is reachable and abort existing path
+- **Type**: `Double`, **Optional** (Default: 20.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - GoalLenience (Experimental)
+
+- The distance from the target landing point that is acceptable to land at
+- **Type**: `Double`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
+- SlowDownDistance must be greater or equal than StopDistance
+- Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
+
+[(Top)](#top)
+
+## Leave: BodyMotion (Experimental) [#bodymotion_leave]
+
+Get away from current position using path finding
+
+### Attributes
+
+#### - RelativeSpeed (Stable)
+
+- Maximum relative speed the NPC should move
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+#### - RelativeSpeedWaypoint (Stable)
+
+- Maximum relative speed the NPC should move close to waypoints
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 1
+
+#### - WaypointRadius (Stable)
+
+- Radius to slow down around waypoints
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0.1
+
+#### - UseBestPath (Stable)
+
+- Use best partial path if goal can't be reached
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - ThrottleDelayRange (Stable)
+
+- Time to delay after no path finding solution found
+- **Type**: `Array`, **Optional** (Default: [3.0, 5.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - ThrottleIgnoreCount (Stable)
+
+- How often no valid path solution can be found before throttling delay is applied
+- **Type**: `Integer`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - BuildOptimisedPath (Stable)
+
+- Try to reduce number of nodes of generated path
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - AvoidBlockDamage (Stable)
+
+- Should avoid environmental damage from blocks
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - RelaxedMoveConstraints (Stable)
+
+- NPC can do movements like wading (depends on motion controller type)
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - BlendHeading (Stable)
+
+- Relative rotation angle into next waypoint when arriving at current waypoint
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - PathSmoothing (Stable)
+
+- Try to smooth followed path. Larger values smooth more.
+- **Type**: `Integer`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - RejectionWeight (Stable)
+
+- Weight of rejection vector pushing entity closer to original path
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MinPathLength (Experimental)
+
+- Minimum length of path required when not able to reach target (should be greater equal 2)
+- **Type**: `Double`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - DiagonalMoves (Stable)
+
+- Allow diagonal moves
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - StepsPerTick (Stable)
+
+- Steps per iteration
+- **Type**: `Integer`, **Optional** (Default: 50.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxPathLength (Stable)
+
+- Max path steps before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 200.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxOpenNodes (Stable)
+
+- Max open nodes before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 200.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxTotalNodes (Stable)
+
+- Max total node before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 900.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Debug (Stable)
+
+- Debugging flags
+- **Type**: `String`, **Optional** (Default: )
+
+#### - DesiredAltitudeWeight (Stable)
+
+- How much this NPC prefers being within the desired height range. 0 means it doesn't care much, 1 means it will do its best to get there fast. Values below 0 mean the default in the motion controller will be used.
+- **Type**: `Double`, **Optional** (Default: -1.0), **Computable**
+- **Constraint**: Value must be greater or equal than -1 and less or equal than 1
+
+#### - Distance (Experimental)
+
+- Minimum distance required
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+### Constraints
+
+[(Top)](#top)
+
+## LineOfSight: IEntityFilter (Stable) [#ientityfilter_lineofsight]
+
+Matches if there is line of sight to the target
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+### Constraints
+
+[(Top)](#top)
+
+## MaintainDistance: BodyMotion (Stable) [#bodymotion_maintaindistance]
+
+Maintain distance from a given position
+
+### Attributes
+
+#### - DesiredDistanceRange (Stable)
+
+- The desired distance to remain at.
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than -1.7976931348623157e+308, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - TargetDistanceFactor (Stable)
+
+- A factor used to decide what distance to move to within the target range when the target falls outside of it. 0 will result in moving the shortest distance to fall within the range, 1 the furthest distance, and 0.5 roughly the middle of the range.
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - MoveThreshold (Stable)
+
+- An extra threshold distance on either side of the desired range before the NPC will trigger movement.
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - RelativeForwardsSpeed (Stable)
+
+- Maximum relative speed for the NPC moving forwards
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+#### - RelativeBackwardsSpeed (Stable)
+
+- Maximum relative speed for the NPC moving backwards
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+#### - MoveTowardsSlowdownThreshold (Stable)
+
+- The distance away from the target stopping point at which the NPC will start to slow down while moving towards the target
+- **Type**: `Double`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - StrafingDurationRange (Stable)
+
+- How long to strafe for (moving left or right around the target). If set to [ 0, 0 ], will not move horizontally at all.
+- **Type**: `Array`, **Optional** (Default: [0.0, 0.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - StrafingFrequencyRange (Stable)
+
+- How frequently to execute strafing
+- **Type**: `Array`, **Optional** (Default: [2.0, 2.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
+
+[(Top)](#top)
+
+## MatchLook: BodyMotion (Stable) [#bodymotion_matchlook]
+
+Make NPC body rotate to match look direction
+
+### Constraints
+
+[(Top)](#top)
+
+## MovementState: IEntityFilter (Stable) [#ientityfilter_movementstate]
+
+Check if the entity is in the given movement state
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - State (Stable)
+
+- The movement state to check
+- **Type**: `Flag`, **Required**
+- **Flag Values**:
+  - `WALKING`: Walking
+  - `FLYING`: Flying
+  - `RUNNING`: Running
+  - `FALLING`: Falling
+  - `IDLE`: Idle
+  - `SPRINTING`: Sprinting
+  - `CROUCHING`: Crouching
+  - `CLIMBING`: Climbing
+  - `ANY`: Any
+  - `JUMPING`: Jumping
+
+[(Top)](#top)
+
+## NPCGroup: IEntityFilter (Stable) [#ientityfilter_npcgroup]
+
+Returns whether the entity matches one of the provided NPCGroups
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - IncludeGroups (Stable)
+
+- A set of NPCGroups to include in the match
+- **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: TagSet
+
+#### - ExcludeGroups (Stable)
+
+- A set of NPCGroups to exclude from the match
+- **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: TagSet
+
+### Constraints
+
+- One (and only one) of IncludeGroups, ExcludeGroups must be provided
+
+[(Top)](#top)
+
+## Not: IEntityFilter (WorkInProgress) [#ientityfilter_not]
+
+Invert filter test
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Filter (Stable)
+
+- Filter to test
+- **Type**: `ObjectRef`, **Required**, **Object Type**: IEntityFilter
+
+[(Top)](#top)
+
+## Nothing: BodyMotion (Stable) [#bodymotion_nothing]
+
+Do nothing
+
+### Constraints
+
+[(Top)](#top)
+
+## Nothing: HeadMotion (Stable) [#headmotion_nothing]
+
+Do nothing
+
+### Constraints
+
+[(Top)](#top)
+
+## Observe: HeadMotion (Stable) [#headmotion_observe]
+
+Observe surroundings in various ways. This includes looking in random directions within an angle, or sweeping the head left and right, etc. Angles are relative to body angle at any given time.
+
+### Attributes
+
+#### - AngleRange (Stable)
+
+- The angle range to observe in degrees, offset from facing forwards
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than -180, less or equal than 180and in weakly ascending order
+
+#### - PauseTimeRange (Stable)
+
+- How long to continue looking in a given direction
+- **Type**: `Array`, **Optional** (Default: [2.0, 2.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - PickRandomAngle (Stable)
+
+- Whether to pick random angles within the range. If false, will instead sweep across the range, pausing at either end.
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - ViewSegments (Stable)
+
+- The number of distinct segments to stop at when sweeping from left to right
+- **Type**: `Integer`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - RelativeTurnSpeed (Stable)
+
+- The relative turn speed modifier
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+### Constraints
+
+[(Top)](#top)
+
+## Or: IEntityFilter (Stable) [#ientityfilter_or]
+
+Logical OR of a list of filters
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Filters (Stable)
+
+- List of filters
+- **Type**: `Array`, **Required**, **Element Type**: IEntityFilter
+- **Constraint**: Array must not be empty
+
+[(Top)](#top)
+
+## Path: Path (Stable) [#path_path]
+
+List of transient path points
+
+### Attributes
+
+#### - Waypoints (Stable)
+
+- List of transient path points
+- **Type**: `Array`, **Required**, **Element Type**: RelativeWaypointDefinition
+
+#### - Scale (Stable)
+
+- Overall path scale
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+[(Top)](#top)
+
+## Path: BodyMotion (Stable) [#bodymotion_path]
+
+Walk along a path.
+
+### Attributes
+
+#### - StartAtNearestNode (Stable)
+
+- Start at closest warp point
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - PathWidth (Experimental)
+
+- Walking corridor width
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - NodeWidth (Experimental)
+
+- Radius of warp point node
+- **Type**: `Double`, **Optional** (Default: 0.2)
+- **Constraint**: Value must be greater than 0
+
+#### - MinRelSpeed (Stable)
+
+- Minimum relative walk speed
+- **Type**: `Double`, **Optional** (Default: 0.5)
+- **Constraint**: Value must be greater than 0 and less or equal than 1
+
+#### - MaxRelSpeed (Stable)
+
+- Maximum relative walk speed
+- **Type**: `Double`, **Optional** (Default: 0.5)
+- **Constraint**: Value must be greater than 0 and less or equal than 1
+
+#### - MinWalkDistance (Experimental)
+
+- Minimum walk distance when PathWidth greater 0
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxWalkDistance (Experimental)
+
+- Maximum walk distance when PathWidth greater 0
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - Direction (Stable)
+
+- Walking direction relative to order of nodes
+- **Type**: `Flag`, **Optional** (Default: FORWARD)
+- **Flag Values**:
+  - `BACKWARD`: Start visiting nodes in reverse order
+  - `RANDOM`: Can change direction between nodes and randomly pick target node in Points shape mode
+  - `FORWARD`: Start visiting nodes in order
+  - `ANY`: Pick any start direction
+
+#### - Shape (Stable)
+
+- Shape of Path
+- **Type**: `Flag`, **Optional** (Default: LOOP), **Computable**
+- **Flag Values**:
+  - `CHAIN`: Nodes form an open path of line segments and will chain together with the next nearest path upon reaching the final node
+  - `LINE`: Nodes form an open path of line segments
+  - `LOOP`: Nodes form a closed loop of line segments (last node leads to first node)
+  - `POINTS`: Any path between nodes is possible
+
+#### - MinNodeDelay (Stable)
+
+- Minimum resting time at a node
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxNodeDelay (Stable)
+
+- Maximum resting time at a node
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - UseNodeViewDirection (Stable)
+
+- Look into next node direction at node
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - NodePauseScaleRange (Stable)
+
+- The range from which to pick a value that defines the portion of the total node pause time that should be spent facing a direction before turning
+- **Type**: `Array`, **Optional** (Default: [0.2, 0.4]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - NodePauseExtraPercentRange (Stable)
+
+- A range from which to pick the additional percentage of the directional pause time to add to it
+- **Type**: `Array`, **Optional** (Default: [0.0, 0.2]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1and in weakly ascending order
+
+#### - PickRandomAngle (Stable)
+
+- Whether to sweep left and right using the observation angle, or pick a random angle within the sector each time
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - ViewSegments (Stable)
+
+- The number of distinct segments to stop at when sweeping from left to right using the observation angle
+- **Type**: `Integer`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+### Constraints
+
+- MinRelativeSpeed must be less or equal than MaxRelativeSpeed
+- MinWalkDistance must be less or equal than MaxWalkDistance
+- MinNodeDelay must be less or equal than MaxNodeDelay
+- Must be attached to a sensor that provides one of path
+
+[(Top)](#top)
+
+## Random: Instruction (Stable) [#instruction_random]
+
+Randomised list of weighted instructions. One will be selected at random and executed until the NPC state changes.
+
+### Attributes
+
+#### - Name (Stable)
+
+- Optional name for descriptor
+- **Type**: `String`, **Optional** (Default: null)
+
+#### - Tag (Experimental)
+
+- Internal identifier tag for debugging
+- **Type**: `String`, **Optional** (Default: null)
+- **Constraint**: String value must be either null or not empty
+
+#### - Enabled (Stable)
+
+- Whether this instruction should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Sensor (Stable)
+
+- Sensor for testing if instruction can be applied. If not supplied, will always match
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: Sensor
+
+#### - Instructions (Stable)
+
+- List of weighted instructions to select from
+- **Type**: `Array`, **Optional** (Default: null), **Element Type**: Instruction
+
+#### - Continue (WorkInProgress)
+
+- Continue after this instruction was executed
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Weight (Stable)
+
+- Weighted chance of picking this instruction in a random instruction
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - TreeMode (Stable)
+
+- Whether this instruction and its contents should be treated like a traditional behaviour tree, i.e. will continue if all child instructions fail
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - InvertTreeModeResult (Stable)
+
+- Whether or not to invert the result of TreeMode evaluation when passing up to parent TreeMode instructions
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - ResetOnStateChange (Stable)
+
+- Whether to reset when NPC state changes
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - ExecuteFor (Stable)
+
+- How long to execute the chosen instruction before picking another
+- **Type**: `Array`, **Optional** (Default: [1.7976931348623157E308, 1.7976931348623157E308]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+### Constraints
+
+- If TreeMode is true, Continue must be false
+
+[(Top)](#top)
+
+## Reference: Instruction (Stable) [#instruction_reference]
+
+Prioritized instruction list that can be referenced from elsewhere in the file. Otherwise works like the default
+
+### Attributes
+
+#### - Parameters (Stable)
+
+- The parameter block for defining variables
+- **Type**: `Parameters`, **Optional** (Default: )
+
+#### - Name (Stable)
+
+- Name for referencing
+- **Type**: `String`, **Required**
+
+#### - Tag (Experimental)
+
+- Internal identifier tag for debugging
+- **Type**: `String`, **Optional** (Default: null)
+- **Constraint**: String value must be either null or not empty
+
+#### - Enabled (Stable)
+
+- Whether this instruction should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Sensor (Stable)
+
+- Sensor for testing if instruction can be applied. If not supplied, will always match
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: Sensor
+
+#### - BodyMotion (Stable)
+
+- Body motion to be executed
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: BodyMotion
+
+#### - HeadMotion (Stable)
+
+- Head motion to be executed
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: HeadMotion
+
+#### - Actions (Stable)
+
+- Actions to be executed
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: ActionList
+
+#### - ActionsBlocking (Stable)
+
+- Do not execute an action unless the previous action could execute
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - ActionsAtomic (Stable)
+
+- Only execute actions if all actions can be executed
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Instructions (Stable)
+
+- Optional nested list of instructions
+- **Type**: `Array`, **Optional** (Default: null), **Element Type**: Instruction
+
+#### - Continue (WorkInProgress)
+
+- Continue after this instruction was executed
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Weight (Stable)
+
+- Weighted chance of picking this instruction in a random instruction
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - TreeMode (Stable)
+
+- Whether this instruction and its contents should be treated like a traditional behaviour tree, i.e. will continue if all child instructions fail
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - InvertTreeModeResult (Stable)
+
+- Whether or not to invert the result of TreeMode evaluation when passing up to parent TreeMode instructions
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+### Constraints
+
+- At most one or none of BodyMotion, Instructions must be provided
+- At most one or none of HeadMotion, Instructions must be provided
+- At most one or none of Actions, Instructions must be provided
+- If TreeMode is true, Continue must be false
+
+[(Top)](#top)
+
+## RelativeWaypointDefinition: RelativeWaypointDefinition (Stable) [#relativewaypointdefinition_relativewaypointdefinition]
+
+A simple path waypoint definition where each waypoint is relative to the previous
+
+### Attributes
+
+#### - Rotation (Stable)
+
+- Rotation to turn from previous waypoint
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater than -360 and less than 360
+
+#### - Distance (Stable)
+
+- A distance to move from the previous waypoint
+- **Type**: `Double`, **Required**
+- **Constraint**: Value must be greater than 0
+
+[(Top)](#top)
+
+## Seek: BodyMotion (Experimental) [#bodymotion_seek]
+
+Move towards a target using path finding or steering
+
+### Attributes
+
+#### - RelativeSpeed (Stable)
+
+- Maximum relative speed the NPC should move
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+#### - RelativeSpeedWaypoint (Stable)
+
+- Maximum relative speed the NPC should move close to waypoints
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 1
+
+#### - WaypointRadius (Stable)
+
+- Radius to slow down around waypoints
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0.1
+
+#### - UseBestPath (Stable)
+
+- Use best partial path if goal can't be reached
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - ThrottleDelayRange (Stable)
+
+- Time to delay after no path finding solution found
+- **Type**: `Array`, **Optional** (Default: [3.0, 5.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - ThrottleIgnoreCount (Stable)
+
+- How often no valid path solution can be found before throttling delay is applied
+- **Type**: `Integer`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - BuildOptimisedPath (Stable)
+
+- Try to reduce number of nodes of generated path
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - AvoidBlockDamage (Stable)
+
+- Should avoid environmental damage from blocks
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - RelaxedMoveConstraints (Stable)
+
+- NPC can do movements like wading (depends on motion controller type)
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - BlendHeading (Stable)
+
+- Relative rotation angle into next waypoint when arriving at current waypoint
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - PathSmoothing (Stable)
+
+- Try to smooth followed path. Larger values smooth more.
+- **Type**: `Integer`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - RejectionWeight (Stable)
+
+- Weight of rejection vector pushing entity closer to original path
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - UseSteering (Stable)
+
+- Use simple/cheap steering if available
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - SkipSteering (Experimental)
+
+- Skip steering if target not reachable
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - UsePathfinder (Stable)
+
+- Use path finder
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - MinPathLength (Experimental)
+
+- Minimum length of path required when not able to reach target (should be greater equal 2)
+- **Type**: `Double`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - DiagonalMoves (Stable)
+
+- Allow diagonal moves
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - StepsPerTick (Stable)
+
+- Steps per iteration
+- **Type**: `Integer`, **Optional** (Default: 50.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxPathLength (Stable)
+
+- Max path steps before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 200.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxOpenNodes (Stable)
+
+- Max open nodes before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 200.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxTotalNodes (Stable)
+
+- Max total node before aborting path finding
+- **Type**: `Integer`, **Optional** (Default: 900.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Debug (Stable)
+
+- Debugging flags
+- **Type**: `String`, **Optional** (Default: )
+
+#### - DesiredAltitudeWeight (Stable)
+
+- How much this NPC prefers being within the desired height range. 0 means it doesn't care much, 1 means it will do its best to get there fast. Values below 0 mean the default in the motion controller will be used.
+- **Type**: `Double`, **Optional** (Default: -1.0), **Computable**
+- **Constraint**: Value must be greater or equal than -1 and less or equal than 1
+
+#### - WaitDistance (Experimental)
+
+- Minimum distance target needs to move before recomputing path when no path can be found
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - RecomputeDistance (Experimental)
+
+- Maximum distance target can move before path is recomputed or 0 to supress recomputation
+- **Type**: `Double`, **Optional** (Default: 10.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - ReprojectDistance (Experimental)
+
+- Maximum distance target can move before position is reprojected
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - AdjustRangeByHitboxSize (Stable)
+
+- Correct range by hitbox sizes of involved entities
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - RecomputeConeAngle (Experimental)
+
+- Recompute path when target leaves cone from initial position to target
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - Reachable (Experimental)
+
+- Target must be reachable so that hitboxes can overlap
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - HeightDifference (Experimental)
+
+- Height difference allowed to target
+- **Type**: `Array`, **Optional** (Default: [-1.0, 1.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than -1.7976931348623157e+308, less or equal than 1.7976931348623157e+308and in strictly ascending order
+
+#### - SlowDownDistance (Stable)
+
+- Distance when to slow down when approaching
+- **Type**: `Double`, **Optional** (Default: 8.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - StopDistance (Stable)
+
+- Distance to stop at
+- **Type**: `Double`, **Optional** (Default: 10.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - AbortDistance (Stable)
+
+- Distance to abort behaviour
+- **Type**: `Double`, **Optional** (Default: 96.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Falloff (Stable)
+
+- Deceleration when approaching target
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - SwitchToSteeringDistance (Stable)
+
+- Distance below NPC can test if target is reachable and abort existing path
+- **Type**: `Double`, **Optional** (Default: 20.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
+- SlowDownDistance must be greater or equal than StopDistance
+- Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
+
+[(Top)](#top)
+
+## Sequence: BodyMotion (Stable) [#bodymotion_sequence]
+
+Sequence of motions. Can be used in conjunction with 'Timer' to model more complex motions.
+
+### Attributes
+
+#### - Looped (Stable)
+
+- When true restart after last motion is finished
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - RestartOnActivate (Experimental)
+
+- Restart from first motion when NPC is activated.
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Motions (Stable)
+
+- Array of motions
+- **Type**: `Array`, **Required**, **Element Type**: BodyMotion
+- **Constraint**: Array must not be empty
+
+### Constraints
+
+[(Top)](#top)
+
+## Sequence: HeadMotion (Stable) [#headmotion_sequence]
+
+Sequence of motions. Can be used in conjunction with 'Timer' to model more complex motions.
+
+### Attributes
+
+#### - Looped (Stable)
+
+- When true restart after last motion is finished
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - RestartOnActivate (Experimental)
+
+- Restart from first motion when NPC is activated.
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Motions (Stable)
+
+- Array of motions
+- **Type**: `Array`, **Required**, **Element Type**: HeadMotion
+- **Constraint**: Array must not be empty
+
+### Constraints
+
+[(Top)](#top)
+
+## SpotsMe: IEntityFilter (Stable) [#ientityfilter_spotsme]
+
+Checks if the entity can view the NPC in a given view sector or cone and without obstruction.
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - ViewAngle (Stable)
+
+- Angle used for view sector and view cone test
+- **Type**: `Double`, **Optional** (Default: 90.0)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - ViewTest (Stable)
+
+- Check if the entity is in the view cone, view sector, or neither
+- **Type**: `Flag`, **Optional** (Default: VIEW_SECTOR)
+- **Flag Values**:
+  - `VIEW_SECTOR`: View_Sector
+  - `NONE`: None
+  - `VIEW_CONE`: View_Cone
+
+#### - TestLineOfSight (Stable)
+
+- Check if view to the npc is not obstructed
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+### Constraints
+
+[(Top)](#top)
+
+## StandingOnBlock: IEntityFilter (Stable) [#ientityfilter_standingonblock]
+
+Matches the block directly beneath the entity against a BlockSet
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - BlockSet (Stable)
+
+- The BlockSet to match against
+- **Type**: `Asset`, **Required**, **Computable**
+
+[(Top)](#top)
+
+## Stat: IEntityFilter (Stable) [#ientityfilter_stat]
+
+Match stat values of the entity
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Stat (Stable)
+
+- The stat value to check
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - StatTarget (Stable)
+
+- The stat target
+- **Type**: `Flag`, **Required**, **Computable**
+- **Flag Values**:
+  - `Min`: Min value
+  - `Max`: Max value
+  - `Value`: Current value
+
+#### - RelativeTo (Stable)
+
+- The stat value to check against
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - RelativeToTarget (Stable)
+
+- The stat target
+- **Type**: `Flag`, **Required**, **Computable**
+- **Flag Values**:
+  - `Min`: Min value
+  - `Max`: Max value
+  - `Value`: Current value
+
+#### - ValueRange (Stable)
+
+- The fractional range within which to trigger, with 1 being equal
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+[(Top)](#top)
+
+## StateTransition: StateTransition (Stable) [#statetransition_statetransition]
+
+An entry containing a list of actions to execute when moving from one state to another
+
+### Attributes
+
+#### - States (Stable)
+
+- List of state transitions
+- **Type**: `Array`, **Required**, **Element Type**: StateTransitionEdges
+
+#### - Actions (Stable)
+
+- List of actions
+- **Type**: `ObjectRef`, **Required**, **Object Type**: ActionList
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
+
+## StateTransitionController: StateTransitionController (Stable) [#statetransitioncontroller_statetransitioncontroller]
+
+A list of state transitions
+
+- A list of state transition entries with lists of actions
+- **Type**: `Array`, **Required**, **Element Type**: StateTransition
+
+[(Top)](#top)
+
+## StateTransitionEdges: StateTransitionEdges (Stable) [#statetransitionedges_statetransitionedges]
+
+Sets of from and to states defining state transitions
+
+### Attributes
+
+#### - Priority (Stable)
+
+- Priority for the actions in this transition
+- **Type**: `Integer`, **Optional** (Default: 0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - From (Stable)
+
+- A set of from states
+- **Type**: `StringList`, **Required**
+- **Constraint**: Strings in array must not be empty
+
+#### - To (Stable)
+
+- A set of to states
+- **Type**: `StringList`, **Required**
+- **Constraint**: Strings in array must not be empty
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
+
+## TakeOff: BodyMotion (Experimental) [#bodymotion_takeoff]
+
+Switch NPC from walking to flying motion controller
+
+### Attributes
+
+#### - JumpSpeed (Experimental)
+
+- Speed to jump off
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+### Constraints
+
+[(Top)](#top)
+
+## Teleport: BodyMotion (Experimental) [#bodymotion_teleport]
+
+Teleport NPC to a position given by a sensor or to a random position nearby with an optional minimum offset up to a maximum offset
+
+### Attributes
+
+#### - OffsetRange (Experimental)
+
+- The minimum and maximum offset the NPC can be spawned from the target position
+- **Type**: `Array`, **Optional** (Default: [0.0, 0.0]), **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - MaxYOffset (Experimental)
+
+- Maximum vertical offset from the target position in case of terrain obstacles
+- **Type**: `Double`, **Optional** (Default: 5.0)
+- **Constraint**: Value must be greater than 0
+
+#### - OffsetSector (Experimental)
+
+- The sector around the target in which to teleport to. The origin point is directly between the target and the NPC teleporting
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - Orientation (Experimental)
+
+- The direction to face after teleporting
+- **Type**: `Flag`, **Optional** (Default: Unchanged)
+- **Flag Values**:
+  - `UseTarget`: Use the target's orientation
+  - `TowardsTarget`: Face towards the target
+  - `Unchanged`: Do not change orientation
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
+- If Orientation is UseTarget, must be attached to a sensor that provides one of player target, NPC target, dropped item target
+
+[(Top)](#top)
+
+## TestProbe: BodyMotion (Experimental) [#bodymotion_testprobe]
+
+Debugging - Test probing
+
+### Attributes
+
+#### - AdjustX (Experimental)
+
+- X block position adjustment
+- **Type**: `Double`, **Optional** (Default: -1.0)
+
+#### - AdjustZ (Experimental)
+
+- Y block position adjustment
+- **Type**: `Double`, **Optional** (Default: -1.0)
+
+#### - AdjustDistance (Experimental)
+
+- Set probe direction length for debugging
+- **Type**: `Double`, **Optional** (Default: -1.0)
+
+#### - SnapAngle (Experimental)
+
+- Snap angle to multiples of value for debugging
+- **Type**: `Double`, **Optional** (Default: -1.0)
+
+#### - AvoidBlockDamage (Stable)
+
+- Should avoid environmental damage from blocks
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - RelaxedMoveConstraints (Stable)
+
+- NPC can do movements like wading (depends on motion controller type)
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+### Constraints
+
+[(Top)](#top)
+
+## Timer: BodyMotion (Stable) [#bodymotion_timer]
+
+Execute a Motion for a specific maximum time. If the motion finishes earlier the Timer also finishes.
+
+### Attributes
+
+#### - Time (Stable)
+
+- Range of time from which the random timer length can be chosen
+- **Type**: `Array`, **Optional** (Default: [1.0, 1.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - Motion (Stable)
+
+- Motion to execute
+- **Type**: `ObjectRef`, **Required**, **Object Type**: BodyMotion
+
+### Constraints
+
+[(Top)](#top)
+
+## Timer: HeadMotion (Stable) [#headmotion_timer]
+
+Execute a Motion for a specific maximum time. If the motion finishes earlier the Timer also finishes.
+
+### Attributes
+
+#### - Time (Stable)
+
+- Range of time from which the random timer length can be chosen
+- **Type**: `Array`, **Optional** (Default: [1.0, 1.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - Motion (Stable)
+
+- Motion to execute
+- **Type**: `ObjectRef`, **Required**, **Object Type**: HeadMotion
+
+### Constraints
+
+[(Top)](#top)
+
+## ValueToParameterMapping: ValueToParameterMapping (Stable) [#valuetoparametermapping_valuetoparametermapping]
+
+An entry containing a list of actions to execute when moving from one state to another
+
+### Attributes
+
+#### - ValueType (Stable)
+
+- The type of the value being mapped
+- **Type**: `Flag`, **Required**
+- **Flag Values**:
+  - `String`: String value
+  - `Double`: Double value
+  - `Int`: Integer value
+
+#### - FromValue (Stable)
+
+- The value to read from the value store
+- **Type**: `String`, **Required**
+- **Constraint**: String must be not empty
+
+#### - ToParameter (Stable)
+
+- The parameter name to override
+- **Type**: `String`, **Required**
+- **Constraint**: String must be not empty
+
+[(Top)](#top)
+
+## ViewSector: IEntityFilter (Stable) [#ientityfilter_viewsector]
+
+Matches entities within the given view sector
+
+### Attributes
+
+#### - Enabled (Stable)
+
+- Whether this entity filter should be enabled
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - ViewSector (Stable)
+
+- View sector to test entities in
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+### Constraints
+
+[(Top)](#top)
+
+## Wander: BodyMotion (Stable) [#bodymotion_wander]
+
+Random movement in short linear pieces.
+
+### Attributes
+
+#### - MinWalkTime (Stable)
+
+- Minimum time to wander for a segment.
+- **Type**: `Double`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxWalkTime (Stable)
+
+- Maximum time to wander for a segment.
+- **Type**: `Double`, **Optional** (Default: 4.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MinHeadingChange (Stable)
+
+- Approximate minimum heading change between segments
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 180
+
+#### - MaxHeadingChange (Stable)
+
+- Approximate maximum heading change between segments
+- **Type**: `Double`, **Optional** (Default: 90.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 180
+
+#### - RelaxHeadingChange (Stable)
+
+- Allow other directions when preferred directions blocked
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - RelativeSpeed (Stable)
+
+- Relative wander speed
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+#### - MinMoveDistance (Stable)
+
+- Minimum distance to move in a segment
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - StopDistance (Stable)
+
+- Distance to stop at target
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - TestsPerTick (Stable)
+
+- Direction tests per tick
+- **Type**: `Integer`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - AvoidBlockDamage (Stable)
+
+- Should avoid environmental damage from blocks
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - RelaxedMoveConstraints (Stable)
+
+- NPC can do movements like wading (depends on motion controller type)
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - DesiredAltitudeWeight (Stable)
+
+- How much this NPC prefers being within the desired height range. 0 means it doesn't care much, 1 means it will do its best to get there fast. Values below 0 mean the default in the motion controller will be used.
+- **Type**: `Double`, **Optional** (Default: -1.0), **Computable**
+- **Constraint**: Value must be greater or equal than -1 and less or equal than 1
+
+### Constraints
+
+- MinWalkTime must be less or equal than MaxWalkTime
+- MinHeadingChange must be less or equal than MaxHeadingChange
+
+[(Top)](#top)
+
+## WanderInCircle: BodyMotion (Stable) [#bodymotion_wanderincircle]
+
+Random movement in short linear pieces inside circle around spawn position.
+
+### Attributes
+
+#### - MinWalkTime (Stable)
+
+- Minimum time to wander for a segment.
+- **Type**: `Double`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxWalkTime (Stable)
+
+- Maximum time to wander for a segment.
+- **Type**: `Double`, **Optional** (Default: 4.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MinHeadingChange (Stable)
+
+- Approximate minimum heading change between segments
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 180
+
+#### - MaxHeadingChange (Stable)
+
+- Approximate maximum heading change between segments
+- **Type**: `Double`, **Optional** (Default: 90.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 180
+
+#### - RelaxHeadingChange (Stable)
+
+- Allow other directions when preferred directions blocked
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - RelativeSpeed (Stable)
+
+- Relative wander speed
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+#### - MinMoveDistance (Stable)
+
+- Minimum distance to move in a segment
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - StopDistance (Stable)
+
+- Distance to stop at target
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - TestsPerTick (Stable)
+
+- Direction tests per tick
+- **Type**: `Integer`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - AvoidBlockDamage (Stable)
+
+- Should avoid environmental damage from blocks
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - RelaxedMoveConstraints (Stable)
+
+- NPC can do movements like wading (depends on motion controller type)
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - DesiredAltitudeWeight (Stable)
+
+- How much this NPC prefers being within the desired height range. 0 means it doesn't care much, 1 means it will do its best to get there fast. Values below 0 mean the default in the motion controller will be used.
+- **Type**: `Double`, **Optional** (Default: -1.0), **Computable**
+- **Constraint**: Value must be greater or equal than -1 and less or equal than 1
+
+#### - Radius (Stable)
+
+- Radius of circle to wander in
+- **Type**: `Double`, **Optional** (Default: 10.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Flock (Experimental)
+
+- Do not use
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - UseSphere (Stable)
+
+- Use a sphere instead of circle cylinder
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+### Constraints
+
+- MinWalkTime must be less or equal than MaxWalkTime
+- MinHeadingChange must be less or equal than MaxHeadingChange
+
+[(Top)](#top)
+
+## WanderInRect: BodyMotion (Stable) [#bodymotion_wanderinrect]
+
+Random movement in short linear pieces inside rectangle around spawn position.
+
+### Attributes
+
+#### - MinWalkTime (Stable)
+
+- Minimum time to wander for a segment.
+- **Type**: `Double`, **Optional** (Default: 2.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxWalkTime (Stable)
+
+- Maximum time to wander for a segment.
+- **Type**: `Double`, **Optional** (Default: 4.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MinHeadingChange (Stable)
+
+- Approximate minimum heading change between segments
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 180
+
+#### - MaxHeadingChange (Stable)
+
+- Approximate maximum heading change between segments
+- **Type**: `Double`, **Optional** (Default: 90.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 180
+
+#### - RelaxHeadingChange (Stable)
+
+- Allow other directions when preferred directions blocked
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - RelativeSpeed (Stable)
+
+- Relative wander speed
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+#### - MinMoveDistance (Stable)
+
+- Minimum distance to move in a segment
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - StopDistance (Stable)
+
+- Distance to stop at target
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - TestsPerTick (Stable)
+
+- Direction tests per tick
+- **Type**: `Integer`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - AvoidBlockDamage (Stable)
+
+- Should avoid environmental damage from blocks
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - RelaxedMoveConstraints (Stable)
+
+- NPC can do movements like wading (depends on motion controller type)
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - DesiredAltitudeWeight (Stable)
+
+- How much this NPC prefers being within the desired height range. 0 means it doesn't care much, 1 means it will do its best to get there fast. Values below 0 mean the default in the motion controller will be used.
+- **Type**: `Double`, **Optional** (Default: -1.0), **Computable**
+- **Constraint**: Value must be greater or equal than -1 and less or equal than 1
+
+#### - Width (Stable)
+
+- Rectangle width
+- **Type**: `Double`, **Optional** (Default: 10.0)
+- **Constraint**: Value must be greater than 0
+
+#### - Depth (Stable)
+
+- Rectangle depth
+- **Type**: `Double`, **Optional** (Default: 10.0)
+- **Constraint**: Value must be greater than 0
+
+### Constraints
+
+- MinWalkTime must be less or equal than MaxWalkTime
+- MinHeadingChange must be less or equal than MaxHeadingChange
+
+[(Top)](#top)
+
+## Watch: HeadMotion (Stable) [#headmotion_watch]
+
+Rotate to target.
+
+### Attributes
+
+#### - RelativeTurnSpeed (Stable)
+
+- The relative turn speed modifier
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 2
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
+
+[(Top)](#top)
+
+## WeightedAction: WeightedAction (Stable) [#weightedaction_weightedaction]
+
+A wrapped and weighted action intended to be used for Random action lists.
+
+### Attributes
+
+#### - Action (Stable)
+
+- The action to run
+- **Type**: `ObjectRef`, **Required**, **Object Type**: Action
+
+#### - Weight (Stable)
+
+- The weight representing how likely this action is to run
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+[(Top)](#top)

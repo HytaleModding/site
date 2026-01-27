@@ -1,0 +1,509 @@
+---
+title: NPC Core Components - Entity
+description: Official documentation for NPC entity core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (entity)
+
+## Beacon: Sensor (Stable) [#sensor_beacon]
+
+Checks to see if any messages have been broadcasted by nearby NPCs.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Message (Experimental)
+
+- The message to listen for
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - Range (Experimental)
+
+- The max distance beacons should be received from
+- **Type**: `Double`, **Optional** (Default: 64.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - TargetSlot (Stable)
+
+- A slot to store the sender as a target. If omitted no target will be stored
+- **Type**: `String`, **Optional** (Default: null)
+- **Constraint**: String value must be either null or not empty
+
+#### - ConsumeMessage (Stable)
+
+- Whether the message should be consumed by this sensor
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+### Provides
+
+- Player target
+- NPC target
+- Dropped item target
+
+[(Top)](#top)
+
+## Count: Sensor (Stable) [#sensor_count]
+
+Check if there is a certain number of NPCs or players within a specific range
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Count (Stable)
+
+- Specifies the allowed number of entities (inclusive)
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: integer
+- **Constraint**: Values must be greater or equal than 0, less or equal than 2147483647and in weakly ascending order
+
+#### - Range (Stable)
+
+- Range to find entities in (inclusive)
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - IncludeGroups (Stable)
+
+- Match for NPCs in these groups
+- **Type**: `AssetArray`, **Optional** (Default: null), **Element Type**: TagSet
+
+#### - ExcludeGroups (Stable)
+
+- Never match NPCs in these groups
+- **Type**: `AssetArray`, **Optional** (Default: null), **Element Type**: TagSet
+
+[(Top)](#top)
+
+## IgnoreForAvoidance: Action (Stable) [#action_ignoreforavoidance]
+
+Set the target slot of an entity that should be ignored during avoidance
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - TargetSlot (Stable)
+
+- The target slot containing the entity to be ignored
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+[(Top)](#top)
+
+## Kill: Sensor (Stable) [#sensor_kill]
+
+Return true if NPC made a kill. Target position is killed entity position.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - TargetSlot (Stable)
+
+- The target slot to check if killed. If omitted, will accept any entity killed
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+### Provides
+
+- Vector position
+
+[(Top)](#top)
+
+## Mob: Sensor (Stable) [#sensor_mob]
+
+Return true if entity matching specific attributes and filters is in range. Target is entity.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - MinRange (Stable)
+
+- Minimum range to test entities in
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - Range (Stable)
+
+- Maximum range to test entities in
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - LockOnTarget (Stable)
+
+- Matched target becomes locked target
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - LockedTargetSlot (Stable)
+
+- The target slot to use for locking on or unlocking
+- **Type**: `String`, **Optional** (Default: LockedTarget), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - AutoUnlockTarget (Stable)
+
+- Unlock locked target when sensor not matching it anymore
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - OnlyLockedTarget (Stable)
+
+- Test only locked target
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - IgnoredTargetSlot (Stable)
+
+- The target slot to use for ignoring
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - UseProjectedDistance (Stable)
+
+- Use the projected movement direction vector for distance, rather than the Euclidean distance
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - Prioritiser (Stable)
+
+- A prioritiser for selecting results based on additional parameters
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: ISensorEntityPrioritiser
+
+#### - Collector (Stable)
+
+- A collector which can process all checked entities and act on them based on whether they match or not
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: ISensorEntityCollector
+
+#### - Filters (Stable)
+
+- A series of entity filter sensors to test
+- **Type**: `Array`, **Optional** (Default: null), **Element Type**: IEntityFilter
+
+#### - GetPlayers (Stable)
+
+- Test players
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - GetNPCs (Stable)
+
+- Test mobs/NPCs
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - ExcludeOwnType (Stable)
+
+- Exclude NPCs of same type as current NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+### Constraints
+
+- Range must be greater or equal than MinRange
+- At least one of GetPlayers, GetNPCs must be true
+
+### Provides
+
+- Player target
+- NPC target
+
+[(Top)](#top)
+
+## OverrideAttitude: Action (Stable) [#action_overrideattitude]
+
+Override this NPCs attitude towards the provided target for a given duration
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Attitude (Stable)
+
+- The attitude to set
+- **Type**: `Flag`, **Required**, **Computable**
+- **Flag Values**:
+  - `HOSTILE`: is hostile towards the target
+  - `REVERED`: reveres the target
+  - `FRIENDLY`: is friendly towards the target
+  - `IGNORE`: is ignoring the target
+  - `NEUTRAL`: is neutral towards the target
+
+#### - Duration (Stable)
+
+- The duration to override for
+- **Type**: `Double`, **Optional** (Default: 10.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target
+
+[(Top)](#top)
+
+## Player: Sensor (Stable) [#sensor_player]
+
+Return true if player matching specific attributes and filters is in range. Target is player.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - MinRange (Stable)
+
+- Minimum range to test entities in
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - Range (Stable)
+
+- Maximum range to test entities in
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - LockOnTarget (Stable)
+
+- Matched target becomes locked target
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - LockedTargetSlot (Stable)
+
+- The target slot to use for locking on or unlocking
+- **Type**: `String`, **Optional** (Default: LockedTarget), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - AutoUnlockTarget (Stable)
+
+- Unlock locked target when sensor not matching it anymore
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - OnlyLockedTarget (Stable)
+
+- Test only locked target
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - IgnoredTargetSlot (Stable)
+
+- The target slot to use for ignoring
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - UseProjectedDistance (Stable)
+
+- Use the projected movement direction vector for distance, rather than the Euclidean distance
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - Prioritiser (Stable)
+
+- A prioritiser for selecting results based on additional parameters
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: ISensorEntityPrioritiser
+
+#### - Collector (Stable)
+
+- A collector which can process all checked entities and act on them based on whether they match or not
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: ISensorEntityCollector
+
+#### - Filters (Stable)
+
+- A series of entity filter sensors to test
+- **Type**: `Array`, **Optional** (Default: null), **Element Type**: IEntityFilter
+
+### Constraints
+
+- Range must be greater or equal than MinRange
+
+### Provides
+
+- Player target
+- NPC target
+
+[(Top)](#top)
+
+## ReleaseTarget: Action (Stable) [#action_releasetarget]
+
+Clear locked target for NPC.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - TargetSlot (Stable)
+
+- The target slot to release
+- **Type**: `String`, **Optional** (Default: LockedTarget), **Computable**
+- **Constraint**: String must be not empty
+
+[(Top)](#top)
+
+## Self: Sensor (Stable) [#sensor_self]
+
+Test if the NPC itself matches a set of entity filters
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Filters (Stable)
+
+- A series of entity filter sensors to test
+- **Type**: `Array`, **Required**, **Element Type**: IEntityFilter
+
+### Provides
+
+- Vector position
+
+[(Top)](#top)
+
+## SetMarkedTarget: Action (Stable) [#action_setmarkedtarget]
+
+Explicitly sets a marked target in a given slot.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - TargetSlot (Stable)
+
+- The target slot to set a target to.
+- **Type**: `String`, **Optional** (Default: LockedTarget), **Computable**
+- **Constraint**: String must be not empty
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target
+
+[(Top)](#top)
+
+## SetStat: Action (Stable) [#action_setstat]
+
+Sets (or adds to) an entity stat on the NPC.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Stat (Stable)
+
+- The entity stat to affect.
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - Value (Stable)
+
+- The value to set the stat to.
+- **Type**: `Double`, **Required**, **Computable**
+
+#### - Add (Stable)
+
+- Add the value to the existing value instead of setting it.
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+[(Top)](#top)
+
+## Target: Sensor (Stable) [#sensor_target]
+
+Test if given target matches a series of criteria and optional entity filters
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - TargetSlot (Stable)
+
+- The target slot to check
+- **Type**: `String`, **Optional** (Default: LockedTarget), **Computable**
+- **Constraint**: String must be not empty
+
+#### - Range (Stable)
+
+- Maximum range of locked target
+- **Type**: `Double`, **Optional** (Default: 1.7976931348623157E308), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - AutoUnlockTarget (Stable)
+
+- Unlock locked target if match fails
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - Filters (Stable)
+
+- A series of entity filter sensors to test
+- **Type**: `Array`, **Optional** (Default: null), **Element Type**: IEntityFilter
+
+### Provides
+
+- Player target
+- NPC target
+
+[(Top)](#top)

@@ -1,0 +1,280 @@
+---
+title: NPC Core Components - Timer
+description: Official documentation for NPC timer core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (timer)
+
+## Alarm: Sensor (Stable) [#sensor_alarm]
+
+Check the state of a named alarm and optionally clear it if the time has passed
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Name (Stable)
+
+- The name of the alarm to check
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - State (Stable)
+
+- The state to check for
+- **Type**: `Flag`, **Required**, **Computable**
+- **Flag Values**:
+  - `SET`: Set
+  - `UNSET`: Not set
+  - `PASSED`: Passed
+
+#### - Clear (Stable)
+
+- Whether to clear the alarm (unset it) if it has passed
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+[(Top)](#top)
+
+## SetAlarm: Action (Stable) [#action_setalarm]
+
+Set a named alarm on the NPC
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Name (Stable)
+
+- The name of the alarm to set
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - DurationRange (Stable)
+
+- The duration range from which to pick a duration to set the alarm for. [ "P0D", "P0D" ] will unset the alarm
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: TemporalAmount
+- **Constraint**: Values must be greater or equal than a few seconds, less or equal than 5879611 years, in weakly ascending order and either all Periods or all Durations
+
+[(Top)](#top)
+
+## Timer: Sensor (Stable) [#sensor_timer]
+
+Tests if a timer exists and the value is within a certain range.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Name (Stable)
+
+- The name of the timer
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - State (Stable)
+
+- The timer's state to check
+- **Type**: `Flag`, **Optional** (Default: ANY)
+- **Flag Values**:
+  - `PAUSED`: Paused
+  - `RUNNING`: Running
+  - `STOPPED`: Stopped
+  - `ANY`: Any
+
+#### - TimeRemainingRange (Stable)
+
+- The acceptable remaining time on the timer.
+- **Type**: `Array`, **Optional** (Default: [0.0, 1.7976931348623157E308]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+[(Top)](#top)
+
+## TimerContinue: Action (Stable) [#action_timercontinue]
+
+Continue a timer
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Name (Stable)
+
+- The name of the timer
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+[(Top)](#top)
+
+## TimerModify: Action (Stable) [#action_timermodify]
+
+Modify values of a timer
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Name (Stable)
+
+- The name of the timer
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - AddValue (Stable)
+
+- Add value to the timer
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxValue (Stable)
+
+- Set the restart value range the timer can have. If [ 0, 0 ] (default) it will be ignored
+- **Type**: `Array`, **Optional** (Default: [0.0, 0.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308
+
+#### - Rate (Stable)
+
+- Set the rate at which the timer will decrease. If 0 (default) it will be ignored
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - SetValue (Stable)
+
+- Set the value of the timer. If 0 (default) it will be ignored
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - Repeating (Stable)
+
+- Whether to repeat the timer when countdown finishes
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+[(Top)](#top)
+
+## TimerPause: Action (Stable) [#action_timerpause]
+
+Pause a timer
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Name (Stable)
+
+- The name of the timer
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+[(Top)](#top)
+
+## TimerRestart: Action (Stable) [#action_timerrestart]
+
+Restart a timer. Will be set to the original initial values.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Name (Stable)
+
+- The name of the timer
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+[(Top)](#top)
+
+## TimerStart: Action (Stable) [#action_timerstart]
+
+Start a timer
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Name (Stable)
+
+- The name of the timer
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - StartValueRange (Stable)
+
+- The range from which to pick an initial value to start at
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - RestartValueRange (Stable)
+
+- The range from which to pick a value when the timer is restarted. The upper bound is also the timer max
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - Rate (Stable)
+
+- The rate at which the timer will decrease
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Repeating (Stable)
+
+- Whether to repeat the timer when countdown finishes
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+[(Top)](#top)
+
+## TimerStop: Action (Stable) [#action_timerstop]
+
+Stop a timer
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Name (Stable)
+
+- The name of the timer
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+[(Top)](#top)

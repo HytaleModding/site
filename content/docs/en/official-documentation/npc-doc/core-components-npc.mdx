@@ -1,0 +1,164 @@
+---
+title: NPC Core Components - NPC
+description: Official documentation for NPC core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (npc)
+
+## CompleteTask: Action (Stable) [#action_completetask]
+
+Complete a task. Tasks are picked based on those provided to SensorCanInteract.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Slot (Stable)
+
+- The animation slot to play on
+- **Type**: `Flag`, **Required**
+- **Flag Values**:
+  - `Status`: Status
+  - `Action`: Action
+  - `Face`: Face
+
+#### - Animation (Stable)
+
+- The animation ID to play
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+
+#### - PlayAnimation (Stable)
+
+- Whether or not to play the animation associated with completing this task
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+### Constraints
+
+[(Top)](#top)
+
+## HasTask: Sensor (Stable) [#sensor_hastask]
+
+Checks whether or not the player being iterated by the interaction instruction has any of the given tasks
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - TasksById (Stable)
+
+- Completable tasks to match by name
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: String
+- **Constraint**: String array must not be empty
+
+### Constraints
+
+[(Top)](#top)
+
+## Mount: Action (Stable) [#action_mount]
+
+Enable the player to mount the entity
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - AnchorX (Stable)
+
+- The X anchor pos
+- **Type**: `Double`, **Required**, **Computable**
+
+#### - AnchorY (Stable)
+
+- The Y anchor pos
+- **Type**: `Double`, **Required**, **Computable**
+
+#### - AnchorZ (Stable)
+
+- The Z anchor pos
+- **Type**: `Double`, **Required**, **Computable**
+
+#### - MovementConfig (Stable)
+
+- The MovementConfig to use for this mount
+- **Type**: `String`, **Required**, **Computable**
+
+[(Top)](#top)
+
+## OpenBarterShop: Action (Stable) [#action_openbartershop]
+
+Open the barter shop UI for the current player
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Shop (Stable)
+
+- The barter shop to open
+- **Type**: `Asset`, **Required**, **Computable**
+
+### Constraints
+
+[(Top)](#top)
+
+## OpenShop: Action (Stable) [#action_openshop]
+
+Open the shop UI for the current player
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Shop (Stable)
+
+- The shop to open
+- **Type**: `Asset`, **Required**, **Computable**
+
+### Constraints
+
+[(Top)](#top)
+
+## StartObjective: Action (Stable) [#action_startobjective]
+
+Start the given objective for the currently iterated player in the interaction instruction
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Objective (Stable)
+
+- The task to start
+- **Type**: `Asset`, **Required**, **Computable**
+
+### Constraints
+
+[(Top)](#top)

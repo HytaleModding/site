@@ -1,0 +1,214 @@
+---
+title: NPC Core Components - Combat
+description: Official documentation for NPC combat core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (combat)
+
+## ApplyEntityEffect: Action (Stable) [#action_applyentityeffect]
+
+Applies an entity effect to the target or self
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - EntityEffect (Stable)
+
+- The entity effect to apply
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - UseTarget (Stable)
+
+- Use the sensor-provided target for the action, self otherwise
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+### Constraints
+
+- If UseTarget is true, must be attached to a sensor that provides one of player target, NPC target
+
+[(Top)](#top)
+
+## Attack: Action (Experimental) [#action_attack]
+
+Let NPC start an attack. When an attack is running no new attack is started.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Attack (Experimental)
+
+- Attack pattern to use. If omitted, will cancel current attack
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - AttackType (Stable)
+
+- The interaction type to use
+- **Type**: `Flag`, **Optional** (Default: Primary), **Computable**
+- **Flag Values**:
+  - `Secondary`: Secondary attack
+  - `Ability3`: Ability 3
+  - `Primary`: Primary attack
+  - `Ability2`: Ability 2
+  - `Ability1`: Ability 1
+
+#### - ChargeFor (Stable)
+
+- How long to charge for. 0 indicates no charging. Also doubles as how long to block for
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - AttackPauseRange (Stable)
+
+- Range of minimum pause between attacks
+- **Type**: `Array`, **Optional** (Default: [0.0, 0.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - AimingTimeRange (Stable)
+
+- A range from which to pick a random value denoting the max time the NPC will wait for aiming before launching the attack.
+- **Type**: `Array`, **Optional** (Default: [0.0, 0.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - LineOfSight (Experimental)
+
+- Check Line of Sight before firing
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - AvoidFriendlyFire (Experimental)
+
+- Tries to avoid friendly fire if true
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - BallisticMode (WorkInProgress)
+
+- Trajectory to use
+- **Type**: `Flag`, **Optional** (Default: Short)
+- **Flag Values**:
+  - `Random`: Random long or short
+  - `Long`: Longer flight curve
+  - `Short`: Shorter flight curve
+  - `Alternate`: Alternate between long and short
+
+#### - MeleeConeAngle (WorkInProgress)
+
+- Cone angle considered for on target for melee
+- **Type**: `Double`, **Optional** (Default: 30.0)
+- **Constraint**: Value must be greater than 0 and less or equal than 360
+
+#### - DamageFriendlies (Stable)
+
+- Whether this attack should bypass ignored damage groups and deal damage to the target
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - SkipAiming (Stable)
+
+- Whether aiming should be skipped an the attack just executed immediately.
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - ChargeDistance (Stable)
+
+- If this is a charge attack, the distance required for the charge
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - InteractionVars (Stable)
+
+- Set of interaction vars for modifying the interaction
+- **Type**: `CodecObject`, **Optional** (Default: null)
+
+### Constraints
+
+- If SkipAiming is true, LineOfSight, AvoidFriendlyFire must be false
+
+[(Top)](#top)
+
+## Damage: Sensor (Stable) [#sensor_damage]
+
+Test if NPC suffered damage. A position is only returned when NPC suffered combat damage.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Combat (Stable)
+
+- Test for combat damage
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - Friendly (Stable)
+
+- Test for damage from usually disabled damage groups
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Drowning (Stable)
+
+- Test for damage from drowning
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Environment (Stable)
+
+- Test for damage from environment
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Other (Stable)
+
+- Test for other damage
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - TargetSlot (Stable)
+
+- The slot to use for locking on the target if damage is taken. If omitted, target will not be locked
+- **Type**: `String`, **Optional** (Default: null)
+- **Constraint**: String value must be either null or not empty
+
+### Constraints
+
+- At least one of Combat, Drowning, Environment, Other must be true
+- If TargetSlot is true, Drowning, Environment, Other must be false
+
+### Provides
+
+- Player target
+- NPC target
+- Dropped item target
+
+[(Top)](#top)
+
+## IsBackingAway: Sensor (Stable) [#sensor_isbackingaway]
+
+Test if the NPC is currently backing away from something.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
