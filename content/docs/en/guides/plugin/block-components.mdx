@@ -86,7 +86,7 @@ public class ExampleInitializer extends RefSystem {
 }
 ```
 
-ExampleSystemInitializer is a RefSystem that reacts when block entities with the ExampleBlock component are added or removed. This is crucial for marking blocks as ticking when they're first placed.
+ExampleInitializer is a RefSystem that reacts when block entities with the ExampleBlock component are added or removed. This is crucial for marking blocks as ticking when they're first placed.
 
 **Key Points:**
 
@@ -208,7 +208,7 @@ public class ExamplePlugin extends JavaPlugin {
 	@Override
 	protected void start() {
 		this.getChunkStoreRegistry().registerSystem(new ExampleSystem());
-		this.getChunkStoreRegistry().registerSystem(new ExampleSystemInitializer());
+		this.getChunkStoreRegistry().registerSystem(new ExampleInitializer());
 	}
 
     public ComponentType getExampleBlockComponentType() {
