@@ -37,7 +37,11 @@
     "failedToLoad": "Falha ao carregar.",
     "gitInfoUnavailable": "Informações do Git indisponíveis",
     "credit": "Escrito por",
-    "supportUs": "Apoie-nos"
+    "supportUs": "Apoie-nos",
+    "officialDocumentationNotice": {
+      "title": "Documentação oficial do Hytale",
+      "description": "Todo o conteúdo desta seção é fornecido pela **Hypixel Studios Canada Inc.** e é apresentado sem alterações substanciais, exceto por ajustes de design visual realizados pela equipe Hytale Modding."
+    }
   },
   "meta": {
     "established_information": {
@@ -66,6 +70,20 @@
       "title": "Guias",
       "java_basics": {
         "title": "Fundamentos do Java"
+      }
+    },
+    "official_documentation": {
+      "worldgen": {
+        "title": "Geração de mundo",
+        "pack_tutorial": {
+          "title": "Tutorial do pacote da geração de mundo"
+        },
+        "technical_hytale_generator": {
+          "title": "Gerador técnico do Hytale"
+        },
+        "worldgen_tutorial": {
+          "title": "Tutorial da geração de mundo"
+        }
       }
     },
     "community_projects": {

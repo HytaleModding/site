@@ -16,7 +16,7 @@ String empty = "";
 ```
 
 <Callout type="warning" title="Strings são imutáveis">
-  Uma vez criada, uma string **não pode ser alterada**. Methods that seem to modify a string actually create a new one!
+  Uma vez criada, uma string **não pode ser alterada**. Métodos que parecem modificar uma string e realmente criam uma nova!
 
   ```java
   String text = "Olá";
@@ -177,7 +177,7 @@ String result = "Olá".concat(" Mundo");  // "Olá Mundo"
 
 ### Construindo strings longas
 
-For many concatenations, use `StringBuilder`:
+Para muitas concatenações, use o `StringBuilder`:
 
 ```java
 StringBuilder builder = new StringBuilder();
@@ -197,26 +197,26 @@ System.out.println(result);
   A concatenação regular cria muitas strings temporárias:
 
   ```java
-  // Inefficient - Creates many temporary strings
+  // Ineficiente — Cria muitas strings temporárias
   String result = "";
   for (int i = 0; i < 1000; i++) {
-      result = result + i;  // Creates 1000 temporary strings!
+      result = result + i;  // Cria 1000 strings temporárias!
   }
 
-  // Efficient - StringBuilder is mutable
+  // Eficiente — StringBuilder é mutável
   StringBuilder sb = new StringBuilder();
   for (int i = 0; i < 1000; i++) {
-      sb.append(i);  // Modifies one object
+      sb.append(i);  // Modifica um objeto
   }
   String result = sb.toString();
   ```
 
-  Use `StringBuilder` when building strings in loops!
+  Use `StringBuilder` ao montar strings em repetições!
 </Callout>
 
 ## Exemplos práticos
 
-### Parse Player Command
+### Analisar comando do jogador
 
 ```java
 public class CommandParser {
@@ -253,17 +253,17 @@ public class PlayerFormatter {
         }
         
         formatted.append(name);
-        formatted.append(" (Lv. ").append(level).append(")");
+        formatted.append(" (Nv. ").append(level).append(")");
         
         return formatted.toString();
     }
     
     public static void main(String[] args) {
         String display1 = formatName("Alice", 10, "VIP");
-        System.out.println(display1);  // "[VIP] Alice (Lv. 10)"
+        System.out.println(display1);  // "[VIP] Alice (Nv. 10)"
         
         String display2 = formatName("Bob", 5, null);
-        System.out.println(display2);  // "Bob (Lv. 5)"
+        System.out.println(display2);  // "Bob (Nv. 5)"
     }
 }
 ```
@@ -273,7 +273,7 @@ public class PlayerFormatter {
 ```java
 public class UsernameValidator {
     public static boolean isValid(String username) {
-        // Rules: 3-16 characters, letters and numbers only
+        // Regras: 3-16 caracteres, somente letras e números
         
         if (username == null || username.isEmpty()) {
             return false;
@@ -296,15 +296,15 @@ public class UsernameValidator {
     }
     
     public static void main(String[] args) {
-        System.out.println(isValid("Steve"));      // true
-        System.out.println(isValid("Player_123")); // false (has underscore)
-        System.out.println(isValid("ab"));         // false (too short)
-        System.out.println(isValid(""));           // false (empty)
+        System.out.println(isValid("Steve"));      // correto
+        System.out.println(isValid("Player_123")); // errado (tem sublinhado)
+        System.out.println(isValid("ab"));         // errado (muito curto)
+        System.out.println(isValid(""));           // errado (vazio)
     }
 }
 ```
 
-### Item Description Builder
+### Construtor de descrições de itens
 
 ```java
 public class ItemDescription {
@@ -312,27 +312,27 @@ public class ItemDescription {
                                          int damage, int durability) {
         StringBuilder desc = new StringBuilder();
         
-        // Title with rarity color code
+        // Título com código de cor de raridade
         desc.append(getRarityColor(rarity));
         desc.append(name);
         desc.append("\n");
         
-        // Stats
-        desc.append("Damage: ").append(damage).append("\n");
-        desc.append("Durability: ").append(durability).append("/");
+        // Status
+        desc.append("Dano: ").append(damage).append("\n");
+        desc.append("Durabilidade: ").append(durability).append("/");
         desc.append(durability).append("\n");
-        desc.append("Rarity: ").append(rarity);
+        desc.append("Raridade: ").append(rarity);
         
         return desc.toString();
     }
     
     private static String getRarityColor(String rarity) {
         switch (rarity.toLowerCase()) {
-            case "legendary": return "§6";  // Gold
-            case "epic": return "§5";       // Purple
-            case "rare": return "§9";       // Blue
-            case "common": return "§f";     // White
-            default: return "§7";           // Gray
+            case "legendary": return "§6";  // Dourado
+            case "epic": return "§5";       // Roxo
+            case "rare": return "§9";       // Azul
+            case "common": return "§f";     // Branco
+            default: return "§7";           // Cinza
         }
     }
     
@@ -343,7 +343,7 @@ public class ItemDescription {
 }
 ```
 
-### Chat Message Filter
+### Filtro de mensagens do bate-papo
 
 ```java
 public class ChatFilter {
@@ -370,58 +370,58 @@ public class ChatFilter {
 }
 ```
 
-## String Formatting
+## Formatação de string
 
-### Using String.format()
+### Usando `String.format()`
 
 ```java
 String name = "Alice";
 int level = 10;
 double health = 85.5;
 
-String formatted = String.format("%s is level %d with %.1f%% health", 
+String formatted = String.format("%s está no nível %d com %.1f%% de vida", 
                                  name, level, health);
 System.out.println(formatted);
-// "Alice is level 10 with 85.5% health"
+// "Alice está no nível 10 com 85.5% de vida"
 ```
 
-<Callout type="info" title="Format Specifiers">
-  Common format codes:
+<Callout type="info" title="Especificadores de formatação">
+  Códigos de formatação comuns:
 
   - `%s` — String
-  - `%d` - Integer
-  - `%f` - Floating point
-  - `%.2f` - Float with 2 decimal places
-  - `%n` - New line (platform independent)
+  - `%d` — Integer
+  - `%f` — Ponto flutuante (decimal)
+  - `%.2f` — Float com 2 casas decimais
+  - `%n` — Nova linha (independente da plataforma)
 
   ```java
-  String.format("Name: %s", "Steve");          // "Name: Steve"
-  String.format("Level: %d", 10);              // "Level: 10"
-  String.format("Health: %.1f", 85.5);         // "Health: 85.5"
-  String.format("Position: (%d, %d, %d)", 
-                10, 64, -5);                    // "Position: (10, 64, -5)"
+  String.format("Nome: %s", "Steve");          // "Nome: Steve"
+  String.format("Nível: %d", 10);              // "Nível: 10"
+  String.format("Vida: %.1f", 85.5);         // "Vida: 85.5"
+  String.format("Posição: (%d, %d, %d)", 
+                10, 64, -5);                    // "Posição: (10, 64, -5)"
   ```
 </Callout>
 
-## Common String Operations
+## Operações comuns com as strings
 
-### Check if String is Empty
+### Verificar se a string está vazia
 
 ```java
 String text = "";
 
-// Check for empty or null
+// Verificar se está vazio ou nulo
 if (text == null || text.isEmpty()) {
-    System.out.println("Empty!");
+    System.out.println("Vazio!");
 }
 
-// Check for empty, null, or whitespace only
+// Verificar se há apenas valores vazios, nulos ou espaços em branco
 if (text == null || text.trim().isEmpty()) {
-    System.out.println("Empty or whitespace!");
+    System.out.println("Vazio ou com espaço em branco!");
 }
 ```
 
-### Count Occurrences
+### Contagem de ocorrências
 
 ```java
 public static int countOccurrences(String text, String target) {
@@ -441,7 +441,7 @@ int count = countOccurrences("hello hello world", "hello");
 System.out.println(count);  // 2
 ```
 
-### Reverse a String
+### Reverter uma string
 
 ```java
 public static String reverse(String text) {
@@ -468,7 +468,7 @@ System.out.println(isPalindrome("racecar"));     // true
 System.out.println(isPalindrome("hello"));       // false
 ```
 
-## Practice Exercises
+## Exercícios práticos
 
 1. **Username Checker**: Write a method that checks if a username:
    - Is between 3 and 16 characters

@@ -1,220 +1,68 @@
 ---
-title: Player Input and Keybind Guide
-description: How to handle player input.
+title: Player Input Guide
+description: Learn how to handle player input.
 authors:
-  - name: Vibe Theory
-    url: https://discord.com/users/145420279294722048
+  - name: Neil Revin
+    url: https://itsneil.dev
+  - name: Zoon20X
 ---
 
-## The Basics
+Hytale servers don't receive raw keyboard input. The client interprets keypresses and sends packets describing what action the player wants to perform. You need to intercept these packets or events to create custom behavior.
 
-Hytale Servers **do not receive raw keyboard input.** Instead, clients send `packets` of Interaction types:
+We can use the `SyncInteractionChains` to check when a player interacts. This has a few InteractionTypes, which are listed at the end of this guide.
 
-- **Mouse events** - clicks with target info
-- **Movement states** - 22 boolean flags (walking, jumping, etc.)
-- **Interaction types** - what action the player is performing
-
----
-
-## Keybind Limitations
-
-Due to the use of `packets` not key inputs, you cannot assign your custom Fireball spell to X.
-
-_There is a workaround addressed below, but first let's understand the baseline:_
-
-**You CANNOT:**
-
-- Add new keybinds (keyboard mapping is client-side)
-- Remap existing keys
-- Add more than 3 ability slots
-
-**You CAN:**
-
-- Intercept `packets` and hijack their purpose
-- Use 3 built-in ability slots (`Ability1`, `Ability2`, `Ability3`)
-- Make abilities item-dependent (wand = fireball, sword = slash)
-- Detect hold vs tap, double-click, toggle (via timing)
-- Full mouse control (all 5 buttons, press/release, drag)
-
-### Fixed Input Slots
-
-| Action         | Default Key | Server Receives             | Notes                   |
-| -------------- | ----------- | --------------------------- | ----------------------- |
-| Left Mouse     | LMB         | `InteractionType.Primary`   | Attack/break            |
-| Right Mouse    | RMB         | `InteractionType.Secondary` | Use/place               |
-| Weapon Ability | Q           | `InteractionType.Ability1`  | Active - weapon special |
-| Ability Slot 2 | —           | `InteractionType.Ability2`  | Unused placeholder      |
-| Ability Slot 3 | —           | `InteractionType.Ability3`  | Unused placeholder      |
-| Interact       | E           | `InteractionType.Use`       | Interact with world     |
-| Pick Block     | MMB         | `InteractionType.Pick`      | Copy block type         |
-| Dodge          | —           | `InteractionType.Dodge`     | Dodge roll mechanic     |
-
-**Note:** Only `Ability1` (Q key) is actively used for weapon abilities. `Ability2` and `Ability3` exist in the enum but have no default keybinds and nothing in the codebase references them: they appear to be reserved for future use.
-
-These are the only keyboard actions the server sees.
-
----
-
-## Intercepting Packets
-
-This is the work around to Custom Player Keybinds. By intercepting the input packets you can redirect the event trigger to your own class. There is a **major caveat with this strategy:** This will override the default Key Mapping unless you otherwise redirect it.
-
-See [Client Input Reference](https://hytalemodding.dev/en/docs/guides/plugin/client-inputs-reference) for a comprehensive list of all client-to-server packets.
-
-For instance, intercepting Q to use for custom Fireball spell = Hytale Weapon Abilities becoming unusable.
-
-This is because you aren't intercepting Q, but rather `InteractionType.Ability1`. You would need to redirect a different packet into those recreated abilities in your own mod (this will also of course hijack another packet). The Client Input Reference above shows all packets. _Pro Tip: Builder tools when not in creative are a great starting point._
-
-### Example: Builder Tools -> Combat Abilities
-
-This is one of the better systems to capture, as it intercepts packets not even used during standard play.
+We can use the following code to intercept the SyncInteractionChains packet, and run our code whenever a user interacts using the "F" keybind.
 
 ```java
-// 1. Grant permission on join (in PlayerReadyEvent handler)
-PermissionsModule.get().addUserPermission(
-    playerRef.getUuid(),
-    Set.of("hytale.editor.builderTools")
-);
-
-// 2. Intercept in packet handler
-void handleBuilderToolAction(BuilderToolGeneralAction packet, PlayerRef playerRef) {
-    Ref<EntityStore> ref = playerRef.getReference();
-    if (ref == null) return;
-    
-    Store<EntityStore> store = ref.getStore();
-    Player playerComponent = (Player) store.getComponent(ref, Player.getComponentType());
-    
-    if (playerComponent.getGameMode() != GameMode.Creative) {
-        // Hijack for abilities
-        switch (packet.action) {
-            case ActivateToolMode -> castFireball(playerRef);   // B pressed
-            case DeactivateToolMode -> endFireball(playerRef);  // B released
-            case HistoryUndo -> castRewind(playerRef);          // Ctrl+Z
-            case HistoryRedo -> castHaste(playerRef);           // Ctrl+Y
-            case SelectionCopy -> castClone(playerRef);         // Ctrl+C
+public class PacketListener implements PacketWatcher {
+    @Override
+    public void accept(PacketHandler packetHandler, Packet packet) {
+        if (packet.getId() != 290) {
+            return;
         }
-        return;  // Don't run actual builder tool logic
+        SyncInteractionChains interactionChains = (SyncInteractionChains) packet;
+        SyncInteractionChain[] updates = interactionChains.updates;
+
+        for (SyncInteractionChain item : updates) {
+            PlayerAuthentication playerAuthentication = packetHandler.getAuth();
+            String uuid = playerAuthentication.getUuid().toString();
+            InteractionType interactionType = item.interactionType;
+            if(interactionType == InteractionType.Use){
+                // code here
+            }
+        }
     }
-    // Creative players get normal behavior
-    super.handleBuilderToolAction(packet, playerRef);
 }
 ```
 
-You can do this with anything, so a custom keybind for UI, gameplay, etc.
+### Interaction Types
 
-**Critical Note:** If the player changes keybinds you won't know, so your guides have to reference Default Hytale Controls. Also if they change key binds due to your mod (disliking Ctrl+C as an ability for example) the setting follows them, and may impact their experience outside of your ecosystem. Important to consider while choosing packets.
+You will majorly use the `Primary`, `Secondary` and `Use` interaction types. The `Primary` Interaction Type is triggered when a player left clicks, `Secondary` is triggered when a player right clicks, and `Use` is triggered when a player uses an item.
 
-###
+Here's a list of all Interaction Types:
 
----
-
-## Mouse Inputs
-
-Some useful info about mouse inputs
-
-### Listening to Mouse Clicks
-
-```java
-@Override
-protected void setup() {
-    getEventRegistry().register(PlayerMouseButtonEvent.class, event -> {
-        MouseButtonEvent mouse = event.getMouseButton();
-
-        if (mouse.mouseButtonType == MouseButtonType.Left
-                && mouse.state == MouseButtonState.Pressed) {
-            // Left click!
-            Entity target = event.getTargetEntity();
-            Vector3i block = event.getTargetBlock();
-        }
-
-        // Cancel the click
-        // event.setCancelled(true);
-    });
-}
-```
-
----
-
-### Mouse Button Types
-
-```java
-MouseButtonType.Left    // Primary click
-MouseButtonType.Right   // Secondary click
-MouseButtonType.Middle  // Scroll wheel click
-MouseButtonType.X1      // Side button 1
-MouseButtonType.X2      // Side button 2
-```
-
-```java
-MouseButtonState.Pressed   // Button down
-MouseButtonState.Released  // Button up
-```
-
----
-
-### What You Get From Mouse Events
-
-| Property            | Type             | Description                     |
-| ------------------- | ---------------- | ------------------------------- |
-| `getMouseButton()`  | MouseButtonEvent | Button type, state, click count |
-| `getTargetEntity()` | Entity           | Entity under cursor (or null)   |
-| `getTargetBlock()`  | Vector3i         | Block position under cursor     |
-| `getItemInHand()`   | Item             | Currently held item             |
-| `getScreenPoint()`  | Vector2f         | Cursor screen position          |
-| `getPlayer()`       | Player           | The player who clicked          |
-
-**Double-click detection:**
-
-```java
-if (mouse.clicks >= 2) {
-    // Double-clicked!
-}
-```
-
-### Imports
-
-```java
-import com.hypixel.hytale.protocol.MouseButtonType;
-import com.hypixel.hytale.protocol.MouseButtonState;
-import com.hypixel.hytale.protocol.MouseButtonEvent;
-import com.hypixel.hytale.protocol.InteractionType;
-import com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent;
-import com.hypixel.hytale.server.core.event.events.player.PlayerMouseMotionEvent;
-```
-
----
-
-### Available Player Events
-
-All player events that can be registered via `getEventRegistry()`:
-
-| Event                        | Description                     |
-| ---------------------------- | ------------------------------- |
-| `PlayerConnectEvent`         | Player connecting to server     |
-| `PlayerDisconnectEvent`      | Player disconnecting            |
-| `PlayerSetupConnectEvent`    | Connection setup phase          |
-| `PlayerSetupDisconnectEvent` | Disconnect setup phase          |
-| `PlayerReadyEvent`           | Player fully loaded and ready   |
-| `PlayerChatEvent`            | Chat message sent               |
-| `PlayerInteractEvent`        | Interaction with world/entities |
-| `PlayerMouseButtonEvent`     | Mouse button press/release      |
-| `PlayerMouseMotionEvent`     | Mouse movement                  |
-| `PlayerCraftEvent`           | Item crafted                    |
-| `AddPlayerToWorldEvent`      | Player added to a world         |
-| `DrainPlayerFromWorldEvent`  | Player removed from world       |
-
----
-
-## Tips
-
-- **1 ability slot active**: Only `Ability1` (Q) is currently used - make it item-dependent
-- **Cancel events**: Use `event.setCancelled(true)` to block the action
-- **Movement states**: Check these in systems for continuous monitoring
-- **Double-click**: Check `mouse.clicks >= 2`
-- **Hold vs tap**: Track press/release timing yourself
-- **Target info**: Events include what block/entity the player was targeting
-- **No move event**: Poll `TransformComponent` or check `MovementStates` instead
-
----
-
-_From Hytale Server build `2026.01.13-dcad8778f`_
+- Primary (0)
+- Secondary (1)
+- Ability1 (2)
+- Ability2 (3)
+- Ability3 (4)
+- Use (5)
+- Pick (6)
+- Pickup (7)
+- CollisionEnter (8)
+- CollisionLeave (9)
+- Collision (10)
+- EntityStatEffect (11)
+- SwapTo (12)
+- SwapFrom (13)
+- Death (14)
+- Wielding (15)
+- ProjectileSpawn (16)
+- ProjectileHit (17)
+- ProjectileMiss (18)
+- ProjectileBounce (19)
+- Held (20)
+- HeldOffhand (21)
+- Equipped (22)
+- Dodge (23)
+- GameModeSwap (24)

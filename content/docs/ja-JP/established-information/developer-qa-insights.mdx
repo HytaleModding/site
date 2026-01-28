@@ -1,125 +1,125 @@
 ---
-title: Developer Q&A Technical Insights
-description: Comprehensive summary of technical insights from Hytale developers covering architecture, modding, gameplay systems, and development philosophy.
+title: 開発者の質疑応答と技術的な洞察
+description: アーキテクチャ、Mod開発、ゲームプレイシステム、開発哲学を網羅した Hytale 開発者からの技術的洞察の包括的な概要
 ---
 
-# Developer Q&A Technical Insights
+# 開発者の質疑応答と技術的な洞察
 
-This extensive Q&A session with Hytale developers reveals critical technical details about the game's architecture, modding philosophy, gameplay systems, and development approach.
+このHytale開発者との広範な質疑応答では、ゲームのアーキテクチャ・Modding哲学・ゲームプレイシステム・開発アプローチなどについての重要な技術的詳細が明らかになります。
 
-## Technical Architecture
+## 技術的アーキテクチャ
 
-### Network & Infrastructure
+### ネットワークとインフラストラクチャ
 
-* **Protocol**: Uses QUIC (reliable UDP with unreliable channels) instead of TCP
-* **Server Compatibility**: Runs on any platform supporting Java 25
-* **Connection Method**: Direct IP initially, server discovery planned post-launch
-* **Data Layer**: Current custom serialization format will be replaced post-launch
-* **Performance**: Multi-core support - each world has main thread + parallel execution
-* **Rendering**: OpenGL 3.3 for Mac compatibility, potential future Vulkan/Metal migration
-* **Tick Model**: Base server tick rate is 30 TPS by default; can be changed using server plugins.
+* **プロトコル**: TCPの代わりに、QUIC (信頼出来ないチャンネル上での信頼出来るUDP) を使用します
+* **サーバーの互換性**: Java 25 をサポートするあらゆるプラットフォームで実行できます
+* **接続方法**: 最初はIPアドレスでの直接続、リリース後にサービスディスカバリを予定
+* **Data Layer**: 現在のカスタムシリアル化フォーマットはリリース後に置き換えられます
+* **パフォーマンス**: マルチコアサポート - 各ワールドにはメインスレッドと並列実行があります
+* **レンダリング**: Macとの互換性のため、OpenGL 3.3。将来的にはVulkan/Metalへの移行の可能性
+* **Tick Model**: サーバーの基本的なティックレートはデフォルトで30 TPSです。サーバープラグインを使用して変更できます
 
-### Security & Distribution
+### セキュリティと配布
 
-* **No Client-Side Code Execution**: Prevents remote code execution exploits
-* **Downloads Limited To**: Configuration files and assets only
-* **Mod Distribution**: Community platforms (CurseForge, Modrinth), no immediate in-game marketplace
-* **Server Hosting**: Available day 1, no business agreements required (just EULA/TOS)
+* **クライアント側でのコード実行無し**: リモートコード実行の脆弱性を防ぎます
+* **ダウンロードの制限**: 設定ファイルとアセットのみ
+* **Mod配布**: コミュニティプラットフォーム (CurseForge, Modrinth)。ゲーム内のマーケットプレイスは現在ありません
+* **サーバーホスティング**: 初日から利用可能、ビジネス契約は必要ありません (EULA/TOSのみ)
 
-## Modding Capabilities
+## Mod開発でできること
 
-### Server-Side Power
+### サーバーサイドの能力
 
-* **Full Java Access**: Database connections, web requests, any Java functionality
-* **Custom Libraries**: Can create Lua scripting, ML frameworks, or any Java library
-* **Server Modification**: Shared source code allows heavy server modifications
-* **Hot Reload**: Supported for most asset types
-* **Documentation**: Public GitBook planned, though initially sparse
+* **完全なJavaアクセス**: データベース接続、Webリクエスト、あらゆるJavaの機能
+* **カスタムライブラリ**: Luaスクリプト、MLフレームワーク、または任意のJavaライブラリを作成できます
+* **サーバーの改造**: 共有されたソースコードにより、サーバーを自在に改造できます
+* **ホットリロード**: ほとんどの種類のアセットでサポートされています
+* **ドキュメント**: 公開GitBookを予定していますが、最初はまばらです
 
-### Content Creation (No Code Required)
+### コンテンツ作成 (コード不要)
 
-* **World Generation**: Custom biomes and maps without Java
-* **NPCs & Items**: JSON-based configuration
-* **Crafting Recipes**: Data-driven system
-* **Visual Scripting**: Replaces command blocks, fully sandboxed
-* **Prefab System**: Sophisticated building blocks with in-game editor
+* **ワールド生成**: Javaを使用しないカスタムバイオームとマップ
+* **NPCとアイテム**: JSON ベースの設定
+* **クラフトレシピ**: データ駆動システム
+* **ビジュアルスクリプティング**: コマンドブロックの代替, 完全にサンドボックス化されて実行
+* **Prefabシステム**: ゲーム内エディター付きの洗練されたビルディングブロック
 
-### Advanced Modding
+### 高度なModding
 
-* **Combat System**: Data-driven interaction system for attack chains and abilities
-* **Sub-Hitboxes**: Support for complex boss mechanics (needs improvement)
-* **Status Effects**: Buff/debuff system with custom effects and stats
-* **Custom UI**: NoesisGUI transition enables powerful interface customization
-* **Block Physics**: Selective system (trees fall, but placed blocks don't)
+* **戦闘システム**: 攻撃チェーンとアビリティのためのデータ駆動相互作用システム
+* **子当たり判定**: 複雑なボスの仕組みをサポート (改善が必要)
+* **ステータス効果**: カスタムエフェクトとステータスを利用したバフ/デバフシステム
+* **カスタムUI**: NoesisGUIトランジションにより、インターフェイスの強力なカスタマイズが可能になります
+* **ブロック物理学**: 選択的なシステム (木は倒れますが、配置されたブロックは倒れません)
 
-## Gameplay Systems
+## ゲームプレイシステム
 
-### Core Mechanics
+### コアメカニズム
 
-* **Stamina System**: No hunger by default (can be modded in)
-* **Gravity**: Selective block physics - trees collapse, buildings can float
-* **Lighting**: Major overhaul to fix model/voxel inconsistencies
-* **World Height**: Currently limited, may change with voxel storage updates
-* **Automation**: No redstone equivalent at launch (moddable)
+* **スタミナシステム**：空腹度はデフォルトではありません（Modで追加可能）
+* **重力**: 選択的ブロック物理学 - 木は倒れるが、建物は空中に浮かせられます
+* **ライティング**: モデル・ボクセルの不整合を修正するための主要なオーバーホール
+* **ワールドの高さ**: 現在は制限されていますが、Voxelストレージのアップデートで変更される可能性があります
+* **自動化**: リリース時にレッドストーンの代替物はありません (Modで追加可能)
 
-### Player Systems
+### プレイヤーシステム
 
-* **Character Models**: Humans by default, changeable in creative mode
-* **Multiplayer Avatars**: Server-controlled (no custom models in multiplayer)
-* **Skins**: Full customization possible ("mod yourself into a potato")
-* **Shapeshifting**: Transformation potions exist for fun/modding
+* **キャラクターモデル**: デフォルトで人間、クリエイティブモードで変更可能
+* **マルチプレイヤーアバター**: サーバー制御 (マルチプレイヤーではカスタムモデルなし)
+* **スキン** : 完全なカスタマイズが可能 (「自分をジャガイモにする」 など)
+* **変身能力**: 変形ポーションが遊びとModdingのために存在します
 
-### World & NPCs
+### ワールド＆NPC
 
-* **Faction System**: Living world with dynamic NPC interactions
-* **Village Systems**: Planned dynamic villages with relationships and behaviors
-* **Chunk Loading**: Entities unload when out of all players' render distance
-* **Seeds**: Shareable world generation seeds supported
+* **陣営システム**: 動的なNPCの相互作用による生きた世界
+* **村システム**: 関係と行動を持つ動的な村を計画中
+* **チャンクの読み込み**: エンティティはすべてのプレイヤーの描画距離から外れたときにアンロードされます
+* **シード値**: 共有可能なワールド生成シードをサポート
 
-## Development Philosophy
+## 開発哲学
 
-### Release Strategy
+### リリース戦略
 
-* **Base Game Priority**: Adventure mode is primary focus, modding architecture supports it
-* **Tech Debt**: Acknowledged as necessary for release, commitment to improvement
-* **Update Frequency**: Very frequent updates planned, especially post-launch
-* **Version Policy**: Always latest version, but servers can run modified versions
+* **ベースゲームの優先順位**: アドベンチャーモードが主要な焦点で、Moddingアーキテクチャによりそれをサポートする
+* **技術的負債**: リリースのために必要不可欠であるため受け入れるが、改善する意思は持っている
+* **更新頻度**: 非常に頻繁な更新を予定、特にリリース直後
+* **バージョンポリシー**: クライアントは常に最新版のみを利用可能。しかし、サーバーは好きなバージョンを実行可能。
 
-### Community Focus
+### コミュニティへの注力
 
-* **Creator Support**: Development bounties planned for community contributors
-* **Tutorials**: Official modding tutorials planned with partners
-* **Feedback Integration**: Strong commitment to community-driven improvements
-* **Accessibility**: Designed for lower-end hardware, reasonable system requirements
+* **クリエイターサポート**: コミュニティ貢献者のために開発報奨金を計画
+* **チュートリアル**: パートナーと公式Moddingチュートリアルを計画
+* **フィードバックの統合**: コミュニティ主導の改善への強いコミットメント
+* **アクセシビリティ**: 低性能ハードウェア向けに設計されており、システム要件は低め
 
-### Tools & Documentation
+### ツール & ドキュメント
 
-* **Blockbench Integration**: Replaces custom "Hytale Model Maker"
-* **Machinima Tools**: Full cinematic creation capabilities
-* **Creative Tools**: Major reveal planned for building/creation features
-* **Source Access**: Server code will be unobfuscated with developer comments
+* **Blockbench統合**: カスタム「Hytale Model Maker」を置き換えます
+* **Machinima Tools**: 完全なシネマティック作成機能
+* **クリエイティブツール**: 建設/作成機能の大規模公開を計画
+* **ソースコードへのアクセス**: サーバーのコードは非難読化状態・開発者のコメント付きで公開されます
 
-## Platform Support
+## プラットフォームのサポート
 
-* **Current**: Windows (primary)
-* **Planned**: Mac/Linux support actively in development
-* **VR**: Not feasible in near future
-* **Performance**: Uncapped framerate, designed for accessibility
-* **Offline Play**: Single-player works without internet connection
+* **現在**: Windows (主要)
+* **予定**: Mac/Linuxのサポートを積極的に開発中
+* **VR**: 近い将来には実現できません
+* **パフォーマンス**: フレームレートの上限なし、アクセシビリティのために設計
+* **オフラインプレイ**: シングルプレイはインターネット接続なしで動作します
 
-## Monetization & Legal
+## 収益化と法的事項
 
-* **No Pay-to-Win**: Firm commitment against P2W mechanics
-* **Cosmetics Only**: Low-price cosmetic packs to support infrastructure
-* **Server EULA**: Terms being finalized for server monetization policies
-* **QUIC Blocking**: Acknowledged issue in some regions, no alternative protocol
+* **Pay-to-Winなし**: Pay to Winの仕組みは作らないという確固たる方針
+* **装飾のみ**: インフラをサポートするために、低価格のコスメティックパックを販売
+* **サーバーEULA**：サーバーマネタイズポリシーの規約が確定しました
+* **QUICのブロック**: 一部の地域で問題が確認されていますが、代替プロトコルはありません。
 
-## Current Limitations
+## 現在の制限
 
-* **Custom Shaders**: Not supported until sandboxing solution found
-* **UI/Input Limitations**: Being expanded but currently restricted
-* **Documentation**: Sparse initially, will improve over time
-* **Client Mods**: No client-side code execution for security
-* **Nameplates**: Currently limited customization
+* **カスタムシェーダー**: サンドボックス化の方法が見つかるまでサポートされていません
+* **UI/入力の制限**: 拡張予定ですが、現在は制限されています
+* **ドキュメント**: 最初は少ないですが、時間が経つにつれ改善予定です
+* **クライアントMod**: セキュリティのため、クライアントでのコード実行はありません
+* **ネームプレート**: 現在、カスタマイズが制限されています
 
-This comprehensive technical foundation positions Hytale as a secure, extensible platform that empowers creators while maintaining performance, accessibility, and a commitment to continuous improvement.
+この包括的な技術基盤により、Hytaleは、パフォーマンス、アクセシビリティ、継続的な改善へのコミットメントを維持しながら、クリエイターを支援するセキュアで拡張可能なプラットフォームとして位置づけられています。

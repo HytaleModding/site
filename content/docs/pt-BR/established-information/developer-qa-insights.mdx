@@ -1,25 +1,25 @@
 ---
-title: Developer Q&A Technical Insights
-description: Comprehensive summary of technical insights from Hytale developers covering architecture, modding, gameplay systems, and development philosophy.
+title: Perguntas e respostas técnicas de desenvolvedor
+description: Compilado técnico detalhado dos desenvolvedores do Hytale sobre arquitetura, criação de mods, sistemas do jogo e a filosofia de desenvolvimento.
 ---
 
-# Developer Q&A Technical Insights
+# Introdução
 
-This extensive Q&A session with Hytale developers reveals critical technical details about the game's architecture, modding philosophy, gameplay systems, and development approach.
+Esta extensa sessão de perguntas e respostas com os desenvolvedores do Hytale revela detalhes técnicos críticos sobre a arquitetura do jogo, filosofia da criação de mods, sistemas de jogabilidade e abordagem de desenvolvimento.
 
-## Technical Architecture
+## Arquitetura técnica
 
-### Network & Infrastructure
+### Rede e infraestrutura
 
-* **Protocol**: Uses QUIC (reliable UDP with unreliable channels) instead of TCP
-* **Server Compatibility**: Runs on any platform supporting Java 25
-* **Connection Method**: Direct IP initially, server discovery planned post-launch
-* **Data Layer**: Current custom serialization format will be replaced post-launch
-* **Performance**: Multi-core support - each world has main thread + parallel execution
-* **Rendering**: OpenGL 3.3 for Mac compatibility, potential future Vulkan/Metal migration
-* **Tick Model**: Base server tick rate is 30 TPS by default; can be changed using server plugins.
+* **Protocolo**: usa QUIC (UDP confiável com canais não confiáveis) em vez de TCP;
+* **Compatibilidade de servidor**: funciona em qualquer plataforma que suporte Java 25;
+* **Método de conexão**: inicialmente por IP direto. A listagem de servidores será planejada após o lançamento;
+* **Camada de dados**: o formato de serialização personalizada atual será substituído pós-lançamento;
+* **Desempenho**: suporte a múltiplos núcleos, e cada mundo tem um thread principal + execução paralela;
+* **Renderização**: OpenGL 3.3 para compatibilidade com Mac, potencial migração para Vulkan/Metal;
+* **Modelo de tick**: a taxa de atualização base do servidor é de 30 TPS por padrão. e pode ser alterada através de plugins de servidor.
 
-### Security & Distribution
+### Segurança e distribuição
 
 * **No Client-Side Code Execution**: Prevents remote code execution exploits
 * **Downloads Limited To**: Configuration files and assets only
@@ -28,7 +28,7 @@ This extensive Q&A session with Hytale developers reveals critical technical det
 
 ## Modding Capabilities
 
-### Server-Side Power
+### Poder do server-side
 
 * **Full Java Access**: Database connections, web requests, any Java functionality
 * **Custom Libraries**: Can create Lua scripting, ML frameworks, or any Java library
@@ -44,7 +44,7 @@ This extensive Q&A session with Hytale developers reveals critical technical det
 * **Visual Scripting**: Replaces command blocks, fully sandboxed
 * **Prefab System**: Sophisticated building blocks with in-game editor
 
-### Advanced Modding
+### Criação de mods avançada
 
 * **Combat System**: Data-driven interaction system for attack chains and abilities
 * **Sub-Hitboxes**: Support for complex boss mechanics (needs improvement)
@@ -52,9 +52,9 @@ This extensive Q&A session with Hytale developers reveals critical technical det
 * **Custom UI**: NoesisGUI transition enables powerful interface customization
 * **Block Physics**: Selective system (trees fall, but placed blocks don't)
 
-## Gameplay Systems
+## Sistemas de jogabilidade
 
-### Core Mechanics
+### Principais mecânicas
 
 * **Stamina System**: No hunger by default (can be modded in)
 * **Gravity**: Selective block physics - trees collapse, buildings can float
@@ -62,44 +62,44 @@ This extensive Q&A session with Hytale developers reveals critical technical det
 * **World Height**: Currently limited, may change with voxel storage updates
 * **Automation**: No redstone equivalent at launch (moddable)
 
-### Player Systems
+### Sistemas de jogador
 
 * **Character Models**: Humans by default, changeable in creative mode
 * **Multiplayer Avatars**: Server-controlled (no custom models in multiplayer)
 * **Skins**: Full customization possible ("mod yourself into a potato")
 * **Shapeshifting**: Transformation potions exist for fun/modding
 
-### World & NPCs
+### Mundo e NPCs
 
 * **Faction System**: Living world with dynamic NPC interactions
 * **Village Systems**: Planned dynamic villages with relationships and behaviors
 * **Chunk Loading**: Entities unload when out of all players' render distance
 * **Seeds**: Shareable world generation seeds supported
 
-## Development Philosophy
+## Filosofia de desenvolvimento
 
-### Release Strategy
+### Estratégia de lançamento
 
 * **Base Game Priority**: Adventure mode is primary focus, modding architecture supports it
 * **Tech Debt**: Acknowledged as necessary for release, commitment to improvement
 * **Update Frequency**: Very frequent updates planned, especially post-launch
 * **Version Policy**: Always latest version, but servers can run modified versions
 
-### Community Focus
+### Foco na comunidade
 
 * **Creator Support**: Development bounties planned for community contributors
 * **Tutorials**: Official modding tutorials planned with partners
 * **Feedback Integration**: Strong commitment to community-driven improvements
 * **Accessibility**: Designed for lower-end hardware, reasonable system requirements
 
-### Tools & Documentation
+### Ferramentas e documentação
 
 * **Blockbench Integration**: Replaces custom "Hytale Model Maker"
 * **Machinima Tools**: Full cinematic creation capabilities
 * **Creative Tools**: Major reveal planned for building/creation features
 * **Source Access**: Server code will be unobfuscated with developer comments
 
-## Platform Support
+## Plataforma(s) compatível(is)
 
 * **Current**: Windows (primary)
 * **Planned**: Mac/Linux support actively in development
@@ -107,14 +107,14 @@ This extensive Q&A session with Hytale developers reveals critical technical det
 * **Performance**: Uncapped framerate, designed for accessibility
 * **Offline Play**: Single-player works without internet connection
 
-## Monetization & Legal
+## Monetização e jurídico
 
 * **No Pay-to-Win**: Firm commitment against P2W mechanics
 * **Cosmetics Only**: Low-price cosmetic packs to support infrastructure
 * **Server EULA**: Terms being finalized for server monetization policies
 * **QUIC Blocking**: Acknowledged issue in some regions, no alternative protocol
 
-## Current Limitations
+## Limitações
 
 * **Custom Shaders**: Not supported until sandboxing solution found
 * **UI/Input Limitations**: Being expanded but currently restricted

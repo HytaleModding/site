@@ -1,45 +1,45 @@
 ---
-title: Frequently Asked Questions
-description: Frequently Asked Questions about Hytale modding.
+title: よくある質問
+description: Hytale Moddingに関するよくある質問
 ---
 
-On this page, we'll answer some of your Frequently Asked Questions.
+このページでは、よく寄せられる質問のいくつかに回答します。
 
-## 1. Can the client be modded?
+## 1. クライアントを改造できますか？
 
-No, the client is not able to be modded, although the Client will not have control over how the game and the UI looks.
+いいえ、クライアントは改造できませんし、ゲームがどう動作するか・UIがどのような見た目かの制御も担っていません。
 
-The server decides the visuals, more like the "Resource Packs" available in Minecraft. The server decides what mods are used
+Minecraft で利用可能な「リソースパック」のように、サーバーが見た目を決定します。 サーバーがMODを使用するかを決定します。
 
-## 2. What Network Protocol will be used?
+## 2. どのネットワークプロトコルが使用されますか？
 
-Hytale will use the QUIC transport protocol.
+Hytale では QUIC トランスポートプロトコルを使用します。
 
-For context, the two main Internet protocols are UDP and TCP.
+背景として、インターネットでの通信にはUDPとTCPという2つの主要な通信プロトコルがあります。
 
-* UDP is connectionless, fast, fire-and-forget packets but has less reliability as packets can be lost.
-* TCP is connection-based, slower than UDP, can guarantee packet delivery with much more reliability.
-  Both are pretty fast in modern times, games can run fine on both (but generally prefer UDP).
+* UDP は、コネクションレス、高速、Fire-and-forget (うちっぱなし)パケットですが、パケットが失われる可能性があるため、信頼性は低くなります。
+* TCPはコネクションベースでUDPよりも遅いですが、パケットの到達を保証できるため信頼性がより高くなります。
+  どちらも現代ではかなり速いですし、ゲームはどちらでも正常に動作できます (しかし、一般には UDP が好まれます)
 
-QUIC is a **hybrid protocol** that builds off UDP to get the same speed benefits, but adds some layers of reliability like TCP.
-Essentially, a solid choice for game development that blends speed and reliability.
+QUIC は**ハイブリッドプロトコル**であり、速度の利点を得るためにUDP上に構築されますが、TCPのような信頼性のためのレイヤーが追加されます。
+基本的に、ゲーム開発では速度と信頼性の両方を取る良い選択肢です。
 
-## 3. What are Transfer Packets?
+## 3. 転送パケットとは？
 
-Transfer packets in Hytale are small data payloads *(4kb)* that allow players to move from one server to another while carrying information.
-They are not equivalent to something like BungeeCord or Velocity and are primarily intended for smaller servers.
+Hytaleにおける転送パケットとは、プレイヤーが情報を保持したままあるサーバーから別のサーバーに移動できるようにする小さなデータ *(4kb)* です。
+これらは BungeeCord や Velocity のようなものではなく、主に小規模なサーバー向けのものです。
 
-Unlike BungeeCord, they do not manage network-wide features such as global plugins.
-Implementing DDOS protection would also be incredibly hard for smaller networks by using transfer packets.
+BungeeCord とは異なり、グローバルプラグインのようなネットワーク全体の機能は管理しません。
+転送パケットを利用してDDOS保護を構築することは、小さなネットワーク向けであっても信じられないほど難しいでしょう。
 
-Transfer packets work quite well in scenarios such as small server networks or hubs where players will hop between servers without the loss of progress. For example, a player might finish a dungeon on one server and then move to a lobby or different game mode with their inventory and stats intact. This lessens server costs and enables the developers to put more effort into gameplay improvement rather than complicated network setups.
+転送パケットは、小規模サーバーのネットワークやハブなど、プレイヤーが進捗を失わずに行き来するような場合には非常にうまく機能します。 例えば、プレイヤーはあるサーバーでダンジョンを攻略し、持ち物や統計情報を維持したままロビーや別のゲームモードに移動するかもしれません。 これにより、サーバーのコストが削減され、開発者は複雑なネットワーク設定よりもゲームプレイの改善に力を入れることができます。
 
-## 4. Will Hytale support dedicated servers?
+## 4. Hytale はサーバー用ソフト (Dedicated Server) をサポートしますか？
 
-Yes, Hytale will support dedicated servers. This allows server owners to host their own Hytale servers on their own hardware or through third-party hosting services.
+はい、Hytaleはサーバー用ソフトをサポートします。 これにより、サーバー所有者は独自のハードウェアまたはサードパーティのホスティングサービスを介して独自の Hytale サーバーをホストすることができます。
 
-Dedicated servers provide more control over server settings, mods, and performance compared to using official hosting solutions.
+サーバー用ソフトは、公式のホスティングサービスに比べて、サーバー設定・Mod・パフォーマンスにおいてより広い範囲を制御できます。
 
-## 5. Will Hytale support modding on consoles?
+## 5. Hytale はコンソールでの Modding をサポートしますか?
 
-As of now, Hytale modding is primarily focused on PC platforms.
+現在、Hytale Moddingは主にPCプラットフォームに焦点を当てています。

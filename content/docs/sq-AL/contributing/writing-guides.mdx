@@ -1,0 +1,86 @@
+---
+title: Writing Guides
+---
+
+## Creating a guide file
+
+To start writing a guide, you need to create a file with extension `.mdx`. You need to create this file inside the `/content/docs/en` directory, now it depends in which section you want to make the guide, so you can decide which folder you should put it in after that.
+
+Suppose I want to make a java basics guide, I'd put it in `/content/docs/en/guides/java-basics`. You'll have to do some digging to find out where you want to place it.
+
+<Callout>
+  If there's already a guide in the section you want to write about, you can just press on the "Edit On GitHub" button on our website and it'll take you to the folder, now you can write in the same folder to have your guide appear in the same section.
+</Callout>
+
+## Frontmatter
+
+Frontmatter is the metadata of your guide, it tells our website how to display your guide. This needs to be at the very top of the file, which starts with `---` and ends with `---`.
+
+Here's an example:
+
+```mdx
+---
+title: "Java Basics"
+description: "Learn the basics of Java programming."
+authors:
+    - name: "Your Name"
+      url: "https://yourwebsite.com"
+---
+```
+
+Now as you can see, it's pretty self explanatory, you just need to fill in the details for your specific guide. If you don't have a URL you want to link yourself to, just don't write that whole line. Additionally, the authors section is optional, so if you don't want to add it, you can just leave it out although we encourage you to do so and credit yourself.
+
+The indentation in the frontmatter is important, so make sure to keep it consistent with the example.
+
+## Content Structure
+
+You should structure the content of your guide in a clear and organized manner. Here are some tips on how to do that:
+
+- **Introduction:** Start with an overview of the topic and what the reader can expect to learn.
+- **Prerequisites:** List any prerequisites or prior knowledge the reader should have before diving into the guide.
+- **Step-by-Step Instructions:** Break down the content into clear, actionable steps. Use headings and subheadings to organize the information.
+- **Code Examples:** Include code snippets to illustrate key points. Make sure to explain each example thoroughly.
+- **Conclusion:** Summarize the main points and encourage the reader to explore further or try out what they've learned.
+
+Now if you're writing a really big section, you should split this into multiple pages so that it's easier for the reader to digest the information. No one wants to read a big wall of text all at once!
+
+When we write guides, we should also think of how people will consume them, and many people prefer to skim content rather than read it in detail. This is why it's better to split information into multiple pages, so it looks like a smaller amount of information to the reader. Also, consider using bullet points, numbered lists, and other formatting techniques to make the content more scannable.
+
+## Formatting
+
+We use [Markdown](https://www.markdownguide.org/) for formatting our guides. Here are some key points to keep in mind:
+
+- Use headings (`#`, `##`, `###`) to organize your content.
+- Use bullet points and numbered lists for clarity.
+- Use code blocks (\`\`\`) for code snippets.
+- Use links to reference other guides or external resources.
+
+This is the same type of formatting you'll see on most documentation websites, and also social media platforms like Discord.
+
+You can also make a Callout to highlight important information or tips. Use the following syntax:
+
+```mdx
+<Callout>
+    This is a callout message.
+</Callout>
+```
+
+<Callout>
+  This is a callout message.
+</Callout>
+
+You can change the color of the callout by adding a `type` attribute. For example:
+
+```mdx
+<Callout type="info">
+    This is an info callout.
+</Callout>
+```
+
+Available types are: `info`, `warning`, `error`, and `success`.
+
+## Conclusion
+
+That's all! You are now a master at writing guides. Just remember, do not think you need to be perfect with your English, write the guide the way you will explain the topic to someone, and don't hesitate to ask for feedback or help if you need it.
+
+Happy writing!

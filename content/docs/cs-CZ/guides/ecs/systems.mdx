@@ -1,0 +1,230 @@
+---
+title: Systems
+description: In this guide you will learn about how systems work inside of Hytale.
+authors:
+  - name: oskarscot
+    url: https://oskar.scot
+---
+
+Systems are where the logic lives. While components are pure data containers, systems operate on entities that match specific component queries. The ECS scheduler runs systems each tick, passing in only the entities that have the components the system cares about.
+
+### EntityTickingSystem
+
+The most common system type. It runs every tick and processes each entity matching its query individually.
+
+```java
+public class PoisonSystem extends EntityTickingSystem<EntityStore> {
+
+  private final ComponentType<EntityStore, PoisonComponent> poisonComponentType;
+
+  public PoisonSystem(ComponentType<EntityStore, PoisonComponent> poisonComponentType) {
+    this.poisonComponentType = poisonComponentType;
+  }
+
+  @Override
+  public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
+      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+
+    PoisonComponent poison = archetypeChunk.getComponent(index, poisonComponentType);
+    Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
+
+    poison.addElapsedTime(dt);
+
+    if (poison.getElapsedTime() >= poison.getTickInterval()) {
+      poison.resetElapsedTime();
+
+      Damage damage = new Damage(Damage.NULL_SOURCE, DamageCause.OUT_OF_WORLD, poison.getDamagePerTick());
+      DamageSystems.executeDamage(ref, commandBuffer, damage);
+
+      poison.decrementRemainingTicks();
+    }
+
+    if (poison.isExpired()) {
+      commandBuffer.removeComponent(ref, poisonComponentType);
+    }
+  }
+
+  @Nullable
+  @Override
+  public SystemGroup<EntityStore> getGroup() {
+    return DamageModule.get().getGatherDamageGroup();
+  }
+
+  @Nonnull
+  @Override
+  public Query<EntityStore> getQuery() {
+    return Query.and(this.poisonComponentType);
+  }
+}
+```
+
+The `tick` method receives `dt` which is delta time since the last tick. This lets you accumulate time for interval-based logic rather than counting ticks. The `ArchetypeChunk` gives you access to the entity's components via the index, and `getReferenceTo` returns the `Ref` you need for issuing commands.
+
+### TickingSystem
+
+Runs once per tick globally, not per-entity. Use this for world-wide updates or logic that doesn't target specific entities.
+
+```java
+public class GlobalUpdateSystem extends TickingSystem<EntityStore> {
+
+  @Override
+  public void tick(float dt, int index, Store<EntityStore> store) {
+    World world = store.getExternalData().getWorld();
+  }
+}
+```
+
+### DelayedEntitySystem
+
+Like `EntityTickingSystem` but with a built-in delay. The constructor takes a float representing seconds between executions.
+
+```java
+public class HealthRegenSystem extends DelayedEntitySystem<EntityStore> {
+
+  public HealthRegenSystem() {
+    super(1.0f);
+  }
+
+  @Override
+  public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
+      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+    // Runs every 1 second per matching entity
+  }
+
+  @Nonnull
+  @Override
+  public Query<EntityStore> getQuery() {
+    return Query.and(Player.getComponentType());
+  }
+}
+```
+
+### RefSystem
+
+We can also create systems to listen for changes on entities themselves. This is done through a `RefSystem`, for example let's say we want to perform an action whenever we add a component to an entity, update it or remove it.
+This can be done via the `RefChangeSystem<ECS_STORE, COMPONENT>`. Let's break down the example below:
+
+```java
+public class PermissionAttachmentSystem extends RefChangeSystem<EntityStore, PermissionAttachment> {
+
+  private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
+  @Nonnull
+  @Override
+  public ComponentType<EntityStore, PermissionAttachment> componentType() {
+    return EntityStoreRegistry.get().getPermissionAttachmentComponentType();
+  }
+
+  @Override
+  public void onComponentAdded(@Nonnull Ref<EntityStore> ref, @Nonnull PermissionAttachment permissionAttachment, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+    UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
+    UUID playerUuid = component.getUuid();
+
+    // PermissionAttachment component was added to a new entity
+  }
+
+  @Override
+  public void onComponentSet(@Nonnull Ref<EntityStore> ref, @Nullable PermissionAttachment oldAttachment, @Nonnull PermissionAttachment newAttachment, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+    UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
+    UUID playerUuid = component.getUuid();
+
+    // PermissionAttachment component was updated using replaceComponent or putComponent
+  }
+
+  @Override
+  public void onComponentRemoved(@Nonnull Ref<EntityStore> ref, @Nonnull PermissionAttachment permissionAttachment, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+    UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
+    UUID playerUuid = component.getUuid();
+
+    // PermissionAttachment component was removed from an entity
+  }
+
+  @Nullable
+  @Override
+  public Query<EntityStore> getQuery() {
+    return EntityStoreRegistry.get().getPermissionAttachmentComponentType();
+  }
+}
+```
+
+In this system we listen for changes on the `PermissionAttachment` component inside of the `EntityStore`. This gives us access to `onComponentAdded`, `onComponentSet` and `onComponentRemoved` which in this example caches and persists permission data
+which is stored on a player inside of a custom `PermissionAttachment` component.
+
+## Queries
+
+Queries filter which entities a system processes. The ECS only passes entities to your system's `tick` method if they have all the components specified in the query.
+
+```java
+// Single component - any entity with PoisonComponent
+Query.and(poisonComponentType)
+
+// Multiple components - entities with both
+Query.and(poisonComponentType, Player.getComponentType())
+
+// Exclusion - players that aren't dead
+Query.and(Player.getComponentType(), Query.not(DeathComponent.getComponentType()))
+```
+
+## SystemGroups and Dependencies
+
+Systems can declare which group they belong to and what dependencies they have. This controls execution order which is critical for systems that interact.
+
+```java
+@Nullable
+@Override
+public SystemGroup<EntityStore> getGroup() {
+  return DamageModule.get().getGatherDamageGroup();
+}
+```
+
+For more complex ordering you can override `getDependencies`:
+
+```java
+@Nonnull
+public Set<Dependency<EntityStore>> getDependencies() {
+  return Set.of(
+    new SystemGroupDependency(Order.AFTER, DamageModule.get().getFilterDamageGroup()),
+    new SystemDependency(Order.BEFORE, PlayerSystems.ProcessPlayerInput.class)
+  );
+}
+```
+
+The damage system is a good example of why ordering matters. Hytale's damage pipeline has four stages: GatherDamageGroup collects damage sources, FilterDamageGroup applies reductions and cancellations, then damage is applied to health, and finally InspectDamageGroup handles side effects like particles and sounds. If these ran in the wrong order you'd play death animations before the entity dies or apply armor reduction after health is already subtracted.
+
+## Registering Components and Systems
+
+Components and systems must be registered during plugin setup. The `EntityStoreRegistry` handles this.
+
+```java
+public final class ExamplePlugin extends JavaPlugin {
+
+  private static ExamplePlugin instance;
+  private ComponentType<EntityStore, PoisonComponent> poisonComponent;
+
+  public ExamplePlugin(@Nonnull JavaPluginInit init) {
+    super(init);
+    instance = this;
+  }
+
+  @Override
+  protected void setup() {
+    this.getCommandRegistry().registerCommand(new ExampleCommand());
+    this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
+    this.getEventRegistry().registerGlobal(PlayerChatEvent.class, ChatFormatter::onPlayerChat);
+
+    this.poisonComponent = this.getEntityStoreRegistry()
+        .registerComponent(PoisonComponent.class, PoisonComponent::new);
+    this.getEntityStoreRegistry().registerSystem(new PoisonSystem(this.poisonComponent));
+  }
+
+  public ComponentType<EntityStore, PoisonComponent> getPoisonComponentType() {
+    return poisonComponent;
+  }
+
+  public static ExamplePlugin get() {
+    return instance;
+  }
+}
+```
+
+The `registerComponent` method returns a `ComponentType` which acts as a key for accessing that component type throughout your plugin. Store it as a field and pass it to any systems that need it. The second argument is a factory for creating default instances.

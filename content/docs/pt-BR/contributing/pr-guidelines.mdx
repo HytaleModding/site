@@ -1,39 +1,39 @@
 ---
-title: PR Guidelines
-description: Guidelines that reviewers and contributors should follow when submitting and reviewing pull requests.
+title: Orientações de pull request
+description: Orientações que revisores e contribuidores devem seguir ao enviarem e analisarem os pull requests.
 ---
 
-# Pull Request Guidelines
+# Introdução
 
-To ensure a smooth and efficient review process, both contributors and reviewers should adhere to the following guidelines when submitting and reviewing pull requests (PRs).
+Para garantir um processo de revisão suave e eficiente, tanto os contribuidores quantos os revisores devem aderir às orientações ao enviar e analisar os pull requests. Veja abaixo:
 
-## For Contributors
+## Para os contribuidores
 
-1. **Descriptive Titles and Descriptions**
-   - Use clear and concise titles that summarize the changes.
-   - Provide detailed descriptions of what the PR does, why the changes are necessary, and any relevant context.
-2. **Link to Issues**
-   - In your PR title, add `GH-ISSUE-NUMBER` to link the PR to the relevant issue. This is required for all PRs.
-3. **Small, Focused Changes**
-   - Aim to keep PRs small and focused on a single issue or feature. This makes it easier for reviewers to understand and provide feedback.
-4. **Code Quality**
-   - Ensure your code follows the project's coding standards and best practices.
-   - Include comments where necessary to explain complex logic.
-5. **Testing**
-   - Test your changes thoroughly before submitting the PR.
-   - If applicable, include unit tests or integration tests to verify your changes.
+1. **Títulos e descrições descritivas**
+   - Use títulos coerentes e concisos que resumam as alterações;
+   - Descreva detalhadamente as ações do pull request, a necessidade das mudanças e o contexto relevante.
+2. **Link para problemas**
+   - No título do seu pull request, adicione `GH-ISSUE-NUMBER` para vinculá-lo ao problema correspondente. Isso é necessário para todos os pull requests.
+3. **Mudanças pequenas e focadas**
+   - Procure manter os pull requests pequenos e focados em um único problema ou recurso. Isso ajuda os revisores a entenderem melhor e a oferecerem feedback.
+4. **Qualidade do código**
+   - Certifique-se de que seu código siga os padrões e as práticas recomendadas de codificação do projeto;
+   - Inclua comentários quando necessário para explicar a lógica complexa.
+5. **Testando**
+   - Teste as suas alterações cuidadosamente antes de enviar o pull request;
+   - Se aplicável, inclua testes unitários ou de integração para verificar as suas alterações.
 6. **Documentação**
-   - Update or add documentation as needed to reflect your changes.
-7. **Commit Messages**
-   - Use clear and descriptive commit messages that follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) format.
-8. **Check for Conflicts**
-   - Before submitting your PR, ensure that your branch is up to date with the base branch to minimize merge conflicts.
+   - Atualize ou adicione documentação conforme necessário para refletir em suas alterações.
+7. **Mensagens de commit**
+   - Siga o formato [convencional de commits](https://www.conventionalcommits.org/en/v1.0.0/) para criar mensagens de commit claras e descritivas.
+8. **Verificar se há conflitos**
+   - Antes de enviar seu PR, certifique-se de que a sua branch esteja atualizada com a branch base para minimizar conflitos de mesclagem.
 
-## For Reviewers
+## Para os revisores
 
-- You are supposed to review PRs thoroughly, and request changes if needed.
-- Provide constructive feedback and suggestions for improvement.
-- Verify that the changes meet the project's coding standards and best practices.
-- Deploy the PR using the dokploy integration to ensure the changes work as expected.
-- Ensure that documentation is updated as necessary.
-- Approve the PR only when you are satisfied with the changes and all checks have passed.
+- Você deve revisar os pull requests minuciosamente e, se necessário, solicitar alterações;
+- Forneça feedbacks construtivos e sugestões de melhoria;
+- Verifique se as mudanças estão em conformidade com o código e as boas práticas do projeto;
+- Faça a implementação do pull request utilizando a integração com o Dokploy para garantir que as alterações funcionem conforme o esperado;
+- Mantenha a documentação atualizada segundo as necessidades das alterações;
+- Aprove o pull request apenas quando estiver satisfeito com as alterações e todas as verificações tiverem passado.

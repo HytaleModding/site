@@ -376,6 +376,23 @@ public static String getHealthStatus(int health, int maxHealth) {
    * Enthält mindestens eine Zahl
    * Gibt true zurück wenn gültig, ansonsten false
 
+<Callout type="info" title="Division Note">
+  When writing a password validator, you may be in need of a way to compare array's values. For example:
+
+  ```java
+  String[] array1 = {"Apple", "Banana"};
+  String[] array2 = {"Apple", "Banana"};
+
+  //Wrong:
+  array1[0] == array2[0]       // false - Java compares objects not by their location in Java's memory. 
+
+  //Instead use .equals() method - it compares objects by their values:
+  array1[0].equals(array2[0]);       // true 
+
+  //This although does not affect primitive data types.
+  ```
+</Callout>
+
 ## Häufige Fehler
 
 ```java

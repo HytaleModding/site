@@ -1,29 +1,28 @@
 ---
-title: Server-First Development
-description: Information regarding what Server-First Development means, and more.
+title: サーバーファースト開発
+description: サーバーファースト開発とは何を意味するか、などに関する情報
 ---
 
-Hytale is being developed with a "server-first" approach. This means that the server is considered the authoritative source of game state and logic, while the client primarily handles rendering and user input.
+Hytale は「サーバーファースト」手法で開発されています。 これは、サーバーがゲームの状態やロジックにおける信頼できる情報源として扱われ、クライアントは主に描画とユーザー入力の処理を担当することを意味します。
 
-## What does "Server-First" mean?
+## 「サーバーファースト」とはどういう意味ですか？
 
-In a server-first architecture, the server is responsible for managing the game world, enforcing rules, and processing player actions. The client connects to the server to receive updates about the game state and to send player inputs. This approach helps ensure consistency and fairness in multiplayer environments, as the server has control over the game logic.
+サーバーファーストアーキテクチャでは、サーバーがゲーム世界の管理、ルールの適用、およびプレイヤーの行動の処理を担当します。 クライアントはサーバーに接続し、ゲームの状態とプレイヤーの入力を送信します。 この手法は、サーバーがゲーム処理を制御するため、マルチプレイヤー環境における一貫性と公平性を確保するのに役立ちます。
 
-## Benefits of Server-First Development
+## サーバーファースト開発のメリット
 
-* **Consistency**: Since the server is the authoritative source, all players experience the same game state, reducing discrepancies and cheating.
-* **Scalability**: Server-first architectures can be more easily scaled to accommodate large numbers
-  of players, as the server can manage resources and distribute load effectively.
-* **Security**: By centralizing game logic on the server, it becomes more difficult for players to manipulate the game state unfairly.
-* **Easier Updates**: Updates and changes can be made on the server side without requiring players to download new client versions.
-* **Only One Version**: There won't be a version selector for the Hytale Client, meaning that server owners do not need to support multiple versions and can rely on everyone being on the latest client. This will help both server owners and modders.
+* **一貫性**：サーバーは信頼できる情報源であるため、すべてのプレイヤーが同じゲーム状態を体験でき、矛盾やチート行為を減らすことができます。
+* **スケーラビリティ**：サーバーファーストアーキテクチャは、サーバーが情報源を管理し、負荷を効果的に分散できるため、大量のプレイヤーに対応するよう容易にスケールすることができます。
+* **セキュリティ**：ゲーム処理をサーバーに集中させることで、プレイヤーがゲームの状態を不当に操作することが難しくなります。
+* **より簡単なアップデート**：プレイヤーが新しいバージョンをダウンロードする必要なく、サーバー側でアップデートと変更を行うことができます。
+* **単一バージョン**：Hytaleクライアントにはバージョンの選択がないため、サーバー所有者は複数のバージョンをサポートする必要がなく、全員が最新のクライアントを前提にできます。 これはサーバー所有者とMOD開発者の両方にとって有益です。
 
-## Implications for Modding
+## MOD開発への影響
 
-Modders will primarily interact with the server-side components of Hytale. This means that mods will often focus on altering game logic, rules, and behaviors that are managed by the server. Client-side modifications are not allowed (as of the information given right now).
+MOD開発者は、主にHytaleのサーバーコンポーネントとやり取りを行います。 これは、MOD開発者がサーバーによって管理されるゲーム処理、ルール、および動作の変更に焦点を当てることを意味します。 クライアント側の改変は許可されていません（現時点での情報）
 
-Overall, the server-first approach in Hytale aims to create a robust and fair multiplayer experience while providing modders with powerful tools to customize and enhance the game.
+全体として、Hytaleにおけるサーバーファースト手法は、堅牢で公正なマルチプレイヤー体験を実現すると同時に、MOD開発者がゲームをカスタマイズし拡張するための強力なツールを提供することを目的としています。
 
-## Conclusion
+## 結論
 
-The server-first development model is a key aspect of Hytale's architecture, ensuring a consistent and secure multiplayer experience. Modders should focus on server-side modifications to fully leverage the capabilities of this approach and create engaging content for players.
+サーバーファースト開発モデルは、Hytaleのアーキテクチャの重要な側面であり、一貫性とセキュリティに優れたマルチプレイヤー体験を保証します。 MOD開発者は、この手法の機能を最大限に活用し、プレイヤーに魅力的なコンテンツを提供するために、サーバー側の改変に集中すべきです。

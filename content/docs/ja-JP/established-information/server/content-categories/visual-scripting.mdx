@@ -1,59 +1,59 @@
 ---
-title: Visual Scripting
-description: An introduction to what we know of Hytale's visual scripting system as of writing this.
+title: ビジュアルスクリプティング
+description: 執筆時点でわかっているHytaleのビジュアルスクリプティングシステムの紹介。
 ---
 
-# Visual Scripting
+# ビジュアルスクリプティング
 
-Hytale plans to support Visual Scripting as a method to make advanced logic and control flow accessible to a wider audience. This system will not be available at launch, but should be available shortly after launch.
+Hytaleは、高度な処理と制御フローを多くのユーザーが利用できるようにする方法として、ビジュアルスクリプティングを計画しています。 このシステムはリリース時には利用できませんが、リリース以降に利用可能になる予定です。
 
-## Overview
+## 概要
 
-Visual Scripting in Hytale is designed to function similarly to Blueprints in Unreal Engine. It allows designers to create complex behaviors through a visual interface that matches how they think about game logic, without needing to write code directly.
+Hytaleのビジュアルスクリプティングは、Unreal Engineのブループリントと同じように機能するよう設計されています。 デザイナーが直接コードを書くことなく、直感的なインターフェースを通じてゲームの複雑な挙動を作成できるように設計されています。
 
-### Key Features
+### 主な特徴
 
-* **Subset of Java functionality**: Visual Scripting can do a subset of what is possible with Java plugins
-* **Designer-friendly**: "Designers are empowered through a visual language that matches how they think about behaviors"
-* **Programmer extensible**: Programmers can extend and optimize the system by adding new visual nodes and performance-sensitive implementations
-* **Safe sharing environment**: Provides a sandboxed, safe environment for sharing logic between modders
+* **Java機能の一部**：ビジュアルスクリプティングは、Javaプラグインで実装できる一部の機能を実現できる
+* **デザイナーフレンドリー**：「デザイナーは、振る舞いを考える思考様式に合ったビジュアル言語を通じて自ら実装・調整できるようになっている。」
+* **プログラマー拡張可能**：プログラマーは、新しいビジュアルノードと性能重視の実装を提供することで、システムを拡張・最適化できます。
+* **安全な共有環境**：MOD開発者同士でロジックを共有するための、サンドボックス化された安全な環境を提供します。
 
-## Advantages Over Traditional Coding
+## 従来のコーディングに対する利点
 
-Visual Scripting makes writing custom logic more accessible by removing common hurdles found when developing in Java:
+ビジュアルスクリプティングは、Javaでの開発時によくあるハードルを無くすことで、カスタムロジックを簡単に作れるようにします。
 
-* **No complex environment setup**: No need to worry about installing the right tools or configuring development environments
-* **Syntax-free development**: Removes the need to learn and remember programming syntax
-* **Safer sharing**: Malware in visual scripting should be virtually impossible
-* **More inclusive**: Lowers the barrier to entry for non-programmers
+* **複雑な環境設定は不要**：適切なツールのインストールや開発環境の設定について心配する必要はありません。
+* **構文なしの開発**：プログラミング構文を学習する必要がなくなります。
+* **より安全な共有**：ビジュアルスクリプティングでのマルウェアの発生は事実上不可能のはずです。
+* **より多様的**: プログラマー以外の人のための参入の敷居を下げます。
 
-## Relationship with Java
+## Javaとの関係
 
-Visual Scripting and Java plugins are designed to work in tandem:
+ビジュアルスクリプティングとJava プラグインは連携して動作するように設計されています。
 
-* **Java extends Visual Scripting**: Programmers can create new visual nodes using Java
-* **Performance optimization**: While Visual Scripting may not be as optimized as Java directly, programmers can implement performance-critical logic in Java and expose it as visual nodes
-* **Best of both worlds**: Allows the majority of logic to remain in the accessible Visual Scripting environment while keeping expensive operations optimized
+* **Javaがビジュアルスクリプティングを拡張**：プログラマーはJavaを使用して新しいビジュアルノードを作成できます。
+* **パフォーマンスの最適化**：ビジュアルスクリプティングはJavaほど直接的に最適化されていませんが、プログラマーは重要なパフォーマンスの処理をJavaで実装し、それをビジュアルノードとして公開することができます。
+* **両方の利点を活かす**：大部分のロジックを扱いやすいビジュアルスクリプティング環境内に維持しつつ、処理負荷の高い操作は最適化されたままにできます。
 
-Hytale strongly recommends Visual Scripting since it is both more accessible and safer to share and download. However, staying purely in Java will still work for those who prefer it.
+Hytaleは、よりアクセスしやすく、かつ共有やダウンロードもより安全であるため、ビジュアルスクリプティングを強く推奨しています。 ですが、Javaのみで開発することも可能です。
 
-## 3D Visual Scripting
+## 3Dビジュアルスクリプト
 
-One of Hytale's unique features is bringing visual scripting directly into the 3D world:
+Hytaleのユニークな機能の1つは、ビジュアルスクリプトを3D世界に直接導入することです。
 
-* **In-world editing**: Link levers, doors, spawners, triggers, and other elements directly inside the game
-* **Adventure map creation**: Excellent for building adventure maps and encounters without leaving Hytale
-* **Similar to DOOM SnapMap**: Provides a familiar workflow for those who have used similar systems
-* **Fully integrated**: Works seamlessly with the asset and scripting stack
+* **ワールド内編集**：レバー、ドア、スポナー、トリガーなどの要素をゲーム内で直接リンクします。
+* **アドベンチャーマップ作成**：Hytaleを離れずに、アドベンチャーマップやエンカウント処理を構築するのに最適です。
+* **DOOM SnapMapとの類似**: 類似したシステムを利用したことがある人のために似たワークフローを提供します。
+* **完全な統合**: アセットとスクリプトスタックとシームレスに動作します。
 
-## No Text-Based Scripting
+## テキストスクリプトを使わない
 
-Hytale has made a deliberate decision not to include text-based scripting languages. Their reasoning:
+Hytaleは、テキストベースのスクリプト言語を含めないという意図的な決定を下しています。 その理由は以下のとおりです。
 
-* **False compromise**: Text-based scripting is often introduced to "help non-programmers" but still requires learning programming concepts
-* **Complexity increase**: Programmers end up juggling two languages where one is less powerful
-* **Still requires syntax**: Designers still need to learn syntax and programming concepts
-* **Less inclusive**: Doesn't truly solve the accessibility problem
-* **Fragmentation**: Avoids "fragmenting logic across multiple 'half-languages'"
+* **見せかけの妥協案**：テキストベースのスクリプトでの開発はしばしば「非プログラマー向け」と称して導入されますが、実際はプログラミング概念を学ぶ必要があります。
+* **複雑さの増大**：プログラマーは、能力の低い言語一つと組み合わせて二つの言語を扱うことになります。
+* **依然として構文が必要**：それでもデザイナーは構文とプログラミングの概念を学ぶ必要があります。
+* **包括性が低い**：アクセシビリティの問題を真に解決しません。
+* **断片化回避**：「複数の『中途半端な言語』にロジックを分散させる」ことを避けます。
 
-Instead, Hytale believes visual scripting is a better approach that truly makes game logic accessible to a wider audience while maintaining the power and flexibility needed
+代わりに、Hytaleはビジュアルスクリプティングこそが、ゲームロジックをより幅広いユーザーが利用できるようにしながら、必要な能力と柔軟性を維持する最良のアプローチだと考えています。

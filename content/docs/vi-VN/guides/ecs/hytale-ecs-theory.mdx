@@ -1,0 +1,162 @@
+---
+title: Hytale ECS Theory
+description: In this guide you will learn about the basics of Hytale's powerful ECS system as well as create your own component, a system, and work together with other systems to create gameplay logic.
+authors:
+  - name: oskarscot
+    url: https://oskar.scot
+  - name: musava_ribica
+    url: https://forum.hytalemodding.dev/u/musava_ribica
+---
+
+## Store
+
+The `Store` class is the core of Hytale's ECS system, it's responsible for storing entities, if you ever need to access an entity, you need access to the store. It utilises a concept called Archetypes where data is grouped together in chunks. For example if we have 100 Trorks, they will be chunked together along with their components so that they're closely packed together and faster to retrieve.
+
+## EntityStore
+
+When looking through Hytale's server code you will find that most of the time `Store` will be of type `EntityStore`. This name can be misleading as it might suggest that it's a `Store` for entities.
+But didn't we just say that the base `Store` already stores entities? The `EntityStore` class implements `WorldProvider` meaning that `EntityStore` is responsible for accessing a specific Hytale `World`. It maintains internal maps `entitiesByUuid` and `networkIdToRef`, allowing you to find a specific entity by its persistent ID or its networking ID.
+
+Every Entity has a `UUIDComponent` as well as a `NetworkId` which are used by the `EntityStore` to lookup entities inside of the `Store`.
+
+## ChunkStore
+
+Another type of `Store` that you might come across is the `ChunkStore`, it is responsible for storing all the components, related to blocks inside of the `World`. You can retrieve `WorldChunk`s which are your general chunk Components.
+A `WorldChunk` component contains an `EntityChunk` which holds all the Entities that are inside of the chunk as well as their reference to the EntityStore. It also holds the `BlockChunk` which consists of `BlockSection`s. There are more components making up the overall world and chunk systems but
+for now this is the basic understanding for the `ChunkStore`. You can use it to retrieve data about chunks and their blocks as well as entities on a given chunk and create block and chunk systems.
+
+## Holder
+
+A Holder is essentially a blueprint for an entity. Before an entity exists in the Store (and thus in the world), is exists as a `Holder`. It collects and holds all the necessary components (data). You can compare it analogous to shopping cart. You grab all components you need and once you have everything, check out at the store which will take your cart and create a valid entity ID and hand you back a receipt (a Ref).
+
+Let's take a look at an example: initializing players. In `Universe`, the `addPlayer` method demonstrates it perfectly.
+When a player connects, we don't immediately throw them into the ECS. We first construct their data in a Holder.
+Notice that `PlayerStorage#load` method, which loads player data from disk, returns a `CompletableFuture<Holder<EntityStore>>`.
+What it means is that the method is async and the future will contain a Holder for something in the `EntityStore`.
+Just open the `Universe `class, find the `addPlayer` method and read it start to end. Trust me, it will help you a lot when you see the actual process how an entity is constructed, what it has to pass through. In the end, `Universe` calls `world#addPlayer`, which (after dispatching an event) calls the delightful
+
+```java
+Ref<EntityStore> ref = playerRefComponent.addToStore(store);
+```
+
+and `PlayerRef#addToStore` has this:
+
+```java
+store.addEntity(this.holder, AddReason.LOAD);
+```
+
+## Ref (Reference)
+
+For those familiar with languages like C++, you probably already can guess what this class is purely by the name of it. However, a Ref is a safe "handle" or pointer to an entity. You should **NEVER** store a direct reference to an entity object, you use a Ref instead. It tracks whether an entity is still alive. If you call `validate()` on a Ref for an entity that has been deleted, it throws an exception.
+
+## Player Components
+
+In Hytale, a "Player" is not just one object. It is a single entity composed of multiple specialized components. Understanding the difference between `Player` and `PlayerRef` is crucial for modding.
+
+### PlayerRef
+
+Despite its name, PlayerRef is a Component, not a handle. It represents the player's connection and identity. It's a special component which stays active as long as the player is connected to the server, even if the player switches worlds. The key data that it stores are the player's username, UUID, language as well as the packet handler.
+
+### Player
+
+The `Player` component represents the player's physical presence. It only exists when the player is actually spawned in a world. Providing access to gameplay specific data, this component differs per world.
+
+To interact with an entity, you use the `Store` to retrieve its components via their `ComponentType`. Because Hytale uses a decoupled system, you don't call `entity.getHealth()`. Instead, you ask the `Store` for the health data associated with that entity's `Ref`.
+
+```java
+@Override
+protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<EntityStore> store, 
+    @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {
+  Player player = store.getComponent(ref, Player.getComponentType());
+  UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
+  TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
+  player.sendMessage(Message.raw("UUIDComponent : " + component.getUuid()));
+  player.sendMessage(Message.raw("Transform : " + transform.getPosition()));
+}
+```
+
+In here we use the `Store<EntityStore>` to access the `Player` component using the `Ref<EntityStore>`. We can do the same for other components like the `UUIDComponent` or the `TransformComponent` to retrieve the entity Transform containing the position and rotation.
+
+## Components
+
+Components are pure data containers. They hold state but contain no logic. In Hytale, components must implement `Component<EntityStore>` and provide a clone method for the ECS to copy them when needed.
+
+```java
+public class PoisonComponent implements Component<EntityStore> {
+
+  private float damagePerTick;
+  private float tickInterval;
+  private int remainingTicks;
+  private float elapsedTime;
+
+  public PoisonComponent() {
+    this(5f, 1.0f, 10);
+  }
+
+  public PoisonComponent(float damagePerTick, float tickInterval, int totalTicks) {
+    this.damagePerTick = damagePerTick;
+    this.tickInterval = tickInterval;
+    this.remainingTicks = totalTicks;
+    this.elapsedTime = 0f;
+  }
+
+  public PoisonComponent(PoisonComponent other) {
+    this.damagePerTick = other.damagePerTick;
+    this.tickInterval = other.tickInterval;
+    this.remainingTicks = other.remainingTicks;
+    this.elapsedTime = other.elapsedTime;
+  }
+
+  @Nullable
+  @Override
+  public Component<EntityStore> clone() {
+    return new PoisonComponent(this);
+  }
+
+  public float getDamagePerTick() {
+    return damagePerTick;
+  }
+
+  public float getTickInterval() {
+    return tickInterval;
+  }
+
+  public int getRemainingTicks() {
+    return remainingTicks;
+  }
+
+  public float getElapsedTime() {
+    return elapsedTime;
+  }
+
+  public void addElapsedTime(float dt) {
+    this.elapsedTime += dt;
+  }
+
+  public void resetElapsedTime() {
+    this.elapsedTime = 0f;
+  }
+
+  public void decrementRemainingTicks() {
+    this.remainingTicks--;
+  }
+
+  public boolean isExpired() {
+    return this.remainingTicks <= 0;
+  }
+}
+```
+
+The default constructor is required for the registration factory. The copy constructor is used by `clone()` which the ECS calls internally when it needs to duplicate component data.
+
+## CommandBuffer
+
+The `CommandBuffer` queues changes to entities. Use it instead of modifying the store directly to ensure thread safety and proper ordering. You'll use it to add components, remove components, and execute damage.
+
+```java
+commandBuffer.addComponent(ref, componentType, new MyComponent());
+
+commandBuffer.removeComponent(ref, componentType);
+
+MyComponent comp = commandBuffer.getComponent(ref, componentType);
+```

@@ -1,0 +1,72 @@
+---
+title: Vienību Komponentu Sistēma
+description: Pamatu pamācība ECS (Entity Component System)
+---
+
+<Callout type="warning">
+  Šī pamācība pieprasa pamata zināšanas OOP konceptiem, kā mantošana.
+
+  Lūdzu, pārliecinies, ka labi izproti šos konceptus pirms pamācības lasīšanas.
+</Callout>
+
+<Callout type="info">
+  Šī pamācība pašlaik ir tikai par ECS teoriju, un tajā nebūs koda piemēri.
+
+  Koda piemēri tiek apzināti izlaisti, lai izvairītos no neskaidrībām par to, kā ECS ieviests Hytale.
+</Callout>
+
+# Ievads
+
+Entity Component System, kas pazīstama arī kā ECS, ir dizaina modelis spēļu izstrādē.
+
+ECS sastāv no Vienībām, kas atsaucas uz komponentiem un sistēmām priekš vienībām.
+
+Tas arī koncentrējas uz kompozīciju pāri mantošanai, novēršot stingru hierarhiju un palīdz sadalīt uzvedību, datus, un atvieglo atkārtotu izmantošanu.
+
+# Kompozīcija Pāri Mantošanai
+
+Pirms saprotam kas ir ECS, jāsaprot kāda ir ECS filozofija.
+
+Mēs varam aprakstīt kompozīciju kā "tam ir X" un mantojumu kā "tas ir X".
+Kad mēs mantojam klasi Javā, mēs mantojam visus tās atribūtus un metodes.
+Kompozīcijā mēs varam izvēlēties katram objektam atsauces un kuras sistēmas ar to strādās.
+
+# Vienības, Komponenti un Sistēmas
+
+## Vienības
+
+Entity/Vienība ir unikāls identifikātors.
+
+- Tas nesatur datus.
+- Tas nesatur loģiku.
+
+Iedomājies vienības, kā lietvārdus, kas var būt aprakstīti izmantojot komponentus
+
+## Komponenti
+
+Komponenti ir prasti datu konteineri.
+
+- Tie glabā tikai datus
+- Tie nesatur uzvedību, vai loģiku
+- Tie apraksta vienību īpašības un aspektus
+
+Komponentu piemērs:
+
+- 'Position' komponents, kas glabā X, Y un Z koordinātes
+- 'Velocity' komponents, kas glabā ātrumu uz katras ass
+- 'Health' komponents, kas glabā pašreizējo vienības veselību
+
+Domā par komponentiem kā īpašības vārdiem, kas apraksta vienību
+
+## Sistēmas
+
+Sistēmas satur loģīku tavā spēlē (vai šajā gadījumā modā).
+
+- Tas darbojas uz visām vienībām, kam ir specifisks komponentu komplekts.
+- Tas neuzglabā vienību datus
+- Tas attiecina uzvedību lasot un modificējot komponentu datus
+
+Piemēram:
+
+- "WinConditionSystem" var apstrādāt Vienības, kas satur komponenta "Position" un "Velocity"
+- Ja vienība sasniedz `(0, 0, 0)` pozīciju, tad sistēma palaiž "Tu uzvarēji!" ziņu.

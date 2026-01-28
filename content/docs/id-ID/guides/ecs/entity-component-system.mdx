@@ -1,0 +1,72 @@
+---
+title: Entity Component System
+description: A basic introduction into ECS (Entity Component System)
+---
+
+<Callout type="warning">
+  This guide requires basic understanding of OOP concepts such as inheritance.
+
+  Please make sure you have a good understanding of these concepts before reading this guide.
+</Callout>
+
+<Callout type="info">
+  This guide is currently only on the theory of ECS and will not have code examples.
+
+  Code examples are intentionally omitted to avoid confusion about how Hytale’s ECS may be implemented.
+</Callout>
+
+# Introduction
+
+An Entity Component System otherwise known as ECS is a design pattern in game development.
+
+ECS is made up of Entities, which reference Components and Systems that operates on Entities.
+
+It also focuses on composition over inheritance, eliminating rigid hierarchy, helps separate behavior and data and makes reusability easier.
+
+# Composition Over Inheritance
+
+Before getting into understanding what ECS is made of, lets understand what is the ECS philosophy.
+
+We can describe composition as "has X" and inheritance as "is X".
+When we inherit a class in Java, we inherit all of its attributes and methods.
+While in composition we can choose for each object what it references and what systems will work on it.
+
+# Entities, Components and Systems
+
+## Entities
+
+An Entity is just a unique identifier.
+
+- It contains no data.
+- It contains no logic
+
+Think of entities as nouns that can be described using components
+
+## Components
+
+Components are just plain data containers.
+
+- They store only data
+- They contain no behavior or logic
+- They describe traits or aspects of an entity
+
+Examples of components:
+
+- A 'Position' component that stores X, Y and Z coordinates
+- A 'Velocity' component that stores the speed along each axis
+- A 'Health' component that stores the current health of the entity
+
+Think of components as adjectives that describe an entity
+
+## Systems
+
+Systems contains the logic for your game (or in this case, a mod).
+
+- It Operates on all entities that have a specific set of components
+- It Does not store entity data itself
+- It Applies behavior by reading and modifying component data
+
+For example:
+
+- A "WinConditionSystem" may process every Entity that contains the components "Position" and "Velocity"
+- If an entity reaches the position `(0, 0, 0)`, the system will trigger a "You Won!" message.
