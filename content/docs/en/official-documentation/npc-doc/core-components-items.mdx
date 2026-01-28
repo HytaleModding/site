@@ -1,0 +1,223 @@
+---
+title: NPC Core Components - Items
+description: Official documentation for NPC items core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (items)
+
+## DropItem: Action (Stable) [#action_dropitem]
+
+Drop an item. Can be a specific item, or from a drop table
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Delay (Stable)
+
+- Range of time to delay in seconds
+- **Type**: `Array`, **Optional** (Default: [1.0, 1.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - Item (Stable)
+
+- A specific item to drop
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - DropList (Stable)
+
+- A reference to an item drop list
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - ThrowSpeed (Stable)
+
+- The throw speed to use
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater than 0 and less or equal than 3.4028234663852886e+38
+
+#### - Distance (Stable)
+
+- The range from which to pick a distance to throw the item
+- **Type**: `Array`, **Optional** (Default: [1.0, 1.0]), **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - DropSector (Stable)
+
+- The sector to spread drops in relative to view direction of NPC in degrees.
+- **Type**: `Array`, **Optional** (Default: [0.0, 0.0]), **Element Type**: Double
+- **Constraint**: Values must be greater or equal than -360, less or equal than 360and in weakly ascending order
+
+#### - PitchHigh (Stable)
+
+- Whether to pitch high or pitch low instead
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+### Constraints
+
+- One (and only one) of Item, DropList must be provided
+
+[(Top)](#top)
+
+## DroppedItem: Sensor (Stable) [#sensor_droppeditem]
+
+Triggers if a given item is within a certain range of the NPC. Will match anything if Items and Attitudes are not defined, otherwise will match items meeting either criteria.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Range (Stable)
+
+- The range within which to look
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - ViewSector (Stable)
+
+- View sector in which to look
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - LineOfSight (Stable)
+
+- Requires line of sight to item
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - Items (Stable)
+
+- A list of glob item patterns to match. If omitted, will match any item
+- **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: Item
+
+#### - Attitudes (Stable)
+
+- Attitudes to match
+- **Type**: `FlagSet`, **Optional** (Default: []), **Computable**
+- **Flag Values**:
+  - `Neutral`: Neutral
+  - `Ignore`: Ignore
+  - `Like`: Like
+  - `Love`: Love
+  - `Dislike`: Dislike
+
+### Provides
+
+- Dropped item target
+
+[(Top)](#top)
+
+## Inventory: Action (Stable) [#action_inventory]
+
+Add or remove a number of items from an inventory. Can also be used to equip them.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Operation (Stable)
+
+- Operation to perform
+- **Type**: `Flag`, **Optional** (Default: Add), **Computable**
+- **Flag Values**:
+  - `Add`: Add items to inventory
+  - `RemoveHeldItem`: Destroy the held item
+  - `SetHotbar`: Sets the hotbar item in a specific slot
+  - `Equip`: Equip item as weapon or armour
+  - `ClearHeldItem`: Clear the held item
+  - `EquipOffHand`: Equips the item from a specific off-hand slot
+  - `Remove`: Remove items from inventory
+  - `EquipHotbar`: Equips the item from a specific hotbar slot
+  - `SetOffHand`: Sets the off-hand item in a specific slot
+
+#### - Count (Stable)
+
+- Number of items to add/remove
+- **Type**: `Integer`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Item (Stable)
+
+- Item type to add, remove, or equip
+- **Type**: `Asset`, **Optional** (Default: ), **Computable**
+
+#### - UseTarget (Stable)
+
+- Use the sensor-provided target for the action
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Slot (Stable)
+
+- The hotbar or off-hand to effect. Only valid for Hotbar/OffHand Set/Equip operations
+- **Type**: `Integer`, **Optional** (Default: 0.0), **Computable**
+
+### Constraints
+
+- If UseTarget is true, must be attached to a sensor that provides one of player target, NPC target
+
+[(Top)](#top)
+
+## PickUpItem: Action (Stable) [#action_pickupitem]
+
+Pick up an item. In hoover mode, will match to the Item array. Otherwise, requires a target to be provided e.g. by a DroppedItemSensor
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Delay (Stable)
+
+- Range of time to delay in seconds
+- **Type**: `Array`, **Optional** (Default: [1.0, 1.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
+
+#### - Range (Stable)
+
+- The range the item will be picked up from
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - StorageTarget (Experimental)
+
+- Where to prioritise putting the item
+- **Type**: `Flag`, **Optional** (Default: Hotbar), **Computable**
+- **Flag Values**:
+  - `Destroy`: Destroy the item
+  - `Hotbar`: Prioritise hotbar
+  - `Inventory`: Prioritise inventory
+
+#### - Hoover (Stable)
+
+- Suck up all items in range with optional cooldown. Can be filtered with a list of glob patterns. Ignored outside hoover mode
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Items (Stable)
+
+- A list of glob item patterns to match for hoover mode. If omitted, will match any item. Ignored outside hoover mode
+- **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: Item
+
+### Constraints
+
+- If Hoover is false, must be attached to a sensor that provides dropped item target
+
+[(Top)](#top)

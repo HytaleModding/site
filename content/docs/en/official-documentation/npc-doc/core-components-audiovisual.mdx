@@ -1,0 +1,178 @@
+---
+title: NPC Core Components - Audiovisual
+description: Official documentation for NPC audiovisual core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (audiovisual)
+
+## Animation: Sensor (Stable) [#sensor_animation]
+
+Check if a given animation is being played
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Slot (Stable)
+
+- The animation slot to check
+- **Type**: `Flag`, **Required**, **Computable**
+- **Flag Values**:
+  - `Status`: Status
+  - `Action`: Action
+  - `Face`: Face
+
+#### - Animation (Stable)
+
+- The animation ID to check for
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+[(Top)](#top)
+
+## Appearance: Action (Stable) [#action_appearance]
+
+Change model of NPC to given appearance.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Appearance (Stable)
+
+- Model name to use
+- **Type**: `Asset`, **Required**
+
+[(Top)](#top)
+
+## DisplayName: Action (Stable) [#action_displayname]
+
+Set the name displayed above NPC
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - DisplayName (Stable)
+
+- Name to display above NPC
+- **Type**: `String`, **Required**, **Computable**
+
+[(Top)](#top)
+
+## ModelAttachment: Action (Stable) [#action_modelattachment]
+
+Set an attachment on the current NPC model
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Slot (Stable)
+
+- The attachment slot to set
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - Attachment (Stable)
+
+- The attachment to set, or empty to remove
+- **Type**: `String`, **Required**, **Computable**
+
+[(Top)](#top)
+
+## PlayAnimation: Action (Experimental) [#action_playanimation]
+
+Play an animation
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Slot (Stable)
+
+- The animation slot to play on
+- **Type**: `Flag`, **Required**
+- **Flag Values**:
+  - `Status`: Status
+  - `Action`: Action
+  - `Face`: Face
+
+#### - Animation (Stable)
+
+- The animation ID to play
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+
+[(Top)](#top)
+
+## PlaySound: Action (Stable) [#action_playsound]
+
+Plays a sound to players within a specified range.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - SoundEventId (Stable)
+
+- The sound event to play
+- **Type**: `Asset`, **Required**, **Computable**
+
+[(Top)](#top)
+
+## SpawnParticles: Action (WorkInProgress) [#action_spawnparticles]
+
+Spawn particle system visible within a given range with an offset relative to npc heading
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - ParticleSystem (Stable)
+
+- Particle system to spawn
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - Range (Stable)
+
+- Maximum visibility range
+- **Type**: `Double`, **Optional** (Default: 75.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Offset (Stable)
+
+- Offset relative to footpoint in view direction of NPC
+- **Type**: `Array`, **Optional** (Default: null), **Computable**, **Element Type**: Double
+
+[(Top)](#top)

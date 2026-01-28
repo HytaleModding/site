@@ -1,0 +1,125 @@
+---
+title: NPC Core Components - Statemachine
+description: Official documentation for NPC statemachine core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (statemachine)
+
+## IsBusy: Sensor (Stable) [#sensor_isbusy]
+
+Tests if an NPC is in one of the defined Busy States.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
+
+## ParentState: Action (Stable) [#action_parentstate]
+
+Set the main state of NPC from within a component
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - State (Stable)
+
+- The alias of the external state to set, as defined by \_ImportStates in parameters
+- **Type**: `String`, **Required**
+- **Constraint**: String must be a valid state string. A main state must be included before the period (e.g. Main.Test). Only the main state can be included.
+
+### Constraints
+
+- May only be included within a component
+
+[(Top)](#top)
+
+## State: Action (Stable) [#action_state]
+
+Set state of NPC. The state can be queried with a sensor later on.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - State (Stable)
+
+- State name to set
+- **Type**: `String`, **Required**
+- **Constraint**: String must be a valid state string. State strings consist of a main state and a sub state (e.g. Main.Test). If nested within a substate, the main state may be omitted (e.g. .Test) when referencing.
+
+#### - ClearState (Stable)
+
+- Clear the state of things like set once flags on transition
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+### Constraints
+
+[(Top)](#top)
+
+## State: Sensor (Stable) [#sensor_state]
+
+Signal if NPC is set to specific state.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - State (Stable)
+
+- State to compare to
+- **Type**: `String`, **Required**
+- **Constraint**: String must be a valid state string. State strings consist of a main state and a sub state (e.g. Main.Test). If nested within a substate, the main state may be omitted (e.g. .Test) when referencing.
+
+#### - IgnoreMissingSetState (Stable)
+
+- Override and ignore checks for matching setter action that sets this state. Intended for use in cases such as the FlockState action which sets the state via another NPC
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+[(Top)](#top)
+
+## ToggleStateEvaluator: Action (Stable) [#action_togglestateevaluator]
+
+Enable or disable the NPC's state evaluator
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether or not to enable the state evaluator
+- **Type**: `Boolean`, **Required**
+
+[(Top)](#top)

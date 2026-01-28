@@ -1,0 +1,77 @@
+---
+title: NPC Core Components - Path
+description: Official documentation for NPC path core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (path)
+
+## MakePath: Action (WorkInProgress) [#action_makepath]
+
+Constructs a transient path for the NPC based on a series of rotations and distances
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Path (WorkInProgress)
+
+- A transient path definition
+- **Type**: `ObjectRef`, **Required**, **Object Type**: Path
+
+[(Top)](#top)
+
+## Path: Sensor (Stable) [#sensor_path]
+
+Find a path based on various criteria. Provides the position of the nearest waypoint and the path itself
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Path (Stable)
+
+- The name of the path. If left blank, will find the nearest path
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+
+#### - Range (Stable)
+
+- The range to test to nearest waypoint. 0 is unlimited
+- **Type**: `Double`, **Optional** (Default: 10.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - PathType (Stable)
+
+- The type of path to search for
+- **Type**: `Flag`, **Optional** (Default: AnyPrefabPath), **Computable**
+- **Flag Values**:
+  - `CurrentPrefabPath`: a path from the prefab the NPC spawned in
+  - `TransientPath`: a transient path (testing purposes only)
+  - `AnyPrefabPath`: a path from any prefab
+  - `WorldPath`: named world path
+
+### Constraints
+
+- If PathType is WorldPath, the following must apply to Path: String must be not empty
+
+### Provides
+
+- Vector position
+- Path
+
+[(Top)](#top)

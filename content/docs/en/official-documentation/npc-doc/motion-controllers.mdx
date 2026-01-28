@@ -1,0 +1,631 @@
+---
+title: NPC Motion Controllers
+description: Official documentation for NPC motion controllers.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Motion Controllers
+
+## Dive: MotionController (WorkInProgress) [#motioncontroller_dive]
+
+Provide diving abilities for NPC
+
+### Attributes
+
+#### - Type (Stable)
+
+- Type field
+- **Type**: `String`, **Required**
+- **Constraint**: String must be not empty
+
+#### - EpsilonSpeed (Experimental)
+
+- Minimum speed considered non 0
+- **Type**: `Double`, **Optional** (Default: 1.0E-5)
+- **Constraint**: Value must be greater than 0
+
+#### - EpsilonAngle (Experimental)
+
+- Minimum angle difference considered non 0 in degrees
+- **Type**: `Double`, **Optional** (Default: 3.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxHeadRotationSpeed (Stable)
+
+- Maximum rotation speed of the head in degrees
+- **Type**: `Double`, **Optional** (Default: 360.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - ForceVelocityDamping (Experimental)
+
+- Damping of external force/velocity over time
+- **Type**: `Double`, **Optional** (Default: 0.5)
+- **Constraint**: Value must be greater than 0
+
+#### - RunThreshold (WorkInProgress)
+
+- Relative threshold when running animation should be used
+- **Type**: `Double`, **Optional** (Default: 0.7), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - RunThresholdRange (WorkInProgress)
+
+- Relative threshold range for switching between running/walking
+- **Type**: `Double`, **Optional** (Default: 0.15)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - MaxSwimSpeed (Stable)
+
+- Maximum horizontal speed
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxDiveSpeed (Stable)
+
+- Maximum vertical speed
+- **Type**: `Double`, **Optional** (Default: 8.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxFallSpeed (Stable)
+
+- Terminal velocity falling in air
+- **Type**: `Double`, **Optional** (Default: 10.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxSinkSpeed (Stable)
+
+- Terminal velocity sinking in water
+- **Type**: `Double`, **Optional** (Default: 4.0)
+- **Constraint**: Value must be greater than 0
+
+#### - Gravity (Stable)
+
+- Gravity
+- **Type**: `Double`, **Optional** (Default: 10.0)
+- **Constraint**: Value must be greater than 0
+
+#### - Acceleration (Stable)
+
+- Acceleration
+- **Type**: `Double`, **Optional** (Default: 3.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxRotationSpeed (Stable)
+
+- Maximum rotational speed in degrees
+- **Type**: `Double`, **Optional** (Default: 360.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxSwimTurnAngle (WorkInProgress)
+
+- Maximum angle NPC can walk without explicit turning in degrees
+- **Type**: `Double`, **Optional** (Default: 90.0)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 180
+
+#### - FastSwimThreshold (WorkInProgress)
+
+- Relative threshold when fast swimming animation should be used
+- **Type**: `Double`, **Optional** (Default: 0.6)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - SwimDepth (WorkInProgress)
+
+- 0 is at eye height, -1 is bottom of bounding box, +1 top of bounding box. other values between -1 and +1 scale linear
+- **Type**: `Double`, **Optional** (Default: 0.4)
+- **Constraint**: Value must be greater or equal than -1 and less or equal than 1
+
+#### - SinkRatio (WorkInProgress)
+
+- Relative sink or climb speed while wandering
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MinDiveDepth (Unknown)
+
+- null
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxDiveDepth (WorkInProgress)
+
+- Maximum dive depth below surface desired
+- **Type**: `Double`, **Optional** (Default: 1.7976931348623157E308)
+- **Constraint**: Value must be greater than 0
+
+#### - MinDepthAboveGround (WorkInProgress)
+
+- Minimum distance from ground desired
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MinDepthBelowSurface (WorkInProgress)
+
+- Minimum distance from water surface desired
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MinWaterDepth (Unknown)
+
+- null
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxWaterDepth (Unknown)
+
+- null
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - DesiredDepthWeight (Stable)
+
+- How much this NPC prefers being within the desired height range. 0 means it doesn't care much, 1 means it will do its best to get there fast.
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+### Constraints
+
+- MinSwimSpeed must be less or equal than MaxSwimSpeed
+
+[(Top)](#top)
+
+## Fly: MotionController (WorkInProgress) [#motioncontroller_fly]
+
+Flight motion controller
+
+### Attributes
+
+#### - Type (Stable)
+
+- Type field
+- **Type**: `String`, **Required**
+- **Constraint**: String must be not empty
+
+#### - EpsilonSpeed (Experimental)
+
+- Minimum speed considered non 0
+- **Type**: `Double`, **Optional** (Default: 1.0E-5)
+- **Constraint**: Value must be greater than 0
+
+#### - EpsilonAngle (Experimental)
+
+- Minimum angle difference considered non 0 in degrees
+- **Type**: `Double`, **Optional** (Default: 3.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxHeadRotationSpeed (Stable)
+
+- Maximum rotation speed of the head in degrees
+- **Type**: `Double`, **Optional** (Default: 360.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - ForceVelocityDamping (Experimental)
+
+- Damping of external force/velocity over time
+- **Type**: `Double`, **Optional** (Default: 0.5)
+- **Constraint**: Value must be greater than 0
+
+#### - RunThreshold (WorkInProgress)
+
+- Relative threshold when running animation should be used
+- **Type**: `Double`, **Optional** (Default: 0.7), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - RunThresholdRange (WorkInProgress)
+
+- Relative threshold range for switching between running/walking
+- **Type**: `Double`, **Optional** (Default: 0.15)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - MinAirSpeed (WorkInProgress)
+
+- Minimum in air speed
+- **Type**: `Double`, **Optional** (Default: 0.1)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxHorizontalSpeed (Stable)
+
+- Maximum horizontal speed
+- **Type**: `Double`, **Optional** (Default: 8.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxClimbSpeed (Stable)
+
+- Maximum climbing speed
+- **Type**: `Double`, **Optional** (Default: 6.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxSinkSpeed (Stable)
+
+- Maximum sink/drop speed
+- **Type**: `Double`, **Optional** (Default: 10.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxFallSpeed (Stable)
+
+- Maximum fall speed
+- **Type**: `Double`, **Optional** (Default: 40.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxSinkSpeedFluid (Stable)
+
+- Maximum sink/fall speed in fluids
+- **Type**: `Double`, **Optional** (Default: 4.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxClimbAngle (Stable)
+
+- Maximum climb angle
+- **Type**: `Double`, **Optional** (Default: 45.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxSinkAngle (Stable)
+
+- Maximum sink angle
+- **Type**: `Double`, **Optional** (Default: 85.0)
+- **Constraint**: Value must be greater than 0
+
+#### - Acceleration (Stable)
+
+- Maximum Acceleration
+- **Type**: `Double`, **Optional** (Default: 4.0)
+- **Constraint**: Value must be greater than 0
+
+#### - Deceleration (Stable)
+
+- Maximum deceleration
+- **Type**: `Double`, **Optional** (Default: 4.0)
+- **Constraint**: Value must be greater than 0
+
+#### - Gravity (Stable)
+
+- Gravity
+- **Type**: `Double`, **Optional** (Default: 40.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxTurnSpeed (Stable)
+
+- Maximum turn speed in degrees per second
+- **Type**: `Double`, **Optional** (Default: 180.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxRollAngle (Stable)
+
+- Maximum roll angle in degrees
+- **Type**: `Double`, **Optional** (Default: 45.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxRollSpeed (Stable)
+
+- Maximum roll speed in degrees per second
+- **Type**: `Double`, **Optional** (Default: 180.0)
+- **Constraint**: Value must be greater than 0
+
+#### - RollDamping (Stable)
+
+- Roll damping
+- **Type**: `Double`, **Optional** (Default: 0.8999999761581421)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - MinHeightOverGround (Stable)
+
+- Minimum height over ground
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxHeightOverGround (Stable)
+
+- Maximum height over ground
+- **Type**: `Double`, **Optional** (Default: 20.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - FastFlyThreshold (WorkInProgress)
+
+- Relative threshold when fast flying animation should be used
+- **Type**: `Double`, **Optional** (Default: 0.6)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - AutoLevel (Stable)
+
+- Set pitch to 0 when no steering forces applied
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - DesiredAltitudeWeight (Stable)
+
+- How much this NPC prefers being within the desired height range. 0 means it doesn't care much, 1 means it will do its best to get there fast.
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+[(Top)](#top)
+
+## Walk: MotionController (WorkInProgress) [#motioncontroller_walk]
+
+Provide walk on ground abilities for NPC
+
+### Attributes
+
+#### - Type (Stable)
+
+- Type field
+- **Type**: `String`, **Required**
+- **Constraint**: String must be not empty
+
+#### - EpsilonSpeed (Experimental)
+
+- Minimum speed considered non 0
+- **Type**: `Double`, **Optional** (Default: 1.0E-5)
+- **Constraint**: Value must be greater than 0
+
+#### - EpsilonAngle (Experimental)
+
+- Minimum angle difference considered non 0 in degrees
+- **Type**: `Double`, **Optional** (Default: 3.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxHeadRotationSpeed (Stable)
+
+- Maximum rotation speed of the head in degrees
+- **Type**: `Double`, **Optional** (Default: 360.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - ForceVelocityDamping (Experimental)
+
+- Damping of external force/velocity over time
+- **Type**: `Double`, **Optional** (Default: 0.5)
+- **Constraint**: Value must be greater than 0
+
+#### - RunThreshold (WorkInProgress)
+
+- Relative threshold when running animation should be used
+- **Type**: `Double`, **Optional** (Default: 0.7), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - RunThresholdRange (WorkInProgress)
+
+- Relative threshold range for switching between running/walking
+- **Type**: `Double`, **Optional** (Default: 0.15)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - MaxWalkSpeed (Stable)
+
+- Maximum horizontal speed
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MinWalkSpeed (WorkInProgress)
+
+- Minimum horizontal speed
+- **Type**: `Double`, **Optional** (Default: 0.1)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxFallSpeed (Stable)
+
+- Maximum fall speed
+- **Type**: `Double`, **Optional** (Default: 8.0)
+- **Constraint**: Value must be greater than 0
+
+#### - MaxSinkSpeedFluid (Stable)
+
+- Maximum sink speed in fluids
+- **Type**: `Double`, **Optional** (Default: 4.0)
+- **Constraint**: Value must be greater than 0
+
+#### - Gravity (Stable)
+
+- Gravity
+- **Type**: `Double`, **Optional** (Default: 10.0)
+- **Constraint**: Value must be greater than 0
+
+#### - Acceleration (Stable)
+
+- Acceleration
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxRotationSpeed (Stable)
+
+- Maximum rotational speed in degrees
+- **Type**: `Double`, **Optional** (Default: 360.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MaxWalkTurnAngle (WorkInProgress)
+
+- Maximum angle NPC can walk without explicit turning in degrees
+- **Type**: `Double`, **Optional** (Default: 90.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 180
+
+#### - BlendRestTurnAngle (WorkInProgress)
+
+- When NPC is blending heading and turn angle required is larger than this value speed is reduced
+- **Type**: `Double`, **Optional** (Default: 60.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 180
+
+#### - BlendRestRelativeSpeed (WorkInProgress)
+
+- When NPC is blending heading relative speed used when reducing speed
+- **Type**: `Double`, **Optional** (Default: 0.2), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - MaxClimbHeight (Stable)
+
+- Maximum height NPC can climb
+- **Type**: `Double`, **Optional** (Default: 1.3), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - JumpHeight (Experimental)
+
+- How high the NPC jumps above climb height
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MinJumpHeight (Experimental)
+
+- Minimum height above which a jump will be attempted
+- **Type**: `Double`, **Optional** (Default: 0.6), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MinJumpDistance (Experimental)
+
+- Minimum distance above which a jump will be executed
+- **Type**: `Double`, **Optional** (Default: 0.2), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - JumpForce (Experimental)
+
+- The force multiplier for the upward motion of the jump
+- **Type**: `Double`, **Optional** (Default: 1.5), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - JumpBlending (Experimental)
+
+- The blending of the upward jump pattern. 0 is more curved and 1 is linear
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - JumpDescentBlending (Experimental)
+
+- The blending of the jump descent pattern. 0 is linear while higher values become more curved
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - JumpDescentSteepness (Experimental)
+
+- The steepness of the descent portion of the jump
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - AscentAnimationType (Stable)
+
+- The animation to play when walking up a block
+- **Type**: `Flag`, **Optional** (Default: Walk), **Computable**
+- **Flag Values**:
+  - `Walk`: Play walk animation
+  - `Fly`: Play fly animation
+  - `Idle`: Play idle animation
+  - `Climb`: Play climb animation
+  - `Jump`: Play jump animation
+
+#### - ClimbSpeedMult (WorkInProgress)
+
+- Climb speed multiplier (const + multiplier \* walkspeed \*\* power)
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+
+#### - ClimbSpeedPow (WorkInProgress)
+
+- Climb speed power (const + multiplier \* walkspeed \*\* power)
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+
+#### - ClimbSpeedConst (WorkInProgress)
+
+- Climb speed constant (const + multiplier \* walkspeed \*\* power)
+- **Type**: `Double`, **Optional** (Default: 5.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - MinDescentAnimationHeight (Stable)
+
+- The min drop distance to switch from the standard walking animation to the specified descent animation
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - DescendFlatness (WorkInProgress)
+
+- Relative scale how fast NPC moves forward while climbing down
+- **Type**: `Double`, **Optional** (Default: 0.7), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - DescendSpeedCompensation (WorkInProgress)
+
+- Factor to compensate forward speed reduction while moving downwards
+- **Type**: `Double`, **Optional** (Default: 0.9), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+#### - DescentAnimationType (Experimental)
+
+- The animation to play when moving down a block
+- **Type**: `Flag`, **Optional** (Default: Fall), **Computable**
+- **Flag Values**:
+  - `Walk`: Play walk animation
+  - `Idle`: Play idle animation
+  - `Fall`: Play fall animation
+
+#### - DescentSteepness (Experimental)
+
+- The relative steepness of the descent
+- **Type**: `Double`, **Optional** (Default: 1.4), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - DescentBlending (Experimental)
+
+- The blending of the descent pattern. 0 is linear, while higher values become more curved
+- **Type**: `Double`, **Optional** (Default: 1.8), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MaxDropHeight (WorkInProgress)
+
+- Maximum height NPC considers drop safe
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - FenceBlockSet (Stable)
+
+- Unclimbable blocks
+- **Type**: `Asset`, **Optional** (Default: Fence)
+
+#### - JumpRange (WorkInProgress)
+
+- Jump distance range
+- **Type**: `Array`, **Optional** (Default: [0.0, 0.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 10and in weakly ascending order
+
+#### - MinHover (WorkInProgress)
+
+- Minimum hover height over ground
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MinHoverClimb (WorkInProgress)
+
+- Minimum hover height over ground when climbing
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MinHoverDrop (WorkInProgress)
+
+- Minimum hover height over ground when dropping
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - FloatsDown (WorkInProgress)
+
+- If true NPC floats down when hovering enabled else gravity decides
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - MaxHover (WorkInProgress)
+
+- Maximum hover height over ground
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - HoverFreq (WorkInProgress)
+
+- Hover frequency
+- **Type**: `Double`, **Optional** (Default: 0.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - MinHitSlowdown (Stable)
+
+- The minimum percentage to slow down by when attacked from behind
+- **Type**: `Double`, **Optional** (Default: 0.1)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 1
+
+### Constraints
+
+- MinHover must be less or equal than MaxHover
+- MinHoverClimb must be less or equal than MinHover
+- MinHoverDrop must be less or equal than MinHover
+- MinWalkSpeed must be less or equal than MaxWalkSpeed
+
+[(Top)](#top)

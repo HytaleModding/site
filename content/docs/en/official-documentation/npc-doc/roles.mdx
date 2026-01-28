@@ -1,0 +1,893 @@
+---
+title: NPC Roles
+description: Official documentation for NPC roles.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Roles
+
+## Abstract: Role (Stable) [#role_abstract]
+
+Generic role for NPC with a core planner and list of Motion controllers.
+
+### Attributes
+
+#### - MaxHealth (Stable)
+
+- Max health
+- **Type**: `Integer`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Debug (WorkInProgress)
+
+- Debugging flags
+- **Type**: `String`, **Optional** (Default: )
+
+#### - Appearance (Stable)
+
+- Model to use for rendering
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - DisplayNames (Stable)
+
+- List of possible display names to choose from
+- **Type**: `StringList`, **Optional** (Default: null)
+- **Constraint**: Strings in array must not be empty
+
+#### - NameTranslationKey (Stable)
+
+- The translation key for this NPC's name
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - OpaqueBlockSet (Stable)
+
+- Blocks blocking line of sight
+- **Type**: `Asset`, **Optional** (Default: Opaque)
+
+#### - Inertia (Experimental)
+
+- Inertia
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater than 0.1
+
+#### - KnockbackScale (Stable)
+
+- Scale factor for knockback. Values greater 1 increase knockback. Smaller values decrease it.
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - InventorySize (Stable)
+
+- Number of available inventory slots
+- **Type**: `Integer`, **Optional** (Default: 0)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 36
+
+#### - HotbarSize (Stable)
+
+- Number of available hotbar slots
+- **Type**: `Integer`, **Optional** (Default: 3)
+- **Constraint**: Value must be greater or equal than 3 and less or equal than 8
+
+#### - OffHandSlots (Stable)
+
+- The number of slots for off-hand items
+- **Type**: `Integer`, **Optional** (Default: 0)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 4
+
+#### - HotbarItems (Stable)
+
+- Hotbar items (e.g. primary weapon, secondary weapon, etc)
+- **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: Item
+
+#### - OffHandItems (Stable)
+
+- Off-hand items (e.g. shields, torches, etc)
+- **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: Item
+
+#### - PossibleInventoryItems (Stable)
+
+- A droplist defining the possible items the NPCs inventory could contain
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - DefaultOffHandSlot (Stable)
+
+- The default off-hand item slot (-1 is empty)
+- **Type**: `Integer`, **Optional** (Default: -1.0), **Computable**
+- **Constraint**: Value must be greater or equal than -1 and less or equal than 4
+
+#### - Armor (WorkInProgress)
+
+- Armor items
+- **Type**: `AssetArray`, **Optional** (Default: null), **Element Type**: Item
+
+#### - DropList (Stable)
+
+- Drop list to spawn when killed
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - StartState (Stable)
+
+- Initial state
+- **Type**: `String`, **Optional** (Default: start)
+- **Constraint**: String must be not empty
+
+#### - DefaultSubState (Stable)
+
+- The default sub state to reference when transitioning to a main state without a specified sub state
+- **Type**: `String`, **Optional** (Default: Default)
+- **Constraint**: String must be not empty
+
+#### - CollisionDistance (Stable)
+
+- Collision lookahead
+- **Type**: `Double`, **Optional** (Default: 5.0)
+- **Constraint**: Value must be greater than 0
+
+#### - CollisionForceFalloff (Experimental)
+
+- Falloff rate for collision force
+- **Type**: `Double`, **Optional** (Default: 2.0)
+- **Constraint**: Value must be greater than 0
+
+#### - CollisionRadius (Experimental)
+
+- Collision radius override
+- **Type**: `Double`, **Optional** (Default: -1.0)
+
+#### - CollisionViewAngle (Experimental)
+
+- Collision detection view cone
+- **Type**: `Double`, **Optional** (Default: 320.0)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - SeparationDistance (Experimental)
+
+- Desired separation distance
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - SeparationWeight (Experimental)
+
+- Blend factor separation
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - SeparationDistanceTarget (Experimental)
+
+- Desired separation distance when close to target
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - SeparationNearRadiusTarget (Experimental)
+
+- Distance when using SeparationDistanceTarget
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - SeparationFarRadiusTarget (Experimental)
+
+- Use normal separation distance from further than this distance
+- **Type**: `Double`, **Optional** (Default: 5.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - ApplyAvoidance (Experimental)
+
+- Apply avoidance steering force
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - ApplySeparation (Experimental)
+
+- Apply separation steering force
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - AvoidanceMode (Experimental)
+
+- Abilities to use for avoidance
+- **Type**: `Flag`, **Optional** (Default: Any)
+- **Flag Values**:
+  - `Evade`: Only evade
+  - `Slowdown`: Only slow down NPC
+  - `Any`: Any avoidance allowed
+
+#### - EntityAvoidanceStrength (Experimental)
+
+- Blending factor avoidance
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - StayInEnvironment (Experimental)
+
+- Stay in spawning environment
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - AllowedEnvironments (Experimental)
+
+- Allowed environment to walk in
+- **Type**: `String`, **Optional** (Default: null)
+- **Constraint**: String value must be either null or not empty
+
+#### - FlockSpawnTypes (WorkInProgress)
+
+- Types of NPC this flock should consist off
+- **Type**: `Array`, **Optional** (Default: null), **Computable**, **Element Type**: String
+- **Constraint**: Strings in array must not be empty
+
+#### - FlockSpawnTypesRandom (WorkInProgress)
+
+- Create a randomized flock if true else spawn in order of FlockSpawnTypes
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - FlockAllowedNPC (Experimental)
+
+- List of NPCs allowed in flock
+- **Type**: `Array`, **Optional** (Default: null), **Computable**, **Element Type**: String
+- **Constraint**: Strings in array must not be empty
+
+#### - FlockCanLead (Experimental)
+
+- This NPC can be flock leader
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - FlockWeightAlignment (Experimental)
+
+- Blending flock alignment
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater than 0
+
+#### - FlockWeightSeparation (Experimental)
+
+- Blending flock separation
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater than 0
+
+#### - FlockWeightCohesion (Experimental)
+
+- Blending flock cohesion
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater than 0
+
+#### - FlockInfluenceRange (Experimental)
+
+- Influence radius flock forces
+- **Type**: `Double`, **Optional** (Default: 10.0)
+- **Constraint**: Value must be greater than 0
+
+#### - DisableDamageFlock (WorkInProgress)
+
+- If true disables combat damage from flock members
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - DisableDamageGroups (WorkInProgress)
+
+- Members in this list of group won't cause damage
+- **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: TagSet
+
+#### - BusyStates (Stable)
+
+- States during which this NPC is busy and can't be interacted with
+- **Type**: `StringList`, **Required**
+- **Constraint**: String must be a valid state string. A main state must be included before the period (e.g. Main.Test). State strings consist of a main state and a sub state (e.g. Main.Test). If nested within a substate, the main state may be omitted (e.g. .Test) when referencing.
+
+#### - CombatConfig (Stable)
+
+- The combat configuration providing optional combat action evaluator
+- **Type**: `CodecObject`, **Optional** (Default: null)
+
+#### - Invulnerable (Stable)
+
+- Makes NPC ignore damage
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - BreathesInAir (WorkInProgress)
+
+- Can breath in air
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - BreathesInWater (WorkInProgress)
+
+- Can breath in fluid/water
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - PickupDropOnDeath (Stable)
+
+- Drop last picked item on death
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - DeathAnimationTime (Experimental)
+
+- How long to let the death animation play before removing
+- **Type**: `Double`, **Optional** (Default: 5.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - DeathInteraction (Experimental)
+
+- Interaction to run on death
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - DespawnAnimationTime (Experimental)
+
+- How long to let the despawn animation play before removing
+- **Type**: `Double`, **Optional** (Default: 0.800000011920929)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - SpawnParticles (Experimental)
+
+- Particle system when spawning
+- **Type**: `String`, **Optional** (Default: null)
+
+#### - SpawnParticlesOffset (Experimental)
+
+- Displacement from foot point to spawn relative to NPC heading
+- **Type**: `Array`, **Optional** (Default: null), **Element Type**: Double
+
+#### - SpawnViewDistance (Experimental)
+
+- View distance for spawn particle
+- **Type**: `Double`, **Optional** (Default: 75.0)
+- **Constraint**: Value must be greater than 0
+
+#### - DefaultPlayerAttitude (Stable)
+
+- The default attitude of this NPC towards players
+- **Type**: `Flag`, **Optional** (Default: HOSTILE), **Computable**
+- **Flag Values**:
+  - `HOSTILE`: is hostile towards the target
+  - `REVERED`: reveres the target
+  - `FRIENDLY`: is friendly towards the target
+  - `IGNORE`: is ignoring the target
+  - `NEUTRAL`: is neutral towards the target
+
+#### - DefaultNPCAttitude (Stable)
+
+- The default attitude of this NPC towards other NPCs
+- **Type**: `Flag`, **Optional** (Default: NEUTRAL), **Computable**
+- **Flag Values**:
+  - `HOSTILE`: is hostile towards the target
+  - `REVERED`: reveres the target
+  - `FRIENDLY`: is friendly towards the target
+  - `IGNORE`: is ignoring the target
+  - `NEUTRAL`: is neutral towards the target
+
+#### - AttitudeGroup (Stable)
+
+- The attitude group towards other NPCs this NPC belongs to (often species related)
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - ItemAttitudeGroup (Stable)
+
+- This NPC's item attitudes
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - CorpseStaysInFlock (Stable)
+
+- Whether the NPC should stay in the flock until corpse removal or be removed at the moment of death
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - OverrideHeadPitchAngle (Experimental)
+
+- Whether to override the head pitch angle range
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - HeadPitchAngleRange (Experimental)
+
+- Head rotation pitch range to be used instead of model camera settings
+- **Type**: `Array`, **Optional** (Default: [-89.0, 89.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than -90, less or equal than 90and in weakly ascending order
+
+#### - MotionControllerList (Stable)
+
+- Motion controllers
+- **Type**: `ObjectRef`, **Required**, **Object Type**: HashMap
+
+#### - Instructions (WorkInProgress)
+
+- List of instructions
+- **Type**: `Array`, **Optional** (Default: null), **Element Type**: Instruction
+
+#### - InteractionInstruction (Stable)
+
+- An instruction designed to evaluate and set which players can interact with an NPC, along with setting correct states upon interaction
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: Instruction
+
+#### - DeathInstruction (Stable)
+
+- An instruction which will run only when the NPC is dead until they are removed
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: Instruction
+
+#### - StateTransitions (Stable)
+
+- A set of state transitions and the actions that will be executed during them
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: StateTransitionController
+
+#### - StateEvaluator (Stable)
+
+- A state evaluator
+- **Type**: `CodecObject`, **Optional** (Default: null)
+
+#### - InitialMotionController (Stable)
+
+- The initial motion controller to set. If omitted and there are multiple, one will be chosen at random.
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - InteractionVars (Stable)
+
+- Interaction vars to be used in interactions.
+- **Type**: `CodecObject`, **Optional** (Default: null)
+
+#### - IsMemory (Stable)
+
+- Used to define if the NPC has a Memory to record.
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - MemoriesCategory (Stable)
+
+- Category to put the NPC in, as part of the Memories Plugin
+- **Type**: `String`, **Optional** (Default: Other), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - MemoriesNameOverride (Stable)
+
+- Overrides the Memory name when set.
+- **Type**: `String`, **Optional** (Default: ), **Computable**
+
+#### - SpawnLockTime (Stable)
+
+- How long the NPC should be locked and unable to perform behavior when first spawned
+- **Type**: `Double`, **Optional** (Default: 1.5), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+### Constraints
+
+- At least one of BreathesInAir, BreathesInWater must be true
+
+[(Top)](#top)
+
+## Generic: Role (Stable) [#role_generic]
+
+Generic role for NPC with a core planner and list of Motion controllers.
+
+### Attributes
+
+#### - MaxHealth (Stable)
+
+- Max health
+- **Type**: `Integer`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Debug (WorkInProgress)
+
+- Debugging flags
+- **Type**: `String`, **Optional** (Default: )
+
+#### - Appearance (Stable)
+
+- Model to use for rendering
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - DisplayNames (Stable)
+
+- List of possible display names to choose from
+- **Type**: `StringList`, **Optional** (Default: null)
+- **Constraint**: Strings in array must not be empty
+
+#### - NameTranslationKey (Stable)
+
+- The translation key for this NPC's name
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - OpaqueBlockSet (Stable)
+
+- Blocks blocking line of sight
+- **Type**: `Asset`, **Optional** (Default: Opaque)
+
+#### - Inertia (Experimental)
+
+- Inertia
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater than 0.1
+
+#### - KnockbackScale (Stable)
+
+- Scale factor for knockback. Values greater 1 increase knockback. Smaller values decrease it.
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - InventorySize (Stable)
+
+- Number of available inventory slots
+- **Type**: `Integer`, **Optional** (Default: 0)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 36
+
+#### - HotbarSize (Stable)
+
+- Number of available hotbar slots
+- **Type**: `Integer`, **Optional** (Default: 3)
+- **Constraint**: Value must be greater or equal than 3 and less or equal than 8
+
+#### - OffHandSlots (Stable)
+
+- The number of slots for off-hand items
+- **Type**: `Integer`, **Optional** (Default: 0)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 4
+
+#### - HotbarItems (Stable)
+
+- Hotbar items (e.g. primary weapon, secondary weapon, etc)
+- **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: Item
+
+#### - OffHandItems (Stable)
+
+- Off-hand items (e.g. shields, torches, etc)
+- **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: Item
+
+#### - PossibleInventoryItems (Stable)
+
+- A droplist defining the possible items the NPCs inventory could contain
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - DefaultOffHandSlot (Stable)
+
+- The default off-hand item slot (-1 is empty)
+- **Type**: `Integer`, **Optional** (Default: -1.0), **Computable**
+- **Constraint**: Value must be greater or equal than -1 and less or equal than 4
+
+#### - Armor (WorkInProgress)
+
+- Armor items
+- **Type**: `AssetArray`, **Optional** (Default: null), **Element Type**: Item
+
+#### - DropList (Stable)
+
+- Drop list to spawn when killed
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - StartState (Stable)
+
+- Initial state
+- **Type**: `String`, **Optional** (Default: start)
+- **Constraint**: String must be not empty
+
+#### - DefaultSubState (Stable)
+
+- The default sub state to reference when transitioning to a main state without a specified sub state
+- **Type**: `String`, **Optional** (Default: Default)
+- **Constraint**: String must be not empty
+
+#### - CollisionDistance (Stable)
+
+- Collision lookahead
+- **Type**: `Double`, **Optional** (Default: 5.0)
+- **Constraint**: Value must be greater than 0
+
+#### - CollisionForceFalloff (Experimental)
+
+- Falloff rate for collision force
+- **Type**: `Double`, **Optional** (Default: 2.0)
+- **Constraint**: Value must be greater than 0
+
+#### - CollisionRadius (Experimental)
+
+- Collision radius override
+- **Type**: `Double`, **Optional** (Default: -1.0)
+
+#### - CollisionViewAngle (Experimental)
+
+- Collision detection view cone
+- **Type**: `Double`, **Optional** (Default: 320.0)
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - SeparationDistance (Experimental)
+
+- Desired separation distance
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - SeparationWeight (Experimental)
+
+- Blend factor separation
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - SeparationDistanceTarget (Experimental)
+
+- Desired separation distance when close to target
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - SeparationNearRadiusTarget (Experimental)
+
+- Distance when using SeparationDistanceTarget
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - SeparationFarRadiusTarget (Experimental)
+
+- Use normal separation distance from further than this distance
+- **Type**: `Double`, **Optional** (Default: 5.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - ApplyAvoidance (Experimental)
+
+- Apply avoidance steering force
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - ApplySeparation (Experimental)
+
+- Apply separation steering force
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - AvoidanceMode (Experimental)
+
+- Abilities to use for avoidance
+- **Type**: `Flag`, **Optional** (Default: Any)
+- **Flag Values**:
+  - `Evade`: Only evade
+  - `Slowdown`: Only slow down NPC
+  - `Any`: Any avoidance allowed
+
+#### - EntityAvoidanceStrength (Experimental)
+
+- Blending factor avoidance
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - StayInEnvironment (Experimental)
+
+- Stay in spawning environment
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - AllowedEnvironments (Experimental)
+
+- Allowed environment to walk in
+- **Type**: `String`, **Optional** (Default: null)
+- **Constraint**: String value must be either null or not empty
+
+#### - FlockSpawnTypes (WorkInProgress)
+
+- Types of NPC this flock should consist off
+- **Type**: `Array`, **Optional** (Default: null), **Computable**, **Element Type**: String
+- **Constraint**: Strings in array must not be empty
+
+#### - FlockSpawnTypesRandom (WorkInProgress)
+
+- Create a randomized flock if true else spawn in order of FlockSpawnTypes
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - FlockAllowedNPC (Experimental)
+
+- List of NPCs allowed in flock
+- **Type**: `Array`, **Optional** (Default: null), **Computable**, **Element Type**: String
+- **Constraint**: Strings in array must not be empty
+
+#### - FlockCanLead (Experimental)
+
+- This NPC can be flock leader
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - FlockWeightAlignment (Experimental)
+
+- Blending flock alignment
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater than 0
+
+#### - FlockWeightSeparation (Experimental)
+
+- Blending flock separation
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater than 0
+
+#### - FlockWeightCohesion (Experimental)
+
+- Blending flock cohesion
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater than 0
+
+#### - FlockInfluenceRange (Experimental)
+
+- Influence radius flock forces
+- **Type**: `Double`, **Optional** (Default: 10.0)
+- **Constraint**: Value must be greater than 0
+
+#### - DisableDamageFlock (WorkInProgress)
+
+- If true disables combat damage from flock members
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - DisableDamageGroups (WorkInProgress)
+
+- Members in this list of group won't cause damage
+- **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: TagSet
+
+#### - BusyStates (Stable)
+
+- States during which this NPC is busy and can't be interacted with
+- **Type**: `StringList`, **Required**
+- **Constraint**: String must be a valid state string. A main state must be included before the period (e.g. Main.Test). State strings consist of a main state and a sub state (e.g. Main.Test). If nested within a substate, the main state may be omitted (e.g. .Test) when referencing.
+
+#### - CombatConfig (Stable)
+
+- The combat configuration providing optional combat action evaluator
+- **Type**: `CodecObject`, **Optional** (Default: null)
+
+#### - Invulnerable (Stable)
+
+- Makes NPC ignore damage
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - BreathesInAir (WorkInProgress)
+
+- Can breath in air
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - BreathesInWater (WorkInProgress)
+
+- Can breath in fluid/water
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - PickupDropOnDeath (Stable)
+
+- Drop last picked item on death
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - DeathAnimationTime (Experimental)
+
+- How long to let the death animation play before removing
+- **Type**: `Double`, **Optional** (Default: 5.0)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - DeathInteraction (Experimental)
+
+- Interaction to run on death
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - DespawnAnimationTime (Experimental)
+
+- How long to let the despawn animation play before removing
+- **Type**: `Double`, **Optional** (Default: 0.800000011920929)
+- **Constraint**: Value must be greater or equal than 0
+
+#### - SpawnParticles (Experimental)
+
+- Particle system when spawning
+- **Type**: `String`, **Optional** (Default: null)
+
+#### - SpawnParticlesOffset (Experimental)
+
+- Displacement from foot point to spawn relative to NPC heading
+- **Type**: `Array`, **Optional** (Default: null), **Element Type**: Double
+
+#### - SpawnViewDistance (Experimental)
+
+- View distance for spawn particle
+- **Type**: `Double`, **Optional** (Default: 75.0)
+- **Constraint**: Value must be greater than 0
+
+#### - DefaultPlayerAttitude (Stable)
+
+- The default attitude of this NPC towards players
+- **Type**: `Flag`, **Optional** (Default: HOSTILE), **Computable**
+- **Flag Values**:
+  - `HOSTILE`: is hostile towards the target
+  - `REVERED`: reveres the target
+  - `FRIENDLY`: is friendly towards the target
+  - `IGNORE`: is ignoring the target
+  - `NEUTRAL`: is neutral towards the target
+
+#### - DefaultNPCAttitude (Stable)
+
+- The default attitude of this NPC towards other NPCs
+- **Type**: `Flag`, **Optional** (Default: NEUTRAL), **Computable**
+- **Flag Values**:
+  - `HOSTILE`: is hostile towards the target
+  - `REVERED`: reveres the target
+  - `FRIENDLY`: is friendly towards the target
+  - `IGNORE`: is ignoring the target
+  - `NEUTRAL`: is neutral towards the target
+
+#### - AttitudeGroup (Stable)
+
+- The attitude group towards other NPCs this NPC belongs to (often species related)
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - ItemAttitudeGroup (Stable)
+
+- This NPC's item attitudes
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - CorpseStaysInFlock (Stable)
+
+- Whether the NPC should stay in the flock until corpse removal or be removed at the moment of death
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - OverrideHeadPitchAngle (Experimental)
+
+- Whether to override the head pitch angle range
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - HeadPitchAngleRange (Experimental)
+
+- Head rotation pitch range to be used instead of model camera settings
+- **Type**: `Array`, **Optional** (Default: [-89.0, 89.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than -90, less or equal than 90and in weakly ascending order
+
+#### - MotionControllerList (Stable)
+
+- Motion controllers
+- **Type**: `ObjectRef`, **Required**, **Object Type**: HashMap
+
+#### - Instructions (WorkInProgress)
+
+- List of instructions
+- **Type**: `Array`, **Optional** (Default: null), **Element Type**: Instruction
+
+#### - InteractionInstruction (Stable)
+
+- An instruction designed to evaluate and set which players can interact with an NPC, along with setting correct states upon interaction
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: Instruction
+
+#### - DeathInstruction (Stable)
+
+- An instruction which will run only when the NPC is dead until they are removed
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: Instruction
+
+#### - StateTransitions (Stable)
+
+- A set of state transitions and the actions that will be executed during them
+- **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: StateTransitionController
+
+#### - StateEvaluator (Stable)
+
+- A state evaluator
+- **Type**: `CodecObject`, **Optional** (Default: null)
+
+#### - InitialMotionController (Stable)
+
+- The initial motion controller to set. If omitted and there are multiple, one will be chosen at random.
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - InteractionVars (Stable)
+
+- Interaction vars to be used in interactions.
+- **Type**: `CodecObject`, **Optional** (Default: null)
+
+#### - IsMemory (Stable)
+
+- Used to define if the NPC has a Memory to record.
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - MemoriesCategory (Stable)
+
+- Category to put the NPC in, as part of the Memories Plugin
+- **Type**: `String`, **Optional** (Default: Other), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - MemoriesNameOverride (Stable)
+
+- Overrides the Memory name when set.
+- **Type**: `String`, **Optional** (Default: ), **Computable**
+
+#### - SpawnLockTime (Stable)
+
+- How long the NPC should be locked and unable to perform behavior when first spawned
+- **Type**: `Double`, **Optional** (Default: 1.5), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+### Constraints
+
+- At least one of BreathesInAir, BreathesInWater must be true
+
+[(Top)](#top)
+
+## Variant: Role (WorkInProgress) [#role_variant]
+
+Create a variant from an existing NPC JSON file
+
+[(Top)](#top)

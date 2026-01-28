@@ -1,0 +1,712 @@
+---
+title: NPC Core Components - World
+description: Official documentation for NPC world core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (world)
+
+## Block: Sensor (Experimental) [#sensor_block]
+
+Checks for one of a set of blocks in the nearby area and caches the result until explicitly reset or the targeted block changes/is removed. All block sensors with the same sought blockset share the same targeted block once found
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Range (Stable)
+
+- The range to search for the blocks in
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 1.7976931348623157e+308
+
+#### - MaxHeight (Stable)
+
+- The vertical range to search for the blocks in
+- **Type**: `Double`, **Optional** (Default: 4.0), **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 1.7976931348623157e+308
+
+#### - Blocks (Stable)
+
+- The set of blocks to search for
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - Random (Stable)
+
+- Whether to pick at random from within the matched blocks or pick the closest
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+#### - Reserve (Stable)
+
+- Whether to reserve the found block to prevent other NPCs selecting it
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+### Provides
+
+- Vector position
+
+[(Top)](#top)
+
+## BlockChange: Sensor (Stable) [#sensor_blockchange]
+
+Matches when a block from a blockset within a certain range is changed or interacted with
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Range (Stable)
+
+- Max range to listen in
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - SearchType (Stable)
+
+- Whether to listen for events triggered by players, npcs, or both in a certain order
+- **Type**: `Flag`, **Optional** (Default: PlayerOnly), **Computable**
+- **Flag Values**:
+  - `NpcOnly`: search only for events triggered by npcs
+  - `PlayerFirst`: search for events triggered by players first
+  - `PlayerOnly`: search only for events triggered by players
+  - `NpcFirst`: search for events triggered by npcs first
+
+#### - TargetSlot (Stable)
+
+- A target slot to place the target in. If omitted, no slot will be used
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - BlockSet (Stable)
+
+- Block set to listen for
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - EventType (Stable)
+
+- The event type to listen for
+- **Type**: `Flag`, **Optional** (Default: DAMAGE), **Computable**
+- **Flag Values**:
+  - `DESTRUCTION`: On block destruction
+  - `INTERACTION`: On block use interaction
+  - `DAMAGE`: On block damage
+
+### Provides
+
+- Player target
+- NPC target
+
+[(Top)](#top)
+
+## BlockType: Sensor (Stable) [#sensor_blocktype]
+
+Checks if the block at the given position matches the provided block set
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Sensor (Stable)
+
+- Sensor to wrap
+- **Type**: `ObjectRef`, **Required**, **Object Type**: Sensor
+
+#### - BlockSet (Stable)
+
+- Block set to check against
+- **Type**: `Asset`, **Required**, **Computable**
+
+[(Top)](#top)
+
+## CanPlaceBlock: Sensor (Stable) [#sensor_canplaceblock]
+
+Test if the currently set block can be placed at the relative position given direction and offset
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Direction (Stable)
+
+- The direction to place relative to heading
+- **Type**: `Flag`, **Optional** (Default: Forward), **Computable**
+- **Flag Values**:
+  - `Left`: Left
+  - `Backward`: Backward
+  - `Right`: Right
+  - `Forward`: Forward
+
+#### - Offset (Stable)
+
+- The offset to place at
+- **Type**: `Flag`, **Optional** (Default: BodyPosition), **Computable**
+- **Flag Values**:
+  - `BodyPosition`: BodyPosition
+  - `FootPosition`: FootPosition
+  - `HeadPosition`: HeadPosition
+
+#### - RetryDelay (Stable)
+
+- The amount of time to delay if a placement fails before trying to place something again
+- **Type**: `Double`, **Optional** (Default: 5.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - AllowEmptyMaterials (Stable)
+
+- Whether it should be possible to replace blocks that have empty material
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+### Provides
+
+- Vector position
+
+[(Top)](#top)
+
+## EntityEvent: Sensor (Stable) [#sensor_entityevent]
+
+Matches when an entity from a specific NPC group within a certain range is damaged, killed, or interacted with
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Range (Stable)
+
+- Max range to listen in
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - SearchType (Stable)
+
+- Whether to listen for events triggered by players, npcs, or both in a certain order
+- **Type**: `Flag`, **Optional** (Default: PlayerOnly), **Computable**
+- **Flag Values**:
+  - `NpcOnly`: search only for events triggered by npcs
+  - `PlayerFirst`: search for events triggered by players first
+  - `PlayerOnly`: search only for events triggered by players
+  - `NpcFirst`: search for events triggered by npcs first
+
+#### - TargetSlot (Stable)
+
+- A target slot to place the target in. If omitted, no slot will be used
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - NPCGroup (Stable)
+
+- NPC group to listen for
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - EventType (Stable)
+
+- The event type to listen for
+- **Type**: `Flag`, **Optional** (Default: DAMAGE), **Computable**
+- **Flag Values**:
+  - `DEATH`: On dying
+  - `INTERACTION`: On use interaction
+  - `DAMAGE`: On taking damage
+
+#### - FlockOnly (Stable)
+
+- Whether to only listen for flock events
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+### Provides
+
+- Player target
+- NPC target
+
+[(Top)](#top)
+
+## InWater: Sensor (Stable) [#sensor_inwater]
+
+Check if NPC is currently in water
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
+
+## Leash: Sensor (Stable) [#sensor_leash]
+
+Triggers when the NPC is outside a specified range from the leash point
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Range (Stable)
+
+- The farthest distance allowed from the leash point
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+### Provides
+
+- Vector position
+
+[(Top)](#top)
+
+## Light: Sensor (Stable) [#sensor_light]
+
+Check the light levels of the block an entity is standing on. Can test light intensity, sky light or block channel levels.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - LightRange (Stable)
+
+- The light intensity percentage range
+- **Type**: `Array`, **Optional** (Default: [0.0, 100.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 100and in weakly ascending order
+
+#### - SkyLightRange (Stable)
+
+- The sky light percentage range
+- **Type**: `Array`, **Optional** (Default: [0.0, 100.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 100and in weakly ascending order
+
+#### - SunlightRange (Stable)
+
+- The sunlight percentage range
+- **Type**: `Array`, **Optional** (Default: [0.0, 100.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 100and in weakly ascending order
+
+#### - RedLightRange (Stable)
+
+- The red light percentage range
+- **Type**: `Array`, **Optional** (Default: [0.0, 100.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 100and in weakly ascending order
+
+#### - GreenLightRange (Stable)
+
+- The green light percentage range
+- **Type**: `Array`, **Optional** (Default: [0.0, 100.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 100and in weakly ascending order
+
+#### - BlueLightRange (Stable)
+
+- The blue light percentage range
+- **Type**: `Array`, **Optional** (Default: [0.0, 100.0]), **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 100and in weakly ascending order
+
+#### - UseTargetSlot (Stable)
+
+- A target slot to check. If omitted, will check self
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+[(Top)](#top)
+
+## PlaceBlock: Action (Stable) [#action_placeblock]
+
+Place a block (chosen by another action) at a position returned by a Sensor if close enough
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Range (Stable)
+
+- The range to target position before block will be placed
+- **Type**: `Double`, **Optional** (Default: 3.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - AllowEmptyMaterials (Stable)
+
+- Whether it should be possible to replace blocks that have empty material
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+### Constraints
+
+- Must be attached to a sensor that provides one of vector position
+
+[(Top)](#top)
+
+## ReadPosition: Sensor (Stable) [#sensor_readposition]
+
+Read a stored position with some conditions
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Slot (Stable)
+
+- The slot to read the position from
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - MinRange (Stable)
+
+- Minimum range from stored position
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+#### - Range (Stable)
+
+- Maximum range from stored position
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - UseMarkedTarget (Stable)
+
+- Whether to read from a marked target slot instead of a position slot
+- **Type**: `Boolean`, **Optional** (Default: false), **Computable**
+
+### Provides
+
+- Vector position
+
+[(Top)](#top)
+
+## ResetBlockSensors: Action (Stable) [#action_resetblocksensors]
+
+Resets a specific block sensor by name, or all block sensors by clearing the current targeted block
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - BlockSets (Stable)
+
+- The searched blocksets to reset block sensors for. If left empty, will reset all block sensors and found blocks
+- **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: BlockSet
+
+[(Top)](#top)
+
+## ResetPath: Action (Stable) [#action_resetpath]
+
+Resets the current patrol path this NPC follows.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+[(Top)](#top)
+
+## ResetSearchRays: Action (Stable) [#action_resetsearchrays]
+
+Resets a specific search ray sensor cached position by name, or all search ray sensors
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Names (Stable)
+
+- The search ray sensor ids. If left empty, will reset all search ray sensors
+- **Type**: `Array`, **Optional** (Default: null), **Computable**, **Element Type**: String
+- **Constraint**: Strings in array must not be empty
+
+[(Top)](#top)
+
+## SearchRay: Sensor (Stable) [#sensor_searchray]
+
+Fire a ray at a specific angle to see if what it hits matches a given sought block
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Name (Stable)
+
+- The id of this search ray sensor so the position can be cached
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - Angle (Stable)
+
+- Angle to fire the ray. Horizontal is 0. Positive is downwards
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater or equal than -90 and less or equal than 90
+
+#### - Range (Stable)
+
+- How far to search
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0 and less or equal than 96
+
+#### - Blocks (Stable)
+
+- The blockset to search for
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - MinRetestAngle (Stable)
+
+- The minimum change in NPC rotation before rays stop being throttled
+- **Type**: `Double`, **Optional** (Default: 5.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - MinRetestMove (Stable)
+
+- The minimum distance the NPC needs to move while facing the same direction before rays stop being throttled
+- **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - ThrottleTime (Stable)
+
+- The delay between retests when an NPC is facing the same direction
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0
+
+### Provides
+
+- Vector position
+
+[(Top)](#top)
+
+## SetBlockToPlace: Action (Stable) [#action_setblocktoplace]
+
+Set the block type the NPC will place
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Block (Stable)
+
+- The block item type
+- **Type**: `Asset`, **Required**, **Computable**
+
+[(Top)](#top)
+
+## SetLeashPosition: Action (Stable) [#action_setleashposition]
+
+Sets the NPCs current position to the spawn/leash position to be used with the Leash Sensor.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - ToCurrent (Stable)
+
+- Set to the NPCs current position.
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - ToTarget (Stable)
+
+- Set to the target position.
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+### Constraints
+
+- At least one of ToCurrent, ToTarget must be true
+- If ToTarget is true, must be attached to a sensor that provides one of player target, NPC target, dropped item target
+
+[(Top)](#top)
+
+## StorePosition: Action (Stable) [#action_storeposition]
+
+Store the position from the attached sensor
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Slot (Stable)
+
+- The slot to store the position in
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+[(Top)](#top)
+
+## Time: Sensor (Stable) [#sensor_time]
+
+Check if the day/year time is within some specified time. If you want to check a range of time which crosses through midnight and switches to the next day, use the greater time as the min value and the lesser value as the max value.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Period (Stable)
+
+- The time period to trigger within
+- **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
+- **Constraint**: Values must be greater or equal than 0, less or equal than 24
+
+#### - CheckDay (Stable)
+
+- Check the day time. When using a double the values go from [.00, .99]. Don't get confused with there only being 60 minutes in an hour.
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - CheckYear (WorkInProgress)
+
+- Check the year time. When using a double the values go from [.00, .99]. Don't get confused with there only being 60 minutes in an hour.
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - ScaleDayTimeRange (Stable)
+
+- Whether to use a relative scale for the day time. Sunrise will be at relative 6, Noon at 12, and Sunset at 18, regardless of actual in-game time
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+[(Top)](#top)
+
+## TriggerSpawners: Action (Stable) [#action_triggerspawners]
+
+Trigger all, or up to a certain number of manual spawn markers in a radius around the NPC
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - SpawnMarker (Stable)
+
+- The spawn marker type to trigger
+- **Type**: `Asset`, **Optional** (Default: null), **Computable**
+
+#### - Range (Stable)
+
+- The range within which to trigger spawn markers
+- **Type**: `Double`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - Count (Stable)
+
+- The number of markers to randomly trigger (0 will trigger all matching validators)
+- **Type**: `Integer`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0
+
+[(Top)](#top)
+
+## Weather: Sensor (Stable) [#sensor_weather]
+
+Matches the current weather at the NPCs position against a set of weather globs
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Weathers (Stable)
+
+- The glob patterns to match against weather
+- **Type**: `AssetArray`, **Required**, **Computable**, **Element Type**: Weather
+
+[(Top)](#top)

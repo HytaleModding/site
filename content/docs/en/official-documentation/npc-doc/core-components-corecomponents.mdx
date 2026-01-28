@@ -1,0 +1,336 @@
+---
+title: NPC Core Components - Core Components
+description: Official documentation for NPC core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (corecomponents)
+
+## AddToHostileTargetMemory: Action (Stable) [#action_addtohostiletargetmemory]
+
+Adds the passed target from the sensor to the hostile target memory
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target
+
+[(Top)](#top)
+
+## CombatAbility: Action (Stable) [#action_combatability]
+
+Starts the combat ability selected by the combat action evaluator.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+[(Top)](#top)
+
+## CombatActionEvaluator: Sensor (Experimental) [#sensor_combatactionevaluator]
+
+A sensor which handles funnelling information to actions and motions from the combat action evaluator. Delivers the current attack target and desired range for supported direct child motions.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - TargetInRange (Stable)
+
+- Whether to match on target being in or out of range.
+- **Type**: `Boolean`, **Required**, **Computable**
+
+#### - AllowableDeviation (Stable)
+
+- The allowable deviation from the desired attack range
+- **Type**: `Double`, **Optional** (Default: 0.5), **Computable**
+- **Constraint**: Value must be greater than 0
+
+### Provides
+
+- Player target
+- NPC target
+
+[(Top)](#top)
+
+## FlockBeacon: Action (Experimental) [#action_flockbeacon]
+
+Let the NPC send out a message to the flock members
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Message (Stable)
+
+- Message to send to targets
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - SendTargetSlot (Stable)
+
+- The marked target slot to send. If omitted, sends own position
+- **Type**: `String`, **Optional** (Default: null)
+- **Constraint**: String value must be either null or not empty
+
+#### - ExpirationTime (Stable)
+
+- The number of seconds that the message should last and be acknowledged by the receiving NPC. -1 represents infinite time.
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater or equal than 0 or equal -1
+
+#### - SendToSelf (Stable)
+
+- Send the message to self
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+#### - SendToLeaderOnly (Stable)
+
+- Only send the message to the leader of the flock
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+[(Top)](#top)
+
+## FlockCombatDamage: Sensor (Stable) [#sensor_flockcombatdamage]
+
+Return true if flock with NPC received combat damage. Target position is entity which did most damage.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - LeaderOnly (Stable)
+
+- Only test for damage to flock leader
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+### Provides
+
+- Player target
+- NPC target
+
+[(Top)](#top)
+
+## FlockLeader: Sensor (Stable) [#sensor_flockleader]
+
+Test for the presence and provide position of the flock leader
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+### Provides
+
+- Player target
+- NPC target
+
+[(Top)](#top)
+
+## FlockState: Action (Stable) [#action_flockstate]
+
+Sets the state name for the flock the NPC is member of.The flock leader is explicitly excluded from this operation.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - State (Stable)
+
+- State name to set
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be a valid state string. A main state must be included before the period (e.g. Main.Test). State strings consist of a main state and a sub state (e.g. Main.Test). If nested within a substate, the main state may be omitted (e.g. .Test) when referencing.
+
+### Constraints
+
+[(Top)](#top)
+
+## FlockTarget: Action (Stable) [#action_flocktarget]
+
+Sets or clears the locked target for the flock the NPC is member of. If Clear flag is true, the locked target is cleared otherwise it is set to the the target.The flock leader is explicitly excluded from this operation.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Clear (Stable)
+
+- If true, clear locked target. If false, set to current target.
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - TargetSlot (Stable)
+
+- The target slot to use
+- **Type**: `String`, **Optional** (Default: LockedTarget), **Computable**
+- **Constraint**: String must be not empty
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target
+
+[(Top)](#top)
+
+## HasHostileTargetMemory: Sensor (Stable) [#sensor_hashostiletargetmemory]
+
+Checks if there is currently a hostile target in the target memory.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+[(Top)](#top)
+
+## InflictedDamage: Sensor (Stable) [#sensor_inflicteddamage]
+
+Return true if an individual or the flock it belongs to inflicted combat damage. Target position is entity which received most damage.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Target (Stable)
+
+- Who to check has inflicted damage
+- **Type**: `Flag`, **Optional** (Default: Self)
+- **Flag Values**:
+  - `FlockLeader`: Check flock leader only
+  - `Self`: Check self
+  - `Flock`: Check flock
+
+#### - FriendlyFire (Stable)
+
+- Consider friendly fire too
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+### Provides
+
+- Player target
+- NPC target
+
+[(Top)](#top)
+
+## JoinFlock: Action (Stable) [#action_joinflock]
+
+Tries to build/join flock with target. Fails if both NPC and target are in a flock. If either NPC or target are in a flock, the one not in flock tries to join existing flock.If NPC and target are both not in a flock, a new flock with NPC is created and target is tried to be joined.Joining the flock can be rejected if the joining entity does have the correct type or the flock is full. This can be overridden by setting the ForceJoin flag to true.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - ForceJoin (Stable)
+
+- Disables checking flock join conditions test and forces joining flock.
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+### Constraints
+
+- Must be attached to a sensor that provides one of player target, NPC target
+
+[(Top)](#top)
+
+## LeaveFlock: Action (Stable) [#action_leaveflock]
+
+NPC leaves flock currently in. Does nothing when not in flock.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+[(Top)](#top)
+
+## TriggerSpawnBeacon: Action (Stable) [#action_triggerspawnbeacon]
+
+Trigger the nearest spawn beacon matching the configuration id
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - BeaconSpawn (Stable)
+
+- The beacon spawn config ID
+- **Type**: `Asset`, **Required**, **Computable**
+
+#### - Range (Stable)
+
+- The distance to search for a beacon to trigger
+- **Type**: `Integer`, **Required**, **Computable**
+- **Constraint**: Value must be greater than 0
+
+#### - TargetSlot (Stable)
+
+- A slot to use as the target for the spawned NPC. If omitted the NPC itself will be used
+- **Type**: `String`, **Optional** (Default: null)
+- **Constraint**: String value must be either null or not empty
+
+[(Top)](#top)

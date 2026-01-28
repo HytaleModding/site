@@ -1,0 +1,94 @@
+---
+title: NPC Core Components - Message
+description: Official documentation for NPC message core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (message)
+
+## Beacon: Action (Experimental) [#action_beacon]
+
+Let the NPC send out a message to a target group of entities within a certain distance.
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Message (Experimental)
+
+- Message to send to targets
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - Range (Experimental)
+
+- The maximum range to send the message
+- **Type**: `Double`, **Optional** (Default: 64.0)
+- **Constraint**: Value must be greater than 0
+
+#### - TargetGroups (Experimental)
+
+- The target group(s) to send the message to
+- **Type**: `AssetArray`, **Required**, **Computable**, **Element Type**: TagSet
+
+#### - SendTargetSlot (Stable)
+
+- The target slot of the marked entity to send. Omit to send own position
+- **Type**: `String`, **Optional** (Default: null), **Computable**
+- **Constraint**: String value must be either null or not empty
+
+#### - ExpirationTime (Experimental)
+
+- The number of seconds that the message should last and be acknowledged by the receiving NPC. -1 represents infinite time.
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater or equal than 0 or equal -1
+
+#### - SendCount (Experimental)
+
+- Tne number of entities to send the message to. -1 will send to all. Entities will be chosen with a roughly even random distribution using reservoir sampling
+- **Type**: `Integer`, **Optional** (Default: -1)
+- **Constraint**: Value must be greater than 0 or equal -1
+
+[(Top)](#top)
+
+## Notify: Action (Stable) [#action_notify]
+
+Directly notifies a target NPC with a beacon message
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Message (Stable)
+
+- The message to send
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+#### - ExpirationTime (Experimental)
+
+- The number of seconds that the message should last and be acknowledged by the receiving NPC. -1 represents infinite time.
+- **Type**: `Double`, **Optional** (Default: 1.0)
+- **Constraint**: Value must be greater or equal than 0 or equal -1
+
+#### - UseTargetSlot (Stable)
+
+- A marked target to send to instead of the target provided by a sensor. Omit to use the target provided by the sensor.
+- **Type**: `String`, **Optional** (Default: null)
+- **Constraint**: String value must be either null or not empty
+
+### Constraints
+
+- If UseTargetSlot is false, must be attached to a sensor that provides NPC target
+
+[(Top)](#top)

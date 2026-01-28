@@ -1,0 +1,145 @@
+---
+title: NPC Core Components - Interaction
+description: Official documentation for NPC interaction core components.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# List of Core Components (interaction)
+
+## CanInteract: Sensor (Stable) [#sensor_caninteract]
+
+Checks whether or not the player being iterated by the interaction instruction can interact with this NPC
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - ViewSector (Stable)
+
+- View sector to test the player in
+- **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
+- **Constraint**: Value must be greater or equal than 0 and less or equal than 360
+
+#### - Attitudes (Stable)
+
+- A set of attitudes to match
+- **Type**: `FlagSet`, **Optional** (Default: [NEUTRAL, FRIENDLY, REVERED]), **Computable**
+- **Flag Values**:
+  - `HOSTILE`: is hostile towards the target
+  - `REVERED`: reveres the target
+  - `FRIENDLY`: is friendly towards the target
+  - `IGNORE`: is ignoring the target
+  - `NEUTRAL`: is neutral towards the target
+
+### Constraints
+
+[(Top)](#top)
+
+## HasInteracted: Sensor (Stable) [#sensor_hasinteracted]
+
+Checks whether the currently iterated player in the interaction instruction has interacted with this NPC
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+### Constraints
+
+[(Top)](#top)
+
+## InteractionContext: Sensor (Stable) [#sensor_interactioncontext]
+
+Checks whether the currently iterated player in the interaction instruction has interacted with this NPC in the given context
+
+### Attributes
+
+#### - Once (Stable)
+
+- Sensor only triggers once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Enabled (Stable)
+
+- Whether this sensor should be enabled on the NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Context (Stable)
+
+- The context of the interaction
+- **Type**: `String`, **Required**, **Computable**
+- **Constraint**: String must be not empty
+
+### Constraints
+
+[(Top)](#top)
+
+## LockOnInteractionTarget: Action (Stable) [#action_lockoninteractiontarget]
+
+Locks on to the currently iterated player in the interaction instruction
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - TargetSlot (Stable)
+
+- The target slot to use
+- **Type**: `String`, **Optional** (Default: LockedTarget), **Computable**
+- **Constraint**: String must be not empty
+
+### Constraints
+
+[(Top)](#top)
+
+## SetInteractable: Action (Stable) [#action_setinteractable]
+
+Set whether the currently iterated player in the interaction instruction should be able to interact with this NPC
+
+### Attributes
+
+#### - Once (Stable)
+
+- Execute only once
+- **Type**: `Boolean`, **Optional** (Default: false)
+
+#### - Interactable (Stable)
+
+- Toggle whether the currently iterated player in the interaction instruction should be able to interact with this NPC
+- **Type**: `Boolean`, **Optional** (Default: true), **Computable**
+
+#### - Hint (Stable)
+
+- The interaction hint translation key to show for this player (e.g. 'interactionHints.trade')
+- **Type**: `String`, **Optional** (Default: null)
+
+#### - ShowPrompt (Stable)
+
+- Whether to show the F-key interaction prompt. Set to false for contextual-only interactions (e.g. shearing with tools). Defaults to true.
+- **Type**: `Boolean`, **Optional** (Default: true)
+
+### Constraints
+
+[(Top)](#top)

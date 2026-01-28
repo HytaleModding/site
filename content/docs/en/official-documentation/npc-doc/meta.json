@@ -1,0 +1,12 @@
+{
+  "title": "NPC Documentation",
+  "icon": "SquareUserRound",
+  "pages": [
+    "index",
+    "builders",
+    "roles",
+    "misc-parts",
+    "motion-controllers",
+    "..."
+  ]
+}
