@@ -6,7 +6,7 @@ import {
   TooltipContent,
 } from "@/components/ui/tooltip";
 import Link from "next/link";
-import Image from "next/image"
+import Image from "next/image";
 
 import { useState, useEffect, ViewTransition, startTransition } from "react";
 import { getSponsors } from "../actions";
@@ -56,7 +56,9 @@ export function SponsorsList() {
 
   return (
     <div className="space-y-2">
-      <h3 className="text-xl font-semibold text-center">{messages.sponsors.ourSponsors}</h3>
+      <h3 className="text-center text-xl font-semibold">
+        {messages.sponsors.ourSponsors}
+      </h3>
       <div className="pt-1">
         <div className="flex justify-center gap-4">
           {featuredSponsors.map((sponsor) => (
