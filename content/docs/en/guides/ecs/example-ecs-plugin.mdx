@@ -4,6 +4,8 @@ description: "In this guide you will learn how to create a simple poison system 
 authors:
     - name: "oskarscot"
       url: "https://oskar.scot"
+    - name: "jacobwojoski"
+      url: "https://github.com/jacobwojoski"
 ---
 
 ## Practical Example: Poison System
@@ -24,6 +26,43 @@ public class PoisonComponent implements Component<EntityStore> {
   private float tickInterval;
   private int remainingTicks;
   private float elapsedTime;
+
+  // Add static getter and setter to store componentType in the component instead of getting it from the plugin singleton.
+  // - This allows anyone to call PoisonComponent.getComponentType() instead of ExamplePlugin.get().getPoisonComponentType();
+  ComponentType<EntityStore, PoisonComponent> type;
+  public static ComponentType<EntityStore, PoisonComponent> getComponentType(){
+    return this.type;
+  }
+  public static void setComponentType(ComponentType<EntityStore, PoisonComponent> type){
+    this.type = type;
+  }
+
+  // A builder codec is needed to allow components to be saved and loaded from disk
+  public static final BuilderCodec<PoisonComponent> CODEC = BuilderCodec
+        .builder(PoisonComponent.class, PoisonComponent::new)
+        .append(
+            new KeyedCodec<>("DamagePerTick", Codec.FLOAT),
+            (component, value) -> component.damagePerTick = value,
+            component -> component.damagePerTick
+        ).add()
+        .append(
+            new KeyedCodec<>("TickInterval", Codec.FLOAT),
+            (component, value) -> component.tickInterval = value,
+            component -> component.tickInterval
+        ).add()
+        .append(
+            new KeyedCodec<>("RemainingTicks", Codec.INTEGER),
+            (component, value) -> component.remainingTicks = value,
+            component -> component.remainingTicks
+        )
+        .add()
+        .append(
+            new KeyedCodec<>("ElapsedTime", Codec.FLOAT),
+            (component, value) -> component.elapsedTime = value,
+            component -> component.elapsedTime
+        )
+        .add()
+        .build();
 
   public PoisonComponent() {
     this(5f, 1.0f, 10);
@@ -115,6 +154,7 @@ public class PoisonSystem extends EntityTickingSystem<EntityStore> {
   public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
       @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
+    // You could also just call PoisonComponent.getComponentType() instead of taking in the passed in variable here.
     PoisonComponent poison = archetypeChunk.getComponent(index, poisonComponentType);
     Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
 
@@ -162,7 +202,7 @@ public class ExampleCommand extends AbstractPlayerCommand {
       @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {
     Player player = store.getComponent(ref, Player.getComponentType());
     PoisonComponent poison = new PoisonComponent(3f, 0.5f, 8);
-    store.addComponent(ref, ExamplePlugin.get().getPoisonComponentType(), poison);
+    store.addComponent(ref, PoisonComponent.getComponentType(), poison);
     player.sendMessage(Message.raw("You have been poisoned!").color(Color.GREEN).bold(true));
   }
 }
@@ -187,13 +227,11 @@ public final class ExamplePlugin extends JavaPlugin {
     this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
     this.getEventRegistry().registerGlobal(PlayerChatEvent.class, ChatFormatter::onPlayerChat);
 
-    this.poisonComponent = this.getEntityStoreRegistry()
+    ComponentType<EntityStore, PoisonComponent> poisonComponentType = this.getEntityStoreRegistry()
         .registerComponent(PoisonComponent.class, PoisonComponent::new);
-    this.getEntityStoreRegistry().registerSystem(new PoisonSystem(this.poisonComponent));
-  }
+    PoisonComponent.setComponentType(poisonComponentType);
 
-  public ComponentType<EntityStore, PoisonComponent> getPoisonComponentType() {
-    return poisonComponent;
+    this.getEntityStoreRegistry().registerSystem(new PoisonSystem(this.poisonComponent));
   }
 
   public static ExamplePlugin get() {
