@@ -31,6 +31,10 @@ export function baseOptions(
         text: messages.nav.sponsors,
         url: `/${locale}/sponsors`,
       },
+      {
+        text: messages.nav.projects,
+        url: `/${locale}/projects`,
+      },
     );
   }
 
