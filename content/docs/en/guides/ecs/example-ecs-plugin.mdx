@@ -30,6 +30,7 @@ public class PoisonComponent implements Component<EntityStore> {
   // Add static getter and setter to store componentType in the component instead of getting it from the plugin singleton.
   // - This allows anyone to call PoisonComponent.getComponentType() instead of ExamplePlugin.get().getPoisonComponentType();
   // - You could also update the setter to be a singleton if desired.
+  // - Adding a throw condition if getComponentType() returns null could also be good.
   private static ComponentType<EntityStore, PoisonComponent> type;
   public static ComponentType<EntityStore, PoisonComponent> getComponentType(){
     return this.type;
