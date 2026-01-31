@@ -1,9 +1,29 @@
 import { ReactNode } from "react";
 
+const VALID_TYPES = ["info", "warning", "danger", "success", "error"] as const;
+type CalloutType = (typeof VALID_TYPES)[number];
+
 interface CalloutProps {
-  type?: "info" | "warning" | "danger" | "success";
+  type?: string; // Accept any string to enable validation
   title?: string;
   children: ReactNode;
+}
+
+function normalizeType(type: string): "info" | "warning" | "danger" | "success" {
+  const normalized = type.toLowerCase();
+  // Support "error" as an alias for "danger"
+  if (normalized === "error") {
+    return "danger";
+  }
+  if (normalized === "info" || normalized === "warning" || normalized === "danger" || normalized === "success") {
+    return normalized;
+  }
+  return "info"; // fallback, but we'll show an error
+}
+
+function isValidType(type: string): boolean {
+  const normalized = type.toLowerCase();
+  return VALID_TYPES.includes(normalized as CalloutType);
 }
 
 export function CalloutMDX({ type = "info", title, children }: CalloutProps) {
@@ -80,6 +100,22 @@ export function CalloutMDX({ type = "info", title, children }: CalloutProps) {
     ),
   };
 
+  const errorIcon = (
+    <svg
+      className="mt-0.5 h-5 w-5 shrink-0 text-red-600 dark:text-red-400"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+  );
+
   const defaultTitles = {
     info: "Info",
     warning: "Warning",
@@ -87,12 +123,49 @@ export function CalloutMDX({ type = "info", title, children }: CalloutProps) {
     success: "Success",
   };
 
-  const displayTitle = title || defaultTitles[type];
+  // Validate the type and show a helpful error if invalid
+  if (!isValidType(type)) {
+    return (
+      <div className="my-4 rounded-lg border-2 border-dashed border-red-500 bg-red-50 p-4 dark:bg-red-950/50">
+        <div className="flex gap-3">
+          {errorIcon}
+          <div className="min-w-0 flex-1">
+            <div className="mb-1 font-semibold text-red-700 dark:text-red-300">
+              Invalid Callout Type
+            </div>
+            <div className="text-sm text-red-600 dark:text-red-400">
+              <p className="mb-2">
+                Received <code className="rounded bg-red-100 px-1 py-0.5 font-mono dark:bg-red-900">type=&quot;{type}&quot;</code> but expected one of:
+              </p>
+              <ul className="ml-4 list-disc">
+                <li><code className="rounded bg-red-100 px-1 py-0.5 font-mono dark:bg-red-900">info</code></li>
+                <li><code className="rounded bg-red-100 px-1 py-0.5 font-mono dark:bg-red-900">warning</code></li>
+                <li><code className="rounded bg-red-100 px-1 py-0.5 font-mono dark:bg-red-900">danger</code> (or <code className="rounded bg-red-100 px-1 py-0.5 font-mono dark:bg-red-900">error</code>)</li>
+                <li><code className="rounded bg-red-100 px-1 py-0.5 font-mono dark:bg-red-900">success</code></li>
+              </ul>
+              <p className="mt-2 text-xs">
+                Note: Types are case-sensitive and must be lowercase.
+              </p>
+            </div>
+            {children && (
+              <div className="mt-3 border-t border-red-300 pt-3 dark:border-red-700">
+                <div className="text-xs font-medium text-red-600 dark:text-red-400">Original content:</div>
+                <div className="mt-1 text-red-700 dark:text-red-300">{children}</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const normalizedType = normalizeType(type);
+  const displayTitle = title || defaultTitles[normalizedType];
 
   return (
-    <div className={`my-4 rounded-r-lg border-l-4 p-4 ${styles[type]}`}>
+    <div className={`my-4 rounded-r-lg border-l-4 p-4 ${styles[normalizedType]}`}>
       <div className="flex gap-3">
-        {icons[type]}
+        {icons[normalizedType]}
         <div className="min-w-0 flex-1">
           <div className="mb-1 font-semibold">{displayTitle}</div>
           <div>{children}</div>
