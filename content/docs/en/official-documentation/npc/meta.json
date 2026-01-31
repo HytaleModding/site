@@ -1,0 +1,18 @@
+{
+    "title": "NPC Documentation",
+    "icon": "Bot",
+    "pages": [
+        "1-know-your-enemy.mdx",
+        "2-getting-started-with-templates.mdx",
+        "3-importance-of-being-idle.mdx",
+        "4-drawing-the-ogre.mdx",
+        "5-sleep-behavior.mdx",
+        "6-a-brief-interlude.mdx",
+        "7-sleep-animation.mdx",
+        "8-food.mdx",
+        "9-inter-npc-interaction.mdx",
+        "10-attack-a-player.mdx",
+        "11-melee-combat.mdx",
+        "12-appendix.mdx"
+    ]
+}
