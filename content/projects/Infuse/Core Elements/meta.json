@@ -1,0 +1,11 @@
+{
+  "title": "Core elements",
+  "pages": [
+    "Core elements.mdx",
+    "---Specific Categories---",
+    "Mana.mdx",
+    "Core blocks",
+    "Units and other variables.mdx"
+  ],
+  "icon": "Placeholder"
+}
