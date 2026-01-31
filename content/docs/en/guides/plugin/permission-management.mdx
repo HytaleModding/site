@@ -3,128 +3,573 @@ title: "Permission Management"
 description: "Learn how to manage permission nodes and groups in your Hytale plugin."
 authors:
     - name: "Neil Revin"
-      link: "https://itsneil.dev"
+      url: "https://itsneil.dev"
     - name: "Bird"
-      link: "https://discord.com/users/495709580068651009"
+      url: "https://discord.com/users/495709580068651009"
     - name: "Craw"
-      link: "https://discord.com/users/292656109939064833"
+      url: "https://discord.com/users/292656109939064833"
     - name: "Ivan"
-      link: "https://discord.com/users/505770451218333717"
+      url: "https://discord.com/users/505770451218333717"
+    - name: "ZenithDevHQ"
+      url: "https://github.com/ZenithDevHQ"
 ---
 
-In this guide, you'll learn how to manage permission nodes and groups in your Hytale plugin.
+In this guide, you'll learn how to manage permission nodes and groups in your Hytale plugin. Permissions control what actions players can perform on your server, from basic commands to advanced administrative functions.
 
-## The `PermissionsModule` class
+## What Are Permissions?
 
-The `PermissionsModule` class is responsible for managing permission nodes and groups in your plugin. It provides methods to check, grant and revoke permissions and groups for players. It allows the following operations
-- Add permissions to user
-- Remove permissions from user
-- Add permissions to group (this also creates the group if it doesn't exist)
-- Remove permissions from group
-- Add user to group
-- Remove user from group
-- List all groups for a user
-- Check if a user has a permission (it checks both user and group permissions for the given player UUID)
+Permissions are string identifiers that control access to features and commands. When a player tries to perform an action (like using a command), the server checks if they have the required permission.
 
-With this class you cannot:
-- List all defined groups
-- Remove a group 
+**Example permission nodes:**
+- `hytale.command.gamemode` - Permission to use the gamemode command
+- `hytale.editor.brush.use` - Permission to use brush tools
+- `myplugin.teleport.home` - A custom permission for your plugin
 
-### Adding Permission Nodes
+Permissions follow a hierarchical naming pattern: `namespace.category.action`
 
-You need a `Set<String>` containing all the permission nodes you want to add, these are added on top of the already existing permission nodes the user may have, it is not a replacement.
+## Key Concepts
 
-```java
-Set<String> permissions = new HashSet<>();
-PermissionsModule perms = PermissionsModule.get();
-perms.addUserPermission(playerUUID, permissions);
-```
+Before diving into code, let's understand the core concepts:
 
-### Removing Permission Nodes
+| Concept | Description |
+|---------|-------------|
+| **Permission Node** | A string like `myplugin.feature.use` that represents a specific permission |
+| **Group** | A named collection of permissions (e.g., "Admin", "VIP", "Default") |
+| **Provider** | The backend that stores and retrieves permissions |
+| **Wildcard** | A pattern like `*` or `myplugin.*` that matches multiple permissions |
 
-Same as above, we just use the `removeUserPermission` method instead to remove permission nodes.
+### How Permissions Are Checked
 
-```java
-Set<String> permissions = new HashSet<>();
-PermissionsModule perms = PermissionsModule.get();
-perms.removeUserPermission(playerUUID, permissions);
-```
+When checking if a player has a permission, Hytale follows this order:
 
-### Add permissions to group
-```java
-String groupName = "testGroup";
-Set<String> permissions = new HashSet<>();
-PermissionsModule perms = PermissionsModule.get();
-perms.addGroupPermission(groupName, permissions);
-```
+1. **User's direct permissions** - Permissions granted directly to the player
+2. **Group permissions** - Permissions from groups the player belongs to
+3. **Virtual groups** - Game-mode-based permissions (e.g., Creative mode grants builder tools)
+4. **Default value** - Falls back to `false` if no match found
 
-### Remove permissions from group
-```java
-String groupName = "testGroup";
-Set<String> permissions = new HashSet<>();
-PermissionsModule perms = PermissionsModule.get();
-perms.removeGroupPermission(groupName, permissions);
-```
-
-### Add user to group
-```java
-String groupName = "testGroup";
-Set<String> permissions = new HashSet<>();
-PermissionsModule perms = PermissionsModule.get();
-perms.addUserToGroup(playerUUID, groupName);
-```
-
-### Remove user from group
-```java
-String groupName = "testGroup";
-Set<String> permissions = new HashSet<>();
-PermissionsModule perms = PermissionsModule.get();
-perms.removeUserFromGroup(playerUUID, groupName);
-```
-
-### List all groups for a user
-```java
-PermissionsModule perms = PermissionsModule.get();
-perms.getGroupsForUser(playerUUID);
-```
-
-### Check Permission Nodes
-
-To check if a player has a specific permission node, you can use the `hasPermission` method.
-
-```java
-boolean hasPermission = PermissionsModule.hasPermission(playerUUID, "permission.node");
-```
-
-## Additional: Defining your own provider for permissions and groups
-
-The PermissionsModule also enables us to define our own PermissionProvider's, this can be useful for:
-- Cross server permission systems
-- Implementing features missing in the `HytalePermissionsProvider` like permission expiry
-
-To implement our PermissionProvider, first we need to define a provider class that implements PermissionProvider: 
-
-```java
-public class DatabasePermissionProvider implements PermissionProvider
-```
-
-Then we just implement the required methods using a database implementation.
-<Callout type="warning">
-  Hytale will try to use the first available permissions provider to add/remove gamemode groups (i.e. `Creative`, `Adventure`).
-
-  If your provider throws an error (for instance, if the group does not exist) when the server is preparing the player, the player will be disconnected.
+<Callout type="info">
+The first definitive match wins. If a player has a permission granted at the user level, group permissions won't override it.
 </Callout>
 
-We can then register the provider using the built-in permission module:
+---
+
+## The `PermissionsModule` Class
+
+The `PermissionsModule` class is the central hub for managing permissions. Access it using the singleton pattern:
+
 ```java
-PermissionsModule.get().addProvider(new DatabasePermissionProvider());
+PermissionsModule perms = PermissionsModule.get();
 ```
 
-Please note that the `HytalePermissionsProvider` will still be enabled alongside your provider.
-The `PermissionsModule` will aggregate groups and permissions from all available providers.
+### Available Operations
 
-If you want to disable the default `HytalePermissionsProvider`, you can use:
+The module supports these operations:
+
+| Operation | Method |
+|-----------|--------|
+| Add permissions to user | `addUserPermission(uuid, permissions)` |
+| Remove permissions from user | `removeUserPermission(uuid, permissions)` |
+| Add permissions to group | `addGroupPermission(groupName, permissions)` |
+| Remove permissions from group | `removeGroupPermission(groupName, permissions)` |
+| Add user to group | `addUserToGroup(uuid, groupName)` |
+| Remove user from group | `removeUserFromGroup(uuid, groupName)` |
+| Get user's groups | `getGroupsForUser(uuid)` |
+| Check permission | `hasPermission(uuid, permissionNode)` |
+
+<Callout type="warning">
+The module does **not** support:
+- Listing all defined groups
+- Deleting a group entirely
+
+Groups are implicitly created when you first add permissions to them.
+</Callout>
+
+---
+
+## Checking Permissions
+
+The most common operation is checking if a player has a permission.
+
+### Basic Permission Check
+
 ```java
-// put this **before** you add your provider
-PermissionsModule.get().removeProvider(PermissionsModule.get().getFirstPermissionProvider());
+// Returns true if player has the permission, false otherwise
+boolean canUse = PermissionsModule.get().hasPermission(playerUUID, "myplugin.feature.use");
+
+if (canUse) {
+    // Player has permission, allow the action
+} else {
+    // Player lacks permission, deny or show error
+}
 ```
+
+### Permission Check with Default Value
+
+You can specify what to return when no permission is explicitly set:
+
+```java
+// Returns true by default if no explicit permission is found
+boolean canUse = PermissionsModule.get().hasPermission(playerUUID, "myplugin.feature.use", true);
+```
+
+This is useful for features that should be enabled by default but can be revoked.
+
+### Using PermissionHolder Interface
+
+Players and command senders implement `PermissionHolder`, allowing direct checks:
+
+```java
+// In a command or event handler where you have access to the player
+if (player.hasPermission("myplugin.admin.manage")) {
+    // Player has admin permission
+}
+```
+
+---
+
+## Managing User Permissions
+
+### Adding Permissions to a User
+
+Permissions are additive - new permissions are added on top of existing ones, not replaced.
+
+```java
+PermissionsModule perms = PermissionsModule.get();
+
+// Add a single permission
+perms.addUserPermission(playerUUID, Set.of("myplugin.vip.chat"));
+
+// Add multiple permissions at once
+Set<String> newPerms = Set.of(
+    "myplugin.vip.chat",
+    "myplugin.vip.fly",
+    "myplugin.vip.kit"
+);
+perms.addUserPermission(playerUUID, newPerms);
+```
+
+### Removing Permissions from a User
+
+```java
+PermissionsModule perms = PermissionsModule.get();
+
+// Remove specific permissions
+Set<String> toRemove = Set.of("myplugin.vip.fly");
+perms.removeUserPermission(playerUUID, toRemove);
+```
+
+---
+
+## Managing Groups
+
+Groups let you assign a collection of permissions to multiple players. This is more manageable than assigning permissions individually.
+
+### Adding Permissions to a Group
+
+If the group doesn't exist, it will be created automatically.
+
+```java
+PermissionsModule perms = PermissionsModule.get();
+
+// Create/update the "VIP" group with permissions
+Set<String> vipPerms = Set.of(
+    "myplugin.vip.chat",
+    "myplugin.vip.fly",
+    "myplugin.vip.kit"
+);
+perms.addGroupPermission("VIP", vipPerms);
+```
+
+### Removing Permissions from a Group
+
+```java
+PermissionsModule perms = PermissionsModule.get();
+
+// Remove specific permissions from the group
+Set<String> toRemove = Set.of("myplugin.vip.fly");
+perms.removeGroupPermission("VIP", toRemove);
+```
+
+### Adding a User to a Group
+
+```java
+PermissionsModule perms = PermissionsModule.get();
+
+// Add player to the VIP group - they now have all VIP permissions
+perms.addUserToGroup(playerUUID, "VIP");
+```
+
+### Removing a User from a Group
+
+```java
+PermissionsModule perms = PermissionsModule.get();
+
+// Remove player from VIP group
+perms.removeUserFromGroup(playerUUID, "VIP");
+```
+
+### Getting a User's Groups
+
+```java
+PermissionsModule perms = PermissionsModule.get();
+
+// Get all groups the player belongs to
+Set<String> groups = perms.getGroupsForUser(playerUUID);
+
+for (String group : groups) {
+    System.out.println("Player is in group: " + group);
+}
+```
+
+---
+
+## Built-in Groups
+
+Hytale includes two default groups:
+
+| Group | Default Permissions | Purpose |
+|-------|---------------------|---------|
+| `OP` | `*` (all permissions) | Server operators with full access |
+| `Default` | None | Base group for all players |
+
+Players without any explicit group assignment are automatically part of the `Default` group.
+
+---
+
+## Wildcards
+
+Wildcards let you grant or deny multiple permissions with a single pattern.
+
+### Wildcard Patterns
+
+| Pattern | Meaning |
+|---------|---------|
+| `*` | Grants **all** permissions |
+| `myplugin.*` | Grants all permissions starting with `myplugin.` |
+| `-*` | Denies **all** permissions |
+| `-myplugin.admin.*` | Denies all admin permissions in your plugin |
+
+### Example: Admin Group with Wildcards
+
+```java
+// Grant all permissions to admins
+perms.addGroupPermission("Admin", Set.of("*"));
+
+// Grant all plugin permissions to moderators
+perms.addGroupPermission("Moderator", Set.of("myplugin.*"));
+
+// Grant all permissions except admin commands
+perms.addGroupPermission("Helper", Set.of(
+    "*",
+    "-myplugin.admin.*"  // Deny admin permissions
+));
+```
+
+<Callout type="warning">
+Negation permissions (starting with `-`) take precedence at each level. Use them carefully to avoid accidentally blocking permissions.
+</Callout>
+
+---
+
+## Built-in Permission Nodes
+
+Hytale provides constants for common permissions in the `HytalePermissions` class:
+
+### Command Permissions
+
+```java
+// Generate permission for a command
+String perm = HytalePermissions.fromCommand("gamemode");
+// Result: "hytale.command.gamemode"
+
+// Generate permission for a subcommand
+String perm = HytalePermissions.fromCommand("gamemode", "creative");
+// Result: "hytale.command.gamemode.creative"
+```
+
+### Common Permission Nodes
+
+| Permission | Description |
+|------------|-------------|
+| `hytale.command.op.add` | Add players to OP group |
+| `hytale.command.op.remove` | Remove players from OP group |
+| `hytale.editor.brush.use` | Use brush tools |
+| `hytale.editor.prefab.use` | Use prefabs |
+| `hytale.editor.selection.use` | Use selection tools |
+| `hytale.editor.history` | Undo/redo operations |
+| `hytale.camera.flycam` | Use fly camera mode |
+
+---
+
+## Listening to Permission Events
+
+You can react to permission changes using Hytale's event system.
+
+### Available Events
+
+| Event | Triggered When |
+|-------|----------------|
+| `PlayerPermissionChangeEvent.PermissionsAdded` | Permissions added to a user |
+| `PlayerPermissionChangeEvent.PermissionsRemoved` | Permissions removed from a user |
+| `PlayerGroupEvent.Added` | User added to a group |
+| `PlayerGroupEvent.Removed` | User removed from a group |
+| `GroupPermissionChangeEvent.Added` | Permissions added to a group |
+| `GroupPermissionChangeEvent.Removed` | Permissions removed from a group |
+
+### Example: Reacting to Permission Changes
+
+```java
+public class PermissionListener {
+
+    public static void onPermissionsAdded(PlayerPermissionChangeEvent.PermissionsAdded event) {
+        UUID playerUUID = event.getPlayerUuid();
+        Set<String> added = event.getAddedPermissions();
+
+        System.out.println("Permissions added to " + playerUUID + ": " + added);
+
+        // Maybe notify the player or update cached data
+    }
+
+    public static void onGroupAdded(PlayerGroupEvent.Added event) {
+        UUID playerUUID = event.getPlayerUuid();
+        String groupName = event.getGroupName();
+
+        System.out.println("Player " + playerUUID + " joined group: " + groupName);
+    }
+}
+```
+
+### Registering the Events
+
+```java
+public class MyPlugin extends JavaPlugin {
+
+    @Override
+    public void setup() {
+        EventRegistry events = this.getEventRegistry();
+
+        events.registerGlobal(
+            PlayerPermissionChangeEvent.PermissionsAdded.class,
+            PermissionListener::onPermissionsAdded
+        );
+
+        events.registerGlobal(
+            PlayerGroupEvent.Added.class,
+            PermissionListener::onGroupAdded
+        );
+    }
+}
+```
+
+---
+
+## Creating a Custom Permission Provider
+
+For advanced use cases, you can create your own permission provider. This is useful for:
+
+- Database-backed permissions (MySQL, MongoDB, etc.)
+- Cross-server permission synchronization
+- Custom features like permission expiry or contexts
+
+### Implementing PermissionProvider
+
+```java
+public class DatabasePermissionProvider implements PermissionProvider {
+
+    @Nonnull
+    @Override
+    public String getName() {
+        return "DatabasePermissionProvider";
+    }
+
+    // User permission methods
+    @Override
+    public void addUserPermissions(@Nonnull UUID uuid, @Nonnull Set<String> permissions) {
+        // Save to your database
+    }
+
+    @Override
+    public void removeUserPermissions(@Nonnull UUID uuid, @Nonnull Set<String> permissions) {
+        // Remove from your database
+    }
+
+    @Override
+    public Set<String> getUserPermissions(@Nonnull UUID uuid) {
+        // Query your database
+        return Set.of();
+    }
+
+    // Group permission methods
+    @Override
+    public void addGroupPermissions(@Nonnull String group, @Nonnull Set<String> permissions) {
+        // Save to your database
+    }
+
+    @Override
+    public void removeGroupPermissions(@Nonnull String group, @Nonnull Set<String> permissions) {
+        // Remove from your database
+    }
+
+    @Override
+    public Set<String> getGroupPermissions(@Nonnull String group) {
+        // Query your database
+        return Set.of();
+    }
+
+    // User-group membership methods
+    @Override
+    public void addUserToGroup(@Nonnull UUID uuid, @Nonnull String group) {
+        // Save to your database
+    }
+
+    @Override
+    public void removeUserFromGroup(@Nonnull UUID uuid, @Nonnull String group) {
+        // Remove from your database
+    }
+
+    @Override
+    public Set<String> getGroupsForUser(@Nonnull UUID uuid) {
+        // Query your database
+        return Set.of("Default");
+    }
+}
+```
+
+<Callout type="warning">
+Hytale automatically assigns players to game-mode groups (like `Creative` or `Adventure`) using the first available provider.
+
+If your provider throws an error when the group doesn't exist, the player will be disconnected! Always handle missing groups gracefully.
+</Callout>
+
+### Registering Your Provider
+
+```java
+public class MyPlugin extends JavaPlugin {
+
+    @Override
+    public void setup() {
+        // Add your provider alongside the default one
+        PermissionsModule.get().addProvider(new DatabasePermissionProvider());
+    }
+}
+```
+
+The `PermissionsModule` aggregates permissions from all registered providers. This means:
+- Permission checks query all providers
+- Write operations (add/remove) use the **first** provider
+
+### Replacing the Default Provider
+
+If you want full control, you can remove the default provider:
+
+```java
+public class MyPlugin extends JavaPlugin {
+
+    @Override
+    public void setup() {
+        PermissionsModule perms = PermissionsModule.get();
+
+        // Remove the default provider FIRST
+        perms.removeProvider(perms.getFirstPermissionProvider());
+
+        // Then add your provider
+        perms.addProvider(new DatabasePermissionProvider());
+    }
+}
+```
+
+<Callout type="info">
+When you remove the default provider, the `/op self` command will stop working since it checks for provider tampering.
+</Callout>
+
+---
+
+## Best Practices
+
+### Permission Naming Conventions
+
+Follow the pattern: `namespace.category.action`
+
+```java
+// Good - clear hierarchy
+"myplugin.admin.ban"
+"myplugin.user.teleport.home"
+"myplugin.vip.chat.color"
+
+// Bad - unclear structure
+"myplugin_ban"
+"teleport"
+"vipChatColor"
+```
+
+### Use Constants for Permissions
+
+Define your permissions as constants to avoid typos:
+
+```java
+public final class MyPermissions {
+    public static final String ADMIN_BAN = "myplugin.admin.ban";
+    public static final String ADMIN_KICK = "myplugin.admin.kick";
+    public static final String USER_HOME = "myplugin.user.home";
+    public static final String VIP_FLY = "myplugin.vip.fly";
+}
+
+// Usage
+if (player.hasPermission(MyPermissions.ADMIN_BAN)) {
+    // ...
+}
+```
+
+### Don't Over-Permission
+
+Only create permissions for actions that genuinely need access control. Not everything needs a permission check.
+
+### Thread Safety
+
+If you create a custom provider, ensure it's thread-safe. Permission checks can occur from multiple threads simultaneously. Use `ReadWriteLock` or `ConcurrentHashMap` for your data structures.
+
+---
+
+## In-Game Commands
+
+Hytale provides built-in commands for managing permissions:
+
+### `/op` Command
+
+| Command | Description |
+|---------|-------------|
+| `/op self` | Toggle your own OP status (singleplayer or with `--allow-op` flag) |
+| `/op add <player>` | Add a player to the OP group |
+| `/op remove <player>` | Remove a player from the OP group |
+
+### `/perm` Command
+
+Use `/perm --help` in-game for full usage. Common operations:
+
+| Command | Description |
+|---------|-------------|
+| `/perm user list <uuid>` | List user's permissions |
+| `/perm user add <uuid> <perm>` | Add permission to user |
+| `/perm user remove <uuid> <perm>` | Remove permission from user |
+| `/perm user group list <uuid>` | List user's groups |
+| `/perm user group add <uuid> <group>` | Add user to group |
+| `/perm user group remove <uuid> <group>` | Remove user from group |
+| `/perm group list <group>` | List group's permissions |
+| `/perm group add <group> <perm>` | Add permission to group |
+| `/perm group remove <group> <perm>` | Remove permission from group |
+| `/perm test <perm>` | Test if you have a permission |
+
+---
+
+## Summary
+
+You've learned how to:
+
+- **Check permissions** using `PermissionsModule.hasPermission()`
+- **Manage user permissions** with `addUserPermission()` and `removeUserPermission()`
+- **Work with groups** using `addGroupPermission()`, `addUserToGroup()`, etc.
+- **Use wildcards** like `*` and `myplugin.*` for bulk permissions
+- **Listen to events** for permission changes
+- **Create custom providers** for database-backed permissions
+
+For more advanced permission systems with features like inheritance, expiry, and contexts, consider using community plugins like [HyperPerms](https://github.com/HyperSystemsDev/HyperPerms).
