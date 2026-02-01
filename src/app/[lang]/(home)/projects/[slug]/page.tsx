@@ -124,7 +124,7 @@ export default async function ProjectPage({
           </Button>
         </Link>
 
-        <div className="relative mb-8 h-64 w-full overflow-hidden rounded-xl">
+        <div className="relative mb-8 w-full overflow-hidden rounded-xl max-sm:h-64 sm:aspect-video">
           {hasBanner ? (
             <Image
               src={project.frontmatter.banner!}
@@ -138,9 +138,9 @@ export default async function ProjectPage({
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 via-blue-500 to-cyan-500" />
           )}
-          <div className="absolute inset-x-0 bottom-0 flex items-center gap-4 bg-gradient-to-t from-black/70 to-transparent p-6">
+          <div className="absolute inset-x-0 bottom-0 flex items-center gap-4 bg-gradient-to-t from-black/70 to-transparent p-6 max-sm:h-64 max-sm:flex-col sm:aspect-video sm:items-end">
             {hasLogo && (
-              <div className="relative h-16 w-16 shrink-0">
+              <div className="relative h-16 w-16 shrink-0 max-sm:absolute max-sm:top-4 max-sm:left-4">
                 <Image
                   src={project.frontmatter.logo!}
                   alt={`${project.frontmatter.title} logo`}
@@ -149,7 +149,9 @@ export default async function ProjectPage({
                 />
               </div>
             )}
-            <div className="min-w-0 flex-1">
+            <div className="max-sm:flex-1 sm:hidden" />
+            <div className="flex min-w-0 flex-1 flex-col">
+              <div className="flex-1" />
               <h1 className="text-3xl font-bold text-white">
                 {project.frontmatter.title}
               </h1>
@@ -158,7 +160,7 @@ export default async function ProjectPage({
               </p>
             </div>
             {socialLinks.length > 0 && (
-              <div className="flex gap-2">
+              <div className="flex gap-2 max-sm:absolute max-sm:top-4 max-sm:right-4">
                 {socialLinks.map(({ icon: Icon, url, label }) => (
                   <Link
                     key={label}
