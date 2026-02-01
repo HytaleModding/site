@@ -1,0 +1,476 @@
+---
+title: 11 - Melee Combat
+authors:
+  - name: Hypixel Studios Canada Inc.
+    url: https://hytale.com
+---
+
+<OfficialDocumentationNotice />
+
+For the purpose of this Tutorial we'll focus only on the melee attack. We'll start by making an **attack sequence**. Our NPCs can attack using smart decision making with a feature called the Combat Action Evaluator (CAE), but for this tutorial we'll just stick to simple sequences.
+
+This will also allow for a quick look into the adjacent Interactions system. First we need to create a **Root Interaction** in **HytaleAssets/Server/Item/RootInteractions**, together with other Root interactions. Let's make a **Root_NPC_Goblin_Ogre_Attack** interaction:
+
+```json
+{
+  "Interactions": [
+    {
+      "Type": "Chaining",
+      "ChainId": "Slashes",
+      "ChainingAllowance": 15,
+      "Next": [
+        "Goblin_Ogre_Swing_Left",
+        "Goblin_Ogre_Swing_Right",
+        "Goblin_Ogre_Swing_Down"
+      ]
+    }
+  ],
+  "Tags": {
+    "Attack": ["Melee"]
+  }
+}
+```
+
+This is a simple chaining Interaction where the ogre will perform **Swing_Left** and, so long as the next attack happens within 15 seconds, he will use **Swing_Right**. If he then manages to attack us a third time within 15 seconds he'll use the **Swing_Down** attack.
+
+These swing interactions need to be created in the **HytaleAssets/Server/Item/Interactions** folder. Let's make the **Goblin_Ogre_Swing_Left** interaction:
+
+```json
+{
+  "Type": "Simple",
+  "Effects": {
+    "ItemPlayerAnimationsId": "Goblin_Club",
+    "ItemAnimationId": "SwingLeft"
+  },
+  "$Comment": "Prepare Delay",
+  "RunTime": 0.2,
+  "Next": {
+    "Type": "Selector",
+    "$Comment": "Length of Combat",
+    "RunTime": 0.25,
+    "Selector": {
+      "Id": "Horizontal",
+      "Direction": "ToLeft",
+      "TestLineOfSight": true,
+      "ExtendTop": 0.5,
+      "ExtendBottom": 2,
+      "StartDistance": 0.1,
+      "EndDistance": 3.5,
+      "Length": 60,
+      "RollOffset": 0,
+      "YawStartOffset": -30
+    },
+    "HitEntity": {
+      "Interactions": [
+        {
+          "Parent": "DamageEntityParent",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 8
+            }
+          },
+          "DamageEffects": {
+            "Knockback": {
+              "Force": 0.5,
+              "RelativeX": -5,
+              "RelativeZ": -5,
+              "VelocityY": 5
+            },
+            "WorldSoundEventId": "SFX_Unarmed_Impact",
+            "WorldParticles": [
+              {
+                "SystemId": "Impact_Blade_01"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "Next": {
+      "Type": "Simple",
+      "$Comment": "Pad the interaction length",
+      "RunTime": 0.1
+    }
+  }
+}
+```
+
+Now we need to approach the target and use our fancy attack sequence. Again, there are a few components that will make most of this much simpler to do:
+
+- `Component_Instruction_Soft_Leash` will work in conjunction with an external **ReturnHome** state to send the ogre back to his start point if we get him too far away.
+- `Component_Instruction_Intelligent_Chase` will handle smartly chasing the target based on its last known position and will trigger pathfinding where necessary. We might want to add an extra **Search** state for this.
+
+Let's create the states we need. First, Combat itself, but since we're going to be using `Component_Instruction_Intelligent_Chase`, this component needs to know where to switch when the Target is lost or if the NPC is too far away. Let's create two states: **Search** and **ReturnHome** that will be used there.
+
+```json
+{
+	"Sensor": {
+		"Type": "State",
+		"State": "Combat"
+	},
+	"Instructions": [],
+},
+{
+	"Sensor": {
+		"Type": "State",
+		"State": "ReturnHome"
+	},
+	"Instructions": []
+},
+{
+	"Sensor": {
+		"Type": "State",
+		"State": "Search"
+	},
+	"Instructions": []
+}
+```
+
+Let's start with chasing the target. We wrap that behavior in sub state **.Chase** so we can fall back to it when the target gets out of attack range and the NPC needs to run after it in a somewhat intelligent manner.
+
+```json
+{
+  "Sensor": {
+    "Type": "State",
+    "State": "Combat"
+  },
+  "Instructions": [
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": ".Chase"
+      },
+      "Instructions": [
+        {
+          "Sensor": {
+            "Type": "Target",
+            "Range": { "Compute": "AttackDistance" },
+            "Filters": [
+              {
+                "Type": "LineOfSight"
+              }
+            ]
+          },
+          "Actions": [
+            {
+              "Type": "State",
+              "State": ".Default"
+            }
+          ]
+        },
+        {
+          "Reference": "Component_Instruction_Soft_Leash",
+          "Modify": {
+            "_ExportStates": ["ReturnHome"],
+            "LeashDistance": { "Compute": "LeashDistance" },
+            "LeashMinPlayerDistance": { "Compute": "LeashMinPlayerDistance" },
+            "LeashTimer": { "Compute": "LeashTimer" },
+            "HardLeashDistance": { "Compute": "HardLeashDistance" }
+          }
+        },
+        {
+          "Reference": "Component_Instruction_Intelligent_Chase",
+          "Modify": {
+            "_ExportStates": ["Search", "Search", "ReturnHome"],
+            "ViewRange": { "Compute": "AlertedRange * 2" },
+            "HearingRange": { "Compute": "HearingRange * 2" },
+            "StopDistance": 0.1,
+            "RelativeSpeed": 0.5
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+- First, it checks if the target is within AttackDistance. If so, we switch to the default combat state.
+- If the NPC gets too far away from its leash position (often the spawn position), we use `Component_Instruction_Soft_Leash` to send it home. We put this sensor in front of the chase state so that we don't continue chasing if the leash kicks in. There's a **Leash Timer** on this component that decides when it's time to give up.
+- And finally the chase component itself, which performs 'intelligent' chasing of the target.
+
+When the Target is within the **AttackDistance**, we perform the attack, otherwise we switch to the chase state. Let's start with the case where the target is within a melee range.
+
+```json
+{
+	"Sensor": {
+		"Type": "State",
+		"State": "Combat"
+	},
+	"Instructions": [
+		{
+			"Sensor": {
+				"Type": "State",
+				"State": ".Chase"
+			},
+			"Instructions": [ ... ]
+		},
+		{
+			"$Comment": "NPC melee attack",
+			"Sensor": {
+				"Type": "Target",
+				"Range": { "Compute": "AttackDistance" },
+				"Filters": [
+					{
+						"Type": "LineOfSight"
+					}
+				]
+			},
+			"ActionsBlocking": true,
+			"Actions": [
+				{
+					"Type": "Attack",
+					"Attack": { "Compute": "Attack" },
+					"AttackPauseRange": { "Compute": "AttackPauseRange" }
+				},
+				{
+					"Comment": "Brief delay to prevent the NPC potentially strafing/backing away and missing the shot.",
+					"Type": "Timeout",
+					"Delay": [0.2, 0.2]
+				}
+			],
+			"HeadMotion": {
+				"Type": "Aim",
+				"RelativeTurnSpeed": { "Compute": "CombatRelativeTurnSpeed" }
+			}
+		},
+		{
+			"Actions": [
+				{
+					"Type": "State",
+					"State": ".Chase"
+				}
+			]
+		}
+	]
+},
+```
+
+The important things to note here are the **AttackDistance**, **AttackPauseRange** and **CombatRelativeTurnSpeed**. We're going to configure both of these via the template itself.
+
+**AttackDistance** refers to the distance at which the ogre will attempt to perform melee attacks to hit the target (though the actual range of the attack itself is defined in the **Attack** interaction). **CombatRelativeTurnSpeed** allows us to define how quickly (or slowly) the ogre rotates while in combat. **AttackPauseRange** defines how often the attacks will be performed a bit like an attack cooldown.
+
+Let's make sure we have all these parameters added in the list:
+
+```json
+"Attack": {
+    "Value": "Root_NPC_Goblin_Ogre_Attack",
+    "Description": "The attack to use."
+},
+"AttackDistance": {
+    "Value": 2,
+    "Description": "The distance at which an NPC will execute attacks"
+},
+"AttackPauseRange": {
+    "Value": [1.5, 2],
+    "Description": "the range for absolute minimum time before an NPC can execute a second attack (or block)."
+},
+"CombatRelativeTurnSpeed": {
+    "Value": 1.5,
+    "Description": "Modifier that decides turn speed difference in combat."
+},
+"LeashDistance": {
+    "Value": 20,
+    "Description": "The range after which an NPC will start to want to return to their spawn point."
+},
+"LeashMinPlayerDistance": {
+    "Value": 4,
+    "Description": "The minimum distance from the player before the NPC will be willing to give up on the chase."
+},
+"LeashTimer": {
+    "Value": [3, 5],
+    "Description": "How long the NPC must be more than the minimum distance form the player and too far from leash before giving up."
+},
+"HardLeashDistance": {
+    "Value": 60,
+    "Description": "An absolute maximum from the the leash position the NPC can go before turning back."
+},
+
+```
+
+Now the NPC will attack, but we still need to add **Search** and **ReturnHome** logic. We can do that right away, so we have a fully functional melee ogre.
+
+```json
+{
+	"Sensor": {
+		"Type": "State",
+		"State": "ReturnHome"
+	},
+	"Instructions": [
+		{
+			"Sensor": {
+				"Type": "And",
+				"Sensors": [
+					{
+						"Type": "Damage",
+						"Combat": true,
+						"TargetSlot": "LockedTarget"
+					},
+					{
+						"Enabled": { "Compute": "AbsoluteDetectionRange > 0" },
+						"Type": "Target",
+						"TargetSlot": "LockedTarget",
+						"Range": { "Compute": "AbsoluteDetectionRange" }
+					}
+				]
+			},
+			"Actions": [
+				{
+					"Type": "State",
+					"State": "Combat"
+				}
+			]
+		},
+		{
+			"Sensor": {
+				"Type": "Leash",
+				"Range": { "Compute": "LeashDistance * 0.3" }
+			},
+			"BodyMotion": {
+				"Type": "Seek",
+				"SlowDownDistance": { "Compute": "LeashDistance * 0.4" },
+				"StopDistance": { "Compute": "LeashDistance * 0.2" },
+				"RelativeSpeed": 0.8,
+				"UsePathfinder": true
+			}
+		},
+		{
+			"Actions": [
+				{
+					"Type": "SetStat",
+					"Stat": "Health",
+					"Value": 1000000
+				},
+				{
+					"Type": "State",
+					"State": "Idle"
+				}
+			]
+		}
+	]
+},
+```
+
+There are 3 parts to this state: first, it checks if there is incoming combat damage and will switch to Combat if so. We don't want to leave NPCs exploitable as they're running home by having them ignore all attacks. If there's no incoming damage it will find its way home using **BodyMotion: Seek**. We need to be careful here though, since it might become expensive due to **"UsePathfinder": true** turning on complex pathfinding. The last block simply heals the NPC to full health and moves it to idle once it's found its home spot again.
+
+The Search state makes use of `Component_Sensor_Lost_Target_Detection`.
+
+```json
+{
+  "Sensor": {
+    "Type": "State",
+    "State": "Search"
+  },
+  "Instructions": [
+    {
+      "Sensor": {
+        "Type": "Damage",
+        "Combat": true,
+        "TargetSlot": "LockedTarget"
+      },
+      "Actions": [
+        {
+          "Type": "State",
+          "State": "Alerted"
+        }
+      ]
+    },
+    {
+      "Instructions": [
+        {
+          "Sensor": {
+            "Reference": "Component_Sensor_Lost_Target_Detection",
+            "Modify": {
+              "ViewRange": { "Compute": "ViewRange" },
+              "ViewSector": { "Compute": "ViewSector" },
+              "HearingRange": { "Compute": "HearingRange" },
+              "AbsoluteDetectionRange": { "Compute": "AbsoluteDetectionRange" },
+              "TargetSlot": "LockedTarget"
+            }
+          },
+          "Actions": [
+            {
+              "Type": "State",
+              "State": "Combat"
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Reference": "Component_Sensor_Standard_Detection",
+            "Modify": {
+              "ViewRange": { "Compute": "ViewRange" },
+              "ViewSector": { "Compute": "ViewSector" },
+              "HearingRange": { "Compute": "HearingRange" },
+              "AbsoluteDetectionRange": { "Compute": "AbsoluteDetectionRange" },
+              "Attitudes": ["Hostile", "Neutral"]
+            }
+          },
+          "Actions": [
+            {
+              "Type": "State",
+              "State": "Alerted"
+            }
+          ]
+        },
+        {
+          "BodyMotion": {
+            "Type": "Sequence",
+            "Motions": [
+              {
+                "Type": "Timer",
+                "Time": [3, 6],
+                "Motion": {
+                  "Type": "Wander",
+                  "MaxHeadingChange": 1,
+                  "RelativeSpeed": 0.5
+                }
+              },
+              {
+                "Type": "Sequence",
+                "Looped": true,
+                "Motions": [
+                  {
+                    "Type": "Timer",
+                    "Time": [3, 6],
+                    "Motion": {
+                      "Type": "WanderInCircle",
+                      "Radius": 10,
+                      "MaxHeading Change": 60,
+                      "RelativeSpeed": 0.5
+                    }
+                  },
+                  {
+                    "Type": "Timer",
+                    "Time": [2, 3],
+                    "Motion": {
+                      "Type": "Nothing"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "ActionsBlocking": true,
+          "Actions": [
+            {
+              "Type": "Timeout",
+              "Delay": [4, 5]
+            },
+            {
+              "Type": "State",
+              "State": "Idle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+The search state will first check if there is incoming damage and will switch to the alerted state if so. If not it'll execute the next block of instructions using pre-existing components:
+
+- Check if the lost target is detected with the **Lost Target detection sensor**. If so, switch to combat.
+- Check if any other target is available through the **Standard detection sensor**. If so, switch to the alerted state.
+- Otherwise the NPC will move around using the **Wander** motion, stopping briefly in between until it gives up and...
+- ...goes back to being idle.

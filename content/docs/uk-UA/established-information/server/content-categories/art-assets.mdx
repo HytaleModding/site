@@ -1,123 +1,123 @@
 ---
-title: Modelling & Texturing / Art Assets
-description: Information about 3D Modelling, Texturing and Art Assets in Hytale.
+title: Моделювання та текстурування / Художні ресурси
+description: Інформація про 3D-моделювання, текстурування та художні ресурси в Hytale.
 ---
 
-# Modelling / Texture Art
+# Моделювання / Текстурне мистецтво
 
-Hytale provides comprehensive support for 3D modeling and texture art creation, with specialized tools and workflows designed to maintain the game's distinctive visual style while empowering creators.
+Hytale надає комплексну підтримку для 3D-моделювання та створення текстур, за допомогою спеціалізованих інструментів та робочих процесів, розроблених для збереження унікального візуального стилю гри, водночас надаючи розробникам можливості.
 
-## Current Mod Tooling
+## Поточні модифікаційні інструменти
 
 ### Blockbench
 
-Hytale uses **Blockbench** as the primary tool for 3D modeling and animation:
+Hytale використовує **Blockbench** як основний інструмент для 3D-моделювання та анімації:
 
-* **Official support**: Used for "creating Hytale models, textures, and animations"
-* **Special plugin**: Hytale will have a dedicated Blockbench plugin, to be released ASAP
-* **Direct compatibility**: The plugin allows creators to "create Hytale-compatible models, textures, and animations directly in Blockbench"
-* **Replaces legacy tools**: Fully replaces the old Hytale Model Maker to better support established creative workflows in the community
-* **Safety features**: Only allows you to add things compatible with the engine, so no need to worry about breaking anything
+* **Офіційна підтримка**: Використовується для «створення моделей, текстур та анімації Hytale».
+* **Спеціальний плагін**: Hytale матиме спеціальний плагін Blockbench.
+* **Пряма сумісність**: Плагін дозволяє творцям «створювати моделі, текстури та анімацію, сумісні з Hytale, безпосередньо в Blockbench».
+* **Заміна застарілих інструментів**: Повна заміна старого Створювача Моделей Hytale для кращої підтримки встановлених у спільноті творчих робочих процесів
+* **Функції безпеки**: Дозволяє додавати лише матеріали, сумісні з движком, тож вам не потрібно турбуватися про можливі збої.
 
-## Model Constraints
+## Обмеження моделі
 
-### Geometry Types
+### Типи геометрії
 
-The vast majority of models in Hytale are constrained to specific geometric primitives:
+Переважна більшість моделей у Hytale обмежені певними геометричними примітивами:
 
-**3D Elements**:
+**3D-елементи**:
 
-* Blocks
-* Cuboids
-* Boxes
+* Блоки
+* Кубоїди
+* Коробки
 
-**2D Elements**:
+**2D елементи**:
 
-* Quads
-* Rectangles
-* Planes (composed of 2 triangles)
+* Квадрати
+* Прямокутники
+* Площини (складені з 2 трикутників)
 
-### Design Philosophy
+### Філософія дизайну
 
-These constraints serve multiple purposes:
+Ці обмеження служать кільком цілям:
 
-* **Performance optimization**: Ensures efficient rendering and game performance
-* **Consistent art style**: Maintains Hytale's distinctive visual aesthetic
-* **Seamless integration**: Makes mods feel more cohesive with the base game
+* Оптимізація продуктивності: забезпечує ефективну обробку графіки й високу продуктивність гри
+* **Послідовний художній стиль**: Зберігає характерну візуальну естетику Hytale
+* **Безшовна інтеграція**: Робить моди більш цілісними з базовою грою
 
-## Pixel Density Standards
+## Стандарти щільності пікселів
 
-Hytale uses different pixel densities for different types of content:
+Hytale використовує різну щільність пікселів для різних типів контенту:
 
-### Standard Densities
+### Стандартні щільності
 
-* **Blocks**: 32px density
-* **Player models**: 64px density
-* **Mobs**: Likely also 64px density
-* **Player equipment**: 64px density (weapons, cosmetics, armor, etc.)
+* **Блоки**: щільність 32 пікселів
+* **Моделі гравців**: щільність 64 пікселів
+* **Істоти**: Ймовірно, також щільність 64 пікселів
+* **Спорядження гравця**: щільність 64 пікселів (зброя, косметика, броня тощо)
 
-### Flexibility
+### Гнучкість
 
-* **Wrong density handling**: Using incorrect density may cause assets to appear at the wrong size, but will not cause import failures
-* **No strict restrictions**: Pixel ratio, rotation, and scaling are not restricted
-* **Forgiving system**: The tools are designed to be flexible while maintaining compatibility
+* **Обробка неправильної щільності**: Використання неправильної щільності може призвести до зображення ресурсів неправильного розміру, але не призведе до збоїв імпорту.
+* **Без суворих обмежень**: співвідношення пікселів, обертання та масштабування не обмежені
+* **Гнучка система**: Інструменти розроблені з урахуванням гнучкості та сумісності
 
-## Hytale Asset Editor
+## Редактор активів Hytale
 
-### In-Game Editor
+### Ігровий редактор
 
-The Asset Editor is a comprehensive tool that will ship with the game:
+Редактор активів– це комплексний інструмент, який постачатиметься разом із грою:
 
-* **Ships with game**: Available to all players from launch
-* **External tool requirement**: Does not support image editing, you must use external tools for texture creation
-* **Data asset editing**: Primary editor for working with Data Assets
-* **Expanding capabilities**: Currently supports most features, though has limitations around NPCs, worldgen, and interactions that will expand over time
+* **Поставляється з грою**: Доступно всім гравцям з моменту запуску
+* **Вимога до зовнішнього інструменту**: Не підтримує редагування зображень, для створення текстур необхідно використовувати зовнішні інструменти.
+* **Редагування активів даних**: Основний редактор для роботи з активами даних
+* **Розширення можливостей**: Наразі підтримує більшість функцій, хоча має обмеження щодо NPC, покоління світів та взаємодій, які з часом розширяться.
 
-### Particle Creation
+### Створення частинок
 
-The Asset Editor includes robust particle creation tools:
+Редактор активів містить потужні інструменти для створення частинок:
 
-* **In-game creation**: Particles are created directly in-game using the Asset Editor
-* **Industry standard**: Particle logic is robust and similar to Unity/Unreal particle systems
-* **Event-driven**: Particles can be spawned on events or interactions (like opening doors)
-* **Entity attachment**: Can attach particles to entities with specific attachment points
-* **Dynamic movement**: Supports particles moving with their anchor points
-* **Time delays**: Supports time-based particle effects and delays
+* **Створення в грі**: Частинки створюються безпосередньо в грі за допомогою редактора ресурсів
+* **Галузевий стандарт**: Логіка частинок є надійною та подібною до систем частинок Unity/Unreal
+* **Подієво-керовані**: Частинки можуть з'являтися внаслідок подій або взаємодій (наприклад, відкриття дверей).
+* **Прикріплення сутності**: Можна прикріплювати частинки до сутностей за допомогою певних точок прикріплення
+* **Динамічний рух**: Підтримує рух частинок за допомогою їхніх опорних точок
+* **Часові затримки**: Підтримує ефекти частинок та затримки на основі часу
 
-## Materials
+## Матеріали
 
-### Optimization Focus
+### Фокус на оптимізацію
 
-Hytale takes a different approach to materials compared to other engines:
+Hytale використовує інший підхід до матеріалів проти інших двигунів:
 
-* **Pre-optimized**: Materials are very optimized and artists cannot create custom materials
-* **Performance priority**: This constraint ensures consistent performance across all content
-* **Curated system**: Maintains visual consistency while maximizing efficiency
+* **Попередньо оптимізовано**: Матеріали дуже оптимізовані, і художники не можуть створювати власні матеріали
+* **Пріоритет продуктивності**: Це обмеження забезпечує стабільну продуктивність для всього контенту
+* **Кураторська система**: Зберігає візуальну узгодженість, одночасно максимізуючи ефективність
 
-## Best Practices
+## Найкращі практики
 
-### Asset Optimization
+### Оптимізація активів
 
-Key considerations from Hytale's development team:
+Ключові міркування команди розробників Hytale:
 
-* **Mindful resource usage**: Be conscious of how many blocks/quads you use and texture file sizes
-* **Avoid bloat**: Goal is to prevent unnecessary asset bloat that could impact performance
-* **Efficiency focus**: Balance visual quality with technical constraints
+* **Уважне використання ресурсів**: Звертайте увагу на кількість блоків/квадратів, які ви використовуєте, та розміри файлів текстур.
+* **Уникнення роздуття**: Мета полягає в запобіганні непотрібному роздуттю активів, яке може вплинути на продуктивність.
+* **Орієнтація на ефективність**: Збалансуйте візуальну якість із технічними обмеженнями
 
-### Future Documentation
+### Майбутня документація
 
-* **Best practice guide**: A comprehensive "best practice" guide for art and modeling will be released at some point
-* **Flexible boundaries**: Most creative goals can be achieved without breaking anything in the system
-* **Робочі процеси, керовані спільнотою**: Інструменти розроблені для підтримки усталених творчих робочих процесів у спільноті модингу.
+* **Посібник з найкращих практик**: Вичерпний посібник з «найкращих практик» для мистецтва та моделювання буде опубліковано згодом.
+* **Гнучкі межі**: Більшість творчих цілей можна досягти, не порушуючи жодних функцій системи
+* **Робочі процеси, керовані спільнотою**: Інструменти розроблені для підтримки усталених творчих робочих процесів у спільноті модифікацій.
 
-## Integration with Development Pipeline
+## Інтеграція з конвеєром розробки
 
-The modeling and texture art workflow integrates seamlessly with Hytale's broader development ecosystem:
+Робочий процес моделювання та створення текстур бездоганно інтегрується з ширшою екосистемою розробки Hytale:
 
-* **Asset Editor compatibility**: Models created in Blockbench work directly with the Hytale Asset Editor
-* **Data Asset integration**: 3D models can be configured and customized through Data Assets
-* **Visual Scripting support**: Models can be controlled and animated through Visual Scripting
-* **Java plugin extensibility**: Advanced model behaviors can be implemented through Java plugins
-* **Particle integration**: Models can have particles attached at specific points for enhanced visual effects
+* **Сумісність редактора активів**: Моделі, створені в Blockbench, працюють безпосередньо з редактором активів Hytale.
+* **Інтеграція з активами даних**: 3D-моделі можна налаштовувати та змінювати за допомогою активів даних
+* **Підтримка візуальних сценаріїв**: Моделі можна керувати та анімувати за допомогою візуальних сценаріїв
+* **Розширюваність плагінів Java**: Розширені моделі можна реалізувати за допомогою плагінів Java
+* **Інтеграція частинок**: Моделі можуть мати частинки, прикріплені в певних точках, для покращення візуальних ефектів.
 
-This integrated approach ensures that 3D modeling and texture art aren't isolated creative processes, but core components of Hytale's comprehensive development environment.
+Такий інтегрований підхід гарантує, що 3D-моделювання та створення текстур не є ізольованими творчими процесами, а основними компонентами комплексного середовища розробки Hytale.

@@ -14,7 +14,10 @@ public static void teleportPlayer(Player player, int x, int y, int z) {
         world.execute(() -> {
             if (player.getReference() == null) return;
             Store<EntityStore> store = player.getReference().getStore();
-            Teleport teleport = new Teleport(new Transform(x ,y, z));
+            Teleport teleport = Teleport.createForPlayer(world,
+                new Vector3d(x ,y, z), // Target position
+                new Vector3f(0, 0, 0)  // Target rotation (pitch, yaw, roll)
+            );
 
             store.addComponent(player.getReference(), Teleport.getComponentType(), teleport);
         });

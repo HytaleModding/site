@@ -3,7 +3,7 @@ title: Inventory Management
 description: Learn how to manage player inventories in your Hytale mod.
 authors:
   - name: Neil Revin
-    link: https://itsneil.dev
+    url: https://itsneil.dev
 ---
 
 In this guide, you'll learn how to manage player inventories in your Hytale mod.
@@ -46,7 +46,7 @@ You can create and manipulate items in a player's inventory using the `ItemStack
 To create an `ItemStack`, you need to specify the material type and the quantity of items in the stack.
 
 ```java
-ItemStack item = new ItemStack("Stone"); 
+ItemStack item = new ItemStack("Stone");
 ItemStack withQuantity = new ItemStack("Stone", 64);
 ```
 
@@ -94,17 +94,18 @@ There are also combined methods like:
 
 ## Adding `ItemStack` objects to the Inventory
 
-To add an `ItemStack` to a player's inventory, you can use the `addItemStack()` method of the `Inventory` class.
+To add an `ItemStack` to a player's inventory, you can use the `addItemStack()` method of the `ItemContainer` class.
 
 ```java
 Inventory inventory = player.getInventory();
-inventory.addItemStack(item);
+ItemContainer storageContainer = inventory.getStorage();
+storageContainer.addItemStack(item);
 ```
 
 Or you can specify a certain slot to add it to:
 
 ```java
-inventory.addItemStackToSlot((short) 4, stack)
+storageContainer.addItemStackToSlot((short) 4, stack)
 ```
 
 ## Removing `ItemStack` objects from the Inventory
@@ -113,11 +114,12 @@ To remove an `ItemStack` from a player's inventory, you can use the `removeItemS
 
 ```java
 Inventory inventory = player.getInventory();
-inventory.removeItemStack(item);
+ItemContainer storageContainer = inventory.getStorage();
+storageContainer.removeItemStack(item);
 ```
 
 Or you can specify a certain slot to remove it from:
 
 ```java
-inventory.removeItemStackFromSlot((short) 4);
+storageContainer.removeItemStackFromSlot((short) 4);
 ```

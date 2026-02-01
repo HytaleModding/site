@@ -37,7 +37,11 @@
     "failedToLoad": "تعذّر التحميل.",
     "gitInfoUnavailable": "معلومات Git غير متوفرة",
     "credit": "كتب بواسطة",
-    "supportUs": "إدعمنا"
+    "supportUs": "إدعمنا",
+    "officialDocumentationNotice": {
+      "title": "Official Hytale Documentation",
+      "description": "All content on this section is provided by **Hypixel Studios Canada Inc.** and is presented without any substantial changes, aside from visual design adjustments by the HytaleModding Team."
+    }
   },
   "meta": {
     "established_information": {
@@ -66,6 +70,20 @@
       "title": "الشروحات",
       "java_basics": {
         "title": "أساسيات جافا"
+      }
+    },
+    "official_documentation": {
+      "worldgen": {
+        "title": "World Generation",
+        "pack_tutorial": {
+          "title": "Worldgen Pack Tutorial"
+        },
+        "technical_hytale_generator": {
+          "title": "Technical Hytale Generator"
+        },
+        "worldgen_tutorial": {
+          "title": "Worldgen Tutorial"
+        }
       }
     },
     "community_projects": {

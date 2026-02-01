@@ -1,80 +1,78 @@
 ---
-title: UI Customization
-description: Information about UI customization in Hytale.
+title: Кастомизация пользовательского интерфейса
+description: Информация о кастомизации интерфейса в Hytale.
 ---
 
-UI can be customized via **server-side** modding. Many of the UI pages shown to players are available to be modified by server owners through mods.
+Пользовательский интерфейс (UI) можно кастомизировать с помощью **серверного** моддинга. В Hytale много возможностей для создателей модов и большая часть доступного для игрока UI можно переделать под себя.
 
-## UI Customization in Hytale
+## Кастомизация UI в Hytale
 
-Hytale provides extensive UI customization capabilities through server-side modding, allowing server owners to modify many of the UI pages that players interact with.
+Hytale предоставляет обширные возможности для настройки UI посредством моддинга на стороне сервера, что позволяет владельцам серверов изменять многие части UI, с которыми взаимодействуют игроки.
 
-### Control Flow
+### Управление потоками
 
-The UI system in Hytale follows a specific control flow pattern:
+Система UI в Hytale соответствует определенной схеме управления потоком:
 
-1. Server sends UI data to the client
-2. Client renders the UI
-3. User interacts with the UI (e.g., pressing a button)
-4. Client sends the interaction event to the server
-5. Server executes the callback logic for the event
+1. Сервер отправляет UI данные клиенту
+2. Клиент рендерит пользовательский интерфейс
+3. Пользователь взаимодействует с интерфейсом (например, нажатие кнопки)
+4. Клиент отправляет событие взаимодействия на сервер
+5. Сервер выполняет логику обратного вызова для события
 
-This architecture means:
+Такая архитектура означает:
 
-* The client is responsible for rendering UI and sending user interactions to the server
-* The server handles all the actual logic behind user interactions
+* Клиент отвечает за рендеринг пользовательского интерфейса и отправку взаимодействия пользователя на сервер
+* Сервер обрабатывает всю фактическую логику взаимодействия с пользователем
 
-<Callout type="warning" title="Possible Performance Implications">
+<Callout type="warning" title="Возможные последствия для производительности">
   <span>
-    Because the server processes all UI logic, there is an inherent latency
-    impact on UI responsiveness. Button clicks and other interactions must
-    travel to the server before taking effect, meaning network ping directly
-    affects UI responsiveness.
+    Поскольку сервер обрабатывает всю логику интерфейса, существует задержка, которая влияет на скорость отклика UI. Нажатия кнопок и другие взаимодействия должны
+    дойти до сервера, прежде чем вступить в силу, а это означает, что пинг напрямую
+    влияет на отклик UI.
   </span>
 
   <span>
-    Additionally, since client-side modding is not supported, no modded values
-    persist on the client.
+    Кроме того, поскольку моддинг на стороне клиента не поддерживается, модифицированные элементы не сохраняются на клиенте.
   </span>
 </Callout>
 
-### UI Layout Assets
+### Ассеты слоёв интерфейса
 
-Hytale's UI customization system works through the following structure:
+Система кастомизации интерфейса Hytale работает по следующей структуре:
 
-* **UI Layout**: Sent to the client as an asset
-* **UI Behavior**: Defined in Java code
-* **Custom Layouts**: Enables creation of bespoke UI layouts rather than repurposing existing ones (unlike inventory menu modifications in Minecraft)
+* **Макет UI**: Отправляется клиенту в ассета
+* **Поведение пользовательского интерфейса**: Определено в Java коде
+* **Пользовательские макеты**: позволяет создавать индивидуальные макеты пользовательского интерфейса вместо переделки существующих (в отличие от модификаций инвентаря в Minecraft).
 
-### UI Framework Implementations
+### Реализации фрэймворков пользовательского интерфейса
 
-Hytale currently supports multiple UI implementations, with plans to consolidate on NoesisGUI:
+Hytale в настоящее время поддерживает несколько реализаций UI, при этом планируется перейти на NoesisGUI:
 
-#### Legacy Implementation
+#### Legacy реализация
 
-* Serves as an example of server modding capabilities
-* Uses a combination of in-game elements, UI Markup Assets, and Java mod code
-* Utilizes a legacy custom markup language
-* Will be deprecated in favor of NoesisGUI
+* Служит примером возможностей серверного моддинга
+* Использует комбинацию игровых элементов, ассетов разметки UI и кода мода на базе Java.
+* Использует legacy язык разметки
+* Будет признано устаревшим в пользу NoesisGUI
 
-#### NoesisGUI (Primary Framework)
+#### NoesisGUI (главный фреймворк)
 
-* Uses XAML Markup Language for UI definition
-* Supports multiple languages for internationalization
-* Runs on C# bindings on the client side (not C++)
-* Represents the future direction of Hytale's UI system
+* Использует язык разметки XAML для определения UI
+* Поддержка нескольких языков для интернационализации
+* Работает на C#-привязках на стороне клиента (не C++)
+* Представляет будущее направление развития системы пользовательского интерфейса Hytale
 
-#### Third Framework
+#### Сторонний фреймворк
 
-* Currently being phased out
-* Will be replaced by NoesisGUI as part of the consolidation effort
+* Сейчас на стадии завершения использования
+* Будет заменено NoesisGUI в рамках унификации
 
-### Performance Considerations
+### Особенности производительности
 
-Due to the server-side nature of UI processing, there are inherent performance characteristics to consider:
+Поскольку обработка UI выполняется на стороне сервера, необходимо учитывать некоторые особенности производительности:
 
-* **Latency Impact**: Button clicks and UI interactions must travel to the server before taking effect, meaning network ping directly affects UI responsiveness
-* **No Client Persistence**: Since client-side modding is not supported, no modded values persist on the client
-* **Optimized Architecture**: Hytale's system is designed to minimize latency through efficient communication protocols and optimized server performance, ensuring smooth interactions despite server-side processing requirements
+* **Влияние на задержку**: нажатия кнопок и взаимодействия с пользовательским интерфейсом должны быть отправлены на сервер, прежде чем вступят в силу, а это означает, что пинг напрямую влияет на скорость отклика UI.
+* **Нет сохранения на стороне клиента**: поскольку модификация на стороне клиента не поддерживается, измененные элементы не сохраняются на стороне клиента.
+* **Оптимизированная архитектура**: система Hytale разработана для минимизации задержек за счет эффективных протоколов связи и оптимизации производительности сервера, что гарантирует стабильную работу несмотря на обработку кода на стороне сервера
 
-The architecture prioritizes security and consistency by centralizing UI logic on the server while maintaining responsive user experiences
+Архитектура ставит во главу угла безопасность и согласованность, централизуя логику пользовательского интерфейса на сервере и сохраняя при этом отзывчивость пользовательского интерфейса.

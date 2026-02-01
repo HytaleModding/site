@@ -376,6 +376,27 @@ public static String getHealthStatus(int health, int maxHealth) {
    * Contiene almeno un numero
    * Restituisce vero se valido, falso altrimenti
 
+<Callout type="info" title="Division Note">
+  When writing a password validator, you may need a way to compare array values. For example:
+
+  ```java
+  String[] array1 = {"Apple", "Banana"};
+  String[] array2 = {"Apple", "Banana"};
+
+  //Wrong:
+  array1[0] == array2[0];       // false
+  /*
+  Array is a non-primitive data type. Java compares reference (non-primitive) data types by 
+  their location in Java's memory, not by their values.
+  */
+
+  // To compare the actual values of reference data types, use the .equals() method:
+  array1[0].equals(array2[0]);       // true 
+
+  // This does not apply to primitive data types.
+  ```
+</Callout>
+
 ## Errori Comuni
 
 ```java

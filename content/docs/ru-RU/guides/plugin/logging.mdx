@@ -1,0 +1,73 @@
+---
+title: Logging
+description: Learn how to log messages on the server using Hytale's server logging.
+authors:
+  - name: LucasVinicius314
+    url: https://github.com/LucasVinicius314
+---
+
+One way of logging messages is by using Hytale's own logging class `HytaleLogger`, which extends `com.google.common.flogger.AbstractLogger`. The logs will appear in the same log file that the Hytale server uses to write logs, in the server's log folder `{Hytale's install folder}/UserData/Saves/{World}/logs`.
+
+The logger allows you to add a name to it, when calling `HytaleLogger.get("<logger name>")`. The name of the logger will be added before the log message, so it's more easily identifiable inside the log file.
+
+There is a method `.forEnclosingClass()` that you can use to automatically get the logger for the file you are working in without having to change it every time.
+
+An example of how to use the Hytale logging class to log messages, through a static attribute in your plugin's main class:
+
+```java
+import com.hypixel.hytale.logger.HytaleLogger;
+
+public class ExamplePlugin extends JavaPlugin {
+
+  public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
+  @Override
+  protected void setup() {
+    LOGGER.atInfo().log("my example plugin just loaded");
+  }
+}
+```
+
+The logger can then be used anywhere, like this:
+
+```java
+ExamplePlugin.LOGGER.atInfo().log("hello world");
+```
+
+## Log Levels
+
+All log messages have an associated level. The level can be used to categorize messages and configure how they are logged. Using the default configurations, only messages from `Info`, `Warn`, and `Severe` are printed.
+
+```java
+    LOGGER.atInfo().log("Provide high-level information about normal behavior.");
+    LOGGER.atWarning().log("Signal a potential problem or a situation that could lead to an error.");
+    LOGGER.atSevere().log("A serious error that will prevent things from working as expected.");
+```
+
+## Template Arguments
+
+The HytaleLogger uses `printf` style arguments, and should support most of the features and specifiers used by normal string formatting.
+
+```java
+final String name = "World";
+LOGGER.atInfo().log("Hello %s", name);
+// prints: Hello World
+```
+
+Here is a quick overview of some of the more commonly used specifiers:
+
+- `%s`: String
+- `%d`: Integer
+- `%f`: Float/Double
+- `%b`: Boolean
+- `%c`: Char
+
+## Exceptions and Causes
+
+If your log message has an associated exception or you want to include a stack trace, this can be done by setting the cause.
+
+```java
+    catch (IOException e) {
+        LOGGER.atSevere().withCause(e).log("Error!");
+    }
+```

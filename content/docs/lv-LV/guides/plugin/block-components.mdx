@@ -1,0 +1,253 @@
+---
+title: Bloku Komponenti
+description: Apgūsti kā izmantot bloku komponentus.
+authors:
+  - name: Birds
+    link: https://discord.com/users/495709580068651009
+---
+
+# Pārskats
+
+Šajā pamācība apgūsi kā izmanot bloku komponentus, lai izveidotu tikšķošu bloku.
+
+<Callout>
+  Lai iegūtu pilnīgāku atsauci, vari arī pārskatīt FarmingSystems.Ticking, jo liela daļa pamatā esošās loģikas ir balstīta uz tās ieviešanu.
+</Callout>
+
+## Soļi
+
+### 1. ExampleBlock - satur bloka uzvedību
+
+```java
+public class ExampleBlock implements Component<ChunkStore> {
+
+    public static final BuilderCodec CODEC;
+
+    public ExampleBlock() {
+
+    }
+
+    public static ComponentType getComponentType() {
+        return ExamplePlugin.get().getExampleBlockComponentType();
+    }
+
+    public void runBlockAction(int x, int y, int z, World world) {
+        world.execute(() -> {
+            world.setBlock(x + 1, y, z, "Rock_Ice");
+        });
+    }
+
+    @Nullable
+    public Component<ChunkStore> clone() {
+        return new ExampleBlock();
+    }
+
+    static {
+        CODEC = BuilderCodec.builder(ExampleBlock.class, ExampleBlock::new).build();
+    }
+}
+```
+
+ExampleBlock ir pielāgots komponents, kas glabā uzvedību un datus tikšķošajiem blokiem. Šeit tas vienkārši novieto Ledus bloku x + 1 relatīvi no esošās pozīcijas, kad tas tikšķ.
+
+---
+
+### 2. ExampleInitializer - marķē blokus kā tikšķošus, kad novieto
+
+```java
+public class ExampleInitializer extends RefSystem {
+
+    @Override
+    public void onEntityAdded(@Nonnull Ref ref, @Nonnull AddReason reason, @Nonnull Store store, @Nonnull CommandBuffer commandBuffer) {
+        BlockModule.BlockStateInfo info = (BlockModule.BlockStateInfo) commandBuffer.getComponent(ref, BlockModule.BlockStateInfo.getComponentType());
+        if (info == null) return;
+
+        ExampleBlock generator = (ExampleBlock) commandBuffer.getComponent(ref, ExamplePlugin.get().getExampleBlockComponentType());
+        if (generator != null) {
+            int x = ChunkUtil.xFromBlockInColumn(info.getIndex());
+            int y = ChunkUtil.yFromBlockInColumn(info.getIndex());
+            int z = ChunkUtil.zFromBlockInColumn(info.getIndex());
+
+            WorldChunk worldChunk = (WorldChunk) commandBuffer.getComponent(info.getChunkRef(), WorldChunk.getComponentType());
+            if (worldChunk != null) {
+				worldChunk.setTicking(x, y, z, true);
+            }
+        }
+    }
+
+    @Override
+    public void onEntityRemove(@Nonnull Ref ref, @Nonnull RemoveReason reason, @Nonnull Store store, @Nonnull CommandBuffer commandBuffer) {
+    }
+
+    @Override
+    public Query getQuery() {
+        return Query.and(BlockModule.BlockStateInfo.getComponentType(), ExamplePlugin.get().getExampleBlockComponentType());
+    }
+}
+```
+
+ExampleInitializer ir RefSistēma, kas reaģē, kad vienības ar ExampleBlock komponentu tiek pievienoti, vai noņemti. Tas ir svarīgi, lai marķētu blokus kā tikšķošus, kad tos pirmo reizi novieto.
+
+**Galvenie punkti:**
+
+- Norāda spēlei, ka šim blokam vajadzētu tikšķēt, ļaujot `ExampleSystem` to apstrādāt.
+
+```java
+worldChunk.setTicking(x, y, z, true);
+```
+
+---
+
+### 3. ExampleSystem - pārvalda tikšķēšanu
+
+```java
+public class ExampleSystem extends EntityTickingSystem {
+    private static final Query QUERY = Query.and(BlockSection.getComponentType(), ChunkSection.getComponentType());
+
+    public void tick(float dt, int index, @Nonnull ArchetypeChunk archetypeChunk, @Nonnull Store store, @Nonnull CommandBuffer commandBuffer) {
+        BlockSection blocks = (BlockSection) archetypeChunk.getComponent(index, BlockSection.getComponentType());
+
+        assert blocks != null;
+
+        if (blocks.getTickingBlocksCountCopy() != 0) {
+            ChunkSection section = (ChunkSection) archetypeChunk.getComponent(index, ChunkSection.getComponentType());
+
+            assert section != null;
+
+            BlockComponentChunk blockComponentChunk = (BlockComponentChunk) commandBuffer.getComponent(section.getChunkColumnReference(), BlockComponentChunk.getComponentType());
+
+            assert blockComponentChunk != null;
+
+            blocks.forEachTicking(blockComponentChunk, commandBuffer, section.getY(), (blockComponentChunk1, commandBuffer1, localX, localY, localZ, blockId) ->
+            {
+                Ref<ChunkStore> blockRef = blockComponentChunk1.getEntityReference(ChunkUtil.indexBlockInColumn(localX, localY, localZ));
+                if (blockRef == null) {
+                    return BlockTickStrategy.IGNORED;
+                } else {
+                    ExampleBlock exampleBlock = (ExampleBlock) commandBuffer1.getComponent(blockRef, ExampleBlock.getComponentType());
+                    if (exampleBlock != null) {
+                        WorldChunk worldChunk = (WorldChunk) commandBuffer.getComponent(section.getChunkColumnReference(), WorldChunk.getComponentType());
+
+                        int globalX = localX + (worldChunk.getX() * 32);
+                        int globalZ = localZ + (worldChunk.getZ() * 32);
+
+                        exampleBlock.runBlockAction(globalX, localY, globalZ, worldChunk.getWorld());
+
+                        return BlockTickStrategy.CONTINUE;
+
+                    } else {
+                        return BlockTickStrategy.IGNORED;
+                    }
+                }
+            });
+        }
+    }
+
+    @Nullable
+    public Query getQuery() {
+        return QUERY;
+    }
+}
+```
+
+ExampleSystem ir EntityTickingSystem, kas strādā katru tikšķi, lai izpildītu loģiku visiem tikšķošajiem blokiem ar ExampleBlock komponentu.
+
+**Galvenie Punkti:**
+
+- **Dabū bloka komponentu**
+
+```java
+ExampleBlock exampleBlock = (ExampleBlock) commandBuffer1.getComponent(blockRef, ExampleBlock.getComponentType());
+```
+
+- **Pārvērt lokālo gabalu koordinātes par pasaules koordinatēm**
+
+```java
+int globalX = localX + (worldChunk.getX() * 32);
+int globalZ = localZ + (worldChunk.getZ() * 32);
+```
+
+- **Palaid bloka loģiku**
+
+```java
+exampleBlock.runBlockAction(globalX, localY, globalZ, worldChunk.getWorld());
+```
+
+- **Turpini bloka tikšķi nākamajā tikšķī**
+
+```java
+return BlockTickStrategy.CONTINUE;
+```
+
+---
+
+### 4. ExamplePlugin - reģistrē komponentus un sistēmas
+
+```java
+public class ExamplePlugin extends JavaPlugin {
+    protected static ExamplePlugin instance;
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    private ComponentType exampleBlockComponentType;
+
+    public static ExamplePlugin get() {
+        return instance;
+    }
+
+    public ExamplePlugin(@Nonnull JavaPluginInit init) {
+        super(init);
+        LOGGER.atInfo().log("Hello from " + this.getName() + " version " + this.getManifest().getVersion().toString());
+    }
+
+    @Override
+    protected void setup() {
+        instance = this;
+        LOGGER.atInfo().log("Setting up plugin " + this.getName());
+        this.exampleBlockComponentType = this.getChunkStoreRegistry().registerComponent(ExampleBlock.class, "ExampleBlock", ExampleBlock.CODEC);
+    }
+	
+	@Override
+	protected void start() {
+		this.getChunkStoreRegistry().registerSystem(new ExampleSystem());
+		this.getChunkStoreRegistry().registerSystem(new ExampleInitializer());
+	}
+
+    public ComponentType getExampleBlockComponentType() {
+        return this.exampleBlockComponentType;
+    }
+}
+```
+
+---
+
+### 5. Konfigurē spēlē
+
+![block-component-1](/assets/guides/block-component-1.png)
+
+![block-component-2](/assets/guides/block-component-2.png)
+
+Ar šo loģiku bloks turpinās novietot Ledus Bloku uz x + 1 koordinātes, relatīvi tā esošajai pozīcijai katru tikšķi.
+
+---
+
+## Biežākās Problēmas
+
+### NullPointerException pēc uzsākšanas
+
+**Kļūdas ziņojums:**
+
+```java
+java.lang.NullPointerException: Cannot invoke "com.hypixel.hytale.component.query.Query.validateRegistry(com.hypixel.hytale.component.ComponentRegistry)" because "query" is null
+```
+
+**Cēlonis:**
+Šī kļūda parādās tad, kad modulis ielādēts **pirms** nepieciešamajiem Hytale moduļiem.
+
+**Risinājums:**
+Pievieno `EntityModule` un `BlockModule` kā dependencies/atkarības savā `manifest.json`, lai nodrošinātu pareizu ielādes kārtību.
+
+```json
+"Dependencies": {
+  "Hytale:EntityModule": "*",
+  "Hytale:BlockModule": "*"
+}
+```

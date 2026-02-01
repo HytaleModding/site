@@ -1,0 +1,70 @@
+---
+title: 6 - A brief interlude
+description: "or: how I learned to stop worrying and love building NPC components"
+authors:
+  - name: Hypixel Studios Canada Inc.
+    url: https://hytale.com
+---
+
+<OfficialDocumentationNotice />
+
+We already have the logic to build this component - it's already contained within the **.Guard** state we created earlier. All we need to do is identify which parts of it we need to expose to whoever might want to use this component in the future.
+
+That's pretty simple too - we have two:
+
+- The duration of the delay before switching state.
+- The state to switch to.
+
+So we put together our new component (`Component_Instruction_State_Timeout`).
+
+```json
+{
+  "Type": "Component",
+  "Class": "Instruction",
+  "Parameters": {
+    "_ImportStates": ["Main"],
+    "Delay": {
+      "Value": [3, 5],
+      "Description": "The amount of time to wait before transitioning"
+    }
+  },
+  "Content": {
+    "Continue": true,
+    "ActionsBlocking": true,
+    "Actions": [
+      {
+        "Type": "Timeout",
+        "Delay": { "Compute": "Delay" }
+      },
+      {
+        "Type": "ParentState",
+        "State": "Main"
+      }
+    ]
+  }
+}
+```
+
+The logic here should be very familiar - the only difference is that we've added and described the parameters in the **Parameters** block, and now use a **ParentState** action to signify that this is going to use one of the **_ImportedStates** from the template itself.
+
+If we would update the template and replace the Timeout block with it, it would look like this, for example, in the **Sleep** state.
+
+```json
+{
+  "Sensor": {
+    "Type": "State",
+    "State": "Sleep"
+  },
+  "Instructions": [
+    {
+      "Reference": "Component_Instruction_State_Timeout",
+      "Modify": {
+        "_ExportStates": ["Idle.Default"],
+        "Delay": [30, 45]
+      }
+    }
+  ]
+}
+```
+
+We won't replace this everywhere in the tutorial just yet, but we'll use this knowledge to replace even more code with components.

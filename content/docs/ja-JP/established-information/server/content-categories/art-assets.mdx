@@ -1,123 +1,123 @@
 ---
-title: Modelling & Texturing / Art Assets
-description: Information about 3D Modelling, Texturing and Art Assets in Hytale.
+title: モデリング＆テクスチャ / アート素材
+description: Hytaleのモデリング、テクスチャ、アート素材に関する情報
 ---
 
-# Modelling / Texture Art
+# モデリング・テクスチャ
 
-Hytale provides comprehensive support for 3D modeling and texture art creation, with specialized tools and workflows designed to maintain the game's distinctive visual style while empowering creators.
+Hytaleは3Dモデリングとテクスチャ制作を全面的にサポートしており、ゲームの独特スタイルを保ちつつ、クリエイターの創作を力強く後押しするための専用のツールと作業フローを提供します。
 
-## Current Mod Tooling
+## 現在のMODツール
 
 ### Blockbench
 
-Hytale uses **Blockbench** as the primary tool for 3D modeling and animation:
+Hytaleは3Dモデリングとアニメーションの制作に**Blockbench**をメインに使用しています。
 
-* **Official support**: Used for "creating Hytale models, textures, and animations"
-* **Special plugin**: Hytale will have a dedicated Blockbench plugin, to be released ASAP
-* **Direct compatibility**: The plugin allows creators to "create Hytale-compatible models, textures, and animations directly in Blockbench"
-* **Replaces legacy tools**: Fully replaces the old Hytale Model Maker to better support established creative workflows in the community
-* **Safety features**: Only allows you to add things compatible with the engine, so no need to worry about breaking anything
+* **公式サポート**：Hytaleのモデル、テクスチャ、アニメーションに使用されています。
+* **独自のプラグイン**：Hytaleには専用のBlockbenchプラグインが用意されます。これはできるだけ早くリリースされます。
+* **直接的な互換性**：Blockbench内で直接Hytaleのモデル、テクスチャ、アニメーションを作成することができます
+* **古いツールを置き換える**：コミュニティで親しまれてきた方法をサポートするため、古いモデリングソフトを置き換えます。
+* **安全機能**：互換性のある要素だけをエンジンに追加できるので、破損の心配はありません。
 
-## Model Constraints
+## モデルの制約
 
-### Geometry Types
+### ジオメトリの種類
 
-The vast majority of models in Hytale are constrained to specific geometric primitives:
+Hytaleのモデルは主に立方体と四角形のみという特定の基本形状に限定されている。
 
-**3D Elements**:
+**3Dの要素**
 
-* Blocks
-* Cuboids
-* Boxes
+* ブロック
+* 直方体
+* 立方体
 
-**2D Elements**:
+**2Dの要素**
 
-* Quads
-* Rectangles
-* Planes (composed of 2 triangles)
+* 四角形
+* 長方形
+* 平面（2つの三角形で構成される）
 
-### Design Philosophy
+### デザインの考え方
 
-These constraints serve multiple purposes:
+これらの制約はいくつかの目的があります。
 
-* **Performance optimization**: Ensures efficient rendering and game performance
-* **Consistent art style**: Maintains Hytale's distinctive visual aesthetic
-* **Seamless integration**: Makes mods feel more cohesive with the base game
+* **パフォーマンスの最適化**：効率的なレンダリングをゲームパフォーマンスを確保します。
+* **一貫した絵柄**：Hytale独自のボクセル風アートスタイルを維持します。
+* **シームレスな連携**：MODとゲームの一体感を持たせます。
 
-## Pixel Density Standards
+## 解像度の基準
 
-Hytale uses different pixel densities for different types of content:
+Hytaleは、コンテンツの種類よって異なる解像度を使用します。
 
-### Standard Densities
+### 基本の解像度
 
-* **Blocks**: 32px density
-* **Player models**: 64px density
-* **Mobs**: Likely also 64px density
-* **Player equipment**: 64px density (weapons, cosmetics, armor, etc.)
+* **ブロック**：32px
+* **プレイヤーモデル**：64px
+* **モブ**: 同様におそらく64px
+* **プレイヤー装備**: 64px (武器、装飾品、防具など)
 
-### Flexibility
+### 柔軟性
 
-* **Wrong density handling**: Using incorrect density may cause assets to appear at the wrong size, but will not cause import failures
-* **No strict restrictions**: Pixel ratio, rotation, and scaling are not restricted
-* **Forgiving system**: The tools are designed to be flexible while maintaining compatibility
+* **間違った解像度の使用**：解像度の間違いにより、アセットが意図しない大きさで描画される可能性があります。これが原因でインポートに失敗することはありません。
+* **厳しい制限はありません**：ピクセル比、回転、拡大縮小に制限はありません。
+* **寛容なシステム**：ツールは互換性を持つように柔軟に設計されています。
 
-## Hytale Asset Editor
+## Hytaleアセットエディタ
 
-### In-Game Editor
+### ゲーム内エディタ
 
-The Asset Editor is a comprehensive tool that will ship with the game:
+アセットエディタは、ゲームに付属する多機能ツールです。
 
-* **Ships with game**: Available to all players from launch
-* **External tool requirement**: Does not support image editing, you must use external tools for texture creation
-* **Data asset editing**: Primary editor for working with Data Assets
-* **Expanding capabilities**: Currently supports most features, though has limitations around NPCs, worldgen, and interactions that will expand over time
+* **ゲームに付属**：発売時から全プレイヤーが使用可能です。
+* **外部ツールが必要**：画像編集はサポートしていません。テクスチャの作成には外部ツールを使用してください。
+* **データアセットの編集**：データアセットを編集する主要なエディタ。
+* **拡張中の機能**：現在はほとんどの機能に対応していますが、NPC、世界の生成、インタラクションに関する制限があり、今後拡張予定です。
 
-### Particle Creation
+### パーティクルの作成
 
-The Asset Editor includes robust particle creation tools:
+アセットエディタには強力なパーティクル作成ツールが入っています。
 
-* **In-game creation**: Particles are created directly in-game using the Asset Editor
-* **Industry standard**: Particle logic is robust and similar to Unity/Unreal particle systems
-* **Event-driven**: Particles can be spawned on events or interactions (like opening doors)
-* **Entity attachment**: Can attach particles to entities with specific attachment points
-* **Dynamic movement**: Supports particles moving with their anchor points
-* **Time delays**: Supports time-based particle effects and delays
+* **ゲーム内で作成**： パーティクルはアセットエディタを使ってゲーム内で直接作成します。
+* **業界基準**：パーティクルロジックはUnityやUnrealのパーティクルシステムと同じように堅牢です。
+* **イベント駆動**：パーティクルはイベントやインタラクション（ドアを開ける時など）で生成されます。
+* **エンティティのアタッチメント**：特定のアタッチメントポイントを持つエンティティにパーティクルを取り付けることができます。
+* **ダイナミックな動き**：アンカーポイントを使ったパーティクルの移動をサポートします。
+* **時間遅延**：時間ベースのパーティクル効果と遅延をサポート
 
-## Materials
+## マテリアル
 
-### Optimization Focus
+### 最適化の焦点
 
-Hytale takes a different approach to materials compared to other engines:
+Hytaleはマテリアルに対して他のエンジンと異なるアプローチを採用しています。
 
-* **Pre-optimized**: Materials are very optimized and artists cannot create custom materials
-* **Performance priority**: This constraint ensures consistent performance across all content
-* **Curated system**: Maintains visual consistency while maximizing efficiency
+* **事前最適化**：マテリアルは高度に最適化されており、制作者はカスタムマテリアルを作成できません。
+* **パフォーマンスの優先順位**：この制約が全てのコンテンツで一貫したパフォーマンスを保証します。
+* **管理されたシステム**：ビジュアルの一貫性を維持しつつ、効率を最大化します。
 
-## Best Practices
+## ベストプラクティス
 
-### Asset Optimization
+### アセットの最適化
 
-Key considerations from Hytale's development team:
+Hytale開発チームからの重要な考慮点
 
-* **Mindful resource usage**: Be conscious of how many blocks/quads you use and texture file sizes
-* **Avoid bloat**: Goal is to prevent unnecessary asset bloat that could impact performance
-* **Efficiency focus**: Balance visual quality with technical constraints
+* **リソースの使用に注意**：使用する立方体/平面の数、テクスチャのファイルサイズ
+* **肥大化を避ける**：不要なアセット肥大化を防ぎ、パフォーマンスへの影響を防止することが目標にしましょう。
+* **効率重視**：視覚的な品質と技術的な制約のバランス。
 
-### Future Documentation
+### 今後のドキュメント
 
-* **Best practice guide**: A comprehensive "best practice" guide for art and modeling will be released at some point
-* **Flexible boundaries**: Most creative goals can be achieved without breaking anything in the system
-* **Community-driven workflows**: Tools are designed to support established creative workflows in the modding community
+* **ベストプラクティスガイド**: アートとモデリングのための包括的な「ベストプラクティス」ガイドがいつかリリースされます
+* **柔軟な境界**：ほとんどの創作目標は、システムを壊すことなく実現できます。
+* **コミュニティ主導のワークフロー**：ツールは、MOD開発コミュニティで親しまれてきたワークフローをサポートするように設計されています
 
-## Integration with Development Pipeline
+## 開発パイプラインとの連携
 
-The modeling and texture art workflow integrates seamlessly with Hytale's broader development ecosystem:
+モデリング・テクスチャ制作のワークフローはHytale全体の開発環境と完全に連携します。
 
-* **Asset Editor compatibility**: Models created in Blockbench work directly with the Hytale Asset Editor
-* **Data Asset integration**: 3D models can be configured and customized through Data Assets
-* **Visual Scripting support**: Models can be controlled and animated through Visual Scripting
-* **Java plugin extensibility**: Advanced model behaviors can be implemented through Java plugins
-* **Particle integration**: Models can have particles attached at specific points for enhanced visual effects
+* **アセットエディタの互換性**：Blockbenchで作成されたモデルはHytaleアセットエディタで直接動作します。
+* **データアセット連携**：3Dモデルはデータアセットを通じて設定・カスタマイズ可能です。
+* **ビジュアルスクリプティング対応**：モデルはビジュアルスクリプティングで制御・アニメーション可能です。
+* **Javaプラグインの拡張性**：高度なモデル動作はJavaプラグインを通じて実装できます。
+* **パーティクル連携**：モデルの特定の位置にパーティクルを取り付け、視覚効果を高めることができます。
 
-This integrated approach ensures that 3D modeling and texture art aren't isolated creative processes, but core components of Hytale's comprehensive development environment.
+この連携手法により、3Dモデリングとテクスチャ制作は独立した作業ではなく、Hytale開発環境の中心要素となります。

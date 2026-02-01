@@ -1,80 +1,77 @@
 ---
-title: UI Customization
-description: Information about UI customization in Hytale.
+title: |
+  UIカスタマイズ
+description: HytaleのUIカスタマイズに関する情報。
 ---
 
-UI can be customized via **server-side** modding. Many of the UI pages shown to players are available to be modified by server owners through mods.
+UIは**サーバーサイドのMOD**によってカスタマイズできます。 プレイヤーに表示される多くのUIページは、サーバー所有者がMODを通じて変更できるようになっています。
 
-## UI Customization in Hytale
+## HytaleのUIカスタマイズ
 
-Hytale provides extensive UI customization capabilities through server-side modding, allowing server owners to modify many of the UI pages that players interact with.
+Hytaleは、サーバーサイドのMODを通じてUIカスタマイズの幅広い機能を提供しており、サーバー所有者はプレイヤーが操作する多くのUI ページを変更できます。
 
-### Control Flow
+### 制御フロー
 
-The UI system in Hytale follows a specific control flow pattern:
+HytaleのUIシステムは、特定の制御フロー パターンに従います。
 
-1. Server sends UI data to the client
-2. Client renders the UI
-3. User interacts with the UI (e.g., pressing a button)
-4. Client sends the interaction event to the server
-5. Server executes the callback logic for the event
+1. サーバーはクライアントにUIデータを送信します
+2. クライアントがUIをレンダリングする
+3. ユーザーがUIを操作する（例：ボタンを押す）
+4. クライアントはインタラクションイベントをサーバーに送信する
+5. サーバーはイベントのコールバック処理を実行します
 
-This architecture means:
+このアーキテクチャは次のことを意味します。
 
-* The client is responsible for rendering UI and sending user interactions to the server
-* The server handles all the actual logic behind user interactions
+* クライアントはUIをレンダリングし、ユーザーインタラクションをサーバーに送信する役割を担う。
+* サーバーは、ユーザーの操作に関するすべての実際の処理を担います。
 
-<Callout type="warning" title="Possible Performance Implications">
+<Callout type="warning" title="パフォーマンスへの影響の可能性">
   <span>
-    Because the server processes all UI logic, there is an inherent latency
-    impact on UI responsiveness. Button clicks and other interactions must
-    travel to the server before taking effect, meaning network ping directly
-    affects UI responsiveness.
+    すべてのUI動作はサーバーで処理されるため、UIの反応にはラグが生じます。 ボタンのクリックやその他の操作は、反映されるより先にサーバーへ送信される必要があるため、ネットワークの遅延（ping）がUIの反応速度に直接影響します。
   </span>
 
   <span>
-    Additionally, since client-side modding is not supported, no modded values
-    persist on the client.
+    さらに、クライアント側のMOD開発はサポートされていないため、MODの数値はクライアント上に保持されません。
   </span>
 </Callout>
 
-### UI Layout Assets
+### UIレイアウトアセット
 
-Hytale's UI customization system works through the following structure:
+HytaleのUIカスタマイズ システムは、次の構造で機能します。
 
-* **UI Layout**: Sent to the client as an asset
-* **UI Behavior**: Defined in Java code
-* **Custom Layouts**: Enables creation of bespoke UI layouts rather than repurposing existing ones (unlike inventory menu modifications in Minecraft)
+* **UIレイアウト**：アセットとしてクライアントに送信
+* **UI動作**：Javaのコードで定義
+* **カスタム レイアウト**：既存のレイアウトを再利用するのではなく、オリジナルでUIレイアウトを作成できます（Minecraftのインベントリメニューの変更とは異なります）
 
-### UI Framework Implementations
+### UIフレームワークの実装
 
-Hytale currently supports multiple UI implementations, with plans to consolidate on NoesisGUI:
+Hytaleは現在複数のUI実装をサポートしており、NoesisGUIに統合する予定です。
 
-#### Legacy Implementation
+#### 従来の実装
 
-* Serves as an example of server modding capabilities
-* Uses a combination of in-game elements, UI Markup Assets, and Java mod code
-* Utilizes a legacy custom markup language
-* Will be deprecated in favor of NoesisGUI
+* サーバーでのMODの機能の一例として機能します。
+* ゲーム内要素、UIマークアップアセット、JavaのMODコードを組み合わせて使用​​します
+* 従来の自作マークアップ言語を利用する
+* NoesisGUIに置き換えられるため廃止される予定です
 
-#### NoesisGUI (Primary Framework)
+#### NoesisGUI (主要なフレームワーク)
 
-* Uses XAML Markup Language for UI definition
-* Supports multiple languages for internationalization
-* Runs on C# bindings on the client side (not C++)
-* Represents the future direction of Hytale's UI system
+* UI定義にはXAMLマークアップ言語を使用する
+* 国際化のために複数の言語をサポート
+* クライアント側ではC#バインディングで実行されます（C++ではありません）
+* HytaleのUIシステムの今後の方向性を示しています。
 
-#### Third Framework
+#### 第三のフレームワーク
 
-* Currently being phased out
-* Will be replaced by NoesisGUI as part of the consolidation effort
+* 現在段階的に廃止中
+* 統合作業の一環としてNoesisGUIに置き換えられます
 
-### Performance Considerations
+### パフォーマンスに関する考慮事項
 
-Due to the server-side nature of UI processing, there are inherent performance characteristics to consider:
+UI処理がサーバー側で行われる性質上、考慮すべき固有のパフォーマンス特性があります。
 
-* **Latency Impact**: Button clicks and UI interactions must travel to the server before taking effect, meaning network ping directly affects UI responsiveness
-* **No Client Persistence**: Since client-side modding is not supported, no modded values persist on the client
-* **Optimized Architecture**: Hytale's system is designed to minimize latency through efficient communication protocols and optimized server performance, ensuring smooth interactions despite server-side processing requirements
+* **遅延の影響**：ボタンのクリックやUIの操作は、効果を発揮するより先にサーバーに送信される必要があるため、ネットワークのpingはUIの応答性に直接影響します。
+* **クライアントでの保存無し**: クライアント側のMod開発はサポートされていないため、Modによる値はクライアント側に保持されません。
+* **最適化されたアーキテクチャ**：Hytaleのシステムは、効率的な通信プロトコルと最適化されたサーバーパフォーマンスによって遅延を最小限に抑えるよう設計されており、サーバー側での処理が必要であってもスムーズな操作を実現します。
 
-The architecture prioritizes security and consistency by centralizing UI logic on the server while maintaining responsive user experiences
+このアーキテクチャは、UIロジックをサーバー側に集約することでセキュリティと一貫性を優先しつつ、ユーザーにとって応答性の高い操作体験を維持します。

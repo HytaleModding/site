@@ -1,6 +1,6 @@
 ---
-title: Server Code Insights
-description: Slikey shared some insights about server code on 12/15/2025. Este documento abrange os principais pontos e os tópicos dessa discussão.
+title: Informações sobre o código do servidor
+description: Slikey compartilhou algumas informações sobre o código do servidor em 15/12/2025. Este documento abrange os principais pontos e os tópicos dessa discussão.
 ---
 
 <Callout type="info" title="Nota">
@@ -15,7 +15,7 @@ The server will be released as shared source - we will have the source code with
 
 ### Licença
 
-The license permits usage for any **hytale related** things, so as long as you dont use the server / source to make your own game or sell their algorithms.
+The license permits usage for any **hytale related** things, so as long as you don't use the server / source to make your own game or sell their algorithms.
 
 # Sistema de permissão
 
@@ -70,17 +70,17 @@ Alright, I'll drop some code snippets here for a simple plugin called "BlockSpaw
 There is more code here in general but it shows the Asset System and the plugin layout. You can see that the asset system defines "Codecs" which are used to serialize and deserialize data. Using these codecs we can generate schemas.
 Let's say you connect to a server and open the asset editor: the server will send those schemas - so every single asset type defined server side, even you own, now become part of the asset editor on the client - no need to do anything, you just get to enjoy the editor UI for making your assets that you defined
 
-![Código 1 — Block Spawner](/assets/blockspawner-code-1.png)
-![Código 2 — Block Spawner](/assets/blockspawner-code-2.png)
-![Código 3 — Block Spawner](/assets/blockspawner-code-3.png)
-![Manifesto — Block Spawner](/assets/blockspawner-manifest.png)
+![Block Spawner Code 1](/assets/blockspawner-code-1.png)
+![Block Spawner Code 2](/assets/blockspawner-code-2.png)
+![Block Spawner Code 3](/assets/blockspawner-code-3.png)
+![Block Spawner Manifest](/assets/blockspawner-manifest.png)
 
 > i guess this part also shows a bit how we use constants to store some language keys - Slikey
 > (in reference to the image below)
 
-![Constantes para armazenar chaves de idioma](/assets/constants.png)
+![Constants to store Language Keys](/assets/constants.png)
 
-> you can completely customize the chunk storage provider, we for example made one that is just empty where it doesnt load any chunks from disk
+> you can completely customize the chunk storage provider, we for example made one that is just empty where it doesn't load any chunks from disk
 > you could add an MySQLChunkStorageProvider and it could read the data from a database
 > and the same goes for worldgen, you can simply implement this interface to generate a world generator - slikey
 
@@ -90,4 +90,4 @@ Let's say you connect to a server and open the asset editor: the server will sen
 
 > i mean here are all the weapons defined, you tell me, obviously you will discover limitations but i think there is plenty of room to make changes - this stuff is actually hard though, there is a lot of QoL to have happen here
 
-![Armas 1](/assets/weapons-1.png)
+![Weapons 1](/assets/weapons-1.png)

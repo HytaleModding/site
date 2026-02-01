@@ -19,13 +19,13 @@
     "forum": "Forums",
     "discord": "Pievienojies kopienai!",
     "memberCount": "{count} Biedri",
-    "countdown": "Hytale releases in {countdown}",
+    "countdown": "Hytale izlaidīs {countdown}",
     "countdownUnits": {
       "hours": "h",
       "minutes": "m",
       "seconds": "s"
     },
-    "hytaleReleased": "Hytale is out!"
+    "hytaleReleased": "Hytale ir iznācis!"
   },
   "sponsors": {
     "title": "Atbalsti Mūs",
@@ -37,7 +37,11 @@
     "failedToLoad": "Neizdevās ielādēt.",
     "gitInfoUnavailable": "Git info nav pieejams",
     "credit": "Rakstīja",
-    "supportUs": "Atbalsti Mūs"
+    "supportUs": "Atbalsti Mūs",
+    "officialDocumentationNotice": {
+      "title": "Oficiālā Hytale Dokumentācija",
+      "description": "Visu saturu šajā sadaļā sniedz **Hypixel Studios Canada Inc.** un ir prezentēts bez lielām izmaiņām, izņemot no HytaleModding Komandas vizuālā dizaina pielāgojumiem."
+    }
   },
   "meta": {
     "established_information": {
@@ -66,6 +70,20 @@
       "title": "Rokasgrāmatas",
       "java_basics": {
         "title": "Java Pamati"
+      }
+    },
+    "official_documentation": {
+      "worldgen": {
+        "title": "Pasaules Ģenerēšana",
+        "pack_tutorial": {
+          "title": "Worldgen Pakas Pamācība"
+        },
+        "technical_hytale_generator": {
+          "title": "Tehnisks Hytale Ģenerātors"
+        },
+        "worldgen_tutorial": {
+          "title": "Worldgen Pamācība"
+        }
       }
     },
     "community_projects": {

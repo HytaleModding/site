@@ -1,0 +1,169 @@
+---
+title: Spawning NPCs
+description: Learn how to easily spawn NPCs using the NPCPlugin helper.
+authors:
+  - name: Corin
+    link: https://github.com/Corin-alt
+---
+
+In this guide, you will learn how to spawn Non-Player Characters (NPCs) using the `NPCPlugin` helper. This is a more convenient alternative to manually spawning entities with `Holder<EntityStore>` as described in the [Spawning Entities](./spawning-entities) guide.
+
+It is **highly recommended** to familiarize yourself with the Entity Component System (ECS) before proceeding. You can find the ECS guide [here](./ecs).
+
+## Using NPCPlugin
+
+The `NPCPlugin` simplifies the process of creating an entity, attaching a model, and handling initial setup. It abstracts away much of the boilerplate required when constructing a `Holder` manually.
+
+### Spawning the NPC
+
+To spawn an NPC, you use the `NPCPlugin.get().spawnNPC(...)` method. This handles the creation of the entity, assigning the model, and positioning it in the world.
+
+```java
+Pair<Ref<EntityStore>, INonPlayerCharacter> result = NPCPlugin.get().spawnNPC(store, "Kweebec_Sapling", null, position, rotation);
+```
+
+**Parameters:**
+
+- `store`: The entity store where the NPC will exist.
+- `"Kweebec_Sapling"`: The key/name of the entity model/type.
+- `null`: Optional configuration (passed as null here).
+- `position`: Where to spawn the NPC.
+- `rotation`: How the NPC is oriented.
+
+### Handling the Result
+
+The method returns a `Pair`. You should always check if the result is `not null` to ensure the spawn was successful.
+
+- `result.first()`: Returns the `Ref<EntityStore>`, which is the reference to the entity in the ECS. You need this to add components or modify the entity later.
+- `result.second()`: Returns the `INonPlayerCharacter` interface, providing NPC-specific methods.
+
+```java
+if (result != null) {
+    Ref<EntityStore> npcRef = result.first();
+    INonPlayerCharacter npc = result.second();
+    
+    // Proceed with customization...
+    setupNPCInventory(npcRef, store);
+}
+```
+
+## Customizing the NPC
+
+Once spawned, you can customize the NPC, for example, by modifying its inventory.
+
+### Accessing the Inventory
+
+First, retrieve the `NPCEntity` component to access inventory settings.
+
+```java
+NPCEntity npcComponent = store.getComponent(npcRef, Objects.requireNonNull(NPCEntity.getComponentType()));
+
+// Initialize inventory size (e.g., 3 rows, 9 columns, 0 offset)
+npcComponent.setInventorySize(3, 9, 0);
+```
+
+### Adding Items
+
+You can then access the `Inventory` object to add items or equip armor.
+
+```java
+Inventory inventory = npcComponent.getInventory();
+
+// Add a Thorium Mace to the first slot of the hotbar
+inventory.getHotbar().addItemStackToSlot((short) 0, new ItemStack("Weapon_Mace_Thorium", 1));
+
+// Equip a Thorium Helmet using the InventoryHelper
+InventoryHelper.useArmor(inventory.getArmor(), "Armor_Thorium_Head");
+```
+
+> **Note:** `InventoryHelper` is a utility class provided directly by the Hytale API.
+
+## Full Example Command
+
+Here is the complete code for a command that spawns a "Kweebec Sapling" NPC at the player's location and sets up its inventory.
+
+```java
+import com.example.npc.NPCPlugin; // Adjust imports as necessary
+import hytale.server.plugin.npc.INonPlayerCharacter;
+import hytale.server.plugin.npc.NPCEntity;
+// ... other imports
+
+public class SpawnNpcCommand extends AbstractPlayerCommand {
+    public SpawnNpcCommand() {
+        // Register the command /npc which will trigger the "spawn npc" action
+        super("npc", "spawn npc");
+    }
+
+    @Override
+    protected void execute(@NonNullDecl CommandContext commandContext,
+            @NonNullDecl Store<EntityStore> store,
+            @NonNullDecl Ref<EntityStore> ref,
+            @NonNullDecl PlayerRef playerRef,
+            @NonNullDecl World world) {
+
+        // Get the player's current position to spawn the NPC at the same location
+        Vector3d position = playerRef.getTransform().getPosition();
+        // Define the initial rotation (facing direction) for the NPC
+        Vector3f rotation = new Vector3f(0, 0, 0);
+
+        // Use the NPCPlugin helper to spawn the NPC.
+        Pair<Ref<EntityStore>, INonPlayerCharacter> result = NPCPlugin.get().spawnNPC(store, "Kweebec_Sapling", null,
+                position, rotation);
+
+        if (result != null) {
+            // Successfully spawned
+            Ref<EntityStore> npcRef = result.first();
+            // Retrieve the NPC interface if needed for further interaction
+            INonPlayerCharacter npc = result.second();
+
+            // Set up the NPC's inventory and equipment
+            setupNPCInventory(npcRef, store);
+        }
+    }
+
+    /**
+     * Configures the inventory for the spawned NPC.
+     */
+    public void setupNPCInventory(Ref<EntityStore> npcRef, Store<EntityStore> store) {
+        // Retrieve the NPCEntity component to access inventory settings
+        NPCEntity npcComponent = store.getComponent(npcRef, Objects.requireNonNull(NPCEntity.getComponentType()));
+        
+        if (npcComponent == null)
+            return;
+
+        // Initialize inventory size (e.g., 3 rows, 9 columns, 0 offset)
+        npcComponent.setInventorySize(3, 9, 0);
+        
+        // Add items to the initialized inventory
+        addItemsToNPCInventory(npcComponent.getInventory());
+    }
+
+    /**
+     * Adds specific items and armor to the NPC's inventory.
+     */
+    public void addItemsToNPCInventory(Inventory inventory) {
+        // Add a Thorium Mace to the first slot of the hotbar
+        inventory.getHotbar().addItemStackToSlot((short) 0, new ItemStack("Weapon_Mace_Thorium", 1));
+        
+        // Equip a Thorium Helmet using the InventoryHelper
+        InventoryHelper.useArmor(inventory.getArmor(), "Armor_Thorium_Head");
+        
+        // Set the active hotbar slot to the weapon
+        inventory.setActiveHotbarSlot((byte) 0);
+    }
+}
+```
+
+## Registering the Command
+
+Finally, do not forget to register the command in your main plugin class:
+
+```java
+public class MyHytaleMod extends JavaPlugin {
+
+    @Override
+    protected void setup() {
+        this.getCommandRegistry().registerCommand(new SpawnNpcCommand());
+    }
+}
+```

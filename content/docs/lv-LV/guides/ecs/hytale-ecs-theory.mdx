@@ -1,0 +1,161 @@
+---
+title: Hytale ECS Teorija
+description: Šajā pamācībā uzzināsi par Hytale jaudīgās ECS sistēmas pamatiem, kā arī izveidosi savu komponentu, sistēmu un strādāsi kopā ar citām sistēmām, lai izveidotu spēles loģiku.
+authors:
+  - name: oskarscot
+    url: https://oskar.scot
+  - name: musava_ribica
+    url: https://forum.hytalemodding.dev/u/musava_ribica
+---
+
+## Store/Glabātuve
+
+`Store` klase ir Hytale ECS sistēmas kodols, kas atbild par vienību glabāšanu. Ja jebkad nepieciešams piekļūt vienībai, tad jāpiekļūst glabātuvei. Tā izmanto Archetypes konceptu, kur dati ir sagrubēti gabalos. Piemēram, ja mums ir 100 Trorki, tie būs sagrupēti chunk/gabalos kopā ar to komponentiem, lai tie būtu vieglāk un ātrāk pieejami.
+
+## EntityStore
+
+Skatoties cauri Hytale servera kodam, tu atradīsi `Store` kā `EntityStore` tipu. Tā nosaukums var būt maldinošs, jo vārdu salikums arī liecina par Vienību Glabāšanu.
+Bet vai tad tikko neizrunājām, ka `Store` jau tieši to dara? `EntityStore` klase implementē `WorldProvider`, kas nozīmē, ka `EntityStore` atbild par pieeju specifiskām Hytale `World` pasaulēm. Tas uztur iekšējās kartes `entitiesByUuid` un `networkIdToRef`, kas ļauj atrast specifiskas vienībes pēc to patstāvīgajiem ID, vai tīkla ID.
+
+Katrai Entity/Vienībai ir gan `UUIDComponent`, gan `NetworkId`, ko izmanto `EntityStore`, lai uzmeklētu vienības iekš `Store`.
+
+## ChunkStore
+
+Vēl viens `Store` tips ar ko varētu sastapties ir `ChunkStore`. Tas atbild par visu bloku komponentu glabāšanu, kas saistīti ar `World`. Tu vari iegūt `WorldChunk`-us, kas ir vispārējie gabalu Komponenti.
+`WorldChunk` komponenta sastāvā ir `EntityChunk`, kas tur visas Vienības, kas ir iekš gabala, kā arī to references uz EntityStore. Tas arī tur `BlockChunk`, kas sastāv no `BlockSection`-s. Pastāv vēl citi komponenti, kas veido vispārējo pasauli un gabalu sistēmu, bet pagaidām šīs ir pamata zināšanas priekš `ChunkStore`. Tu vari to izmantot, lai iegūtu datus par gabaliem, to blokiem, vienībām, kas atrodas gabalā un veidot bloku, un gabalu sistēmas.
+
+## Holder
+
+Holder/Turētājs pamatā ir vienības plāns. Pirms vienība eksistē Glabātuvē (un pasaulē), tā eksistē kā `Holder`. Tā ievāc un tur nepieciešamos komponentus (datus). Tu vari salīdzināt to ar analogu, kā iepirkšanās grozu. Tu vispirms paņem visus vajadzīgos komponentus veikalā un tikai tad dodies uz kasi, kas paņems groza saturu, izveidos derīgus vienības ID un atdos tos atpakaļ ar čeku (Ref).
+
+Apskatīsim kādu piemēru: Spēlētāja inicializācija. Iekš `Universe`, `addPlayer` metode demonstrē to perfekti.
+Kad spēlētājs savienojas, mēs uzreiz neiemetam viņu ECS. Mēs vispirms izveidojam spēlētāja datus iekš Holder.
+Pievērs uzmanību `PlayerStorage#load` metodei, kad tā ielādē spēlētāju no diska un atgriež `CompletableFuture<Holder<EntityStore>>`.
+Metode ir asinhroniska un nākotnē turēs Holder kaut kam iekš `EntityStore`.
+Atver `Universe ` klasi, atrodi `addPlayer` metodi un izlasi to no sākuma līdz beigām. Tici man, tas ļoti palīdzēs tad, kad redzēsi kā vienība tiek izveidota un caur kurieni tā tiek izlaista. Beigās `Universe` izsauc `world#addPlayer`, kas (pēc notikuma) izsauc brīnišķīgo
+
+```java
+Ref<EntityStore> ref = playerRefComponent.addToStore(store);
+```
+
+un `PlayerRef#addToStore` satur šo:
+
+```java
+store.addEntity(this.holder, AddReason.LOAD);
+```
+
+## Ref (Reference)
+
+Tiem, kas pazīstami ar C++, jūs varbūt jau varat minēt ko šī klase dara pēc nosaukuma. Tikai šeit Ref ir drošs "segvārds", vai rādītājs uz vienību. Tev **NEKAD** nevajadzētu turēt tiešu atsauci uz vienības objektu, bet tā vietā izmanto Ref. Tas seko vai vienība ir joprojām dzīva. Ja tu izsauc `validate()` uz Ref priekš vienības, kas izdzēsta, tad izmetīs exception/izņēmumu.
+
+## Spēlētāja Komponenti
+
+Iekš Hytale "Player" nav tikai viens objekts. Tā ir viena vienība, kas satur vairākus specializētus komponentus. Modificēšanai ir svarīgi saprast atšķirību starp `Player` un `PlayerRef`.
+
+### PlayerRef
+
+Neskatoties uz tā nosaukumu, PlayerRef ir komponents, nevis abstrakta reference. Tas reprezentē spēlētāja savienojumu un identitāti. Tas ir speciāls komponents, kas paliek aktīvs, kamēr spēlētājs ir savienots ar serveri, pat, ja spēlētājs nomaina pasaules. Galvenie dati, ko tas glabā, ir spēlētāja lietotājvārds, UUID, valoda, kā arī pakešu apstrādātājs.
+
+### Player
+
+`Player` komponents reprezentē spēlētāja fizisko klātbūtni. Tas eksistē tikai tad, kad spēlētājs ir ievietots pasaulē. Nodrošinot piekļuvi spēles specifiskiem datiem, šis komponents atšķiras atkarībā no pasaules.
+
+Lai mijiedarbotos ar vienību, tu izmanto `Store`, lai iegūtu tā komponentus caur `ComponentType`. Tā kā Hytale izmanto atāķētu sistēmu, tu neizsauc `entity.getHealth()`. Tā vietā, tu prasi `Store` sagādāt veselības datus saistītus ar tās vienības `Ref`.
+
+```java
+@Override
+protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<EntityStore> store, 
+    @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {
+  Player player = store.getComponent(ref, Player.getComponentType());
+  UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
+  TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
+  player.sendMessage(Message.raw("UUIDComponent : " + component.getUuid()));
+  player.sendMessage(Message.raw("Transform : " + transform.getPosition()));
+}
+```
+
+Šeit mēs izmantojam `Store<EntityStore>`, lai piekļūtu `Player` komponentam izmantojot `Ref<EntityStore>`. Mēs varam darīt to pašu ar citiem komponentiem, piemēram, 'UUIDComponent' vai 'TransformComponent', lai izgūtu entītiju Transform, kas satur pozīciju un rotāciju.
+
+## Komponenti
+
+Komponenti ir tīri datu konteineri. Tie tur statusu, bet ne loģiku. Iekš Hytale, komponentiem jāimplementē `Component<EntityStore>` un jāsniedz metodes klons priekš ECS, lai ECS kopētu to pēc vajadzības.
+
+```java
+public class PoisonComponent implements Component<EntityStore> {
+
+  private float damagePerTick;
+  private float tickInterval;
+  private int remainingTicks;
+  private float elapsedTime;
+
+  public PoisonComponent() {
+    this(5f, 1.0f, 10);
+  }
+
+  public PoisonComponent(float damagePerTick, float tickInterval, int totalTicks) {
+    this.damagePerTick = damagePerTick;
+    this.tickInterval = tickInterval;
+    this.remainingTicks = totalTicks;
+    this.elapsedTime = 0f;
+  }
+
+  public PoisonComponent(PoisonComponent other) {
+    this.damagePerTick = other.damagePerTick;
+    this.tickInterval = other.tickInterval;
+    this.remainingTicks = other.remainingTicks;
+    this.elapsedTime = other.elapsedTime;
+  }
+
+  @Nullable
+  @Override
+  public Component<EntityStore> clone() {
+    return new PoisonComponent(this);
+  }
+
+  public float getDamagePerTick() {
+    return damagePerTick;
+  }
+
+  public float getTickInterval() {
+    return tickInterval;
+  }
+
+  public int getRemainingTicks() {
+    return remainingTicks;
+  }
+
+  public float getElapsedTime() {
+    return elapsedTime;
+  }
+
+  public void addElapsedTime(float dt) {
+    this.elapsedTime += dt;
+  }
+
+  public void resetElapsedTime() {
+    this.elapsedTime = 0f;
+  }
+
+  public void decrementRemainingTicks() {
+    this.remainingTicks--;
+  }
+
+  public boolean isExpired() {
+    return this.remainingTicks <= 0;
+  }
+}
+```
+
+Noklusējuma konstruktors ir nepieciešams reģistrācijas rūpnīcai. `clone()` izmanto kopēšanas konstruktoru, ko ECS izsauc iekšēji pēc vajadzības, lai dublicētu komponenta datus.
+
+## CommandBuffer
+
+`CommandBuffer` sastāda rindu vienību izmaiņām. Izmanto to, nevis tieši modificē glabātuvi, lai nodrošinātu drošību un pareizu kārtību. Tu to izmantosi, lai pievienotu komponentus, noņemtu komponentus un veiktu bojājumus.
+
+```java
+commandBuffer.addComponent(ref, componentType, new MyComponent());
+
+commandBuffer.removeComponent(ref, componentType);
+
+MyComponent comp = commandBuffer.getComponent(ref, componentType);
+```

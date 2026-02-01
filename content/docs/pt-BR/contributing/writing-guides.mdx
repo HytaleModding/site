@@ -1,86 +1,86 @@
 ---
-title: Writing Guides
+title: Escrevendo guias
 ---
 
-## Creating a guide file
+## Criando um arquivo de guia
 
-To start writing a guide, you need to create a file with extension `.mdx`. You need to create this file inside the `/content/docs/en` directory, now it depends in which section you want to make the guide, so you can decide which folder you should put it in after that.
+Para começar a escrever um guia, crie um arquivo com a extensão `.mdx`. Crie esse arquivo dentro do diretório `/content/docs/en`. O local exato dependerá da seção onde deseja incluir o guia. Por isso, escolha a pasta apropriada após esse caminho.
 
-Suppose I want to make a java basics guide, I'd put it in `/content/docs/en/guides/java-basics`. You'll have to do some digging to find out where you want to place it.
+Suponha que eu queira criar um guia de fundamentos do Java, então eu o colocaria em `/content/docs/en/guides/java-basics`. Você precisará investigar um pouco para descobrir onde deseja colocá-lo.
 
 <Callout>
-  If there's already a guide in the section you want to write about, you can just press on the "Edit On GitHub" button on our website and it'll take you to the folder, now you can write in the same folder to have your guide appear in the same section.
+  Se já houver um guia na seção sobre a qual você deseja escrever, basta clicar no botão "Edit On GitHub" em nosso site. Isso levará você diretamente à pasta correta. Salve seu novo guia nela para que ele apareça na mesma seção.
 </Callout>
 
 ## Frontmatter
 
-Frontmatter is the metadata of your guide, it tells our website how to display your guide. This needs to be at the very top of the file, which starts with `---` and ends with `---`.
+O frontmatter representa os metadados do seu guia. Ele informa ao nosso site como o conteúdo deve ser mostrado. Isso precisa estar no topo do arquivo, que começa com `---` e termina com `---`.
 
-Here's an example:
+Veja um exemplo abaixo:
 
 ```mdx
 ---
-title: "Java Basics"
-description: "Learn the basics of Java programming."
+title: "Fundamentos do Java"
+description: "Aprenda os conceitos básicos de programação em Java."
 authors:
-    - name: "Your Name"
-      url: "https://yourwebsite.com"
+    - name: "Seu nome"
+      url: "https://seusite.com"
 ---
 ```
 
-Now as you can see, it's pretty self explanatory, you just need to fill in the details for your specific guide. If you don't have a URL you want to link yourself to, just don't write that whole line. Additionally, the authors section is optional, so if you don't want to add it, you can just leave it out although we encourage you to do so and credit yourself.
+Como você pode ver, é bastante autoexplicativo. Basta preencher os detalhes para o seu guia específico. Caso não tenha uma URL para pôr naquele espaço, deixe-o em branco. A seção de autores é opcional. Se preferir, você pode omiti-la, mas recomendamos que a utilize para se identificar como autor do guia para obter os devidos créditos.
 
-The indentation in the frontmatter is important, so make sure to keep it consistent with the example.
+A indentação no frontmatter é fundamental. Garanta que os espaços estejam exatamente como no exemplo.
 
-## Content Structure
+## Estrutura do conteúdo
 
-You should structure the content of your guide in a clear and organized manner. Here are some tips on how to do that:
+Você deve estruturar o conteúdo do seu guia com clareza e organização. Veja abaixo algumas dicas de como fazer isso:
 
-- **Introduction:** Start with an overview of the topic and what the reader can expect to learn.
-- **Prerequisites:** List any prerequisites or prior knowledge the reader should have before diving into the guide.
-- **Step-by-Step Instructions:** Break down the content into clear, actionable steps. Use headings and subheadings to organize the information.
-- **Code Examples:** Include code snippets to illustrate key points. Make sure to explain each example thoroughly.
-- **Conclusion:** Summarize the main points and encourage the reader to explore further or try out what they've learned.
+- **Introdução:** comece com uma visão geral do tópico e o que o leitor pode esperar aprender;
+- **Pré-requisitos:** liste quaisquer pré-requisitos ou conhecimentos prévios que o leitor deva ter antes de se aprofundar no guia;
+- **Etapas das instruções:** divida o conteúdo em etapas claras e objetivas. Use títulos e subtítulos para organizar as informações;
+- **Exemplos de código:** inclua trechos de código para ilustrar os principais pontos. Certifique-se de explicar cada exemplo de forma detalhada;
+- **Conclusão:** resuma os principais pontos e incentive o leitor a explorar mais ou a colocar em prática o que aprendeu.
 
-Now if you're writing a really big section, you should split this into multiple pages so that it's easier for the reader to digest the information. No one wants to read a big wall of text all at once!
+Se você estiver escrevendo uma seção muito extensa, o ideal é dividi-la em várias páginas para que a informação seja mais fácil de ser entendida. Ninguém quer ler um enorme bloco de texto de uma só vez!
 
-When we write guides, we should also think of how people will consume them, and many people prefer to skim content rather than read it in detail. This is why it's better to split information into multiple pages, so it looks like a smaller amount of information to the reader. Also, consider using bullet points, numbered lists, and other formatting techniques to make the content more scannable.
+Ao escrever guias, devemos pensar em como as pessoas os consumirão e muitas preferem passar rapidamente pelo conteúdo em vez de lê-lo em detalhes. É por isso que é melhor dividir a informação em várias páginas, para que o conteúdo pareça menos denso para o leitor. Além disso, considere usar tópicos, listas numeradas e outras técnicas de formatação para tornar o conteúdo mais amigável.
 
-## Formatting
+## Formatação
 
-We use [Markdown](https://www.markdownguide.org/) for formatting our guides. Here are some key points to keep in mind:
+Utilizamos [Markdown](https://www.markdownguide.org/) para formatar os nossos guias. A seguir estão alguns pontos importantes a serem considerados:
 
-- Use headings (`#`, `##`, `###`) to organize your content.
-- Use bullet points and numbered lists for clarity.
-- Use code blocks (\`\`\`) for code snippets.
-- Use links to reference other guides or external resources.
+- Use títulos (`#`, `##`, `###`) para organizar o seu conteúdo;
+- Use listas com marcadores e listas numeradas para maior clareza;
+- Use blocos de código (\`\`\`) para trechos de código;
+- Use links para referenciar outros guias ou recursos externos.
 
-This is the same type of formatting you'll see on most documentation websites, and also social media platforms like Discord.
+Esse é o mesmo tipo de formatação que você verá na maioria dos sites de documentação e também em plataformas sociais, como o Discord.
 
-You can also make a Callout to highlight important information or tips. Use the following syntax:
+Você também pode usar um callout para destacar informações ou dicas importantes. Use a seguinte sintaxe:
 
 ```mdx
 <Callout>
-    This is a callout message.
+    Esta é uma mensagem em destaque de callout.
 </Callout>
 ```
 
 <Callout>
-  This is a callout message.
+  Esta é uma mensagem em destaque usando callout.
 </Callout>
 
 Você pode alterar a cor do callout adicionando um atributo `type`. Por exemplo:
 
 ```mdx
 <Callout type="info">
-    This is an info callout.
+    Isto é um callout de informação
 </Callout>
 ```
 
-Available types are: `info`, `warning`, `error`, and `success`.
+Os tipos disponíveis são: `info`, `warning`,  `error`  e `success`.
 
 ## Conclusão
 
-That's all! You are now a master at writing guides. Just remember, do not think you need to be perfect with your English, write the guide the way you will explain the topic to someone, and don't hesitate to ask for feedback or help if you need it.
+Isso é tudo! Agora você é um mestre em escrever guias. Não se preocupe em ter um inglês perfeito. Escreva o guia como se estivesse explicando o assunto para alguém e não hesite em pedir feedback ou ajuda se precisar.
 
-Happy writing!
+Boa escrita!

@@ -1,13 +1,28 @@
 ---
 title: Browsing the server.jar code
-description: Learn how to patch the server.jar and browse the source code.
+description: Learn how to decompile the HytaleServer.jar and browse the source code.
+authors:
+  - name: musava_ribica
+    url: https://github.com/IamMusavaRibica
 ---
 
-The ~~patcher~~ allows you to more easily prepare an environment for exploring the Hytale Server without publishing the decompiled code.
+Our [patcher](https://github.com/HytaleModding/patcher) tool allows you to easily prepare an environment for exploring the Hytale Server.
 
-## Setup
+## Why?
 
-- Clone the patcher `git clone https://github.com/HytaleModding/patcher.git`, and enter the directory. `cd patcher`
+When you add a compiled jar as a library, IntelliJ only decompiles class by class and doesn't let you search it. For example, you cannot right click some class and then Find Usages. This script will give you a ready to use Hytale server code as a project where you can explore anything you want.
+
+If anything goes wrong, please ping the author in [this post](https://discord.com/channels/1440173445039132724/1460707397189238785) in the Hytale Modding discord server
+
+## Instructions
+
+If you prefer watching over reading, check out the awesome video walkthrough made by Hyphen45. Note that the written instructions have since been improved, but the process remains the same.
+
+<iframe src="https://www.youtube.com/embed/j8dgR_0Hde8" allowFullScreen />
+
+After watching, check out the _Adding HytaleServer as a dependency_ section below.
+
+- Clone the repository `git clone https://github.com/HytaleModding/patcher.git`, and enter the directory using `cd patcher`
 
 - Create a Python virtual environment in the `.venv` folder. The command for this varies by platform but it is probably
   one of these:
@@ -19,22 +34,24 @@ The ~~patcher~~ allows you to more easily prepare an environment for exploring t
   In the last one, specifying the version is recommended if you have multiple Pythons installed.
 
 - Activate the virtual environment:
-  - Windows: `".venv\Scripts\activate"`  (including the quotes)
+  - Windows: If you're using normal command prompt, do `".venv\Scripts\activate"` and if you're using PowerShell, do `.\.venv\Scripts\activate`
   - Linux/Mac: `source .venv/bin/activate`
   - From now on, you are running python commands from inside the venv, hence you must use `python` instead of `py` or `python3` to invoke python.
 
-- Inside the venv, you have to install the dependencies
+- You should now have `(.venv)` prefixed to the current working dir in the terminal.
+
+- Inside the venv, install the dependencies
   - `pip install -r requirements.txt`
 
 - Install these dependencies and ensure they are on PATH:
-  - `git`
+  - `git` - download from [here](https://git-scm.com/install/) and make sure the `C:\Program Files\Git\cmd\` folder is on your PATH.
   - `java` you need JDK 25 or newer
   - `jar` (comes with JDK inside the bin folder)
-  - `mvn`
+  - `mvn` - download from [here](https://maven.apache.org/download.cgi), extract and add the `bin` folder on your PATH
 
-## Usage
+After modifying your PATH, don't forget to close existing terminals and start a new one. Verify that those tools are installed by running these commands: `git --version`, `mvn --version`, `java --version`, `jar --version`.
 
-Put your HytaleServer.jar in the same root directory of this repo or specify an environment variable `HYTALESERVER_JAR_PATH` with the path to your HytaleServer.jar
+- Put your HytaleServer.jar in the same root directory of this repo or specify an environment variable `HYTALESERVER_JAR_PATH` with the path to your HytaleServer.jar
 
 Then run this:
 
@@ -42,23 +59,53 @@ Then run this:
 python run.py setup
 ```
 
-It will
+What will it do:
 
 - copy the HytaleServer.jar into `work/download`
   - (on Windows) fix `META-INF/license` name collision
-- decompile it using Fernflower and save the output to `work/decompile`
+- decompile only the `com.hypixel` package using Vineflower and save the output to `work/decompile`
 - set up a Maven project in `hytale-server` with the decompiled code
+  - all other libraries the server uses are added into pom.xml and you don't have to worry about them.
 
 You can then open the `hytale-server` folder in your favorite IDE and begin exploring the code. For _IntelliJ IDEA_,
 you must first set up the SDK. After opening the project (you can open the `pom.xml` file, IDEA will prompt you to open
-the entire project) press Ctrl+Alt+Shift+S and under _Project_ configure SDK and Language level to _25_.
+the entire project) press Ctrl+Alt+Shift+S and under _Project_ configure _SDK_ and _Language level_ to **25**.
 
-If IDEA does not offer an option to run the main file, right-click the `src` folder -> Mark Directory As -> Sources Root
-then reload the maven project:\
+This decompiled code is likely broken. But it is somewhat usable for exploration. Try Ctrl+Shift+F and search PacketAdapters. Want to figure out where is PlayerSetupConnectEvent constructed? Just find it somewhere then right click and Find Usages, and at the bottom see New instance creation.
+
+## Adding HytaleServer as a dependency
+
+Go into `hytale-server/src/main/java` folder in your terminal (cmd or powershell). Run this command
+
+```shell
+jar -f hytale-server-stripped.jar -c com
+```
+
+Then run this **from the same folder**:
+
+```shell
+mvn install:install-file -Dfile=hytale-server-stripped.jar -DgroupId="com.hypixel.hytale" -DartifactId=HytaleServer-stripped -Dversion="1.0-SNAPSHOT" -Dpackaging=jar
+```
+
+Then, in your plugin project add this dependency and also copy other dependencies from the `hytale-server/pom.xml`.
+
+```xml
+<dependency>
+    <groupId>com.hypixel.hytale</groupId>
+    <artifactId>HytaleServer-stripped</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <scope>provided</scope>
+    <!-- other dependencies too... -->
+</dependency>
+```
+
+Congratulations!
+
+## Reloading Maven projects
+
+You may have to reload the maven project sometimes. Here's how to do that:\
 ![_readme_images/img.png](/assets/reload-maven.png)\
 It is located in the "m" icon on the right side:\
 ![_readme_images/m.png](/assets/maven.png)\
 If you don't see it, enable it under View -> Tool Windows -> Maven.\
 ![_readme_images/tool_windows.png](/assets/view-windowtools-maven.png)
-
-This decompiled code is likely broken. But it is somewhat usable for exploration. Try Ctrl+Shift+F and search PacketAdapters

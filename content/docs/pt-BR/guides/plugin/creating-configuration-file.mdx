@@ -1,0 +1,110 @@
+---
+title: Creating a Configuration File
+description: Learn how to create and manage configuration files for your Hytale mod.
+authors:
+  - name: Tarook
+    url: https://github.com/Tarroook
+---
+
+In this guide, you will learn how to create and manage configuration files for your Hytale mod.
+
+## Making a Configuration class
+
+To create a configuration file, you first need to create a class that will hold the configuration data.
+This class must have a `BuilderCodec<T>` defined for it, where `T` is the class itself.
+This codec is responsible for serializing and deserializing the configuration data to and from the configuration file.
+Keys added to the codec must be capitalized. If you don't it will throw an error when loading the configuration file.
+
+```java
+import com.hypixel.hytale.codec.Codec; // Careful to not use other Codec imports
+import com.hypixel.hytale.codec.KeyedCodec;
+import com.hypixel.hytale.codec.builder.BuilderCodec;
+
+public class MyConfig {
+    public static final BuilderCodec<MyConfig> CODEC = BuilderCodec.builder(MyConfig.class, MyConfig::new)
+            .append(new KeyedCodec<Integer>("SomeValue", Codec.INTEGER),
+                    (config, value) -> config.someValue = value, // Setter
+                    (config) -> config.someValue).add() // Getter
+            .append(new KeyedCodec<String>("SomeString", Codec.STRING),
+                    (config, value) -> config.someString = value,
+                    (config) -> config.someString).add()
+            .build();
+
+
+    private int someValue = 12;
+    private String someString = "My default string";
+
+    public MyConfig() {
+    }
+
+    // Getters
+    public int getSomeValue() {
+        return someValue;
+    }
+    public String getSomeString() {
+        return someString;
+    }
+
+    // Setters
+    public void setSomeValue(int someValue) {
+        this.someValue = someValue;
+    }
+    public void setSomeString(String someString) {
+        this.someString = someString;
+    }
+}
+```
+
+In this example, we create a `MyConfig` class with two configuration options: `SomeValue` and `SomeString`.
+The `BuilderCodec<MyConfig>` specifies how to serialize and deserialize these options.
+
+## Loading, Saving and Using the Configuration
+
+### Initial Setup
+
+Using the configuration file is done through the `Config<T>` class. You can create an instance of this class by providing the plugin instance, the codec of your configuration class, and the file name for the configuration file.
+
+In your project's `JavaPlugin` class, you should load the configuration file in the constructor of the plugin, if it is loaded after the setup is done it will throw an error.
+You should also call `save()` on the `Config<T>` in the setup, to ensure that the configuration file is created if it doesn't exist.
+
+```java
+public class ExamplePlugin extends JavaPlugin {
+    private final Config<MyConfig> config = this.withConfig("MyConfig", MyConfig.CODEC);
+
+    @Override
+    public void setup() {
+        config.save(); // Ensures the config file is created if it doesn't exist
+    }
+}
+```
+
+### Using the Configuration
+
+Once this setup is done, you can access the configuration data in your plugin using the `config` instance variable. If you need to access it from other classes, you can either pass it as a parameter or create a getter method in your `JavaPlugin` class.
+You can then access and modify the configuration data using the `get()` method of the `Config<T>` class.
+
+```java
+public class SomeOtherClass {
+    private final ExamplePlugin plugin;
+
+    public SomeOtherClass(ExamplePlugin plugin) {
+        this.plugin = plugin;
+    }
+
+    public void someMethod() {
+        MyConfig myConfig = plugin.getConfig().get();
+        int value = myConfig.getSomeValue();
+        String str = myConfig.getSomeString();
+
+        // Modify the configuration
+        myConfig.setSomeValue(999);
+        myConfig.setSomeString("A new string");
+
+        // Save the updated configuration back to the file
+        plugin.getConfig().save();
+    }
+}
+```
+
+Here, we access the configuration data, modify it, and save the changes back to the configuration file. This change will persist across server restarts.
+You can find the configuration file in the mods folder of the server.

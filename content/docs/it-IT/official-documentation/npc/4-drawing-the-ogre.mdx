@@ -1,0 +1,118 @@
+---
+title: 4 - Drawing the rest of the ogre
+authors:
+  - name: Hypixel Studios Canada Inc.
+    url: https://hytale.com
+---
+
+<OfficialDocumentationNotice />
+
+We were fortunate, in a sense, that the initial ogre behaviour was simple to handle with existing components.
+
+Now the real challenge begins! From here on out, it's critical to remember to test, test, and test some more. **Every time we add a new behaviour it should be tested to ensure it works as expected**. Never leave it until everything is implemented - this just results in unnecessary headaches.
+
+First, we have to figure out how we want to randomise these base idle behaviours. There are three we care about right now since they don't involve interacting with any other types of NPC:
+
+- Standing guard (we already did this!)
+- Napping for a while.
+- Going off to find some food.
+
+There are a few ways we can approach this, but we'll be using a Random Action to make the initial pick and then letting the individual behaviour control its length before resetting and picking a new one.
+
+With this in mind, we can see a minor error in our original judgement - the **Idle** state needs **four** substates, not three:
+
+- **.Default** (this now becomes an entry state for picking the random behaviour state to switch to)
+- **.Guard** (this is now our guarding state)
+- **.FindFood** (go search for some nearby food if it exists)
+- **.EatRat** (murder an innocent nearby rat - we ignore this for now since it relies on another NPC)
+
+So let's quickly refactor the existing **Idle** state to reflect this change, and add a **Random Action** that will, for now, only have a single option.
+
+```json
+"Instructions": [
+    {
+        "Sensor": {
+            "Type": "State",
+            "State": ".Default"
+        },
+        "Instructions": [
+            {
+                "Actions": [
+                    {
+                        "Type": "Random",
+                        "Actions": [
+                            {
+                                "Weight": 100,
+                                "Action": {
+                                    "Type": "State",
+                                    "State": ".Guard"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "Sensor": {
+            "Type": "State",
+            "State": ".Guard"
+        },
+        "Instructions": [
+            {
+                "Reference": "Component_Instruction_Intelligent_Idle_Motion_Follow_Path"
+            }
+        ]
+    }
+]
+
+```
+
+Looking at the modified **Idle** state instruction, we now have two substates: **.Default** and **.Guard**.
+
+If we spawn this NPC next to a path marker, it'll act exactly as it did before. The difference now is that it first executes the **Random** action in the **.Default** substate which picks the only available state action and sends the ogre to **.Guard**. We've set the **Weight** to be 100 for now, but it doesn't matter since there are no other choices anyway and we'll balance these better later (perhaps even for months after initial implementation!)
+
+Now that we have more than one substate, it becomes a little harder to understand what the ogre is doing, so we'll add a **Debug** flag at the top of the file that will tell us what state it's in.
+
+```json
+"Debug": "DisplayState",
+```
+
+Now we can be sure our (presently) friendly goblin ogre is in the correct state.
+
+But wait! There's nothing to send the ogre back to try and do something different!
+
+This is actually pretty simple; we'll just add an instruction with **ActionsBlocking**, a **Timeout**, and **Continue** to the **.Guard** substate that will send it back to **.Default** after a randomised amount of time so it can make a new pick.
+
+```json
+{
+  "Sensor": {
+    "Type": "State",
+    "State": ".Guard"
+  },
+  "Instructions": [
+    {
+      "Continue": true,
+      "ActionsBlocking": true,
+      "Actions": [
+        {
+          "Type": "Timeout",
+          "Delay": [15, 30]
+        },
+        {
+          "Type": "State",
+          "State": ".Default"
+        }
+      ]
+    },
+    {
+      "Reference": "Component_Instruction_Intelligent_Idle_Motion_Follow_Path"
+    }
+  ]
+}
+```
+
+The **ActionsBlocking** is important here because it ensures we don't execute the switch between states until the first action is complete (the **Timeout**). So now we'll hang around at the path marker for between **fifteen** and **thirty** seconds before going back to pick something else to do.
+
+...not that there's anything else to do yet, so why don't we address that next?

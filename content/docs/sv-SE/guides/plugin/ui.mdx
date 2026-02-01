@@ -1,0 +1,265 @@
+---
+title: Custom UI
+description: Learn how to show custom UI to the player
+authors:
+  - name: underscore95
+    url: https://github.com/underscore95
+---
+
+## Important Information
+
+- All .ui files must be included in your plugin resources folder, specifically they should be in resources/Common/UI/Custom
+- Ensure your manifest.json contains `"IncludesAssetPack": true`
+- The Hytale client has a "Diagnostic Mode" setting under General, this will give more detailed error messages.
+
+## Useful Resources
+
+Video Tutorials:
+
+- CustomUIHud Tutorial: https://www.youtube.com/watch?v=u4pGShklEKs
+- InteractiveCustomUIPage Tutorial: https://www.youtube.com/watch?v=NOFWQt9wEbk
+- Useful Information & Resources: https://www.youtube.com/watch?v=AaNk_g9vb50
+
+Examples:
+
+- Simple InteractiveCustomUIPage Example: https://github.com/underscore95/Hytale-Sandbox-Plugin/tree/ui-pages
+- Complicated InteractiveCustomUIPage Example: https://github.com/Buuz135/AdminUI/tree/main
+
+Visual UI Editor: https://hytale.ellie.au/
+Create UI from Java: https://www.curseforge.com/hytale/mods/hyui
+
+Show multiple custom HUDs at the same time: https://www.curseforge.com/hytale/mods/multiplehud
+Example MultipleHUD code: https://github.com/underscore95/Hytale-Sandbox-Plugin/tree/multiple-huds
+
+## .ui files
+
+Hytale currently uses .ui files to render UI, these are currently deprecated and Hytale is planning to move to NoesisGUI.
+The transition has not happened yet and .ui files are the only way to render UI.
+
+UI is defined using a .ui file which functions similarly to HTML and CSS.
+
+### UI Elements
+
+A .ui file contains a tree of UI elements, declaring a UI element uses the following syntax:
+
+```
+Group {
+  TextField #MyInput {
+    Style: $Common.@DefaultInputFieldStyle;
+    Background: $Common.@InputBoxBackground;
+    Anchor: (Top: 10, Width: 200, Height: 50);
+  }
+}
+```
+
+`TextField` and `Group` are the types of UI elements.
+
+- A text field is an input where the user can enter text.
+- A group is an empty UI element, similar to a div in HTML.
+
+`#MyInput` is the ID of the TextField UI element, this is required for Java code to access the element later.
+
+### Variables
+
+You can define variables using the following syntax:
+
+```
+@MyTex = PatchStyle(TexturePath: "MyBackground.png");
+```
+
+### Textures
+
+Textures can be loaded using
+
+```
+PatchStyle(TexturePath: "MyBackground.png");
+```
+
+The path is relative to the .ui file.
+Your textures must be included in your resource folder.
+
+If applying a texture as the background of a UI element, you do not need to match size, the texture will automatically be stretched.
+
+### Including other .ui files
+
+You can include other .ui files using `$Common = "Common.ui";`, this allows you to access variables like so: `Style: $Common.@DefaultInputFieldStyle;`
+
+## HUDs
+
+A HUD is an element of UI that stays on the screen all the time, for example the players hot bar or health bar.
+It cannot be interacted with.
+
+### CustomUIHud
+
+Create a Java class that extends `CustomUIHud` and overrides the `build` function.
+
+The `build` function has a `UICommandBuilder` parameter, this allows you to add .ui files to the HUD.
+
+```java
+uiCommandBuilder.append("MyUI.ui"); // This file must be located at resources/Common/UI/Custom/MyUI.ui
+```
+
+### Showing & Hiding UI
+
+You can get the HudManager using `Player#getHudManager`.
+
+- Use `HudManager#setCustomHud` to show UI.
+- Use `HudManager#hideHudComponents` to hide default Hytale UI.
+- Set a custom hud with an empty build method to hide custom UI, or use MultipleHUD
+
+## UI Pages
+
+Pages are another type of UI, these prevent the player from interacting with the game and unlock the players mouse.
+Some examples of pages include: Crafting menu, pause menu
+
+### CustomUIPage
+
+If you do not need user input, you can make a class extending CustomUIPage, this is very similar to CustomUIHud.
+
+### InteractiveCustomUIPage
+
+You must extend InteractiveCustomUIPage to receive events and user input.
+
+The following UI is used for the below code:
+
+```
+$Common = "Common.ui";
+
+@MyTex = PatchStyle(TexturePath: "MyBackground.png");
+
+Group {
+  LayoutMode: Center;
+
+  Group #MyPanel {
+    Background: @MyTex;
+    Anchor: (Width: 800, Height: 1000);
+    LayoutMode: Top;
+
+    Label #MyLabel {
+      Style: (FontSize: 32, Alignment: Center);
+      Anchor: (Top: 50);
+      Text: "MyText";
+      Padding: (Full: 10);
+    }
+
+    TextField #MyInput {
+      Style: $Common.@DefaultInputFieldStyle;
+      Background: $Common.@InputBoxBackground;
+      Anchor: (Top: 10, Width: 200, Height: 50);
+      Padding: (Full: 10);
+    }
+  }
+}
+```
+
+InteractiveCustomUIPage takes a generic argument, this is a class containing any UI data you want the client to send to the server.
+
+```java
+public static class Data {
+  public static final BuilderCodec<Data> CODEC = BuilderCodec.builder(Data.class, Data::new)
+    .append(new KeyedCodec<>("@MyInput", Codec.STRING), (data, value) -> data.value = value, data -> data.value).add()
+    .build();
+
+  private String value; // Value of the TextField input
+}
+```
+
+InteractiveCustomUIPage constructor takes a PlayerRef, CustomPageLifetime, and `BuilderCodec<Data>`.
+
+- PlayerRef is the player you want to show UI to.
+- CustomPageLifetime is an enum controlling if the player can close the UI or not
+
+`BuilderCodec<Data>` tells the server how to create the Data object from the JSON the client sends.
+Example value in the Data class above.
+
+This passes the Class and a lambda function that constructs the Data object, the server uses this to deserialize the JSON.:
+
+```java
+BuilderCodec.builder(Data.class, Data::new)
+```
+
+This provides a setter and getter lambda function to the field that should contain whatever @MyInput is set to:
+
+```java
+.append(new KeyedCodec<>("@MyInput", Codec.STRING), (data, value) -> data.value = value, data -> data.value).add()
+```
+
+The following build method is used:
+
+```java
+@Override
+public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder uiCommandBuilder, @Nonnull UIEventBuilder uiEventBuilder, @Nonnull Store<EntityStore> store) {
+  uiCommandBuilder.append("MyUI.ui");
+  uiEventBuilder.addEventBinding(CustomUIEventBindingType.ValueChanged, "#MyInput", EventData.of("@MyInput", "#MyInput.Value"), false);
+}
+```
+
+This says we are listening for whenever the value of #MyInput changes:
+
+```java
+CustomUIEventBindingType.ValueChanged, "#MyInput"
+```
+
+You may be wondering where `@MyInput` in the codec previously came from, it is defined here.
+This creates the codec value `@MyInput` and maps it to `#MyInput.Value`:
+
+```java
+EventData.of("@MyInput", "#MyInput.Value")
+```
+
+The following `handleDataEvent` will be overridden, take care to override the one that has a `Data` parameter rather than `String raw` (this is the raw json).
+
+```java
+@Override
+public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, Data data) {
+  super.handleDataEvent(ref, store, data);
+
+  System.out.println("EVENT: " + data.value);
+
+  sendUpdate();
+}
+```
+
+You must always either switch to a new UI or call `sendUpdate();` otherwise the Hytale client will display "Loading..." forever and prevent the user from interacting with your UI.
+This will be familiar if you have ever made commands in a Discord bot, where you have to acknowledge interactions.
+
+### Showing & Hiding UI pages
+
+```java
+player.getPageManager().openCustomPage(ref, store, MyUI(playerRef));
+player.getPageManager().setPage(ref, store, Page.None);
+```
+
+## Dynamically Updating UI
+
+In many cases you want to update your UI at run time.
+
+Here is an example of updating a Label's (with id MyLabel) text content, this method should be added to your UI Java class:
+
+```java
+public void updateText(String newText) {
+  UICommandBuilder uiCommandBuilder = new UICommandBuilder();
+  uiCommandBuilder.set("#MyLabel.TextSpans", Message.raw(newText));
+  update(false, uiCommandBuilder); // false = don't clear existing UI
+}
+```
+
+## Common Issues
+
+### Failed to apply Custom UI HUD commands
+
+This means your .ui file has something wrong with it.
+Enabling Diagnostic Mode in Hytale settings might give more information.
+
+### Could not find document XXXXX for Custom UI Append command
+
+This means your .ui file wasn't in the location your Java code said it was, double check that your path is correct.
+
+## IntelliJ Plugin for UI-Files
+
+There is also a community plugin, which enables syntax highlighting, color picking
+and code-completion for `*.ui` files.
+
+You can look it up here:
+
+https://plugins.jetbrains.com/plugin/29783-hytale-ui-support

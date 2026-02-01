@@ -1,0 +1,229 @@
+---
+title: Sistēmas
+description: Šajā pamācībā uzzināsi, kā sistēmas darbojas Hytale.
+authors:
+  - name: oskarscot
+    url: https://oskar.scot
+---
+
+Sistēmās dzīvo loģika. Kamēr komponenti ir tīri datu konteineri, sistēmas darbojas uz vienībām, kam sakrīt specifiski komponenti meklēšanas izsaukumos. ECS plānotājs palaiž sistēmas katru tikšķi, nododot tikai tās vienības, kurām ir komponenti, kas rūp sistēmai.
+
+### EntityTickingSystem
+
+Biežākais sistēmas tips. Tas darbojas katru tikšķi un apstrādā katru individuālo vienību, kas atbilst tā izsaukumā.
+
+```java
+public class PoisonSystem extends EntityTickingSystem<EntityStore> {
+
+  private final ComponentType<EntityStore, PoisonComponent> poisonComponentType;
+
+  public PoisonSystem(ComponentType<EntityStore, PoisonComponent> poisonComponentType) {
+    this.poisonComponentType = poisonComponentType;
+  }
+
+  @Override
+  public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
+      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+
+    PoisonComponent poison = archetypeChunk.getComponent(index, poisonComponentType);
+    Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
+
+    poison.addElapsedTime(dt);
+
+    if (poison.getElapsedTime() >= poison.getTickInterval()) {
+      poison.resetElapsedTime();
+
+      Damage damage = new Damage(Damage.NULL_SOURCE, DamageCause.OUT_OF_WORLD, poison.getDamagePerTick());
+      DamageSystems.executeDamage(ref, commandBuffer, damage);
+
+      poison.decrementRemainingTicks();
+    }
+
+    if (poison.isExpired()) {
+      commandBuffer.removeComponent(ref, poisonComponentType);
+    }
+  }
+
+  @Nullable
+  @Override
+  public SystemGroup<EntityStore> getGroup() {
+    return DamageModule.get().getGatherDamageGroup();
+  }
+
+  @Nonnull
+  @Override
+  public Query<EntityStore> getQuery() {
+    return Query.and(this.poisonComponentType);
+  }
+}
+```
+
+`tick` metode saņem `dt`, kas ir delta time/laiks kopš pēdējā tikšķa. Tas ļauj uzkrāt laiku intervālu loģikai, nevis tikšķu skaitīšanai. `ArchetypeChunk` dod pieeju vienības komponentiem caur indeksu un `getReferenceTo` atgriež vajadzīgo `Ref` komandas izsaukšanai.
+
+### TickingSystem
+
+Darbojas vienu reizi katru globālo tikšķi, nevis pēc vienības. Izmanto to priekš vispasaules loģikas atjauninājumiem, vai loģikai, kas neatsaucās par katru vienību.
+
+```java
+public class GlobalUpdateSystem extends TickingSystem<EntityStore> {
+
+  @Override
+  public void tick(float dt, int index, Store<EntityStore> store) {
+    World world = store.getExternalData().getWorld();
+  }
+}
+```
+
+### DelayedEntitySystem
+
+Līdzīgs `EntityTickingSystem`, bet ar iebūvētu aizturi. Konstruktors paņem 'float' vērtību, kas reprezentē sekundes starp izpildīšanām.
+
+```java
+public class HealthRegenSystem extends DelayedEntitySystem<EntityStore> {
+
+  public HealthRegenSystem() {
+    super(1.0f);
+  }
+
+  @Override
+  public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
+      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+    // Runs every 1 second per matching entity
+  }
+
+  @Nonnull
+  @Override
+  public Query<EntityStore> getQuery() {
+    return Query.and(Player.getComponentType());
+  }
+}
+```
+
+### RefSystem
+
+Mēs varam arī izveidot sistēmas, kas gaida izmaiņas pašās vienībās. Tas tiek darīts, izmantojot `RefSystem`, piemēram, pieņemsim, ka mēs vēlamies veikt darbību ikreiz, kad mēs pievienojam komponentu vienībai, atjauninām to vai noņemam.
+To var izdarīt ar `RefChangeSystem<ECS_STORE, COMPONENT>`. Sadalīsim piemēru zemāk:
+
+```java
+public class PermissionAttachmentSystem extends RefChangeSystem<EntityStore, PermissionAttachment> {
+
+  private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
+  @Nonnull
+  @Override
+  public ComponentType<EntityStore, PermissionAttachment> componentType() {
+    return EntityStoreRegistry.get().getPermissionAttachmentComponentType();
+  }
+
+  @Override
+  public void onComponentAdded(@Nonnull Ref<EntityStore> ref, @Nonnull PermissionAttachment permissionAttachment, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+    UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
+    UUID playerUuid = component.getUuid();
+
+    // PermissionAttachment component was added to a new entity
+  }
+
+  @Override
+  public void onComponentSet(@Nonnull Ref<EntityStore> ref, @Nullable PermissionAttachment oldAttachment, @Nonnull PermissionAttachment newAttachment, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+    UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
+    UUID playerUuid = component.getUuid();
+
+    // PermissionAttachment component was updated using replaceComponent or putComponent
+  }
+
+  @Override
+  public void onComponentRemoved(@Nonnull Ref<EntityStore> ref, @Nonnull PermissionAttachment permissionAttachment, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+    UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
+    UUID playerUuid = component.getUuid();
+
+    // PermissionAttachment component was removed from an entity
+  }
+
+  @Nullable
+  @Override
+  public Query<EntityStore> getQuery() {
+    return EntityStoreRegistry.get().getPermissionAttachmentComponentType();
+  }
+}
+```
+
+Šajā sistēmā mēs gaidām izmaiņas `PermissionAttachment` komponentā iekš `EntityStore`. Tas dod mums piekļuvi `onComponentAdded`, `onComponentSet` un `onComponentRemoved`, kas šajā piemērā kešatmiņā saglabā un saglabā atļauju datus kas tiek glabāts atskaņotājā pielāgotā "PermissionAttachment" komponentā.
+
+## Queries
+
+Queries/Meklēšanas pieprasījumi filtrē kuras vienības sistēma apstrādās. ECS tikai izlaiž cauri vienības sistēmas `tick` metodei, ja tām ir visi komponenti, kas pieprasīti.
+
+```java
+// Viens komponents - jebkura vienība ar PoisonComponent
+Query.and(poisonComponentType)
+
+// Vairāki komponenti - vienības ar abiem
+Query.and(poisonComponentType, Player.getComponentType())
+
+// Izņēmumi - spēlētāji, kas nav miruši
+Query.and(Player.getComponentType(), Query.not(DeathComponent.getComponentType()))
+```
+
+## SystemGroups un Dependencies
+
+Sistēmas var deklarēt kurai grupai tās pieder un no kā tās atkarīgas. Tas kontrolē palaišanas kārtību, kas ir kritiski priekš sistēmu mijiedarbībai.
+
+```java
+@Nullable
+@Override
+public SystemGroup<EntityStore> getGroup() {
+  return DamageModule.get().getGatherDamageGroup();
+}
+```
+
+Sarežģītākai kārtībai var pārrakstīt `getDependencies`:
+
+```java
+@Nonnull
+public Set<Dependency<EntityStore>> getDependencies() {
+  return Set.of(
+    new SystemGroupDependency(Order.AFTER, DamageModule.get().getFilterDamageGroup()),
+    new SystemDependency(Order.BEFORE, PlayerSystems.ProcessPlayerInput.class)
+  );
+}
+```
+
+Damage/Bojājumu sistēma ir labs piemērs kamdēļ kārtība ir nozīmīga. Hytale ievainojumu vadlīnijai ir četras stadijas: GatherDamageGroup ievāc bojājumu avotus, FilterDamageGroup noskaita attiecināmo pēc aizsardzības faktoriem, tad tikai noņem no dzīvībām un finālā InspectDamageGroup apstrādā papildus efektus, kā daļinas un skaņu. Ja virkne strādātu pēc citas kārtības, tad parādītu miršanas animāciju pirms vienība ir beigta, vai noskaitītu bojājumus pret bruņām pēc tā, kad dzīvības jau bija atņemtas.
+
+## Komponentu un Sistēmu Reģistrēšana
+
+Komponenti un sistēmas jāreģistrē spraudņa izveides laikā. Par to atbild `EntityStoreRegistry`.
+
+```java
+public final class ExamplePlugin extends JavaPlugin {
+
+  private static ExamplePlugin instance;
+  private ComponentType<EntityStore, PoisonComponent> poisonComponent;
+
+  public ExamplePlugin(@Nonnull JavaPluginInit init) {
+    super(init);
+    instance = this;
+  }
+
+  @Override
+  protected void setup() {
+    this.getCommandRegistry().registerCommand(new ExampleCommand());
+    this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
+    this.getEventRegistry().registerGlobal(PlayerChatEvent.class, ChatFormatter::onPlayerChat);
+
+    this.poisonComponent = this.getEntityStoreRegistry()
+        .registerComponent(PoisonComponent.class, PoisonComponent::new);
+    this.getEntityStoreRegistry().registerSystem(new PoisonSystem(this.poisonComponent));
+  }
+
+  public ComponentType<EntityStore, PoisonComponent> getPoisonComponentType() {
+    return poisonComponent;
+  }
+
+  public static ExamplePlugin get() {
+    return instance;
+  }
+}
+```
+
+`registerComponent` metode atgriež `ComponentType`, ko izmanto kā atslēgu, lai piekļūtu komponenta tipam ar savu spraudni. Glabā to kā field/laukumu un izlaid to cauri jebkurai nepieciešamajai sistēmai. Otrais arguments ir factory/rūpnīca noklusējuma instances izveidei.

@@ -1,0 +1,244 @@
+---
+title: Пример ECS плагина
+description: В этом руководстве вы узнаете, как создать простую систему отправления (эффект), используя все функции, о которых вы ранее узнали из системы ECS Hytale.
+authors:
+  - name: oskarscot
+    url: https://oskar.scot
+  - name: jacobwojoski
+    url: https://github.com/jacobwojoski
+---
+
+## Практический пример: система отравления
+
+Примените все полученные вами знания для создания эффекта отравления. При применении к любой сущности наносит урон через определенные промежутки времени, пока у эффекта не истечет срок действия и он не исчезнет.
+
+```java
+package scot.oskar.hytaletemplate.components;
+
+import com.hypixel.hytale.component.Component;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import javax.annotation.Nullable;
+
+public class PoisonComponent implements Component<EntityStore> {
+
+  private float damagePerTick;
+  private float tickInterval;
+  private int remainingTicks;
+  private float elapsedTime;
+
+  // Add static getter and setter to store componentType in the component instead of getting it from the plugin singleton.
+  // - This allows anyone to call PoisonComponent.getComponentType() instead of ExamplePlugin.get().getPoisonComponentType();
+  // - You could also update the setter to be a singleton if desired.
+  // - Adding a throw condition if getComponentType() returns null could also be good.
+  private static ComponentType<EntityStore, PoisonComponent> type;
+  public static ComponentType<EntityStore, PoisonComponent> getComponentType(){
+    return this.type;
+  }
+  public static void setComponentType(ComponentType<EntityStore, PoisonComponent> type){
+    this.type = type;
+  }
+
+  // A builder codec is needed to allow components to be saved and loaded from disk
+  public static final BuilderCodec<PoisonComponent> CODEC = BuilderCodec
+        .builder(PoisonComponent.class, PoisonComponent::new)
+        .append(
+            new KeyedCodec<>("DamagePerTick", Codec.FLOAT),
+            (component, value) -> component.damagePerTick = value,
+            component -> component.damagePerTick
+        ).add()
+        .append(
+            new KeyedCodec<>("TickInterval", Codec.FLOAT),
+            (component, value) -> component.tickInterval = value,
+            component -> component.tickInterval
+        ).add()
+        .append(
+            new KeyedCodec<>("RemainingTicks", Codec.INTEGER),
+            (component, value) -> component.remainingTicks = value,
+            component -> component.remainingTicks
+        )
+        .add()
+        .append(
+            new KeyedCodec<>("ElapsedTime", Codec.FLOAT),
+            (component, value) -> component.elapsedTime = value,
+            component -> component.elapsedTime
+        )
+        .add()
+        .build();
+
+  public PoisonComponent() {
+    this(5f, 1.0f, 10);
+  }
+
+  public PoisonComponent(float damagePerTick, float tickInterval, int totalTicks) {
+    this.damagePerTick = damagePerTick;
+    this.tickInterval = tickInterval;
+    this.remainingTicks = totalTicks;
+    this.elapsedTime = 0f;
+  }
+
+  public PoisonComponent(PoisonComponent other) {
+    this.damagePerTick = other.damagePerTick;
+    this.tickInterval = other.tickInterval;
+    this.remainingTicks = other.remainingTicks;
+    this.elapsedTime = other.elapsedTime;
+  }
+
+  @Nullable
+  @Override
+  public Component<EntityStore> clone() {
+    return new PoisonComponent(this);
+  }
+
+  public float getDamagePerTick() {
+    return damagePerTick;
+  }
+
+  public float getTickInterval() {
+    return tickInterval;
+  }
+
+  public int getRemainingTicks() {
+    return remainingTicks;
+  }
+
+  public float getElapsedTime() {
+    return elapsedTime;
+  }
+
+  public void addElapsedTime(float dt) {
+    this.elapsedTime += dt;
+  }
+
+  public void resetElapsedTime() {
+    this.elapsedTime = 0f;
+  }
+
+  public void decrementRemainingTicks() {
+    this.remainingTicks--;
+  }
+
+  public boolean isExpired() {
+    return this.remainingTicks <= 0;
+  }
+}
+```
+
+```java
+package scot.oskar.hytaletemplate.systems;
+
+import com.hypixel.hytale.component.ArchetypeChunk;
+import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.SystemGroup;
+import com.hypixel.hytale.component.query.Query;
+import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
+import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
+import com.hypixel.hytale.server.core.modules.entity.damage.DamageCause;
+import com.hypixel.hytale.server.core.modules.entity.damage.DamageModule;
+import com.hypixel.hytale.server.core.modules.entity.damage.DamageSystems;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import scot.oskar.hytaletemplate.components.PoisonComponent;
+
+public class PoisonSystem extends EntityTickingSystem<EntityStore> {
+
+  private final ComponentType<EntityStore, PoisonComponent> poisonComponentType;
+
+  public PoisonSystem(ComponentType<EntityStore, PoisonComponent> poisonComponentType) {
+    this.poisonComponentType = poisonComponentType;
+  }
+
+  @Override
+  public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
+      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+
+    // You could also just call PoisonComponent.getComponentType() instead of taking in the passed in variable here.
+    PoisonComponent poison = archetypeChunk.getComponent(index, poisonComponentType);
+    Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
+
+    poison.addElapsedTime(dt);
+
+    if (poison.getElapsedTime() >= poison.getTickInterval()) {
+      poison.resetElapsedTime();
+
+      Damage damage = new Damage(Damage.NULL_SOURCE, DamageCause.OUT_OF_WORLD, poison.getDamagePerTick());
+      DamageSystems.executeDamage(ref, commandBuffer, damage);
+
+      poison.decrementRemainingTicks();
+    }
+
+    if (poison.isExpired()) {
+      commandBuffer.removeComponent(ref, poisonComponentType);
+    }
+  }
+
+  @Nullable
+  @Override
+  public SystemGroup<EntityStore> getGroup() {
+    return DamageModule.get().getGatherDamageGroup();
+  }
+
+  @Nonnull
+  @Override
+  public Query<EntityStore> getQuery() {
+    return Query.and(this.poisonComponentType);
+  }
+}
+```
+
+```java
+package scot.oskar.hytaletemplate.commands;
+
+public class ExampleCommand extends AbstractPlayerCommand {
+
+  public ExampleCommand() {
+    super("test", "Super test command!");
+  }
+
+  @Override
+  protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<EntityStore> store, 
+      @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {
+    Player player = store.getComponent(ref, Player.getComponentType());
+    PoisonComponent poison = new PoisonComponent(3f, 0.5f, 8);
+    store.addComponent(ref, PoisonComponent.getComponentType(), poison);
+    player.sendMessage(Message.raw("You have been poisoned!").color(Color.GREEN).bold(true));
+  }
+}
+```
+
+```java
+package scot.oskar.hytaletemplate;
+
+public final class ExamplePlugin extends JavaPlugin {
+
+  private static ExamplePlugin instance;
+
+  public ExamplePlugin(@Nonnull JavaPluginInit init) {
+    super(init);
+    instance = this;
+  }
+
+  @Override
+  protected void setup() {
+    this.getCommandRegistry().registerCommand(new ExampleCommand());
+    this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
+    this.getEventRegistry().registerGlobal(PlayerChatEvent.class, ChatFormatter::onPlayerChat);
+
+    // Register the component & set the type in the component class so its easier to retrieve.
+    ComponentType<EntityStore, PoisonComponent> poisonComponentType = this.getEntityStoreRegistry()
+        .registerComponent(PoisonComponent.class, PoisonComponent::new);
+    PoisonComponent.setComponentType(poisonComponentType);
+
+    this.getEntityStoreRegistry().registerSystem(new PoisonSystem(PoisonComponent.getComponentType()));
+  }
+
+  public static ExamplePlugin get() {
+    return instance;
+  }
+}
+```
+
+Этот запрос использует только `poisonComponentType`, что значит, что система будет действовать на все сущности с `PoisonComponent`, не только на игроков Это делает её гибкой, появляется возможность применить эффект на NPC, мобах или других сущностях. Система ставит себя в `GatherDamageGroup`, так что урон, нанесённый ей, проходит через полный пайплайн урона, включая снижение брони и проверку неуязвимости.

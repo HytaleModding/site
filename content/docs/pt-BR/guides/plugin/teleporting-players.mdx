@@ -1,6 +1,6 @@
 ---
-title: Teleporting the player
-description: Learn how to teleport the player.
+title: Teletransportando o jogador
+description: Aprenda a teletransportar o jogador.
 ---
 
 To teleport players in Hytale, you will need to get a `World` object so we can safely run the teleport on the world thread. The world thread manages all entity updates, so modifying entities off-thread can crash the server or cause inconsistent state.
@@ -14,7 +14,10 @@ public static void teleportPlayer(Player player, int x, int y, int z) {
         world.execute(() -> {
             if (player.getReference() == null) return;
             Store<EntityStore> store = player.getReference().getStore();
-            Teleport teleport = new Teleport(new Transform(x ,y, z));
+            Teleport teleport = Teleport.createForPlayer(world,
+                new Vector3d(x ,y, z), // Target position
+                new Vector3f(0, 0, 0)  // Target rotation (pitch, yaw, roll)
+            );
 
             store.addComponent(player.getReference(), Teleport.getComponentType(), teleport);
         });

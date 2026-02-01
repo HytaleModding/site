@@ -1,0 +1,194 @@
+---
+title: Instance System
+description: Learn how to create, manage, and teleport players into instances in Hytale.
+authors:
+  - name: Bird
+    link: https://discord.com/users/495709580068651009
+---
+
+# Overview
+
+In this guide, you’ll learn how to use the InstancesPlugin to load an instance and teleport a player to it.
+
+## Spawning an Instance
+
+To create a new instance, you use the `spawnInstance` method. This handles copying the world template and initializing it in the universe.
+
+```java
+InstancesPlugin plugin = InstancesPlugin.get();
+World currentWorld = /* current world context */;
+Transform returnPoint = /* where players should go when they leave */;
+
+// Spawn an instance named "Challenge_Combat_1"
+World instanceWorld = InstancesPlugin.get().spawnInstance("Challenge_Combat_1", world, returnPoint).join();
+Universe.get().sendMessage(Message.raw("Instance spawned: " + instanceWorld.getName()));
+```
+
+<Callout>
+  Instance templates should be located in your asset pack under `Server/Instances/[Name]`. Each template must contain an `instance.bson` configuration file.
+</Callout>
+
+## Teleporting Players to Instances
+
+Once an instance is spawned (or while it is loading), you can move players into it. The `InstancesPlugin` provides utility methods for this that handle state consistency.
+
+### Teleporting to an Active Instance
+
+If the `World` object is already available:
+
+```java
+InstancesPlugin.teleportPlayerToInstance(
+    playerRef, 
+    componentAccessor, 
+    instanceWorld, 
+    null // optional override for return point
+);
+```
+
+### Teleporting to a Loading Instance
+
+If you have a `CompletableFuture<World>` from `spawnInstance`, you can queue the teleport to happen as soon as the world is ready.
+
+```java
+CompletableFuture<World> worldFuture = plugin.spawnInstance("Challenge_Combat_1", currentWorld, returnPoint);
+
+InstancesPlugin.teleportPlayerToLoadingInstance(
+    playerRef,
+    componentAccessor,
+    worldFuture,
+    null // optional override for return point
+);
+```
+
+## Exiting Instances
+
+When a player finishes their objective, you can return them to their original world using `exitInstance`. This automatically uses the return point defined during the instance creation.
+
+```java
+InstancesPlugin.exitInstance(playerRef, componentAccessor);
+```
+
+## Managing Instance Removal
+
+Instances can be configured to remove themselves automatically based on certain conditions, such as being empty for a certain duration.
+
+```java
+InstancesPlugin.safeRemoveInstance(instanceWorld);
+```
+
+---
+
+## Command Examples
+
+### Spawn Instance Command
+
+```java
+public class ExampleSpawnInstanceCommand extends CommandBase {
+    private final RequiredArg<String> nameArg;
+
+    public ExampleSpawnInstanceCommand() {
+        super("spawninstance", "Spawns a new instance from a template");
+        this.nameArg = this.withRequiredArg("name", "The name of the new instance", ArgTypes.STRING);
+    }
+
+    @Override
+    protected void executeSync(@Nonnull CommandContext ctx) {
+        UUID playerUUID = ctx.sender().getUuid();
+        PlayerRef playerRef = Universe.get().getPlayer(playerUUID);
+        World world = Universe.get().getWorld(playerRef.getWorldUuid());
+
+        ISpawnProvider spawnProvider = world.getWorldConfig().getSpawnProvider();
+        Transform returnPoint = spawnProvider != null ? spawnProvider.getSpawnPoint(world, playerRef.getUuid()) : new Transform();
+
+        world.execute(() -> {
+            World instanceWorld = InstancesPlugin.get().spawnInstance(this.nameArg.get(ctx), world, returnPoint).join();
+            Universe.get().sendMessage(Message.raw("Instance spawned: " + instanceWorld.getName()));
+        });
+    }
+}
+```
+
+---
+
+### Remove Instance Command
+
+```java
+public class ExampleRemoveInstanceCommand extends CommandBase {
+    private final RequiredArg<String> worldArg;
+
+    public ExampleRemoveInstanceCommand() {
+        super("removeinstance", "Safely removes an instance");
+        this.worldArg = this.withRequiredArg("world", "The world to remove", ArgTypes.STRING);
+    }
+
+    @Override
+    protected void executeSync(@Nonnull CommandContext ctx) {
+        String worldName = ctx.get(this.worldArg);
+        World targetWorld = Universe.get().getWorld(worldName);
+
+        if (targetWorld == null) {
+            ctx.sendMessage(Message.raw("World not found: " + worldName));
+            return;
+        }
+
+        targetWorld.execute(() -> {
+            InstancesPlugin.safeRemoveInstance(targetWorld);
+        });
+    }
+}
+```
+
+---
+
+### Enter Instance Command
+
+```java
+public class ExampleEnterInstanceCommand extends CommandBase {
+    private final RequiredArg<String> nameArg;
+
+    public ExampleEnterInstanceCommand() {
+        super("enterinstance", "Spawns and enters an instance immediately");
+        this.nameArg = this.withRequiredArg("name", "The name of the instance", ArgTypes.STRING);
+    }
+
+    @Override
+    protected void executeSync(@Nonnull CommandContext ctx) {
+        UUID playerUUID = ctx.sender().getUuid();
+        PlayerRef playerRef = Universe.get().getPlayer(playerUUID);
+        World world = Universe.get().getWorld(playerRef.getWorldUuid());
+
+        ISpawnProvider spawnProvider = world.getWorldConfig().getSpawnProvider();
+        Transform returnPoint = spawnProvider != null ? spawnProvider.getSpawnPoint(world, playerRef.getUuid()) : new Transform();
+
+        world.execute(() -> {
+			//World instanceWorld = InstancesPlugin.get().spawnInstance(this.nameArg.get(ctx), world, returnPoint).join();
+            //InstancesPlugin.teleportPlayerToInstance(playerRef.getReference(), playerRef.getReference().getStore(), instanceWorld, (Transform) null);	
+            CompletableFuture<World> worldFuture = InstancesPlugin.get().spawnInstance(this.nameArg.get(ctx), world, returnPoint);
+            InstancesPlugin.teleportPlayerToLoadingInstance(playerRef.getReference(), playerRef.getReference().getStore(), worldFuture, null);
+        });
+    }
+}
+```
+
+---
+
+### Exit Instance Command
+
+```java
+public class ExampleExitInstanceCommand extends CommandBase {
+
+    public ExampleExitInstanceCommand() {
+        super("exitinstance", "Exits the current instance and returns to the previous world");
+    }
+
+    @Override
+    protected void executeSync(@Nonnull CommandContext ctx) {
+        Player player = (Player) ctx.sender();
+        World world = player.getWorld();
+
+        world.execute(() -> {
+            InstancesPlugin.exitInstance(player.getReference(), player.getReference().getStore());
+        });
+    }
+}
+```

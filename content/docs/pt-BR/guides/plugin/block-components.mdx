@@ -1,0 +1,253 @@
+---
+title: Componentes do bloco
+description: Aprenda a usar os componentes do bloco.
+authors:
+  - name: Bird
+    link: https://discord.com/users/495709580068651009
+---
+
+# Visão geral
+
+Neste guia, você aprenderá a usar os componentes do bloco para criar um bloco-tique-taque.
+
+<Callout>
+  Para uma referência mais completa, recomenda-se rever o `FarmingSystems.Ticking`, uma vez que grande parte da lógica subjacente é baseada em sua implementação.
+</Callout>
+
+## Etapas
+
+### 1. `ExampleBlock` — Contém o comportamento do bloco
+
+```java
+public class ExampleBlock implements Component<ChunkStore> {
+
+    public static final BuilderCodec CODEC;
+
+    public ExampleBlock() {
+
+    }
+
+    public static ComponentType getComponentType() {
+        return ExamplePlugin.get().getExampleBlockComponentType();
+    }
+
+    public void runBlockAction(int x, int y, int z, World world) {
+        world.execute(() -> {
+            world.setBlock(x + 1, y, z, "Rock_Ice");
+        });
+    }
+
+    @Nullable
+    public Component<ChunkStore> clone() {
+        return new ExampleBlock();
+    }
+
+    static {
+        CODEC = BuilderCodec.builder(ExampleBlock.class, ExampleBlock::new).build();
+    }
+}
+```
+
+ExampleBlock is a custom component that stores the behavior and data for your ticking block. Here, it simply places an Ice Block at x + 1 relative to its current position when it ticks.
+
+---
+
+### 2. ExampleInitializer - marks blocks as ticking when placed
+
+```java
+public class ExampleInitializer extends RefSystem {
+
+    @Override
+    public void onEntityAdded(@Nonnull Ref ref, @Nonnull AddReason reason, @Nonnull Store store, @Nonnull CommandBuffer commandBuffer) {
+        BlockModule.BlockStateInfo info = (BlockModule.BlockStateInfo) commandBuffer.getComponent(ref, BlockModule.BlockStateInfo.getComponentType());
+        if (info == null) return;
+
+        ExampleBlock generator = (ExampleBlock) commandBuffer.getComponent(ref, ExamplePlugin.get().getExampleBlockComponentType());
+        if (generator != null) {
+            int x = ChunkUtil.xFromBlockInColumn(info.getIndex());
+            int y = ChunkUtil.yFromBlockInColumn(info.getIndex());
+            int z = ChunkUtil.zFromBlockInColumn(info.getIndex());
+
+            WorldChunk worldChunk = (WorldChunk) commandBuffer.getComponent(info.getChunkRef(), WorldChunk.getComponentType());
+            if (worldChunk != null) {
+				worldChunk.setTicking(x, y, z, true);
+            }
+        }
+    }
+
+    @Override
+    public void onEntityRemove(@Nonnull Ref ref, @Nonnull RemoveReason reason, @Nonnull Store store, @Nonnull CommandBuffer commandBuffer) {
+    }
+
+    @Override
+    public Query getQuery() {
+        return Query.and(BlockModule.BlockStateInfo.getComponentType(), ExamplePlugin.get().getExampleBlockComponentType());
+    }
+}
+```
+
+ExampleInitializer is a RefSystem that reacts when block entities with the ExampleBlock component are added or removed. This is crucial for marking blocks as ticking when they're first placed.
+
+**Key Points:**
+
+- Tells the game that this block should tick, allowing `ExampleSystem` to process it.
+
+```java
+worldChunk.setTicking(x, y, z, true);
+```
+
+---
+
+### 3. `ExampleSystem` — Manipula o tique-taque (_ticking_)
+
+```java
+public class ExampleSystem extends EntityTickingSystem {
+    private static final Query QUERY = Query.and(BlockSection.getComponentType(), ChunkSection.getComponentType());
+
+    public void tick(float dt, int index, @Nonnull ArchetypeChunk archetypeChunk, @Nonnull Store store, @Nonnull CommandBuffer commandBuffer) {
+        BlockSection blocks = (BlockSection) archetypeChunk.getComponent(index, BlockSection.getComponentType());
+
+        assert blocks != null;
+
+        if (blocks.getTickingBlocksCountCopy() != 0) {
+            ChunkSection section = (ChunkSection) archetypeChunk.getComponent(index, ChunkSection.getComponentType());
+
+            assert section != null;
+
+            BlockComponentChunk blockComponentChunk = (BlockComponentChunk) commandBuffer.getComponent(section.getChunkColumnReference(), BlockComponentChunk.getComponentType());
+
+            assert blockComponentChunk != null;
+
+            blocks.forEachTicking(blockComponentChunk, commandBuffer, section.getY(), (blockComponentChunk1, commandBuffer1, localX, localY, localZ, blockId) ->
+            {
+                Ref<ChunkStore> blockRef = blockComponentChunk1.getEntityReference(ChunkUtil.indexBlockInColumn(localX, localY, localZ));
+                if (blockRef == null) {
+                    return BlockTickStrategy.IGNORED;
+                } else {
+                    ExampleBlock exampleBlock = (ExampleBlock) commandBuffer1.getComponent(blockRef, ExampleBlock.getComponentType());
+                    if (exampleBlock != null) {
+                        WorldChunk worldChunk = (WorldChunk) commandBuffer.getComponent(section.getChunkColumnReference(), WorldChunk.getComponentType());
+
+                        int globalX = localX + (worldChunk.getX() * 32);
+                        int globalZ = localZ + (worldChunk.getZ() * 32);
+
+                        exampleBlock.runBlockAction(globalX, localY, globalZ, worldChunk.getWorld());
+
+                        return BlockTickStrategy.CONTINUE;
+
+                    } else {
+                        return BlockTickStrategy.IGNORED;
+                    }
+                }
+            });
+        }
+    }
+
+    @Nullable
+    public Query getQuery() {
+        return QUERY;
+    }
+}
+```
+
+ExampleSystem is an EntityTickingSystem that runs every tick to execute the logic for all ticking blocks with the ExampleBlock component.
+
+**Key Points:**
+
+- **Obtenha o componente do bloco**
+
+```java
+ExampleBlock exampleBlock = (ExampleBlock) commandBuffer1.getComponent(blockRef, ExampleBlock.getComponentType());
+```
+
+- **Converter as coordenadas do chunk local para as coordenadas do mundo**
+
+```java
+int globalX = localX + (worldChunk.getX() * 32);
+int globalZ = localZ + (worldChunk.getZ() * 32);
+```
+
+- **Execute a lógica do bloco**
+
+```java
+exampleBlock.runBlockAction(globalX, localY, globalZ, worldChunk.getWorld());
+```
+
+- **Mantenha o bloco em ticking no próximo tick**
+
+```java
+return BlockTickStrategy.CONTINUE;
+```
+
+---
+
+### 4. `ExamplePlugin` — Registra os componentes e sistemas
+
+```java
+public class ExamplePlugin extends JavaPlugin {
+    protected static ExamplePlugin instance;
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    private ComponentType exampleBlockComponentType;
+
+    public static ExamplePlugin get() {
+        return instance;
+    }
+
+    public ExamplePlugin(@Nonnull JavaPluginInit init) {
+        super(init);
+        LOGGER.atInfo().log("Hello from " + this.getName() + " version " + this.getManifest().getVersion().toString());
+    }
+
+    @Override
+    protected void setup() {
+        instance = this;
+        LOGGER.atInfo().log("Setting up plugin " + this.getName());
+        this.exampleBlockComponentType = this.getChunkStoreRegistry().registerComponent(ExampleBlock.class, "ExampleBlock", ExampleBlock.CODEC);
+    }
+	
+	@Override
+	protected void start() {
+		this.getChunkStoreRegistry().registerSystem(new ExampleSystem());
+		this.getChunkStoreRegistry().registerSystem(new ExampleInitializer());
+	}
+
+    public ComponentType getExampleBlockComponentType() {
+        return this.exampleBlockComponentType;
+    }
+}
+```
+
+---
+
+### 5. Configurar dentro do jogo
+
+![block-component-1](/assets/guides/block-component-1.png)
+
+![block-component-2](/assets/guides/block-component-2.png)
+
+Com essa lógica, o bloco agora posicionará continuamente um Bloco de Gelo na coordenada X + 1, em relação à sua posição atual, a cada tick.
+
+---
+
+## Common Issues
+
+### NullPointerException on Startup
+
+**Error message:**
+
+```java
+java.lang.NullPointerException: Cannot invoke "com.hypixel.hytale.component.query.Query.validateRegistry(com.hypixel.hytale.component.ComponentRegistry)" because "query" is null
+```
+
+**Cause:**
+This error occurs when your module is loaded **before** the required Hytale modules.
+
+**Fix:**
+Add `EntityModule` and `BlockModule` as dependencies in your `manifest.json` to ensure proper load order.
+
+```json
+"Dependencies": {
+  "Hytale:EntityModule": "*",
+  "Hytale:BlockModule": "*"
+}
+```

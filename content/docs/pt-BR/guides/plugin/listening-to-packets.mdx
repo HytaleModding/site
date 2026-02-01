@@ -1,0 +1,296 @@
+---
+title: Listening to Packets
+description: Learn how to listen to packets that are sent or received from the Client
+authors:
+  - name: Neil Revin
+    url: https://itsneil.dev
+  - name: musava_ribica
+    url: https://forum.hytalemodding.dev/u/musava_ribica
+  - name: Drakon
+    url: https://github.com/Drakonkinst
+---
+
+In this guide, you'll learn how to listen to packets that are being sent or received from the Client.
+
+Packets are defined in `com.hypixel.hytale.protocol` and organized by category in `com.hypixel.hytale.protocol.packets`. Base class is `Packet` and the sub-packages contain actual packet classes. The low-level Netty handler is `com.hypixel.hytale.server.core.io.netty.PlayerChannelHandler`, it delegates packet processing logic to `com.hypixel.hytale.server.core.io.adapter.PacketAdapters`.
+
+The server has a built-in adapter system that makes injection very straightforward. You don't need to hook into Netty manually. You can use the `PacketAdapters` class to register inbound (Client -> Server) and outbound (Server -> Client) watchers. The process for registering inbound packets is the same as for outbound.
+
+The `PacketAdapters` class provides several `registerInbound` method overloads. Possible argument types are `PacketWatcher`, `PacketFilter`, `PlayerPacketWatcher` and `PlayerPacketFilter`.
+
+The difference between `PacketWatcher` and `PacketFilter` is that the `PacketFilter` can prevent packet processing and block the packet from reaching the server (for inbound) or reaching the player (for outbound).
+
+## Player Packet Tracker (Utility)
+
+To get a better understanding of how packets are sent to/from players, you can add this snippet below to track packets sent to/from players:
+
+```java
+public class PlayerPacketTracker {
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
+    private static class PlayerStats {
+        final Map<String, AtomicInteger> sent = new ConcurrentHashMap<>();
+        final Map<String, AtomicInteger> received = new ConcurrentHashMap<>();
+    }
+    private static final Map<String, PlayerStats> stats = new ConcurrentHashMap<>();
+
+    private static String getPlayerName(PacketHandler handler) {
+        if (handler instanceof GamePacketHandler gpHandler) {
+            return gpHandler.getPlayerRef().getUsername();
+        }
+        return null;
+    }
+
+    public static void registerPacketCounters() {
+        PacketAdapters.registerInbound((PacketHandler handler, Packet packet) -> {
+            String playerName = getPlayerName(handler);
+            if (playerName != null) {
+                stats.computeIfAbsent(playerName, k -> new PlayerStats())
+                        .received.computeIfAbsent(packet.getClass().getSimpleName(), k -> new AtomicInteger(0))
+                        .incrementAndGet();
+            }
+        });
+
+        // Listener for sent packets (Outbound)
+        PacketAdapters.registerOutbound((PacketHandler handler, Packet packet) -> {
+            String playerName = getPlayerName(handler);
+            if (playerName != null) {
+                stats.computeIfAbsent(playerName, k -> new PlayerStats())
+                        .sent.computeIfAbsent(packet.getClass().getSimpleName(), k -> new AtomicInteger(0))
+                        .incrementAndGet();
+            }
+        });
+
+        // Schedule logging every 3 seconds
+        HytaleServer.SCHEDULED_EXECUTOR.scheduleAtFixedRate(() -> {
+            if (stats.isEmpty()) return;
+
+            for (Map.Entry<String, PlayerStats> entry : stats.entrySet()) {
+                String player = entry.getKey();
+                PlayerStats pStats = entry.getValue();
+
+                StringBuilder sb = new StringBuilder();
+
+                // Build Sent string
+                List<String> sentLogs = new ArrayList<>();
+                pStats.sent.forEach((type, atomic) -> {
+                    int count = atomic.getAndSet(0);
+                    if (count > 0) {
+                        sentLogs.add(type + " x" + count);
+                    }
+                });
+
+                if (!sentLogs.isEmpty()) {
+                    sb.append("Sent ").append(String.join(", ", sentLogs));
+                }
+
+                // Build Received string
+                List<String> recvLogs = new ArrayList<>();
+                pStats.received.forEach((type, atomic) -> {
+                    int count = atomic.getAndSet(0);
+                    if (count > 0) {
+                        recvLogs.add(type + " x" + count);
+                    }
+                });
+
+                if (!recvLogs.isEmpty()) {
+                    if (!sb.isEmpty()) sb.append("\n");
+                    sb.append("Received ").append(String.join(", ", recvLogs));
+                }
+
+                if (!sb.isEmpty()) {
+                    LOGGER.atInfo().log("To " + player + ":\n" + sb);
+                }
+            }
+        }, 3, 3, TimeUnit.SECONDS);
+    }
+}
+```
+
+Then call `PlayerPacketTracker.registerPacketCounters();` in your `setup()` function.
+
+## Injecting our own function to the PacketAdapter.
+
+We can inject our own function to the PacketAdapter by using one of the methods mentioned above, here is an example that prints all packets sent from the server to the client.
+
+```java
+PacketAdapters.registerOutbound((PacketHandler handler, Packet packet) -> {
+    var handlerName = handler.getClass().getSimpleName();
+    var packetName = packet.getClass().getSimpleName();
+
+    // some common packets excluded to reduce spam
+    if (!"EntityUpdates".equals(packetName) && !"CachedPacket".equals(packetName)) {
+        logger.at(Level.INFO)
+              .log("[" + handlerName + "] Sent packet id=" + packet.getId() + ": " + packetName);
+    }
+});
+```
+
+## Modfying an incoming packet
+
+In the following example, we modify a incoming packet containing skin data to remove that data from the packet. With this, every player will have default skin.
+
+```java
+PacketAdapters.registerInbound((PacketHandler handler, Packet packet) -> {
+    if (packet instanceof PlayerOptions skinPacket) {
+        skinPacket.skin = null;
+    }
+});
+```
+
+### Player packet handling
+
+We can use another method in `PacketAdapter` to specifically target packets send by a player.
+In this method, returning `true` cancels the packet while returning `false` allows the packet to pass through.
+This allows you to add your own logic to packets.
+
+<Callout type="warning">
+  While you can cancel packets entirely, client-side prediction still occurs and the targeted client will still see
+  their movement inputs work as normal. This requires extra work (guide pending) to prevent the player from taking
+  certain actions; cancelling packets is likely not the right approach.
+</Callout>
+
+```java
+PacketAdapters.registerInbound((PlayerPacketFilter) (player,  packet) -> {
+    if (packet instanceof ClientMovement movementPacket) {
+        // Do some logic here, then return true to cancel the packet
+        return true;
+    }
+    return false;
+});
+```
+
+## Packet handlers
+
+Packet Handlers and the incoming packet types and corresponding packet ids of the packets they handle. Packets can be present in multiple handlers. If any other type of packet comes in during wrong phase, the handler will disconnect the sender. These are serverbound (inbound) packets. Some packets are used in both directions, such as SyncInteractionChains. Packets not mentioned here are likely clientbound (outbound), but will be added soon.
+
+### InitialPacketHandler
+
+- Connect (0)
+- Disconnect (1)
+
+### HandshakeHandler
+
+Isso é uma superclasse de `AuthenticationPacketHandler`.
+
+- Disconect (1)
+- AuthToken (12)
+
+### PasswordPacketHandler
+
+- Disconnect (1)
+- PasswordResponse (15)
+
+### SetupPacketHandler
+
+- Disconnect (1)
+- RequestAssets (23)
+- ViewRadius (32)
+- PlayerOptions (33)
+
+### GamePacketHandler
+
+- Disconnect (1)
+- Pong (3)
+- ClientMovement (108)
+- ChatMessage (211)
+- RequestAssets (23)
+- CustomPageEvent (219)
+- ViewRadius (32)
+- UpdateLanguage (232)
+- MouseInteraction (111)
+- UpdateServerAccess (251)
+- SetServerAccess (252)
+- ClientOpenWindow (204)
+- SendWindowAction (203)
+- CloseWindow (202)
+- RequestMachinimaActorModel (260)
+- UpdateMachinimaScene (262)
+- ClientReady (105)
+- MountMovement (166)
+- SyncPlayerPreferences (116)
+- ClientPlaceBlock (117)
+- RemoveMapMarker (119)
+- UpdateWorldMapVisible (243)
+- TeleportToWorldMapMarker (244)
+- TeleportToWorldMapPosition (245)
+- SyncInteractionChains (290)
+- SetPaused (158)
+- RequestFlyCameraMode (282)
+
+The following are so called sub packet handlers, they serve as additional functionality to the GamePacketHandler:
+
+#### AssetEditorPacketHandler
+
+- Disconnect (1)
+- Pong (3)
+- AssetEditorRequestChildrenList (321)
+- AssetEditorUpdateAsset (324)
+- AssetEditorUpdateJsonAsset (323)
+- AssetEditorSelectAsset (336)
+- AssetEditorFetchAsset (310)
+- AssetEditorFetchJsonAssetWithParents (311)
+- AssetEditorCreateAsset (327)
+- AssetEditorCreateDirectory (307)
+- AssetEditorRequestDataset (333)
+- AssetEditorFetchAutoCompleteData (331)
+- AssetEditorActivateButton (335)
+- AssetEditorDeleteAsset (329)
+- AssetEditorRenameAsset (328)
+- AssetEditorDeleteDirectory (308)
+- AssetEditorRenameDirectory (309)
+- AssetEditorExportAssets (342)
+- AssetEditorFetchLastModifiedAssets (338)
+- AssetEditorUndoChanges (349)
+- AssetEditorRedoChanges (350)
+- AssetEditorSubscribeModifiedAssetsChanges (341)
+- AssetEditorSetGameTime (352)
+- AssetEditorUpdateWeatherPreviewLock (354)
+- AssetEditorCreateAssetPack (316)
+- AssetEditorUpdateAssetPack (315)
+- AssetEditorDeleteAssetPack (317)
+
+#### BuilderToolsPacketHandler
+
+- LoadHotbar (106)
+- SaveHotbar (107)
+- BuilderToolArgUpdate (400)
+- BuilderToolEntityAction (401)
+- BuilderToolGeneralAction (412)
+- BuilderToolSelectionUpdate (409)
+- BuilderToolExtrudeAction (403)
+- BuilderToolRotateClipboard (406)
+- BuilderToolPasteClipboard (407)
+- BuilderToolOnUseInteraction (413)
+- BuilderToolSelectionToolAskForClipboard (410)
+- BuilderToolLineAction (414)
+- BuilderToolSetEntityTransform (402)
+- BuilderToolSetEntityScale (420)
+- BuilderToolSelectionTransform (405)
+- BuilderToolStackArea (404)
+- BuilderToolSetTransformationModeState (408)
+- PrefabUnselectPrefab (417)
+- BuilderToolSetEntityPickupEnabled (421)
+- BuilderToolSetEntityLight (422)
+- BuilderToolSetNPCDebug (423)
+
+#### InventoryPacketHandler
+
+- SetCreativeItem (171)
+- DropCreativeItem (172)
+- SmartGiveCreativeItem (173)
+- DropItemStack (174)
+- MoveItemStack (175)
+- SmartMoveItemStack (176)
+- SetActiveSlot (177)
+- SwitchHotbarBlockSet (178)
+- InventoryAction (179)
+
+#### AssetEditorGamePacketHandler
+
+- AssetEditorInitialize (302)
+- AssetEditorUpdateJsonAsset (323)
+
+#### MountGamePacketHandler
+
+- DismountNPC (294)

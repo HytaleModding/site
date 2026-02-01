@@ -1,0 +1,73 @@
+---
+title: Registrando
+description: Aprenda a registrar mensagens no servidor usando o sistema de registro de logs do Hytale.
+authors:
+  - name: LucasVinicius314
+    url: https://github.com/LucasVinicius314
+---
+
+Uma forma de registrar mensagens é usando a própria classe de registro do Hytale, a `HytaleLogger` que estende a classe `com.google.common.flogger.AbstractLogger`. Os registros aparecerão no mesmo arquivo de registro utilizado pelo servidor do Hytale, na pasta de registros do servidor em `{Hytale's install folder}/UserData/Saves/{World}/logs`.
+
+O registrador permite a atribuição de um nome ao realizar a chamada `HytaleLogger.get("<logger name>")`. O nome do registrador será adicionado antes da mensagem de registro, facilitando sua identificação dentro do arquivo de registro.
+
+There is a method `.forEnclosingClass()` that you can use to automatically get the logger for the file you are working in without having to change it every time.
+
+Um exemplo de utilização da classe de registro do Hytale para registrar mensagens, através de um atributo estático na classe principal do plugin:
+
+```java
+import com.hypixel.hytale.logger.HytaleLogger;
+
+public class ExamplePlugin extends JavaPlugin {
+
+  public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
+  @Override
+  protected void setup() {
+    LOGGER.atInfo().log("meu plugin de exemplo carregou");
+  }
+}
+```
+
+O registrador poderá ser usado em qualquer local, como no exemplo abaixo:
+
+```java
+ExamplePlugin.LOGGER.atInfo().log("olá mundo");
+```
+
+## Níveis de registro
+
+Todas as mensagens de registro têm um nível associado. O nível pode ser usado para categorizar as mensagens e a configurar como elas são registradas. Utilizando as configurações padrões, apenas as mensagens de `Info`, `Warn` e `Severe` são mostradas.
+
+```java
+    LOGGER.atInfo().log("Fornece informações de alto nível sobre o comportamento normal do sistema.");
+    LOGGER.atWarning().log("Sinaliza um problema em potencial ou uma situação que pode levar a um erro.");
+    LOGGER.atSevere().log("Um erro grave que impedirá o funcionamento conforme o esperado.");
+```
+
+## Argumentos de modelo
+
+O HytaleLogger usa argumentos no estilo `printf` e deve oferecer suporte à maioria dos recursos e especificadores utilizados na formatação de strings convencionais.
+
+```java
+final String name = "Mundo";
+LOGGER.atInfo().log("Olá %s", name);
+// mostra: Olá Mundo
+```
+
+Segue um breve resumo dos especificadores mais comuns:
+
+- `%s`: String
+- `%d`: Integer
+- `%f`: Float/Double
+- `%b`: Boolean
+- `%c`: Char
+
+## Exceções e causas
+
+Caso a mensagem de `log` tenha uma exceção associada ou exija a inclusão de um stack trace, é possível realizá-lo definindo a causa (`cause`).
+
+```java
+    catch (IOException e) {
+        LOGGER.atSevere().withCause(e).log("Erro!");
+    }
+```

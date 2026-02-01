@@ -1,0 +1,161 @@
+---
+title: Теория ECS в Hytale
+description: В этом руководстве вы узнаете об основах мощной системы ECS Hytale, а также научитесь создавать собственные компоненты, системы и взаимодействовать с другими системами для создания игровой логики.
+authors:
+  - name: oskarscot
+    url: https://oskar.scot
+  - name: musava_ribica
+    url: https://forum.hytalemodding.dev/u/musava_ribica
+---
+
+## Хранилище (Store)
+
+Класс `Store` является ядром системы ECS в Hytale, он отвечает за хранение сущностей. Если вам когда-либо понадобится получить доступ к сущности, вам в первую очередь потребуется получить доступ к хранилищу. Он использует концепцию, называемую архетипами, где данные группируются вместе в чанки. Например, если у нас есть 100 трорков, они будут объединены в чанки вместе со своими компонентами, чтобы находиться рядом в памяти и их было быстрее получать.
+
+## EntityStore
+
+При просмотре серверного кода Hytale вы увидите, что в большинстве случаев `Store` имеет тип `EntityStore`. Это название может вводить в заблуждение, так как создаётся впечатление, что это `Store` (Хранилище) сущностей.
+Но разве мы не говорили, что `Store` сам по себе уже хранит сущности? Класс `EntityStore` реализует `WorldProvider`, что означает, что `EntityStore` отвечает за доступ к конкретному миру (`World`) Hytale. Он поддерживает внутренние словари `entitiesByUuid` и `networkIdToRef`, что позволяет найти конкретную сущность по её постоянному ID или по сетевому ID.
+
+У каждой сущности есть `UUIDComponent`, а также `NetworkId`, которые используются `EntityStore` для поиска сущностей внутри `Store`.
+
+## ChunkStore
+
+Ещё один тип `Store`, с которым вы можете столкнуться, - это `ChunkStore`. Он отвечает за хранение всех компонентов, связанных с блоками внутри `World`. Вы можете получить `WorldChunk` - это ваши общие компоненты чанков.
+Компонент `WorldChunk` содержит `EntityChunk`, который хранит все сущности, находящиеся внутри чанка, а также их ссылку на `EntityStore`. Он также содержит `BlockChunk`, который состоит из `BlockSection`. Есть ещё множество компонентов, составляющих общую систему мира и чанков, но на данный момент это базовое понимание того, что такое `ChunkStore`. Вы можете использовать его для получения данных о чанках и их блоках, а также о сущностях в конкретном чанке, а также для создания систем блоков и чанков.
+
+## Holder
+
+Holder - это по сути чертёж (шаблон) сущности. Прежде чем сущность появится в Store (и, соответственно, в мире), она существует как `Holder`. Он собирает и хранит все необходимые компоненты (данные). Можно сравнить это с корзиной для покупок. Вы берёте все нужные компоненты, и когда всё собрано, "оформляете покупку" в Store: он принимает ваш "корзину", создаёт корректный ID сущности и выдаёт вам "чек" (Ref).
+
+Давайте рассмотрим пример: инициализация игроков. В `Universe` метод `addPlayer` демонстрирует это идеально.
+Когда игрок подключается, мы не сразу бросаем его в ECS. Сначала мы создаем их данные в Holder.
+Обратите внимание, что метод `PlayerStorage#load`, который загружает данные игрока с диска, возвращает `CompletableFuture<Holder<EntityStore>>`.
+Это означает, что метод выполняется асинхронно, и в будущем будет содержаться `Holder` для сущности в `EntityStore`.
+Просто откройте класс `Universe`, найдите метод `addPlayer` и прочитайте его от начала до конца. Поверьте, это очень поможет: вы увидите реальный процесс создания сущности и через что ей приходится пройти. В конце `Universe` вызывает `world#addPlayer`, который (после отправки события) вызывает метод...
+
+```java
+Ref<EntityStore> ref = playerRefComponent.addToStore(store);
+```
+
+А `PlayerRef#addToStore` содержит следующее:
+
+```java
+store.addEntity(this.holder, AddReason.LOAD);
+```
+
+## Ref (Reference; Ссылка)
+
+Тем, кто знаком с такими языками, как C++, по названию уже, вероятно, понятно, что это за класс. Однако Ref - это безопасный "дескриптор" или указатель на сущность. Вы **НИКОГДА** не должны хранить прямую ссылку на объект сущности - вместо этого используйте Ref. Он отслеживает, жива ли сущность. Если вызвать `validate()` у Ref на сущность, которая была удалена, будет выброшено исключение.
+
+## Компоненты игрока
+
+В Hytale "Игрок" - это не просто один объект. Это одна сущность, состоящая из множества специализированных компонентов. Понимание разницы между `Player` и `PlayerRef` имеет решающее значение для моддинга.
+
+### PlayerRef
+
+Несмотря на свое название, PlayerRef является компонентом, а не дескриптором. Он представляет подключение и идентичность игрока. Это специальный компонент, который остаётся активным, пока игрок подключён к серверу, даже если он переключается между мирами. Ключевые данные, которые он хранит: имя игрока, UUID, язык и обработчик пакетов.
+
+### Player
+
+Компонент `Player` представляет физическое присутствие игрока. Он существует только тогда, когда игрок действительно появляется в мире. Обеспечивая доступ к данным, относящимся к игровому процессу, этот компонент отличается в зависимости от мира.
+
+Чтобы взаимодействовать с сущностью, вы используете `Store`, чтобы получить её компоненты по `ComponentType`. Поскольку Hytale использует раздельную (decoupled) систему, вы не вызываете entity.getHealth(). Вместо этого вы запрашиваете у `Store` данные о хп, связанные с `Ref` этой сущности.
+
+```java
+@Override
+protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<EntityStore> store, 
+    @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {
+  Player player = store.getComponent(ref, Player.getComponentType());
+  UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
+  TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
+  player.sendMessage(Message.raw("UUIDComponent : " + component.getUuid()));
+  player.sendMessage(Message.raw("Transform : " + transform.getPosition()));
+}
+```
+
+Здесь мы используем `Store<EntityStore>`, чтобы получить компонент `Player` через `Ref<EntityStore>`. То же самое можно сделать и с другими компонентами, например `UUIDComponent` или `TransformComponent`, чтобы получить трансформ сущности - позицию и положение (поворот).
+
+## Components (Компоненты)
+
+Компоненты - это чистые контейнеры данных. Они сохраняют состояние, но не содержат логики. В Hytale компоненты должны реализовывать `Component<EntityStore>` и представлять метод clone, чтобы ECS мог копировать их при необходимости.
+
+```java
+public class PoisonComponent implements Component<EntityStore> {
+
+  private float damagePerTick;
+  private float tickInterval;
+  private int remainingTicks;
+  private float elapsedTime;
+
+  public PoisonComponent() {
+    this(5f, 1.0f, 10);
+  }
+
+  public PoisonComponent(float damagePerTick, float tickInterval, int totalTicks) {
+    this.damagePerTick = damagePerTick;
+    this.tickInterval = tickInterval;
+    this.remainingTicks = totalTicks;
+    this.elapsedTime = 0f;
+  }
+
+  public PoisonComponent(PoisonComponent other) {
+    this.damagePerTick = other.damagePerTick;
+    this.tickInterval = other.tickInterval;
+    this.remainingTicks = other.remainingTicks;
+    this.elapsedTime = other.elapsedTime;
+  }
+
+  @Nullable
+  @Override
+  public Component<EntityStore> clone() {
+    return new PoisonComponent(this);
+  }
+
+  public float getDamagePerTick() {
+    return damagePerTick;
+  }
+
+  public float getTickInterval() {
+    return tickInterval;
+  }
+
+  public int getRemainingTicks() {
+    return remainingTicks;
+  }
+
+  public float getElapsedTime() {
+    return elapsedTime;
+  }
+
+  public void addElapsedTime(float dt) {
+    this.elapsedTime += dt;
+  }
+
+  public void resetElapsedTime() {
+    this.elapsedTime = 0f;
+  }
+
+  public void decrementRemainingTicks() {
+    this.remainingTicks--;
+  }
+
+  public boolean isExpired() {
+    return this.remainingTicks <= 0;
+  }
+}
+```
+
+The default constructor is required for the registration factory. Копирующий конструктор используется в clone(), который ECS вызывает внутренне, когда нужно продублировать данные компонента.
+
+## CommandBuffer
+
+`CommandBuffer` ставит изменения сущностей в очередь. Используйте его вместо прямого изменения `Store`, чтобы обеспечить потокобезопасность и правильный порядок выполнения. Вы будете использовать его для добавления компонентов, удаления компонентов и нанесения урона.
+
+```java
+commandBuffer.addComponent(ref, componentType, new MyComponent());
+
+commandBuffer.removeComponent(ref, componentType);
+
+MyComponent comp = commandBuffer.getComponent(ref, componentType);
+```

@@ -1,0 +1,340 @@
+---
+title: Create Custom Item and Interaction
+description: Learn how you can create a custom item interactions for your custom items
+authors:
+  - name: Marcel-TO
+    url: https://marcel-to.net
+---
+
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+
+Creating a custom item follows the same setup than the [Creating custom blocks](./creating-block).
+
+## Setup
+
+1. Enable asset packs in `manifest.json` by setting `IncludesAssetPack` to `true`
+2. Create the following folder structure:
+
+<Files>
+  <Folder name="resources" defaultOpen>
+    <Folder name="Server" defaultOpen>
+      <Folder name="Item" defaultOpen>
+        <Folder name="Items" defaultOpen>
+          <File name="my_new_item.json" />
+        </Folder>
+      </Folder>
+    </Folder>
+
+    <Folder name="Common" defaultOpen>
+      <Folder name="Icons" defaultOpen>
+        <Folder name="ItemsGenerated" defaultOpen>
+          <File name="my_new_item_icon.png" />
+        </Folder>
+      </Folder>
+
+      <Folder name="Items" defaultOpen>
+        <Folder name="my_new_item" defaultOpen>
+          <File name="model.blockymodel" />
+
+          <File name="model_texture.png" />
+        </Folder>
+      </Folder>
+    </Folder>
+  </Folder>
+</Files>
+
+The following files are relevant for the item:
+
+| File                 | Location                    | Description                              |
+| -------------------- | --------------------------- | ---------------------------------------- |
+| my_new_item.json     | Server/Item/Items           | Defines the item properties and behavior |
+| my_new_item_icon.png | Common/Icons/ItemsGenerated | Icon for the item in inventory           |
+| model.blockymodel    | Common/Items/my_new_item    | 3D model of the item                     |
+| model_texture.png    | Common/Items/my_new_item    | Texture for the item model               |
+
+## Custom Item Definition
+
+Create `Server/Item/Items/my_new_item.json`:
+
+```json
+{
+  "TranslationProperties": {
+    "Name": "My New Item", // Alternatively, use localization keys
+    "Description": "My New Item Description" // Alternatively, use localization keys
+  },
+   "Id": "My_New_Item",
+  "Icon": "Icons/ItemsGenerated/my_new_item_icon.png",
+  "Model": "Items/my_new_item/model.blockymodel",
+  "Texture": "Items/my_new_item/model_texture.png",
+  "Quality": "Common",
+  "MaxStack": 1,
+  "Categories": [
+    "Items.Example"
+  ]
+}
+```
+
+This JSON file defines a new item with a unique ID, icon, 3D model, texture, quality, maximum stack size, and category.
+Ensure all referenced files exist in their respective folders, and the paths are correct.
+
+## Adding Recipe for the Item
+
+To allow players to craft the new item, you can define a crafting recipe. Inside the metadata for the item, add the following recipe definition:
+
+```json
+{
+  ... // existing item properties from above
+  "Recipe": {
+    "TimeSeconds": 3.5, // Time taken to craft the item
+    "Input": [
+      {
+        "ItemId": "Ingredient_1", // Example ingredient item ID
+        "Quantity": 15
+      },
+      {
+        "ItemId": "Ingredient_2", // Example ingredient item ID
+        "Quantity": 15
+      },
+      {
+        "ItemId": "Ingredient_3", // Example ingredient item ID
+        "Quantity": 15
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Workbench", // What type of crafting bench is required
+        "Type": "Crafting",
+        "Categories": [
+          "Workbench_Survival" // Which category of workbench tab
+        ]
+      }
+    ]
+  }
+}
+```
+
+This recipe allows players to craft "My New Item" using specified ingredients at a workbench.
+
+## Item Interaction
+
+To create a custom interaction, you will need to define the interaction behavior in your plugin code. This typically involves handling events when the item is used by the player. Inherit from `SimpleInstantInteraction` and override the necessary methods to define what happens when the item is used.
+
+### Plugin Code
+
+```java
+public class MyCustomInteraction extends SimpleInstantInteraction {
+    @Override
+    protected void firstRun(@Nonnull InteractionType interactionType, @Nonnull InteractionContext interactionContext, @Nonnull CooldownHandler cooldownHandler) {
+        // Custom behavior when the item is used
+    }
+}
+```
+
+What is missing is a custom CODEC to link the interaction to the item.
+
+```java
+public class MyCustomInteraction extends SimpleInstantInteraction {
+    public static final BuilderCodec<MyCustomInteraction> CODEC = BuilderCodec.builder(
+            MyCustomInteraction.class, MyCustomInteraction::new, SimpleInstantInteraction.CODEC
+    ).build();
+
+    @Override
+    protected void firstRun(@Nonnull InteractionType interactionType, @Nonnull InteractionContext interactionContext, @Nonnull CooldownHandler cooldownHandler) {
+        // Custom behavior when the item is used
+    }
+}
+```
+
+Finally, register the interaction in your plugin's main class:
+
+```java
+public class MyPlugin extends JavaPlugin {
+    public MyPlugin(@Nonnull JavaPluginInit init) {
+        super(init);
+    }
+
+    @Override
+    protected void setup() {
+        this.getCodecRegistry(Interaction.CODEC).register("my_custom_interaction_id", MyCustomInteraction.class, MyCustomInteraction.CODEC);
+    }
+}
+```
+
+This code registers the custom interaction with a unique ID, allowing the game to recognize and use it when any item with with this interaction id is used.
+
+### Linking Interaction to Item
+
+To link the custom interaction to the item, add the following property to the item JSON definition:
+
+```json
+{
+  ... // existing item properties from above
+  "Interactions": {
+    "Secondary": { // depending on the type of interaction you want
+      "Interactions": [
+        {
+          "Type": "my_custom_interaction_id",
+        }
+      ]
+    }
+  }
+}
+```
+
+## Full Interaction Example
+
+Here is a complete example of a custom interaction that sends a message with the item ID to the player when the item is used:
+
+```java
+public class SendMessageInteraction extends SimpleInstantInteraction {
+    public static final BuilderCodec<SendMessageInteraction> CODEC = BuilderCodec.builder(
+            SendMessageInteraction.class, SendMessageInteraction::new, SimpleInstantInteraction.CODEC
+    ).build();
+
+    public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
+    @Override
+    protected void firstRun(@Nonnull InteractionType interactionType, @Nonnull InteractionContext interactionContext, @Nonnull CooldownHandler cooldownHandler) {
+        CommandBuffer<EntityStore> commandBuffer = interactionContext.getCommandBuffer();
+        if (commandBuffer == null) {
+            interactionContext.getState().state = InteractionState.Failed;
+            LOGGER.atInfo().log("CommandBuffer is null");
+            return;
+        }
+
+        World world = commandBuffer.getExternalData().getWorld(); // just to show how to get the world if needed
+        Store<EntityStore> store = commandBuffer.getExternalData().getStore(); // just to show how to get the store if needed
+        Ref<EntityStore> ref = interactionContext.getEntity();
+        Player player = commandBuffer.getComponent(ref, Player.getComponentType());
+        if (player == null) {
+            interactionContext.getState().state = InteractionState.Failed;
+            LOGGER.atInfo().log("Player is null");
+            return;
+        }
+
+        ItemStack itemStack = interactionContext.getHeldItem();
+        if (itemStack == null) {
+            interactionContext.getState().state = InteractionState.Failed;
+            LOGGER.atInfo().log("ItemStack is null");
+            return;
+        }
+
+        player.sendMessage(Message.raw("You have used the custom item +" + itemStack.getItemId()));
+    }
+}
+```
+
+## Advanced Interaction Features
+
+Interactions are highly flexible. Since they are nested, you can combine multiple interactions to create complex behaviors. For example, you could have an interaction that first checks certain conditions (like player health or environment) before executing another interaction. Afterwards, you can chain interactions to create a sequence of actions triggered by a single item use. Or you could create interactions that need to be charged over time before they activate.
+
+To get your creative juices flowing, here are some examples of interaction types:
+
+1. **Condition**: Check specific conditions before allowing the interaction to proceed (e.g., only if player crouches):
+
+```json
+{
+    "Type": "Condition",
+    "Crouching": true, // only allow if player is crouching example
+    "Failed": "Block_Secondary",
+    "Next": {
+        ... // next interaction to run if condition is met
+    }
+}
+```
+
+2. **Charge**: Require the player to hold the interaction for a certain duration before it activates (This behavior for example is called if the player eats food):
+
+```json
+{
+    "Type": "Charging",
+    "FailsOnDamage": true, // cancel if player takes damage
+    "HorizontalSpeedMultiplier": 0.4, // reduce speed while charging
+    "Next": {
+        "2.5" : {  // interaction after 2.5 seconds of charging
+            ... // interaction to run after charge time
+        },
+    },
+    "Failed": {
+        ... // interaction to run if charging fails
+    }
+}
+```
+
+3. **Serial**: Execute a series of interactions in order, one after the other:
+
+```json
+{
+    "Type": "Serial",
+    "Interactions": [
+        {
+            ... // first interaction
+        },
+        {
+            ... // second interaction
+        }
+    ]
+}
+```
+
+4. **Replace**: Replace the default behavior of the item (e.g., inherited from parent) with a custom interaction:
+
+```json
+{
+    "Type": "Replace",
+    "Var": "Item_Default_Interaction",
+    "DefaultValue": {
+        "Interactions": [
+            {
+                ... // default interaction that replaces the original
+            }
+        ]
+    }
+}
+```
+
+5. **Simple**: Simple Interaction that performs a single action, such as sending a message or applying an effect:
+
+```json
+{
+    "Type": "Simple"
+}
+```
+
+### Advanced Interaction Example
+
+Here is an example of a more complex interaction that requires the player to crouch and charge for 2.5 seconds before executing the custom action:
+
+```json
+{
+    ... // existing item properties from above
+    "Interactions": {
+        "Secondary": {
+            "Interactions": [
+                {
+                    "Type": "Condition",
+                    "Crouching": true,
+                    "Failed": "Block_Secondary",
+                    "Next": {
+                        "Type": "Charging",
+                        "FailsOnDamage": true,
+                        "HorizontalSpeedMultiplier": 0.5,
+                        "Next": {
+                            "2.5": {
+                                "Type": "my_custom_interaction_id",
+                            }
+                        },
+                        "Failed": {
+                            "Type": "Simple"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
+```
+
+## Conclusão
+
+You have now created a custom item with a unique interaction in your Hytale plugin. You can expand upon this foundation to create more complex items and interactions as needed for your mod. Keep experimenting, chain interactions, and explore the possibilities to enhance gameplay!
