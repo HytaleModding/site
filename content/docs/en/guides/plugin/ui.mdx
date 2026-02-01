@@ -25,7 +25,7 @@ Examples:
 Visual UI Editor: https://hytale.ellie.au/
 Create UI from Java: https://www.curseforge.com/hytale/mods/hyui
 
-Show multiple custom HUDs at the same time: https://www.curseforge.com/hytale/mods/multiplehud 
+Show multiple custom HUDs at the same time: https://www.curseforge.com/hytale/mods/multiplehud
 Example MultipleHUD code: https://github.com/underscore95/Hytale-Sandbox-Plugin/tree/multiple-huds
 
 ## .ui files
@@ -63,7 +63,7 @@ You can define variables using the following syntax:
 
 ### Textures
 
-Textures can be loaded using 
+Textures can be loaded using
 ```
 PatchStyle(TexturePath: "MyBackground.png");
 ```
@@ -143,6 +143,11 @@ Group {
 ```
 
 InteractiveCustomUIPage takes a generic argument, this is a class containing any UI data you want the client to send to the server.
+
+<Callout type="info">
+Each variable you want to store in your component must have its own Codec field defined in the BuilderCodec.
+For more information on how to create custom Codecs, check out the [ECS Codec Guide](../ecs/hytale-ecs-theory#codec).
+</Callout>
 
 ```java
 public static class Data {
