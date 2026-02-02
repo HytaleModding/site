@@ -33,7 +33,7 @@ The most basic command is an `AbstractAsyncCommand`. It has very minimal data av
 `AbstractAsyncCommand` runs on its own background thread. This means its execute is not tied to any world instance and because of this it can not edit any **Stores** or **Refs** without getting the desired world first. To access this data any of the other command types would be preferred and are likely what you will want to use instead.
 </Callout>
 
-The main purpose for a command like this would be for something that can happen everywhere and is not tied to a specific world. For example a `serverRules` command to tell the user thats running the command in chat what the servers rules are nomatter what world they are in.
+The main purpose for a command like this would be for something that can happen everywhere and is not tied to a specific world. For example a `serverRules` command to tell the user that's running the command in chat what the servers rules are no matter what world they are in.
 
 ```java
 // Command that can be run that lists the server rules in chat to the player
@@ -46,7 +46,7 @@ public class ServerRulesCommand extends AbstractAsyncCommand {
     }
 
     // Run the command
-    // conetext - info about who ran the command. Server console?, Some player?
+    // context - info about who ran the command. Server console?, Some player?
     @Override
     protected CompletableFuture<Void> executeAsync(@Nonnull CommandContext context) {
         context.sendMessage(Message.raw("The only rule is there are no rules."));
@@ -386,5 +386,5 @@ public class MyPlugin extends JavaPlugin {
 ---
 
 ## Video Link
-*Special Thanks to [TroubleDev](https://www.youtube.com/@TroubleDEV) for his excelent video guide on all of these features.*
+*Special Thanks to [TroubleDev](https://www.youtube.com/@TroubleDEV) for his excellent video guide on all of these features.*
 *Video Link: [TroubleDev - Hytale's Command API Explained](https://www.youtube.com/watch?v=KnmhG9MDMgo)*

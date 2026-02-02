@@ -1,6 +1,6 @@
 ---
-title: "Storing Persistant Data on the Player"
-description: "Learn how to save and load persistant data using Components"
+title: "Storing Persistent Data on the Player"
+description: "Learn how to save and load persistent data using Components"
 authors:
     - name: "Neil Revin"
       url: "https://itsneil.dev/"
@@ -115,7 +115,7 @@ private void someEntryMethod(@Nonnull Ref<EntityStore> ref, @Nonnull Store<Entit
        // Any entity will work, for now we will use the player
       Player player = (Player) store.getComponent(ref, Player.getComponentType());
 
-      // since were using putComponent, it could be useful to check if it already exists on the player in case we want to update it
+      // since we're using putComponent, it could be useful to check if it already exists on the player in case we want to update it
      if(store.getComponent(ref, YourPlugin.instance().getYourPlayerDataComponent()) != null)
      {
           // here we implement logic that updates the component
