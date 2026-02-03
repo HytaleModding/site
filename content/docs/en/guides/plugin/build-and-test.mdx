@@ -9,18 +9,18 @@ If you followed along with the [Setting Up Your Development Environment](./setti
 
 ## Building Your Mod
 
-In our case, we've **Maven** as the build system. Maven is a powerful build automation tool that manages dependencies, compiles your code, and packages everything into a distributable JAR file.
+In our case, we've **Gradle** as the build system. Gradle is a powerful build automation tool that manages dependencies, compiles your code, and packages everything into a distributable JAR file.
 
-### Understanding Maven
+### Understanding Gradle
 
-Maven uses a `pom.xml` file (Project Object Model) to define your project's configuration, dependencies, and build settings. You can learn more about Maven at the [official Apache Maven website](https://maven.apache.org/).
+Gradle can use a `build.gradle.kts` file (Kotlin DSL) to define your project's configuration, dependencies, and build settings. You can learn more about Gradle at the [official Gradle website](https://gradle.org/).
 
-### Building with Maven
+### Building with Gradle
 
 To build your mod, open a terminal in your project directory and run:
 
 ```bash
-mvn package
+./gradlew build
 ```
 
 This command will:
@@ -28,16 +28,33 @@ This command will:
 2. Run any tests (if present)
 3. Package everything into a JAR file
 
+<Callout type="info">
+If you are using the plugin template from the [Setting Up Your Development Environment](./setting-up-env) guide, then the build script is already set up for you. It includes paths to your Hytale game library and handles the packaging of your mod, managing hytale dependencies and manifest changes.
+
+If you have a different path to your Hytale installation, you may receive the following error:
+```bash
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Failed to find Hytale at the expected location. Please make sure you have installed the game. The expected location can be changed using the hytale.home_path property. Currently looking in 'C:\Path\To\Hytale'
+```
+
+You can change the path by adding a property to your `gradle.properties` file (if it doesn't exist, create it in the root of your project):
+```properties
+hytale.home_path=C:\Correct\Path\To\Hytale
+```
+
+</Callout>
+
 ### Build Output
 
-Once the build completes successfully, your mod will be located in the `target` directory and named:
-
+Once the build completes successfully, your mod will be located in the `build/libs` directory and named:
 ```
-ExamplePlugin-1.0-SNAPSHOT.jar
+ExamplePlugin-1.0.jar
 ```
 
 <Callout type="info">
-The exact name may vary depending on what you configured in your `pom.xml` file. Check the `artifactId` and `version` fields to see what your JAR will be named.
+The exact name may vary depending on what you configured in your `build.gradle.kts` and `settings.gradle.kts` file. Check the `rootProject.name` and `version` fields to see what your JAR will be named.
 </Callout>
 
 ## Testing Your Mod
@@ -48,11 +65,11 @@ Now that you've built your mod, it's time to test it in Hytale!
 
 First, you need to find Hytale's mods directory:
 
-1. Press **Win + R** on your keyboard
-2. Type `%appdata%` and press Enter
-3. Navigate to: `Hytale\UserData\Mods`
+1. Go to your Hytale installation directory (The default location is usually in your AppData folder)
+    > On Windows, you can access it by clicking `windows + R` and typing `%appdata%`.
+3. Navigate to: `/UserData/Mods`
 
-The full path should look like:
+The default path would look like:
 ```
 C:\Users\YourUsername\AppData\Roaming\Hytale\UserData\Mods
 ```
@@ -63,7 +80,7 @@ If the `Mods` folder doesn't exist, you may need to create it manually or launch
 
 ### 2. Copy Your Mod
 
-Copy the `ExamplePlugin-1.0-SNAPSHOT.jar` file from your project's `target` directory into the `Mods` folder you just located.
+Copy the `ExamplePlugin-1.0.jar` file from your project's `build/libs` directory into the `Mods` folder you just located.
 
 ### 3. Launch Hytale and Verify
 
@@ -82,7 +99,7 @@ If your mod doesn't appear in the mods list:
 - Make sure the JAR file is in the correct `Mods` folder
 - Check that your `manifest.json` file is properly configured
 - Look for any error messages in the Hytale logs
-- Verify that you're using the correct version of Java and Maven
+- Verify that you're using the correct version of Java and Gradle
 
 ## Next Steps
 
