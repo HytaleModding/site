@@ -4,6 +4,8 @@ description: "Learn how to use the block components."
 authors:
     - name: "Bird"
       link: "https://discord.com/users/495709580068651009"
+    - name: "oskarscot"
+      link: "https://oskar.scot"
 ---
 
 # Overview
@@ -21,29 +23,18 @@ For a more complete reference, you may also want to review FarmingSystems.Tickin
 ```java
 public class ExampleBlock implements Component<ChunkStore> {
 
-    public static final BuilderCodec CODEC;
+    public static final BuilderCodec CODEC = BuilderCodec.builder(ExampleBlock.class, ExampleBlock::new).build();
 
-    public ExampleBlock() {
-
-    }
+    // Components usually require a copy constructor as well but since we don't actually hold any data in this component this is not neccessary
+    public ExampleBlock() { }
 
     public static ComponentType getComponentType() {
         return ExamplePlugin.get().getExampleBlockComponentType();
     }
 
-    public void runBlockAction(int x, int y, int z, World world) {
-        world.execute(() -> {
-            world.setBlock(x + 1, y, z, "Rock_Ice");
-        });
-    }
-
     @Nullable
     public Component<ChunkStore> clone() {
         return new ExampleBlock();
-    }
-
-    static {
-        CODEC = BuilderCodec.builder(ExampleBlock.class, ExampleBlock::new).build();
     }
 }
 ```
@@ -102,7 +93,6 @@ worldChunk.setTicking(x, y, z, true);
 
 ```java
 public class ExampleSystem extends EntityTickingSystem {
-    private static final Query QUERY = Query.and(BlockSection.getComponentType(), ChunkSection.getComponentType());
 
     public void tick(float dt, int index, @Nonnull ArchetypeChunk archetypeChunk, @Nonnull Store store, @Nonnull CommandBuffer commandBuffer) {
         BlockSection blocks = (BlockSection) archetypeChunk.getComponent(index, BlockSection.getComponentType());
@@ -118,20 +108,24 @@ public class ExampleSystem extends EntityTickingSystem {
 
             assert blockComponentChunk != null;
 
-            blocks.forEachTicking(blockComponentChunk, commandBuffer, section.getY(), (blockComponentChunk1, commandBuffer1, localX, localY, localZ, blockId) ->
-            {
-                Ref<ChunkStore> blockRef = blockComponentChunk1.getEntityReference(ChunkUtil.indexBlockInColumn(localX, localY, localZ));
+            blocks.forEachTicking(blockComponentChunk, commandBuffer, section.getY(), (blockComponentChunk1, commandBuffer1, localX, localY, localZ, blockId) -> {
+                Ref<ChunkStore> blockRef = blockComponentChunk.getEntityReference(ChunkUtil.indexBlockInColumn(localX, localY, localZ));
                 if (blockRef == null) {
                     return BlockTickStrategy.IGNORED;
                 } else {
                     ExampleBlock exampleBlock = (ExampleBlock) commandBuffer1.getComponent(blockRef, ExampleBlock.getComponentType());
                     if (exampleBlock != null) {
                         WorldChunk worldChunk = (WorldChunk) commandBuffer.getComponent(section.getChunkColumnReference(), WorldChunk.getComponentType());
+                        World world = worldChunk.getWorld();
 
                         int globalX = localX + (worldChunk.getX() * 32);
                         int globalZ = localZ + (worldChunk.getZ() * 32);
 
-                        exampleBlock.runBlockAction(globalX, localY, globalZ, worldChunk.getWorld());
+                        // We need to execute setBlock on the world thread as you cannot call store functions from a system
+                        // This is because of the architecture of the server, depending on your needs you can also use the CommandBuffer
+                        world.execute(() -> {
+                            world.setBlock(globalX + 1, localY, globalZ, "Rock_Ice");
+                        });
 
                         return BlockTickStrategy.CONTINUE;
 
@@ -145,7 +139,7 @@ public class ExampleSystem extends EntityTickingSystem {
 
     @Nullable
     public Query getQuery() {
-        return QUERY;
+        return Query.and(BlockSection.getComponentType(), ChunkSection.getComponentType());;
     }
 }
 ```
@@ -157,7 +151,7 @@ ExampleSystem is an EntityTickingSystem that runs every tick to execute the logi
 * **Get the block component**
 
 ```java
-ExampleBlock exampleBlock = (ExampleBlock) commandBuffer1.getComponent(blockRef, ExampleBlock.getComponentType());
+ExampleBlock exampleBlock = (ExampleBlock) commandBuffer.getComponent(blockRef, ExampleBlock.getComponentType());
 ```
 
 * **Convert local chunk coordinates to world coordinates**

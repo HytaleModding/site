@@ -154,6 +154,11 @@ Group {
 
 InteractiveCustomUIPage takes a generic argument, this is a class containing any UI data you want the client to send to the server.
 
+<Callout type="info">
+  Each variable you want to store in your component must have its own Codec field defined in the BuilderCodec.
+  For more information on how to create custom Codecs, check out the [ECS Codec Guide](../ecs/hytale-ecs-theory#codec).
+</Callout>
+
 ```java
 public static class Data {
   public static final BuilderCodec<Data> CODEC = BuilderCodec.builder(Data.class, Data::new)

@@ -33,7 +33,7 @@ The most basic command is an `AbstractAsyncCommand`. It has very minimal data av
 `AbstractAsyncCommand` runs on its own background thread. This means its execute is not tied to any world instance and because of this it can not edit any **Stores** or **Refs** without getting the desired world first. To access this data any of the other command types would be preferred and are likely what you will want to use instead.
 </Callout>
 
-The main purpose for a command like this would be for something that can happen everywhere and is not tied to a specific world. For example a `serverRules` command to tell the user thats running the command in chat what the servers rules are nomatter what world they are in.
+The main purpose for a command like this would be for something that can happen everywhere and is not tied to a specific world. For example a `serverRules` command to tell the user that's running the command in chat what the server's rules are no matter what world they are in.
 
 ```java
 // Command that can be run that lists the server rules in chat to the player
@@ -46,7 +46,7 @@ public class ServerRulesCommand extends AbstractAsyncCommand {
     }
 
     // Run the command
-    // conetext - info about who ran the command. Server console?, Some player?
+    // context - info about who ran the command. Server console?, Some player?
     @Override
     protected CompletableFuture<Void> executeAsync(@Nonnull CommandContext context) {
         context.sendMessage(Message.raw("The only rule is there are no rules."));
@@ -128,7 +128,7 @@ Uses a Ray to see what the player is looking at and tries to run the command on 
 ---
 
 ## Adding Arguments
-Arguments are additional fields that the user can input when running a command. The different types of arguments along with small snipits and a large example can be seen below.
+Arguments are additional fields that the user can input when running a command. The different types of arguments along with small snippets and a large example can be seen below.
 
 ### Command Argument Types
 - `withRequiredArg`    // Must be provided and are parsed left -> right in the command
@@ -151,13 +151,13 @@ this.messageArg = this.withOptionalArg("message", "Message to print while healin
 ```
 
 ### Default Arguments
-Adding a default argument has two additional arguemnt for the default value and default value description. You need to use `withDefaultArg` method.
+Adding a default argument has two additional argument for the default value and default value description. You need to use `withDefaultArg` method.
 ```java
 // args <Command String> <Description> <Default Value> <Desc of default value>
 this.healthArg = this.withDefaultArg("health", "Amount to heal player", ArgTypes.FLOAT, (float)100, "Desc of Default: 100");
 ```
 
-### Flag Arguemnts
+### Flag Arguments
 Similar as above but the flags return is either true if it exists or false if it does not. You need to use `withFlagArg` method.
 ```java
 // No type needed due to being a bool
@@ -173,11 +173,11 @@ The following ArgTypes are available (only lists common types):
 - `ArgTypes.FLOAT`
 - `ArgTypes.DOUBLE`
 - `ArgTypes.UUID`
-
 ### Example Command Arg Types
-Shows all Command arguemnt types with different various input types.
 
-**NOTE:** When getting the value of an argument during execute you need to pass the context with `someArg.get(commandContext)`. Where `commandContext` is the first variable in the execute funtion.
+Shows all Command argument types with different various input types.
+
+**NOTE:** When getting the value of an argument during execute you need to pass the context with `someArg.get(commandContext)`. Where `commandContext` is the first variable in the execute function.
 
 ```java
 // Example usage: /healplayer --health 50 --message "Feels Good" --debug
@@ -187,7 +187,7 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
     private final FlagArg debugArg;
 
     public HealPlayerCommand() {
-        super("healplayer", "Healing a player for an <input> ammount of HP (default: 100)");
+        super("healplayer", "Healing a player for an <input> amount of HP (default: 100)");
 
         // Abstract TargetPlayerCommand passes the player that ran the command by default and implements
         // the use of `--player <value>` to specify someone else
@@ -196,10 +196,10 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
         this.healthArg = this.withDefaultArg("health", "Amount to heal player", ArgTypes.FLOAT, (float)100, "Desc of Default: 100");
 
         // Or you could do the following making the health value required instead of with a default.
-        //    You would need to change the decleration to RequiredArg<Float>
+        //    You would need to change the declaration to RequiredArg<Float>
         // this.healthArg = this.withRequiredArg("health", "Amount to heal player", ArgTypes.FLOAT);
 
-        // Optional args reguare the user the input `--<key> <value>` so the following would require `--message "Good Luck"`
+// Optional args require the user the input `--<key> <value>` so the following would require `--message "Good Luck"`
         this.messageArg = this.withOptionalArg("message", "Message to print while healing", ArgTypes.STRING);
 
         // No type needed due to being a bool
@@ -213,7 +213,7 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
             commandContext.sendMessage(Message.raw("We are debugging"));
         }
 
-        // Health is stored in a generic stat map to allowing mods/future contect to easily add more stats if desired.
+        // Health is stored in a generic stat map to allowing mods/future content to easily add more stats if desired.
         EntityStatMap stats = store.getComponent(ref, EntityStatMap.getComponentType());
         int healthIdx = DefaultEntityStatTypes.getHealth();
         EntityStatValue health = stats.get(healthIdx);
@@ -247,7 +247,7 @@ Argument validators are a way to check the command before the command gets execu
     OptionalArg<Integer> healAmount = withOptionalArg("amount", "Heal Amount", ArgTypes.INTEGER)
             .addValidator( value -> {
                 if (value != null && value <= 0) {
-                    return ValidationResult.error("ammount argument must be a positive number");
+                    return ValidationResult.error("amount argument must be a positive number");
                 }
                 return ValidationResult.success();
             });
@@ -290,7 +290,7 @@ Use `/perm --help` in game to see usage.
 ## Command Variants
 If you want variants of the same command without doing argument parsing you can instead use `addUsageVariant(new OtherCommandClass())` in the original commands constructor.
 
-The only difference is in the `OtherCommandClass()` constrcutor you don't pass the command name to the super class.
+The only difference is in the `OtherCommandClass()` constructor you don't pass the command name to the super class.
 <Callout type="info">
 You can also use `addAliases("some_alias", "some_other_alias")` as a way to add shorthand or other ways to write the same command.
 </Callout>
@@ -360,7 +360,7 @@ public class AdminCommand extends AbstractCommandCollection {
     public AdminCommand () {
         super("admin", "Admin commands");
         addSubCommand(new UserCommandCollection());
-        addSybCommand(new ServerCommandCollection);
+        addSubCommand(new ServerCommandCollection);
     }
 }
 ```
@@ -386,5 +386,5 @@ public class MyPlugin extends JavaPlugin {
 ---
 
 ## Video Link
-*Special Thanks to [TroubleDev](https://www.youtube.com/@TroubleDEV) for his excelent video guide on all of these features.*
+*Special Thanks to [TroubleDev](https://www.youtube.com/@TroubleDEV) for his excellent video guide on all of these features.*
 *Video Link: [TroubleDev - Hytale's Command API Explained](https://www.youtube.com/watch?v=KnmhG9MDMgo)*
