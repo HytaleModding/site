@@ -22,12 +22,7 @@ Start by creating your custom component class. This will be extremely similar to
 
 <Callout type="info">
   Each variable you want to store in your component must have its own Codec field defined in the BuilderCodec.
-  Since the codec system is lambda based, you provide a setter and getter for each field.
-
-  Using complex data types (like Lists, Maps, etc) is possible, but can get tricky.
-  Refer to the available Codec types in the `Server.jar/com/hypixel/hytale/codec/` package for more information on what types are available.
-
-  Note that the 'key' used in the KeyedCodec must start with a Capital Letter, otherwise it may not serialize properly.
+  For more information on how to create custom Codecs, check out the [ECS Codec Guide](../ecs/hytale-ecs-theory#codec).
 </Callout>
 
 ```java
@@ -133,7 +128,7 @@ private void someEntryMethod(@Nonnull Ref<EntityStore> ref, @Nonnull Store<Entit
           var myCustomComp = new CustomComponent();
           // declare public fields or methods in the component class
           myCustomComp.SomeString = "Edited String";
-        
+
           // putComponent allows you to insert declared objects
           store.putComponent(ref, YourPlugin.instance().getYourPlayerDataComponent(), myCustomComp);
      }

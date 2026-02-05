@@ -1,6 +1,6 @@
 ---
-title: "Storing Persistant Data on the Player"
-description: "Learn how to save and load persistant data using Components"
+title: "Storing Persistent Data on the Player"
+description: "Learn how to save and load persistent data using Components"
 authors:
     - name: "Neil Revin"
       url: "https://itsneil.dev/"
@@ -22,12 +22,7 @@ Start by creating your custom component class. This will be extremely similar to
 
 <Callout type="info">
 Each variable you want to store in your component must have its own Codec field defined in the BuilderCodec.
-Since the codec system is lambda based, you provide a setter and getter for each field.
-
-Using complex data types (like Lists, Maps, etc) is possible, but can get tricky.
-Refer to the available Codec types in the `Server.jar/com/hypixel/hytale/codec/` package for more information on what types are available.
-
-Note that the 'key' used in the KeyedCodec must start with a Capital Letter, otherwise it may not serialize properly.
+For more information on how to create custom Codecs, check out the [ECS Codec Guide](../ecs/hytale-ecs-theory#codec).
 </Callout>
 
 ```java
@@ -120,7 +115,7 @@ private void someEntryMethod(@Nonnull Ref<EntityStore> ref, @Nonnull Store<Entit
        // Any entity will work, for now we will use the player
       Player player = (Player) store.getComponent(ref, Player.getComponentType());
 
-      // since were using putComponent, it could be useful to check if it already exists on the player in case we want to update it
+      // since we're using putComponent, it could be useful to check if it already exists on the player in case we want to update it
      if(store.getComponent(ref, YourPlugin.instance().getYourPlayerDataComponent()) != null)
      {
           // here we implement logic that updates the component
@@ -132,7 +127,7 @@ private void someEntryMethod(@Nonnull Ref<EntityStore> ref, @Nonnull Store<Entit
           var myCustomComp = new CustomComponent();
           // declare public fields or methods in the component class
           myCustomComp.SomeString = "Edited String";
-        
+
           // putComponent allows you to insert declared objects
           store.putComponent(ref, YourPlugin.instance().getYourPlayerDataComponent(), myCustomComp);
      }
@@ -169,7 +164,7 @@ public class IncompleteCustomCommand extends AbstractPlayerCommand {
 
 And that's it! Your data will now be saved and loaded automatically with the player.
 
-Using custom components to store persistent data on players is a powerful way to maintain state across sessions. 
-By following the steps outlined above, you can easily create, register, and utilize your own data structures within the Hytale ECS framework. 
+Using custom components to store persistent data on players is a powerful way to maintain state across sessions.
+By following the steps outlined above, you can easily create, register, and utilize your own data structures within the Hytale ECS framework.
 This approach ensures that your data is seamlessly integrated with the game's existing systems.
-For more information about Hytale's Entity Component System visit the [Hytale ECS Theory](https://hytalemodding.dev/en/docs/plugin/plugin/hytale-ecs-theory) guide.
+For more information about Hytale's Entity Component System visit the [Hytale ECS Theory](https://hytalemodding.dev/en/docs/guides/ecs/hytale-ecs-theory) guide.

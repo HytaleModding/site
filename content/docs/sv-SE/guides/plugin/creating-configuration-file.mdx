@@ -15,6 +15,11 @@ This class must have a `BuilderCodec<T>` defined for it, where `T` is the class 
 This codec is responsible for serializing and deserializing the configuration data to and from the configuration file.
 Keys added to the codec must be capitalized. If you don't it will throw an error when loading the configuration file.
 
+<Callout type="info">
+  Each variable you want to store in your component must have its own Codec field defined in the BuilderCodec.
+  For more information on how to create custom Codecs, check out the [ECS Codec Guide](../ecs/hytale-ecs-theory#codec).
+</Callout>
+
 ```java
 import com.hypixel.hytale.codec.Codec; // Careful to not use other Codec imports
 import com.hypixel.hytale.codec.KeyedCodec;

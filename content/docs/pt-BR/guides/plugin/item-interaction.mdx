@@ -132,6 +132,11 @@ public class MyCustomInteraction extends SimpleInstantInteraction {
 
 What is missing is a custom CODEC to link the interaction to the item.
 
+<Callout type="info">
+  Each variable you want to store in your component must have its own Codec field defined in the BuilderCodec.
+  For more information on how to create custom Codecs, check out the [ECS Codec Guide](../ecs/hytale-ecs-theory#codec).
+</Callout>
+
 ```java
 public class MyCustomInteraction extends SimpleInstantInteraction {
     public static final BuilderCodec<MyCustomInteraction> CODEC = BuilderCodec.builder(
