@@ -13,7 +13,7 @@ authors:
 
 This document describes the shared UI components and styles defined in `Common.ui`.
 
-***
+---
 
 ### Styles
 
@@ -22,7 +22,7 @@ We are providing some styles that can be re-used in any custom UI that, provide 
 You can find a list of all the styles defined with live examples by running the `/ui-gallery` command ingame.
 
 <Callout type="warning">
-This command is not available yet, but will be in a future patch.
+  This command is not available yet, but will be in a future patch.
 </Callout>
 
 ![Gallery](/assets/official-documentation/ui/gallery.png)
@@ -39,3 +39,13 @@ $Common.@TextButton { @Text = "My Button"; }
 $Common.@Container { ... }
 ```
 
+<Callout type="info">
+The `Common.ui` file is at `Common/UI/Custom/Common.ui` within the Hytale pack. If your custom ui document is in a subfolder of `Common/UI/Custom/`, reference it via relative path traversal:
+
+```
+$Common = "../Common.ui";
+```
+
+You can find more info about paths [here](markup#path).
+
+</Callout>
