@@ -1,0 +1,9 @@
+{
+  "title": "Adding the Basics",
+  "pages": [
+    "creating-commands.mdx",
+    "creating-block.mdx",
+    "playing-sounds.mdx",
+    "item-interaction.mdx"
+  ]
+}

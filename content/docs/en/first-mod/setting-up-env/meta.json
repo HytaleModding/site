@@ -1,0 +1,9 @@
+{
+  "title": "Setup and Preparation",
+  "pages": [
+    "setting-up-env.mdx",
+    "browsing-serverjar.mdx",
+    "build-and-test.mdx",
+    "logging.mdx"
+  ]
+}

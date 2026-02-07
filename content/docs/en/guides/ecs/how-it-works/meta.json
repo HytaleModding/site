@@ -1,0 +1,10 @@
+{
+  "title": "How It Works",
+  "pages": [
+    "entity-component-system.mdx",
+    "hytale-ecs-theory.mdx",
+    "systems.mdx",
+    "example-ecs-plugin.mdx",
+    "block-components.mdx"
+  ]
+}

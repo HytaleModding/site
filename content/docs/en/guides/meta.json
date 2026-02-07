@@ -1,13 +1,14 @@
 {
   "title": "{meta.guides.title}",
   "pages": [
-    "learning-to-learn.mdx",
-    "java-basics",
-    "plugin",
+    "common-tasks",
     "ecs",
-    "...",
-    "---Gameplay Systems---",
-    "prefabs.mdx"
+    "ui-display",
+    "worldgen",
+    "packets-connection",
+    "events",
+    "other-guides",
+    "..."
   ],
   "icon": "GraduationCap"
 }

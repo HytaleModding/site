@@ -2,10 +2,7 @@
   "title": "Entity Component System",
   "icon": "IdCardLanyard",
   "pages": [
-    "entity-component-system.mdx",
-    "hytale-ecs-theory.mdx",
-    "systems.mdx",
-    "example-ecs-plugin.mdx",
-    "block-components.mdx"
+    "how-it-works",
+    "examples"
   ]
 }
