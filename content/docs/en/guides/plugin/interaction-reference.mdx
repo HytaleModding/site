@@ -466,7 +466,9 @@ This interaction will attempt to change the target block to the next block type 
 ### DestroyBlock
 
 This interaction destroys the target block without dropping anything.  It will successfully destroy the block if the 
-  target block exists and this interaction has no failure conditions. This interaction has no additional fields.
+  target block exists and this interaction has no failure conditions. 
+  
+**This interaction has no additional fields.**
 
 
 ### PickBlock
@@ -475,6 +477,8 @@ This interaction is effectively equivalent to using the middle mouse button in c
   block's item will be moved to the user's current active hotbar slot if it is in the player's inventory.  This 
   interaction is performed entirely on the client and cannot be performed by non-players.  It is unclear if this 
   interaction has failure conditions.
+
+**PickBlock Fields**
 
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
@@ -493,6 +497,8 @@ It's not clear under what circumstances this interaction can fail. The server wi
   LivingEntity is not holding a block). However, the client is very involved with the function of this interaction and 
   its behavior is unknown.
 
+**PlaceBlock Fields**
+
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
 | BlockTypeToPlace | `Asset`<br />(Asset Type: `BlockType`) | **No** | If provided, the block placed by this interaction will be the specified BlockType. If not provided, the User entity's held item will be used, instead, if it is a block. |
@@ -502,14 +508,134 @@ It's not clear under what circumstances this interaction can fail. The server wi
 
 ## Items 
 
+These are interactions intended to interface with an entity's inventory. There is no concept of an "item target", 
+  unfortunately, so these generally either interact with the entity's held item or the entity's inventory at a high level.
+
 ### AddItem 
+
+Adds a specified quantity of a specified item to the User entity's inventory, preferring to add it to the 
+ entity's hotbar where possible. This interaction will have no effect on User entities that are not LivingEntities.
+ This interaction has no failure states.
+
+**Note: This interaction has a bug in its field validators that will cause interactions that reference items declared 
+  in the same mod to fail validation on startup.  Additionally, this interaction has a bug that will cause it to
+  fail and have no effect if the User entity has no block target. Use ModifyInventory instead.**
+
+**AddItem Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| ItemId | `Asset`<br />(Asset Type: `Item`) | **Yes** | The item id of the item to add to the player's inventory. |
+| Quantity | `Integer`<br />(Default: 0) | **No** | The quantity of the item to add to the player's inventory. |
+
+
 ### PickupItem
+
+This interaction will attempt to pick up the User entity's current target entity and add it to their inventory. It will 
+  fail if the User entity is not a player, if they do not have a target entity, or if the target entity is not an item 
+  located in the world.  It will not fail if the player simply cannot pick up the item.  
+  
+**This interaction has no additional fields.**
+
+
+### ModifyInventory
+
+This interaction attempts to perform one or more inventory-modifying actions against the User entity. The User entity must 
+  be a player. If they are not, no actions will be performed, but the interaction will not fail. Any item removals performed 
+  by this interaction, either as a result of `ItemToRemove` or `AdjustHeldItemQuantity`, are both atomic (meaning the entire
+  quantity must be removed, or none) and required (meaning that the interaction will fail and no further actions taken if
+  the removal fails for any reason).  Item additions performed by this interaction, either as a result of `ItemToAdd` or
+  `AdjustHeldItemQuantity` will drop excess items on the ground near the player if necesary and continue on. 
+
+This interaction first executes the item removal in `ItemToRemove`, if any, then adjusts the held item as specified by 
+  `AdjustHeldItemQuantity`, if provided, then executes the item addition in `ItemToAdd`, if any, and then finally executes 
+  the damage/healing of the held item in `AdjustHeldItemDurability`, if provided.
+  
+**ModifyDurability Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| RequiredGameMode | `GameMode` | **No** | If provided, only execute the inventory-modifying actions if the player is in the provided GameMode. The interaction will not fail if the GameMode doesn't match. |
+| ItemToRemove | `ItemStack` | **No** | If provided, a matching item will be removed in the provided quantity. If there is no matching item in the player inventory in the required quantity, then the interaction will fail and further actions will not be executed. |
+| AdjustHeldItemQuantity | `Integer`<br />(Default: 0) | **No** | The player's held item, if any, will have its quantity will be modified by the provided amount- subtracted from if this number is negative or added to if this item is positive.  If the player has no held item, then this field will have no effect regardless of its value and the interaction will NOT fail.  If the player's inventory does not have sufficient quantity of items to support the removal, this interaction will fail and further actions will not be executed. Excess items will be dropped on the ground near the player. |
+| ItemToAdd | `ItemStack` | **No** | If provided, the ItemStack will be added to the player's inventory. Excess items will be dropped on the ground near the player. |
+| AdjustHeldItemDurability | `Double`<br />(Default: 0.0) | **No** | The player's held item, if any, will have its durability adjusted by the specified amount.  The durability cannot go below 0 or raise above the item's maximum durability. Invalid durability values in this field will not cause the interaction to fail. Neither will it fail if the player has no held item. |
+| BrokenItem | `String` | **No** | This field should contain an ItemId, but it is not validated by the server on startup, so be careful.  This field can have the value of "Empty" to specify no item, or an empty hand. If specified and the `AdjustHeldItemDurability` operation reduces the player's held item to 0 durability, the player's held item is changed to this ItemId. If the inventory replacement fails, this interaction will fail. |
+| NotifyOnBreak | `Boolean`<br />(Default: false) | **No** | If true and the `AdjustHeldItemDurability` operation reduces the player's held item to 0 durability, this interaction will perform the usual audiovisual feedback of a broken tool. It will play the usual tool breaking sound and send the player a text message in chat that their item has broken. |
+| NotifyOnBreakMessage | `String` | **No** | If provided, and `NotifyOnBreak` is true, when the player is notified of a broken tool by this interaction, the message sent to their chat will instead be the translation key specified by this field. The translation key supports the templating parameter `{itemName}`. See the translation key `server.general.repair.itemBroken_Hoe` for an example. |
+
+**GameMode Values**
+- `Creative`: The game is currently in Creative Mode 
+- `Adventure`: The game is currently in Adventure Mode 
+
+**ItemStack Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `Asset`<br />(Asset Type: `Item`) | **Yes** | The id of the Item asset this stack contains. |
+| Quantity | `Integer`<br />(Default: 1) | **No** | The number of items in this stack.<br />**Must be greater than 0.** |
+| Durability | `Double`<br />(Default: 0.0) | **No** | The durability of the item stack.<br />**Cannot be negative.** |
+| MaxDurability | `Double`<br />(Default: 0.0) | **No** | The maximum durability of the item this stack contains.<br />**Cannot be negative.** |
+| Metadata | `Bson Document` | **No** | If provided, applies the bson to the item stack metadata. |
+| OverrideDroppedItemAnimation | `Boolean`*(Default: false) | **No** | ??? |
+
 
 ## EntityEffects
 
+EntityEffects are buff or debuff effects that can be applied to a LivingEntity.  These can have a variety of effects from
+  movement speed changes to periodic damage.
+
 ### EffectCondition 
+
+This interaction will fail if the specified entity's EntityEffects do not match the provided conditions. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Entity | `InteractionTarget`<br />(Default: User) | **Yes** | The entity to examine for EntityEffects. This field can indicate the Owner, User, or Target of this interaction chain. |
+| Match | `Match`<br />(Default: All) | **No** | If `All`, then this interaction will fail if any EntityEffect in the `EntityEffectIds` is not on the specified entity. If `None`, then this interaction will fail if any EntityEffect IS on the specified entity. |
+| EntityEffectIds | `AssetArray`<br />(Element Type: `EntityEffect`) | **Yes** | The set of EntityEffects to check against the specified entity and `Match`. |
+
+**InteractionTarget Values**
+- `User` - The user of this interaction chain. The entity whose actions caused this interaction chain to be executed. This is usually the same as the Owner.
+- `Owner` - The owner of this interaction chain. The entity upon whom this interaction chain is executing.
+- `Target` - The entity target of this interaction chain, if any.  This value is mutable (and can therefore come from many places) but most commonly, it is an entity the User was targeting when this interaction chain began executing.
+
+**Match Values**
+- `All` - All EntityEffects must be on the specified entity for this interaction to succeed. 
+- `None` - None of the EntityEffects must be on the specified entity for this interaction to succeed.
+
+
 ### ApplyEffect 
+
+This interaction will apply the specified EntityEffect to the specified Entity.  It has no special failure conditions. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Entity | `InteractionTarget`<br />(Default: User) | **Yes** | The entity to apply the EntityEffect to. This field can indicate the Owner, User, or Target of this interaction chain. |
+| EffectId | `Asset`<br />(Asset Type: `EntityEffect`) | **Yes** | The effect to apply. |
+
+**InteractionTarget Values**
+- `User` - The user of this interaction chain. The entity whose actions caused this interaction chain to be executed. This is usually the same as the Owner.
+- `Owner` - The owner of this interaction chain. The entity upon whom this interaction chain is executing.
+- `Target` - The entity target of this interaction chain, if any.  This value is mutable (and can therefore come from many places) but most commonly, it is an entity the User was targeting when this interaction chain began executing.
+
+
 ### ClearEntityEffect
+
+This interaction will remove the specified EntityEffect from the specified Entity. It has no special failure conditions. 
+  It will not fail if the Entity does not have the EntityEffect. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Entity | `InteractionTarget`<br />(Default: User) | **Yes** | The entity to remove the EntityEffect from. This field can indicate the Owner, User, or Target of this interaction chain. |
+| EffectId | `Asset`<br />(Asset Type: `EntityEffect`) | **Yes** | The effect to remove. |
+
+**InteractionTarget Values**
+- `User` - The user of this interaction chain. The entity whose actions caused this interaction chain to be executed. This is usually the same as the Owner.
+- `Owner` - The owner of this interaction chain. The entity upon whom this interaction chain is executing.
+- `Target` - The entity target of this interaction chain, if any.  This value is mutable (and can therefore come from many places) but most commonly, it is an entity the User was targeting when this interaction chain began executing.
+
 
 ## Cooldowns 
 
@@ -552,7 +678,7 @@ LaunchPad
 LaunchProjectile
 LearnRecipe
 MemoriesCondition
-ModifyInventory
+
 Mount 
 MovementCondition
 OpenBenchPage
