@@ -39,8 +39,8 @@
     "credit": "Écrit par",
     "supportUs": "Soutenez-nous",
     "officialDocumentationNotice": {
-      "title": "Official Hytale Documentation",
-      "description": "All content on this section is provided by **Hypixel Studios Canada Inc.** and is presented without any substantial changes, aside from visual design adjustments by the HytaleModding Team."
+      "title": "Documentation officielle de Hytale",
+      "description": "Tout le contenu de cette section est fourni par **Hypixel Studios Canada Inc. * et est présenté sans aucun changement substantiel, en dehors des ajustements de design visuel par l'équipe HytaleModding."
     }
   },
   "meta": {
@@ -74,15 +74,15 @@
     },
     "official_documentation": {
       "worldgen": {
-        "title": "World Generation",
+        "title": "Génération de monde",
         "pack_tutorial": {
-          "title": "Worldgen Pack Tutorial"
+          "title": "Tutoriel du pack de génération de monde"
         },
         "technical_hytale_generator": {
-          "title": "Technical Hytale Generator"
+          "title": "Générateur technique de Hytale"
         },
         "worldgen_tutorial": {
-          "title": "Worldgen Tutorial"
+          "title": "Tutoriel de génération de monde"
         }
       }
     },

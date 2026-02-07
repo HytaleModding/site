@@ -15,7 +15,7 @@ description: Slikey氏は、2025年12月15日にサーバーのコードにつ�
 
 ### ライセンス
 
-The license permits usage for any **hytale related** things, so as long as you don't use the server / source to make your own game or sell their algorithms.
+Hytaleの利用規約(ライセンス)は、サーバーのソースコードをあらゆる **Hytaleに関連するもの** に許可しています。サーバーやソースコードを自身のゲームを作るのに利用したり、アルゴリズムを売ったりすることは禁止されています。
 
 # 権限システム
 
@@ -79,9 +79,8 @@ public interface IWorldGen {
 
 ![言語キーを格納するための定数](/assets/constants.png)
 
-> you can completely customize the chunk storage provider, we for example made one that is just empty where it doesn't load any chunks from disk
-> you could add an MySQLChunkStorageProvider and it could read the data from a database
-> and the same goes for worldgen, you can simply implement this interface to generate a world generator - slikey
+> チャンクのストレージプロバイダーを完全にカスタマイズすることもできます。例として、ディスクからチャンクを一切読み込まない空のストレージプロバイダーを作ります。
+> 例えば MySQLChunkStorageProvider (MySQLを利用したチャンクのストレージプロバイダー) を追加することができるし、ワールド生成でも同様です。ワールド生成器を作るためにはこのインターフェースを実装するだけです。 - slikey
 
 ![Chunks 1](/assets/chunks-1.png)
 ![Chunks 2](/assets/chunks-2.png)

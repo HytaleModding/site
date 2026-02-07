@@ -4,33 +4,32 @@ description: Slikey compartilhou algumas informações sobre o código do servid
 ---
 
 <Callout type="info" title="Nota">
-  The following information is based on insights shared by Technical Director Slikey on December 15, 2025 on the Hytale Discord Server. It provides an overview of the server code architecture and plugin capabilities.
+  As informações a seguir baseiam-se em observações compartilhadas pelo Diretor Técnico Slikey, em 15 de dezembro de 2025, no servidor de Discord do Hytale. Ele fornece uma visão geral da arquitetura do código do servidor e das capacidades dos plugins.
 
-  Majority of this document is just straight quotes from Slikey with minimal commentary. It is more over to preserve the information shared rather than reword it.
+  Este documento é composto principalmente por falas do próprio Slikey, com poucas observações adicionais. A ideia é manter o que foi dito em vez de mudar as palavras e o contexto.
 </Callout>
 
 # Código-fonte do servidor
 
-The server will be released as shared source - we will have the source code with no obfuscation and all their comments.
+O servidor será lançado como fonte compartilhada. Teremos acesso ao código-fonte sem qualquer ofuscação e com todos os seus comentários.
 
 ### Licença
 
-The license permits usage for any **hytale related** things, so as long as you don't use the server / source to make your own game or sell their algorithms.
+A licença permite o uso para quaisquer coisas **relacionadas ao Hytale**, desde que você não use o servidor e/ou código-fonte para criar seu próprio jogo ou vender os algoritmos deles.
 
 # Sistema de permissão
 
-After being asked in the Hytale Modding server, Lead Architect Zero has replied:
+Após ser questionado no servidor Hytale Modding, o Arquiteto Chefe Zero respondeu:
 
-It's quite basic, so don't expect much but yes we do have a permissions system built in. It also support implementing your own backend. Ex. if you wanted to store it in a database.
+É bastante básico, por isso não espere muito, mas sim, temos um sistema de permissões integrado. Também suporta a implementação do seu próprio back-end. Ex.: se você quisesse armazená-lo em um banco de dados.
 
 ![Premission Source Snippet](/assets/premission-system.png)
 
 # Implementação da geração de mundo
 
-The following block of text is directly from Lead Architect Zero:
+O bloco de texto a seguir é diretamente do Arquiteto Chefe Zero:
 
-You can totally implement a custom world gen in a plugin super easy. So if you want a totally different config or logic for generating terrain you can add that into a plugin and then configure a world to use that,
-We have some stuff load prefabs and there is existing code in the current world generators that could possibly be reused but no APIs specifically for the details of the generation itself.
+Você pode implementar uma geração de mundo personalizada em um plugin de forma super fácil. Portanto, caso deseje uma lógica de geração de terreno completamente nova, você pode implementá-la via plugin e definir que o mundo a utilize. Já existem sistemas para carregar os prefabs e os códigos nos geradores atuais que podem ser reaproveitados, mas ainda não temos APIs específicas para os detalhes internos da geração.
 
 ```java
 public interface IWorldGenProvider {
@@ -59,35 +58,33 @@ public interface IWorldGen {
 }
 ```
 
-# Server Code Snippets
+# Trechos de código do servidor
 
-Some code snippets from a plugin they made were also shared. The following snippets are directly quoted from Technical Director Slikey:
+Alguns trechos de código de um plugin que eles criaram também foram compartilhados. Os trechos a seguir são citações diretas do diretor técnico Slikey:
 
 ## Plugin BlockSpawner
 
-Alright, I'll drop some code snippets here for a simple plugin called "BlockSpawner" which will turn into a "random" block when put into the world based on the configured rules
+Deixarei aqui alguns trechos de código para um plugin simples chamado “BlockSpawner”. Ele se transformará em um bloco “aleatório” quando colocado no mundo com base nas regras configuradas.
 
-There is more code here in general but it shows the Asset System and the plugin layout. You can see that the asset system defines "Codecs" which are used to serialize and deserialize data. Using these codecs we can generate schemas.
-Let's say you connect to a server and open the asset editor: the server will send those schemas - so every single asset type defined server side, even you own, now become part of the asset editor on the client - no need to do anything, you just get to enjoy the editor UI for making your assets that you defined
+Há mais código nesta aqui, mas ele serve para mostrar como funciona o sistema de recursos e a estrutura do plugin. Perceba que o sistema de recursos define "Codecs" que são usados para serializar e desserializar dados. Ao usá-los, podemos gerar esquemas.
+Digamos que você se conecte a um servidor e abra o editor de assets: o servidor enviará esses esquemas. Portanto, cada tipo de recurso definido no lado do servidor, até mesmo os seus próprios, agora se tornam parte do editor de recursos no cliente. Não é necessário fazer nada, apenas aproveite a interface do editor para criar os recursos que você mesmo definiu.
 
 ![Block Spawner Code 1](/assets/blockspawner-code-1.png)
 ![Block Spawner Code 2](/assets/blockspawner-code-2.png)
 ![Block Spawner Code 3](/assets/blockspawner-code-3.png)
 ![Block Spawner Manifest](/assets/blockspawner-manifest.png)
 
-> i guess this part also shows a bit how we use constants to store some language keys - Slikey
-> (in reference to the image below)
+> Acredito que essa parte também mostra um pouco como usamos as constantes para armazenar algumas chaves de idioma. — Slikey
+> (referente à imagem abaixo)
 
 ![Constants to store Language Keys](/assets/constants.png)
 
-> you can completely customize the chunk storage provider, we for example made one that is just empty where it doesn't load any chunks from disk
-> you could add an MySQLChunkStorageProvider and it could read the data from a database
-> and the same goes for worldgen, you can simply implement this interface to generate a world generator - slikey
+> Você pode personalizar completamente o provedor de armazenamento de chunks. Por exemplo, criamos um que é apenas vazio, onde ele não carrega nenhum chunk do disco. Você poderia adicionar um `MySQLChunkStorageProvider` e ele poderia ler os dados de um banco de dados. O mesmo vale para a geração de mundo, a qual você pode simplesmente implementar esta interface para criar um gerador de mundo.
 
 ![Chunks 1](/assets/chunks-1.png)
 ![Chunks 2](/assets/chunks-2.png)
 ![Chunks 3](/assets/chunks-3.png)
 
-> i mean here are all the weapons defined, you tell me, obviously you will discover limitations but i think there is plenty of room to make changes - this stuff is actually hard though, there is a lot of QoL to have happen here
+> Digo, aqui estão todas as armas definidas, você me diz e obviamente descobrirá limitações, mas acho que há muito espaço para fazer mudanças. Essas coisas são difíceis, na verdade, ainda há muita qualidade de vida para ser implementada aqui.
 
 ![Weapons 1](/assets/weapons-1.png)

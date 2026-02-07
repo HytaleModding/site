@@ -436,8 +436,8 @@ public static int countOccurrences(String text, String target) {
     return count;
 }
 
-// Usage
-int count = countOccurrences("hello hello world", "hello");
+// Modo de uso
+int count = countOccurrences("olá olá mundo", "olá");
 System.out.println(count);  // 2
 ```
 
@@ -449,12 +449,12 @@ public static String reverse(String text) {
     return sb.reverse().toString();
 }
 
-// Usage
-String reversed = reverse("Hello");
-System.out.println(reversed);  // "olleH"
+// Modo de uso
+String reversed = reverse("Olá");
+System.out.println(reversed);  // "álO"
 ```
 
-### Check if Palindrome
+### Verifique se é um palíndromo
 
 ```java
 public static boolean isPalindrome(String text) {
@@ -463,31 +463,31 @@ public static boolean isPalindrome(String text) {
     return cleaned.equals(reversed);
 }
 
-// Usage
-System.out.println(isPalindrome("racecar"));     // true
-System.out.println(isPalindrome("hello"));       // false
+// Modo de uso
+System.out.println(isPalindrome("carrodecorrida"));     // Correto
+System.out.println(isPalindrome("olá"));       // Errado
 ```
 
 ## Exercícios práticos
 
-1. **Username Checker**: Write a method that checks if a username:
-   - Is between 3 and 16 characters
-   - Contains only letters, numbers, and underscores
-   - Doesn't start with a number
-   - Returns true if valid, false otherwise
+1. **Verificador de nome de usuário**: escreva um método que verifique se um nome de usuário:
+   - Deve ter entre 3 e 16 caracteres;
+   - Conter apenas letras, números e sublinhados;
+   - Não pode começar com um número;
+   - Retorna _true_ se for válido e _false_ se não for.
 
-2. **Command Parser**: Parse this command format: `/teleport x y z`
-   - Extract the coordinates
-   - Convert them to integers
-   - Return an array of the three values
+2. **Command `parse`**: realize o `parse` deste formato de comando: `/teleport x y z`:
+   - Extraia as coordenadas;
+   - Converta para números inteiros;
+   - Retorne um array de três valores.
 
-3. **Chat Formatter**: Create a method that formats chat messages:
-   - Input: player name, rank, message
-   - Output: `"[RANK] PlayerName: message"`
-   - If no rank, just show `"PlayerName: message"`
+3. **Formatador de bate-papo**: crie um método que formate as mensagens do bate-papo:
+   - Input: nome do jogador, rank, mensagem;
+   - Output: `"[RANK] nome do jogador: mensagem"`;
+   - Se não houver rank, apenas mostre `"Nome do jogador: mensagem"`.
 
-4. **Word Counter**: Count how many words are in a sentence (words are separated by spaces)
+4. **Contagem de palavras**: contar quantas palavras há em uma frase (as palavras são separadas por espaços).
 
-5. **Title Case**: Convert a string to title case:
-   - Input: `"hello world"`
-   - Output: `"Hello World"`
+5. **Title-case**: converter uma sequência de caracteres para maiúsculas e minúsculas:
+   - Input: `"olá mundo"`;
+   - Output: `"Olá Mundo"`.
