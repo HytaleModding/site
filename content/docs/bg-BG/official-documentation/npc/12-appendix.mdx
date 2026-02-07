@@ -1,0 +1,1035 @@
+---
+title: 12 - Appendix
+authors:
+  - name: Hypixel Studios Canada Inc.
+    url: https://hytale.com
+---
+
+<OfficialDocumentationNotice />
+
+### Template_Goblin_Ogre_Tutorial
+
+(dependant on Root_NPC_Goblin_Ogre_Attack - you need this file to exist, because template is referencing it)
+
+```json
+{
+  "$Comment": "Debug: DisplayState",
+  "Debug": "DisplayState",
+  "Type": "Abstract",
+  "Parameters": {
+    "Appearance": {
+      "Value": "Bear_Grizzly",
+      "Description": "Model to be used"
+    },
+    "DropList": {
+      "Value": "Empty",
+      "Description": "Drop Items"
+    },
+    "MaxHealth": {
+      "Value": 100,
+      "Description": "Max health for the NPC"
+    },
+    "EatItem": {
+      "Value": "Food_Beef_Raw",
+      "Description": "The item this NPC will find when it rummages for food"
+    },
+    "SleepingAttack": {
+      "Value": "Root_NPC_Attack_Melee",
+      "Description": "Attack to use on NPCs that annoy it while sleeping"
+    },
+    "FoodNPCGroups": {
+      "Value": ["Edible_Rat"],
+      "Description": "The groups of edible NPCs that will come from triggering the beacon"
+    },
+    "FoodNPCBeacon": {
+      "Value": "Edible_Rat",
+      "Description": "The spawn beacon to trigger to create an edible NPC"
+    },
+    "FoodNPCItem": {
+      "Value": "Food_Cheese",
+      "Description": "The edible NPC in item form"
+    },
+    "ViewRange": {
+      "Value": 15,
+      "Description": "View range in blocks"
+    },
+    "ViewSector": {
+      "Value": 180,
+      "Description": "View sector in degrees"
+    },
+    "HearingRange": {
+      "Value": 8,
+      "Description": "Hearing range in blocks"
+    },
+    "AlertedRange": {
+      "Value": 30,
+      "Description": "A range within which the player can be seen/sensed when the NPC is alerted to their presence"
+    },
+    "DistractedPenalty": {
+      "Value": 2,
+      "Description": "A factor by which view range and hearing range will be divided when this NPC is distracted"
+    },
+    "AbsoluteDetectionRange": {
+      "Value": 4,
+      "Description": "The range at which a target is guaranteed to be detected. If zero, absolute detection will be disabled."
+    },
+    "WarnGroups": {
+      "Value": ["Goblin_Scrapper"],
+      "Description": "The groups to warn when spotting an enemy"
+    },
+    "AttitudeGroup": {
+      "Value": "Empty",
+      "Description": "This NPCs attitude group"
+    },
+    "Attack": {
+      "Value": "Root_NPC_Goblin_Ogre_Attack",
+      "Description": "The attack to use."
+    },
+    "AttackDistance": {
+      "Value": 2,
+      "Description": "The distance at which an NPC will execute attacks"
+    },
+    "AttackPauseRange": {
+      "Value": [1.5, 2],
+      "Description": "The range for absolute minimum time before an NPC can execute a second attack (or block)."
+    },
+    "CombatRelativeTurnSpeed": {
+      "Value": 1.5,
+      "Description": "Modifier that decides turn speed difference in combat."
+    },
+    "LeashDistance": {
+      "Value": 20,
+      "Description": "The range after which an NPC will start to want to return to their spawn point."
+    },
+    "LeashMinPlayerDistance": {
+      "Value": 4,
+      "Description": "The minimum distance from the player before the NPC will be willing to give up on the chase."
+    },
+    "LeashTimer": {
+      "Value": [3, 5],
+      "Description": "How long the NPC must be more than the minimum distance form the player and too far from leash before giving up."
+    },
+    "HardLeashDistance": {
+      "Value": 60,
+      "Description": "An absolute maximum from the the leash position the NPC can go before turning back."
+    },
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Template.name",
+      "Description": "Translation key for NPC name display"
+    }
+  },
+  "Appearance": { "Compute": "Appearance" },
+  "DropList": { "Compute": "DropList" },
+  "MaxHealth": { "Compute": "MaxHealth" },
+  "StartState": "Idle",
+  "DefaultPlayerAttitude": "Hostile",
+  "DefaultNPCAttitude": "Ignore",
+  "AttitudeGroup": { "Compute": "AttitudeGroup" },
+  "KnockbackScale": 0.5,
+  "MotionControllerList": [
+    {
+      "Type": "Walk",
+      "MaxWalkSpeed": 3,
+      "Gravity": 10,
+      "MaxFallSpeed": 8,
+      "Acceleration": 10
+    }
+  ],
+  "InteractionVars": {
+    "Melee_Damage": {
+      "Interactions": [
+        {
+          "$Comment": "Config for a successful melee hit, default values for Effects and Hitshape are not overwritten here, see each NPC_ file",
+          "Parent": "NPC_Attack_Melee_Damage",
+          "DamageCalculator": {
+            "Type": "Absolute",
+            "BaseDamage": {
+              "Physical": 10
+            },
+            "RandomPercentageModifier": 0.1
+          }
+        }
+      ]
+    }
+  },
+  "StateTransitions": [
+    {
+      "States": [
+        {
+          "From": ["Idle"],
+          "To": ["Sleep"]
+        }
+      ],
+      "Actions": [
+        {
+          "Type": "PlayAnimation",
+          "Slot": "Status",
+          "Animation": "Laydown"
+        },
+        {
+          "Type": "Timeout",
+          "Delay": [1, 1]
+        }
+      ]
+    },
+    {
+      "States": [
+        {
+          "From": ["Sleep"],
+          "To": []
+        }
+      ],
+      "Actions": [
+        {
+          "Type": "PlayAnimation",
+          "Slot": "Status",
+          "Animation": "Wake"
+        },
+        {
+          "Type": "Timeout",
+          "Delay": [1, 1]
+        }
+      ]
+    },
+    {
+      "States": [
+        {
+          "From": ["Idle"],
+          "To": ["Eat"]
+        }
+      ],
+      "Actions": [
+        {
+          "Type": "Inventory",
+          "Operation": "SetHotbar",
+          "Item": { "Compute": "EatItem" },
+          "Slot": 2,
+          "UseTarget": false
+        },
+        {
+          "Type": "Inventory",
+          "Operation": "EquipHotbar",
+          "Slot": 2,
+          "UseTarget": false
+        }
+      ]
+    },
+    {
+      "States": [
+        {
+          "From": ["CallRat"],
+          "To": ["Eat"]
+        }
+      ],
+      "Actions": [
+        {
+          "Type": "Inventory",
+          "Operation": "SetHotbar",
+          "Item": { "Compute": "FoodNPCItem" },
+          "Slot": 2,
+          "UseTarget": false
+        },
+        {
+          "Type": "Inventory",
+          "Operation": "EquipHotbar",
+          "Slot": 2,
+          "UseTarget": false
+        }
+      ]
+    },
+    {
+      "States": [
+        {
+          "From": ["Eat"],
+          "To": []
+        }
+      ],
+      "Actions": [
+        {
+          "Type": "PlayAnimation",
+          "Slot": "Status"
+        },
+        {
+          "Type": "Inventory",
+          "Operation": "EquipHotbar",
+          "Slot": 0,
+          "UseTarget": false
+        }
+      ]
+    },
+    {
+      "States": [
+        {
+          "From": [],
+          "To": ["Combat"]
+        }
+      ],
+      "Actions": [
+        {
+          "Type": "PlayAnimation",
+          "Slot": "Status"
+        },
+        {
+          "Type": "Beacon",
+          "Message": "Goblin_Ogre_Warn",
+          "TargetGroups": { "Compute": "WarnGroups" },
+          "SendTargetSlot": "LockedTarget"
+        }
+      ]
+    }
+  ],
+  "Instructions": [
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": "Idle"
+      },
+      "Instructions": [
+        {
+          "Continue": true,
+          "Sensor": {
+            "Type": "Any",
+            "Once": true
+          },
+          "Actions": [
+            {
+              "Type": "Inventory",
+              "Operation": "EquipHotbar",
+              "Slot": 0,
+              "UseTarget": false
+            }
+          ]
+        },
+        {
+          "Reference": "Component_Instruction_Damage_Check",
+          "Modify": {
+            "_ExportStates": ["Alerted", "Alerted"],
+            "AlertedRange": { "Compute": "AlertedRange" }
+          }
+        },
+        {
+          "$Comment": "Check for any hostile targets in range that could alert the NPC",
+          "Sensor": {
+            "Reference": "Component_Sensor_Standard_Detection",
+            "Modify": {
+              "ViewRange": { "Compute": "ViewRange" },
+              "ViewSector": { "Compute": "ViewSector" },
+              "HearingRange": { "Compute": "HearingRange" },
+              "ThroughWalls": false,
+              "AbsoluteDetectionRange": { "Compute": "AbsoluteDetectionRange" },
+              "Attitudes": ["Hostile"]
+            }
+          },
+          "Actions": [
+            {
+              "Type": "State",
+              "State": "Alerted"
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "State",
+            "State": ".Default"
+          },
+          "Instructions": [
+            {
+              "Actions": [
+                {
+                  "Type": "Random",
+                  "Actions": [
+                    {
+                      "Weight": 10,
+                      "Action": {
+                        "Type": "State",
+                        "State": ".Guard"
+                      }
+                    },
+                    {
+                      "Weight": 10,
+                      "Action": {
+                        "Type": "State",
+                        "State": "Sleep"
+                      }
+                    },
+                    {
+                      "Weight": 10,
+                      "Action": {
+                        "Type": "State",
+                        "State": "Eat"
+                      }
+                    },
+                    {
+                      "Weight": 10,
+                      "Action": {
+                        "Type": "State",
+                        "State": "CallRat"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "State",
+            "State": ".Guard"
+          },
+          "Instructions": [
+            {
+              "Continue": true,
+              "ActionsBlocking": true,
+              "Actions": [
+                {
+                  "Type": "Timeout",
+                  "Delay": [5, 10]
+                },
+                {
+                  "Type": "State",
+                  "State": ".Default"
+                }
+              ]
+            },
+            {
+              "Reference": "Component_Instruction_Intelligent_Idle_Motion_Follow_Path"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": "Sleep"
+      },
+      "Instructions": [
+        {
+          "Reference": "Component_Instruction_Damage_Check",
+          "Modify": {
+            "_ExportStates": ["Alerted", "Alerted"],
+            "AlertedRange": { "Compute": "AlertedRange" }
+          }
+        },
+        {
+          "$Comment": "Check for any hostile targets in range that could alert the NPC",
+          "Sensor": {
+            "Reference": "Component_Sensor_Standard_Detection",
+            "Modify": {
+              "ViewRange": { "Compute": "ViewRange / DistractedPenalty" },
+              "ViewSector": { "Compute": "ViewSector" },
+              "HearingRange": { "Compute": "ViewRange / DistractedPenalty" },
+              "ThroughWalls": false,
+              "AbsoluteDetectionRange": { "Compute": "AbsoluteDetectionRange" },
+              "Attitudes": ["Hostile"]
+            }
+          },
+          "Actions": [
+            {
+              "Type": "State",
+              "State": "Alerted"
+            }
+          ]
+        },
+        {
+          "Reference": "Component_Instruction_Play_Animation_In_State_For_Duration",
+          "Modify": {
+            "_ExportStates": ["Idle.Default"],
+            "Animation": "Sleep",
+            "Duration": [5, 6]
+          }
+        },
+        {
+          "Sensor": {
+            "Type": "Beacon",
+            "Message": "Annoy_Ogre",
+            "Range": 5
+          },
+          "Actions": [
+            {
+              "Type": "Attack",
+              "Attack": { "Compute": "SleepingAttack" },
+              "AttackPauseRange": [1, 2]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": "Eat"
+      },
+      "Instructions": [
+        {
+          "Reference": "Component_Instruction_Damage_Check",
+          "Modify": {
+            "_ExportStates": ["Alerted", "Alerted"],
+            "AlertedRange": { "Compute": "AlertedRange" }
+          }
+        },
+        {
+          "$Comment": "Check for any hostile targets in range that could alert the NPC",
+          "Sensor": {
+            "Reference": "Component_Sensor_Standard_Detection",
+            "Modify": {
+              "ViewRange": { "Compute": "ViewRange / DistractedPenalty" },
+              "ViewSector": { "Compute": "ViewSector" },
+              "HearingRange": { "Compute": "ViewRange / DistractedPenalty" },
+              "ThroughWalls": false,
+              "AbsoluteDetectionRange": { "Compute": "AbsoluteDetectionRange" },
+              "Attitudes": ["Hostile"]
+            }
+          },
+          "Actions": [
+            {
+              "Type": "State",
+              "State": "Alerted"
+            }
+          ]
+        },
+        {
+          "Reference": "Component_Instruction_Play_Animation_In_State_For_Duration",
+          "Modify": {
+            "_ExportStates": ["Idle.Default"],
+            "Animation": "Eat",
+            "Duration": [5, 6]
+          }
+        }
+      ]
+    },
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": "CallRat"
+      },
+      "Instructions": [
+        {
+          "Continue": true,
+          "Sensor": {
+            "Type": "Any",
+            "Once": true
+          },
+          "Actions": [
+            {
+              "Type": "TriggerSpawnBeacon",
+              "BeaconSpawn": { "Compute": "FoodNPCBeacon" },
+              "Range": 15
+            }
+          ]
+        },
+        {
+          "Reference": "Component_Instruction_Damage_Check",
+          "Modify": {
+            "_ExportStates": ["Alerted", "Alerted"],
+            "AlertedRange": { "Compute": "AlertedRange" }
+          }
+        },
+        {
+          "$Comment": "Check for any hostile targets in range that could alert the NPC",
+          "Sensor": {
+            "Reference": "Component_Sensor_Standard_Detection",
+            "Modify": {
+              "ViewRange": { "Compute": "ViewRange" },
+              "ViewSector": { "Compute": "ViewSector" },
+              "HearingRange": { "Compute": "HearingRange" },
+              "ThroughWalls": false,
+              "AbsoluteDetectionRange": { "Compute": "AbsoluteDetectionRange" },
+              "Attitudes": ["Hostile"]
+            }
+          },
+          "Actions": [
+            {
+              "Type": "State",
+              "State": "Alerted"
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "Mob",
+            "Range": 2.5,
+            "Filters": [
+              {
+                "Type": "NPCGroup",
+                "IncludeGroups": { "Compute": "FoodNPCGroups" }
+              },
+              {
+                "Type": "LineOfSight"
+              }
+            ]
+          },
+          "HeadMotion": {
+            "Type": "Watch"
+          },
+          "ActionsBlocking": true,
+          "Actions": [
+            {
+              "Type": "PlayAnimation",
+              "Slot": "Status",
+              "Animation": "Swipe"
+            },
+            {
+              "Type": "Timeout",
+              "Delay": [0.1, 0.1],
+              "Action": {
+                "Type": "Sequence",
+                "Actions": [
+                  {
+                    "Type": "Remove"
+                  },
+                  {
+                    "Type": "State",
+                    "State": "Eat"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "Continue": true,
+          "Sensor": {
+            "Type": "Mob",
+            "Range": 5,
+            "Filters": [
+              {
+                "Type": "NPCGroup",
+                "IncludeGroups": { "Compute": "FoodNPCGroups" }
+              },
+              {
+                "Type": "LineOfSight"
+              }
+            ]
+          },
+          "HeadMotion": {
+            "Type": "Watch"
+          }
+        },
+        {
+          "Reference": "Component_Instruction_State_Timeout",
+          "Modify": {
+            "_ExportStates": ["Idle"],
+            "Delay": [10, 15]
+          }
+        }
+      ]
+    },
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": "Alerted"
+      },
+      "Instructions": [
+        {
+          "Reference": "Component_Instruction_Play_Animation",
+          "Modify": {
+            "Animation": "Alerted"
+          }
+        },
+        {
+          "Continue": true,
+          "Sensor": {
+            "Type": "Target",
+            "Range": { "Compute": "AlertedRange" },
+            "Filters": [
+              {
+                "Type": "LineOfSight"
+              }
+            ]
+          },
+          "HeadMotion": {
+            "Type": "Watch"
+          }
+        },
+        {
+          "Sensor": {
+            "Type": "Target",
+            "Range": { "Compute": "AlertedRange" }
+          },
+          "ActionsBlocking": true,
+          "Actions": [
+            {
+              "Type": "Timeout",
+              "Delay": [1, 1]
+            },
+            {
+              "Type": "State",
+              "State": "Combat"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": "Combat"
+      },
+      "Instructions": [
+        {
+          "Sensor": {
+            "Type": "State",
+            "State": ".Chase"
+          },
+          "Instructions": [
+            {
+              "Sensor": {
+                "Type": "Target",
+                "Range": { "Compute": "AttackDistance" },
+                "Filters": [
+                  {
+                    "Type": "LineOfSight"
+                  }
+                ]
+              },
+              "Actions": [
+                {
+                  "Type": "State",
+                  "State": ".Default"
+                }
+              ]
+            },
+            {
+              "Reference": "Component_Instruction_Soft_Leash",
+              "Modify": {
+                "_ExportStates": ["ReturnHome"],
+                "LeashDistance": { "Compute": "LeashDistance" },
+                "LeashMinPlayerDistance": {
+                  "Compute": "LeashMinPlayerDistance"
+                },
+                "LeashTimer": { "Compute": "LeashTimer" },
+                "HardLeashDistance": { "Compute": "HardLeashDistance" }
+              }
+            },
+            {
+              "Reference": "Component_Instruction_Intelligent_Chase",
+              "Modify": {
+                "_ExportStates": ["Search", "Search", "ReturnHome"],
+                "ViewRange": { "Compute": "AlertedRange * 2" },
+                "HearingRange": { "Compute": "HearingRange * 2" },
+                "StopDistance": 0.1,
+                "RelativeSpeed": 0.5
+              }
+            }
+          ]
+        },
+        {
+          "$Comment": "NPC melee attack",
+          "Sensor": {
+            "Type": "Target",
+            "Range": { "Compute": "AttackDistance" },
+            "Filters": [
+              {
+                "Type": "LineOfSight"
+              }
+            ],
+            "ActionsBlocking": true,
+            "Actions": [
+              {
+                "Type": "Attack",
+                "Attack": { "Compute": "Attack" },
+                "AttackPauseRange": { "Compute": "AttackPauseRange" }
+              },
+              {
+                "$Comment": "Brief delay to prevent the NPC potentially strafing/backing away and missing the shot.",
+                "Type": "Timeout",
+                "Delay": [0.2, 0.2]
+              }
+            ],
+            "HeadMotion": {
+              "Type": "Aim",
+              "RelativeTurnSpeed": { "Compute": "CombatRelativeTurnSpeed" }
+            }
+          },
+          "Actions": [
+            {
+              "Type": "State",
+              "State": ".Chase"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": "ReturnHome"
+      },
+      "Instructions": [
+        {
+          "Sensor": {
+            "Type": "And",
+            "Sensors": [
+              {
+                "Type": "Damage",
+                "Combat": true,
+                "TargetSlot": "LockedTarget",
+                "Enabled": { "Compute": "AbsoluteDetectionRange > 0" }
+              },
+              {
+                "Type": "Target",
+                "TargetSlot": "LockedTarget",
+                "Range": { "Compute": "AbsoluteDetectionRange" }
+              }
+            ]
+          },
+          "Actions": [
+            {
+              "Type": "State",
+              "State": "Combat"
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "Leash",
+            "Range": { "Compute": "LeashDistance * 0.3" },
+            "BodyMotion": {
+              "Type": "Seek",
+              "SlowDownDistance": { "Compute": "LeashDistance * 0.4" },
+              "StopDistance": { "Compute": "LeashDistance * 0.2" },
+              "RelativeSpeed": 0.8,
+              "UsePathfinder": true
+            }
+          },
+          "Actions": [
+            {
+              "Type": "SetStat",
+              "Stat": "Health",
+              "Value": 1000000
+            },
+            {
+              "Type": "State",
+              "State": "Idle"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": "Search"
+      },
+      "Instructions": [
+        {
+          "Sensor": {
+            "Type": "Damage",
+            "Combat": true,
+            "TargetSlot": "LockedTarget"
+          },
+          "Actions": [
+            {
+              "Type": "State",
+              "State": "Alerted"
+            }
+          ]
+        },
+        {
+          "Instructions": [
+            {
+              "Sensor": {
+                "Reference": "Component_Sensor_Lost_Target_Detection",
+                "Modify": {
+                  "ViewRange": { "Compute": "ViewRange" },
+                  "ViewSector": { "Compute": "ViewSector" },
+                  "HearingRange": { "Compute": "HearingRange" },
+                  "AbsoluteDetectionRange": {
+                    "Compute": "AbsoluteDetectionRange"
+                  },
+                  "TargetSlot": "LockedTarget"
+                }
+              },
+              "Actions": [
+                {
+                  "Type": "State",
+                  "State": "Combat"
+                }
+              ]
+            },
+            {
+              "Sensor": {
+                "Reference": "Component_Sensor_Standard_Detection",
+                "Modify": {
+                  "ViewRange": { "Compute": "ViewRange" },
+                  "ViewSector": { "Compute": "ViewSector" },
+                  "HearingRange": { "Compute": "HearingRange" },
+                  "AbsoluteDetectionRange": {
+                    "Compute": "AbsoluteDetectionRange"
+                  },
+                  "Attitudes": ["Hostile", "Neutral"]
+                }
+              },
+              "Actions": [
+                {
+                  "Type": "State",
+                  "State": "Alerted"
+                }
+              ]
+            },
+            {
+              "BodyMotion": {
+                "Type": "Sequence",
+                "Motions": [
+                  {
+                    "Type": "Timer",
+                    "Time": [3, 6],
+                    "Motion": {
+                      "Type": "Wander",
+                      "MaxHeadingChange": 1,
+                      "RelativeSpeed": 0.5
+                    }
+                  },
+                  {
+                    "Type": "Sequence",
+                    "Looped": true,
+                    "Motions": [
+                      {
+                        "Type": "Timer",
+                        "Time": [3, 6],
+                        "Motion": {
+                          "Type": "WanderInCircle",
+                          "Radius": 10,
+                          "MaxHeadingChange": 60,
+                          "RelativeSpeed": 0.5
+                        }
+                      },
+                      {
+                        "Type": "Timer",
+                        "Time": [2, 3],
+                        "Motion": {
+                          "Type": "Nothing"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "ActionsBlocking": true,
+              "Actions": [
+                {
+                  "Type": "Timeout",
+                  "Delay": [4, 5]
+                },
+                {
+                  "Type": "State",
+                  "State": "Idle"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "NameTranslationKey": { "Compute": "NameTranslationKey" }
+}
+```
+
+### Goblin_Ogre_Tutorial role file
+
+```json
+{
+  "Type": "Variant",
+  "Reference": "Template_Goblin_Ogre_Tutorial",
+  "Modify": {
+    "Appearance": "Goblin",
+    "MaxHealth": 124,
+    "InteractionVars": {
+      "Melee_SwingDown_Damage": {
+        "Interactions": [
+          {
+            "Parent": "Goblin_Ogre_Swing_Down_Damage",
+            "DamageCalculator": {
+              "Type": "Absolute",
+              "BaseDamage": {
+                "Physical": 20
+              }
+            }
+          }
+        ]
+      }
+    },
+    "NameTranslationKey": { "Compute": "NameTranslationKey" }
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Goblin_Ogre.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}
+```
+
+### Goblin_Ogre_Swing_Down file
+
+```json
+{
+  "Type": "Simple",
+  "Effects": {
+    "ItemPlayerAnimationsId": "Goblin_Club",
+    "ItemAnimationId": "SwingDown"
+  },
+  "$Comment": "Prepare Delay",
+  "RunTime": 0.2,
+  "Next": {
+    "Type": "Selector",
+    "$Comment": "Length of Combat",
+    "RunTime": 0.25,
+    "Selector": {
+      "Id": "Horizontal",
+      "Direction": "ToLeft",
+      "TestLineOfSight": true,
+      "ExtendTop": 0.5,
+      "ExtendBottom": 0.5,
+      "StartDistance": 1,
+      "EndDistance": 2.5,
+      "Length": 90,
+      "RollOffset": 60,
+      "YawStartOffset": -45
+    },
+    "HitEntity": {
+      "Interactions": [
+        {
+          "Type": "Replace",
+          "DefaultValue": {
+            "Interactions": ["Goblin_Ogre_Swing_Down_Damage"]
+          },
+          "Var": "Melee_SwingDown_Damage"
+        }
+      ]
+    },
+    "Next": {
+      "Type": "Simple",
+      "$Comment": "Pad the interaction length",
+      "RunTime": 0.1
+    }
+  }
+}
+```
+
+### Root_NPC_Goblin_Ogre_Attack
+
+(you need this file to exist, because template is referencing it)
+
+```json
+{
+  "Interactions": [
+    {
+      "Type": "Chaining",
+      "ChainId": "Slashes",
+      "ChainingAllowance": 15,
+      "Next": [
+        "Goblin_Ogre_Swing_Left",
+        "Goblin_Ogre_Swing_Right",
+        "Goblin_Ogre_Swing_Down"
+      ]
+    }
+  ],
+  "Tags": {
+    "Attack": ["Melee"]
+  }
+}
+```

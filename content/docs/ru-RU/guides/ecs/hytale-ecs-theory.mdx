@@ -28,7 +28,7 @@ authors:
 
 ## Holder
 
-Holder - это по сути чертёж (шаблон) сущности. Прежде чем сущность появится в Store (и, соответственно, в мире), она существует как `Holder`. Он собирает и хранит все необходимые компоненты (данные). Можно сравнить это с корзиной для покупок. Вы берёте все нужные компоненты, и когда всё собрано, "оформляете покупку" в Store: он принимает ваш "корзину", создаёт корректный ID сущности и выдаёт вам "чек" (Ref).
+Holder - это по сути чертёж (шаблон) сущности. Before an entity exists in the Store (and thus in the world), it exists as a `Holder`. Он собирает и хранит все необходимые компоненты (данные). Можно сравнить это с корзиной для покупок. Вы берёте все нужные компоненты, и когда всё собрано, "оформляете покупку" в Store: он принимает ваш "корзину", создаёт корректный ID сущности и выдаёт вам "чек" (Ref).
 
 Давайте рассмотрим пример: инициализация игроков. В `Universe` метод `addPlayer` демонстрирует это идеально.
 Когда игрок подключается, мы не сразу бросаем его в ECS. Сначала мы создаем их данные в Holder.
@@ -74,6 +74,7 @@ protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<En
   player.sendMessage(Message.raw("UUIDComponent : " + component.getUuid()));
   player.sendMessage(Message.raw("Transform : " + transform.getPosition()));
 }
+
 ```
 
 Здесь мы используем `Store<EntityStore>`, чтобы получить компонент `Player` через `Ref<EntityStore>`. То же самое можно сделать и с другими компонентами, например `UUIDComponent` или `TransformComponent`, чтобы получить трансформ сущности - позицию и положение (поворот).
@@ -162,11 +163,11 @@ commandBuffer.removeComponent(ref, componentType);
 MyComponent comp = commandBuffer.getComponent(ref, componentType);
 ```
 
-## Codec
+## Кодек
 
-Codecs handle serialization and deserialization of components. Hytale uses them to save and load entity data to and from disk as well as sending component data over the network. When creating a custom component, you must also create a corresponding Codec.
+Кодеки обрабатывают сериализацию и десериализацию компонентов. Hytale использует их для сохранения и загрузки данных сущностей на диск и с диска, а также для отправки данных компонентов по сети. При создании пользовательского компонента необходимо также создать соответствующий кодек.
 
-There are mutliple Codec types already implemented in the default Codec Interface:
+There are multiple Codec types already implemented in the default Codec Interface:
 
 - Codec.STRING
 - Codec.BOOLEAN
@@ -186,16 +187,16 @@ There are mutliple Codec types already implemented in the default Codec Interfac
 - Codec.DURATION
 - Codec.DURATION_SECONDS
 - Codec.LOG_LEVEL
-- Codec.UUID_BINARY
+- Codec.LOG_LEVEL
 - Codec.UUID_STRING
 
-Aside from the basic types, there are also more complex Codec implementations like `CodecMap`, `ObjectMapCodec` or `EnumCodec`.
+Помимо базовых типов, существуют также более сложные реализации кодеков, такие как `CodecMap`, `ObjectMapCodec` или `EnumCodec`.
 
-### Builder Codec
+### BuilderCodec
 
-The `BuilderCodec` is a powerful utility for creating your custom codecs. It allows you to define how each field in your component is serialized and deserialized. Each Field needs to have the following information:
+BuilderCodec — это мощная утилита для создания пользовательских кодеков. Он позволяет определить, как каждое поле в вашем компоненте будет сериализовано и десериализовано. Каждое поле должно содержать следующую информацию:
 
-- The KeyedCodec to use for serialization/deserialization of the field. This can be one of the built-in codecs or a custom codec if your field is a complex type. To initialize a KeyedCodec you need to provide a unique string identifier for the codec and the actual Codec instance to use for the field.
+- KeyedCodec, который будет использоваться для сериализации/десериализации поля. Им может быть один из встроенных кодеков или пользовательский кодек, если ваше поле имеет сложный тип. Для инициализации KeyedCodec необходимо предоставить уникальный строковый идентификатор кодека и фактический экземпляр Codec, который будет использоваться для самого поля.
 
 <Callout type="warning">
   Keep in mind that every KeyedCodec identifier string must start Uppercase and be unique across your entire mod. This means that if you have multiple components, each field's KeyedCodec identifier must not clash with any other field's identifier in any other component within your mod. Otherwise you may run into serialization issues.
@@ -214,7 +215,7 @@ This might seem tedious at first but it ensures that your component can be corre
   KeyedCodec<Integer> exampleInt = new KeyedCodec<Integer>("ExampleIntIdForCodec", Codec.INTEGER);
   ```
 
-- **Setter Function**: This is a lambda function that takes an instance of your component and returns the value of the field you want to serialize. For example, if you have a field called `myCustomField` in your custom component, your getter function would look like this:
+- **Setter Function**: This is a lambda function that takes an instance of your component + the value to set and sets the field value on the component. For example, if you have a field called `myCustomField` in your custom component, your setter function would look like this:
   ```java
   (data, value) -> data.myCustomField = value
   ```
@@ -275,7 +276,7 @@ public class PoisonComponent implements Component<EntityStore> {
 
 You can also add validators to your Codec fields to ensure that the data being serialized/deserialized meets certain criteria. For example, if you want to ensure that the `damagePerTick` field is always non-negative or the poison name is never null, you can add a validator like this:
 
-````java
+```java
 .append(
     new KeyedCodec<Float>("DamagePerTick", Codec.FLOAT),
     (data, value) -> data.damagePerTick = value,
@@ -291,15 +292,16 @@ You can also add validators to your Codec fields to ensure that the data being s
 )
 .addValidator(Validators.nonNull())
 .add()
+```
 
 ### Complex Codec Examples
 
-If you want to have a map inside your component, you can use the MapCodec class to build a KeyedCoded for it. Here's an example of how to create a Codec for a Map field:
+If you want to have a map inside your component, you can use the MapCodec class to build a KeyedCodec for it. Here's an example of how to create a Codec for a Map field:
 
 ```java
 var damagePerTick = new KeyedCodec<>("DamagePerTick", new MapCodec<>(Codec.FLOAT, HashMap<String, Float>::new));
-````
+```
 
 <Callout type="info">
-  This also works with custom Objects as long as you have a Codec defined for the Object type.
+  Это также работает с пользовательскими объектами, если для типа объекта определен кодек.
 </Callout>
