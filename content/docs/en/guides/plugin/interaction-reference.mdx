@@ -590,6 +590,8 @@ EntityEffects are buff or debuff effects that can be applied to a LivingEntity. 
 
 This interaction will fail if the specified entity's EntityEffects do not match the provided conditions. 
 
+**EffectCondition Fields**
+
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
 | Entity | `InteractionTarget`<br />(Default: User) | **Yes** | The entity to examine for EntityEffects. This field can indicate the Owner, User, or Target of this interaction chain. |
@@ -610,6 +612,8 @@ This interaction will fail if the specified entity's EntityEffects do not match 
 
 This interaction will apply the specified EntityEffect to the specified Entity.  It has no special failure conditions. 
 
+**ApplyEffect Fields**
+
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
 | Entity | `InteractionTarget`<br />(Default: User) | **Yes** | The entity to apply the EntityEffect to. This field can indicate the Owner, User, or Target of this interaction chain. |
@@ -626,6 +630,8 @@ This interaction will apply the specified EntityEffect to the specified Entity. 
 This interaction will remove the specified EntityEffect from the specified Entity. It has no special failure conditions. 
   It will not fail if the Entity does not have the EntityEffect. 
 
+**ClearEntityEffect Fields**
+
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
 | Entity | `InteractionTarget`<br />(Default: User) | **Yes** | The entity to remove the EntityEffect from. This field can indicate the Owner, User, or Target of this interaction chain. |
@@ -639,9 +645,84 @@ This interaction will remove the specified EntityEffect from the specified Entit
 
 ## Cooldowns 
 
+RootInteractions interface with a complex cooldown system that can be used for a variety of purposes. Aside from simply 
+  adding an important aspect of resource management to your game design, cooldowns can be used to ensure that click-activated 
+  interaction chains don't repeatedly spam if the player holds down the input. 
+
+By default, every RootInteraction has a cooldown timer that is keyed to the RootInteraction name, and by default, it 
+  will launch a cooldown of 0.35 seconds when activated by client input.  Otherwise, no cooldown will be activated.  However,
+  by configuring your RootInteraction, you can change the key for the cooldown (so that multiple RootInteractions can share 
+  a single cooldown), set the cooldown timer to whatever you like, and configure multiple charges that can build up over time
+  to allow the entity to activate the RootInteraction multiple times before encountering a cooldown timer. 
+
+One important concept to keep in mind is the difference between **cooldown** and **charge time**.  The cooldown, if any,
+  is activated each time a RootInteraction triggers, even if the player has more available charges. If the RootInteraction 
+  is configured to use charges, then they will gradually build up over time. In order for a RootInteraction to be activated,
+  the cooldown (if any) must be expired, and the RootInteraction must have at least one charge (if the ability has been 
+  configured to use charges). 
+
+Bear in mind that the entire Cooldown configuration is shared between different RootInteractions with the same cooldown id.
+  If you use an ability with 5 charges and a short cooldown and then another ability with a much longer cooldown and no 
+  charges, the second ability will use the cooldown properties of the first ability until/unless the first ability finishes 
+  charging and is cleared from the system.  You should generally only have multiple RootInteractions share a cooldown id 
+  if they have the same configuration.
+
+The interactions below interact with the cooldown system to allow you to manipulate cooldowns via the interaction system.
+
 ### CooldownCondition
+
+**CooldownCondition Fields**
+
+This interaction will fail if the specified cooldown id is on cooldown for the User entity.  This interaction will only 
+  function for players- the interaction will always succeed for NPCs.  In order for this interaction to succeed, the 
+  cooldown, if any, must have expired and at least one charge, if any, must have filled.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `String` | **Yes** | The cooldown id to check. |
+
 ### IncrementCooldown
+
+**IncrementCooldown Fields**
+
+This interaction will modify a cooldown that is currently active on the User entity, allowing charges and remaining 
+  cooldown to be modified.
+  Despite its name, this interaction can be used to reduce a cooldown as well as increase it. If the cooldown is not 
+  currently active, this interaction will have no effect. The interaction has no special failure conditions. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `String` | **No** | If provided, the cooldown id of the cooldown to be manipulated. If not provided, the cooldown id of the current chain's RootInteraction will be used. |
+| Time | `Float`<br />(Default: 0.0) | **No** | The amount to increase the remaining cooldown by. Can be negative. The remaining cooldown time will not be reduced below zero or increased above the maximum cooldown time. |
+| ChargeTime | `Float`<br />(Default: 0.0) | **No** | The amount to increase the remaining time until the next charge is filled by. Can be negative. The remaining charge time cannot be reduced below zero or increased above the maximum cooldown time. **This will not work on abilities that have a maximum of 1 charge, for some reason.** |
+| Charge | `Integer`<br />(Default: 0) | **No** | The amount to increase the number of charges by. Can be negative. The number of charges cannot be reduced below 0 or increased above the maximum. |
+| InterruptRecharge | `Boolean`(Default: false) | **No** | If true and `Charge` is not 0, will reset the remaining time to the next charge to the maximum value after changing the charge count. |
+
 ### ResetCooldown
+
+This interaction will trigger a cooldown on the User entity with a specified configuration. The charges will be refilled 
+  but the cooldown will be immediately triggered.  The mechanisms for deciding on the configuration are a little bit complicated.
+  You may specify a cooldown configuration via the `Cooldown` field. If you do not include an `Id` field, then the 
+  interaction chain's RootInteraction will be used for any field not specified in the configuration. If there is an active 
+  cooldown under the specified `Id` (or under the RootInteraction's cooldown id if none is specified) then the fields 
+  from that active cooldown will overwrite data in the RootInteraction's cooldown, but not data in your `Cooldown` field.
+
+**ResetCooldown Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Cooldown | `InteractionCooldown` | **No** | A cooldown configuration to use for the new, reset cooldown. |
+
+**InteractionCooldown Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `String` | **No** | The cooldown id to use for this cooldown. If not provided, the RootInteraction's cooldown id will be used, if any. |
+| Cooldown | `Float`<br />(Default: 0.0) | **No** | The duration of the cooldown, in seconds. | 
+| Charges | `Array`<br />(Element Type: `Float`) | **No** | If provided, a list of how many charges this cooldown can build, and how long each charge takes to build, in seconds. |
+| InterruptRecharge | `Boolean`<br />(Default: false) | **No** | If true, the charge time will be reset when the number of charges changes. |
+| ClickBypass | `Boolean`<br />(Default: false) | **No** | If true, RootInteractions keyed to this cooldown can still be activated when it is on cooldown provided that the RootInteraction was triggered by a distinct key or mouse button press on the client. |
+
 
 ## Combo Chains 
 
