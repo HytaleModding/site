@@ -4,6 +4,10 @@ description: "Learn how to set up your development environment for modding Hytal
 authors:
     - name: "Neil Revin"
       link: "https://itsneil.dev"
+    - name: "Marcel-TO"
+      url: "https://marcel-to.net"
+    - name: "Ádám Liszkai"
+      link: "https://adaliszk.dev"
 ---
 
 This guide will walk you through setting up a complete development environment for Hytale modding, including all necessary tools and dependencies.
@@ -18,22 +22,67 @@ Before we begin, make sure you have:
 
 ## Required Software
 
-### 1. Java Development Kit (JDK)
+### Integrated Development Environment (IDE)
 
+We recommend IntelliJ IDEA Community Edition for Hytale modding. If you use IntelliJ IDEA, **almost everything is built-in**. You can clone a template, open a new project, and start working right away!
+
+1. Download from [JetBrains website](https://www.jetbrains.com/idea/download/)
+2. Install with default settings
+3. Launch and complete the initial setup wizard
+
+When opening a project, wait for indexing to finish, then start coding.
+Now, IDEA may say "No JDK configured" at the top of the source file you have.
+In that case, you can click Download JDK and choose JetBrains JDK 25.
+
+<Callout type="success">
+    If IDEA opened the project without errors, your environment is ready.
+</Callout>
+
+More details by [JetBrains](https://www.jetbrains.com/help/idea/2026.1/run-for-the-first-time.html)
+help page, where we recommend that you also check the
+[SDK configuration](https://www.jetbrains.com/help/idea/2026.1/sdk.html) guide.
+
+<Callout type="info">
+    We recommened following
+    [TheNullicorn's](https://gist.github.com/TheNullicorn/90a619796c40f20ae1fcf13094c1a57d) guide to ensure
+    you are using the correct `Nonnull` in your projects.
+</Callout>
+
+#### What the IDE Does for You
+
+When opened in IntelliJ IDEA, the project automatically:
+
+- Detects and configures Gradle or Maven
+- Downloads all dependencies
+- Sets up project structure and classpaths
+- Configures run/build tasks
+
+You do **not** need to manually install or configure Maven or Gradle if you stay inside the IDE.
+
+Skip to the [Setting Up Your Workspace](#setting-up-your-workspace).
+
+### Manual Setup: Java Development Kit (JDK)
+For any other setup, you will need to install and configure your system to have and load Java.
 Hytale modding requires Java 25 or later. We recommend using OpenJDK.
 
-#### Windows
+#### Windows via Installer
 1. Download OpenJDK 25 from [Adoptium](https://adoptium.net/)
 2. Run the installer with default settings
     - Optionally enable feature `Set or Override JAVA_HOME variable` to resolve version related build issues with your project.
 3. Verify installation by opening Command Prompt and running:
+
+#### Windows via Scoop
+1. Install Scoop via PowerShell using [scoop.sh](https://scoop.sh/)
+2. Install OpenJDK 25:
 ```bash
-java -version
+scoop bucket add java
+scoop install java/openjdk25
 ```
 
 #### macOS
+1. Install Brew via Terminal using [brew.sh](https://brew.sh)
+2. Install JDK via Homebrew:
 ```bash
-# Using Homebrew
 brew install openjdk@25
 ```
 
@@ -46,21 +95,36 @@ source ~/.zshrc
 </Callout>
 
 #### Linux (Ubuntu/Debian)
+1. Install JDK via the built-in package repository:
 ```bash
 sudo apt update
 sudo apt install openjdk-25-jdk
 ```
 
-### 2. Integrated Development Environment (IDE)
+### Verify installation:
+Run the following command to see what version of Java you have:
+```bash
+java -version
+```
 
-We recommend IntelliJ IDEA Community Edition for Hytale modding.
 
-1. Download from [JetBrains website](https://www.jetbrains.com/idea/download/)
-2. Install with default settings
-3. Launch and complete the initial setup wizard
+### Java Build Tool (Optional)
+We recommend using a Gradle Wrapper for managing dependencies and building your Hytale plugins. It provides benefits by eliminating the need for a system-wide Gradle installation and ensuring consistent Gradle versions across different environments. (Alternatively you can use Maven, but this guide focuses on Gradle since it is the default for our plugin template.)
 
-### 3. Java Build Tool
-We recommend using Apache Maven for managing dependencies and building your Hytale plugins. (Alternatively you can use Gradle, but this guide focuses on Maven.)
+The plugin template in the following sections includes a Gradle Wrapper, so you can skip this step if you plan to use the template.
+
+#### Choosing Gradle (if not using the template)
+If you prefer to install Gradle manually, follow these steps:
+
+1. Visit the official website: https://gradle.org/releases/
+2. Download the newest gradle binary: `gradle-9.3.1-bin.zip` (Binary zip archive)
+3. Unzip it
+4. Add the `gradle-9.3.1/bin/` folder to your PATH
+
+You can now try the command `gradle -version` to verify Gradle is installed correctly. Make sure to do this in a fresh new terminal instead of one you had opened from before!
+
+#### Choosing Maven (if not using the template)
+If you prefer to use Maven instead of Gradle, follow these steps to install Maven:
 
 1. Visit the official website: https://maven.apache.org/download.cgi
 2. Download this file: `apache-maven-3.9.12-bin.zip` (Binary zip archive)
@@ -83,22 +147,58 @@ cd MyFirstMod
 
 If you don't have Git installed, you can download the ZIP file from the repository page and extract it to a folder named `MyFirstMod`.
 
-### 2. Open Plugin in your IDEA
+### 2. Open Plugin in your IDE
 
-1. Open IntelliJ IDEA
+1. Open Your IDE (e.g., IntelliJ IDEA)
 2. Click "Open" and navigate to your `MyFirstMod` directory
-3. IntelliJ will automatically detect it as a Maven project
+3. Most IDEs like IntelliJ will automatically detect it as a Gradle project
 4. Wait for the project to index and dependencies to download
 
-<Callout type="info">
-    We recommend following [this](https://gist.github.com/TheNullicorn/90a619796c40f20ae1fcf13094c1a57d) guide to ensure you are using the correct `Nonnull` in your projects.
-</Callout>
+## Alternate Approach: Hytale Dependency
+If you prefer to set up your project from scratch without using the template and importing the hytale dependencies manually, ensure your build configuration includes the Hytale repositories and dependencies:
+
+For Gradle, add the following to your `build.gradle.kts`:
+```kotlin
+repositories {
+    mavenCentral()
+    maven {
+        name = "hytale"
+        url = uri("https://maven.hytale.com/release") // Or "hytale-pre-release" for pre-release versions
+    }
+}
+dependencies {
+    // + here means the latest version, but you can hard-wire any known version!
+    implementation("com.hypixel.hytale:Server:+")
+}
+```
+
+For Maven, add the following to your `pom.xml`:
+```xml
+<project>
+    <repositories>
+        <repository>
+            <id>hytale-release</id> <!-- Or "hytale-pre-release" for pre-release versions -->
+            <url>https://maven.hytale.com/release</url> <!-- Or "https://maven.hytale.com/pre-release" -->
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.hypixel.hytale</groupId>
+            <artifactId>Server</artifactId>
+            <!-- Replace with latest version, Hytale provides jars for the last five releases -->
+            <version>LATEST_VERSION_HERE</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
+```
 
 ## Next Steps
 
 Now that you have your development environment set up with the plugin template:
 
-1. **Customize the template** - Edit the `pom.xml` and `manifest.json` file to change your mod's name and details
+1. **Customize the template** - Edit the `settings.gradle.kts`, `build.gradle.kts` and `manifest.json` file to change your mod's name and details
 2. **Explore the code structure** - Familiarize yourself with the template's organization
 3. **Start modding** - Begin writing your first Hytale plugin!
 
