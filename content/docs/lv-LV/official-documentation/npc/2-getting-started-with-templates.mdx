@@ -1,0 +1,74 @@
+---
+title: 2 - Getting started with Templates
+authors:
+  - name: Hypixel Studios Canada Inc.
+    url: https://hytale.com
+---
+
+<OfficialDocumentationNotice />
+
+There are no hard and fast rules for making a start on a template. I like to duplicate **BlankTemplate** and start from there because it already provides the basic structure of the file.
+
+This leaves me with the following template (`Template_Goblin_Ogre.json`): (note: the file could be looking different in the current version of the game)
+
+```json
+{
+  "Type": "Abstract",
+  "Parameters": {
+    "Appearance": {
+      "Value": "Bear_Grizzly",
+      "Description": "Model to be used"
+    },
+    "DropList": {
+      "Value": "Empty",
+      "Description": "Drop Items"
+    },
+    "MaxHealth": {
+      "Value": 100,
+      "Description": "Max health for the NPC"
+    },
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Template.name",
+      "Description": "Translation key for NPC name display"
+    }
+  },
+  "Appearance": { "Compute": "Appearance" },
+  "DropList": { "Compute": "Droplist" },
+  "MaxHealth": { "Compute": "MaxHealth" },
+  "MotionControllerList": [
+    {
+      "Type": "Walk",
+      "MaxWalkSpeed": 3,
+      "Gravity": 10,
+      "MaxFallSpeed": 8,
+      "Acceleration": 10
+    }
+  ],
+  "Instructions": [
+    {
+      "Sensor": {
+        "Type": "Any"
+      },
+      "BodyMotion": {
+        "Type": "Nothing"
+      }
+    }
+  ],
+  "NameTranslationKey": { "Compute": "NameTranslationKey" }
+}
+```
+
+And the following variant (`Goblin_Ogre.json`) next to the template. There's a translation key in the template used for localisation of the NPC name, but we won't worry about that for now since it's not required for the NPC to work.
+
+```json
+{
+  "Type": "Variant",
+  "Reference": "Template_Goblin_Ogre",
+  "Modify": {
+    "Appearance": "Goblin_Ogre",
+    "MaxHealth": 124
+  }
+}
+```
+
+Our artists have defined the `Goblin_Ogre` appearance already so I'm going to use that.

@@ -377,6 +377,28 @@ public static String getHealthStatus(int health, int maxHealth) {
    * Tenha pelo menos um número
    * Retorna *true* se for válido, e *false* se não for
 
+<Callout type="info" title="Nota de divisão">
+  Ao escrever um validador de senha, será preciso comparar os valores do array. Por exemplo:
+
+  ```java
+  String[] array1 = {"Maçã", "Banana"};
+  String[] array2 = {"Maçã", "Banana"};
+
+  //Errado:
+  array1[0] == array2[0];       // falso
+  /*
+  O array é um tipo de dado não primitivo. O Java compara os tipos 
+  de dados de referência (não primitivos) por sua localização na memória, 
+  e não por seus valores.
+  */
+
+  // Para comparar os valores reais dos tipos de dados de referência, 
+  use o método .equals(): array1[0].equals(array2[0]);"      // verdadeiro
+
+  // Isso não se aplica aos tipos de dados primitivos.
+  ```
+</Callout>
+
 ## Erros comuns
 
 ```java

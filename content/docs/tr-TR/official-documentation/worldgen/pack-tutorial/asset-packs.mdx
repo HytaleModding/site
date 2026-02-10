@@ -1,0 +1,93 @@
+---
+title: Asset Packs
+description: Covers how to create and install Asset Packs
+icon: Bookmark
+authors:
+  - name: Hypixel Studios Canada Inc.
+    url: https://hytale.com
+---
+
+<OfficialDocumentationNotice />
+
+# How to modify Hytale
+
+## What's an Asset Pack
+
+Hytales gameplay is driven by assets in the game that can be modified by creators. Asset Packs are our solution to let you override or add features to the base game with your own work. These can in the form of zip files of folders, which contain a custom set of assets. This is not the only way for a creator to change Hytale but this is the most accessible form.;
+
+### How do I make an Asset Pack
+
+<video controls className="my-6 aspect-video w-full rounded-lg border">
+  <source src="https://cdn.internal.hytalemodding.dev/guides/official/how-to-asset-pack.mp4" type="video/mp4" />
+</video>
+
+{/* {% include "../.gitbook/includes/requirements.md" %} */}
+
+An asset pack is typically a zip or folder, with a `manifest.json` inside. This can be created either using our ingame asset editor, or in your file browser. All Asset Packs require a manifest and the assets must be located in the correct folders. For this reason we recommend using the Asset Editor.
+
+```json title="manifest.json"
+{
+  "Group": "My Group",
+  "Name": "Pack Example",
+  "Version": "1.0.0",
+  "Description": "An Example Asset Pack",
+  "Authors": [
+    {
+      "Name": "Me",
+      "Email": "",
+      "Url": ""
+    }
+  ],
+  "Website": "",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "LoadBefore": {},
+  "DisabledByDefault": false,
+  "IncludesAssetPack": false,
+  "SubPlugins": []
+}
+```
+
+### Where are they stored
+
+Asset Packs are stored with other mods in the Mods folder.
+
+```
+C:\Users\<user>\AppData\Roaming\Hytale\UserData\Mods
+```
+
+Mods and Asset Packs are also stored per world, this is where Asset Packs land when created with the Asset Editor.;
+
+```
+C:\Users\<user>\AppData\Roaming\Hytale\UserData\Saves\New World 5\mods
+```
+
+<Callout type="warning">
+  When creating an Asset Pack in-game with the Asset Editor, they are currently
+  stored in that world. This means to access the pack in other worlds you need
+  to copy the pack into your Mods folder.
+</Callout>
+
+---
+
+<video controls className="my-6 aspect-video w-full rounded-lg border">
+  <source src="https://cdn.internal.hytalemodding.dev/guides/official/how-to-install.mp4" type="video/mp4" />
+</video>
+
+When you have Asset Packs or Mods installed, these will appear in the New World menu under the Options menu.;
+
+### How do I change an existing asset
+
+<video controls className="my-6 aspect-video w-full rounded-lg border">
+  <source src="https://cdn.internal.hytalemodding.dev/guides/official/how-to-asset.mp4" type="video/mp4" />
+</video>
+
+<Callout type="warning">You must create an Asset Pack</Callout>
+
+All creators are free to modify our existing assets, to do so you must create an Asset Pack. Assets that exist inside of Asset Packs override the asset from the base game. You are also able to add new assets the same way.;
+
+### Notes
+
+- Can be downloaded from hosting sites such as CurseForge.
+- Exist entirely on the server.
+  - Only the server or world host has to download Asset Packs and Mods.;

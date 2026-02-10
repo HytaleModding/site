@@ -1,26 +1,32 @@
 ---
 title: Teleporting the player
 description: Learn how to teleport the player.
+authors:
+    - name: "oskarscot"
+      url: "https://oskar.scot"
 ---
 
-To teleport players in Hytale, you will need to get a `World` object so we can safely run the teleport on the world thread. The world thread manages all entity updates, so modifying entities off-thread can crash the server or cause inconsistent state.
-Next, we get the entity store and make a `Teleport` object.
-We add a `Teleport` component to the player’s entity reference in the entity store. This triggers the teleportation logic for that player.
+Teleporting players in Hytale works by simply attaching a `Teleport` component to a player with the desired world and transform.
+You can only trigger teleports from a world where the player is currently present.
+Teleport itself is a component but it also provides factory methods to configure the Teleport. Just as with any entity component, an EntityStore and a Ref to the EntityStore is required
+
+We can create a simple teleport utility like this:
 
 ```java
-public static void teleportPlayer(Player player, int x, int y, int z) {
-        World world = player.getWorld();
-        if (world == null) return;
-        world.execute(() -> {
-            if (player.getReference() == null) return;
-            Store<EntityStore> store = player.getReference().getStore();
-            Teleport teleport = Teleport.createForPlayer(world,
-                new Vector3d(x ,y, z), // Target position
-                new Vector3f(0, 0, 0)  // Target rotation (pitch, yaw, roll)
-            );
+public static void teleportPlayer(Ref<EntityStore> ref, Store<EntityStore> store, World targetWorld, double x, double y, double z) {                                                                                       
+    Transform transform = new Transform(x, y, z);                                                                                                                           
+    Teleport teleport = Teleport.createForPlayer(targetWorld, transform);                                                                                                   
+    store.addComponent(ref, Teleport.getComponentType(), teleport);                                                                                                         
+}  
+```
 
-            store.addComponent(player.getReference(), Teleport.getComponentType(), teleport);
-        });
+A `Transform` is a representation of a position Vector3d and rotation Vector3f which works in the following way:
 
-}
+```java
+Transform transform = new Transform(
+    new Vector3d(x, y, z),      // Position
+    new Rotation(yaw, pitch, 0) // Rotation, last value seems to always be 0
+);
+Teleport teleport = Teleport.createForPlayer(targetWorld, transform);
+store.addComponent(ref, Teleport.getComponentType(), teleport);
 ```

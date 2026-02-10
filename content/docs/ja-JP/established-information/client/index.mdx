@@ -1,69 +1,68 @@
 ---
-title: The Hytale Client
-description: Information regarding the Hytale client.
+title: Hytaleクライアント
+description: Hytaleクライアントに関する情報。
 ---
 
 <Callout>
-  The client is written in C#, compiled to machine code before distribution, and not moddable. Single-player runs on a local server. All mods must go through the server API.
+  クライアントはC#で作成され、配布前に機械語にコンパイルされます。MODの対応はしていません。 シングルプレイヤーはローカルサーバー上で動作します。 すべてのMODはサーバーAPIを経由する必要があります。
 </Callout>
 
-# No Client-Side Mods
+# クライアント用のMODはありません
 
-There is no client-side modding.
+クライアント側で改造することはできません。
 
-> We don't intend to support any client mods - Slikey
+> 私たちはクライアント側のMODを一切サポートするつもりはありません - Slikey
 
-## Why?
+## なぜですか？
 
-1. No need to download externally.
-   * Hytale wants to "avoid a fragmented ecosystem where every server requires a different modded client".
+1. 外部からダウンロードする必要はありません。
+   * Hytaleは、「プレイヤーの環境がサーバーごとに異なる改造クライアントを要求することで分断されてしまう状況を避けたい」と考えています。
 
-2. Client security.
-   * Running `.jar` files from third-party sites on the client can easily introduce malware.
-   > [We don't want to expose players] to the security and safety risks that exist on some other modding platform.
+2. クライアントの安全性
+   * 第三者サイトからダウンロードした `.jar` ファイルをクライアント側で起動すると、マルウェアに簡単に感染する可能性があります。
+   > プレイヤーをほかのMODプラットフォームで見られるような、セキュリティや安全上のリスクに晒したくはありません。
 
-3. Client stability.
-   * Hytale may move to other platforms on which client modding is impossible, so they're locking it down early to set the right direction early.
-   > We believe that the results that people get in other block games using client mods can be easily achieved using our server-sided modding. In other block games you have to install a client mod in order to get new blocks, NPCs, UI, etc.Hytale does all of that just by listening to the server. The server will basically "mod" the client temporarily in a really safe way to add and modify your gameplay experience. You could make your very own version of Orbis, using none of our models, music, world generation, combat or anything. You have control and you can rip it all out without ever touching the client. Think about how Roblox works.. You never change your App. You just click on an experience you want and you get all you need without modding your installation itself. - Slikey
+3. クライアントの安定性
+   * Hytaleは、クライアント側のMODを利用できない他のプラットフォームに移行する可能性があるため、早い段階でクライアントMODを厳しく制限し、正しい方向性を確立しようとしています。
+   > 開発者は、他のブロックゲームでクライアントMODを使って実現しているものは、Hytaleのサーバー側のMODで簡単に達成できると考えています。 他のブロックゲームでは、新しいブロック、NPC、UIなどを追加するために、プレイヤーがクライアント側にMODをインストールする必要があります。Hytaleではクライアントを一切変更せず、サーバーからの通信のみでそれらすべてを実現します。 サーバーからクライアントを一時的に「改造」して、プレイ体験を安全に変更・追加します。 オリジナルのOrbisのような独自の世界を、オリジナルのモデル・音楽・ワールド生成・戦闘システムを一切使わずに作成可能です。 クライアントに触れることなく、自由に操作し、すべてを自由にカスタマイズできます。 Robloxの仕組みを考えてみてください。 アプリを変更する必要はありません。 クリックをするだけでMODをインストールしなくても必要なものをすべて手に入れられます - Slikey
 
-## Client Mods are Not Needed
+## クライアント側でMODは必要ありません
 
-The typical use cases for client mods are:
+クライアントMODの一般的な使用例は次のとおりです。
 
-* Cosmetic changes (resource packs, shaders, capes, etc.): servers own visuals, not the client.
-* Performance: the base game will offer necessary performance controls.
-* Accessibility: the base game will be accessible on its own.
-* User Interface: servers own UI, not the client.
+* 見た目の変更（リソースパック、シェーダー、ケープなど）: クライアントではなくサーバーが管理します。
+* パフォーマンス：各種性能の調整はゲームの基盤に組み込まれています。
+* 利便性：快適にプレイできる環境はゲームの基盤に組み込まれています。
+* ユーザーインターフェース：UIはサーバーで管理しています。
 
-### Client-Side Prediction
+### クライアントサイド予測
 
-Hytale uses data-driven client-side prediction to mitigate lag, as all interactions take place on the server and are relayed back to the client. This is already present for some systems but currently limited, though further integration is planned for the future. It's also planned to work with the visual scripting system in the future for further optimization.
+すべての処理がサーバー上で行われ、その結果をクライアントに反映することで発生する遅延を軽減するために、Hytaleはデータ駆動型のクライアントサイド予測を使用しています。 この機能はすで導入されていますが、現在は限定的な使用をしています。将来的にさらなる統合が計画されています。 今後はビジュアルスクリプティングシステムとも連携し、さらに最適化を進める予定です。
 
-## Client-Side Execution
+## クライアント側の実行
 
-The team is exploring allowing execution of code by the client (which is distinct from modding the client; this is code sent from the server), though this is not guaranteed.
+開発チームは、クライアント上でのコード実行（クライアントの改造とは異なり、サーバーから送信されるコードの実行を指す）を許可する可能性を検討中していますが、確定ではありません。
 
-# Models
+# モデル
 
-The client and assets pipeline accepts `.blockymodel`, a custom format for Hytale. The official Blockbench plugin will allow you to export to this format.
+Hytaleはは独自の.`.blockymodel`形式の3Dモデルファイルに対応しています。 Blockbenchで公式プラグインを使用すると、この形式に出力することができます。
 
-# Client Technical Details
+# クライアントの技術詳細
 
-There will only ever be one current, supported version of the client.
+現在サポートされているクライアントのバージョンは常に 1 つだけです。
 
-> Java version will be kept updated by us and right now we are on the latest version (Java 25)
-> The game version will not be selectable to avoid the version jungle we experienced on our hypixel server network. We simply want to make sure that multiplayer networks can rely on players having the latest version of the game to not have to support 15+ versions of the client. - Slikey
+> Javaバージョンは我々で随時更新しており、現在は最新バージョン（Java 25）を使用しています。Hypixelサーバーネットワークで経験したバージョンの乱立を避けるため、ゲームバージョンの選択はできません。 マルチプレイネットワークが、プレイヤーが最新バージョンのゲームを持っていることを前提に設計できるようにし、15個以上のバージョンをサポートする必要がないようにしたいためです。 - Slikey
 
-The client is multithreaded.
+クライアントはマルチスレッド対応です。
 
 ## GUI
 
-The GUI is built from C# bindings using Noesis.
+GUIはNoesisのC#バインディングを使用して構築されています。
 
-## Build System
+## システムの構築
 
-Hytale uses NativeAOT ("Ahead of Time") to build the client, which compiles C# to machine code for distribution. This means that, without reverse-engineering the machine code, mods will have to go through the server API.
+HytaleはNativeAOT ("Ahead of Time", 事前コンパイル)を使用してクライアントをビルドします。これにより、C#が機械語にコンパイルされて配布されます。 これにより、機械語をリバースエンジニアリングでもしない限り、MODはサーバーAPIを経由する必要があるということです。
 
-# Other Information
+# その他の情報
 
-The client has its own versioning and protocol to interact with servers.
+クライアントはサーバーとの通信に特化したの独自バージョン管理と通信プロトコルを持っています。

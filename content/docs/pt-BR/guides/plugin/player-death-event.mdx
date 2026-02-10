@@ -1,0 +1,129 @@
+---
+title: Evento de morte do jogador
+description: Aprenda a usar o `OnDeathSystem`.
+authors:
+  - name: Bird
+    link: https://discord.com/users/495709580068651009
+---
+
+# Visão geral
+
+Neste guia, você aprenderá a usar o `OnDeathSystem` para detectar quando um jogador morrer.
+
+## Exemplo de código
+
+```java
+package org.example.plugin.Systems;
+
+import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.query.Query;
+import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
+import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
+import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
+import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+
+import javax.annotation.Nonnull;
+
+public class TestDeathSystem extends DeathSystems.OnDeathSystem {
+
+    @Nonnull
+    @Override
+    public Query<EntityStore> getQuery() {
+        return Query.and(Player.getComponentType());
+    }
+
+    @Override
+    public void onComponentAdded(@Nonnull Ref ref, @Nonnull DeathComponent component, @Nonnull Store store, @Nonnull CommandBuffer commandBuffer) {
+        Player playerComponent = (Player) store.getComponent(ref, Player.getComponentType());
+
+        assert playerComponent != null;
+
+        Universe.get().sendMessage(Message.raw("Jogador morto: " + playerComponent.getDisplayName()));
+        Damage deathInfo = component.getDeathInfo();
+        if (deathInfo != null) {
+            Universe.get().sendMessage(Message.raw("Qt. de dano: " + deathInfo.getAmount()));
+        }
+    }
+}
+```
+
+## Etapas
+
+### 1. Estender o sistema de morte
+
+Comece criando uma nova classe que aumenta o `DeathSystems.OnDeathSystem`. Isso permite que o seu sistema reaja automaticamente quando uma entidade morrer.
+
+```java
+public class TestDeathSystem extends DeathSystems.OnDeathSystem {
+```
+
+---
+
+### 2. Define Which Entities This System Applies To
+
+Override the `getQuery()` method to filter for the entities you want. In this case, we only want **players**:
+
+```java
+@Nonnull
+@Override
+public Query<EntityStore> getQuery() {
+    return Query.and(Player.getComponentType());
+}
+```
+
+<Callout>
+  `Query.and(...)` allows you to combine multiple filters if needed.
+</Callout>
+
+---
+
+### 3. Monitorar o evento de morte
+
+The `onComponentAdded` method is called automatically whenever a `DeathComponent` is added to an entity matching your query.
+
+```java
+@Override
+public void onComponentAdded(
+        @Nonnull Ref ref,
+        @Nonnull DeathComponent component,
+        @Nonnull Store store,
+        @Nonnull CommandBuffer commandBuffer
+)
+```
+
+---
+
+### 4. Obter o componente do jogador
+
+Use the `Store` to retrieve the `Player` component from the entity that just died:
+
+```java
+Player playerComponent = (Player) store.getComponent(ref, Player.getComponentType());
+```
+
+This lets you access information such as the player's display name.
+
+---
+
+### 5. Get Death Damage Information
+
+The `DeathComponent` contains information about the damage that killed the player:
+
+```java
+Damage deathInfo = component.getDeathInfo();
+```
+
+Então você pode verificar:
+
+```java
+if (deathInfo != null) {
+    Universe.get().sendMessage(Message.raw("Quantidade de dano: " + deathInfo.getAmount()));
+}
+```
+
+This provides the **amount of damage** and the **source of the death**.

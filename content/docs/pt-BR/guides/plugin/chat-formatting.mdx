@@ -1,15 +1,16 @@
 ---
-title: Formatting the chat
-description: Learn how to format the chat using the PlayerChatEvent
+title: Formatando o bate-papo
+description: Aprenda a formatar o bate-papo usando o `PlayerChatEvent`
 authors:
   - name: oskarscot
-    link: https://oskar.scot
+    url: https://oskar.scot
 ---
 
 ![chat format example](/assets/guides/chat-example.png)
 
-The chat uses the PlayerChatEvent, it contains the formatter, the PlayerRef for the sender, the content as well as a list of targets (it's safe to assume the targets is the list of players who can see the chat message)
-You can cancel this event as well as modify the content and the formatter.
+O bate-papo é executado pelo `PlayerChatEvent`. Ele traz o formatador, o PlayerRef de quem enviou, o conteúdo e a lista de alvos (basicamente, quem vai receber a mensagem). Você pode cancelar o evento ou alterar o conteúdo e a formatação como desejar.
+
+## Formatação manual (abordagem padrão)
 
 ```java
 public class ChatFormatter {
@@ -45,3 +46,159 @@ The formatter is the following interface:
   }
 }
 ```
+
+---
+
+## TinyMessage - Rich Text Formatting (Easy Alternative)
+
+![chat format example](/assets/guides/chat-tinymessage-example.png)
+
+**TinyMessage** is a lightweight, powerful rich text parser for Hytale servers that allows you to use simple tags to create gradients, hex colors, clickable links, and nested styles in chat messages. Similar to minecraft MiniMessage
+
+### Features
+
+- **Gradients:** `<gradient:red:blue>Hello</gradient>` or multi-color `<gradient:gold:red:black>...`
+- **Hex Colors:** `<color:#FF55FF>Custom Colors</color>` or `<color:red>Named Colors</color>`
+- **Standard Styles:** `<b>Bold</b>`, `<i>Italic</i>`, `<u>Underline</u>`, `<mono>Monospace</mono>`
+- **Clickable Links:** `<link:https://google.com>Click me!</link>`
+- **Nested Styling:** Tags can be nested indefinitely
+
+### Usage Examples
+
+```java
+import fi.sulku.hytale.TinyMsg;
+import com.hypixel.hytale.server.core.Message;
+
+// Parse a formatted string into a Message
+Message message = TinyMsg.parse("<gradient:red:blue>Hello World!</gradient>");
+player.sendMessage(message);
+
+// Multiple styles
+TinyMsg.parse("<b><color:gold>Bold Gold Text</color></b>");
+
+// Clickable gradient link
+TinyMsg.parse("<link:https://example.com><gradient:aqua:blue>Click me!</gradient></link>");
+
+// Complex nested styling
+TinyMsg.parse("<b>Bold <i>and italic <color:red>and red</color></i></b>");
+
+// Reset styles mid-text
+TinyMsg.parse("<b>Bold <reset>normal text");
+```
+
+```java
+public class ChatFormatter {
+
+    private void onPlayerChat(PlayerChatEvent event) {
+        PlayerRef sender = event.getSender();
+        if (event.getContent().equalsIgnoreCase("poo")) {
+            event.setCancelled(true);
+            sender.sendMessage(TinyMsg.parse("<red>Hey, you cannot say that!</red>"));
+        }
+
+        if (event.getContent().equalsIgnoreCase("you stink")) {
+            event.setContent("i stink");
+        }
+
+        event.setFormatter((playerRed, message) ->
+                TinyMsg.parse("<red>[COOL] </red><yellow>" + sender.getUsername() + "</yellow><pink> : " + message + "</pink>"));
+  }
+}
+```
+
+### Instalação
+
+Links:
+
+<a href="https://github.com/Zoltus/TinyMessage/" target="_blank" rel="noopener noreferrer">
+  Repositório no GitHub
+</a>
+
+<a href="https://github.com/Zoltus/TinyMessage/releases" target="_blank" rel="noopener noreferrer">
+  Github Releases
+</a>
+
+Curseforge (coming soon)
+
+## Installation for server owners:
+
+### Download the TinyMessage.jar
+
+Download the latest TinyMessage.jar from the releases page and place it in your server's `mods` folder.
+
+## Installation for developers:
+
+### manifest.json
+
+```json
+"Dependencies": {
+  "Zoltus:TinyMessage": "*"
+},
+```
+
+### For Gradle
+
+```kotlin
+repositories {
+    maven { url = uri("https://jitpack.io") }
+}
+
+dependencies {
+    compileOnly("com.github.Zoltus:TinyMessage:2.0.1") // Use newest version in the repo
+}
+```
+
+### For Maven
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependency>
+    <groupId>com.github.Zoltus</groupId>
+    <artifactId>TinyMessage</artifactId>
+    <version>2.0.1</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+---
+
+### API Reference
+
+#### `TinyMsg.parse(String text)`
+
+Parses a string with TinyMsg tags and returns a `Message` object.
+
+**Parameters:**
+
+- `text` - The string to parse
+
+**Returns:**
+
+- `Message` - A Hytale `Message` object ready to be sent to players
+
+### Supported Tags
+
+| Tag                | Aliases               | Example                                 | Description                    |
+| ------------------ | --------------------- | --------------------------------------- | ------------------------------ |
+| `<color:X>`        | `<c:X>`, `<colour:X>` | `<color:red>text</color>`               | Sets text color (named or hex) |
+| `<gradient:X:Y:Z>` | `<grnt:X:Y:Z>`        | `<gradient:red:blue>text</gradient>`    | Creates a color gradient       |
+| `<bold>`           | `<b>`                 | `<b>text</b>`                           | Makes text bold                |
+| `<italic>`         | `<i>`, `<em>`         | `<i>text</i>`                           | Makes text italic              |
+| `<underline>`      | `<u>`                 | `<u>text</u>`                           | Underlines text                |
+| `<monospace>`      | `<mono>`              | `<mono>text</mono>`                     | Uses monospace font            |
+| `<link:URL>`       | `<url:link>`          | `<link:https://google.com>click</link>` | Creates clickable link         |
+| `<reset>`          | `<r>`                 | `<b>bold<reset>normal`                  | Resets all formatting          |
+
+### Named Colors
+
+`black`, `dark_blue`, `dark_green`, `dark_aqua`, `dark_red`, `dark_purple`, `gold`, `gray`, `dark_gray`, `blue`, `green`, `aqua`, `red`, `light_purple`, `yellow`, `white`
+
+### License
+
+TinyMsg is available under the MIT License - feel free to use in your projects!

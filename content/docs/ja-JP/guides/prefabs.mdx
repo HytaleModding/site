@@ -1,92 +1,94 @@
 ---
-title: Prefabs
-description: Documentation about Prefabs in Hytale.
+title: プレハブ
+description: Hytaleのプレハブに関するドキュメント
 icon: Box
 authors:
   - name: Ben Cressman
-    link: https://bencres.dev
+    url: https://bencres.dev
 ---
 
-# Introduction
+# はじめに
 
-Prefabs are Hytale's way of creating reusable structures.
+プレハブ (Prefabs) は Hytale における再利用可能な構造を作成するための方法です。
 
-There are a few fundamental concepts to understand about prefabs:
+プレハブについて理解すべきいくつかの基本的な概念があります。
 
-- Users interact with prefabs via a prefab editing world.
-- Prefabs the physical structures in the game world, and are saved as JSON files.
+- ユーザーは、プレハブ編集ワールドを介してプレハブを操作します。
+- プレハブはゲーム世界における物理的な構造であり、JSON ファイルとして保存されます。
 
-## How to Create a Prefab
+## プレハブの作り方
 
-Be sure to check the Known Issues section at the end of this guide if you encounter any problems.
+問題が発生した場合は、必ずこのガイドの最後にある「既知の問題」セクションを確認してください。
 
-1. `/editprefab new <world name>` to create a new prefab editing world: `/editprefab new my_prefab_world`
-   - Note that `my_prefab` is the name of the _world_, not the prefab itself. Worlds can contain multiple prefabs.
-2. Build whatever you want in the prefab editing world.
-3. Use the selection brush to select the area you want to save as a prefab.
-4. `/prefab save` to save the structure as a prefab.
-5. `/editprefab exit` to exit the prefab editing world.
-6. Using the Paste brush, press 'e' on your keyboard to select the prefab you just created. It will be in the "server" dropdown, which can be selected from the top right of the menu.
-   - You can also select it with `/prefab list` and selecting the prefab you just created.
+1. `/editprefab new <world name>` で新しいプレハブ編集ワールドを作成します: `/editprefab new my_prefab_world`
+   - `my_prefab` はプレハブ自体ではなく _ワールド_ の名前であることに注意してください。 ワールドは複数のプレハブを含めることができます。
+2. プレハブ編集ワールドで好きなものを作ります。
+3. 選択ツール (Selection Tool) を使用して、プレハブとして保存したい領域を選択します。
+4. `/prefab save` で構造をプレハブとして保存します。
+5. `/editprefab exit` でプレハブ編集ワールドを終了します。
+6. 貼り付けツール (Paste Tool) を手に持った状態で、キーボードの 'e' キーを押すとプレハブ一覧が表示されます。 メニューの左上にあるドロップダウン (検索窓の左の"ASSETS"と表示されている場所) から「サーバー (SERVER)」を選択し、その後作成したプレハブを選択します。
+   - `/prefab list` で作成したプレハブを選択することもできます。
 
-There is a lot more that you can do with prefabs; this is just the basic flow. Keep reading for more information.
+プレハブでできることはもっとたくさんあります。これは基本的な流れです。 詳細については続きを読んでください。
 
-## Commands
+## コマンド
 
-There are two main commands for prefabs, `/prefab` and `/editprefab`.
+プレハブでは、主に `/prefab` と `/editprefab` の2つのコマンドを使います。
 
-This list does not cover the various options for each command. You can use the `--help` flag at the end of any command to see the available options, e.g. `/prefab save --help`, or use `/help` in game and find the `prefab` and `editprefab` commands.
+この一覧では、各コマンドの詳細なオプションについては説明しません。 コマンドの最後に `--help` フラグを追加することで利用可能なオプションの一覧を表示できます。 例: `/prefab save --help`\
+また、 `/help` コマンドを使用してコマンドのヘルプ画面を表示し、 `prefab` や `editprefab` の項目から詳細を確認することもできます。
 
-### `/prefab`
+###
 
-This command allows the user to interact with an existing prefab's file.
+このコマンドを使うと、既存のプレハブファイルを操作することができます。
 
-Subcommands:
+サブコマンド:
 
-- `save`
-  - Saves the prefab to the file system.
-- `load`
-  - Loads the prefab into the game.
-- `delete`
-  - Deletes the prefab from the file system.
-- `list`
-  - Lists all prefabs in the file system.
+-
+  - プレハブをファイルシステムに保存します。
+-
+  - プレハブをゲームにロードします。
+-
+  - プレハブをファイルシステムから削除します。
+-
+  - ファイルシステム内のプレハブの一覧を表示します。
 
-### `/editprefab`
+###
 
-The `/editprefab` command is used to create or edit the physical structure in the game the prefab is holding.
+`/editprefab` コマンドは、プレハブが持っているゲーム内の物理的な構造を作成または編集するために使用されます。\
+(訳注: 翻訳時点で、 `/editprefab` コマンドを使うには OP 権限が必要です。シングルプレイの場合、 `/op` コマンドで OP 権限を獲得可能です。)
 
-Subcommands:
+サブコマンド:
 
-- `exit`
-  - Exits the current prefab editing world.
-- `load`
-  - Creates a new prefab editing world to paste an existing prefab into.
-- `new`
-  - Creates a new prefab editing world to create a new prefab from scratch.
-- `select`
-  - Selects the area of the prefab the user is looking at (within 200 blocks).
-- `save`
-  - Saves the current prefab using the existing area, or the currently selected area.
-- `saveui`
-  - Opens the save UI for the current world, allowing the user to interact with all prefabs that are in the world.
-- `kill`
-  - Despawn all entities in the currently selected prefab.
-- `saveas`
-  - Save the selected prefab into a new file.
-- `setbox`
-  - Set the bounding box of the currently selected prefab.
-- `info`
-  - General information about the currently selected prefab.
-- `tp`
-  - Opens the teleport UI to teleport to a prefab in the current editing world.
-- `modified`
-  - Lists all modified prefabs with unsaved changes in the current editing world.
+-
+  - 現在のプレハブ編集ワールドを終了します。
+-
+  - 新しいプレハブ編集ワールドを作成し、そこに既存のプレハブを貼り付けます。
+-
+  - 新しいプレハブを0から作成するために、プレハブ編集ワールドを作成します。
+-
+  - プレイヤーが見ているプレハブ領域を選択します (200ブロック以内) 。
+-
+  - 既存の領域または現在選択している領域を使って現在のプレハブを保存します。
+-
+  - 現在のワールドのセーブUIを開き、ワールド内の全てのプレハブを操作できるようにします。
+-
+  - 現在選択されているプレハブ内のすべてのエンティティをデスポーン (削除) します。
+-
+  - 選択したプレハブを新しいファイルに保存します。
+-
+  - 現在選択されているプレハブのバウンディングボックスを設定します。
+-
+  - 現在選択されているプレハブの一般的な情報を表示します。
+-
+  - 現在の編集ワールド内のプレハブにテレポートするためのテレポートUIを開きます。
+-
+  - 現在の編集ワールド内の、保存されていない変更を含むプレハブの一覧が表示されます。
 
-# Known Issues
+# 既知の問題
 
-- After saving edits to an existing prefab, the prefab does not reflect the changes in the game.
-  - Workaround: exit and re-enter the world.
-- When pasting a prefab, the prefab is not always shown accurately.
-  - Workaround: hit 't' on your keyboard to toggle the material being shown; usually at least one view is accurate.
-- `/prefab delete` errors with `Assert not in thread`.
+- 既存のプレハブへの編集を保存した後、プレハブがゲームに反映されません。
+  - 回避策: ワールドから退出し、再度入り直します。
+- プレハブを貼り付ける場合、プレハブが正しく表示されない場合があります。
+  - 回避策:キーボードの「t」を押すと、表示されるマテリアルを切り替えることができます。通常、少なくとも1つの表示が正確です。
+- `/prefab delete` コマンドが `Assert not in thread.` エラーを出す

@@ -1,0 +1,298 @@
+---
+title: Customizing Hotbar Actions
+description: Step by step breakdown on customizing hotbar functionality.
+authors:
+  - name: Vibe Theory
+    url: https://discord.com/users/145420279294722048
+---
+
+This guide walks you through creating a custom keybind system for Hytale servers. By the end, you'll understand how to intercept player inputs, block default behaviors, and trigger custom abilities - like launching a projectile when pressing a specific key.
+
+## Learn By Doing
+
+In this guide, We're going to turn hotbar slot 8 (the "9" key) into an ability trigger. When pressed:
+
+1. The normal slot-switching behavior is blocked
+2. The player stays on their current slot
+3. Some ideas to get started on what to have it actually do
+
+This same pattern can be adapted for any custom keybind system - dodge rolls, special attacks, spell casting, etc.
+**Critical Note:** This is for the hotbar only. Further guides on other keys available to override are coming, but each system requires a slightly different approach. This does mean you will lose a hotbar slot for every custom action you add.
+
+---
+
+## Part 1: Understanding the Packet System
+
+You can use the [Listening to Packets Guide](./listening-to-packets) to learn about how the packet system works and how to listen. In short, the Client sends the Server packets for any user interactions the server needs to know about. For the sake of this guide, we care about the `SyncInteractionChains` packet.
+
+### The SyncInteractionChains Packet
+
+This packet (ID 290) is the workhorse for player interactions. It contains an array of `SyncInteractionChain` objects, each describing an interaction the player is attempting.
+
+For slot switching, we care about these fields:
+
+- `interactionType` - What kind of interaction (SwapFrom, SwapTo, Attack, etc.)
+- `activeHotbarSlot` - The slot the player is currently on
+- `data.targetSlot` - The slot they want to switch to
+- `initial` - Whether this is the start of a new interaction chain
+
+When switching from slot 5 to slot 9, you'll see:
+
+```
+SwapFrom: activeSlot=5, targetSlot=8, initial=true
+```
+
+Note: Slot index is 0-based, so slot "9" is index 8.
+
+---
+
+## Part 2: Packet Interception
+
+### Watcher vs Filter
+
+Hytale provides two ways to intercept packets via `PacketAdapters`:
+
+| Type        | Interface             | Can Block? | Use Case                                    |
+| ----------- | --------------------- | ---------- | ------------------------------------------- |
+| **Watcher** | `PlayerPacketWatcher` | No         | Logging, analytics, triggering side effects |
+| **Filter**  | `PlayerPacketFilter`  | Yes        | Blocking/modifying behavior                 |
+
+Since we need to **block** the slot switch, we use `PlayerPacketFilter`. This interface has one method - `test()` - which receives every inbound packet. Return `true` to block the packet, `false` to let it through.
+
+### Setting Up the Handler
+
+Your handler class implements the filter interface. You'll need these imports:
+
+```java
+import com.hypixel.hytale.protocol.Packet;
+import com.hypixel.hytale.protocol.InteractionType;
+import com.hypixel.hytale.protocol.packets.interaction.SyncInteractionChain;
+import com.hypixel.hytale.protocol.packets.interaction.SyncInteractionChains;
+import com.hypixel.hytale.server.core.io.adapter.PlayerPacketFilter;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+```
+
+The handler skeleton:
+
+```java
+public class AbilitySlotHandler implements PlayerPacketFilter {
+
+    private static final int ABILITY_SLOT = 8;  // Slot index 8 = Key "9"
+
+    @Override
+    public boolean test(@Nonnull PlayerRef playerRef, @Nonnull Packet packet) {
+        // We'll fill this in next
+        return false;
+    }
+}
+```
+
+### Registration
+
+In your plugin, register the handler in `setup()` and store the returned filter so you can deregister later:
+
+```java
+import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
+import com.hypixel.hytale.server.core.io.adapter.PacketFilter;
+
+// In your plugin class:
+private PacketFilter inboundFilter;
+
+@Override
+protected void setup() {
+    AbilitySlotHandler handler = new AbilitySlotHandler(this);
+    inboundFilter = PacketAdapters.registerInbound(handler);
+}
+
+@Override
+protected void shutdown() {
+    if (inboundFilter != null) {
+        PacketAdapters.deregisterInbound(inboundFilter);
+    }
+}
+```
+
+Great! Now a PlayerPacketFilter is intercepting every inbound packet and letting us choose to block or let them through. Now we need to set up what we're filtering for.
+
+---
+
+## Part 3: Detecting the Ability Trigger
+
+### The test() Method
+
+Inside `test()`, we need to:
+
+1. Check if this is the packet type we care about
+2. Look for our specific trigger condition
+3. Block and handle it, or let it through
+
+```java
+@Override
+public boolean test(@Nonnull PlayerRef playerRef, @Nonnull Packet packet) {
+    // Step 1
+    if (!(packet instanceof SyncInteractionChains syncPacket)) {
+        return false;
+    }
+
+    // Step 2
+    for (SyncInteractionChain chain : syncPacket.updates) {
+        if (chain.interactionType == InteractionType.SwapFrom
+                && chain.data != null
+                && chain.data.targetSlot == ABILITY_SLOT
+                && chain.initial) {
+
+            int originalSlot = chain.activeHotbarSlot;
+            // Trigger ability and fix client state (covered in next sections)
+            handleAbilityTrigger(playerRef, originalSlot);
+            return true;
+        }
+    }
+
+    return false;
+}
+```
+
+**Why these conditions?**
+
+- `SwapFrom` - The client is leaving their current slot
+- `data.targetSlot == 8` - They're trying to go to slot 9
+- `initial == true` - This is a new interaction, not a continuation of an existing one
+
+Okay, now we are filtering for `SyncInteractionChains` packets and detecting when the player tries to switch to our designated ability slot.
+
+---
+
+## Part 4: The Client Desync Problem
+
+### The Challenge
+
+Here's where it gets tricky, because the Client performs this action locally _before_ the server confirms it.
+
+- **Server**: Player stays on slot 5 (we blocked the packet)
+- **Client**: Player is on slot 8 (already switched locally before sending)
+
+The client and server are now **desynced**. The player will appear to be on slot 9 but the server thinks they're on slot 5, so now we need to fix the client state.
+
+### Fixing The Client State: SetActiveSlot Packet
+
+You need to send `SetActiveSlot` (packet 177), which explicitly tells the client which slot to select:
+
+```java
+import com.hypixel.hytale.protocol.packets.inventory.SetActiveSlot;
+import com.hypixel.hytale.server.core.inventory.Inventory;
+
+// Update server-side state
+playerComponent.getInventory().setActiveHotbarSlot((byte) originalSlot);
+
+// Send packet to force client to the correct slot
+SetActiveSlot setActiveSlotPacket = new SetActiveSlot(
+    Inventory.HOTBAR_SECTION_ID,  // -1 indicates the hotbar
+    originalSlot                   // The slot index to select
+);
+playerRef.getPacketHandler().write(setActiveSlotPacket);
+```
+
+This directly tells the client "your selected slot is now X", fixing the desync!
+
+---
+
+## Part 5: Thread Safety: world.execute()
+
+Packet handlers run on network threads, but entity operations must run on the world thread. Use world.execute() to schedule your code in the right place. [See Thread Safety: Using world.execute()](https://forum.hytalemodding.dev/d/21-thread-safety-using-worldexecute) for details.
+
+Schedule your entity operations on the world thread:
+
+```java
+private void handleAbilityTrigger(PlayerRef playerRef, int originalSlot) {
+    Ref<EntityStore> entityRef = playerRef.getReference();
+    if (entityRef == null || !entityRef.isValid()) {
+        return;
+    }
+
+    Store<EntityStore> store = entityRef.getStore();
+    World world = store.getExternalData().getWorld();
+
+    world.execute(() -> {
+        Player playerComponent = store.getComponent(entityRef, Player.getComponentType());
+        if (playerComponent == null) {
+            return;
+        }
+
+        // Your ability logic here
+    });
+}
+```
+
+_Recommendation: read the Thread Safety guide linked above to understand why `world.execute()` is so important (you'll use it often)._
+
+---
+
+## Part 6: Triggering Abilities
+
+Congratulations! You now have a custom keybind you can do basically anything you want with! Here's some starting points:
+
+**Running Commands:** `CommandManager.get().handleCommand(playerRef, "noon")` executes a command as the player. Quick and easy for prototyping.
+
+**More Advanced:** While you could technically just put abilities on commands, some more advanced options like spawning projectiles with `ProjectileModule.get().spawnProjectile()` are a cleaner way to go. This is a bit more involved, such as `TargetUtil.getLook` for player's eye position. As more guides are released this one will be updated to direct you there!
+
+---
+
+## Part 7: Debugging Tips
+
+### Log Everything
+
+When something doesn't work, add logging at each step:
+
+```java
+// Log what packets you're seeing
+plugin.getLogger().at(Level.INFO).log(
+    "[DEBUG] Packet: %s, type=%s, activeSlot=%d, targetSlot=%d",
+    playerRef.getUsername(),
+    chain.interactionType,
+    chain.activeHotbarSlot,
+    chain.data != null ? chain.data.targetSlot : -1
+);
+```
+
+You need this import for logging:
+
+```java
+import java.util.logging.Level;
+```
+
+### Troubleshooting
+
+**Nothing happens when I press the key:**
+
+- Is your packet filter registered? Check for startup logs.
+- Is the packet type correct? Log all packets to see what's actually coming through.
+- Are your conditions matching? Log the chain fields to verify.
+
+**Ability fires but player is stuck on wrong slot:**
+
+- Are you sending `SetActiveSlot` correctly?
+- Verify the code running on the world thread with `world.execute()`.
+
+**Errors about threads or null components:**
+
+- Always check if `entityRef.isValid()` before using it.
+- Always null-check components - players can disconnect mid-operation.
+- Make sure entity operations are inside `world.execute()`.
+
+---
+
+## Going Further
+
+This pattern opens up many possibilities:
+
+- **Multiple ability slots** - Slots 7, 8, 9 as three different abilities
+- **Cooldowns** - Track last use time per player with a Map
+- **Class-based abilities** - Store player class data, trigger different effects
+- **Combo systems** - Track sequences of interactions
+- **Custom projectiles** - Create your own ProjectileConfig assets
+
+## Video Example
+
+<iframe src="https://www.youtube.com/embed/c0rxzyAUGU8" allowFullScreen />
+
+_From Hytale Server build `2026.01.13-dcad8778f`_

@@ -9,7 +9,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, Github, Globe, Twitter } from "lucide-react";
 import { Card, Cards } from "fumadocs-ui/components/card";
-import { CalloutMDX } from "@/components/mdx/CalloutMDX";
+import { Callout } from "@/components/mdx/Callout";
 
 type ProjectFrontmatter = {
   title: string;
@@ -33,7 +33,7 @@ type ProjectFrontmatter = {
 const components = {
   Card,
   Cards,
-  Callout: CalloutMDX,
+  Callout: Callout,
 };
 
 const DiscordIcon = (

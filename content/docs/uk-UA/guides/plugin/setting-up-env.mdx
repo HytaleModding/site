@@ -8,7 +8,7 @@ authors:
 
 This guide will walk you through setting up a complete development environment for Hytale modding, including all necessary tools and dependencies.
 
-## Prerequisites
+## Передумови
 
 Before we begin, make sure you have:
 
@@ -40,6 +40,15 @@ java -version
 brew install openjdk@25
 ```
 
+<Callout type="info">
+  If `java --version` shows "Unable to locate a Java Runtime", add OpenJDK to your PATH:
+
+  ```bash
+  echo 'export PATH="$(brew --prefix)/opt/openjdk@25/bin:$PATH"' >> ~/.zshrc
+  source ~/.zshrc
+  ```
+</Callout>
+
 #### Linux (Ubuntu/Debian)
 
 ```bash
@@ -55,7 +64,9 @@ We recommend IntelliJ IDEA Community Edition for Hytale modding.
 2. Install with default settings
 3. Launch and complete the initial setup wizard
 
-### 3) Maven
+### 3) Java Build Tool
+
+We recommend using Apache Maven for managing dependencies and building your Hytale plugins. (Alternatively you can use Gradle, but this guide focuses on Maven.)
 
 1. Visit the official website: https://maven.apache.org/download.cgi
 2. Download this file: `apache-maven-3.9.12-bin.zip` (Binary zip archive)
@@ -66,19 +77,7 @@ You can now try the command `mvn -version` to verify Maven is installed correctl
 
 ## Setting Up Your Workspace
 
-### 1. Add HytaleServer.jar Dependency
-
-Before you can start modding, you need to add the HytaleServer.jar file as a dependency:
-
-1. **Download HytaleServer.jar** using the [Hytale Downloader](https://support.hytale.com/hc/en-us/articles/45326769420827-Hytale-Server-Manual)
-2. **Add to IntelliJ IDEA**:
-   - Click on **"File"** at the top left
-   - Go to **"Project Structure"**
-   - Go to **"Libraries"**
-   - Click on the **+ icon**
-   - Select the **HytaleServer.jar** you downloaded
-
-### 2) Clone the Plugin Template
+### 1. Clone the Plugin Template
 
 Instead of creating an empty directory, we'll use the official Hytale plugin template:
 
@@ -88,12 +87,18 @@ git clone https://github.com/HytaleModding/plugin-template.git MyFirstMod
 cd MyFirstMod
 ```
 
-### 3. Open in IntelliJ IDEA
+If you don't have Git installed, you can download the ZIP file from the repository page and extract it to a folder named `MyFirstMod`.
+
+### 2. Open Plugin in your IDEA
 
 1. Open IntelliJ IDEA
 2. Click "Open" and navigate to your `MyFirstMod` directory
 3. IntelliJ will automatically detect it as a Maven project
 4. Wait for the project to index and dependencies to download
+
+<Callout type="info">
+  We recommened following [this](https://gist.github.com/TheNullicorn/90a619796c40f20ae1fcf13094c1a57d) guide to ensure you are using the correct `Nonnull` in your projects.
+</Callout>
 
 ## Next Steps
 
@@ -103,9 +108,10 @@ Now that you have your development environment set up with the plugin template:
 2. **Explore the code structure** - Familiarize yourself with the template's organization
 3. **Start modding** - Begin writing your first Hytale plugin!
 
-The plugin template includes:
+Learn how to:
 
-- Pre-configured Gradle build system
-- Example plugin structure
-- Essential dependencies
-- Development tools configuration
+- [Build and Test Your Mod](./build-and-test)
+- [Create Commands](./creating-commands)
+- [Create Events](./creating-events)
+
+and more! Explore the documentation to learn about all available features and best practices.

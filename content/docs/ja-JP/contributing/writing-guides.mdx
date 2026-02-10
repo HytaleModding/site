@@ -1,22 +1,22 @@
 ---
-title: Writing Guides
+title: 執筆ガイド
 ---
 
-## Creating a guide file
+## ガイドファイルの作成
 
-To start writing a guide, you need to create a file with extension `.mdx`. You need to create this file inside the `/content/docs/en` directory, now it depends in which section you want to make the guide, so you can decide which folder you should put it in after that.
+ガイドの作成を始めるには、.mdx拡張子のファイルを作成し、 content/docs/enディレクトリ内に配置してください。どの記事にガイドを作成するかによって、フォルダの配置が決まってます。
 
-Suppose I want to make a java basics guide, I'd put it in `/content/docs/en/guides/java-basics`. You'll have to do some digging to find out where you want to place it.
+もしJavaの基本的なガイドを作りたいなら、content/docs/en/guides/java-basicsに配置します。 既存のフォルダ構成から適切な場所を判断してください。
 
 <Callout>
-  If there's already a guide in the section you want to write about, you can just press on the "Edit On GitHub" button on our website and it'll take you to the folder, now you can write in the same folder to have your guide appear in the same section.
+  すでに同じ記事がある場合、サイトの「Edit On GitHub」ボタンを押すと該当フォルダに直接移動し、編集することができます。
 </Callout>
 
 ## Frontmatter
 
-Frontmatter is the metadata of your guide, it tells our website how to display your guide. This needs to be at the very top of the file, which starts with `---` and ends with `---`.
+Frontmatter はガイドのメタデータで、Webサイトにガイドをどう表示するかを指示します。 これはファイルの一番上、'---'で挟まれている部分に記述する必要があります。
 
-Here's an example:
+例
 
 ```mdx
 ---
@@ -28,36 +28,36 @@ authors:
 ---
 ```
 
-Now as you can see, it's pretty self explanatory, you just need to fill in the details for your specific guide. If you don't have a URL you want to link yourself to, just don't write that whole line. Additionally, the authors section is optional, so if you don't want to add it, you can just leave it out although we encourage you to do so and credit yourself.
+ご覧の通りガイドの詳細を記述するだけでOKです。 リンクしたいURLが無い場合は、その行を削除してください。 authors（著者）の記載は任意ですが、明記することを推奨しています。
 
-The indentation in the frontmatter is important, so make sure to keep it consistent with the example.
+Frontmatter の文法は例と同じフォーマットで揃えてください。
 
-## Content Structure
+## コンテンツ構造
 
-You should structure the content of your guide in a clear and organized manner. Here are some tips on how to do that:
+ガイドの中身は、読み手が理解しやすいように整った構造にしてください。 そのためのヒントをいくつか紹介します。
 
-- **Introduction:** Start with an overview of the topic and what the reader can expect to learn.
-- **Prerequisites:** List any prerequisites or prior knowledge the reader should have before diving into the guide.
-- **Step-by-Step Instructions:** Break down the content into clear, actionable steps. Use headings and subheadings to organize the information.
-- **Code Examples:** Include code snippets to illustrate key points. Make sure to explain each example thoroughly.
-- **Conclusion:** Summarize the main points and encourage the reader to explore further or try out what they've learned.
+- **導入**：トピックの概要と読み手が何を学べるかを説明しましょう。
+- **前提条件**：ガイドを読み進める前に必要な環境や事前知識をリストアップしましょう。
+- **段階的な指示**：ガイドの内容を複数の手順として小分けにしましょう。 見出しと小見出しを使用して情報を整理します。
+- **コード例**：重要なポイントを示すコードスニペットを入れてください。 それぞれの例を使用して、詳細に説明をするようにしましょう。
+- **結論**：要点をまとめ、読み手の学習意欲を出させるようにしましょう。
 
-Now if you're writing a really big section, you should split this into multiple pages so that it's easier for the reader to digest the information. No one wants to read a big wall of text all at once!
+記事が大きくなりそうな場合は、複数のページに分けることで読み手も理解しやすくなります。 誰も、文字の塊のような長文を一気に読みたいとは思いません。
 
-When we write guides, we should also think of how people will consume them, and many people prefer to skim content rather than read it in detail. This is why it's better to split information into multiple pages, so it looks like a smaller amount of information to the reader. Also, consider using bullet points, numbered lists, and other formatting techniques to make the content more scannable.
+ガイドを作成する際には、読み手がどのように利用するかを考慮する必要があります。多くの人は、内容を詳細に読むよりも、流し読みをしています。 そのため、情報を複数のページに分割し、読み手にとって情報がシンプルなように見せる方が効果的です。 また、箇条書き、番号付きリスト、その他の書式設定の手法を活用して、読みやすくすることも考えてみてください。
 
-## Formatting
+## 書式設定
 
-We use [Markdown](https://www.markdownguide.org/) for formatting our guides. Here are some key points to keep in mind:
+ガイドの書式設定には[Markdown](https://www.markdownguide.org/)を使用しています。 以下に留意すべきポイントをいくつか紹介します。
 
-- Use headings (`#`, `##`, `###`) to organize your content.
-- Use bullet points and numbered lists for clarity.
-- Use code blocks (\`\`\`) for code snippets.
-- Use links to reference other guides or external resources.
+- 見出し (`#`, `##`, `###`) を使用して内容を整理できます。
+- 箇条書きと番号付きリストを使用するとわかりやすくなります。
+- コードスニペットにはコードブロック (\`\`\`) を使用できます。
+- リンクを添付して、他のガイドや外部リソースを参照できます。
 
-This is the same type of formatting you'll see on most documentation websites, and also social media platforms like Discord.
+これらは、ほとんどのドキュメントサイトや、Discord などのSNSプラットフォームでよく使われる書式です。
 
-You can also make a Callout to highlight important information or tips. Use the following syntax:
+重要な情報やヒントを強調するために、吹き出しを作成することもできます。 以下の構文を使用してください。
 
 ```mdx
 <Callout>
@@ -66,10 +66,10 @@ You can also make a Callout to highlight important information or tips. Use the 
 ```
 
 <Callout>
-  This is a callout message.
+  これは吹き出しのメッセージです。
 </Callout>
 
-You can change the color of the callout by adding a `type` attribute. For example:
+属性`type`を追加することで、吹き出しの色を変更できます 例
 
 ```mdx
 <Callout type="info">
@@ -77,10 +77,10 @@ You can change the color of the callout by adding a `type` attribute. For exampl
 </Callout>
 ```
 
-Available types are: `info`, `warning`, `error`, and `success`.
+利用可能なtypeは次のとおりです。`info` `warning` `error`  `success`
 
-## Conclusion
+## 終わりに
 
-That's all! You are now a master at writing guides. Just remember, do not think you need to be perfect with your English, write the guide the way you will explain the topic to someone, and don't hesitate to ask for feedback or help if you need it.
+これで完了です！ あなたはすでにガイド作成のプロです。 完璧な英語である必要はありません。誰かに説明するようなイメージでガイドを書いてください。必要であればフェードバックや助けを求めることもできます。
 
-Happy writing!
+楽しい執筆ライフを！

@@ -1,0 +1,171 @@
+---
+title: Arcio
+description: "Unique and intuitive mana driven automation - that just works like magic 🧙"
+github: "https://github.com/Void-Bond/arcio"
+twitter: "https://x.com/ArcioHytale"
+discord: "https://discord.void.bond"
+banner: "/projects/arcio/logo.png"
+author:
+  name: "kelpy"
+  avatar: "/avatars/kelpy.png"
+  bio: "Developer of Arcio"
+  github: "https://github.com/KelpyCode"
+---
+
+<Callout>
+  This is a community-maintained project started by
+  [VOID.BOND](https://discord.void.bond) <small>(Team behind Arcio)</small>.
+</Callout>
+
+## Links
+
+- [Official Arcio Docs | arcio.void.bond ](https://arcio.void.bond)
+- [Discord | discord.void.bond](https://discord.void.bond)
+- [𝕏 @ArcioHytale](https://x.com/ArcioHytale)
+
+<div className="flex justify-center">
+  <img
+    src="/projects/arcio/shard_catalyst.png"
+    alt="Shard Catalyst"
+    className="max-w-75"
+  />
+</div>
+
+## Introduction
+
+**Arcio** is a mana-driven automation mod for Hytale-designed to feel approachable, visually obvious, and powerful at scale. Imagine wiring glowing mana threads through a factory: everything is visible, directional, and behaves predictably.
+
+- **Accessible by design:** Clear tools and visible connections let new players create meaningful automation quickly.
+- **Deep and performant:** The systems scale to large builds and enable advanced users to craft compact CPUs and optimised transport networks.
+
+**How it works - at a glance**
+
+- Use **Sigil Matrix** gates to build deterministic binary logic (AND / OR / NOT / XOR and friends).
+- Route directional **Manathreads** with the Needle Tool and organize flows with Arc Relays.
+
+## Why Arcio?
+
+- Thematically fitting to Hytale's magical world: _Magic is all around already_, we just give you the tools to harness it.
+- It _"just works like magic"_: the systems are intentionally opinionated so common patterns are simple to build.
+- Thriving with _personality_: visible connections and clear tools make it easy to understand and debug builds.
+- Connecting components is as simple as **pointing and clicking**, no need to make space for bulky lanes or pipes.
+- _Easy to learn, easy to master_: beginners can create functional builds quickly, while advanced users can optimize and scale.
+
+<div className="flex justify-center">
+  <img
+    src="/projects/arcio/showcase_01.png"
+    alt="Shard Catalyst"
+    className="w-full"
+  />
+</div>
+_Simple circuit with a negated switch input connected to an Etherlamp. (Ingame
+screenshot)_
+
+## MVP Features
+
+- **Binary Logic & Sigils:** Named, optimised logic gates so you can build complex CPUs without friction.
+- **Manathreads & Wiring Tools:** Visible, directional wiring + the Needle Tool for neat, traceable layouts.
+- **Compact Design:** Build dense systems - connections float as magical threads, not bulky pipes.
+
+## Planned features
+
+- **Leylight Transport:** A scalable, mana-costed item network (Arc Funnels, Chromatic Emitters, Focal Arrays, Arc Depots).
+- **Circuit Boards:** Nestable, placeable circuits with export/import and share codes for the community.
+- **Modder API:** Hooks for other mod authors to extend Arcio's mana and logic primitives.
+- **Open Source plans post launch**
+- (and more secret stuff 🧙)
+
+## Meet our team
+
+<div className="mb-5 flex flex-col items-center text-3xl">
+  <div>VOID.BOND</div>
+</div>
+
+<div className="flex flex-wrap flex-row gap-3">
+
+{[
+{
+name: 'kelpy',
+role: 'Developer',
+img: '/avatars/kelpy.png',
+quote: "What one developer can do in one day, two developers can do in two.",
+links: [
+{ href: 'https://github.com/KelpyCode', label: 'GitHub' },
+{ href: 'mailto:itskelpy@proton.me', label: 'Email' },
+],
+},
+{
+name: 'Herond',
+role: 'Developer',
+img: '/avatars/Herond.png',
+links: [
+{ href: 'https://x.com/devherond', label: 'Twitter' },
+{ href: 'https://github.com/gmherond', label: 'GitHub' },
+],
+quote: "Life before death, strength before weakness, journey before destination."
+},
+{
+name: 'Sky',
+role: 'Developer',
+img: '/avatars/Sky.png',
+links: [{ href: 'https://github.com/skydev125', label: 'GitHub' }],
+quote: "Ship it like you mean it, or your code will be mean to you :v"
+},
+{
+name: 'Frogballoon',
+role: 'Artist',
+img: '/avatars/frogballoon.webp',
+links: [{ href: 'https://www.youtube.com/@frogballoon', label: 'YouTube' }],
+},
+].map((m, i) => (
+
+  <div
+    key={m.name}
+    className="bg-fd-card border-fd-border flex min-w-100 flex-1 flex-col  gap-4 rounded-lg border px-4 align-middle"
+  >
+    <div className={i % 2 === 0 ? 'flex-row items-center w-full flex flex-1' : 'flex-row-reverse items-center w-full flex flex-1'}>
+      <div className="min-w-40">
+        <img
+          src={m.img}
+          className='h-32 rounded-3xl'
+          alt={m.name}
+        />
+      </div>
+
+      <div className="">
+        <div className="min-w-40 text-2xl">{m.name}</div>
+        <div className="m-0 opacity-60">{m.role}</div>
+        <div className="m-0 mt-4 flex items-center gap-2 text-xs opacity-60">
+          {m.links.map((link) => (
+            <a key={link.href} href={link.href} target="_blank">
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div>
+      {m.quote && <blockquote className="italic opacity-70 -mt-6">"{m.quote}"</blockquote>}
+    </div>
+
+  </div>
+))}
+
+</div>
+
+<div className="mt-3">
+  <Cards>
+    <Card
+      icon="💬"
+      title="Join the Discord"
+      description="Best way to keep up to date with development and chat with the team."
+      href="https://discord.void.bond"
+    />
+    <Card
+      icon="🧙"
+      title="Official Arcio Docs"
+      description="Comprehensive documentation for Arcio."
+      href="https://arcio.void.bond"
+    />
+  </Cards>
+</div>

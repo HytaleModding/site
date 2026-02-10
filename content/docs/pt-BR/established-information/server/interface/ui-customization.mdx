@@ -1,28 +1,28 @@
 ---
-title: Personalização da IU
-description: Informações sobre a personalização da IU no Hytale.
+title: Personalização da interface
+description: Informações sobre a personalização da interface no Hytale.
 ---
 
 A interface do usuário pode ser personalizada por mods feitos diretamente no **lado do servidor**. Grande parte das telas da interface do usuário, mostradas aos jogadores, podem ser modificadas pelos donos de servidores através de mods.
 
-## Personalização da IU no Hytale
+## Personalização da interface no Hytale
 
-O Hytale oferece extensas capacidades de personalização da interface do usuário através de mods gerenciados pelo servidor, permitindo que os donos de servidores modifiquem muitas das páginas da IU com as quais os jogadores interagem.
+O Hytale oferece extensas capacidades de personalização da interface através de mods gerenciados pelo servidor, permitindo que os donos de servidores modifiquem muitas das páginas da interface com as quais os jogadores interagem.
 
 ### Controle de fluxo
 
-O sistema de IU do Hytale adota um padrão de fluxo de controle específico:
+O sistema de interface do Hytale adota um padrão de fluxo de controle específico:
 
-1. O servidor envia os dados da IU para o cliente
-2. O cliente renderiza a IU
-3. O usuário interage com a IU (p. ex.: pressionando um botão)
-4. O cliente envia o evento de interação para o servidor
-5. O servidor executa a lógica de retorno de chamada para o evento
+1. O servidor envia os dados da interface para o cliente;
+2. O client renderiza a interface;
+3. O usuário interage com a interface (p. ex.: pressionando um botão);
+4. O client envia o evento de interação para o servidor;
+5. O servidor executa a lógica de retorno de chamada para o evento.
 
 Essa arquitetura significa:
 
-* O cliente é responsável por renderizar a IU e enviar as interações do usuário para o servidor
-* O servidor lida com toda a lógica real por trás das interações do usuário
+* O cliente é responsável por renderizar a interface e enviar as interações do usuário para o servidor;
+* O servidor lida com toda a lógica real por trás das interações do usuário.
 
 <Callout type="warning" title="Possíveis implicações no desempenho">
   <span>
@@ -30,29 +30,29 @@ Essa arquitetura significa:
   </span>
 
   <span>
-    Additionally, since client-side modding is not supported, no modded values
-    persist on the client.
+    Além disso, uma vez que a modificação em client-side não é suportada. Por isso, nenhum valor modificado
+    fica no client.
   </span>
 </Callout>
 
-### UI Layout Assets
+### Recursos de modelo da interface
 
-Hytale's UI customization system works through the following structure:
+O sistema de personalização da interface do Hytale funciona através da seguinte estrutura:
 
-* **UI Layout**: Sent to the client as an asset
-* **UI Behavior**: Defined in Java code
-* **Custom Layouts**: Enables creation of bespoke UI layouts rather than repurposing existing ones (unlike inventory menu modifications in Minecraft)
+* **Modelo da interface**: enviado ao client como um recurso;
+* **Comportamento da interface**: definido no código Java;
+* **Modelos personalizados**: permite a criação de modelos de interface sob medida ao invés de reaproveitar os existentes (como modificações no menu do Minecraft).
 
-### UI Framework Implementations
+### Implementações do framework para a interface
 
-Hytale currently supports multiple UI implementations, with plans to consolidate on NoesisGUI:
+Atualmente, o Hytale é compatível com várias implementações de interface, com planos para consolidar no NoesisGUI:
 
 #### Implementação legado
 
-* Serves as an example of server modding capabilities
-* Uses a combination of in-game elements, UI Markup Assets, and Java mod code
-* Utilizes a legacy custom markup language
-* Will be deprecated in favor of NoesisGUI
+* Serve como um exemplo das capacidades de modificação do servidor;
+* Usa uma combinação de elementos do jogo, recursos de marcação de interface e código de mod em Java;
+* Utiliza uma linguagem de marcação personalizada legado;
+* Será descontinuado a favor do NoesisGUI.
 
 #### NoesisGUI (framework principal)
 
@@ -71,7 +71,7 @@ Hytale currently supports multiple UI implementations, with plans to consolidate
 Devido à natureza do processamento server-side da IU, há características de desempenho que devem ser consideradas, como:
 
 * **Impacto na latência**: os cliques dos botões e interações com a interface do usuário devem viajar para o servidor antes de ter efeito. Isso significa que a latência da rede afeta diretamente a capacidade de resposta da IU;
-* **No Client Persistence**: Since client-side modding is not supported, no modded values persist on the client
-* **Optimized Architecture**: Hytale's system is designed to minimize latency through efficient communication protocols and optimized server performance, ensuring smooth interactions despite server-side processing requirements
+* **Sem persistência no client**: como as modificações em client-side não são permitidas, então nenhum valor modificado permanece salvo no client;
+* **Arquitetura otimizada**: o sistema do Hytale foi projetado para minimizar a latência por meio de protocolos de comunicação eficientes e desempenho de servidor otimizado, garantindo interações fluidas, apesar dos requisitos de processamento em server-side.
 
-The architecture prioritizes security and consistency by centralizing UI logic on the server while maintaining responsive user experiences
+A arquitetura prioriza a segurança e a consistência ao centralizar a lógica da interface no servidor mantendo experiências responsivas do usuário.

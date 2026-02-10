@@ -58,8 +58,8 @@ Create `Server/Item/Items/my_new_item.json`:
   },
    "Id": "My_New_Item",
   "Icon": "Icons/ItemsGenerated/my_new_item_icon.png",
-  "Model": "Resources/my_new_item/model.blockymodel",
-  "Texture": "Resources/my_new_item/model_texture.png",
+  "Model": "Items/my_new_item/model.blockymodel",
+  "Texture": "Items/my_new_item/model_texture.png",
   "Quality": "Common",
   "MaxStack": 1,
   "Categories": [
@@ -122,6 +122,10 @@ public class MyCustomInteraction extends SimpleInstantInteraction {
 ```
 
 What is missing is a custom CODEC to link the interaction to the item.
+<Callout type="info">
+Each variable you want to store in your component must have its own Codec field defined in the BuilderCodec.
+For more information on how to create custom Codecs, check out the [ECS Codec Guide](../ecs/hytale-ecs-theory#codec).
+</Callout>
 
 ```java
 public class MyCustomInteraction extends SimpleInstantInteraction {

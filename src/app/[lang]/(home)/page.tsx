@@ -305,10 +305,10 @@ export default function HomePage() {
       </div> */}
 
       <div className="container mx-auto flex flex-1 flex-col items-center justify-center px-4 py-8 md:px-12">
-        <div className="max-w-5xl space-y-8 pt-16 text-center md:pt-0">
+        <div className="w-full max-w-5xl space-y-8 pt-16 text-center md:pt-0">
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
-              <div className="relative mx-auto w-lg">
+              <div className="relative mx-auto w-fit max-w-full">
                 <GlowEffect
                   colors={["#FF5733", "#33FF57", "#3357FF", "#F1C40F"]}
                   mode="flowHorizontal"
@@ -316,16 +316,15 @@ export default function HomePage() {
                   duration={3}
                   scale={0.9}
                 />
-                <Button
-                  className="bg-background hover:bg-background/85 relative w-115"
-                  variant={"secondary"}
-                  asChild
-                >
-                  <Link href={"https://hytalemodjam.com"}>
-                    We&apos;re hosting the first Hytale Modjam with 4,000$ in
-                    prizes! <ArrowRightIcon className="h4 w-4" />
+                <div className="bg-background hover:bg-background/85 relative mx-4 rounded-lg p-2 text-sm font-medium shadow-md transition-colors duration-200 ease-in-out">
+                  <Link
+                    href={"https://hytalemodjam.com"}
+                    className="flex items-center justify-center gap-2 text-wrap"
+                  >
+                    We hosted the first Hytale Modjam with $5,000 in prizes!{" "}
+                    <ArrowRightIcon className="h4 w-4" />
                   </Link>
-                </Button>
+                </div>
               </div>
               <h1 className="text-4xl font-semibold text-balance md:text-5xl">
                 <div>{messages.home.title.split("{flipwords}")[0]}</div>

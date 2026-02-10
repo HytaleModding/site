@@ -1,125 +1,125 @@
 ---
-title: Developer Q&A Technical Insights
-description: Comprehensive summary of technical insights from Hytale developers covering architecture, modding, gameplay systems, and development philosophy.
+title: Perguntas e respostas técnicas de desenvolvedor
+description: Compilado técnico detalhado dos desenvolvedores do Hytale sobre arquitetura, criação de mods, sistemas do jogo e a filosofia de desenvolvimento.
 ---
 
-# Developer Q&A Technical Insights
+# Introdução
 
-This extensive Q&A session with Hytale developers reveals critical technical details about the game's architecture, modding philosophy, gameplay systems, and development approach.
+Esta extensa sessão de perguntas e respostas com os desenvolvedores do Hytale revela detalhes técnicos críticos sobre a arquitetura do jogo, filosofia da criação de mods, sistemas de jogabilidade e abordagem de desenvolvimento.
 
-## Technical Architecture
+## Arquitetura técnica
 
-### Network & Infrastructure
+### Rede e infraestrutura
 
-* **Protocol**: Uses QUIC (reliable UDP with unreliable channels) instead of TCP
-* **Server Compatibility**: Runs on any platform supporting Java 25
-* **Connection Method**: Direct IP initially, server discovery planned post-launch
-* **Data Layer**: Current custom serialization format will be replaced post-launch
-* **Performance**: Multi-core support - each world has main thread + parallel execution
-* **Rendering**: OpenGL 3.3 for Mac compatibility, potential future Vulkan/Metal migration
-* **Tick Model**: Base server tick rate is 30 TPS by default; can be changed using server plugins.
+* **Protocolo**: usa QUIC (UDP confiável com canais não confiáveis) em vez de TCP;
+* **Compatibilidade de servidor**: funciona em qualquer plataforma que suporte Java 25;
+* **Método de conexão**: inicialmente por IP direto. A listagem de servidores será planejada após o lançamento;
+* **Camada de dados**: o formato de serialização personalizada atual será substituído pós-lançamento;
+* **Desempenho**: suporte a múltiplos núcleos, e cada mundo tem um thread principal + execução paralela;
+* **Renderização**: OpenGL 3.3 para compatibilidade com Mac, potencial migração para Vulkan/Metal;
+* **Modelo de tick**: a taxa de atualização base do servidor é de 30 TPS por padrão. e pode ser alterada através de plugins de servidor.
 
-### Security & Distribution
+### Segurança e distribuição
 
-* **No Client-Side Code Execution**: Prevents remote code execution exploits
-* **Downloads Limited To**: Configuration files and assets only
-* **Mod Distribution**: Community platforms (CurseForge, Modrinth), no immediate in-game marketplace
-* **Server Hosting**: Available day 1, no business agreements required (just EULA/TOS)
+* **Sem execução de código no client**: previne exploits de execução de código remoto;
+* **Restrição de downloads**: apenas arquivos de configuração e de recursos;
+* **Distribuição de mods**: plataformas comunitárias, como CurseForge e Modrinth, sem marketplace interno imediato;
+* **Hospedagem de servidor**: disponível no dia 1 e não requer acordos de negócios (apenas EULA/TOS).
 
-## Modding Capabilities
+## Capacidades da criação de mods
 
-### Server-Side Power
+### Poder do server-side
 
-* **Full Java Access**: Database connections, web requests, any Java functionality
-* **Custom Libraries**: Can create Lua scripting, ML frameworks, or any Java library
-* **Server Modification**: Shared source code allows heavy server modifications
-* **Hot Reload**: Supported for most asset types
-* **Documentation**: Public GitBook planned, though initially sparse
+* **Acesso completo ao Java**: conexões de banco de dados, solicitações web e qualquer funcionalidade Java;
+* **Bibliotecas personalizadas**: pode criar scripts em Lua, frameworks de machine learning ou qualquer biblioteca do Java;
+* **Modificação no servidor**: o código-fonte compartilhado permite modificações pesadas nos servidores;
+* **Recarregamento imediato**: compatível com a maioria dos tipos de recursos;
+* **Documentação**:  GitBook público planejado, embora inicialmente seja escasso.
 
-### Content Creation (No Code Required)
+### Criação de conteúdo (não requer código)
 
-* **World Generation**: Custom biomes and maps without Java
-* **NPCs & Items**: JSON-based configuration
-* **Crafting Recipes**: Data-driven system
-* **Visual Scripting**: Replaces command blocks, fully sandboxed
-* **Prefab System**: Sophisticated building blocks with in-game editor
+* **Geração de mundo**: biomas e mapas personalizados sem Java;
+* **NPCs e itens**: configuração baseada em JSON;
+* **Receitas p/ fabricação**: sistema baseado em dados;
+* **Programação visual**: substitui os blocos de comando, totalmente em sandbox;
+* **Sistema de prefab**: blocos de construção sofisticados com editor dentro do jogo.
 
-### Advanced Modding
+### Criação de mods avançada
 
-* **Combat System**: Data-driven interaction system for attack chains and abilities
-* **Sub-Hitboxes**: Support for complex boss mechanics (needs improvement)
-* **Status Effects**: Buff/debuff system with custom effects and stats
-* **Custom UI**: NoesisGUI transition enables powerful interface customization
-* **Block Physics**: Selective system (trees fall, but placed blocks don't)
+* **Sistema de combate**: sistema de interação baseado em dados para ataque e habilidades em sequências;
+* **Caixas de colisão internas**: suporte para mecânicas de chefes complexas (precisa ser melhorado);
+* **Efeitos de status**: sistema de buff e debuff com efeitos e estatísticas personalizadas;
+* **Interface personalizada**: a transição para o NoesisGUI possibilita uma poderosa personalização da interface;
+* **Física dos blocos**: sistema seletivo (árvores caem, mas blocos colocados não).
 
-## Gameplay Systems
+## Sistemas de jogabilidade
 
-### Core Mechanics
+### Principais mecânicas
 
-* **Stamina System**: No hunger by default (can be modded in)
-* **Gravity**: Selective block physics - trees collapse, buildings can float
-* **Lighting**: Major overhaul to fix model/voxel inconsistencies
-* **World Height**: Currently limited, may change with voxel storage updates
-* **Automation**: No redstone equivalent at launch (moddable)
+* **Sistema de estâmina**: sem fome por padrão (pode ser feito por mods);
+* **Gravidade**: física de blocos seletiva — árvores caem, construções podem flutuar;
+* **Iluminação**: grande revisão para corrigir inconsistências de modelo/voxel;
+* **Altura do mundo**: atualmente limitada e pode mudar com atualizações de armazenamento voxel;
+* **Automação**: sem algo equivalente a redstone no lançamento (pode ser feito por mods).
 
-### Player Systems
+### Sistemas de jogador
 
-* **Character Models**: Humans by default, changeable in creative mode
-* **Multiplayer Avatars**: Server-controlled (no custom models in multiplayer)
-* **Skins**: Full customization possible ("mod yourself into a potato")
-* **Shapeshifting**: Transformation potions exist for fun/modding
+* **Modelos de personagem**: humanos por padrão, alteráveis no modo criativo;
+* **Avatares multijogadores**: controlado pelo servidor (nenhum modelo personalizado no modo multijogador);
+* **Skins**: possibilidade de personalização completa ("modifique você mesmo em uma batata");
+* **Metamorfose**: poções de transformação existem para diversão/mods.
 
-### World & NPCs
+### Mundo e NPCs
 
-* **Faction System**: Living world with dynamic NPC interactions
-* **Village Systems**: Planned dynamic villages with relationships and behaviors
-* **Chunk Loading**: Entities unload when out of all players' render distance
-* **Seeds**: Shareable world generation seeds supported
+* **Sistema de facção**: mundo vivo com interações dinâmicas entre os NPCs;
+* **Sistemas de vilas**: vilas dinâmicas planejadas com relacionamentos e comportamentos;
+* **Carregamento de chunk**: entidades descarregam quando estão fora da distância de renderização de todos os jogadores;
+* **Sementes**: suporte a sementes de geração de mundo compartilháveis.
 
-## Development Philosophy
+## Filosofia de desenvolvimento
 
-### Release Strategy
+### Estratégia de lançamento
 
-* **Base Game Priority**: Adventure mode is primary focus, modding architecture supports it
-* **Tech Debt**: Acknowledged as necessary for release, commitment to improvement
-* **Update Frequency**: Very frequent updates planned, especially post-launch
-* **Version Policy**: Always latest version, but servers can run modified versions
+* **Prioridade básica do jogo**: o modo aventura é o foco principal, a arquitetura de criação de mods é compatível com ele;
+* **Dívida técnica**: reconhecida como necessária para o lançamento, com compromisso de melhoria;
+* **Frequência de atualização**: atualizações frequentemente planejadas, especialmente após o lançamento;
+* **Política de versão**: sempre a versão mais recente, mas os servidores podem executar versões modificadas.
 
-### Community Focus
+### Foco na comunidade
 
-* **Creator Support**: Development bounties planned for community contributors
-* **Tutorials**: Official modding tutorials planned with partners
-* **Feedback Integration**: Strong commitment to community-driven improvements
-* **Accessibility**: Designed for lower-end hardware, reasonable system requirements
+* **Suporte ao criador**: recompensas de desenvolvimento planejadas para colaboradores da comunidade;
+* **Tutoriais**: tutoriais oficiais de criação de mods planejados com parceiros;
+* **Integração de feedback**: forte compromisso com melhorias conduzidas pela comunidade;
+* **Acessibilidade**: desenvolvido para equipamentos mais baratos, requisitos de sistema razoáveis.
 
-### Tools & Documentation
+### Ferramentas e documentação
 
-* **Blockbench Integration**: Replaces custom "Hytale Model Maker"
-* **Machinima Tools**: Full cinematic creation capabilities
-* **Creative Tools**: Major reveal planned for building/creation features
-* **Source Access**: Server code will be unobfuscated with developer comments
+* **Integração com o Blockbench**: substitui um "criador de modelos de Hytale" personalizado;
+* **Ferramentas de Machinima**: recursos completos de criação cinemática;
+* **Ferramentas criativas**: grande revelação dos recursos de construção/criação;
+* **Acesso ao código-fonte**: o código do servidor não será ofuscado com comentários do desenvolvedor.
 
-## Platform Support
+## Plataforma(s) compatível(is)
 
-* **Current**: Windows (primary)
-* **Planned**: Mac/Linux support actively in development
-* **VR**: Not feasible in near future
-* **Performance**: Uncapped framerate, designed for accessibility
-* **Offline Play**: Single-player works without internet connection
+* **Atual**: Windows (principal);
+* **Planejado**: suporte para Mac/Linux em constante desenvolvimento;
+* **VR**: é inviável em um futuro próximo;
+* **Desempenho**: taxa de quadros ilimitada, projetada para acessibilidade;
+* **Jogar off-line**: o modo um jogador funciona sem conexão com a internet.
 
-## Monetization & Legal
+## Monetização e jurídico
 
-* **No Pay-to-Win**: Firm commitment against P2W mechanics
-* **Cosmetics Only**: Low-price cosmetic packs to support infrastructure
-* **Server EULA**: Terms being finalized for server monetization policies
-* **QUIC Blocking**: Acknowledged issue in some regions, no alternative protocol
+* **Sem pay-to-win**: compromisso firme contra a mecânica P2W;
+* **Apenas cosméticos**: os pacotes de cosméticos com baixo preço oferecem suporte à infraestrutura;
+* **EULA do servidor**: termos sendo finalizados para as políticas de monetização do servidor;
+* **Bloqueio QUIC**: problema reconhecido em algumas regiões, sem protocolo alternativo.
 
-## Current Limitations
+## Limitações
 
-* **Custom Shaders**: Not supported until sandboxing solution found
-* **UI/Input Limitations**: Being expanded but currently restricted
-* **Documentation**: Sparse initially, will improve over time
-* **Client Mods**: No client-side code execution for security
-* **Nameplates**: Currently limited customization
+* **Sombreadores personalizados**: não há suporte até que uma solução do sandbox seja encontrada;
+* **Limitações de entrada/interface**: ainda em expansão, mas atualmente restrito;
+* **Documentação**: inicialmente escassa, mas será aprimorada com o tempo;
+* **Modificações do client**: nenhuma execução de código em client-side para segurança;
+* **Nameplates**: personalização atualmente limitada.
 
-This comprehensive technical foundation positions Hytale as a secure, extensible platform that empowers creators while maintaining performance, accessibility, and a commitment to continuous improvement.
+Esta base técnica abrangente posiciona o Hytale como uma plataforma segura e extensível, capacitando os criadores ao mesmo tempo em que mantém a performance, a acessibilidade e o compromisso com a melhoria contínua.

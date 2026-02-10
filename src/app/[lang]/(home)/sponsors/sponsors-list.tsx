@@ -12,11 +12,31 @@ import { useState, useEffect, ViewTransition, startTransition } from "react";
 import { getSponsors } from "../actions";
 import { useMessages } from "@/lib/hooks/useMessages";
 
-const featuredSponsors: Sponsor[] = [
+import BisectHostingLight from "./featured-sponsor-img/bh/BH_LIGHT.svg";
+import BisectHostingDark from "./featured-sponsor-img/bh/BH_DARK.svg";
+import FiveManageLight from "./featured-sponsor-img/fivemanage/FM_LIGHT.svg";
+import FiveManageDark from "./featured-sponsor-img/fivemanage/FM_DARK.svg";
+
+type FeaturedSponsor = Omit<Sponsor, "image" | "website" | "MemberId"> & {
+  image: { light: string; dark: string };
+  website: string;
+};
+
+const featuredSponsors: FeaturedSponsor[] = [
   {
-    MemberId: "BisectHosting",
+    name: "FiveManage",
+    image: {
+      light: FiveManageLight,
+      dark: FiveManageDark,
+    },
+    website: "https://fivemanage.com",
+  },
+  {
     name: "BisectHosting",
-    image: "/sponsors/bisecthosting.png",
+    image: {
+      light: BisectHostingLight,
+      dark: BisectHostingDark,
+    },
     website: "https://bisecthosting.com",
   },
 ];
@@ -55,29 +75,37 @@ export function SponsorsList() {
   }, []);
 
   return (
-    <div className="space-y-2">
-      <h3 className="text-center text-xl font-semibold">
-        {messages.sponsors.ourSponsors}
-      </h3>
-      <div className="pt-1">
+    <div className="space-y-8">
+      <div className="space-y-4">
+        <h3 className="text-center text-xl font-semibold">
+          {messages.sponsors.ourSponsors}
+        </h3>
         <div className="flex justify-center gap-4">
-          {featuredSponsors.map((sponsor) => (
-            <a
-              key={sponsor.name}
+          {featuredSponsors.map((sponsor, i) => (
+            <Link
+              key={i}
               href={sponsor.website}
               target="_blank"
-              rel="noopener noreferrer"
-              className="transition-all hover:scale-105"
+              rel="noopener"
+              className="transition-transform hover:scale-105"
             >
-              <div className="relative h-32 w-48">
+              <div className="relative flex h-full items-center justify-center rounded-lg border p-4">
                 <Image
-                  src={sponsor.image}
+                  src={sponsor.image.light}
                   alt={sponsor.name}
-                  fill
-                  className="object-contain"
+                  width={192}
+                  height={128}
+                  className="object-contain dark:hidden"
+                />
+                <Image
+                  src={sponsor.image.dark}
+                  alt={sponsor.name}
+                  width={192}
+                  height={128}
+                  className="object-contain not-dark:hidden"
                 />
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

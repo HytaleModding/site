@@ -10,30 +10,30 @@ description: プルリクエストの提出時とレビュー時に、コント�
 ## コントリビューター
 
 1. **明瞭なタイトルと説明**
-   - Use clear and concise titles that summarize the changes.
+   - 変更内容をまとめた明確で簡潔なタイトルを使用してください。
    - PRで行うこと、変更が必要な理由、および関連する情報を詳しく説明してください。
 2. **Issueへのリンク**
    - 関連するIssueとPRをリンクさせるために、PRのタイトルに GH-ISSUE-NUMBER を追加してください。 これはすべてのPRに適用されます。
-3. **Small, Focused Changes**
-   - Aim to keep PRs small and focused on a single issue or feature. This makes it easier for reviewers to understand and provide feedback.
+3. **小規模で集中した変更**
+   - PRを小さく保ち、単一の問題や機能に焦点を当てることを目指してください。 これにより、レビュワーが理解しフィードバックを提供しやすくなります。
 4. **コードの品質**
-   - Ensure your code follows the project's coding standards and best practices.
+   - コードがプロジェクトのコーディング基準とベストプラクティスに従っていることを確認してください。
    - 複雑なロジックの説明が必要な箇所にはコメントを付けてください。
 5. **テスト**
-   - Test your changes thoroughly before submitting the PR.
-   - If applicable, include unit tests or integration tests to verify your changes.
-6. レビュアー
-   - Update or add documentation as needed to reflect your changes.
-7. **Commit Messages**
-   - Use clear and descriptive commit messages that follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) format.
-8. **Check for Conflicts**
-   - Before submitting your PR, ensure that your branch is up to date with the base branch to minimize merge conflicts.
+   - PRを提出する前に、変更を徹底的にテストしてください。
+   - 該当する場合は、変更を検証するための単体テストまたは統合テストを含めてください。
+6. **ドキュメント**
+   - 必要に応じて、変更を反映させるためにドキュメントを更新または追加してください。
+7. **コミットメッセージ**
+   - [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)の仕様に従った、明瞭でわかりやすいコミットメッセージを添付してください。
+8. **競合の確認**
+   - PRを送信する前に、マージ競合を最小限に抑えるためにブランチがベースブランチに対して最新であることを確認してください。
 
-## For Reviewers
+## レビュアー
 
-- You are supposed to review PRs thoroughly, and request changes if needed.
-- Provide constructive feedback and suggestions for improvement.
-- Verify that the changes meet the project's coding standards and best practices.
-- Deploy the PR using the dokploy integration to ensure the changes work as expected.
-- Ensure that documentation is updated as necessary.
-- Approve the PR only when you are satisfied with the changes and all checks have passed.
+- PRを詳細にレビューし、必要なら修正依頼を出すのがレビュアーの役割です。
+- 建設的なフィードバックと改善のための提案を提供してください。
+- 変更内容がプロジェクトのコーディング基準とベストプラクティスを満たしていることを確認してください。
+- 変更が期待どおりに動作することを保証するために、Dokploy 統合を使用して PR をデプロイしてください。
+- 必要に応じてドキュメントが適切に更新されているか確認してください。
+- 変更内容に納得がいき、すべての確認が完了してから承認してください。

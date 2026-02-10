@@ -18,15 +18,16 @@ A variable has three key components:
 In Java, you must declare a variable before using it, like you'd need a box before putting something in it. The syntax is:
 
 ```java
-int age;
-age = 18;
+int age; // A declaration
+age = 18; // An assignment
 
-int age = 18; // Declaration and assignment in one line
+int age = 18; // Declaration and assignment in one line, also considered an initialization
 ```
 
-## Primitive Data Types
+## Data Types
 
-You might wonder what "int" means. It's a primitive data type in Java. Java has 8 primitive data types. Here are the most important ones for modding:
+You might wonder what "int" means. It's a primitive data type in Java. Java has 8 primitive and non-primitive (reference) data types.
+You will learn the difference between them later. Here are the most important ones for modding:
 
 | Data Type | Description                   | Example                    |
 | --------- | ----------------------------- | -------------------------- |
@@ -44,7 +45,7 @@ Sometimes you might not want a variable to stay the same type. You can convert b
 
 ```java
 int num = 10;
-double decimalNum = (double) num; // 10.0 - works automatically
+double decimalNum = num; // 10.0 - works automatically
 ```
 
 ### Manual (Casting)

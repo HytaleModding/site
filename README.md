@@ -1,3 +1,5 @@
+<p align="center"><a href="https://hytalemodding.dev"><img src="https://cdn.internal.hytalemodding.dev/assets/HytaleLogo_DiscordBannerV6.png" width="600"></a></p>
+
 # Hytale Modding Documentation
 
 **An unofficial community-maintained documentation site for Hytale modding.**

@@ -474,7 +474,7 @@ class Data {
     // Static member:
     // cannot access to non-static variables
     public static void bar() {
-        x = 100; // Error: non-static variable x cannot be renference from a static context
+        x = 100; // Error: non-static variable x cannot be referenced from a static context
         y = 100; // OK
     }
 }
@@ -494,7 +494,7 @@ Data.x = 1000; // Error: cannot access instanced variables in a static context
 
 ### Static Fields
 
-A static field represents a data member owned by the class type rather then the object. Static fields are also stored in a specific memory location that's been shared between all the object instances that are created.
+A static field represents a data member owned by the class type rather than the object. Static fields are also stored in a specific memory location that's been shared between all the object instances that are created.
 
 It is declared as following:
 

@@ -1,11 +1,11 @@
 ---
-title: 08 - Encapsulation and Access Modifiers
-description: Learn how to protect and control access to your class data.
+title: 08 — Encapsulamento e modificadores de acesso
+description: Aprenda a proteger e controlar o acesso aos dados para as suas classes.
 ---
 
-Encapsulation is about hiding the internal details of a class and controlling how its data is accessed and modified. This prevents bugs and makes your code more maintainable.
+O encapsulamento consiste em ocultar os detalhes internos de uma classe e determinar como os seus dados podem ser acessados ou modificados. Isso evita que erros aconteçam e o seu código se torna mais simples de manter e atualizar.
 
-## The Problem Without Encapsulation
+## O problema sem o encapsulamento
 
 ```java
 public class Player {
@@ -28,11 +28,11 @@ public class Main {
 }
 ```
 
-Without protection, anyone can set invalid values!
+Sem proteção, qualquer um pode definir valores inválidos!
 
-## Access Modifiers
+## Modificadores de acesso
 
-Java has keywords that control who can access your class members:
+O Java tem palavras-chave que controlam quem pode acessar os membros da sua classe:
 
 | Modificador | Classe | Pacote | Subclasse | Mundo |
 | ----------- | ------ | ------ | --------- | ----- |
@@ -46,7 +46,7 @@ Java has keywords that control who can access your class members:
 * `public` — Qualquer pessoa pode acessar
 * `private` — Apenas essa classe pode acessar
 
-## Making Properties Private
+## Tornando propriedades privadas
 
 ```java
 public class Player {
@@ -62,7 +62,7 @@ public class Player {
 }
 ```
 
-Now you can't access properties directly:
+Não é mais possível acessar as propriedades diretamente:
 
 ```java
 Player player = new Player("Alice", 100);
@@ -124,11 +124,11 @@ System.out.println(player.getHealth());  // 0
 ```
 
 <Callout type="info" title="Nomeação Getter e Setter">
-  Follow Java naming conventions:
+  Siga as convenções de nomenclatura do Java:
 
   * **Getter**: `get` + nome da propriedade (capitalizado);
   * **Setter**: `set` + nome da propriedade (capitalizado);
-  * **Boolean**: `is` + nome da propriedade (capitalizado)
+  * **Boolean**: `is` + nome da propriedade (capitalizado).
 
   ```java
   private int health;
@@ -145,7 +145,7 @@ System.out.println(player.getHealth());  // 0
   ```
 </Callout>
 
-## Benefits of Encapsulation
+## Vantagens do encapsulamento
 
 ### 1. Validação
 
@@ -170,9 +170,9 @@ public class Item {
 }
 ```
 
-### 2. Read-Only Properties
+### 2. Propriedades apenas de leitura
 
-Sometimes you don't want a setter:
+Às vezes, você não quer um `setter`:
 
 ```java
 public class Monster {
@@ -244,23 +244,23 @@ public class Tool {
     
     public void use() {
         if (broken) {
-            System.out.println(name + " is broken!");
+            System.out.println(name + " está quebrado(a)!");
             return;
         }
         
         durability--;
-        System.out.println(name + " used. Durability: " + durability);
+        System.out.println(name + " usado(a). Durabilidade: " + durability);
         
         if (durability <= 0) {
             broken = true;
-            System.out.println(name + " broke!");
+            System.out.println(name + " quebrou!");
         }
     }
     
     public void repair() {
         durability = maxDurability;
         broken = false;
-        System.out.println(name + " repaired!");
+        System.out.println(name + " reparado(a)!");
     }
     
     // Getters
@@ -285,7 +285,6 @@ public class Tool {
 ### Exemplo de conta bancária
 
 ```java
-public class PlayerWallet {
     private int gold;
     private int silver;
     
@@ -297,18 +296,18 @@ public class PlayerWallet {
     public void addGold(int amount) {
         if (amount > 0) {
             gold += amount;
-            System.out.println("Added " + amount + " gold");
+            System.out.println(amount + "x ouro(s) adicionado(s)");
         }
     }
     
     public boolean spendGold(int amount) {
         if (amount > gold) {
-            System.out.println("Not enough gold!");
+            System.out.println("Ouro insuficiente!");
             return false;
         }
         
         gold -= amount;
-        System.out.println("Spent " + amount + " gold");
+        System.out.println(amount + "x ouro(s) usado(s)");
         return true;
     }
     
@@ -317,7 +316,7 @@ public class PlayerWallet {
     }
     
     public int getTotalValue() {
-        // 1 gold = 100 silver
+        // 1 ouro = 100 pratas
         return gold * 100 + silver;
     }
 }
@@ -352,13 +351,13 @@ public class ProtectedBlock {
     public void unlock(String playerName) {
         if (playerName.equals(owner)) {
             locked = false;
-            System.out.println("Block unlocked");
+            System.out.println("Bloco desbloqueado");
         } else {
-            System.out.println("You don't own this block!");
+            System.out.println("Você não é o dono deste bloco!");
         }
     }
     
-    // Getters only - position and owner shouldn't change
+    // Somente Getters — a posição e owner não devem mudar
     public int getX() {
         return x;
     }
@@ -558,10 +557,10 @@ class OtherData {
     private static String msg;
 
     static {
-        msg = "Initialization..."
+        msg = "Inicializando..."
         System.out.println(msg);
         b = 4;
-        // ... complex initialization that can't be done in a single expression
+        // ... inicialização complexa que não pode ser feita em uma única expressão
     }
 }
 ```
@@ -589,7 +588,7 @@ class OtherData {
    * Método: `getPowerLevel()` que retorna `strength` + `defense` + `speed`;
    * As estatísticas não podem ser negativas ou superiores a 100.
 
-4. **Refactor a Class**: Take one of your classes from the previous lesson and add proper encapsulation:
+4. **Refatore uma classe**: pegue uma de suas classes da lição anterior e adicione o encapsulamento adequado:
    * Prive todas as propriedades;
    * Adicionar `getters` e `setters` apropriados;
    * Adicione a validação quando for necessário.

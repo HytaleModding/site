@@ -1,0 +1,96 @@
+---
+title: Build and Test Your Mod
+description: Learn how to build your Hytale mod and test it in-game.
+authors:
+  - name: Michael B
+---
+
+If you followed along with the [Setting Up Your Development Environment](./setting-up-env) page, you should now be able to build your project.
+
+## Building Your Mod
+
+In our case, we've **Maven** as the build system. Maven is a powerful build automation tool that manages dependencies, compiles your code, and packages everything into a distributable JAR file.
+
+### Understanding Maven
+
+Maven uses a `pom.xml` file (Project Object Model) to define your project's configuration, dependencies, and build settings. You can learn more about Maven at the [official Apache Maven website](https://maven.apache.org/).
+
+### Building with Maven
+
+To build your mod, open a terminal in your project directory and run:
+
+```bash
+mvn package
+```
+
+This command will:
+
+1. Compile your Java source code
+2. Run any tests (if present)
+3. Package everything into a JAR file
+
+### Build Output
+
+Once the build completes successfully, your mod will be located in the `target` directory and named:
+
+```
+ExamplePlugin-1.0-SNAPSHOT.jar
+```
+
+<Callout type="info">
+  The exact name may vary depending on what you configured in your `pom.xml` file. Check the `artifactId` and `version` fields to see what your JAR will be named.
+</Callout>
+
+## Testing Your Mod
+
+Now that you've built your mod, it's time to test it in Hytale!
+
+### 1. Locate the Mods Folder
+
+First, you need to find Hytale's mods directory:
+
+1. Press **Win + R** on your keyboard
+2. Type `%appdata%` and press Enter
+3. Navigate to: `Hytale\UserData\Mods`
+
+The full path should look like:
+
+```
+C:\Users\YourUsername\AppData\Roaming\Hytale\UserData\Mods
+```
+
+<Callout type="warning">
+  If the `Mods` folder doesn't exist, you may need to create it manually or launch Hytale at least once.
+</Callout>
+
+### 2. Copy Your Mod
+
+Copy the `ExamplePlugin-1.0-SNAPSHOT.jar` file from your project's `target` directory into the `Mods` folder you just located.
+
+### 3. Launch Hytale and Verify
+
+1. **Start Hytale**
+2. **Click "Create a New World"**
+3. **Click the settings cog**
+4. **Click "Mods"**
+5. **See your mod** in the list!
+
+If your mod appears in the list, congratulations! Your mod has been successfully loaded by Hytale.
+
+## Troubleshooting
+
+If your mod doesn't appear in the mods list:
+
+- Make sure the JAR file is in the correct `Mods` folder
+- Check that your `manifest.json` file is properly configured
+- Look for any error messages in the Hytale logs
+- Verify that you're using the correct version of Java and Maven
+
+## Next Steps
+
+Now that you can build and test your mod, you're ready to start adding functionality! Check out these guides:
+
+- [Create Commands](./creating-commands) - Add custom commands to your mod
+- [Create Events](./creating-events) - React to in-game events
+
+Happy modding!

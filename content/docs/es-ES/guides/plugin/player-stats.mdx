@@ -1,0 +1,113 @@
+---
+title: Player Stats
+description: A simple guide on how to edit player stats.
+authors:
+  - name: Bird
+    link: https://discord.com/users/495709580068651009
+---
+
+# Overview
+
+This guide shows you how to read and modify player stats like health and stamina using the `EntityStatMap` component.
+
+## Available Stats
+
+Hytale provides several default stats via `DefaultEntityStatTypes`:
+
+- **Health**: `DefaultEntityStatTypes.getHealth()`
+- **Stamina**: `DefaultEntityStatTypes.getStamina()`
+- **Mana**: `DefaultEntityStatTypes.getMana()`
+- **Oxygen**: `DefaultEntityStatTypes.getOxygen()`
+- **Signature Energy**: `DefaultEntityStatTypes.getSignatureEnergy()`
+- **Ammo**: `DefaultEntityStatTypes.getAmmo()`
+
+---
+
+## Example 1: Heal Command
+
+This command restores the player's health to its maximum value.
+
+```java
+public class HealCommand extends CommandBase {
+    public HealCommand() {
+        super("heal", "Restores your health to maximum.");
+        this.setPermissionGroup(GameMode.Adventure);
+    }
+
+    @Override
+    protected void executeSync(@Nonnull CommandContext ctx) {
+        // 1. Get the player reference
+        Ref<EntityStore> playerRef = ctx.senderAsPlayerRef();
+        if (playerRef == null) return;
+
+        // 2. Get the store and the world
+        Store<EntityStore> store = playerRef.getStore();
+        EntityStore entityStore = store.getExternalData();
+        World world = entityStore.getWorld();
+
+        // 3. Perform modification on the world thread
+        world.execute(() -> {
+            EntityStatMap statMap = (EntityStatMap) store.getComponent(playerRef, EntityStatMap.getComponentType());
+            if (statMap != null) {
+                statMap.maximizeStatValue(DefaultEntityStatTypes.getHealth());
+                ctx.sendMessage(Message.raw("Your health has been restored!"));
+            }
+        });
+    }
+}
+```
+
+---
+
+## Example 2: Damage Self Command
+
+This command removes a specific amount of health from the player.
+
+```java
+public class DamageSelfCommand extends CommandBase {
+    private final Argument amountArg;
+
+    public DamageSelfCommand() {
+        super("damageself", "Damages yourself by a specific amount.");
+        this.setPermissionGroup(GameMode.Adventure);
+        this.amountArg = this.withRequiredArg("amount", "Amount of damage", ArgTypes.FLOAT);
+    }
+
+    @Override
+    protected void executeSync(@Nonnull CommandContext ctx) {
+		// 1. Get the player reference
+        Ref<EntityStore> playerRef = ctx.senderAsPlayerRef();
+        if (playerRef == null) return;
+
+        // 2. Get command arg
+        Float amount = (Float) this.amountArg.get(ctx);
+        if (amount == null) return;
+
+        // 3. Get the store and the world
+        Store<EntityStore> store = playerRef.getStore();
+        EntityStore entityStore = store.getExternalData();
+        World world = entityStore.getWorld();
+        
+        // 4. Perform modification on the world thread
+        world.execute(() -> {
+            EntityStatMap statMap = (EntityStatMap) store.getComponent(playerRef, EntityStatMap.getComponentType());
+            if (statMap != null) {
+                statMap.subtractStatValue(DefaultEntityStatTypes.getHealth(), amount);
+                ctx.sendMessage(Message.raw("Ouch! You took " + amount + " damage."));
+            }
+        });
+    }
+}
+```
+
+---
+
+## Useful Methods
+
+Common methods available on `EntityStatMap`:
+
+- **Set**: `statMap.setStatValue(statIndex, value)`
+- **Add**: `statMap.addStatValue(statIndex, amount)`
+- **Subtract**: `statMap.subtractStatValue(statIndex, amount)`
+- **Maximize**: `statMap.maximizeStatValue(statIndex)`
+- **Reset**: `statMap.resetStatValue(statIndex)`

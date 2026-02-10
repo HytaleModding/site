@@ -1,0 +1,90 @@
+---
+title: 1 - Know Your Enemy
+authors:
+  - name: Hypixel Studios Canada Inc.
+    url: https://hytale.com
+---
+
+<OfficialDocumentationNotice />
+
+Constructing NPCs largely always follows the same set of initial steps:
+
+1. Read through any design documentation.
+2. Figure out how the behaviour breaks down into distinct states.
+3. Identify which parts of the behaviour already exist in predefined components.
+4. Identify any parts of the behaviour that are likely to be reused across other similar templates.
+5. (Optional) Identify any particularly complex parts of the behaviour that are likely to become generally reusable.
+
+For this tutorial, we're looking at the **Goblin Ogre**.
+
+**Minimum design requirements we were given:**
+
+1. A big and slow NPC with a lot of health, found in specific POIs.
+2. Can follow a pre-determined path and guard that position.
+3. Can sleep and if other goblins annoy the Ogre, there will be a special "sleepy" reaction to that.
+4. Can summon rats to eat.
+5. Has a melee attack
+
+**Note:** For the purposes of this tutorial, we'll stick to this design brief, though it may no longer reflect the NPC used in-game.
+
+---
+
+### Step 1: Read the documentation!
+
+This is also a strong suggestion to take a look through the NPC core element documentation and component documentation [here](../npc-doc), if you haven't already. It provides an overview of all core elements available as sensors/actions/motions/etc. Refer to it anytime you want to know if something is possible and what's needed to achieve it (e.g. picking up items). This will also be updated over time as more features are added!
+
+### Step 2: Decide on the states!
+
+The Goblin Ogre isn't too complicated in this regard. We start with the main top-level states:
+
+- An **Idle** state where it mostly remains stationary at a specific point.
+  - This can also encompass its general 'observed' flavour actions.
+  - In many cases, we can include some inter-NPC behaviours here too, unless they require a more complex sequence of actions.
+- A **Sleep** state.
+  - Sleep states are often best kept separate from the idle state, both to take advantage of mechanisms for handling the transition from the state to others (e.g. playing wake up animations) and to accommodate slight changes to the NPC's detection capabilities.
+- An **Eat** state.
+  - With the same reasoning as Sleep.
+- An **Alerted** state.
+  - Almost all NPCs end up having one of these in some form, though they often vary a bit in their intent.
+- A **Combat** state.
+  - While not always the case, it often makes sense to roll all combat into a single distinct state.
+- A **ReturnHome** state.
+  - This applies particularly to NPCs that have stationary guard points.
+  - Essentially handles getting them home again.
+
+Some of these might break down into a set of additional substates handling individual parts of the behavioural logic. For example,
+
+- **Idle**
+  - **.Default** (stand guard and do nothing else)
+  - **.FindFood** (go search for some nearby food if it exists)
+  - **.EatRat** (murder an innocent nearby rat)
+
+Now we have a rough idea of how this NPC is going to be structured at the highest level. With this in mind, we can also see some potential for **state transitions** that make sense.
+
+- **Any State -> Sleep**
+  - Play a laydown animation
+- **Sleep -> Any State**
+  - Play a get up animation
+- **Any State -> Eat**
+  - Prepare items for eating
+- **Eat -> Any State**
+  - Pull out weapons again
+
+These particular state transitions are pretty generic and commonly used, but at this stage, I don't see the need for any others.
+
+### Step 3: Find existing components we can reuse so we can save ourselves some work!
+
+Straight away, there are a few pre-existing components that will make our lives significantly easier.
+
+- We need to chase and attack other targets.
+  - `Component_Instruction_Intelligent_Chase` is built for exactly this purpose and abstracts away a lot of complicated logic needed to make an NPC smartly try to track down a target based on its last seen position.
+  - `Component_Sensor_Standard_Detection` will help setting up NPC senses, like vision and hearing.
+  - `Component_Instruction_Soft_Leash` will make sure the ogre doesn't chase its target to the far reaches of Orbis and will eventually give up if the player is just running away.
+
+These will handle a chunk of our generic combat logic. We also need to add supporting files, like an **Appearance** file that describes what model and animations are to be used and an **Attack Interaction** for combat.
+
+The ogre does more than just attack though! Unfortunately, the bulk of the other behaviour is quite specific to the ogre itself. There are existing components for handling sleep states, but this creature needs to be able to swat at other goblins in its sleep so we can't make use of them. The general idle components aren't much use either, but we might be able to handle the simple standing guard by using `Component_Instruction_Intelligent_Idle_Motion_Follow_Path`. There are also some general utility components that might prove useful as we build up the template, such as `Component_Instruction_Damage_Check`.
+
+### Step 4 & 5: Identify parts we can reuse in other goblins (or are generally useful to have)
+
+There is a small chance that eating rats and searching for food might be reusable for other goblins, but owing to the uncertainty here, it makes sense to build the NPC without worrying too much about it and then extract the logic out into a component later if required.

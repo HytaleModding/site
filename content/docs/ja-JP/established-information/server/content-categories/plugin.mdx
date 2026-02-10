@@ -1,48 +1,33 @@
 ---
-title: Java Modding (Server Plugins)
-description: An introduction to what we know of Hytale's Java-based modding system as of writing this article.
+title: JavaのMOD開発（サーバープラグイン）
+description: HytaleのJavaベースのModdingシステムについて、この記事を書いている時点で私たちが知っていることを紹介します。
 ---
 
-Hytale's modding capabilities include a Java-based modding system that allows modders
-to create custom behaviors, interactions, and game mechanics. While the full details of
-this system are not publicly documented as the game is still in development and not
-released, we can summarize what is currently known about it.
+HytaleのMOD開発システムには、開発者が独自の動作、インタラクション、ゲームの仕組みを作成できるJavaを基盤にしたMOD開発システムが入っています。 このシステムの詳細は、ゲームがまだ開発中でリリースされていないため、公に文書化されていません。現在知られている情報をまとめると以下のようになります。
 
-### Important Details of Modding in Hytale
+### HytaleのMOD開発に関する重要な詳細
 
-Hytale's modding goes on server side and not client side, meaning that mods/plugins are
-hosted on the server and players connect to these modded servers to experience the custom content
-without needing to install anything on their end. This approach ensures a consistent experience
-for all players on a modded server.
+HytaleのMOD開発はクライアントではなくサーバー側で行われます。MODとプラグインはサーバー上でホストされ、プレイヤーはこれらのMODサーバーに接続することで、何もインストールすることなくカスタムコンテンツを体験できることを意味します。 この手法により、MODサーバー上のすべてのプレイヤーに一貫した体験が保証されます。
 
-### Overview of Java-Based Modding
+### JavaベースのMOD開発の概要
 
-The server-side modding system in Hytale is based on Java, making the server plugins JAR files.
+HytaleのサーバーサイドのMOD開発システムはJavaを基盤としており、サーバー プラグインはJARファイルとなっています。
 
-We're guessing this is done so that Minecraft modders can easily transition to Hytale modding,
-as Minecraft modding is also primarily Java-based. This allows modders familiar with Java
-to leverage their existing knowledge when creating mods for Hytale.
+HytaleのMOD開発がこのように設計されているのは、MinecraftのMOD開発者がJavaを基盤にしたMinecraftのMOD開発からHytaleのMOD開発へ容易に移行できるようにするためだと考えられます。 Javaに慣れているMOD開発者は、Hytale向けのMODを開発する際にすでに学んだ知識を活用することができます。
 
-#### Singleplayer Concerns
+#### シングルプレイヤーの懸念点
 
-Despite the name, server plugins can also be used in singleplayer mode.
-Hytale's singleplayer mode runs a local server instance, allowing players to use server plugins
-even when playing alone. This means that mods created as server plugins can enhance the singleplayer experience as well.
+名前に関係なく、サーバープラグインはシングルプレイヤーモードでも使用できます。
+Hytaleのシングルプレイヤーモードではローカルのサーバーインスタンスが実行されるため、プレイヤーは1人でプレイしていてもサーバープラグインを使用できます。 つまり、サーバープラグインとして作成されたMODは、シングルプレイヤーでも同じような体験をすることができます。
 
-### Mixin System
+### Mixinシステム
 
-Mixins were used in Minecraft modding to directly modify the game’s code, even able to overwrite
-or redirect logic and values. An extremely powerful but somewhat brittle system which depends
-on the source code/game version staying pretty much the same.
+MinecraftのMOD開発では、Mixinを使ってゲームコードを直接変更し、処理や値を上書きしたりリダイレクトしたりすることも可能です。 非常に強力ではありますが、ソースコードとゲームバージョンがほぼ変更されないことに依存する、やや不安定なシステムでした。
 
-We have no official information on Mixins in Hytale. Despite that, we have reason to believe they will not
-need to be supported for the following reasons:
+HytaleにおけるMixinに関する公式情報はまだありません。 ですが以下の理由から、Mixinをサポートする必要はないと考えています。
 
-1. For a properly designed game, 95% of Mixin use cases can be solved with a good API instead.
-   In fact, many Minecraft modding APIs simply mixin to provide the API so the developers using
-   those APIs don’t have to write the mixin themselves.
-   * This is typically replacing hardcoded values and overwriting hardcoded behaviors.
-   * Hytale should ideally make these both API or data-driven.
-2. APIs can also be much more resilient than the game version. We can have a separate API
-   version system which means the same code will not need to be modified across multiple updates
-   until the API changes in a breaking way.
+1. 適切に設計されたゲームであれば、Mixinの使用ケースの95%は優れたAPIによって解決可能です。
+   実際、多くのMinecraftのMOD開発APIはAPIを提供するために単純なMixinを使用しており、それらのAPIを利用する開発者が自分でMixinを書く必要をなくしています。
+   * これは通常、ハードコードされた値を置き換え、動作を上書きします。
+   * 理想を言うならば、HytaleにはこれらをAPIまたはデータ駆動型で提供すべきです。
+2. またAPIはゲームバージョンよりもはるかに堅牢です。 別のAPIバージョン管理システムを導入することで、APIの大規模な変更がない限り、同じコードを何回も修正せずに済みます。

@@ -1,0 +1,492 @@
+---
+title: "Layout"
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# Layout
+
+The layout system determines how UI elements are positioned and sized on screen. Understanding layout is crucial for creating well-structured, responsive interfaces.
+
+## Layout Fundamentals
+
+Every UI element has:
+
+- **Container Rectangle** - The space allocated by the parent
+- **Anchor** - How the element positions/sizes itself within the container
+- **Padding** - Inner spacing that affects child layout
+- **LayoutMode** - How the element arranges its children (if it's a container)
+
+```
+┌─────────────────────────────────────┐
+│  Container Rectangle (from parent)  │
+│  ┌───────────────────────────────┐  │
+│  │  Anchored Rectangle           │  │
+│  │  ┌─────────────────────────┐  │  │
+│  │  │ Padding                 │  │  │
+│  │  │  ┌───────────────────┐  │  │  │
+│  │  │  │  Content Area     │  │  │  │
+│  │  │  └───────────────────┘  │  │  │
+│  │  └─────────────────────────┘  │  │
+│  └───────────────────────────────┘  │
+└─────────────────────────────────────┘
+```
+
+## Anchor
+
+`Anchor` controls how an element positions and sizes itself within its container rectangle.
+
+### Fixed Size
+
+```
+Button {
+    Anchor: (Width: 200, Height: 40);
+}
+```
+
+Creates a 200×40 pixel button.
+
+### Positioning
+
+```
+Label {
+    Anchor: (Top: 10, Left: 20, Width: 100, Height: 30);
+}
+```
+
+- **Top**: 10 pixels from container's top edge
+- **Left**: 20 pixels from container's left edge
+- **Width**: 100 pixels wide
+- **Height**: 30 pixels tall
+
+### Anchoring to Edges
+
+```
+Button {
+    Anchor: (Bottom: 10, Right: 10, Width: 100, Height: 30);
+}
+```
+
+Anchors the button to the bottom-right corner, 10 pixels from each edge.
+
+### Stretching
+
+```
+Group {
+    Anchor: (Top: 0, Bottom: 0, Left: 0, Right: 0);
+}
+```
+
+Stretches to fill the entire container (all edges at 0 pixels).
+
+**Shorthand:**
+
+```
+Group {
+    Anchor: (Full: 0);
+}
+```
+
+### Mixed Anchoring
+
+```
+Panel {
+    Anchor: (Top: 10, Bottom: 10, Left: 20, Width: 300);
+}
+```
+
+- Fixed width of 300 pixels
+- Stretches vertically between top and bottom edges
+- 10 pixels from top and bottom
+- 20 pixels from left
+
+## Padding
+
+`Padding` creates inner spacing, affecting where children are positioned.
+
+### Uniform Padding
+
+```
+Group {
+    Padding: (Full: 20);
+}
+```
+
+20 pixels of padding on all sides.
+
+### Directional Padding
+
+```
+Group {
+    Padding: (Top: 10, Bottom: 20, Left: 15, Right: 15);
+}
+```
+
+Different padding per edge.
+
+### Shorthand
+
+```
+// Horizontal and vertical
+Group {
+    Padding: (Horizontal: 20, Vertical: 10);
+}
+
+// Equivalent to:
+// Top: 10, Bottom: 10, Left: 20, Right: 20
+```
+
+### Effect on Children
+
+```
+Group {
+    Anchor: (Width: 200, Height: 100);
+    Padding: (Full: 10);
+
+    Label {
+        Anchor: (Full: 0);
+    }
+}
+```
+
+The label fills the group, but there's a 10-pixel gap on all sides due to padding.
+
+```
+┌──────────────────────┐
+│ Group (200×100)      │
+│  ┌────────────────┐  │
+│  │ Label          │  │ ← 10px padding all around
+│  │                │  │
+│  └────────────────┘  │
+└──────────────────────┘
+```
+
+## LayoutMode
+
+`LayoutMode` determines how a container arranges its children.
+
+### Top (Vertical Stack)
+
+```
+Group {
+    LayoutMode: Top;
+
+    Button { Anchor: (Height: 30); }
+    Button { Anchor: (Height: 30); }
+    Button { Anchor: (Height: 30); }
+}
+```
+
+Children stack vertically from top to bottom:
+
+```
+┌──────────┐
+│ Button 1 │
+├──────────┤
+│ Button 2 │
+├──────────┤
+│ Button 3 │
+└──────────┘
+
+
+```
+
+Each child's `Anchor.Bottom` adds spacing between elements:
+
+```
+Button { Anchor: (Height: 30, Bottom: 10); }  // 10px gap after this button
+```
+
+### Bottom (Vertical Stack)
+
+```
+Group {
+    LayoutMode: Bottom;
+
+    Button { Anchor: (Height: 30); }
+    Button { Anchor: (Height: 30); }
+    Button { Anchor: (Height: 30); }
+}
+```
+
+Children stack vertically from top to bottom but aligned to the bottom edge of the parent:
+
+```
+
+
+
+┌──────────┐
+│ Button 1 │
+├──────────┤
+│ Button 2 │
+├──────────┤
+│ Button 3 │
+└──────────┘
+```
+
+### Left (Horizontal Stack)
+
+```
+Group {
+    LayoutMode: Left;
+
+    Button { Anchor: (Width: 80); }
+    Button { Anchor: (Width: 80); }
+    Button { Anchor: (Width: 80); }
+}
+```
+
+Children arrange horizontally from left to right:
+
+```
+┌────────┬────────┬────────┐
+│ Button │ Button │ Button │
+│   1    │   2    │   3    │
+└────────┴────────┴────────┘
+```
+
+Use `Anchor.Right` for spacing between elements.
+
+### Right (Horizontal Stack)
+
+```
+Group {
+    LayoutMode: Right;
+
+    Button { Anchor: (Width: 80); }
+    Button { Anchor: (Width: 80); }
+    Button { Anchor: (Width: 80); }
+}
+```
+
+Children arrange horizontally from left to right but aligned to the right side of the parent:
+
+```
+                                                                 ┌────────┬────────┬────────┐
+                                                                 │ Button │ Button │ Button │
+                                                                 │   1    │   2    │   3    │
+                                                                 └────────┴────────┴────────┘
+```
+
+### Center
+
+```
+Group {
+    LayoutMode: Center;
+
+    Group #Dialog {
+        Anchor: (Width: 400, Height: 300);
+    }
+}
+```
+
+Centers the children horizontally.
+
+### Middle
+
+```
+Group {
+    LayoutMode: Middle;
+
+    Group #Dialog {
+        Anchor: (Width: 400, Height: 300);
+    }
+}
+```
+
+Centers the children vertically.
+
+### CenterMiddle (Horizontal Stack, Fully Centered)
+
+```
+Group {
+    LayoutMode: CenterMiddle;
+
+    Button { Anchor: (Width: 80); }
+    Button { Anchor: (Width: 80); }
+    Button { Anchor: (Width: 80); }
+}
+```
+
+Children stack horizontally from left to right, centered both horizontally and vertically within the parent:
+
+```
+┌────────────────────────────────────────────┐
+│                                            │
+│                                            │
+│         ┌──────┐ ┌──────┐ ┌──────┐         │
+│         │  B1  │ │  B2  │ │  B3  │         │
+│         └──────┘ └──────┘ └──────┘         │
+│                                            │
+│                                            │
+└────────────────────────────────────────────┘
+```
+
+---
+
+### MiddleCenter (Vertical Stack, Fully Centered)
+
+```
+Group {
+    LayoutMode: MiddleCenter;
+
+    Button { Anchor: (Height: 30); }
+    Button { Anchor: (Height: 30); }
+    Button { Anchor: (Height: 30); }
+}
+```
+
+Children stack vertically from top to bottom, centered both horizontally and vertically within the parent:
+
+```
+┌────────────────────────────────────────────┐
+│                                            │
+│              ┌──────────┐                  │
+│              │ Button 1 │                  │
+│              ├──────────┤                  │
+│              │ Button 2 │                  │
+│              ├──────────┤                  │
+│              │ Button 3 │                  │
+│              └──────────┘                  │
+│                                            │
+└────────────────────────────────────────────┘
+```
+
+---
+
+### Full
+
+```
+Group {
+    LayoutMode: Full;
+
+    Label {
+        Anchor: (Top: 20, Left: 20, Width: 100, Height: 30);
+    }
+}
+```
+
+Children use absolute positioning via their `Anchor` properties.
+
+### TopScrolling
+
+```
+Group {
+    LayoutMode: TopScrolling;
+    ScrollbarStyle: $Common.@DefaultScrollbar;
+
+    // ... many children
+}
+```
+
+Like `Top`, but adds a scrollbar if content exceeds container height.
+
+Or use `BottomScrolling` for bottom-aligned content.
+
+### LeftScrolling
+
+```
+Group {
+    LayoutMode: LeftScrolling;
+    ScrollbarStyle: $Common.@DefaultScrollbar;
+
+    // ... many children
+}
+```
+
+Like `Left`, but adds a scrollbar for horizontal scrolling.
+
+Or use `RightScrolling` for right-aligned content.
+
+### LeftCenterWrap (Wrapping Horizontal Stack, Horizontally Centered)
+
+```
+Group {
+    LayoutMode: LeftCenterWrap;
+
+    Button { Anchor: (Width: 80, Height: 30); }
+    Button { Anchor: (Width: 80, Height: 30); }
+    Button { Anchor: (Width: 80, Height: 30); }
+    Button { Anchor: (Width: 80, Height: 30); }
+    Button { Anchor: (Width: 80, Height: 30); }
+}
+```
+
+Children flow left to right. When there's no more horizontal space, they wrap to the next row. Each row is horizontally centered within the parent:
+
+```
+┌────────────────────────────────────────────┐
+│                                            │
+│       ┌──────┐ ┌──────┐ ┌──────┐           │
+│       │  B1  │ │  B2  │ │  B3  │           │
+│       └──────┘ └──────┘ └──────┘           │
+│            ┌──────┐ ┌──────┐               │
+│            │  B4  │ │  B5  │               │
+│            └──────┘ └──────┘               │
+│                                            │
+└────────────────────────────────────────────┘
+```
+
+## FlexWeight
+
+`FlexWeight` distributes remaining space among children.
+
+```
+Group {
+    LayoutMode: Left;
+    Anchor: (Width: 400);
+
+    Button {
+        Anchor: (Width: 100);
+    }
+
+    Group {
+        FlexWeight: 1;  // Takes all remaining space
+    }
+
+    Button {
+        Anchor: (Width: 100);
+    }
+}
+```
+
+Result:
+
+- First button: 100px
+- Middle group: 200px (400 - 100 - 100 = 200)
+- Last button: 100px
+
+### Multiple FlexWeights
+
+```
+Group {
+    LayoutMode: Left;
+    Anchor: (Width: 600);
+
+    Group { FlexWeight: 1; }
+    Group { FlexWeight: 2; }
+    Group { FlexWeight: 1; }
+}
+```
+
+Remaining space (600px) is split:
+
+- First group: 600 × (1/4) = 150px
+- Second group: 600 × (2/4) = 300px
+- Third group: 600 × (1/4) = 150px
+
+## Visibility
+
+```
+Button #HiddenButton {
+    Visible: false;
+}
+```
+
+**Effect:**
+
+- Element and its children are not displayed
+- Element is **not included in layout** (doesn't take up space)

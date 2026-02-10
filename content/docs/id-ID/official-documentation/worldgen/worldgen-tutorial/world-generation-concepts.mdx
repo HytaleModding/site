@@ -1,0 +1,149 @@
+---
+title: World Generation Concepts
+description: Explores the basic concepts of world generation in the context of Hytale.
+icon: Globe
+authors:
+  - name: Hypixel Studios Canada Inc.
+    url: https://hytale.com
+---
+
+<OfficialDocumentationNotice />
+
+# World Generation Concepts
+
+### Generative **Noise**
+
+<div className="flex flex-row rounded-lg border p-4">
+  <div className="my-auto flex-3/4 border-r pr-4">
+    Hytale's terrain generation is founded on this concept of Density fields,
+    essentially these are maps of decimal values that are used to define the
+    terrain's shape. Density fields can be built from sources of procedural
+    noise (such as [Simplex](https://en.wikipedia.org/wiki/Simplex_noise) and
+    Cellular), contextual data and processing nodes.
+  </div>
+
+  <div className="flex-1/4 pl-4">
+    ![White
+    Noise](/assets/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts/noise.png)
+  </div>
+</div>
+
+### **Noise based terrain**
+
+A basic terrain shape can be created by combining a set of heights with a noise field, this formula creates most of the terrain in Hytale. This is an important concept to understand as its foundational to making terrain.
+
+<div className="flex flex-row rounded-lg border p-4 text-center">
+  <div className="flex-1 border-r pr-2">
+    <span className="font-bold">Terrain</span> <br /> 3-dimensional terrain
+    output.
+  </div>
+
+  <div className="flex-1 border-r px-2">
+    <span className="font-bold">Simplex 2D</span> <br /> Generative
+    2-dimensional noise field.
+  </div>
+
+  <div className="flex-1 pl-2">
+    <span className="font-bold">Y-Curve</span> <br /> 2-dimensional curve drawn
+    between a height differential.
+  </div>
+</div>
+
+![Graphs about Noise Based Terrain](/assets/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts/noise-based-terrain.png)
+
+#### Solidity
+
+Density generates a range of values, typically between 1 and -1. Some of these values will become our terrain and others will become the negative space, or air, around our terrain.
+
+<div className="flex flex-row rounded-lg border p-4 text-center">
+  <div className="flex-1 border-r pr-2">
+    <span className="font-bold">Density</span> <br />
+    Density values are calculated at each coordinate, you can imagine this is
+    like a cloud ![Graph about
+    Density](/assets/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts/density.png)
+  </div>
+
+  <div className="flex-1 pl-2">
+    <span className="font-bold">Solidity</span> <br />
+    Typically, we interpret positive values account for solid terrain, and
+    negative values the empty space ![Graph about
+    Solidity](/assets/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts/solidity.png)
+  </div>
+</div>
+
+#### Function Nodes
+
+All of our Density fields can be manipulated with a range of function nodes provided in our node editor. These have a range of functionality that can be used to make interesting terrain shapes - a list of these can be found below.
+
+<Callout type="info">
+  Density is calculated from the sum, this can be thought of like a traditional
+  math equation `f(x) = z + y`
+</Callout>
+
+Below we cover some basic examples that are important to understand when creating some of your first terrain.
+
+##### Absolute
+
+In this example, absolute makes all negative values positive. This makes a kind of ridged shape on a simplex noise field.
+
+![Graph about Absolute](/assets/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts/absolute.png)
+
+##### Normalization
+
+Its important to understand how to manipulate a noise field into a new range. This is because some functions affect the range of your field.
+
+In this example we are normalizing our previous example so that half of the field is empty and half solid. This is done by moving our 0 value to -1, stretching the field to our new range.
+
+![Graph about Normalization](/assets/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts/normalization.png)
+
+<Callout type="warning">
+  Currently the Hytale Node Editor does not support noise visualization, but a
+  range of examples of function nodes can be found in
+  `HytaleGenerator/Biomes/Examples/`
+</Callout>
+
+### Material Providers
+
+Materials use a number of logical function nodes to determine which block asset is used at which location. These can be run on both solid portions of the terrain field but also on negative portions to fill in a water level for example. Some examples of this can be found below.
+
+#### Solidity
+
+Splits into two Material Providers, one for all positive values which becomes solid, the other for negatives which become empty.
+
+#### Queue
+
+Creates a queue of materials with the top node coming highest in priority and the bottom the lowest priority.
+
+<Callout type="danger">
+  The Hytale Node Editor currently sets node priority based on a node's position
+  in the editor, this is displayed as a number in the top right corner of the
+  node.
+</Callout>
+
+### Props
+
+Props enable you to generate content in a specific limited region. Hytale has a range of different Prop types that you can use to build content that gets procedurally added to the world. You can define where the content places by using a combination of Positions fields, Scanners and Patterns.
+
+<div className="flex flex-col rounded-lg border p-4">
+  <div className="flex flex-row text-center">
+    <div className="flex-1 border-r pr-2">
+      <span className="font-bold">Positions</span> <br />
+      Provides the locations to scan in.
+    </div>
+
+    <div className="flex-1 border-r px-2">
+      <span className="font-bold">Scanner</span> <br />
+      An area or column around each position to scan, finds the locations that
+      match the Pattern.
+    </div>
+
+    <div className="flex-1 pl-2">
+      <span className="font-bold">Pattern</span> <br />
+      The Pattern that defines what are valid positions based on the contents of
+      the world.
+    </div>
+  </div>
+
+  ![Graph about
+  Props](/assets/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts/props.png)
+</div>

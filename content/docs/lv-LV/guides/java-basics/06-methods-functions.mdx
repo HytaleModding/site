@@ -376,6 +376,26 @@ public static String dabutVeselibasStatusu(int veseliba, int maxVeseliba) {
    * Satur vismaz vienu skaitli
    * Atgriež true, ja pareizi, savādāk false
 
+<Callout type="info" title="Dalīšanas Piezīme">
+  Kad izstrādā paroles pārbaudītāju, tev varētu būt vajadzīgs veids kā salīdzināt Array/Masīvu vērtības. Piemēram:
+
+  ```java
+  String[] array1 = {"Apple", "Banana"};
+  String[] array2 = {"Apple", "Banana"};
+
+  //Nepareizi:
+  array1[0] == array2[0];       // false
+  /*
+  Array/Masīvs ir ne-primitīvs datu tips. Java salīdzina datu tipu references (ne-primitīvas) pēc to lokācijas Javas atmiņā, nevis pēc to vērtības.
+  */
+
+  // Lai salīdzinātu reālās vērtības references datu tipos, izmanto .equals() metodi:
+  array1[0].equals(array2[0]);       // true 
+
+  // Šī metode nav pielietojama uz primitīviem datu tipiem.
+  ```
+</Callout>
+
 ## Bieži sastopamās kļūdas
 
 ```java

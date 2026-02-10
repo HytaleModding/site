@@ -1,66 +1,66 @@
 ---
-title: World Generation System
-description: Learn how to create custom world generation features for your Hytale mod.
+title: Sistema de geração de mundo
+description: Aprenda a criar recursos personalizados de geração de mundo para o seu mod de Hytale.
 authors:
   - name: Neil Revin
-    link: https://itsneil.dev
+    url: https://itsneil.dev
 ---
 
-# Overview
+# Visão geral
 
-This section covers Hytale's procedural world generation systems that creates environments, biomes, and structures dynamically as players explore the world.
+Esta seção aborda os sistemas de geração procedural de mundo de Hytale que criam ambientes, biomas e estruturas dinamicamente à medida que os jogadores exploram o mundo.
 
-Hytale’s world generation is organized into three interconnected systems:
+A geração de mundo de Hytale é organizada em três sistemas interconectados:
 
-- **Zones** - Large-scale regions that define overall world structure
-- **Biomes** - Terrain characteristics and environmental properties within zones
-- **Caves** - Underground structures and networks generated within zones
+- **Zonas**: regiões em grande escala que definem estruturas em todo o mundo;
+- **Biomas**: características do terreno e propriedades ambientais dentro das zonas;
+- **Cavernas**: estruturas e redes subterrâneas dentro das zonas.
 
-These systems work together to create a rich, varied world with smooth transitions and coherent regional themes.
+Esses sistemas trabalham juntos para criar um mundo rico e variado, com transições suaves e temas regionais coerentes.
 
-## Getting Started
+## Primeiros passos
 
-1. Zone System - Large regions
-2. Biome System - Terrain and environment within zones
-3. Cave System - Underground structures and networks within zones
+1. Sistema de zona — Grandes regiões;
+2. Sistema de bioma — Terreno e ambiente dentro das zonas;
+3. Sistema de caverna — Estruturas e redes subterrâneas dentro das zonas;
 
-## Implementation Details
+## Detalhes de implementação
 
-### Zone Lookup and Generation
+### Busca e geração de zona
 
 ```java
 
-// Get zone at position
-ZonePatternGenerator zoneGen = /* world generator */;
+// Obter zona na posição
+ZonePatternGenerator zoneGen = /* gerador de mundo */;
 ZoneGeneratorResult zoneResult = zoneGen.generate(seed, x, z);
 Zone zone = zoneResult.getZone();
 
-// Get biome within zone
+// Obter bioma dentro da zona
 BiomePatternGenerator biomeGen = zone.biomePatternGenerator();
 Biome biome = biomeGen.generateBiomeAt(zoneResult, seed, x, z);
 
-// Check for caves in zone
+// Verificação para as cavernas na zona
 CaveGenerator caveGen = zone.caveGenerator();
 if (caveGen != null) {
     CaveType[] caveTypes = caveGen.getCaveTypes();
-    // Generate caves as needed
+    // Gerar cavernas conforme necessário
 }
 ```
 
-### Creating a Custom Zone
+### Criando uma zona personalizada
 
 ```java
-// Configure zone discovery
+// Configurar descobrimento de zona
 ZoneDiscoveryConfig discovery = new ZoneDiscoveryConfig(
-    true,                           // Show notification
-    "Custom Zone",                  // Display name
-    "zone.forest.discover",         // Sound event
-    "icons/forest.png",             // Icon
-    true,                           // Major zone
-    5.0f, 2.0f, 1.5f                // Duration, fade in, fade out
+    true,                           // Mostrar notificação
+    "Zona personalizada",                  // Nome de exibição
+    "zone.forest.discover",         // Evento sonoro
+    "icons/forest.png",             // Ícone
+    true,                           // Zona principal
+    5.0f, 2.0f, 1.5f                // Duração, Aparecimento, Desaparecimento
 );
 
-// Create biome pattern
+// Criar bioma padrão
 IPointGenerator biomePoints;
 IWeightedMap<TileBiome> tileBiomes;
 CustomBiome[] customBiomes;
@@ -71,26 +71,26 @@ BiomePatternGenerator biomeGen = new BiomePatternGenerator(
     customBiomes
 );
 
-// Create cave configuration
-CaveType[] caveTypes; // cave definitions
+// Criar configuração de caverna
+CaveType[] caveTypes; // Definições de caverna
 CaveGenerator caveGen = new CaveGenerator(caveTypes);
 
-// Assemble the zone
+// Construir zona
 Zone customZone = new Zone(
-    100,                    // Unique ID
-    "new_custom_zone",      // Internal name
-    discovery,              // Discovery config
-    caveGen,                // Cave generator
-    biomeGen,               // Biome pattern
-    uniquePrefabs           // Unique structures
+    100,                    // ID único
+    "new_custom_zone",      // Nome interno
+    discovery,              // Config. de descobrimento
+    caveGen,                // Gerador de caverna
+    biomeGen,               // Bioma padrão
+    uniquePrefabs           // Estruturas únicas
 );
 ```
 
-## System Integration
+## Integração do sistema
 
-### Zone & Biome Integration
+### Integração de zona e bioma
 
-Each zone defines its own biome pattern:
+Cada zona define seu próprio padrão de bioma:
 
 ```java
 Zone zone = zoneGen.generate(seed, x, z).getZone();
@@ -98,46 +98,46 @@ BiomePatternGenerator biomeGen = zone.biomePatternGenerator();
 Biome biome = biomeGen.generateBiomeAt(zoneResult, seed, x, z);
 ```
 
-### Zone & Cave Integration
+### Integração de zona e caverna
 
-Eacdh zone defines it's own cave patterns:
+Cada zona define seu próprio padrão de caverna:
 
 ```java
 Zone zone = /* ... */;
 CaveGenerator caveGen = zone.caveGenerator();
 if (caveGen != null) {
-    // This zone has caves
+    // Esta zona tem cavernas
     CaveType[] types = caveGen.getCaveTypes();
 }
 ```
 
-### Biome & Cave Integration
+### Integração de bioma e caverna
 
-Caves use biome masks for placement control:
+As cavernas usam máscaras do bioma para controle de posicionamento:
 
 ```java
-// Cave type with biome restrictions
+// Tipo de caverna com restrições de bioma
 Int2FlagsCondition biomeMask = caveType.getBiomeMask();
 int biomeId = biome.getId();
 int flags = biomeMask.eval(biomeId);
 
-// Check if cave can generate in this biome
+// Verifica se a caverna pode ser gerada neste bioma
 if (CaveBiomeMaskFlags.canGenerate(flags)) {
     // Generate cave
 }
 ```
 
-### Border Transitions
+### Transições de borda
 
-All systems respect zone boundaries:
+Todos os sistemas respeitam os limites da zona:
 
 ```java
 ZoneGeneratorResult result = zoneGen.generate(seed, x, z);
 double borderDistance = result.getBorderDistance();
 
-// Fade custom biomes near borders
+// Suaviza os biomas personalizados perto das bordas
 if (borderDistance < customBiome.getFadeContainer().getMaskFadeSum()) {
     double factor = customBiome.getFadeContainer().getMaskFactor(result);
-    // Apply fading
+    // Aplica a suavização
 }
 ```
