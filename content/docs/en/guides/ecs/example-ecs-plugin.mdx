@@ -40,6 +40,7 @@ public class PoisonComponent implements Component<EntityStore> {
   }
 
   // A builder codec is needed to allow components to be saved and loaded from disk
+  // NOTE: You must specify the codec when adding the component to the store for it to save and load data.
   public static final BuilderCodec<PoisonComponent> CODEC = BuilderCodec
         .builder(PoisonComponent.class, PoisonComponent::new)
         .append(
@@ -204,7 +205,7 @@ public class ExampleCommand extends AbstractPlayerCommand {
       @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {
     Player player = store.getComponent(ref, Player.getComponentType());
     PoisonComponent poison = new PoisonComponent(3f, 0.5f, 8);
-    store.addComponent(ref, PoisonComponent.getComponentType(), poison);
+    store.addComponent(ref, PoisonComponent.getComponentType(), poison, PoisonComponent.CODEC);
     player.sendMessage(Message.raw("You have been poisoned!").color(Color.GREEN).bold(true));
   }
 }
