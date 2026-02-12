@@ -1,0 +1,134 @@
+- Boolean
+  - true or false
+- Integer
+  - Any Integer
+- String
+  - Any String
+- Float
+  - Any Floater Number
+- Double
+  - Any Double Number
+- UUID
+  - Any UUID
+- Player_UUID
+  - Can be a player UUID or name
+- Game_Profile_Lookup_Async
+  - Profile?
+- Game_Profile_Lookup
+  - Profile but not async?
+- Relative_Double_Coord
+  - ex: "5.0", "~-2.3", "0.0"
+- Relative_Int_Coord
+  - ex: "5", "~-2", "0"
+- Relative_Integer
+  - A tilde to mark an integer as relative to a base
+  - ex: "5", "~-2", "0"
+- Relative_Float
+  - A tilde to mark a float as relative to a base?
+  - ex: 90.0", "~-45.5", "~"
+- Player_Ref
+  - player name only?
+- World
+  - World Name
+- Model_Asset
+  - Model Asset Class
+- Weather_Asset
+  - Weather Class
+- Interaction_Asset
+  - Interaction Class
+- Root_Interaction_Asset
+  - Root Interaction Class
+- Effect_Asset
+  - EntityEffect class
+- Environment_Asset
+  - Environment Class
+- Item_Asset
+  - Item Class
+- Block_Type_Asset
+  - Block Type Class
+- Particle_System
+  - ParticleSystem class
+- Hitbox_Collision_Config
+  - HitboxCollisionConfigClass
+- Repulsion_Config
+  - RepulsionConfig class
+- Sound_Event_Asset
+  - SoundEvent Class
+- Ambiance_Fx_Asset
+  - AmbienceFX class
+- Sound_Category
+  - Parsed against the SoundCategory class (enum?)
+- Entity_ID
+  - Arg Wrapper?
+  - Entity UUID
+- Integer_Comparison_Operator
+  - ex: ">", "<", ">=", "<=", "%", "=", "!="
+  - GREATER_THAN
+  - GREATER_THAN_EQUAL_TO
+  - LESS_THAN
+  - LESS_THAN_EQUAL_TO
+  - MOD_EQUAL_ZERO
+  - MOD_NOT_EQUAL_ZERO
+  - EQUAL_TO
+  - NOT_EQUAL_TO
+- Integer_Operation
+  - A mathematical sign for performing an operation
+  - "+", "-", "*", "/", "%", "="
+- Int_Range
+  - Two integers representing a minimum and maximum of a range
+  - ex: "-2 8", "5 5", "1 5"
+  - Minimum value, must be less than or equal to max value
+  - Maximum value, must be greater than or equal to min value
+- Relative_Int_Range
+  - Two integers representing a minimum and maximum of a range
+  - ex: "~-2 ~8", "~5 ~5", "~1 ~5"
+- Vector2I
+  - Integer Vector 2D
+  - Two integers, generally corresponding to x/z axis
+- Vector3I
+  - Integer Vector
+  - Three integers, generally corresponding to x/y/z axis
+- Relative_Vector3I
+  - Relative Integer Vector
+  - Three optionally relative integers, generally corresponding to x/y/z axis
+- Relative_Block_Position
+  - Each value must be a relative int coord
+  - ex: 124 232 234", "~5 ~ ~-3", "~ ~ ~"
+- Relative_Position
+  - Each value must be a relative double coord
+  - ex: "124.63 232.27 234.22", "~5.5 ~ ~", "~ ~ ~"
+- Relative_Chunk_Position
+  - Each value must be a relative int coord
+  - ex: "5 10", "~c2 ~c-3", "~ ~"
+- Rotation
+  - Pitch, Yaw, Roll (Floats)
+  - ex: "124.63 232.27 234.22"
+- Block_Type_Key
+  - A block type
+  - ex: Wood_Drywood_Planks_Half
+- Block_ID
+  - A block type, converted to an int id
+- Color
+  - can be hex color, hex integer or decimal integer
+  - "#FF0000", "#00FF00FF", "16711680", "0xFF0000"
+- Weighted_Block_Type
+  - A weight corresponding to a blocktype
+  - First param: The relative weight of this entry. Think of it as a lottery ticket
+  - Second param: The BlockTypeKey associated with the weight
+  - ex: "5 Empty", "20 Rock_Stone", "2 Rock_Shale"
+- Weighted_Block_Entry
+  - A block with optional weight prefix (e.g., 20%Rock_Stone or Rock_Stone)
+  - ex: Rock_Stone", "20%Rock_Stone
+- Block_Pattern
+  - A list of blocks with optional weights (e.g., [20%Rock_Stone, 80%Rock_Shale])
+- Individual_Block_Mask
+  - Create a block mask using symbols and block names
+  - ex: ">Grass_Full", "!Fluid_Water", "!^Fluid_Lava", "!#"
+- Block_Mask
+  - A list of block masks that combine together
+  - [!Fluid_Water, !^Fluid_Lava]", "[>Grass_Full, !#]
+- Tick_Rate
+  - ex: "30tps", "33ms", "60", "20tps", "50ms"
+- Game_Mode
+  - "adventure", "a"
+  - "creative", "c"
