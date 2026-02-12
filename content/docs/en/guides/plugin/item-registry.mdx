@@ -1,0 +1,94 @@
+---
+title: "Working with the Item Registry"
+description: "Learn how to access and query the game's item registry to list all items, check if items exist, and retrieve item properties."
+authors:
+    - name: "Denis"
+---
+
+In this guide, you'll learn how to work with Hytale's Item Registry system. This is useful when you need to programmatically list all available items, validate item IDs, or retrieve item properties at runtime.
+
+## Prerequisites
+
+Before diving in, you should be familiar with:
+- [Setting up your development environment](./setting-up-env)
+- [Creating commands](./creating-commands) (optional, for testing)
+
+## Required Imports
+
+To work with the Item Registry, you'll need the following imports:
+
+```java
+import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
+import com.hypixel.hytale.server.core.asset.type.item.config.Item;
+```
+
+## Getting the Item Registry
+
+The Item Registry is accessed through the `Item.getAssetMap()` method, which returns a `DefaultAssetMap<String, Item>` containing all registered items in the game:
+
+```java
+DefaultAssetMap<String, Item> itemMap = Item.getAssetMap();
+```
+
+## Listing All Items
+
+To iterate through all items in the registry, you can get the underlying map and loop through its entries:
+
+```java
+DefaultAssetMap<String, Item> itemMap = Item.getAssetMap();
+var map = itemMap.getAssetMap();
+
+for (var entry : map.entrySet()) {
+    String itemId = String.valueOf(entry.getKey());
+    Item item = entry.getValue();
+    
+    // Do something with the item
+    LOGGER.atInfo().log("Item ID: " + itemId);
+}
+```
+
+You can also get the total count of registered items:
+
+```java
+int totalItems = map.size();
+```
+
+## Checking if an Item Exists
+
+To check if a specific item exists in the registry, use `getAsset()` and verify the result:
+
+```java
+public boolean itemExists(String itemId) {
+    var assetMap = Item.getAssetMap();
+    if (assetMap != null) {
+        Item item = assetMap.getAsset(itemId);
+        return item != null && item != Item.UNKNOWN;
+    }
+    return false;
+}
+```
+
+<Callout type="info">
+The `Item.UNKNOWN` constant represents an invalid or unrecognized item. Always check for both `null` and `Item.UNKNOWN` when validating items.
+</Callout>
+
+## Accessing Item Properties
+
+Once you have an `Item` instance, you can access various properties:
+
+```java
+var assetMap = Item.getAssetMap();
+Item item = assetMap.getAsset("Soil_Grass");
+
+if (item != null && item != Item.UNKNOWN) {
+    String id = item.getId(); // Soil_Grass
+    int maxStack = item.getMaxStack(); // 100
+    boolean isBlock = item.hasBlockType(); // true
+    boolean isConsumable = item.isConsumable(); // false
+}
+```
+
+## Related Guides
+
+- [Inventory Management](./inventory-management) - Learn how to add and remove items from player inventories
+- [Create Custom Item and Interaction](./item-interaction) - Learn how to create your own custom items

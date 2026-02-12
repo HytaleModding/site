@@ -24,20 +24,20 @@ type FeaturedSponsor = Omit<Sponsor, "image" | "website" | "MemberId"> & {
 
 const featuredSponsors: FeaturedSponsor[] = [
   {
-    name: "BisectHosting",
-    image: {
-      light: BisectHostingLight,
-      dark: BisectHostingDark,
-    },
-    website: "https://bisecthosting.com",
-  },
-  {
     name: "FiveManage",
     image: {
       light: FiveManageLight,
       dark: FiveManageDark,
     },
     website: "https://fivemanage.com",
+  },
+  {
+    name: "BisectHosting",
+    image: {
+      light: BisectHostingLight,
+      dark: BisectHostingDark,
+    },
+    website: "https://bisecthosting.com",
   },
 ];
 

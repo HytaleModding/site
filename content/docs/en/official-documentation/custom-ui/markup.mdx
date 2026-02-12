@@ -1,0 +1,226 @@
+---
+title: "Markup"
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+# Markup
+
+## Markup
+
+An element is the basic building block of a user interface. There are various types of elements with different properties, which are documented below.
+
+Here's what the syntax looks like:
+
+```
+// Basic declaration of an element
+// with its Anchor property set to attach on all sides of its parent
+// with 10 pixels of margin
+Group { Anchor: (Left: 10, Top: 10, Right: 10, Bottom: 10); }
+
+Group { Anchor: (Full: 10); } // More concise version
+
+// Declaration of a Label with a name
+// (can be used to access the element from game code)
+Label #MyLabel {
+  Style: LabelStyle(FontSize: 16); // or just Style: (FontSize: 16), type can be inferred.
+  Text: "Hi! I am text.";
+}
+
+// Declaration of a Group containing 2 children
+// You can use FlexWeight to distribute any left-over space after explicit widths/heights have been subtracted
+Group {
+  LayoutMode: Left;
+  Label { Text: "Child 1"; FlexWeight: 2; }
+  Label { Text: "Child 2"; FlexWeight: 1; }
+}
+```
+
+### Documents
+
+A UI document (_.ui_ file) contains trees of elements. There can be multiple root elements.
+
+### Named Expressions
+
+Named expressions can be declared at any level of a document (including at the root) and will be scoped to that subtree, though they need to be declared at the top of the block.
+
+```
+// Example of named expressions, declared and used with @ prefix
+@Title = "Hytale";
+@ExtraSpacing = 5;
+
+Label {
+  Text: @Title;
+  Style: (LetterSpacing: 2 + @ExtraSpacing);
+}
+```
+
+You can use the spread operator `...` to reuse a named expression while overriding some of its fields:
+
+```
+@MyBaseStyle = LabelStyle(FontSize: 24, LetterSpacing: 2);
+
+Label {
+  Style: (...@MyBaseStyle, FontSize: 36);
+}
+```
+
+You can even layer multiple named expressions like so:
+
+```
+@TitleStyle = LabelStyle(FontSize: 24, HorizontalAlignment: Center);
+@SpacedTextStyle = LabelStyle(LetterSpacing: 2);
+
+Label {
+  Style: (...@BigTextStyle, ...@SpacedTextStyle);
+}
+```
+
+#### Document references
+
+A document can reference another document and access its named expressions.
+
+```
+// Document references are defined with $ prefix
+$Common = "../Common.ui";
+
+TextButton {
+  Style: $Common.@DefaultButtonStyle;
+}
+```
+
+### Templates
+
+You can declare a reusable bit of interface as a named expression and then instantiate it as many times as you want in the tree while customizing it.
+
+You can override local named expressions as well as insert additional children at any point in the template tree. However, local named expressions must be defined at the very top of the block, before properties and child elements.
+
+```
+// This is the template
+@Row = Group {
+  Anchor: (Height: 50);
+  Label #Label { Anchor: (Left: 0, Width: 100); Text: @LabelText; }
+  Group #Content { Anchor: (Left: 100); }
+};
+
+// Here we'll be using it twice in the document tree
+Group #Rows {
+  LayoutMode: TopScrolling;
+
+  @Row #MyFirstRow {
+    @LabelText = "First row";
+    #Content { TextInput {} }
+  }
+
+  @Row #MySecondRow {
+    @LabelText = "Second row";
+  }
+}
+```
+
+### Property Types
+
+#### Basic Types
+
+- **Boolean**
+  - `Visible: false;`
+  - `Visible: true;`
+- **Int**
+  - `Height: 20;`
+- **Float, Double, Decimal**
+  - `Min: 0.2;`
+- **String**
+  - `Text: "Hi!";`
+- **Char**
+  - `PasswordChar: "*";`
+  - _Note: The syntax is the same as a string, however a value of this type cannot contain more than one character!_
+- **Color**
+  - `Background: #ffffff;`&#x20;
+- **Objects**
+  - `Style: (Background: #ffffff)`
+- **Array**&#x20;
+  - `TextSpans: [(Text: "Hi", IsBold: true)]`
+
+#### Translations
+
+Translation keys can be referenced anywhere in markup where you can provide a string, and they are then converted to a string when an element gets instantiated.
+
+**Example:**
+
+```
+Label {
+  Text: %ui.general.cancel;
+}
+```
+
+#### Colors
+
+A color literal can be written as follows:
+
+- `#rrggbb`: 6-digit hexadecimal representation for red, green, blue (fully opaque)
+- `#rrggbb(a.a)`: 6-digit hexadecimal representation for red, green, blue with alpha between 0 and 1
+- `#rrggbbaa`: 8-digit hexadecimal representation for red, green, blue and alpha
+
+```
+Group {
+  Background: #000000(0.3);
+}
+```
+
+<Callout>
+  The `#rrggbb(a.a)` format is prefered over the `#rrggbbaa` format for
+  readability reasons.
+</Callout>
+
+#### Font Name
+
+Font names can be referenced directly by their string ID. Internally this is using a custom type called `UIFontName`, however strings will be converted automatically to this type in markup.
+
+```
+Label {
+  Text: "Hi";
+  Style: (FontName: "Secondary");
+}
+```
+
+**Available Font Names**
+
+- _Default_ - This is the default font that is used for most text and is always used unless a different option has been specified
+- _Secondary_ - This font is mostly used for headlines or elements that are supposed to stick out
+- _Mono_ - This is only used for development; For things such as profiling or error overlays.
+
+#### Path
+
+We can reference other UI assets with the `UIPath` type. Similar to `UIFontName`_,_ Strings are automatically converted to a `UIPath`. Paths are always relative to the file where they have been declared in. Looking up _MyButton.png_ in _Menu/MyAwesomeMenu.ui_ will result in _Menu/MyButton.png_. If you want to reference a file that is in a parent folder you can go back one directory by writing two dots (_../MyButton.png_).
+
+The markup syntax of a `UIPath` is the same as a String. (e.g. `Path: "Test.png"`)
+
+Here are some more examples:
+
+| UIPath             | .ui File                              | Resulting Path    |
+| ------------------ | ------------------------------------- | ----------------- |
+| MyButton.png       | Menu/MyAwesomeMenu.ui                 | Menu/MyButton.png |
+| ../MyButton.png    | Menu/MyAwesomeMenu.ui                 | MyButton.png      |
+| ../../MyButton.png | Menu/Popup/Templates/MyAwesomeMenu.ui | Menu/MyButton.png |
+
+#### Objects
+
+Objects contain a set of properties. In this example we are assigning an Anchor object to the _Anchor_ property:
+
+```
+Group {
+  Anchor: (
+   Height: 10,
+   Width: 20
+ );
+}
+```
+
+You can find all objects that can be used in markup [here](type-documentation#elements).
+
+## Visual Studio Code Extension
+
+There is an official extension for Visual Studio Code which adds syntax highlighting for .ui files. You can find it [here](https://marketplace.visualstudio.com/items?itemName=HypixelStudiosCanadaInc.vscode-hytaleui).
