@@ -291,6 +291,19 @@ This interaction immediately executes the provided RootInteraction as part of th
 | RootInteraction | `Asset`<br />(Asset Type: `RootInteraction`) | **Yes** | The RootInteraction to execute. |
 
 
+### SendMessage 
+
+This interaction sends a message to the Owner entity if that entity can receive messages.  Otherwise, the message 
+  is written to the server logs.  If the entity is a player, the message will appear in the player's chat window.
+
+**SendMessage  
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Message | `String` | **No** | A text message to be sent to the Owner entity.  If this field is not provided, `Key` is used instead. |
+| Key | `String` | **No** | A translation key for a message to be sent to the Owner entity. If `Message` is provided, then this field is ignored. |
+
+
 ### Serial 
 
 This interaction does not inherit from SimpleInteraction and therefore has no Next or Failed fields.
@@ -304,6 +317,374 @@ This interaction has a field `Interactions` which is a list of Interaction asset
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
 | Interactions | `AssetArray`<br />(Element Type: `Interaction`) | **Yes** | An array of Interaction assets to execute. |
+
+
+## Cooldowns 
+
+RootInteractions interface with a complex cooldown system that can be used for a variety of purposes. Aside from simply 
+  adding an important aspect of resource management to your game design, cooldowns can be used to ensure that click-activated 
+  interaction chains don't repeatedly spam if the player holds down the input. 
+
+By default, every RootInteraction has a cooldown timer that is keyed to the RootInteraction name, and by default, it 
+  will launch a cooldown of 0.35 seconds when activated by client input.  Otherwise, no cooldown will be activated.  However,
+  by configuring your RootInteraction, you can change the key for the cooldown (so that multiple RootInteractions can share 
+  a single cooldown), set the cooldown timer to whatever you like, and configure multiple charges that can build up over time
+  to allow the entity to activate the RootInteraction multiple times before being forced to pause.
+
+One important concept to keep in mind is the difference between **cooldown** and **charge time**.  The cooldown, if any,
+  is activated each time a RootInteraction triggers, even if the player has more available charges. If the RootInteraction 
+  is configured to use charges, then they will gradually build up over time. In order for a RootInteraction to be activated,
+  the cooldown (if any) must be expired, and the RootInteraction must have at least one charge (if it has been 
+  configured to use charges). 
+
+Bear in mind that the entire Cooldown configuration is shared between different RootInteractions with the same cooldown id.
+  If you activate an ability with 5 charges and a short cooldown and then another ability with a much longer cooldown and no 
+  charges, the second ability will use the cooldown properties of the first ability until/unless the first ability finishes 
+  charging and is cleared from the system.  You should generally only have multiple RootInteractions share a cooldown id 
+  if they have the same configuration.
+
+The interactions below interact with the cooldown system to allow you to manipulate cooldowns via the interaction system. By 
+  using these interactions, you can have several interaction chains with different cooldown configurations share cooldowns 
+  that are checked and activated as part of the interaction chain itself, or have some components of an interaction change 
+  use a second cooldown separate from the main one.
+
+### CooldownCondition
+
+**CooldownCondition Fields**
+
+This interaction will fail if the specified cooldown id is on cooldown for the User entity.  This interaction will only 
+  function for players- the interaction will always succeed for NPCs.  In order for this interaction to succeed, the 
+  cooldown, if any, must have expired and at least one charge, if any, must have filled.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `String` | **Yes** | The cooldown id to check. |
+
+### IncrementCooldown
+
+**IncrementCooldown Fields**
+
+This interaction will modify a cooldown that is currently active on the User entity, allowing charges and remaining 
+  cooldown to be modified.
+  Despite its name, this interaction can be used to reduce a cooldown as well as increase it. If the cooldown is not 
+  currently active, this interaction will have no effect. The interaction has no special failure conditions. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `String` | **No** | If provided, the cooldown id of the cooldown to be manipulated. If not provided, the cooldown id of the current chain's RootInteraction will be used. |
+| Time | `Float`<br />(Default: 0.0) | **No** | The amount to increase the remaining cooldown by. Can be negative. The remaining cooldown time will not be reduced below zero or increased above the maximum cooldown time. |
+| ChargeTime | `Float`<br />(Default: 0.0) | **No** | The amount to increase the remaining time until the next charge is filled by. Can be negative. The remaining charge time cannot be reduced below zero or increased above the maximum cooldown time. **This will not work on abilities that have a maximum of 1 charge, for some reason.** |
+| Charge | `Integer`<br />(Default: 0) | **No** | The amount to increase the number of charges by. Can be negative. The number of charges cannot be reduced below 0 or increased above the maximum. |
+| InterruptRecharge | `Boolean`(Default: false) | **No** | If true and `Charge` is not 0, will reset the remaining time to the next charge to the maximum value after changing the charge count. |
+
+### ResetCooldown
+
+This interaction will trigger a cooldown on the User entity with a specified configuration. The charges will be refilled 
+  but the cooldown will be immediately triggered.  The mechanisms for deciding on the configuration are a little bit complicated.
+  You may specify a cooldown configuration via the `Cooldown` field. If you do not include an `Id` field, then the 
+  interaction chain's RootInteraction will be used for any field not specified in the configuration. If there is an active 
+  cooldown under the specified `Id` (or under the RootInteraction's cooldown id if none is specified) then the fields 
+  from that active cooldown will overwrite data in the RootInteraction's cooldown, but not data in your `Cooldown` field.
+
+**ResetCooldown Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Cooldown | `InteractionCooldown` | **No** | A cooldown configuration to use for the new, reset cooldown. |
+
+**InteractionCooldown Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `String` | **No** | The cooldown id to use for this cooldown. If not provided, the RootInteraction's cooldown id will be used, if any. |
+| Cooldown | `Float`<br />(Default: 0.0) | **No** | The duration of the cooldown, in seconds. | 
+| Charges | `Array`<br />(Element Type: `Float`) | **No** | If provided, a list of how many charges this cooldown can build, and how long each charge takes to build, in seconds. |
+| InterruptRecharge | `Boolean`<br />(Default: false) | **No** | If true, the charge time will be reset when the number of charges changes. |
+| ClickBypass | `Boolean`<br />(Default: false) | **No** | If true, RootInteractions keyed to this cooldown can still be activated when it is on cooldown provided that the RootInteraction was triggered by a distinct key or mouse button press on the client. |
+
+
+## Combo Chains 
+
+Hytale additionally comes with a rich "combo chaining" system, which allows several inputs in a row to result in different 
+  attacks and special moves.  Rather than being attached to the RootInteraction like the cooldown system, these are 
+  primarily driven by the `Chaining` interaction.
+
+
+### Chaining 
+
+This interaction does not inherit from SimpleInteraction and therefore has no Failed field. Its Next field works differently
+  from most interaction types.
+
+Chaining is a type of flow control interaction- each time a Chaining interaction with the same `ChainId` is called, a single 
+  interaction in the `Next` list is chosen and the others are ignored. The first time the `ChainId` is used, the first 
+  interaction in the list is chosen, the next time the second, etc. Once the end of the list is reached, the first 
+  interaction will be chosen again.
+
+Bear in mind: the progress through the Next list is based on the **ChainId**, not the interaction!  That means that two 
+  different Chaining interactions can share a single combo chain. You could have a pair of daggers that attacks with 
+  the left when the left mouse button is clicked and with the right when the right mouse button is clicked.  You could give 
+  both interaction chains a Chaining interaction with the same `ChainId` and three `Next` entries that do a light-light-heavy 
+  combo.  Each specific hit would occur with either the left or the right knife based on which button you clicked, but 
+  the combo would be otherwise identical regardless of which you chose. 
+
+The Chaining interaction also has a concept called "flags".  It is possible to attach named flags to a `ChainId` by using 
+  the ChainFlag interaction.  Then, you specify the flag name in Chaining's `Flags` field. If a Flag is active when the 
+  Chaining interaction is run, the Flag's interaction will be run instead of the appropriate interaction in `Next`.
+  Bear in mind: the entity's progress through the `Next` list still advances, the resulting `Next` interaction is just not 
+  run.  Only one flag can be active at a time.
+
+Lastly, it is possible to cancel the entity's progress through the combo chain and reset them to the first interaction in 
+  the list. This can be done with the CancelChain interaction, but it will also happen automatically if the player does 
+  not trigger an interaction with the ChainId for the specified ChainingAllowance.  When either of these happen, all flags will be 
+  canceled as well.
+
+All of these effects are triggered on the User entity only. Non-players can use the chaining system, but Flags do not currently
+  work for non-players.  This interaction has no special failure conditions.
+
+**Chaining Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ChainId | `String` | **No** | If provided, acts as a key that multiple Chaining interactions can use to share combo chain progress and flags. If not provided, a unique ChainId will be generated for this interaction. | 
+| ChainingAllowance | `Double`<br />(Default: 0.0) | **No** | If, at the time this interaction is triggered, it has been this long in seconds since the last time a Chaining interaction with the same ChainId was executed, all state for this ChainId will be cleared before execution. |
+| Next | `AssetArray`<br />(Element Type: `Interaction`) | **Yes** | A list of interactions to cycle between each time this interaction is run. |
+| Flags | `Map`<br />(Key Type: `String`, Value Type: `Interaction`) | **No** | A map of flag names to interactions to run if the flag is active when this interaction executes. |
+
+
+### CancelChain 
+
+This interaction resets all progress and flag data on the User entity for the provided `ChainId`.  The next time a Chaining 
+  interaction is called for the provided `ChainId`, it will begin at the first interaction in the `Next` list. This
+  interaction has no special failure conditions.
+
+**CancelChain Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ChainId | `String` | **Yes** | A ChainId whose data should be reset. |
+
+
+### ChainFlag 
+
+This interaction activates a flag on the User entity for the provided `ChainId`, which can be used to change behavior the 
+  next time a Chaining interaction with this `ChainId` is run. This will overwrite any flag that has 
+  already been raised. This interaction will have no effect for non-players. This interaction has no special failure 
+  conditions.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ChainId | `String` | **Yes** | A ChainId on whom the flag should be raised. |
+| Flag | `String` | **Yes** | The name of the flag to raise. |
+
+
+## Charging 
+
+A unique flow-control interaction that is frequently used is the Charging interaction.  It is a flow-control interaction 
+  that delays while the input button used to trigger the interaction chain is held.  When it is released (or the interaction 
+  is forced to end), the interaction chain can continue with a different interaction based on how long the input was held 
+  for.
+
+These interactions are all related by either being the Charging interaction, or other interaction types that inherit the
+  Charging interaction's behavior.
+
+### Charging 
+
+This interaction does not inherit from SimpleInteraction and therefore its Next field works different from most interactions.
+  This interaction adds its own Failed field which works the same way that SimpleInteraction's does.
+
+This interaction only works properly when its interaction chain was triggered by a client key or button press (or 
+  NPC-simulated equivalent). This interaction will continue executing for as long as the key or button press is held (with 
+  some exceptions, covered below) by the User entity.  Like other interactions, it has a `Next` field indicating which interaction to execute
+  after this one, but the field is a map from `Float` values to `Interaction` assets. When this interaction ends, either 
+  due to the input being released or the charge duration completing, this interaction will determine the largest `Float` key that is less 
+  than the amount of time in seconds that the interaction was executing for.  The Interaction mapped to that key will be 
+  executed next.
+
+The interaction includes some cancellation conditions that are specific to this interaction. For instance, the interaction 
+  has a `CancelOnOtherClick` field that matches the field on RootInteraction. If it is active on this interaction but not 
+  the RootInteraction, then clicking while charging will cancel this interaction (and execute the `Failed` interaction rather 
+  than any of the `Next` interactions) but otherwise continue the interaction chain.
+
+Another valuable feature Charging has is the `Forks` field.  For input-triggered interactions that are triggered while the 
+  Charging interaction is executing, you can add an entry for the relevant InteractionType to this field and instead of 
+  triggering the usual interaction chain based on held item, targeted block, etc. the RootInteraction specified in the 
+  `Forks` field will be triggered.  This can unlock rich attack modes and behaviors. For instance, having a shield bash attack 
+  triggered off left click while blocking, or a special attack that triggers when both mouse buttons are pressed at the 
+  same time.
+
+There are two modes of operation for the Charging interaction. One is to have the ability charge for as long 
+  as the input is held and only end execution when the entity releases the input.  Bows in the main Hytale game work 
+  that way.  That is accomplished by setting `AllowIndefiniteHold` to true.  Another mode of operation is to have the 
+  interaction complete execution when the execution time has surpassed the largest key value in the `Next` field and 
+  immediately begin executing the Interaction mapped to that key.  Food in the main Hytale game work like this.  It 
+  is accomplished by setting `AllowIndefiniteHold` to false.
+
+One pitfall to be careful of when setting `AllowIndefiniteHold` to false is the way it interacts with cooldowns.  
+  Normally, input-initiated interaction chains start a 0.35s cooldown on the triggered RootInteraction that prevents 
+  holding the mouse button from immediately spamming a new interaction when the first one completes.  However, if the 
+  duration of a Charging interaction is longer than 0.35s, then the cooldown will have already completed when the 
+  interaction chain finishes, which will often result in a new execution beginning immediately before the player can 
+  stop pressing the mouse button.  One solution for this problem is to add a `Simple` interaction to the end of your 
+  interaction chain with a `RunTime` of 0.35s to simulate the cooldown.  Alternatively, you can add a longer cooldown 
+  (the maximum duration of your Charging interaction plus 0.35s) to the RootInteraction. However, the longer cooldown is 
+  not always desirable, as the interaction may have ended prematurely, resulting in an unusually long lockout between 
+  executions.
+
+**Charging Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| FailOnDamage | `Boolean`<br />(Default: false) | **No** | If true, this interaction will fail and end immediately if the User entity takes any damage while it is executing. |
+| CancelOnOtherClick | `Boolean`<br />(Default: true) | **No** | If true, this interaction will fail and end immediately if the User entity sends another button or key press while it is executing. |
+| Forks | `Map`<br />(Key Type: `InteractionType`, Value Type: `RootInteraction`) | **No** | A map of InteractionType to RootInteraction. If entity input triggers the InteractionType while this interaction is executing, the mapped RootInteraction will be forked into its own interaction chain. This will happen instead of the usual handling for that InteractionType.  This fork will occur even if `CancelOnOtherClick` is set to true. |
+| Failed | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this Interaction has finished, "Failed" will be executed if this Interaction failed. |
+| AllowIndefiniteHold | `Boolean`<br />(Default: false) | **No** | If true, this interaction will continue executing for as long as the User entity continues to hold the input. If false, execution will end as soon as the execution time in seconds reaches the largest key value in the `Next` map. |
+| DisplayProgress | `Boolean`<br />(Default: true) | **No** | If true, players executing this interaction will see a progress bar will be displayed below their cursor indicating how close to reaching the highest key value in `Next` they are. |
+| Next | `Map`<br />(Key Type: `Float`, Value Type: `Interaction`) | **No** | A map from `Float` to `Interaction`.  When this interaction successfully finishes executing (either because the input was released or because the maximum duration was reached), this interaction will find the `Float` value with the largest duration in seconds that is less than the amount of time this interaction executed for. That key's mapped Interaction will then be executed. |
+| MouseSensitivityAdjustmentTarget | `Float`<br />(Default: 1.0) | **No** | While charging, this mouse sensitivity multiplier will gradually be applied. |
+| MouseSensitivityAdjustmentDuration | `Float`<br />(Default: 1.0) | **No** | Duration in seconds. After this many seconds, `MouseSensitivityAdjustmentTarget` will be fully applied to the mouse sensitivity. |
+| Delay | `ChargingDelay` | **No** | Settings that allow charging progress to be pushed back when the User entity takes damage. |
+
+**ChargingDelay Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| MinHealth | `Float`<br />(Default: 0.0) | **No** | Damage taken as a percentage of entity health (0.0-1.0). If a hit deals less than this much damage, no pushback will be applied.  If a hit deals exactly this much damage, `MinDelay` seconds worth of pushback will be applied. |
+| MaxHealth | `Float`<br />(Default: 0.0) | **No** | Damage taken as a percentage of entity health (0.0-1.0). If a hit deals at least this much damage, `MaxDelay` seconds worth of pushback will be applied. |
+| MinDelay | `Float`<br />(Default: 0) | **No** | The amount of pushback, in seconds, to apply if the entity takes a hit that deals `MinHealth` damage. The amount of pushback applied by a hit is a gradiant between `MinDelay` and `MaxDelay` based on the amount of damage between `MinHealth` and `MaxHealth`. |
+| MaxDelay | `Float`<br />(Default: 0) | **No** | The amount of pushback, in seconds, to apply if the entity takes a hit that deals at least `MaxHealth` damage. The amount of pushback applied by a hit is a gradiant between `MinDelay` and `MaxDelay` based on the amount of damage between `MinHealth` and `MaxHealth`. |
+| MaxTotalDelay | `Float`<br />(Deault: 0) | **No** | The maximum amount of pushback the entity can receive over the course of a single charge, regardless of how many times they are hit. |
+
+**InteractionType Values**
+- `Primary`
+- `Secondary`
+- `Ability1`
+- `Ability2`
+- `Ability3`
+- `Use`
+- `Pick`
+- `Pickup`
+- `CollisionEnter`
+- `CollisionLeave`
+- `Collision`
+- `EntityStatEffect`
+- `SwapTo`
+- `SwapFrom`
+- `Death`
+- `Wielding`
+- `ProjectileSpawn`
+- `ProjectilHit`
+- `ProjectileMiss`
+- `ProjectileBounce`
+- `Held`
+- `HeldOffhand`
+- `Equipped`
+- `Dodge`
+- `GameModeSwap`
+
+### Wielding 
+
+This interaction is inherited from Charging rather than SimpleInteraction.  However, its `Failed` and `Next` fields function 
+  identically to SimpleInteraction.  It does not inherit all fields from Charging, so be sure to pay close attention to 
+  the field list below.
+
+This interaction drives most blocking behavior in the game. While this interaction is executing, attacks made against 
+  the Owner entity will (conditionally) trigger effects defined in this interaction.  Unlike the Charging interaction, 
+  this interaction can always execute indefinitely and will only end when it fails or when the input is released.
+
+One option available in Wielding is `AngledWielding`, which allows damage and knockback modifiers to only be applied 
+  depending on the direction the attack against the Owner entity is coming from.  The AngledWielding type has a 
+  field `Angle` which determines which direction the protection points relative to the player (0 is the player's 
+  front), and `AngleDistance` which determines how wide the cone of protection extends around the player.  Block effects 
+  from this interaction (such as `BlockedEffects`, `BlockedInteractions`, and `StaminaCost`) will only apply if 
+  the DamageCause matches `DamageModifiers` OR if the DamageCause matches `AngledWielding.DamageModifiers` and 
+  the source of the damage matches `Angle` and `AngleDistance`.  It is possible for damage and knockback multipliers 
+  specified on both this interaction's modifier fields and `AngledWielding`'s modifier fields to stack, if both 
+  have entries for the same DamageCause.
+
+This interaction will only have an effect on damage taken by one of the DamageCause entries in `DamageModifiers` or 
+  `AngledWielding.DamageModifiers`.  If a DamageCause is in `DamageModifiers`, then the block effect will be triggered 
+  and the damage modifier applied regardless of what direction the Owner entity is attacked from.  If a DamageCause is in 
+  `AngledWielding.DamageModifiers`, then the damage modifier is only applied if the 
+
+** Wielding Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| FailOnDamage | `Boolean`<br />(Default: false) | **No** | If true, this interaction will fail and end immediately if the User entity takes any damage while it is executing. |
+| CancelOnOtherClick | `Boolean`<br />(Default: true) | **No** | If true, this interaction will fail and end immediately if the User entity sends another button or key press while it is executing. |
+| Forks | `Map`<br />(Key Type: `InteractionType`, Value Type: `RootInteraction`) | **No** | A map of InteractionType to RootInteraction. If entity input triggers the InteractionType while this interaction is executing, the mapped RootInteraction will be forked into its own interaction chain. This will happen instead of the usual handling for that InteractionType.  This fork will occur even if `CancelOnOtherClick` is set to true (after which this interaction chain will be canceled). |
+| Next | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this interaction has finished, "Next" will be executed if this interaction did not fail. |
+| Failed | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this interaction has finished, "Failed" will be executed if this interaction failed. |
+| DamageModifiers | `Map`<br />(Key Type: `DamageCause`, Value Type: `Float`) | **No** | A map from DamageCause to Float, where the Float is multiplied against any damage received from the mapped DamageCause while this interaction is executing. |
+| KnockbackModifiers | `Map`<br />(Key Type: `DamageCause`, Value Type: `Float`) | **No** | A map from DamageCause to Float, where the Float is multiplied against any knockback force received from the mapped DamageCause while this interaction is executing. |
+| AngledWielding | `AngledWielding` | **No** | Configuration to only trigger block effects from certain angles. |
+| StaminaCost | `StaminaCost` | **No** | If the Owner entity receives damage that matches `DamageModifiers` or `AngledWielding` while this interaction is executing, then the entity's stamina will be deducted according to this configuration. |
+| BlockedEffects | `DamageEffects` | **No** | If the Owner entity receives damage that matches `DamageModifiers` or `AngledWielding` while this interaction is executing, then these effects will be applied to the instance of damage. |
+| BlockedInteractions | `Asset`<br />(Asset Type: `RootInteraction`) | **No** | If the Owner entity receives damage that matches `DamageModifiers` or `AngledWielding` while this interaction is executing, then this RootInteraction will be launched as a brand new interaction chain with the Owner entity as both Owner and User, and the attacker as the Target entity.  This new interaction chain is, notably, brand new, **not** forked from the current one. |
+
+**AngledWielding Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Angle | `Float`<br />(Default: 0.0) | **No** | Angle in degrees relative to the Owner entity where the angled protection is centered. 0.0 means pointed towards the front of the Owner entity. |
+| AngleDistance | `Float`<br />(Default: 0.0) | **No** | Angle in degrees indicating how wide the cone of protection is. |
+| DamageModifiers | `Map`<br />(Key Type: `DamageCause`, Value Type: `Float`) | **No** | A map from DamageCause to Float, where the Float is multiplied against any damage received from the mapped DamageCause received from within the cone of protection while this interaction is executing. |
+| KnockbackModifiers | `Map`<br />(Key Type: `DamageCause`, Value Type: `Float`) | **No** | A map from DamageCause to Float, where the Float is multiplied against any knockback force received from the mapped DamageCause received from within the cone of protection while this interaction is executing. |
+
+**StaminaCost Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| CostType | `CostType`<br />(Default: `MaxHealthPercentage`) | **No** | How to calculate stamina consumed by blocking from the raw pre-block damage. If `Damage`, then the stamina consumed will be `rawDamage / Value`. If `MaxHealthPercentage`, then the stamina consumed will be `rawDamage / (EntityMaxHealth * Value)` |
+| Value | `Float`<br />(Default: 0.04) | **No** | The value to use in the `CostType` formula. |
+
+**DamageEffects Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ModelParticles | `Array`<br />(Element Type: `ModelParticle`) | **No** | Particle systems to trigger in the first-person view. |
+| WorldParticles | `Array`<br />(Element Type: `WorldParticle`) | **No** | Particle systems to trigger in the third-person view. |
+| LocalSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | 2D sound to play locally to the attacking entity if they are a player. |
+| WorldSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | Sound to play in the world at the Owner entity's location. |
+| PlayerSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | 2D sound to play locally to the Owner entity if they are a player. |
+| ViewDistance | `Double`<br />(Default: 75.0) | **No** | Distance at which these effects should play for other players. |
+| Knockback | `Knockback` | **No** | The properties of the knockback that will be applied. |
+| CameraEffect | `Asset`<br />(Asset Type: `CameraEffect`) | **No** | CameraEffect to briefly apply locally to the Owner entity if they are a player. |
+| StaminaDrainMultiplier | `Float`<br />(Default: 1.0) | **No** | This multiplier is applied to the `StaminaCost`, if any. |
+
+
+**Knockback Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Force | `Double`<br />(Default: 0.0) | **No** | The amount of force to apply to the Owner entity. |
+| Duration | `Double`<br />(Default: 0.0) | **No** | If 0.0, apply the force as a single impulse.  If more, continuously apply the force over a period of time. |
+| VelocityType | `ChangeVelocityType`<br />(Default: `Add`) | **No** | How to apply the force, either adding it to the entity's current velocity, or setting the velocity to the knockback force. |
+| VelocityConfig | `VelocityConfig` | **No** | Characteristics of friction as the Owner entity is thrown by this knockback. |
+
+**VelocityConfig Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| GroundResistance | `Float`<br />(Default: 0.82) | **No** | The minimum amount of friction applied when the entity is in contact with the ground.  1.0 = no friction, 0.0 = total friction |
+| GroundResistanceMax | `Float`<br />(Default: 0.0) | **No** | The maximum amount of friction applied when the entity is in contact with the ground.  1.0 = no friction, 0.0 = total friction |
+| AirResistance | `Float`<br />(Default: 0.96) | **No** | The minimum amount of friction applied when the entity is in the air. 1.0 = no friction, 0.0 = total friction | 
+| AirResistanceMax | `Float`<br />(Default: 0.0) | **No** | The maximum amount of friction applied when the entity is in the air. 1.0 = no friction, 0.0 = total friction |
+| Threshold | `Float`<br />(Default: 1.0) | **No** | The speed at which the maximum amount of friction will be applied to the entity. The amount of friction applied will increase from minimum to maximum as the entity moves from 0 to this speed. |
+| Style | `VelocityThresholdStyle`<br />(Default: `Linear`) | **No** | The curve that friction follows as the entity's speed increases toward the `Threshold`. |
+
+**CostType Values**
+- `MaxHealthPercentage`
+- `Damage`
+
+**ChangeVelocityType Values**
+- `Add`
+- `Set`
+
+**VelocityThresholdStyle Values**
+- `Linear`
+- `Exp`
 
 
 ## Blocks
@@ -541,6 +922,16 @@ Adds a specified quantity of a specified item to the User entity's inventory, pr
 | Quantity | `Integer`<br />(Default: 0) | **No** | The quantity of the item to add to the player's inventory. |
 
 
+### CheckUniqueItemUsage
+
+This interaction will check whether it has run once for the User entity with their currently-held item before. If it hasn't,
+  it will succeed. If it has, it will fail. It will also fail if the User entity is not a player. The interaction will record
+  the item id of the User entity's currently-held item on success, ensuring it cannot be successfully run with that player 
+  and item id combination again.
+
+**This interaction has no additional fields.**
+
+
 ### EquipItem
 
 This interaction will equip the User entity's currently-held item into the appropriate armor slot, if it is armor. The 
@@ -548,15 +939,18 @@ This interaction will equip the User entity's currently-held item into the appro
   take no action if the User entity cannot equip armor or if the item is not armor.
 
 **This interaction has no additional fields.**
-  
 
-### PickupItem
 
-This interaction will attempt to pick up the User entity's current target entity and add it to their inventory. It will 
-  fail if the User entity is not a player, if they do not have a target entity, or if the target entity is not an item 
-  located in the world.  It will not fail if the player simply cannot pick up the item.  
-  
-**This interaction has no additional fields.**
+### IncreaseBackpackCapacity
+
+This interaction will increase the User entity's backpack size by the provided amount.  **It will additionally remove one 
+  quantity from the player's currently-held item. There is no way to prevent this.**  This interaction will have no effect
+  if the User entity is not a player.  This interaction has no special failure conditions, even if the User entity 
+  is not a player, or the player is not currently holding an item.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Capacity | `Integer`<br />(Default: 1) | **No** | The additional backpack capacity to add to the player. **Must be between 1 and 32767.**
 
 
 ### ModifyInventory
@@ -599,6 +993,15 @@ This interaction first executes the item removal in `ItemToRemove`, if any, then
 | MaxDurability | `Double`<br />(Default: 0.0) | **No** | The maximum durability of the item this stack contains.<br />**Cannot be negative.** |
 | Metadata | `Bson Document` | **No** | If provided, applies the bson to the item stack metadata. |
 | OverrideDroppedItemAnimation | `Boolean`*(Default: false) | **No** | ??? |
+
+
+### PickupItem
+
+This interaction will attempt to pick up the User entity's current target entity and add it to their inventory. It will 
+  fail if the User entity is not a player, if they do not have a target entity, or if the target entity is not an item 
+  located in the world.  It will not fail if the player simply cannot pick up the item.  
+  
+**This interaction has no additional fields.**
 
 
 ## EntityEffects
@@ -663,162 +1066,55 @@ This interaction will remove the specified EntityEffect from the specified Entit
 - `Target` - The entity target of this interaction chain, if any.  This value is mutable (and can therefore come from many places) but most commonly, it is an entity the User was targeting when this interaction chain began executing.
 
 
-## Cooldowns 
+## Farming 
 
-RootInteractions interface with a complex cooldown system that can be used for a variety of purposes. Aside from simply 
-  adding an important aspect of resource management to your game design, cooldowns can be used to ensure that click-activated 
-  interaction chains don't repeatedly spam if the player holds down the input. 
+These are interaction types built to support the in-game farming system in Hytale. They are mostly block-related interactions 
+  with a few exceptions.
 
-By default, every RootInteraction has a cooldown timer that is keyed to the RootInteraction name, and by default, it 
-  will launch a cooldown of 0.35 seconds when activated by client input.  Otherwise, no cooldown will be activated.  However,
-  by configuring your RootInteraction, you can change the key for the cooldown (so that multiple RootInteractions can share 
-  a single cooldown), set the cooldown timer to whatever you like, and configure multiple charges that can build up over time
-  to allow the entity to activate the RootInteraction multiple times before being forced to pause.
 
-One important concept to keep in mind is the difference between **cooldown** and **charge time**.  The cooldown, if any,
-  is activated each time a RootInteraction triggers, even if the player has more available charges. If the RootInteraction 
-  is configured to use charges, then they will gradually build up over time. In order for a RootInteraction to be activated,
-  the cooldown (if any) must be expired, and the RootInteraction must have at least one charge (if it has been 
-  configured to use charges). 
+### FertilizeSoil
 
-Bear in mind that the entire Cooldown configuration is shared between different RootInteractions with the same cooldown id.
-  If you activate an ability with 5 charges and a short cooldown and then another ability with a much longer cooldown and no 
-  charges, the second ability will use the cooldown properties of the first ability until/unless the first ability finishes 
-  charging and is cleared from the system.  You should generally only have multiple RootInteractions share a cooldown id 
-  if they have the same configuration.
+If the target block is unfertilized tilled soil or a farming block on top of unfertilized tilled soil, fertilizes the soil.
+  The interaction will fail otherwise.
 
-The interactions below interact with the cooldown system to allow you to manipulate cooldowns via the interaction system. By 
-  using these interactions, you can have several interaction chains with different cooldown configurations share cooldowns 
-  that are checked and activated as part of the interaction chain itself, or have some components of an interaction change 
-  use a second cooldown separate from the main one.
-
-### CooldownCondition
-
-**CooldownCondition Fields**
-
-This interaction will fail if the specified cooldown id is on cooldown for the User entity.  This interaction will only 
-  function for players- the interaction will always succeed for NPCs.  In order for this interaction to succeed, the 
-  cooldown, if any, must have expired and at least one charge, if any, must have filled.
+**FertilizeSoil Fields**
 
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
-| Id | `String` | **Yes** | The cooldown id to check. |
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| RefreshModifiers | `Array`<br />(Element Type: `String`) | **No** | Does nothing. |
 
-### IncrementCooldown
 
-**IncrementCooldown Fields**
+### HarvestCrop
 
-This interaction will modify a cooldown that is currently active on the User entity, allowing charges and remaining 
-  cooldown to be modified.
-  Despite its name, this interaction can be used to reduce a cooldown as well as increase it. If the cooldown is not 
-  currently active, this interaction will have no effect. The interaction has no special failure conditions. 
+This interaction will attempt to execute the harvest action on the current block target and add the crop's drops to the User entity's
+  inventory.  The block will either be destroyed or set to its post-harvest growth stage, depending on the farming 
+  configuration of the block.  This will happen (and the player will receive the full harvest drops) regardless of the 
+  block's current growth stage. This interaction has no special failure conditions, even if the block target isn't a 
+  farming block or gathering isn't permitted in the current world, but nothing will occur in those cases.
 
-| Field Name | Type | Required? | Notes |
-|------------|------|-----------|-------|
-| Id | `String` | **No** | If provided, the cooldown id of the cooldown to be manipulated. If not provided, the cooldown id of the current chain's RootInteraction will be used. |
-| Time | `Float`<br />(Default: 0.0) | **No** | The amount to increase the remaining cooldown by. Can be negative. The remaining cooldown time will not be reduced below zero or increased above the maximum cooldown time. |
-| ChargeTime | `Float`<br />(Default: 0.0) | **No** | The amount to increase the remaining time until the next charge is filled by. Can be negative. The remaining charge time cannot be reduced below zero or increased above the maximum cooldown time. **This will not work on abilities that have a maximum of 1 charge, for some reason.** |
-| Charge | `Integer`<br />(Default: 0) | **No** | The amount to increase the number of charges by. Can be negative. The number of charges cannot be reduced below 0 or increased above the maximum. |
-| InterruptRecharge | `Boolean`(Default: false) | **No** | If true and `Charge` is not 0, will reset the remaining time to the next charge to the maximum value after changing the charge count. |
-
-### ResetCooldown
-
-This interaction will trigger a cooldown on the User entity with a specified configuration. The charges will be refilled 
-  but the cooldown will be immediately triggered.  The mechanisms for deciding on the configuration are a little bit complicated.
-  You may specify a cooldown configuration via the `Cooldown` field. If you do not include an `Id` field, then the 
-  interaction chain's RootInteraction will be used for any field not specified in the configuration. If there is an active 
-  cooldown under the specified `Id` (or under the RootInteraction's cooldown id if none is specified) then the fields 
-  from that active cooldown will overwrite data in the RootInteraction's cooldown, but not data in your `Cooldown` field.
-
-**ResetCooldown Fields**
+**HarvestCrop Fields**
 
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
-| Cooldown | `InteractionCooldown` | **No** | A cooldown configuration to use for the new, reset cooldown. |
-
-**InteractionCooldown Fields**
-
-| Field Name | Type | Required? | Notes |
-|------------|------|-----------|-------|
-| Id | `String` | **No** | The cooldown id to use for this cooldown. If not provided, the RootInteraction's cooldown id will be used, if any. |
-| Cooldown | `Float`<br />(Default: 0.0) | **No** | The duration of the cooldown, in seconds. | 
-| Charges | `Array`<br />(Element Type: `Float`) | **No** | If provided, a list of how many charges this cooldown can build, and how long each charge takes to build, in seconds. |
-| InterruptRecharge | `Boolean`<br />(Default: false) | **No** | If true, the charge time will be reset when the number of charges changes. |
-| ClickBypass | `Boolean`<br />(Default: false) | **No** | If true, RootInteractions keyed to this cooldown can still be activated when it is on cooldown provided that the RootInteraction was triggered by a distinct key or mouse button press on the client. |
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
 
 
-## Combo Chains 
+### UseWateringCan
 
-Hytale additionally comes with a rich "combo chaining" system, which allows several inputs in a row to result in different 
-  attacks and special moves.  Rather than being attached to the RootInteraction like the cooldown system, these are 
-  primarily driven by the `Chaining` interaction.
+If the target block is tilled soil or a farming block on top of tilled soil, waters the soil for the specified duration.
+  The interaction will fail otherwise.
 
-
-### Chaining 
-
-This interaction does not inherit from SimpleInteraction and therefore has no Failed field. Its Next field works differently
-  from most interaction types.
-
-Chaining is a type of flow control interaction- each time a Chaining interaction with the same `ChainId` is called, a single 
-  interaction in the `Next` list is chosen and the others are ignored. The first time the `ChainId` is used, the first 
-  interaction in the list is chosen, the next time the second, etc. Once the end of the list is reached, the first 
-  interaction will be chosen again.
-
-Bear in mind: the progress through the Next list is based on the **ChainId**, not the interaction!  That means that two 
-  different Chaining interactions can share a single combo chain. You could have a pair of daggers that attacks with 
-  the left when the left mouse button is clicked and with the right when the right mouse button is clicked.  You could give 
-  both interaction chains a Chaining interaction with the same `ChainId` and three `Next` entries that do a light-light-heavy 
-  combo.  Each specific hit would occur with either the left or the right knife based on which button you clicked, but 
-  the combo would be otherwise identical regardless of which you chose. 
-
-The Chaining interaction also has a concept called "flags".  It is possible to attach named flags to a `ChainId` by using 
-  the ChainFlag interaction.  Then, you specify the flag name in Chaining's `Flags` field. If a Flag is active when the 
-  Chaining interaction is run, the Flag's interaction will be run instead of the appropriate interaction in `Next`.
-  Bear in mind: the entity's progress through the `Next` list still advances, the resulting `Next` interaction is just not 
-  run.  Only one flag can be active at a time.
-
-Lastly, it is possible to cancel the entity's progress through the combo chain and reset them to the first interaction in 
-  the list. This can be done with the CancelChain interaction, but it will also happen automatically if the player does 
-  not trigger an interaction with the ChainId for the specified ChainingAllowance.  When either of these happen, all flags will be 
-  canceled as well.
-
-All of these effects are triggered on the User entity only. Non-players can use the chaining system, but Flags do not currently
-  work for non-players.  This interaction has no special failure conditions.
-
-**Chaining Fields**
+**UseWateringCan Fields**
 
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
-| ChainId | `String` | **No** | If provided, acts as a key that multiple Chaining interactions can use to share combo chain progress and flags. If not provided, a unique ChainId will be generated for this interaction. | 
-| ChainingAllowance | `Double`<br />(Default: 0.0) | **No** | If, at the time this interaction is triggered, it has been this long in seconds since the last time a Chaining interaction with the same ChainId was executed, all state for this ChainId will be cleared before execution. |
-| Next | `AssetArray`<br />(Element Type: `Interaction`) | **Yes** | A list of interactions to cycle between each time this interaction is run. |
-| Flags | `Map`<br />(Key Type: `String`, Value Type: `Interaction`) | **No** | A map of flag names to interactions to run if the flag is active when this interaction executes. |
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| Duration | `Integer`<br />(Default: 0) | **No** | The duration in seconds to water the soil for. |
+| RefreshModifiers | `Array`<br />(Element Type: `String`) | **No** | Does nothing. |
 
 
-### CancelChain 
 
-This interaction resets all progress and flag data on the User entity for the provided `ChainId`.  The next time a Chaining 
-  interaction is called for the provided `ChainId`, it will begin at the first interaction in the `Next` list. This
-  interaction has no special failure conditions.
-
-**CancelChain Fields**
-
-| Field Name | Type | Required? | Notes |
-|------------|------|-----------|-------|
-| ChainId | `String` | **Yes** | A ChainId whose data should be reset. |
-
-
-### ChainFlag 
-
-This interaction activates a flag on the User entity for the provided `ChainId`, which can be used to change behavior the 
-  next time a Chaining interaction with this `ChainId` is run. This will overwrite any flag that has 
-  already been raised. This interaction will have no effect for non-players. This interaction has no special failure 
-  conditions.
-
-| Field Name | Type | Required? | Notes |
-|------------|------|-----------|-------|
-| ChainId | `String` | **Yes** | A ChainId on whom the flag should be raised. |
-| Flag | `String` | **Yes** | The name of the flag to raise. |
 
 
 ApplyForce 
@@ -831,17 +1127,12 @@ ChangeActiveSlot
 ChangeFarmingStage
 ChangeStat 
 ChangeStatWithModifier 
-Charging 
-CheckUniqueItemUsage
 ContextualUseNPC 
 DamageEntity 
 Door
 ExitInstance
 Explode 
-FertilizeSoil
-HarvestCrop
 HubPortal
-IncreaseBackpackCapacity
 LaunchPad
 LaunchProjectile
 LearnRecipe
@@ -864,7 +1155,6 @@ RefillContainer
 RemoveEntity
 RunOnBlockTypes
 Seating 
-SendMessage 
 SetMemoriesCapacity
 SpawnDeployableAtHitLocation
 SpawnDeployableFromRaycast
@@ -883,5 +1173,3 @@ UseCaptureCrate
 UseCoop
 UseEntity
 UseNPC 
-UseWateringCan
-Wielding
