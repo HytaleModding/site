@@ -887,6 +887,23 @@ It's not clear under what circumstances this interaction can fail. The server wi
 | AllowDragPlacement | `Boolean`<br />(Default: True) | **No** | If true and the interaction was triggered on the client by a player, then the player can hold the input that was used to activate this interaction chain and move the mouse around in order to execute this interaction repeatedly and place several blocks. The interaction chain will not move onto the next interaction until the player releases the input. |
 
 
+### RunOnBlockTypes
+
+This interaction retrieves all blocks within a provided radius of the User entity. For each block that matches any of 
+  the provided BlockSets, a new interaction chain will be forked that uses the matching block as the target block.
+  This interaction will continue executing until all forked interaction chains have completed.  The interaction will fail if no 
+  blocks within the radius match the provided BlockSets or if all of the forked interaction chains fail.
+
+**RunOnBlockTypes Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Range | `Integer` | **Yes** | The spherical radius around the User entity to search for blocks. Must be at least 1. |
+| BlockSets | `AssetArray`<br />(Element Type: `BlockSet`) | **No** | A list of BlockSets to match nearby blocks again. Only blocks that match any of the BlockSets will have interaction chains forked for them. |
+| MaxCount | `Integer` | **Yes** | The maximum number of blocks that will be located with the search. Further blocks will be ignored. If there are more matching blocks within the radius than this number, the specific set of blocks that will be found is completely arbitrary and may change from execution to execution. |
+| Interactions | `Asset`<br />(Asset Type: `RootInteraction`) | **No, but yes.** | The RootInteraction that will be forked for each matching block.  This interaction will not fail to validate if it is missing, but every execution of this interaction will fail. |
+
+
 ### UseBlock
 
 If the target block has an interaction for this interaction chain's interaction type, execute it immediately as part of 
@@ -930,6 +947,33 @@ This interaction will check whether it has run once for the User entity with the
   and item id combination again.
 
 **This interaction has no additional fields.**
+
+
+### ChangeActiveSlot
+
+This interaction does not inherit from SimpleInteraction and therefore has no Next or Failed fields.  The `CancelOnItemChange`
+  field is ignored for this interaction and is always treated as false. This interaction will set the User entity's currently-
+  active hotbar slot to the specified slot index. If none is specified, the interaction chain's target slot will be used,
+  if any. Otherwise, slot 0 will be used.  If a slot is specified and it is already active, then this interaction will
+  have no effect, but if no slot is specified and the interaction chain's target slot is already active, the logic in 
+  the next paragraph will still be executed. This interaction will also have no effect if the User entity is not a 
+  LivingEntity.  
+  
+Once the slot has changed, a new SwapTo interaction chain will be forked off for the selected slot.
+  If a target slot was specified, then the interaction chain's current target slot will be set to the specified slot, as will 
+  the forked SwapTo interaction chain. If this interaction chain was initiated by a player swapping an item into or out of
+  an occupied active hotbar slot, then the swap will be executed after the slot is changed and before the SwapTo 
+  interaction is forked. Not running this interaction in the resulting SwapFrom interaction chain is a way for the server 
+  to cancel players performing these sorts of swap interactions. The default behavior for these swap interactions is that 
+  the SwapFrom interaction chain will be initiated with the currently-active-slot as the target slot. As a result, the 
+  target slot will usually not change when this interaction runs, it merely exists as a signal for the server to continue the
+  item swap.
+
+**ChangeActiveSlot Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| TargetSlot | `Integer` | **No** | If not provided, indicates the slot the player's active hotbar slot should be changed to.  Otherwise, the interaction chain's target slot will be used (which is usually the already-active hotbar slot). |
 
 
 ### EquipItem
@@ -1004,6 +1048,39 @@ This interaction will attempt to pick up the User entity's current target entity
 **This interaction has no additional fields.**
 
 
+### RefillContainer
+
+This interaction will fail if the User entity is not a player. The interaction will draw a ray from the player's head 
+  down their look direction until the edge of the player's held item's interaction range or until the first solid block.
+  The nearest fluid block of a type listed in this interaction's `States` map will result in the one of the player's 
+  currently-held items being converted to the fluid's related item state.  If the `States` map indicates a durability 
+  for the new item state, then the converted item will use that durability. If the item is already in the fluid's related 
+  item state, then this interaction will fail if the player's held item is already at maximum durability (unless the 
+  `States` map indicates a durability value greater than the item's maximum, in which case the interaction will succeed 
+  but the item will not change).  Otherwise, the durability listed for the fluid in the `States` map will be added to the 
+  item's current durability.
+
+If the interaction has not failed by this point, the fluid block in the world may be transformed to a different type if one is listed 
+  in the `States` map. 
+
+If any part of this process does not proceed for any reason (for instance, if the player is not holding an item), 
+  then this interaction will fail.
+
+**RefillContainer Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| States | `Map`<br />(Key Type: `String`, Value Type: `RefillState`) | **Yes** | A map from item state names to `RefillState` objects, which contain information such as acceptable fluid block types, durability increases, and what fluid type to convert the targeted fluid block to after refill, if any. If the player targets a fluid block that matches one of the fluid types in the `RefillState`, the item will be converted to the keyed item state and the `RefillState` will be used to decide what happens next. |
+
+**RefillState Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| AllowedFluids | `Array`<br />(Element Type: `String`) | **Yes** | If any of these fluids are targeted by the player, the player's held item will be converted to the keyed item state and `Durability` and `TransformFluid` will be used. |
+| Durability | `Double`<br />(Default: -1.0) | **No** | If the player's held item changes item states, this value is the new item's durability, unless it is negative, in which case the item will begin at full durability. If the player's held item is already in the item state, and the item is not already at full durability, this value will be added to the item's durability. |
+| TransformFluid | `String` | **No** | If provided, this field is a fluid id that the targeted fluid block should be transformed to if the player's held item is successfully updated. |
+
+
 ## EntityEffects
 
 EntityEffects are buff or debuff effects that can be applied to a LivingEntity.  These can have a variety of effects from
@@ -1071,6 +1148,22 @@ This interaction will remove the specified EntityEffect from the specified Entit
 These are interaction types built to support the in-game farming system in Hytale. They are mostly block-related interactions 
   with a few exceptions.
 
+### ChangeFarmingStage
+
+If the target block is a farming block, this interaction will attempt to modify the current farming stage in one of 
+  three ways.  The interaction can optionally specify which StageSet to use for the new stage. If it is not specified, 
+  the current StageSet will be used. If any part of the the process of changing the growth stage fails, this interaction 
+  will fail, with the one exception that attempting to set the stage to the crop's existing stage will have no effect but 
+  still succeed. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| StageSet | `String` | **No** | If provided, set the block's current stage to one in the provided StageSet. Otherwise, use the crop's current StageSet. |
+| Increase | `Integer` | **No** | If provided, increase the current stage by the specified amount. If the specified stage does not exist, the block will be set to the closest extant stage. |
+| Decrease | `Integer` | **No** | If provided and `Increase` is not provided, decrease the current stage by the specified amount. If the specified stage does not exist, the block will be set to the closest extant stage. |
+| Stage | `Integer`<br />(Default: -1) | **No** | If provided and `Increase`/`Decrease` are not provided, set the current stage to the specified stage. If this value is less than 0, set the current stage to the final growth stage. If the specified stage does not exist, the block will be set to the closest extant stage. |
+
 
 ### FertilizeSoil
 
@@ -1117,28 +1210,48 @@ If the target block is tilled soil or a farming block on top of tilled soil, wat
 
 
 
+ChangeStat 
+ChangeStatWithModifier 
+StatsCondition
+StatsConditionWithModifier
+
+DamageEntity 
+RemoveEntity
+Projectile
+UseEntity
+UseNPC 
+SpawnNPC 
+ContextualUseNPC 
+
+
+
+
+MovementCondition
+
+Explode 
+SetMemoriesCapacity
+MemoriesCondition
+
+TeleportConfigInstance
+TeleportInstance
+Teleporter 
+ExitInstance
+
+SpawnDeployableAtHitLocation
+SpawnDeployableFromRaycast
+
 ApplyForce 
 Bed 
 BuilderTool 
 Camera 
 CameraShake 
 CanBreakRespawnPoint
-ChangeActiveSlot
-ChangeFarmingStage
-ChangeStat 
-ChangeStatWithModifier 
-ContextualUseNPC 
-DamageEntity 
 Door
-ExitInstance
-Explode 
 HubPortal
 LaunchPad
 LaunchProjectile
 LearnRecipe
-MemoriesCondition
 Mount 
-MovementCondition
 OpenBenchPage
 OpenContainer
 OpenCustomUI
@@ -1150,26 +1263,11 @@ Portal
 PortalReturn 
 PrefabSelectionInteraction
 PrefabSetAnchorInteraction
-Projectile
-RefillContainer
-RemoveEntity
-RunOnBlockTypes
 Seating 
-SetMemoriesCapacity
-SpawnDeployableAtHitLocation
-SpawnDeployableFromRaycast
 SpawnMinecart 
-SpawnNPC 
 SpawnPrefab
 StartObjective
-StatsCondition
-StatsConditionWithModifier
-TeleportConfigInstance
-TeleportInstance
-Teleporter 
 ToggleGlider 
 TriggerSpawnMarkers 
 UseCaptureCrate
 UseCoop
-UseEntity
-UseNPC 
