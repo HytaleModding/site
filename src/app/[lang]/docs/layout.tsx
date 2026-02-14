@@ -19,9 +19,6 @@ export default async function Layout({
           tree={tree}
           {...baseOptions(lang, true)}
           githubUrl="https://github.com/HytaleModding/site"
-          sidebar={{
-            footer: <DocsFooter />,
-          }}
         >
           {children}
         </DocsLayout>
