@@ -1,140 +1,62 @@
 ---
-title: ArgTypes
+title: "ArgTypes"
 description: "Available ArgTypes"
+icon: "List"
+full: true
 authors:
   - name: "Valeena"
 ---
 
-- Boolean
-  - true or false
-- Integer
-  - Any Integer
-- String
-  - Any String
-- Float
-  - Any Floater Number
-- Double
-  - Any Double Number
-- UUID
-  - Any UUID
-- Player_UUID
-  - Can be a player UUID or name
-- Game_Profile_Lookup_Async
-  - Profile?
-- Game_Profile_Lookup
-  - Profile but not async?
-- Relative_Double_Coord
-  - ex: "5.0", "~-2.3", "0.0"
-- Relative_Int_Coord
-  - ex: "5", "~-2", "0"
-- Relative_Integer
-  - A tilde to mark an integer as relative to a base
-  - ex: "5", "~-2", "0"
-- Relative_Float
-  - A tilde to mark a float as relative to a base?
-  - ex: 90.0", "~-45.5", "~"
-- Player_Ref
-  - player name only?
-- World
-  - World Name
-- Model_Asset
-  - Model Asset Class
-- Weather_Asset
-  - Weather Class
-- Interaction_Asset
-  - Interaction Class
-- Root_Interaction_Asset
-  - Root Interaction Class
-- Effect_Asset
-  - EntityEffect class
-- Environment_Asset
-  - Environment Class
-- Item_Asset
-  - Item Class
-- Block_Type_Asset
-  - Block Type Class
-- Particle_System
-  - ParticleSystem class
-- Hitbox_Collision_Config
-  - HitboxCollisionConfigClass
-- Repulsion_Config
-  - RepulsionConfig class
-- Sound_Event_Asset
-  - SoundEvent Class
-- Ambiance_Fx_Asset
-  - AmbienceFX class
-- Sound_Category
-  - Parsed against the SoundCategory class (enum?)
-- Entity_ID
-  - Arg Wrapper?
-  - Entity UUID
-- Integer_Comparison_Operator
-  - GREATER_THAN
-  - GREATER_THAN_EQUAL_TO
-  - LESS_THAN
-  - LESS_THAN_EQUAL_TO
-  - MOD_EQUAL_ZERO
-  - MOD_NOT_EQUAL_ZERO
-  - EQUAL_TO
-  - NOT_EQUAL_TO
-- Integer_Operation
-  - A mathematical sign for performing an operation
-  - "+", "-", "*", "/", "%", "="
-- Int_Range
-  - Two integers representing a minimum and maximum of a range
-  - ex: "-2 8", "5 5", "1 5"
-  - Minimum value, must be less than or equal to max value
-  - Maximum value, must be greater than or equal to min value
-- Relative_Int_Range
-  - Two integers representing a minimum and maximum of a range
-  - ex: "~-2 ~8", "~5 ~5", "~1 ~5"
-- Vector2I
-  - Integer Vector 2D
-  - Two integers, generally corresponding to x/z axis
-- Vector3I
-  - Integer Vector
-  - Three integers, generally corresponding to x/y/z axis
-- Relative_Vector3I
-  - Relative Integer Vector
-  - Three optionally relative integers, generally corresponding to x/y/z axis
-- Relative_Block_Position
-  - Each value must be a relative int coord
-  - ex: 124 232 234", "~5 ~ ~-3", "~ ~ ~"
-- Relative_Position
-  - Each value must be a relative double coord
-  - ex: "124.63 232.27 234.22", "~5.5 ~ ~", "~ ~ ~"
-- Relative_Chunk_Position
-  - Each value must be a relative int coord
-  - ex: "5 10", "~c2 ~c-3", "~ ~"
-- Rotation
-  - Pitch, Yaw, Roll (Floats)
-  - ex: "124.63 232.27 234.22"
-- Block_Type_Key
-  - A block type
-  - ex: Wood_Drywood_Planks_Half
-- Block_ID
-  - A block type, converted to an int id
-- Color
-  - can be hex color, hex integer or decimal integer
-  - "#FF0000", "#00FF00FF", "16711680", "0xFF0000"
-- Weighted_Block_Type
-  - A weight corresponding to a blocktype
-  - First param: The relative weight of this entry. Think of it as a lottery ticket
-  - Second param: The BlockTypeKey associated with the weight
-  - ex: "5 Empty", "20 Rock_Stone", "2 Rock_Shale"
-- Weighted_Block_Entry
-  - A block with optional weight prefix (e.g., 20%Rock_Stone or Rock_Stone)
-  - ex: Rock_Stone", "20%Rock_Stone
-- Block_Pattern
-  - A list of blocks with optional weights (e.g., [20%Rock_Stone, 80%Rock_Shale])
-- Individual_Block_Mask
-  - Create a block mask using symbols and block names
-  - ex: ">Grass_Full", "!Fluid_Water", "!^Fluid_Lava", "!#"
-- Block_Mask
-  - A list of block masks that combine together
-  - [!Fluid_Water, !^Fluid_Lava]", "[>Grass_Full, !#]
-- Tick_Rate
-  - ex: "30tps", "33ms", "60", "20tps", "50ms"
-- Game_Mode
-  - "adventure", "a"
-  - "creative", "c"
+| Name                        | Target Class                            | ArgumentType | Description                                                                                                                                                                                                                           | Example                  |
+|-----------------------------|-----------------------------------------|:-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|
+| Boolean                     | java.lang.Boolean                       |              | A 'true' or 'false' input                                                                                                                                                                                                             |                          |
+| Integer                     | java.lang.Integer                       |              | A whole number                                                                                                                                                                                                                        |                          |
+| Streing                     | java.lang.String                        |              | Words, text, numbers, letters                                                                                                                                                                                                         |                          |
+| Float                       | java.lang.Float                         |              | A floating-pointer number                                                                                                                                                                                                             |                          |
+| Double                      | java.lang.Double                        |              | A decimal number                                                                                                                                                                                                                      |                          |
+| UUID                        | java.util.UUID                          |              | A UUID (Universally Unique IDentifier)                                                                                                                                                                                                |                          |
+| Player_UUID                 | java.util.UUID                          |              | A UUID or an online player username                                                                                                                                                                                                   | "john_doe", "user123"    |
+| Game_Profile_Lookup_Async   | ProfileServiceClient.PublicGameProfile? |              |                                                                                                                                                                                                                                       |                          |
+| Relative_Double_Coord       | Coord                                   |              | An x, y, or z coordinate as a decimal, optionally relative by specifying a tilde (~) in front of the number                                                                                                                           |                          |
+| Relative_Int_Coord          | IntCoord                                |              | An x, y, or z coordinate as a whole number, optionally relative by specifying a tilde (~) in front of the number                                                                                                                      |                          |
+| Relative_Integer            | RelativeInteger                         |              | A tilde to mark an integer relative to a base                                                                                                                                                                                         |                          |
+| Relative_Float              | RelativeFloat                           |              | A tilde to mark a float relative to a base                                                                                                                                                                                            |                          |
+| Player_Ref                  | PlayerRef                               |              | A UUID or an online player's username                                                                                                                                                                                                 |                          |
+| World                       | World                                   |              | A world folder name                                                                                                                                                                                                                   |                          |
+| Model_Asset                 | ModelAsset                              |              | A reference to an Asset of type Model                                                                                                                                                                                                 |                          |
+| Weather_Asset               | Weather                                 |              | A reference to an Asset of type Weather                                                                                                                                                                                               |                          |
+| Interaction_Asset           | Interaction                             |              | A reference to an Asset of type Interaction                                                                                                                                                                                           |                          |
+| Root_Interaction_Asset      | RootInteraction                         |              | A reference to an Asset of type Root Interaction                                                                                                                                                                                      |                          |
+| Effect_Asset                | EntityEffect                            |              | A refernece to an Asset of type EntityEffect                                                                                                                                                                                          |                          |
+| Environment_Asset           | Environment                             |              | A reference to an Asset of type Environment                                                                                                                                                                                           |                          |
+| Item_Asset                  | Item                                    |              | A reference to an Asset of type Item                                                                                                                                                                                                  |                          |
+| Block_Type_Asset            | BlockType                               |              | A reference to an Asset of type BlockType                                                                                                                                                                                             |                          |
+| Particle_System             | ParticleSystem                          |              | A reference to an Asset of type ParticleSystem                                                                                                                                                                                        |                          |
+| Hitbox_Collision_Config     | HitboxCollisionConfig                   |              | A reference to an Asset of type HitboxCollisionConfig                                                                                                                                                                                 |                          |
+| Repulsion_Config            | RepulsionConfig                         |              | A reference to an Asset of type RepulsionConfig                                                                                                                                                                                       |                          |
+| Sound_Event_Asset           | SoundEvent                              |              | A reference to an Asset of type SoundEvent                                                                                                                                                                                            |                          |
+| Ambiance_Fx_Asset           | AmbianceFX                              |              | A reference to an Asset of type AmbianceFX                                                                                                                                                                                            |                          |
+| Sound_Category              | SoundCategory                           |              | A sound category (sfx, music, ambient, ui)                                                                                                                                                                                            |                          |
+| Entity_ID                   | ArgWrapper<EntityWrappedArg, UUID>      |              | A UUID representing an entity id                                                                                                                                                                                                      |                          |
+| Integer_Comparison_Operator | IntegerComparisonOperator               |              | A mathematical sign for integer comparison                                                                                                                                                                                            |                          |
+| Integer_Operation           | IntegerOperation                        |              | A mathematical sign for performing an operation                                                                                                                                                                                       |                          |
+| Int_Range                   | Pair<Integer, Integer>                  |              | Two integers representing a minimum and maximum of a range                                                                                                                                                                            |                          |
+| Relative_Int_Range          | RelativeIntRange                        |              | Two integers representing a minimum and maximum of a range                                                                                                                                                                            |                          |
+| Vector2I                    | Vector2i                                |              | Two integers, generally corresponding to x/z axis                                                                                                                                                                                     |                          |
+| Vector3I                    | Vector3i                                |              | Three integers, generally corresponding to x/y/z axis                                                                                                                                                                                 |                          |
+| Relative_Vector3I           | RelativeVector3i                        |              | Three optionally relative integers, generally corresponding to x/y/z axis                                                                                                                                                             |                          |
+| Relative_Block_Position     | RelativeIntPosition                     |              | A position with three integer coordinates, representing a block's location in world space. Each argument can be prefixed with a tilde (~) in order to specify it as relative to a point (usually yourself)                            |                          |
+| Relative_Position           | Relative                                |              | A position with three decimal coordinates, representing a location in world space. Each argument can be prefixed with a tilde (~) in order to specify it as relative to a point (usually yourself)                                    |                          |
+| Relative_Chunk_Position     | RealtiveChunkPosition                   |              | A position with two integer coordinates (x, z), representing a chunk's location. Each argument can be prefixed with a tilde (~) to specify it as relative, and 'c' to specify it as chunk coordinates                                 |                          |
+| Rotation                    | Vector3f                                |              | A rotation with three coordinates, representing the pitch, yaw, and roll respectively                                                                                                                                                 |                          |
+| Block_Type_Key              | String                                  |              | A block type                                                                                                                                                                                                                          | Wood_Drywood_Planks_Half |
+| Block_ID                    | Integer                                 |              | A block type, converted to an int id                                                                                                                                                                         Wood_Drywood_Planks_Half |                          |
+| Color                       | Integer                                 |              | A color value in hex format (#RRGGBB, #RRGGBBAA, #RGB, #RGBA), hex integer (0xFF0000), or decimal integer (16711680)                                                                                                                  |                          |
+| Weighted_Block_Type         | Pair<Integer, String>                   |              | A weight corresponding to a blocktype                                                                                                                                                                                                 |                          |
+| Weighted_Block_Entry        | String                                  |              | A block with optional weight prefix (e.g., 20%Rock_Stone or Rock_Stone)                                                                                                                                                               |                          |
+| Block_Pattern               | BlockPattern                            |              | A list of blocks with optional weights (e.g., [20%Rock_Stone, 80%Rock_Shale])                                                                                                                                                         |                          |
+| Individual_Block_Mask       | BlockMask                               |              | Create a block mask using symbols and block names                                                                                                                                                                                     |                          |
+| Block_Mask                  | BlockMask                               |              | A tick rate value (e.g., 30tps, 33ms, or 30)                                                                                                                                                                                          |                          |
+| Tick_Rate                   | Integer                                 |              | A list of block masks that combine together                                                                                                                                                                                           |                          |
+| Game_Mode                   | GameMode                                |              | GameMode                                                                                                                                                                                                                              |                          |
+

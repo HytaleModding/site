@@ -1,0 +1,1614 @@
+---
+title: "Interactions"
+description: "A list of most Interaction types provided by Hypixel, along with the meaning of their fields, and how they fit together."
+icon: "List"
+authors:
+    - name: "Stephen Baynham"
+      url: "https://github.com/cannibalvox"
+---
+
+
+### The Interaction Base Type
+
+All interactions of every type below are inherited from Interaction and have these fields.
+
+**Interaction Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ViewDistance | `Double`<br />(Default: 96.0) | **No**  | Distance in blocks at which other players can see the effects from this interaction. |
+| Effects | `InteractionEffects` | **No** | Sound, animations, and particle effects that should trigger when this interaction begins executing. |
+| HorizontalSpeedMultiplier | `Float`<br />(Default: 1.0) | **No**  | Multiplier applied to the User entity's movement speed while this interaction is executing |
+| RunTime | `Float` | **No** | If provided, this interaction will continue executing for at least this long before the interaction chain moves onto the next interaction. |
+| CancelOnItemChange | `Boolean`<br />(Default: true) | **No**  | If true, this interaction will be cancelled if the User entity's held item changes during execution. This can happen either due to the selected hotbar slot changing or the contents of the item's inventory slot changing. |
+| Rules | `InteractionRules` | **Yes** | If provided, adds additional limitations and cancellation conditions to this interaction. |
+| Settings | `Map`<br />(Key Type: `GameMode`, Value Type: `InteractionSettings`) | **No** | If provided, adds additional per-GameMode settings to the interaction. |
+| Camera | `InteractionCameraSettings` | **No** | Arrays of camera motion keyframes for cutscenes and reveals. |
+
+**GameMode Values**
+- `Creative`: The game is currently in Creative Mode 
+- `Adventure`: The game is currently in Adventure Mode 
+
+**InteractionEffects Fields**
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Particles  | `Array`<br />(Element Type: `ModelParticle`) | **No** | Particle systems to activate when this interaction begins if the player is in third-person mode. |
+| FirstPersonParticles | `Array`<br />(Element Type: `ModelParticle`) | **No** | Particle systems to activate when this interaction begins if the player is in first-person mode. |
+| WorldSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | A sound to play in the world at the User entity's location when this interaction begins.<br />**The SoundEvent must be single-channel (mono) sound.** |
+| LocalSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | A 2D sound to play for the User entity when this interaction begins. Ignored if the User entity is not a player. |
+| Trails | `Array`<br />(Element Type: `ModelTrail`) | **No** | Trail effects to activate on the User entity when this interaction begins. |
+| WaitForAnimationToFinish | `Boolean`<br />(Default: false) | **No** | If true, this interaction will continue executing for at least the length of any animations in this InteractionEffects object. |
+| ItemPlayerAnimationsId | `Asset`<br />(Asset Type: `ItemPlayerAnimations`) | **No** | If provided, the User entity will use this ItemPlayerAnimations set while this interaction is executing. |
+| ItemAnimationId | `String` | **No** | Id of an animation to trigger when this interaction begins executing.<br />**This animation id is not validated on server start.**
+| ClearAnimationOnFinish | `Boolean`<br />(Default: false) | **No** | If true, animations triggered by this interaction will be halted when the interaction completes. |
+| ClearSoundEventOnFinish | `Boolean`<br />(Default: false) | **No** | If true, sounds triggered by this interaction will be halted when the interaction completes. |
+| CameraEffect | `Asset`<br />(Asset Type: `CameraEffect` ) | **No** | If provided, the CameraEffect will be applied while this interaction is executing. |
+| MovementEffects | `MovementEffects` | **No** | If provided, apply the movement effects to the User entity while this interaction is executing. |
+| StartDelay | `Float`<br />(Default: 0.0f) | **No** | The interaction will wait this many seconds before triggering the effects in this object. |
+
+**InteractionRules Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| BlockedBy | `Array`<br />(Element Type: `InteractionType`)<br />(Default: Based on the chain's InteractionType) | **No** | If provided, this RootInteraction cannot be executed while interaction chains of the provided types are executing.<br />**This field only functions for rules attached to a RootInteraction. It has no effect on an Interaction.** |
+| Blocking | `Array`<br />(Element Type: `InteractionType`) | **No** | If provided, interaction chains with the specified InteractionTypes cannot be executed while this interaction is executing. |
+| InterruptedBy | `Array`<br />(Element Type: `InteractionType`) | **No** | If provided, interaction chains with the specified InteractionTypes will cancel this interaction chain when they execute.<br />**This field only functions for rules attached to a RootInteraction. It has no effect on an Interaction.** |
+| Interrupting | `Array`<br />(Element Type: `InteractionType`) | **No** | If provided, interaction chains with the specified InteractionTypes will be canceled when this interaction begins. |
+| BlockedByBypass | `String` | **No** | If provided, this RootInteraction cannot be blocked by interaction chains whose RootInteraction has this value as an asset tag. |
+| BlockingBypass | `String` | **No** | If provided, this interaction will not block RootInteractions that have the this value as an asset tag. |
+| InterruptedByBypass | `String` | **No** | If provided, this RootInteraction cannot be canceled by RootInteractions that have this value as an asset tag. |
+| InterruptingBypass | `String` | **No** | If provided, this interaction will not cancel interaction chains whose RootInteraction has this value as an asset tag. |
+
+**InteractionType Values**
+- `Primary`
+- `Secondary`
+- `Ability1`
+- `Ability2`
+- `Ability3`
+- `Use`
+- `Pick`
+- `Pickup`
+- `CollisionEnter`
+- `CollisionLeave`
+- `Collision`
+- `EntityStatEffect`
+- `SwapTo`
+- `SwapFrom`
+- `Death`
+- `Wielding`
+- `ProjectileSpawn`
+- `ProjectilHit`
+- `ProjectileMiss`
+- `ProjectileBounce`
+- `Held`
+- `HeldOffhand`
+- `Equipped`
+- `Dodge`
+- `GameModeSwap`
+
+**InteractionSettings Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| AllowSkipOnClick | `Boolean`<br />(Default: false) | **No** | If true, the user will be able to skip this interaction by clicking shortly after it starts. |
+
+**InteractionCameraSettings Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| FirstPerson | `Array`<br />(Element Type: `InteractionCamera`) | **No** | A list of camera keyframes to be played if the player is in first-person.<br />**The time of each keyframe must be after the keyframe before it in the array.** |
+| ThirdPerson | `Array`<br />(Element Type: `InteractionCamera`) | **No** | A list of camera keyframes to be played if the player is in third-person.<br />**The time of each keyframe must be after the keyframe before it in the array.** |
+
+**InteractionCamera Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Time | `Float`<br />(Default: 0.1f) | **No** | How long after the interaction begins executing that the camera should arrive at this keyframe.<br />**Cannot be less than or equal to 0.** |
+| Position | `Vector3` | **Yes** | Where the camera should be located when it arrives at this keyframe. |
+| Rotation | `Direction` | **Yes** | Where the camera should be pointing when it arrives at this keyframe. |
+
+### SimpleInteraction 
+
+Most interaction types below are inherited from SimpleInteraction and have these
+ fields.  If a type does not have these fields, the documentation will mention it.
+
+The purpose of SimpleInteraction is to facilitate Interaction chaining by taking different paths
+ based on whether the Interaction succeeded or failed.  The circumstances under which
+ a given Interaction fails are generally type-specific (and described in the documentation
+ below), but all interactions will be marked failed if they are cancelled via one of the
+ many, many mechanisms for doing so.
+
+It is valid to create an interaction asset of type "Simple", which can be valuable when you want to use the 
+  interaction fields with no additional functionality.
+
+**SimpleInteraction Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Next | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this Interaction has finished, "Next" will be executed if this Interaction did not fail. |
+| Failed | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this Interaction has finished, "Failed" will be executed if this Interaction failed. |
+
+
+## Flow Control
+
+These are interaction types used to control the flow of an interaction chain and allow interactions
+ to be composed into more complex behaviors.  These interaction types generally do not pertain to 
+ the game and instead pertain to the interaction system itself.
+
+
+### Condition 
+
+This interaction will fail if one of the fields is provided but does not match the current state.
+
+**Condition Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| RequiredGameMode | `GameMode` | **No** | If provided, the interaction will fail if the current GameMode does not match the provided value. |
+| Jumping | `Boolean` | **No** | If provided, the interaction will fail if the player's Jumping state does not match the provided value. (i.e. if True, the player must be jumping, if False, the player must not be) |
+| Swimming | `Boolean` | **No** | If provided, the interaction will fail if the player's Swimming state does not match the provided value. (i.e. if True, the player must be swimming, if False, the player must not be) |
+| Crouching | `Boolean` | **No** | If provided, the interaction will fail if the player's Crouching state does not match the provided value. (i.e. if True, the player must be crouching, if False, the player must not be) |
+| Running | `Boolean` | **No** | If provided, the interaction will fail if the player's Running state does not match the provided value. (i.e. if True, the player must be running, if False, the player must not be) |
+| Flying | `Boolean` | **No** | If provided, the interaction will fail if the player's Flying state does not match the provided value. (i.e. if True, the player must be flying, if False, the player must not be) |
+
+**GameMode Values**
+- `Creative`: The game is currently in Creative Mode 
+- `Adventure`: The game is currently in Adventure Mode 
+
+
+### FirstClick
+
+This interaction does not inherit from SimpleInteraction and therefore has no Next or Failed fields. 
+
+This interaction has two fields that each contain a reference to an Interaction: Click and Hold.  If the root interaction 
+ of the chain was initiated by a client button/key press (or simulated NPC input) and the input was a tap, then 
+ the Click interaction is run. if it was a longer press, then the Hold interaction is run.
+
+As a minor implementation detail, this interaction is internally marked as failed when the Hold path is followed. 
+ This generally shouldn't matter.  If the interaction was not initiated by a key press at all, the Click path will be followed,
+ but it seems risky to rely on that behavior.
+
+**FirstClick Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Click | `Asset`<br />(Asset Type: `Interaction`) | **No** | If provided and the root interaction of the chain was initiated by button/key press, this interaction is executed next if the press was a quick tap. |
+| Hold | `Asset`<br />(Asset Type: `Interaction`) | **No** | If provided and the root interaction of the chain was initiated by a button/key press, this interaction is executed next if the press was a longer hold. |
+
+
+### Interrupt 
+
+This interaction can be used to cancel one or more running interaction chains on an entity and **all forked interaction 
+  chains those chains have spawned that are still currently running**.  All interaction chains canceled in this manner will be marked as 
+  Failed, which may have additional implications if the canceled chains are themselves forked from 
+  other chains that are still running.
+
+**Interrupt Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Entity | `InteractionTarget`<br />(Default: User) | **Yes** | The entity that is the owner of the target interaction chains.  This field can indicate the Owner, User, or Target of this interaction chain. |
+| InterruptTypes | `Array`<br />(Element Type: `InteractionType`) | **No** | A set of InteractionTypes that are to be interrupted. Only interactions of these types are affected. If null, all types will be interrupted.<br />**(Note: An empty set will interrupt NO TYPES.)** |
+| RequiredTag | `String` | **No** | An asset tag that, if provided, the RootInteraction of the interaction chain must have in order to be canceled. |
+| ExcludedTag | `String` | **No** |  An asset tag that, if provided, the RootInteraction of the interaction chain must not have in order to be canceled. |
+
+**InteractionTarget Values**
+- `User` - The user of this interaction chain. The entity whose actions caused this interaction chain to be executed. This is usually the same as the Owner.
+- `Owner` - The owner of this interaction chain. The entity upon whom this interaction chain is executing.
+- `Target` - The entity target of this interaction chain, if any.  This value is mutable (and can therefore come from many places) but most commonly, it is an entity the User was targeting when this interaction chain began executing.
+
+**InteractionType Values**
+- `Primary`
+- `Secondary`
+- `Ability1`
+- `Ability2`
+- `Ability3`
+- `Use`
+- `Pick`
+- `Pickup`
+- `CollisionEnter`
+- `CollisionLeave`
+- `Collision`
+- `EntityStatEffect`
+- `SwapTo`
+- `SwapFrom`
+- `Death`
+- `Wielding`
+- `ProjectileSpawn`
+- `ProjectilHit`
+- `ProjectileMiss`
+- `ProjectileBounce`
+- `Held`
+- `HeldOffhand`
+- `Equipped`
+- `Dodge`
+- `GameModeSwap`
+
+
+### Parallel
+
+This interaction does not inherit from SimpleInteraction and therefore has no Next or Failed fields. 
+
+This interaction has a field `Interactions` that is an array of RootInteraction assets. The list must contain at least 
+  two RootInteractions.  This interaction will fork all of its children except for the first into their 
+  own interaction chains and immediately complete. After this interaction completes, this interaction chain will 
+  execute the first RootInteraction in the `Interactions` list.
+
+This interaction does not have any failure conditions and is indifferent to the fate of the forked interaction chains.
+
+**Parallel Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Interactions | `AssetArray`<br />(Element Type: `RootInteraction`) | **Yes** | An array of RootInteractions that will be forked or executed. |
+
+
+### Repeat 
+
+This interaction has a field `ForkInteractions` that is an asset of type RootInteraction. This interaction will fork that 
+  RootInteraction into its own interaction chain and then wait for it to complete. If the RootInteraction fails, this 
+  interaction will complete immediately and be marked failed. Otherwise, the RootInteraction will be forked and run again,
+  up to a specified total number of times.
+
+**Repeat Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ForkInteractions | `Asset`<br />(Asset Type: `RootInteraction`) | **Yes** | A RootInteraction that will be forked. |
+| Repeat | `Integer`<br />(Default: 1)<br />**Must be -1 or a positive integer. 0 is not valid.** | **No** | The total number of times to fork ForkInteractions. If -1 is provided, ForkInteractions will continue being forked and executed indefinitely, until this interaction is cancelled or until ForkInteractions fails. |
+
+
+### Replace 
+
+This interaction does not inherit from SimpleInteraction and therefore has no Next or Failed fields.
+
+This interaction uses the InteractionVars system that is avaiable for items. InteractionVars are RootInteractions that 
+  can be attached to an Item asset with a name.
+  
+This interaction specifies a var name, and if this interaction chain was executed through 
+  an item and that item has an InteractionVar of the same name, then this interaction will immediately execute 
+  the RootInteraction on the var.  Otherwise, it will execute the default RootInteraction specified in this interaction. 
+  If no default is specified, then this interaction will be marked as failed.
+
+**Replace Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Var | `String` | **Yes** | The name of the InteractionVar to execute. |
+| DefaultValue | `Asset`<br />(Asset Type: `RootInteraction`) | **No** | The RootInteraction to execute if the owning item does not have an InteractionVar by the specified name. If not provided, the interaction will be marked as failed instead. |
+| DefaultOk | `Boolean`<br />(Default: false) | **No** | If false, then an angry message will be printed to the server logs if the owning item does not have an InteractionVar by the specified name.  The functioning of this interaction will be otherwise unaffected. |
+
+
+### RunRootInteraction 
+
+This interaction immediately executes the provided RootInteraction as part of this interaction chain. This interaction 
+  does not have any failure conditions.
+
+**RunRootInteraction Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| RootInteraction | `Asset`<br />(Asset Type: `RootInteraction`) | **Yes** | The RootInteraction to execute. |
+
+
+### Selector 
+
+This interaction will execute a Selector to find entities and/or blocks (depending on the Selector) and fork off an 
+  interaction chain for each located entity or block. This interaction will not wait for those interaction chains
+  to complete and is indifferent to their fate. The forked interaction chains will use the located entity/block as 
+  their target entity/target block. Each entity or block will only fork one interaction chain over the life of this 
+  interaction.  The Selector is guaranteed to run once for each execution of this interaction, but some Selectors 
+  are intended to be run over a period of time and sweep across an area to locate targets. In order to use those Selectors 
+  properly, you will need to extend the execution time of this interaction using `RunTime` or `WaitForAnimationToFinish`.
+  The Selector will be executed repeatedly over the lifetime of the interaction.
+
+If the Selector is configured to locate entities, you can add additional sets of entity matching rules. If a located entity 
+  matches one of the rules, the matching RootInteraction will be forked instead of the standard `HitEntity` RootInteraction.
+
+Entities located by the Selector will be ignored if they do not have a NetworkId, if they are dead, or if they are invulnerable.
+  The only exception to this rule is that players in Creative Mode that are marked to receive hits will not be ignored.
+
+This interaction's failure conditions are configurable via the `FailOn` field. You can configure this interaction to never 
+  fail, to fail if the Selector does not locate any blocks before this interaction finishes executing, to fail if the 
+  Selector does not locate any entities before this interaction finishes executing, or to fail in either case.
+
+**Selector Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Selector | `Selector` | **Yes** | The Selector is executed at least once and may be executed repeatedly to locate blocks and/or entities in an area. |
+| HitEntity | `Asset`<br />(Asset Type: `RootInteraction`) | **No** | If included and the `Selector` locates an entity that does not match any `HitEntityRules`, this RootInteraction will be forked into a new interaction chain with the located entity as the target entity. |
+| HitEntityRules | `Array`<br />(Element Type: `HitEntity`) | **No** | If included, these rules will be matched against any entity located by the `Selector`. If an entity matches a set of rules, the RootInteraction associated with the rules will be forked instead of the standard `HitEntity` interaction. |
+| HitBlock | `Asset`<br />(Asset Type: `RootInteraction`) | **No** | If included and the `Selector` locates a block, this RootInteraction will be forked into a new interaction chain with the located block as the block target. |
+| FailOn | `FailOnType`<br />(Default: `Neither`) | **No** | Defines under what circumstances this interaction will fail.  It can be marked to fail when it completes without locating any blocks, it can be marked to fail when it completes without locating any entities, both, or neither. |
+| IgnoreOwner | `Boolean`<br />(Default: true) | **No** | If true, the Selector will not locate the User entity of this interaction. |
+
+**HitEntity Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Matchers | `Array`<br />(Element Type: `EntityMatcher`) | **Yes** | A set of rules that an entity must match. An entity must successful match all rules to be considered. |
+| Next | `Asset`<br />(Asset Type: `RootInteraction`) | **Yes** | The RootInteraction to fork if an entity matches all rules. |
+
+**EntityMatcher Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Type | `String` | **Yes** | If provided, specifies a type of EntityMatcher to use. Each matcher type may come with additional fields. |
+| Invert | `Boolean`<br />(Default: false) | **No** | If true, an entity must fail this rule for it to be marked as succeeded. |
+
+**EntityMatcher Type: Player**
+
+This EntityMatcher will succesfully match the entity only if they are a player.
+
+**EntityMatcher Type: Vulnerable**
+
+This Entitymatcher will successfully match the entity only if they are not marked as invulnerable.
+
+**FailOnType Values**
+
+- `Neither`
+- `Entity`
+- `Block`
+- `Either`
+
+
+### Serial 
+
+This interaction does not inherit from SimpleInteraction and therefore has no Next or Failed fields.
+
+This interaction has a field `Interactions` which is a list of Interaction assets. This interaction immediately 
+  completes and the interaction chain continues by executing the interactions in the list one at a time. This 
+  interaction does not have any failure conditions.
+
+**Serial Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Interactions | `AssetArray`<br />(Element Type: `Interaction`) | **Yes** | An array of Interaction assets to execute. |
+
+
+## Cooldowns 
+
+RootInteractions interface with a complex cooldown system that can be used for a variety of purposes. Aside from simply 
+  adding an important aspect of resource management to your game design, cooldowns can be used to ensure that click-activated 
+  interaction chains don't repeatedly spam if the player holds down the input. 
+
+By default, every RootInteraction has a cooldown timer that is keyed to the RootInteraction name, and by default, it 
+  will launch a cooldown of 0.35 seconds when activated by client input.  Otherwise, no cooldown will be activated.  However,
+  by configuring your RootInteraction, you can change the key for the cooldown (so that multiple RootInteractions can share 
+  a single cooldown), set the cooldown timer to whatever you like, and configure multiple charges that can build up over time
+  to allow the entity to activate the RootInteraction multiple times before being forced to pause.
+
+One important concept to keep in mind is the difference between **cooldown** and **charge time**.  The cooldown, if any,
+  is activated each time a RootInteraction triggers, even if the player has more available charges. If the RootInteraction 
+  is configured to use charges, then they will gradually build up over time. In order for a RootInteraction to be activated,
+  the cooldown (if any) must be expired, and the RootInteraction must have at least one charge (if it has been 
+  configured to use charges). 
+
+Bear in mind that the entire Cooldown configuration is shared between different RootInteractions with the same cooldown id.
+  If you activate an ability with 5 charges and a short cooldown and then another ability with a much longer cooldown and no 
+  charges, the second ability will use the cooldown properties of the first ability until/unless the first ability finishes 
+  charging and is cleared from the system.  You should generally only have multiple RootInteractions share a cooldown id 
+  if they have the same configuration.
+
+The interactions below interact with the cooldown system to allow you to manipulate cooldowns via the interaction system. By 
+  using these interactions, you can have several interaction chains with different cooldown configurations share cooldowns 
+  that are checked and activated as part of the interaction chain itself, or have some components of an interaction change 
+  use a second cooldown separate from the main one.
+
+### CooldownCondition
+
+**CooldownCondition Fields**
+
+This interaction will fail if the specified cooldown id is on cooldown for the User entity.  This interaction will only 
+  function for players- the interaction will always succeed for NPCs.  In order for this interaction to succeed, the 
+  cooldown, if any, must have expired and at least one charge, if any, must have filled.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `String` | **Yes** | The cooldown id to check. |
+
+### IncrementCooldown
+
+**IncrementCooldown Fields**
+
+This interaction will modify a cooldown that is currently active on the User entity, allowing charges and remaining 
+  cooldown to be modified.
+  Despite its name, this interaction can be used to reduce a cooldown as well as increase it. If the cooldown is not 
+  currently active, this interaction will have no effect. The interaction has no special failure conditions. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `String` | **No** | If provided, the cooldown id of the cooldown to be manipulated. If not provided, the cooldown id of the current chain's RootInteraction will be used. |
+| Time | `Float`<br />(Default: 0.0) | **No** | The amount to increase the remaining cooldown by. Can be negative. The remaining cooldown time will not be reduced below zero or increased above the maximum cooldown time. |
+| ChargeTime | `Float`<br />(Default: 0.0) | **No** | The amount to increase the remaining time until the next charge is filled by. Can be negative. The remaining charge time cannot be reduced below zero or increased above the maximum cooldown time. **This will not work on abilities that have a maximum of 1 charge, for some reason.** |
+| Charge | `Integer`<br />(Default: 0) | **No** | The amount to increase the number of charges by. Can be negative. The number of charges cannot be reduced below 0 or increased above the maximum. |
+| InterruptRecharge | `Boolean`(Default: false) | **No** | If true and `Charge` is not 0, will reset the remaining time to the next charge to the maximum value after changing the charge count. |
+
+### ResetCooldown
+
+This interaction will trigger a cooldown on the User entity with a specified configuration. The charges will be refilled 
+  but the cooldown will be immediately triggered.  The mechanisms for deciding on the configuration are a little bit complicated.
+  You may specify a cooldown configuration via the `Cooldown` field. If you do not include an `Id` field, then the 
+  interaction chain's RootInteraction will be used for any field not specified in the configuration. If there is an active 
+  cooldown under the specified `Id` (or under the RootInteraction's cooldown id if none is specified) then the fields 
+  from that active cooldown will overwrite data in the RootInteraction's cooldown, but not data in your `Cooldown` field.
+
+**ResetCooldown Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Cooldown | `InteractionCooldown` | **No** | A cooldown configuration to use for the new, reset cooldown. |
+
+**InteractionCooldown Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `String` | **No** | The cooldown id to use for this cooldown. If not provided, the RootInteraction's cooldown id will be used, if any. |
+| Cooldown | `Float`<br />(Default: 0.0) | **No** | The duration of the cooldown, in seconds. | 
+| Charges | `Array`<br />(Element Type: `Float`) | **No** | If provided, a list of how many charges this cooldown can build, and how long each charge takes to build, in seconds. |
+| InterruptRecharge | `Boolean`<br />(Default: false) | **No** | If true, the charge time will be reset when the number of charges changes. |
+| ClickBypass | `Boolean`<br />(Default: false) | **No** | If true, RootInteractions keyed to this cooldown can still be activated when it is on cooldown provided that the RootInteraction was triggered by a distinct key or mouse button press on the client. |
+
+
+### TriggerCooldown 
+
+This interaction is similar to ResetCooldown, except instead of refilling the cooldown's charges, one charge will be deducted
+  as normal.
+
+**TriggerCooldown Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Cooldown | `InteractionCooldown` | **No** | A cooldown configuration to use for the new, reset cooldown. |
+
+**InteractionCooldown Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `String` | **No** | The cooldown id to use for this cooldown. If not provided, the RootInteraction's cooldown id will be used, if any. |
+| Cooldown | `Float`<br />(Default: 0.0) | **No** | The duration of the cooldown, in seconds. | 
+| Charges | `Array`<br />(Element Type: `Float`) | **No** | If provided, a list of how many charges this cooldown can build, and how long each charge takes to build, in seconds. |
+| InterruptRecharge | `Boolean`<br />(Default: false) | **No** | If true, the charge time will be reset when the number of charges changes. |
+| ClickBypass | `Boolean`<br />(Default: false) | **No** | If true, RootInteractions keyed to this cooldown can still be activated when it is on cooldown provided that the RootInteraction was triggered by a distinct key or mouse button press on the client. |
+
+
+## Combo Chains 
+
+Hytale additionally comes with a rich "combo chaining" system, which allows several inputs in a row to result in different 
+  attacks and special moves.  Rather than being attached to the RootInteraction like the cooldown system, these are 
+  primarily driven by the `Chaining` interaction.
+
+
+### Chaining 
+
+This interaction does not inherit from SimpleInteraction and therefore has no Failed field. Its Next field works differently
+  from most interaction types.
+
+Chaining is a type of flow control interaction- each time a Chaining interaction with the same `ChainId` is called, a single 
+  interaction in the `Next` list is chosen and the others are ignored. The first time the `ChainId` is used, the first 
+  interaction in the list is chosen, the next time the second, etc. Once the end of the list is reached, the first 
+  interaction will be chosen again.
+
+Bear in mind: the progress through the Next list is based on the **ChainId**, not the interaction!  That means that two 
+  different Chaining interactions can share a single combo chain. You could have a pair of daggers that attacks with 
+  the left when the left mouse button is clicked and with the right when the right mouse button is clicked.  You could give 
+  both interaction chains a Chaining interaction with the same `ChainId` and three `Next` entries that do a light-light-heavy 
+  combo.  Each specific hit would occur with either the left or the right knife based on which button you clicked, but 
+  the combo would be otherwise identical regardless of which you chose. 
+
+The Chaining interaction also has a concept called "flags".  It is possible to attach named flags to a `ChainId` by using 
+  the ChainFlag interaction.  Then, you specify the flag name in Chaining's `Flags` field. If a Flag is active when the 
+  Chaining interaction is run, the Flag's interaction will be run instead of the appropriate interaction in `Next`.
+  Bear in mind: the entity's progress through the `Next` list still advances, the resulting `Next` interaction is just not 
+  run.  Only one flag can be active at a time.
+
+Lastly, it is possible to cancel the entity's progress through the combo chain and reset them to the first interaction in 
+  the list. This can be done with the CancelChain interaction, but it will also happen automatically if the player does 
+  not trigger an interaction with the ChainId for the specified ChainingAllowance.  When either of these happen, all flags will be 
+  canceled as well.
+
+All of these effects are triggered on the User entity only. Non-players can use the chaining system, but Flags do not currently
+  work for non-players.  This interaction has no special failure conditions.
+
+**Chaining Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ChainId | `String` | **No** | If provided, acts as a key that multiple Chaining interactions can use to share combo chain progress and flags. If not provided, a unique ChainId will be generated for this interaction. | 
+| ChainingAllowance | `Double`<br />(Default: 0.0) | **No** | If, at the time this interaction is triggered, it has been this long in seconds since the last time a Chaining interaction with the same ChainId was executed, all state for this ChainId will be cleared before execution. |
+| Next | `AssetArray`<br />(Element Type: `Interaction`) | **Yes** | A list of interactions to cycle between each time this interaction is run. |
+| Flags | `Map`<br />(Key Type: `String`, Value Type: `Interaction`) | **No** | A map of flag names to interactions to run if the flag is active when this interaction executes. |
+
+
+### CancelChain 
+
+This interaction resets all progress and flag data on the User entity for the provided `ChainId`.  The next time a Chaining 
+  interaction is called for the provided `ChainId`, it will begin at the first interaction in the `Next` list. This
+  interaction has no special failure conditions.
+
+**CancelChain Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ChainId | `String` | **Yes** | A ChainId whose data should be reset. |
+
+
+### ChainFlag 
+
+This interaction activates a flag on the User entity for the provided `ChainId`, which can be used to change behavior the 
+  next time a Chaining interaction with this `ChainId` is run. This will overwrite any flag that has 
+  already been raised. This interaction will have no effect for non-players. This interaction has no special failure 
+  conditions.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ChainId | `String` | **Yes** | A ChainId on whom the flag should be raised. |
+| Flag | `String` | **Yes** | The name of the flag to raise. |
+
+
+## Charging 
+
+A unique flow-control interaction that is frequently used is the Charging interaction.  It is a flow-control interaction 
+  that delays while the input button used to trigger the interaction chain is held.  When it is released (or the interaction 
+  is forced to end), the interaction chain can continue with a different interaction based on how long the input was held 
+  for.
+
+These interactions are all related by either being the Charging interaction, or other interaction types that inherit the
+  Charging interaction's behavior.
+
+### Charging 
+
+This interaction does not inherit from SimpleInteraction and therefore its Next field works different from most interactions.
+  This interaction adds its own Failed field which works the same way that SimpleInteraction's does.
+
+This interaction only works properly when its interaction chain was triggered by a client key or button press (or 
+  NPC-simulated equivalent). This interaction will continue executing for as long as the key or button press is held (with 
+  some exceptions, covered below) by the User entity.  Like other interactions, it has a `Next` field indicating which interaction to execute
+  after this one, but the field is a map from `Float` values to `Interaction` assets. When this interaction ends, either 
+  due to the input being released or the charge duration completing, this interaction will determine the largest `Float` key that is less 
+  than the amount of time in seconds that the interaction was executing for.  The Interaction mapped to that key will be 
+  executed next.
+
+The interaction includes some cancellation conditions that are specific to this interaction. For instance, the interaction 
+  has a `CancelOnOtherClick` field that matches the field on RootInteraction. If it is active on this interaction but not 
+  the RootInteraction, then clicking while charging will cancel this interaction (and execute the `Failed` interaction rather 
+  than any of the `Next` interactions) but otherwise continue the interaction chain.
+
+Another valuable feature Charging has is the `Forks` field.  For input-triggered interactions that are triggered while the 
+  Charging interaction is executing, you can add an entry for the relevant InteractionType to this field and instead of 
+  triggering the usual interaction chain based on held item, targeted block, etc. the RootInteraction specified in the 
+  `Forks` field will be triggered.  This can unlock rich attack modes and behaviors. For instance, having a shield bash attack 
+  triggered off left click while blocking, or a special attack that triggers when both mouse buttons are pressed at the 
+  same time.
+
+There are two modes of operation for the Charging interaction. One is to have the ability charge for as long 
+  as the input is held and only end execution when the entity releases the input.  Bows in the main Hytale game work 
+  that way.  That is accomplished by setting `AllowIndefiniteHold` to true.  Another mode of operation is to have the 
+  interaction complete execution when the execution time has surpassed the largest key value in the `Next` field and 
+  immediately begin executing the Interaction mapped to that key.  Food in the main Hytale game work like this.  It 
+  is accomplished by setting `AllowIndefiniteHold` to false.
+
+One pitfall to be careful of when setting `AllowIndefiniteHold` to false is the way it interacts with cooldowns.  
+  Normally, input-initiated interaction chains start a 0.35s cooldown on the triggered RootInteraction that prevents 
+  holding the mouse button from immediately spamming a new interaction when the first one completes.  However, if the 
+  duration of a Charging interaction is longer than 0.35s, then the cooldown will have already completed when the 
+  interaction chain finishes, which will often result in a new execution beginning immediately before the player can 
+  stop pressing the mouse button.  One solution for this problem is to add a `Simple` interaction to the end of your 
+  interaction chain with a `RunTime` of 0.35s to simulate the cooldown.  Alternatively, you can add a longer cooldown 
+  (the maximum duration of your Charging interaction plus 0.35s) to the RootInteraction. However, the longer cooldown is 
+  not always desirable, as the interaction may have ended prematurely, resulting in an unusually long lockout between 
+  executions.
+
+**Charging Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| FailOnDamage | `Boolean`<br />(Default: false) | **No** | If true, this interaction will fail and end immediately if the User entity takes any damage while it is executing. |
+| CancelOnOtherClick | `Boolean`<br />(Default: true) | **No** | If true, this interaction will fail and end immediately if the User entity sends another button or key press while it is executing. |
+| Forks | `Map`<br />(Key Type: `InteractionType`, Value Type: `RootInteraction`) | **No** | A map of InteractionType to RootInteraction. If entity input triggers the InteractionType while this interaction is executing, the mapped RootInteraction will be forked into its own interaction chain. This will happen instead of the usual handling for that InteractionType.  This fork will occur even if `CancelOnOtherClick` is set to true. |
+| Failed | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this Interaction has finished, "Failed" will be executed if this Interaction failed. |
+| AllowIndefiniteHold | `Boolean`<br />(Default: false) | **No** | If true, this interaction will continue executing for as long as the User entity continues to hold the input. If false, execution will end as soon as the execution time in seconds reaches the largest key value in the `Next` map. |
+| DisplayProgress | `Boolean`<br />(Default: true) | **No** | If true, players executing this interaction will see a progress bar will be displayed below their cursor indicating how close to reaching the highest key value in `Next` they are. |
+| Next | `Map`<br />(Key Type: `Float`, Value Type: `Interaction`) | **No** | A map from `Float` to `Interaction`.  When this interaction successfully finishes executing (either because the input was released or because the maximum duration was reached), this interaction will find the `Float` value with the largest duration in seconds that is less than the amount of time this interaction executed for. That key's mapped Interaction will then be executed. |
+| MouseSensitivityAdjustmentTarget | `Float`<br />(Default: 1.0) | **No** | While charging, this mouse sensitivity multiplier will gradually be applied. |
+| MouseSensitivityAdjustmentDuration | `Float`<br />(Default: 1.0) | **No** | Duration in seconds. After this many seconds, `MouseSensitivityAdjustmentTarget` will be fully applied to the mouse sensitivity. |
+| Delay | `ChargingDelay` | **No** | Settings that allow charging progress to be pushed back when the User entity takes damage. |
+
+**ChargingDelay Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| MinHealth | `Float`<br />(Default: 0.0) | **No** | Damage taken as a percentage of entity health (0.0-1.0). If a hit deals less than this much damage, no pushback will be applied.  If a hit deals exactly this much damage, `MinDelay` seconds worth of pushback will be applied. |
+| MaxHealth | `Float`<br />(Default: 0.0) | **No** | Damage taken as a percentage of entity health (0.0-1.0). If a hit deals at least this much damage, `MaxDelay` seconds worth of pushback will be applied. |
+| MinDelay | `Float`<br />(Default: 0) | **No** | The amount of pushback, in seconds, to apply if the entity takes a hit that deals `MinHealth` damage. The amount of pushback applied by a hit is a gradiant between `MinDelay` and `MaxDelay` based on the amount of damage between `MinHealth` and `MaxHealth`. |
+| MaxDelay | `Float`<br />(Default: 0) | **No** | The amount of pushback, in seconds, to apply if the entity takes a hit that deals at least `MaxHealth` damage. The amount of pushback applied by a hit is a gradiant between `MinDelay` and `MaxDelay` based on the amount of damage between `MinHealth` and `MaxHealth`. |
+| MaxTotalDelay | `Float`<br />(Deault: 0) | **No** | The maximum amount of pushback the entity can receive over the course of a single charge, regardless of how many times they are hit. |
+
+**InteractionType Values**
+- `Primary`
+- `Secondary`
+- `Ability1`
+- `Ability2`
+- `Ability3`
+- `Use`
+- `Pick`
+- `Pickup`
+- `CollisionEnter`
+- `CollisionLeave`
+- `Collision`
+- `EntityStatEffect`
+- `SwapTo`
+- `SwapFrom`
+- `Death`
+- `Wielding`
+- `ProjectileSpawn`
+- `ProjectilHit`
+- `ProjectileMiss`
+- `ProjectileBounce`
+- `Held`
+- `HeldOffhand`
+- `Equipped`
+- `Dodge`
+- `GameModeSwap`
+
+### Wielding 
+
+This interaction is inherited from Charging rather than SimpleInteraction.  However, its `Failed` and `Next` fields function 
+  identically to SimpleInteraction.  It does not inherit all fields from Charging, so be sure to pay close attention to 
+  the field list below.
+
+This interaction drives most blocking behavior in the game. While this interaction is executing, attacks made against 
+  the Owner entity will (conditionally) trigger effects defined in this interaction.  Unlike the Charging interaction, 
+  this interaction can always execute indefinitely and will only end when it fails or when the input is released.
+
+One option available in Wielding is `AngledWielding`, which allows damage and knockback modifiers to only be applied 
+  depending on the direction the attack against the Owner entity is coming from.  The AngledWielding type has a 
+  field `Angle` which determines which direction the protection points relative to the player (0 is the player's 
+  front), and `AngleDistance` which determines how wide the cone of protection extends around the player.  Block effects 
+  from this interaction (such as `BlockedEffects`, `BlockedInteractions`, and `StaminaCost`) will only apply if 
+  the DamageCause matches `DamageModifiers` OR if the DamageCause matches `AngledWielding.DamageModifiers` and 
+  the source of the damage matches `Angle` and `AngleDistance`.  It is possible for damage and knockback multipliers 
+  specified on both this interaction's modifier fields and `AngledWielding`'s modifier fields to stack, if both 
+  have entries for the same DamageCause.
+
+This interaction will only have an effect on damage taken by one of the DamageCause entries in `DamageModifiers` or 
+  `AngledWielding.DamageModifiers`.  If a DamageCause is in `DamageModifiers`, then the block effect will be triggered 
+  and the damage modifier applied regardless of what direction the Owner entity is attacked from.  If a DamageCause is in 
+  `AngledWielding.DamageModifiers`, then the damage modifier is only applied if the 
+
+** Wielding Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| FailOnDamage | `Boolean`<br />(Default: false) | **No** | If true, this interaction will fail and end immediately if the User entity takes any damage while it is executing. |
+| CancelOnOtherClick | `Boolean`<br />(Default: true) | **No** | If true, this interaction will fail and end immediately if the User entity sends another button or key press while it is executing. |
+| Forks | `Map`<br />(Key Type: `InteractionType`, Value Type: `RootInteraction`) | **No** | A map of InteractionType to RootInteraction. If entity input triggers the InteractionType while this interaction is executing, the mapped RootInteraction will be forked into its own interaction chain. This will happen instead of the usual handling for that InteractionType.  This fork will occur even if `CancelOnOtherClick` is set to true (after which this interaction chain will be canceled). |
+| Next | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this interaction has finished, "Next" will be executed if this interaction did not fail. |
+| Failed | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this interaction has finished, "Failed" will be executed if this interaction failed. |
+| DamageModifiers | `Map`<br />(Key Type: `DamageCause`, Value Type: `Float`) | **No** | A map from DamageCause to Float, where the Float is multiplied against any damage received from the mapped DamageCause while this interaction is executing. |
+| KnockbackModifiers | `Map`<br />(Key Type: `DamageCause`, Value Type: `Float`) | **No** | A map from DamageCause to Float, where the Float is multiplied against any knockback force received from the mapped DamageCause while this interaction is executing. |
+| AngledWielding | `AngledWielding` | **No** | Configuration to only trigger block effects from certain angles. |
+| StaminaCost | `StaminaCost` | **No** | If the Owner entity receives damage that matches `DamageModifiers` or `AngledWielding` while this interaction is executing, then the entity's stamina will be deducted according to this configuration. |
+| BlockedEffects | `DamageEffects` | **No** | If the Owner entity receives damage that matches `DamageModifiers` or `AngledWielding` while this interaction is executing, then these effects will be applied to the instance of damage. |
+| BlockedInteractions | `Asset`<br />(Asset Type: `RootInteraction`) | **No** | If the Owner entity receives damage that matches `DamageModifiers` or `AngledWielding` while this interaction is executing, then this RootInteraction will be launched as a brand new interaction chain with the Owner entity as both Owner and User, and the attacker as the Target entity.  This new interaction chain is, notably, brand new, **not** forked from the current one. |
+
+**AngledWielding Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Angle | `Float`<br />(Default: 0.0) | **No** | Angle in degrees relative to the Owner entity where the angled protection is centered. 0.0 means pointed towards the front of the Owner entity. |
+| AngleDistance | `Float`<br />(Default: 0.0) | **No** | Angle in degrees indicating how wide the cone of protection is. |
+| DamageModifiers | `Map`<br />(Key Type: `DamageCause`, Value Type: `Float`) | **No** | A map from DamageCause to Float, where the Float is multiplied against any damage received from the mapped DamageCause received from within the cone of protection while this interaction is executing. |
+| KnockbackModifiers | `Map`<br />(Key Type: `DamageCause`, Value Type: `Float`) | **No** | A map from DamageCause to Float, where the Float is multiplied against any knockback force received from the mapped DamageCause received from within the cone of protection while this interaction is executing. |
+
+**StaminaCost Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| CostType | `CostType`<br />(Default: `MaxHealthPercentage`) | **No** | How to calculate stamina consumed by blocking from the raw pre-block damage. If `Damage`, then the stamina consumed will be `rawDamage / Value`. If `MaxHealthPercentage`, then the stamina consumed will be `rawDamage / (EntityMaxHealth * Value)` |
+| Value | `Float`<br />(Default: 0.04) | **No** | The value to use in the `CostType` formula. |
+
+**DamageEffects Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ModelParticles | `Array`<br />(Element Type: `ModelParticle`) | **No** | Particle systems to trigger in the first-person view. |
+| WorldParticles | `Array`<br />(Element Type: `WorldParticle`) | **No** | Particle systems to trigger in the third-person view. |
+| LocalSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | 2D sound to play locally to the attacking entity if they are a player. |
+| WorldSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | Sound to play in the world at the Owner entity's location. |
+| PlayerSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | 2D sound to play locally to the Owner entity if they are a player. |
+| ViewDistance | `Double`<br />(Default: 75.0) | **No** | Distance at which these effects should play for other players. |
+| Knockback | `Knockback` | **No** | The properties of the knockback that will be applied. |
+| CameraEffect | `Asset`<br />(Asset Type: `CameraEffect`) | **No** | CameraEffect to briefly apply locally to the Owner entity if they are a player. |
+| StaminaDrainMultiplier | `Float`<br />(Default: 1.0) | **No** | This multiplier is applied to the `StaminaCost`, if any. |
+
+
+**Knockback Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Type | `String` | **No** | If provided, specifies a type of knockback to use. Each knockback type may come with additional fields. |
+| Force | `Double`<br />(Default: 0.0) | **No** | The amount of force to apply to the Owner entity. |
+| Duration | `Double`<br />(Default: 0.0) | **No** | If 0.0, apply the force as a single impulse.  If more, continuously apply the force over a period of time. |
+| VelocityType | `ChangeVelocityType`<br />(Default: `Add`) | **No** | How to apply the force, either adding it to the entity's current velocity, or setting the velocity to the knockback force. |
+| VelocityConfig | `VelocityConfig` | **No** | Characteristics of friction as the Owner entity is thrown by this knockback. |
+
+**Knockback Type: Force**
+
+Apply the calculated knockback force along the provided direction.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Direction | `Vector3`<br />(Default: Up) | **No** | Which direction the player should be flung, relative to the direction of the attack. |
+
+**Knockback Type: Point**
+
+Apply the calculated knockback force laterally along the XZ plane, plus provided Y velocity.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| OffsetX | `Integer`<br />(Default: 0) | **No** | Offset the source position of the knockback left or right perpendicular to the direction of the attack. |
+| OffsetZ | `Integer`<br />(Default: 0) | **No** | Offset the source position of the knockback, forward or backward along the directon of the attack. |
+| RotateY | `Integer`<br />(Default: 0) | **No** | Rotate the knockback direction around the Y axis, where 0 is the default attack direction. |
+| VelocityY | `Float`<br />(Default: 0.0) | **No** | Add vertical velocity to the knockback force after the direction and force has been calculated. |
+
+**Knockback Type: Directional**
+
+Apply the calculated knockback force along the attack direction, removing any vertical component and replacing it with a provided Y velocity.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| RelativeX | `Float`<br />(Default: 0) | **No** | Apply additional force left or right perpendicular to the direction of the attack. The additional force is multiplied by the knockback strength. |
+| RelativeZ | `Float`<br />(Default: 0) | **No** | Apply additional force forward or backward along the attack direction. The additional force is multiplied by the knockback strength. |
+| VelocityY | `Float`<br />(Default: 0) | **No** | Replace the vertical velocity of the knockback with this value.  This value is not multiplied by knockback strength. |
+
+**VelocityConfig Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| GroundResistance | `Float`<br />(Default: 0.82) | **No** | The minimum amount of friction applied when the entity is in contact with the ground.  1.0 = no friction, 0.0 = total friction |
+| GroundResistanceMax | `Float`<br />(Default: 0.0) | **No** | The maximum amount of friction applied when the entity is in contact with the ground.  1.0 = no friction, 0.0 = total friction |
+| AirResistance | `Float`<br />(Default: 0.96) | **No** | The minimum amount of friction applied when the entity is in the air. 1.0 = no friction, 0.0 = total friction | 
+| AirResistanceMax | `Float`<br />(Default: 0.0) | **No** | The maximum amount of friction applied when the entity is in the air. 1.0 = no friction, 0.0 = total friction |
+| Threshold | `Float`<br />(Default: 1.0) | **No** | The speed at which the maximum amount of friction will be applied to the entity. The amount of friction applied will increase from minimum to maximum as the entity moves from 0 to this speed. |
+| Style | `VelocityThresholdStyle`<br />(Default: `Linear`) | **No** | The curve that friction follows as the entity's speed increases toward the `Threshold`. |
+
+**CostType Values**
+- `MaxHealthPercentage`
+- `Damage`
+
+**ChangeVelocityType Values**
+- `Add`
+- `Set`
+
+**VelocityThresholdStyle Values**
+- `Linear`
+- `Exp`
+
+
+## Blocks
+
+These are interaction types meant to reason about and modify blocks in the world.  The most important concept unique
+ to these interactions is the Block Target.  Like the Entity Target, it is mutable and can come from many places. 
+ However, for interaction chains initiated by the client, the block target will initially be the block that the player's cursor was 
+ over, if any.
+
+Additionally, for interaction chains initiated by the client, the client will send along which face of the block is targeted,
+ which is used by a few block-related interactions.
+ It is left up to each interaction type that cares about block faces as to how to handle this behavior for simulated input 
+ (i.e. NPCs initiating chains that are normally initated by the client).  At the time of this writing, all block-related 
+ interactions choose the top face where relevant in simulated input.
+
+### BlockCondition 
+
+This interaction has a field `Matchers` which specifies certain conditions, such as block type, state, etc.  This 
+ interaction fails if the current target block does not match all of them.
+
+**BlockCondition Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| Matchers | `Array`<br />(Element Type: `BlockMatcher`) | **Yes** | A list of conditions that the target block must match or this condition will fail.<br />**Note: This field is technically not required but there is a bug that makes it dangerous to not provide at the time of this writing.**<br />**Note: If no conditions are added to this array, the interaction will fail, counterintuitively.** |
+
+**BlockMatcher Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Block | `BlockIdMatcher` | **No** | If provided, requires the block itself match some set of conditions. |
+| Face | `BlockFace` | **No** | If provided and not 'None', requires a specific block face be targeted. |
+| StaticFace | `Boolean` (Default: false) | **No** | If false, the face condition will be adjusted by the block's current rotation. |
+
+**BlockFace Values**
+- `Up`
+- `Down`
+- `North`
+- `South`
+- `East`
+- `West`
+- `None`
+
+**BlockIdMatcher Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------| 
+| Id | `Asset`<br />(Asset Type: `BlockType`) | **No** | If provided, the block must match the specified `BlockType`. |
+| State | `String` | **No** | If provided, the block's current state must match the provided state name. |
+| Tag | `String` | **No** | If provided, the block type's asset tags must contain the provided tag. |
+
+
+### DestroyCondition 
+
+This interaction fails if the current User entity cannot destroy the current target blcok.
+
+**DestroyCondition Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+
+
+### PlacementCountCondition
+
+This interaction accepts the name of a BlockType that has the TrackedPlacement BlockEntity. The interaction will fail if the number of 
+ blocks of the provided BlockType in the world do not match the provided condition.
+
+**PlacementCountCondition Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Block | `String` | **Yes** | The BlockType to examine. The number of instances of the BlockType in the world will be compared to Value.<br />**Note: The specified BlockType must have the TrackedPlacement BlockEntity. Otherwise, the number of blocks in the world will always be zero.** |
+| Value | `Integer`<br />(Default: 0) | **No** | The value to compare the number of blocks in the world with. |
+| LessThan | `Boolean<br />(Default: true) | **No** | If true, the interaction will fail if the number of blocks in the world is greater than or equal to Value. If false, the interaction will fail if the number of blocks in the world is less than or equal to Value. |
+
+
+### BreakBlock
+
+This interaction attempts to break the target block while acting as the User entity. The User entity must be a player. It 
+ is not guaranteed to work, depending on world settings and the User entity's current state, it may not work.  If it 
+  fails, it will fail the interaction under some circumstances, but not others. 
+
+**Note: In particular, if `Harvest`=false and the player is in Survival mode, the player will simply execute a damage operation 
+ against the block. Even when the Tool field is specified, the player's currently-held item can impact the results in unintuitive 
+ ways.**
+
+This interaction will fail if there is no block target, if `Harvest`=true and the 
+  block is not harvestable, or if the world settings prevent the Harvest/Break operation.
+  It will generally not fail otherwise, even if the block was not broken or damaged.
+  The block will generally break every time if `Harvest`=true or the player is in 
+  Creative mode.
+
+
+**BreakBlock Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| Harvest | `Boolean` (Default: false) | **No** | If true, harvest the block and deposit the drops in the player's inventory. This operation will generally always succeed.  If false, this interaction will effectively perform whatever action would have occurred if the player had left-clicked the block. |
+| Tool | `String` | **No** | If `Harvest`=true, the player is in Survival mode, and this field is provided, then the break operation will be performed as though with this tool type.<br />**This field mostly doesn't work.  Your held item will be used for most block damage calculations regardless of this field's contents.** |
+| MatchTool | `Boolean` (Default: false) | **No** | If true, `Harvest`=true, the player is in Survival mode, and `Tool` is provided, block breaking will be prevented unless `Tool` is a valid gathering tool for the target block. The interaction will not be failed, even if block breaking is prevented in this manner. |
+
+
+### ChangeBlock 
+
+This interaction requires a mapping from one or more current BlockTypes to one or more target BlockTypes.  If the 
+  target block is one of the key BlockTypes, then it will be changed to the mapped target BlockType.  If the current 
+  BlockType of the target block does not appear as a key in the Changes field, then this interaction fails.
+
+**ChangeBlock Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| Changes | `Map`<br />(Key Type: `BlockType`, Value Type: `BlockType`) | **No** | A list of potential block type changes, with each entry having a current and new BlockType id. |
+| WorldSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | If provided, this SoundEvent is played in the world at the position of the block if the block successfully changes. |
+| RequireNotBroken | `Boolean`<br />(Default: false) | **No** | If true, this interaction will fail if the player's held item is broken (durability 0), and the block change will not take place. |
+
+
+### ChangeState 
+
+This interaction requires a mapping from one or more current block state names to one or more state names. If the 
+  target block is in one of the key block states, then it will be changed to the mapped target blocks tate. If the 
+  current block state of the target block does nto appear as a key in the Changes field, then this interaction fails.
+
+All blocks start out with a null state by default.  This null state can be referenced by the key "default" and the block 
+  can be returned to that state with the value "default".
+
+**ChangeState Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| Changes | `Map`<br />(Key Type: `String`, Value Type: `String`) | **No** | A list of potential block state changes, with each entry having a current and new state name. |
+| UpdateBlockState | `Boolean`<br />(Default: false) | **No** | If true, performs a full refresh of the block's BlockEntity component and notifies nearby players as though a full block type change occurred. |
+
+
+### CycleBlockGroup
+
+This interaction will attempt to change the target block to the next block type in one of the BlockGroups it belongs to.
+  If the block type belongs to multiple BlockGroups, which one is used is effectively arbitrary. The User entity must be 
+  a player. If the block cannot be changed for any reason (entity not a player, no block target, block does not belong 
+  to a BlockGroup, etc.). If the block is the only entry in the BlockGroup, this interaction will succeed and the block 
+  will be considered changed despite nothing happening.  Unlike most other block-changing interactions, this one will 
+  fail if the world settings prevent players from breaking blocks.
+
+**This interaction always reduces the player's held item's durability by a single 'hit' worth of damage if the block
+  changes. There is no way to prevent it. The block type will change and the interaction will succeed even if the player's
+  held item is broken, however.**
+
+**CycleBlockGroup Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+
+
+### DestroyBlock
+
+This interaction destroys the target block without dropping anything.  It will successfully destroy the block if the 
+  target block exists and this interaction has no failure conditions. 
+  
+**This interaction has no additional fields.**
+
+
+### PickBlock
+
+This interaction is effectively equivalent to using the middle mouse button in creative mode. In survival mode, the
+  block's item will be moved to the user's current active hotbar slot if it is in the player's inventory.  This 
+  interaction is performed entirely on the client and cannot be performed by non-players.  It is unclear if this 
+  interaction has failure conditions.
+
+**PickBlock Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+
+
+### PlaceBlock
+
+This interaction is effectively identical to a right clicking while holding a block in their hand, with some 
+  additional options. For one, it can be executed with any LivingEntity as the User entity. For another, it has some 
+  useful fields.  For the most part, though, it follows the same behaviors and rules as any ordinary block placement 
+  by a player.
+
+It's not clear under what circumstances this interaction can fail. The server will not fail the interaction under any 
+  special circumstances (including when there is no target block, or when `BlockTypeToPlace` is not provided and the 
+  LivingEntity is not holding a block). However, the client is very involved with the function of this interaction and 
+  its behavior is unknown.
+
+**PlaceBlock Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| BlockTypeToPlace | `Asset`<br />(Asset Type: `BlockType`) | **No** | If provided, the block placed by this interaction will be the specified BlockType. If not provided, the User entity's held item will be used, instead, if it is a block. |
+| RemoveItemInHand | `Boolean`<br />(Default: True) | **No** | If true and the User entity is not a player in Creative mode, the item in the player's hand must match the block being placed and one quantity will be removed for each block placed. If the item does not match, the block cannot be placed.  If false, the player's hand item is ignored entirely.** |
+| AllowDragPlacement | `Boolean`<br />(Default: True) | **No** | If true and the interaction was triggered on the client by a player, then the player can hold the input that was used to activate this interaction chain and move the mouse around in order to execute this interaction repeatedly and place several blocks. The interaction chain will not move onto the next interaction until the player releases the input. |
+
+
+### RunOnBlockTypes
+
+This interaction retrieves all blocks within a provided radius of the User entity. For each block that matches any of 
+  the provided BlockSets, a new interaction chain will be forked that uses the matching block as the target block.
+  This interaction will continue executing until all forked interaction chains have completed.  The interaction will fail if no 
+  blocks within the radius match the provided BlockSets or if all of the forked interaction chains fail.
+
+**RunOnBlockTypes Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Range | `Integer` | **Yes** | The spherical radius around the User entity to search for blocks. Must be at least 1. |
+| BlockSets | `AssetArray`<br />(Element Type: `BlockSet`) | **No** | A list of BlockSets to match nearby blocks again. Only blocks that match any of the BlockSets will have interaction chains forked for them. |
+| MaxCount | `Integer` | **Yes** | The maximum number of blocks that will be located with the search. Further blocks will be ignored. If there are more matching blocks within the radius than this number, the specific set of blocks that will be found is completely arbitrary and may change from execution to execution. |
+| Interactions | `Asset`<br />(Asset Type: `RootInteraction`) | **No, but yes.** | The RootInteraction that will be forked for each matching block.  This interaction will not fail to validate if it is missing, but every execution of this interaction will fail. |
+
+
+### UseBlock
+
+If the target block has an interaction for this interaction chain's interaction type, execute it immediately as part of 
+  this interaction chain. The execution will be wrapped in UseBlockEvent.Pre and UseBlockEvent.Post events, and cancellations 
+  of the UserBlockEvent.Pre event are respected. The User entity is considered the triggering entity for both events.
+
+If the target block does not have an interaction for this interaction chain's interaction type, this interaction fails.
+
+**This interaction has no additional fields.**
+
+
+## Items 
+
+These are interactions intended to interface with an entity's inventory. There is no concept of an "item target", 
+  unfortunately, so these generally either interact with the entity's held item or the entity's inventory at a high level.
+
+### AddItem 
+
+Adds a specified quantity of a specified item to the User entity's inventory, preferring to add it to the 
+ entity's hotbar where possible. This interaction will have no effect on User entities that are not LivingEntities.
+ This interaction has no failure states.
+
+**Note: This interaction has a bug in its field validators that will cause interactions that reference items declared 
+  in the same mod to fail validation on startup.  Additionally, this interaction has a bug that will cause it to
+  fail and have no effect if the User entity has no block target. Use ModifyInventory instead.**
+
+**AddItem Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| ItemId | `Asset`<br />(Asset Type: `Item`) | **Yes** | The item id of the item to add to the player's inventory. |
+| Quantity | `Integer`<br />(Default: 0) | **No** | The quantity of the item to add to the player's inventory. |
+
+
+### CheckUniqueItemUsage
+
+This interaction will check whether it has run once for the User entity with their currently-held item before. If it hasn't,
+  it will succeed. If it has, it will fail. It will also fail if the User entity is not a player. The interaction will record
+  the item id of the User entity's currently-held item on success, ensuring it cannot be successfully run with that player 
+  and item id combination again.
+
+**This interaction has no additional fields.**
+
+
+### ChangeActiveSlot
+
+This interaction does not inherit from SimpleInteraction and therefore has no Next or Failed fields.  The `CancelOnItemChange`
+  field is ignored for this interaction and is always treated as false. This interaction will set the User entity's currently-
+  active hotbar slot to the specified slot index. If none is specified, the interaction chain's target slot will be used,
+  if any. Otherwise, slot 0 will be used.  If a slot is specified and it is already active, then this interaction will
+  have no effect, but if no slot is specified and the interaction chain's target slot is already active, the logic in 
+  the next paragraph will still be executed. This interaction will also have no effect if the User entity is not a 
+  LivingEntity.  
+  
+Once the slot has changed, a new SwapTo interaction chain will be forked off for the selected slot.
+  If a target slot was specified, then the interaction chain's current target slot will be set to the specified slot, as will 
+  the forked SwapTo interaction chain. If this interaction chain was initiated by a player swapping an item into or out of
+  an occupied active hotbar slot, then the swap will be executed after the slot is changed and before the SwapTo 
+  interaction is forked. Not running this interaction in the resulting SwapFrom interaction chain is a way for the server 
+  to cancel players performing these sorts of swap interactions. The default behavior for these swap interactions is that 
+  the SwapFrom interaction chain will be initiated with the currently-active-slot as the target slot. As a result, the 
+  target slot will usually not change when this interaction runs, it merely exists as a signal for the server to continue the
+  item swap.
+
+**ChangeActiveSlot Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| TargetSlot | `Integer` | **No** | If not provided, indicates the slot the player's active hotbar slot should be changed to.  Otherwise, the interaction chain's target slot will be used (which is usually the already-active hotbar slot). |
+
+
+### EquipItem
+
+This interaction will equip the User entity's currently-held item into the appropriate armor slot, if it is armor. The 
+  interaction will fail if the item is armor but it cannot be equipped for some reason. The interaction will succeed but 
+  take no action if the User entity cannot equip armor or if the item is not armor.
+
+**This interaction has no additional fields.**
+
+
+### IncreaseBackpackCapacity
+
+This interaction will increase the User entity's backpack size by the provided amount.  **It will additionally remove one 
+  quantity from the player's currently-held item. There is no way to prevent this.**  This interaction will have no effect
+  if the User entity is not a player.  This interaction has no special failure conditions, even if the User entity 
+  is not a player, or the player is not currently holding an item.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Capacity | `Integer`<br />(Default: 1) | **No** | The additional backpack capacity to add to the player. **Must be between 1 and 32767.**
+
+
+### ModifyInventory
+
+This interaction attempts to perform one or more inventory-modifying actions against the User entity. The User entity must 
+  be a player. If they are not, no actions will be performed, but the interaction will not fail. Any item removals performed 
+  by this interaction, either as a result of `ItemToRemove` or `AdjustHeldItemQuantity`, are both atomic (meaning the entire
+  quantity must be removed, or none) and required (meaning that the interaction will fail and no further actions taken if
+  the removal fails for any reason).  Item additions performed by this interaction, either as a result of `ItemToAdd` or
+  `AdjustHeldItemQuantity` will drop excess items on the ground near the player if necesary and continue on. 
+
+This interaction first executes the item removal in `ItemToRemove`, if any, then adjusts the held item as specified by 
+  `AdjustHeldItemQuantity`, if provided, then executes the item addition in `ItemToAdd`, if any, and then finally executes 
+  the damage/healing of the held item in `AdjustHeldItemDurability`, if provided.
+  
+**ModifyDurability Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| RequiredGameMode | `GameMode` | **No** | If provided, only execute the inventory-modifying actions if the player is in the provided GameMode. The interaction will not fail if the GameMode doesn't match. |
+| ItemToRemove | `ItemStack` | **No** | If provided, a matching item will be removed in the provided quantity. If there is no matching item in the player inventory in the required quantity, then the interaction will fail and further actions will not be executed. |
+| AdjustHeldItemQuantity | `Integer`<br />(Default: 0) | **No** | The player's held item, if any, will have its quantity will be modified by the provided amount- subtracted from if this number is negative or added to if this item is positive.  If the player has no held item, then this field will have no effect regardless of its value and the interaction will NOT fail.  If the player's inventory does not have sufficient quantity of items to support the removal, this interaction will fail and further actions will not be executed. Excess items will be dropped on the ground near the player. |
+| ItemToAdd | `ItemStack` | **No** | If provided, the ItemStack will be added to the player's inventory. Excess items will be dropped on the ground near the player. |
+| AdjustHeldItemDurability | `Double`<br />(Default: 0.0) | **No** | The player's held item, if any, will have its durability adjusted by the specified amount.  The durability cannot go below 0 or raise above the item's maximum durability. Invalid durability values in this field will not cause the interaction to fail. Neither will it fail if the player has no held item. |
+| BrokenItem | `String` | **No** | This field should contain an ItemId, but it is not validated by the server on startup, so be careful.  This field can have the value of "Empty" to specify no item, or an empty hand. If specified and the `AdjustHeldItemDurability` operation reduces the player's held item to 0 durability, the player's held item is changed to this ItemId. If the inventory replacement fails, this interaction will fail. |
+| NotifyOnBreak | `Boolean`<br />(Default: false) | **No** | If true and the `AdjustHeldItemDurability` operation reduces the player's held item to 0 durability, this interaction will perform the usual audiovisual feedback of a broken tool. It will play the usual tool breaking sound and send the player a text message in chat that their item has broken. |
+| NotifyOnBreakMessage | `String` | **No** | If provided, and `NotifyOnBreak` is true, when the player is notified of a broken tool by this interaction, the message sent to their chat will instead be the translation key specified by this field. The translation key supports the templating parameter `{itemName}`. See the translation key `server.general.repair.itemBroken_Hoe` for an example. |
+
+**GameMode Values**
+- `Creative`: The game is currently in Creative Mode 
+- `Adventure`: The game is currently in Adventure Mode 
+
+**ItemStack Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `Asset`<br />(Asset Type: `Item`) | **Yes** | The id of the Item asset this stack contains. |
+| Quantity | `Integer`<br />(Default: 1) | **No** | The number of items in this stack.<br />**Must be greater than 0.** |
+| Durability | `Double`<br />(Default: 0.0) | **No** | The durability of the item stack.<br />**Cannot be negative.** |
+| MaxDurability | `Double`<br />(Default: 0.0) | **No** | The maximum durability of the item this stack contains.<br />**Cannot be negative.** |
+| Metadata | `Bson Document` | **No** | If provided, applies the bson to the item stack metadata. |
+| OverrideDroppedItemAnimation | `Boolean`*(Default: false) | **No** | ??? |
+
+
+### PickupItem
+
+This interaction will attempt to pick up the User entity's current target entity and add it to their inventory. It will 
+  fail if the User entity is not a player, if they do not have a target entity, or if the target entity is not an item 
+  located in the world.  It will not fail if the player simply cannot pick up the item.  
+  
+**This interaction has no additional fields.**
+
+
+### RefillContainer
+
+This interaction will fail if the User entity is not a player. The interaction will draw a ray from the player's head 
+  down their look direction until the edge of the player's held item's interaction range or until the first solid block.
+  The nearest fluid block of a type listed in this interaction's `States` map will result in the one of the player's 
+  currently-held items being converted to the fluid's related item state.  If the `States` map indicates a durability 
+  for the new item state, then the converted item will use that durability. If the item is already in the fluid's related 
+  item state, then this interaction will fail if the player's held item is already at maximum durability (unless the 
+  `States` map indicates a durability value greater than the item's maximum, in which case the interaction will succeed 
+  but the item will not change).  Otherwise, the durability listed for the fluid in the `States` map will be added to the 
+  item's current durability.
+
+If the interaction has not failed by this point, the fluid block in the world may be transformed to a different type if one is listed 
+  in the `States` map. 
+
+If any part of this process does not proceed for any reason (for instance, if the player is not holding an item), 
+  then this interaction will fail.
+
+**RefillContainer Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| States | `Map`<br />(Key Type: `String`, Value Type: `RefillState`) | **Yes** | A map from item state names to `RefillState` objects, which contain information such as acceptable fluid block types, durability increases, and what fluid type to convert the targeted fluid block to after refill, if any. If the player targets a fluid block that matches one of the fluid types in the `RefillState`, the item will be converted to the keyed item state and the `RefillState` will be used to decide what happens next. |
+
+**RefillState Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| AllowedFluids | `Array`<br />(Element Type: `String`) | **Yes** | If any of these fluids are targeted by the player, the player's held item will be converted to the keyed item state and `Durability` and `TransformFluid` will be used. |
+| Durability | `Double`<br />(Default: -1.0) | **No** | If the player's held item changes item states, this value is the new item's durability, unless it is negative, in which case the item will begin at full durability. If the player's held item is already in the item state, and the item is not already at full durability, this value will be added to the item's durability. |
+| TransformFluid | `String` | **No** | If provided, this field is a fluid id that the targeted fluid block should be transformed to if the player's held item is successfully updated. |
+
+
+## Entities
+
+### DamageEntity
+
+This interaction does not inherit from SimpleInteraction, but adds its own Next and Failed fields that 
+  work similarly.
+
+This interaction will cause the User entity to damage the Target entity.  It has the capability to apply different 
+  damage based on the direction of the attack or what body part was targeted by the User entity, with each possibility 
+  providing different damage calculations, effects, and Next interaction. If multiple entires match the attack, `TargetedDamage`
+  (body part damage) takes highest priority, then the first matching `AngledDamage` in the list, then the default 
+  damage in the base interaction fields.  It is possible for elements of these different damage priorities to be taken peacemeal if higher-priority 
+  damage fields do not overwrite lower-priority damage fields. For instance, 
+  damage calculation could be taken from `TargetedDamage`, the damage effects could be taken from the first matching 
+  `AngledDamage`, and the Next interaction coming from the default damage field.
+
+If all damage dealt by this interaction is cancelled, then this interaction will fail, and the `Failed` interaction 
+  will be executed next in the chain. If any damage dealt by this interaction is blocked, then this interaction will 
+  succeed, but the `Blocked` interaction wil lbe executed next in the chain. Otherwise, the highest-precedent matching 
+  `Next` interaction that you provide will be executed.  For instance, if you provide `Next` interactions for all 
+  `TargetedDamage` and `AngledDamage` entries, and one in the interaction's `Next` field, then a headshot could result 
+  in a unique `Next` interaction being executed, even if there is a matching `AngledDamage` entry. However, if you leave 
+  the `Next` interaction out of your `TargetedDamage` entries, a special `Next` interaction for backstabs could be 
+  executed.  Otherwise, the `Next` field in the root of the interaction will be executed instead.
+
+DamageEntity has an unusual relationship with `RunTime`. This interaction always ends immediately after its first tick,
+  regardless of the status of `RunTime` or `WaitForAnimationToFinish`.  However, if damage dealt by this interaction is 
+  calculated as `DamageCalculatorType` `Dps`, then the `RunTime` will be used to determine the precise amount of damage to 
+  deal. If `RunTime` is 0, then no damage will be dealt.
+
+**DamageEntity Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| DamageCalculator | `DamageCalculator` | **No** | If provided, describes the damage amounts and types to apply to the Target entity. |
+| DamageEffects | `DamageEffects` | **No** | If provided, describes particles, sounds, knockback, etc. to apply to the target entity on damage. |
+| Next | `Asset`<br />(Asset Type: `Interaction`) | **No**  After this interaction has finished, "Next" will be executed if damage was dealt to the target and none was blocked. |
+| AngledDamage | `Array`<br />(Element Type: `AngledDamage`) | **No** | If provided, allows alternative `DamageCalculator`, `DamageEffects`, and `Next` entries for attacks that approach the target from certain angles. |
+| TargetedDamage | `Map`<br />(Key Type: `String`, Value Type: `TargetedDamage`) | **Yes** | This field must be provided, but is not required to have any entries.  This is a map from body part names to `TargetedDamage` values. Hypixel only uses one body part name: `Head`, and it is not clear whether there are others.  If provided, allows alternative `DamageCalculator`, `DamageEffects`, and `Next` entries for attacks that damage specific enemy body parts. |
+| EntityStatsOnHit | `Array`<br />(Element Type: `EntityStatOnHit`) | **No** | If provided, allows this attack to reduce enemy stats other than health.  Each individual damage application dealt by the same ability will apply stat reductions, at diminishing returns. All damage dealt in interaction chains forked by a Selector interaction will share the number of hits across all targets. |
+| Failed | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this interaction has finished, "Failed" will be executed if no damage hits were applied to the player, or if all damage hits were cancelled. |
+| Blocked | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this interaction has finished, "Blocked" will be executed if any damage hits were blocked by the target. |
+
+**DamageCalculator Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Type | `DamageCalculatorType`<br />(Default: Absolute) | **No** | Whether the damage being applied is `Absolute` or `Dps'. |
+| Class | `DamageClass`<br />(Default: Unknown) | **No** | The type of attack producing the damage. Some weapon systems apply equipment modifiers based on this value. |
+| BaseDamage | `Map`<br />(Key Type: `DamageCause`, Value Type: `Float`) | **No** | A set of DamageCauses and how much base damage is dealt for each. |
+| SequentialModifierStep | `Float`<br />(Default: 0.0) | **No** | Value between 0.0-1.0. Each additional hit from a single ability will have its damage reduced by this much as a percentage. All damage dealt in interaction chains forked by a Selector interaction will share the number of hits across all targets. |
+| SequentialModifierMinimum | `Float`<br />(Default: 0.0) | **No** | Value between 0.0-1.0. `SequentialModifierStep` cannot reduce damage below this percentage regardless of the number of hits. |
+| RandomPercentageModifier | `Float`<br />(Default: 0.0) | **No** | A random value between +/- this amount multiplied by the base damage will be added to the base damage. |
+
+**DamageEffects Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ModelParticles | `Array`<br />(Element Type: `ModelParticle`) | **No** | Particle systems to trigger in the first-person view. |
+| WorldParticles | `Array`<br />(Element Type: `WorldParticle`) | **No** | Particle systems to trigger in the third-person view. |
+| LocalSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | 2D sound to play locally to the attacking entity if they are a player. |
+| WorldSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | Sound to play in the world at the Target entity's location. |
+| PlayerSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | 2D sound to play locally to the Target entity if they are a player. |
+| ViewDistance | `Double`<br />(Default: 75.0) | **No** | Distance at which these effects should play for other players. |
+| Knockback | `Knockback` | **No** | The properties of the knockback that will be applied. |
+| CameraEffect | `Asset`<br />(Asset Type: `CameraEffect`) | **No** | CameraEffect to briefly apply locally to the Target entity if they are a player. |
+| StaminaDrainMultiplier | `Float`<br />(Default: 1.0) | **No** | This multiplier is applied to the stamina cost incurred by the target blocking, if any. |
+
+**AngledDamage Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| AngleDistance | `Float`<br />(Default: 0) | **No** | The width in degrees of the matching arc around the Target entity. If the attack against the Target originates from within the arc, then the properties below will be applied to the attack, if provided. |
+| Angle | `Float`<br />(Default: 0.0) | **No** | The angle in degrees around the Target entity at which the matching arc is centered. |
+| DamageCalculator | `DamageCalculator` | **No** | If provided and the attack against the Target entity originates from within the provided arc, this DamageCalculator will override the interaction's `DamageCalculator` field. |
+| DamageEffects | `DamageEffects` | **No** | If provided and the attack against the Target entity originates from within the provided arc, this DamageEffects will override the interaction's `DamageEffects` field. |
+| Next | `Asset`<br />(Asset Type: `Interaction`) | **No** | If provided and the attack against the Target entity originates from within the provided arc, this Interaction will override the interaction's `Next` field. |
+
+**TargetedDamage Fields** 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| DamageCalculator | `DamageCalculator` | **No** | If provided and this TargetedDamage was matched, this DamageCalculator will override the interaction's `DamageCalculator` field and the `DamageCalculator` field of any matching `AngledDamage`. |
+| DamageEffects | `DamageEffects` | **No** | If provided and this TargetedDamage was matched, this DamageEffects will override the interaction's `DamageEffects` field and the `DamageEffects` field of any matching `AngledDamage`. |
+| Next | `Asset`<br />(Asset Type: `Interaction`) | **No** | If provided and this TargetedDamage was matched, this Interaction will override the interaction's `Next` field and the `Next` field of any matching `AngledDamage`. |
+
+**EntityStatOnHit Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| EntityStatId | `Asset`<br />(AssetType: `EntityStatType`) | **Yes** | Which entity stat to affect. |
+| Amount | `Float`<br />(Default: 0.0) | **No** | How much of the stat to apply for each damage application. Use negative numbers to reduce stats. |
+| MultipliersPerEntitiesHit | `Array`<br />(Element Type: `Float`, Default: `[1.0, 0.6, 0.4, 0.2, 0.1]`) | **No** | The diminishing returns curve to be applied for multiple damage applications by the same ability. Each hit's stat impact will be multiplied by the next value in the list.  If there are more hits than array elements, subsequent hits will be multiplied by `MultiplierPerExtraEntityHit`. |
+| MultiplierPerExtraEntityHit | `Float`<br />(Default: 0.05) | **No** | If an ability carries out more damage applications than there are elements in the `MultipliersPerEntitiesHit` array, then subsequent stat values will be multiplied by this number. |
+
+**Knockback Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Type | `String` | **No** | If provided, specifies a type of knockback to use. Each Target type may come with additional fields. |
+| Force | `Double`<br />(Default: 0.0) | **No** | The amount of force to apply to the Owner entity. |
+| Duration | `Double`<br />(Default: 0.0) | **No** | If 0.0, apply the force as a single impulse.  If more, continuously apply the force over a period of time. |
+| VelocityType | `ChangeVelocityType`<br />(Default: `Add`) | **No** | How to apply the force, either adding it to the entity's current velocity, or setting the velocity to the knockback force. |
+| VelocityConfig | `VelocityConfig` | **No** | Characteristics of friction as the Owner entity is thrown by this knockback. |
+
+**Knockback Type: Force**
+
+Apply the calculated knockback force along the provided direction.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Direction | `Vector3`<br />(Default: Up) | **No** | Which direction the entity should be flung, relative to the direction of the attack. |
+
+**Knockback Type: Point**
+
+Apply the calculated knockback force laterally along the XZ plane, plus provided Y velocity.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| OffsetX | `Integer`<br />(Default: 0) | **No** | Offset the source position of the knockback left or right perpendicular to the direction of the attack. |
+| OffsetZ | `Integer`<br />(Default: 0) | **No** | Offset the source position of the knockback, forward or backward along the directon of the attack. |
+| RotateY | `Integer`<br />(Default: 0) | **No** | Rotate the knockback direction around the Y axis, where 0 is the default attack direction. |
+| VelocityY | `Float`<br />(Default: 0.0) | **No** | Add vertical velocity to the knockback force after the direction and force has been calculated. |
+
+**Knockback Type: Directional**
+
+Apply the calculated knockback force along the attack direction, removing any vertical component and replacing it with a provided Y velocity.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| RelativeX | `Float`<br />(Default: 0) | **No** | Apply additional force left or right perpendicular to the direction of the attack. The additional force is multiplied by the knockback strength. |
+| RelativeZ | `Float`<br />(Default: 0) | **No** | Apply additional force forward or backward along the attack direction. The additional force is multiplied by the knockback strength. |
+| VelocityY | `Float`<br />(Default: 0) | **No** | Replace the vertical velocity of the knockback with this value.  This value is not multiplied by knockback strength. |
+
+**VelocityConfig Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| GroundResistance | `Float`<br />(Default: 0.82) | **No** | The minimum amount of friction applied when the entity is in contact with the ground.  1.0 = no friction, 0.0 = total friction |
+| GroundResistanceMax | `Float`<br />(Default: 0.0) | **No** | The maximum amount of friction applied when the entity is in contact with the ground.  1.0 = no friction, 0.0 = total friction |
+| AirResistance | `Float`<br />(Default: 0.96) | **No** | The minimum amount of friction applied when the entity is in the air. 1.0 = no friction, 0.0 = total friction | 
+| AirResistanceMax | `Float`<br />(Default: 0.0) | **No** | The maximum amount of friction applied when the entity is in the air. 1.0 = no friction, 0.0 = total friction |
+| Threshold | `Float`<br />(Default: 1.0) | **No** | The speed at which the maximum amount of friction will be applied to the entity. The amount of friction applied will increase from minimum to maximum as the entity moves from 0 to this speed. |
+| Style | `VelocityThresholdStyle`<br />(Default: `Linear`) | **No** | The curve that friction follows as the entity's speed increases toward the `Threshold`. |
+
+**DamageCalculatorType Values**
+- `Absolute`
+- `Dps`
+
+**DamageClass Values**
+- `Unknown`
+- `Light`
+- `Charged`
+- `Signature`
+
+**ChangeVelocityType Values**
+- `Add`
+- `Set`
+
+**VelocityThresholdStyle Values**
+- `Linear`
+- `Exp`
+
+
+### LaunchProjectile 
+
+This is just a worse version of Projectile and is slated to be removed.  Use Projectile.
+
+
+### Projectile
+
+This interaction will spawn a new projectile at the User entity's eye position that will travel in its look direction.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Config | `Asset`<br />(Asset Type: `ProjectileConfig`) | **No** | Configuration describing the projectile to be spawned. |
+
+
+### RemoveEntity
+
+Despawns the specified entity from the world. This interaction will have no effect if the specified entity is a player. This 
+  interaction has no special failure conditions.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Entity | `InteractionTarget`<br />(Default: User) | **No** | The entity to despawn. |
+
+**InteractionTarget Values**
+- `User` - The user of this interaction chain. The entity whose actions caused this interaction chain to be executed. This is usually the same as the Owner.
+- `Owner` - The owner of this interaction chain. The entity upon whom this interaction chain is executing.
+- `Target` - The entity target of this interaction chain, if any.  This value is mutable (and can therefore come from many places) but most commonly, it is an entity the User was targeting when this interaction chain began executing.
+
+
+### SendMessage 
+
+This interaction sends a message to the Owner entity if that entity can receive messages.  Otherwise, the message 
+  is written to the server logs.  If the entity is a player, the message will appear in the player's chat window.
+
+**SendMessage  
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Message | `String` | **No** | A text message to be sent to the Owner entity.  If this field is not provided, `Key` is used instead. |
+| Key | `String` | **No** | A translation key for a message to be sent to the Owner entity. If `Message` is provided, then this field is ignored. |
+
+
+### UseEntity
+
+This interaction is not in use by Hypixel and has some unusual qualities that mean it probably won't do what you want it
+  to.  Do not use it.
+
+This interaction will retrieve the entity currently targeted by the client (NOT the interaction chain's current Target 
+  entity) and execute that entity's RootInteraction for this interaction chain's current interaction type. The 
+  RootInteraction will be executed as part of this current interaction chain. None of the properties of this interaction 
+  chain will be modified.
+
+This interaction will fail if the client is not currently targeting an entity, or if no interaction for the current 
+  interaction type exists on the entity.
+
+
+## Stats 
+
+Hytale's resource system has been written about fairly extensively.  You can use these interactions to modify stats in 
+  response to actions or use stats as a cost for abilities.
+
+### ChangeStat 
+
+This interaction applies a set of raw stat changes to the User entity. It has no special failure conditions.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| StatModifiers | `Map`<br />(Key Type: `EntityStatType`, Value Type: `Float`) | **Yes** | A set of stats to modify and what value to apply to them. |
+| ValueType | `ValueType`<br />(Default: Absolute) | **No** | Whether the values in the `StatModifiers` map represent flat values to apply to the stat total, or percentages (0.0-100.0). Percentage values are percentage of the difference between the maximum and minimum stat value. |
+| Behaviour | `ChangeStatBehavior`<br />(Default: Add) | **No** | Whether the values in the `StatModifiers` map represent deltas to add into the User entity's current stat values, or fixed values to set the entity's stats to. |
+
+**ValueType Values**
+- `Absolute`
+- `Percent`
+
+**ChangeStatBehaviour Values**
+- `Add`
+- `Set`
+
+
+### ChangeStatWithModifier 
+
+This interaction is like ChangeStat, except an armor stat modifier can be chosen which will apply bonuses and penalties 
+  to a stat from the User entity's equipped armor before it is applied. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| StatModifiers | `Map`<br />(Key Type: `EntityStatType`, Value Type: `Float`) | **Yes** | A set of stats to modify and what value to apply to them. |
+| ValueType | `ValueType`<br />(Default: Absolute) | **No** | Whether the values in the `StatModifiers` map represent flat values to apply to the stat total, or percentages (0.0-100.0). Percentage values are percentage of the difference between the maximum and minimum stat value. |
+| Behaviour | `ChangeStatBehavior`<br />(Default: Add) | **No** | Whether the values in the `StatModifiers` map represent deltas to add into the User entity's current stat values, or fixed values to set the entity's stats to. |
+| InteractionModifierId | `InteractionModifierId` | **Yes** | The armor interaction modifier to apply bonuses and penalties for. |
+
+**ValueType Values**
+- `Absolute`
+- `Percent`
+
+**ChangeStatBehaviour Values**
+- `Add`
+- `Set`
+
+**InteractionModifierId Values**
+- `Dodge`
+
+
+### StatsCondition
+
+This interaction will fail if the User entity cannot afford the specified stats costs, or if it does not have the 
+  requested stats. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Costs | `Map`<br />(Key Type:` EntityStatType`, Value Type: `Float`) | **Yes** | A set of costs that the User entity needs to be able to afford for this interaction to succeed. |
+| ValueType | `ValueType`<br />(Default: Absolute) | **No** | Whether the values in the `Costs` map represetn flat values or percentages (0.0-100.0).  Percentage values are percentage of the difference between the maximum and minimum value. |
+| LessThan | `Boolean`<br />(Default: false) | **No** | If true, this interaction will fail unless the User entity's current stat values are at or **below** the specified levels.  If false, they must be at or **above** the specified levels. |
+| Lenient | `Boolean`<br />(Default: false) | **No** | If true and `LessThan` is true, and a player's minimum stat value is below zero, then the player can afford a stat cost if the current value of a stat if above 0. |
+
+**ValueType Values**
+- `Absolute`
+- `Percent`
+
+
+### StatsConditionWithModifier
+
+This interaction is like StatsCondition, except an armor stat modifier can be chosen which will apply bonuses and penalties 
+  to a stat's cost from the User entity's equipped armor before it is compared.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Costs | `Map`<br />(Key Type:` EntityStatType`, Value Type: `Float`) | **Yes** | A set of costs that the User entity needs to be able to afford for this interaction to succeed. |
+| ValueType | `ValueType`<br />(Default: Absolute) | **No** | Whether the values in the `Costs` map represetn flat values or percentages (0.0-100.0).  Percentage values are percentage of the difference between the maximum and minimum value. |
+| LessThan | `Boolean`<br />(Default: false) | **No** | If true, this interaction will fail unless the User entity's current stat values are at or **below** the specified levels.  If false, they must be at or **above** the specified levels. |
+| Lenient | `Boolean`<br />(Default: false) | **No** | If true and `LessThan` is true, and a player's minimum stat value is below zero, then the player can afford a stat cost if the current value of a stat if above 0. |
+| InteractionModifierId | `InteractionModifierId` | **Yes** | The armor interaction modifier to apply bonuses and penalties for. |
+
+**ValueType Values**
+- `Absolute`
+- `Percent`
+
+**InteractionModifierId Values**
+- `Dodge`
+
+
+## EntityEffects
+
+EntityEffects are buff or debuff effects that can be applied to a LivingEntity.  These can have a variety of effects from
+  movement speed changes to periodic damage.
+
+### EffectCondition 
+
+This interaction will fail if the specified entity's EntityEffects do not match the provided conditions. 
+
+**EffectCondition Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Entity | `InteractionTarget`<br />(Default: User) | **Yes** | The entity to examine for EntityEffects. This field can indicate the Owner, User, or Target of this interaction chain. |
+| Match | `Match`<br />(Default: All) | **No** | If `All`, then this interaction will fail if any EntityEffect in the `EntityEffectIds` is not on the specified entity. If `None`, then this interaction will fail if any EntityEffect IS on the specified entity. |
+| EntityEffectIds | `AssetArray`<br />(Element Type: `EntityEffect`) | **Yes** | The set of EntityEffects to check against the specified entity and `Match`. |
+
+**InteractionTarget Values**
+- `User` - The user of this interaction chain. The entity whose actions caused this interaction chain to be executed. This is usually the same as the Owner.
+- `Owner` - The owner of this interaction chain. The entity upon whom this interaction chain is executing.
+- `Target` - The entity target of this interaction chain, if any.  This value is mutable (and can therefore come from many places) but most commonly, it is an entity the User was targeting when this interaction chain began executing.
+
+**Match Values**
+- `All` - All EntityEffects must be on the specified entity for this interaction to succeed. 
+- `None` - None of the EntityEffects must be on the specified entity for this interaction to succeed.
+
+
+### ApplyEffect 
+
+This interaction will apply the specified EntityEffect to the specified Entity.  It has no special failure conditions. 
+
+**ApplyEffect Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Entity | `InteractionTarget`<br />(Default: User) | **Yes** | The entity to apply the EntityEffect to. This field can indicate the Owner, User, or Target of this interaction chain. |
+| EffectId | `Asset`<br />(Asset Type: `EntityEffect`) | **Yes** | The effect to apply. |
+
+**InteractionTarget Values**
+- `User` - The user of this interaction chain. The entity whose actions caused this interaction chain to be executed. This is usually the same as the Owner.
+- `Owner` - The owner of this interaction chain. The entity upon whom this interaction chain is executing.
+- `Target` - The entity target of this interaction chain, if any.  This value is mutable (and can therefore come from many places) but most commonly, it is an entity the User was targeting when this interaction chain began executing.
+
+
+### ClearEntityEffect
+
+This interaction will remove the specified EntityEffect from the specified Entity. It has no special failure conditions. 
+  It will not fail if the Entity does not have the EntityEffect. 
+
+**ClearEntityEffect Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Entity | `InteractionTarget`<br />(Default: User) | **Yes** | The entity to remove the EntityEffect from. This field can indicate the Owner, User, or Target of this interaction chain. |
+| EffectId | `Asset`<br />(Asset Type: `EntityEffect`) | **Yes** | The effect to remove. |
+
+**InteractionTarget Values**
+- `User` - The user of this interaction chain. The entity whose actions caused this interaction chain to be executed. This is usually the same as the Owner.
+- `Owner` - The owner of this interaction chain. The entity upon whom this interaction chain is executing.
+- `Target` - The entity target of this interaction chain, if any.  This value is mutable (and can therefore come from many places) but most commonly, it is an entity the User was targeting when this interaction chain began executing.
+
+
+## Farming 
+
+These are interaction types built to support the in-game farming system in Hytale. They are mostly block-related interactions 
+  with a few exceptions.
+
+### ChangeFarmingStage
+
+If the target block is a farming block, this interaction will attempt to modify the current farming stage in one of 
+  three ways.  The interaction can optionally specify which StageSet to use for the new stage. If it is not specified, 
+  the current StageSet will be used. If any part of the the process of changing the growth stage fails, this interaction 
+  will fail, with the one exception that attempting to set the stage to the crop's existing stage will have no effect but 
+  still succeed. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| StageSet | `String` | **No** | If provided, set the block's current stage to one in the provided StageSet. Otherwise, use the crop's current StageSet. |
+| Increase | `Integer` | **No** | If provided, increase the current stage by the specified amount. If the specified stage does not exist, the block will be set to the closest extant stage. |
+| Decrease | `Integer` | **No** | If provided and `Increase` is not provided, decrease the current stage by the specified amount. If the specified stage does not exist, the block will be set to the closest extant stage. |
+| Stage | `Integer`<br />(Default: -1) | **No** | If provided and `Increase`/`Decrease` are not provided, set the current stage to the specified stage. If this value is less than 0, set the current stage to the final growth stage. If the specified stage does not exist, the block will be set to the closest extant stage. |
+
+
+### FertilizeSoil
+
+If the target block is unfertilized tilled soil or a farming block on top of unfertilized tilled soil, fertilizes the soil.
+  The interaction will fail otherwise.
+
+**FertilizeSoil Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| RefreshModifiers | `Array`<br />(Element Type: `String`) | **No** | Does nothing. |
+
+
+### HarvestCrop
+
+This interaction will attempt to execute the harvest action on the current block target and add the crop's drops to the User entity's
+  inventory.  The block will either be destroyed or set to its post-harvest growth stage, depending on the farming 
+  configuration of the block.  This will happen (and the player will receive the full harvest drops) regardless of the 
+  block's current growth stage. This interaction has no special failure conditions, even if the block target isn't a 
+  farming block or gathering isn't permitted in the current world, but nothing will occur in those cases.
+
+**HarvestCrop Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+
+
+### UseWateringCan
+
+If the target block is tilled soil or a farming block on top of tilled soil, waters the soil for the specified duration.
+  The interaction will fail otherwise.
+
+**UseWateringCan Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| Duration | `Integer`<br />(Default: 0) | **No** | The duration in seconds to water the soil for. |
+| RefreshModifiers | `Array`<br />(Element Type: `String`) | **No** | Does nothing. |
