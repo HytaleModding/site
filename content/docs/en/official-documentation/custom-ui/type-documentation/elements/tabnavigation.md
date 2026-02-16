@@ -44,3 +44,23 @@ authors:
 | Name                   | Description |
 | ---------------------- | ----------- |
 | **SelectedTabChanged** |             |
+
+## Example
+
+TabNavigation requires x2 properties to function. [Tabs](../property-types/tab) and [Style](../property-types/tabnavigationstyle).
+
+```
+TabNavigation #MyTabNavigation {
+  SelectedTab: "TabOne";
+  Style: @CustomTopTabStyle;
+  Tabs: [
+    ( Id: "TabOne", Text: "Tab One", ),
+    ( Id: "TabTwo", Text: "Tab Two", )
+  ];
+}
+```
+<Callout type="info">
+At the presant time of this documentation [2026-02-16]:  
+The default styling for TabNavigation found in `common.ui` has issues that will cause the game not to load or crash the ui. That is `@TopTabsStyle` and `@HeaderTabsStyle`, there is a syntax missmatch on a child tab style. The style method for [Tab](../property-types/tab) should be `TabStyleState` not `TabStateStyle`. Therfore at the present time, developers should only use `@TopTabsStyle` and `@HeaderTabsStyle` as a refernce. Additionally default the texture assets are missing and would need to be coppied into your project from the Hytale install directory. For example: `TabOverlay@2x.png` and `TabSelectedOverlay@2x.png`
+</Callout>
+
