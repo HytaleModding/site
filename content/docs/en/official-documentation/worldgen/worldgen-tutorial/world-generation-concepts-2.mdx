@@ -1,0 +1,28 @@
+---
+title: "Prop Generation Concepts"
+description: Explores the basic concepts of world generation in the context of Hytale.
+---
+
+### Props
+
+Props enable you to generate content in a specific limited region. Hytale has a range of different Prop types that you can use to build content that gets procedurally added to the world. You can define where the content places by using a combination of Positions fields, Scanners and Patterns.
+
+<div className="flex flex-row rounded-lg border p-4">
+  <div className="flex-1/3 border-r pr-4">
+    **Positions**
+
+    Provides the locations to scan in.
+  </div>
+  <div className="flex-1/3 border-r pr-4">
+    **Scanner**
+
+    An area or column around each position to scan, finds the locations that match the Pattern.
+  </div>
+  <div className="flex-1/3 pl-4">
+    **Pattern**
+
+    The Pattern that defines what are valid positions based on the contents of the world.
+  </div>
+</div>
+
+![Props](/assets/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts/props.png)

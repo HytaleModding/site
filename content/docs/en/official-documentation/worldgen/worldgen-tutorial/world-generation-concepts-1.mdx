@@ -1,0 +1,20 @@
+---
+title: Materials Generation Concepts
+description: Explores the basic concepts of world generation in the context of Hytale.
+---
+
+### Material Providers
+
+Materials use a number of logical function nodes to determine which block asset is used at which location. These can be run on both solid portions of the terrain field but also on negative portions to fill in a water level for example. Some examples of this can be found below.
+
+#### Solidity
+
+Splits into two Material Providers, one for all positive values which becomes solid, the other for negatives which become empty.
+
+#### Queue
+
+Creates a queue of materials with the top node coming highest in priority and the bottom the lowest priority.
+
+<Callout>
+The Hytale Node Editor currently sets node priority based on a nodes position in the editor, this is displayed as a number in the top right corner of the node.
+</Callout>

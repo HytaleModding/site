@@ -8,6 +8,8 @@ authors:
       url: "https://oskar.scot"
     - name: "jacobwojoski"
       url: "https://github.com/jacobwojoski"
+    - name: "Marcel-TO"
+      url: "https://marcel-to.net"
 ---
 
 In this guide, you will learn how to create custom commands for your Hytale mod.
@@ -234,7 +236,7 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
 ```
 
 ## Argument Validators
-Argument validators are a way to check the command before the command gets executed. They are added with the `addValidator` method on an argument when calling `withXxxArg`. They provide a nice output to the user when an input value is invalid.
+Argument validators are a way to check the command before the command gets executed. They are added with the `addValidator` method on an argument when calling `withXxxArg`. They provide a nice output to the user when an input value is invalid. There are some common validators provided in the `Validators` class such as `greaterThan`, `lessThan`, and `or`, `max`, `range`, etc.
 
 ```java
 ...
@@ -242,16 +244,56 @@ Argument validators are a way to check the command before the command gets execu
     OptionalArg<Integer> healAmount = withOptionalArg("amount", "Heal Amount", ArgTypes.INTEGER)
         .addValidator(Validators.greaterThan(0))
         .addValidator(Validators.lessThan(1000));
-
-    // Custom check example
-    OptionalArg<Integer> healAmount = withOptionalArg("amount", "Heal Amount", ArgTypes.INTEGER)
-            .addValidator( value -> {
-                if (value != null && value <= 0) {
-                    return ValidationResult.error("amount argument must be a positive number");
-                }
-                return ValidationResult.success();
-            });
 ...
+```
+
+### Custom Validators
+You can also create custom validators by implementing the `com.hypixel.hytale.codec.validation.Validator` interface. The interfaces forces you to implement the `accept` and `updateSchema` method. The `accept` method takes in the argument value and validates it. If the validation fails, you can use the `fail` method of the `com.hypixel.hytale.codec.validation.ValidationResults` class to return an error message.
+The `updateSchema` method is used to update the schema of the command argument. This is used for commands that have dynamic schemas based on the input value. For example, if you have a command that takes in a player name as an argument, you can use the `updateSchema` method to update the schema to include a list of online players for validation.
+
+Here is an example of a custom validator that checks if a string value is equal to a banned word. In this example, the banned word is "badword". If the input value is "badword", the validator will fail and return an error message.
+
+```java
+import com.hypixel.hytale.codec.schema.SchemaContext;
+import com.hypixel.hytale.codec.schema.config.Schema;
+import com.hypixel.hytale.codec.validation.ValidationResults;
+import com.hypixel.hytale.codec.validation.Validator;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public class MyCustomValidator implements Validator<String> {
+    @Nonnull
+    private final String value;
+
+    public MyCustomValidator(@Nonnull String value) {
+        this.value = value;
+    }
+
+    @Override
+    public void accept(@Nullable String input, @Nonnull ValidationResults results) {
+        if (this.value.equalsIgnoreCase(input)) {
+            results.fail("The given role has been banned.");
+        }
+    }
+
+    @Override
+    public void updateSchema(SchemaContext context, @Nonnull Schema target) {
+        // This method can be used to update the schema of the command argument. This is useful for commands that have dynamic schemas based on the input value. For example, if you have a command that takes in a player name as an argument, you can use the `updateSchema` method to update the schema to include a list of online players for validation.
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
+}
+```
+
+After the custom validator is created, you can add it to an argument like the following example. In this example, we add the `MyCustomValidator` to a string argument called "role". If the user inputs "badword" as the role, the command will fail and return the error message defined in the `MyCustomValidator`.
+
+```java
+    ...
+    // Custom validator example
+    String bannedRole = "badword";
+
+    OptionalArg<String> roleArg = withOptionalArg("role", "Role to assign", ArgTypes.STRING)
+        .addValidator(new MyCustomValidator(bannedRole));
+    ...
 ```
 
 ---

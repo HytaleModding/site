@@ -1,0 +1,157 @@
+---
+title: How to edit and create Biomes
+description: Explores where world generation assets can be found and how to edit them.
+---
+
+### Where are the Assets
+
+World generation assets are kept in the HytaleGenerator directory within the assets.
+
+```
+/Server/HytaleGenerator/
+```
+
+<div className="flex flex-row rounded-lg border p-4">
+  <div className="flex-1/2 border-r pr-4">
+    ```
+    /Biomes
+    ```
+
+    Biome assets, with content configurations.
+  </div>
+  <div className="flex-1/2 pl-4">
+    ```
+    /WorldStructure
+    ```
+
+    Generator files that define which biomes spawn together.
+  </div>
+</div>
+
+<div className="flex flex-row rounded-lg border p-4">
+  <div className="flex-1/2 border-r pr-4">
+    ```
+    /Density
+    ```
+
+    Density assets that can be referenced by any other assets.
+  </div>
+  <div className="flex-1/2 pl-4">
+    ```
+    /Assignments
+    ```
+
+    Prop assets that can be referenced by any Biome assets.
+  </div>
+</div>
+
+***
+
+An example of this structure can be found bellow, packed in an asset pack with the instance configuration.
+
+[https://drive.google.com/file/d/1sIz\_CluANIIe3n8vNiOi-4PQdeqCO0qY/view?usp=drive\_link](https://drive.google.com/file/d/1sIz_CluANIIe3n8vNiOi-4PQdeqCO0qY/view?usp=drive_link)
+
+<Callout>
+Ensure you place your asset pack in the correct directory, under Mods.
+</Callout>
+
+### How to visit our worlds
+
+[https://drive.google.com/file/d/1cWGvNawy2XllEtWhgMOSiTZx5zzxlDX7/view?usp=sharing](https://drive.google.com/file/d/1cWGvNawy2XllEtWhgMOSiTZx5zzxlDX7/view?usp=sharing)
+
+{/* {% include "../../.gitbook/includes/requirements.md" %} */}
+
+The generation assets define a set of generators but on their own you cannot visit these. Currently you require an Instance with a generator that will allow you to visit your work.
+
+```
+/Server/Instances/
+```
+
+Instances are separate worlds that players can join using the `/instances` command. Each instance has an `Instance.bson` configuration asset that specifies which generator to use, among other worldly settings.
+
+```json
+{
+  "WorldGen": {
+    "Type": "HytaleGenerator",
+    "WorldStructure": "Basic",
+    "playerSpawn" : {
+      "X" : 123,
+      "Y" : 480,
+      "Z" : 10000,
+      "Pitch" : 0,
+      "Yaw" : 0,
+      "Roll" : 0
+    }
+  }
+}
+```
+
+<Callout>
+You can create custom instances for different world structures and biomes as you need them.
+</Callout>
+
+### How to edit Biomes
+
+[https://drive.google.com/file/d/1ryjXt40fB3dXpNPIiuTcnKKyX4o-q5HT/view?usp=sharing](https://drive.google.com/file/d/1ryjXt40fB3dXpNPIiuTcnKKyX4o-q5HT/view?usp=sharing)
+
+We currently use the Hytale Node Editor when editing world generation assets. This can be accessed while in-game from the Content Creation menu when pressing B. The node editor is then found under the asset editor dropdown on the upper left.&#x20;
+
+![Node Editor 1](/assets/official-documentation/worldgen/worldgen-tutorial/biomes/node-editor-1.png)
+
+Once you have the Hytale Node Editor open, through the file menu you can open Biomes by navigating to the Biomes directory and selecting one from your pack.&#x20;
+
+```
+/Server/HytaleGenerator/Biomes/
+```
+
+### Biome Asset Structure
+
+Every Biome has a root Biome node, this node splits into 5 structures. This is covered briefly but more information on each field can be found on the World Generation Concepts page.
+
+![Node Editor 2](/assets/official-documentation/worldgen/worldgen-tutorial/biomes/node-editor-2.png)
+
+<Callout>
+Each biome is for the most part self contained, meaning it has control over what appears with the biome. The only exception to this are Base Heights.
+</Callout>
+
+<Tabs>
+<Tab value="Terrain">
+Mathematical function nodes that calculate the physical shape of the Biome's terrain.
+</Tab>
+
+<Tab value="Materials">
+Logical nodes that determine what materials (blocks) make up a Biome's terrain.
+</Tab>
+
+<Tab value="Props">
+Function nodes that add objects like prefabs and decorations to the terrain.
+</Tab>
+
+<Tab value="Environments">
+Logical nodes that determine the environment asset at a given coordinate within the biome. This asset determines things like weather, NPC spawns, and sounds.
+</Tab>
+
+<Tab value="Tints">
+Logical function nodes that determine a colour code that can be used by certain blocks in the world. Typically this will be grasses and soils.
+</Tab>
+</Tabs>
+
+### How to preview your work
+
+[https://drive.google.com/file/d/1mNcHn9LhFnWDF0DzWFH6\_YllmKAUvUry/view?t=6](https://drive.google.com/file/d/1mNcHn9LhFnWDF0DzWFH6_YllmKAUvUry/view?t=6)
+
+Once you are in an Instance world with the Hytale Generator active you will only be able to see your work by generating new chunks. There are a few ways to do this.
+
+The viewport command selects an area around the Player that will live reload as you make changes to the generator.&#x20;
+
+```
+/viewport --radius 5 
+```
+
+You can also create a new world to show your changes.&#x20;
+
+```
+/instances spawn <instance> 
+```
+
+The last option is to simply fly south, new chunks will generate with the changes made.
