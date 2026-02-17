@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "bun run prebuild.ts && next build",
-    "dev": "bun run predev.ts && next dev",
+    "dev": "bun run prebuild.ts && next dev",
+    "dev:local": "bun run predev.ts && next dev",
     "dev:restore": "bun run restore-languages.ts",
     "start": "next start",
     "types:check": "fumadocs-mdx && tsc --noEmit",

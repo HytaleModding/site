@@ -1,7 +1,15 @@
-console.log("Preparing development environment...");
-
+import { $ } from "bun";
 import { rmdir } from "fs/promises";
 import { existsSync } from "fs";
+
+console.log("Preparing development environment...");
+
+//check if git is available
+$`git --version`.catch(() => {
+  console.warn("Git is not available. Skipping git-info.json generation.");
+  process.exit(0);
+});
+
 
 const languagesToRemove = [
   "af-ZA",
