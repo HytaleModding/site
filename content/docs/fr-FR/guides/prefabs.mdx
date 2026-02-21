@@ -1,6 +1,6 @@
 ---
 title: Prefabs
-description: Documentation about Prefabs in Hytale.
+description: Documentation sur les Prefabs dans Hytale.
 icon: Box
 authors:
   - name: Ben Cressman
@@ -9,84 +9,84 @@ authors:
 
 # Introduction
 
-Prefabs are Hytale's way of creating reusable structures.
+Les Prefabs sont le moyen pour Hytale de créer des structures réutilisables.
 
-There are a few fundamental concepts to understand about prefabs:
+Il y a quelques concepts fondamentaux à comprendre sur les prefabs :
 
-- Users interact with prefabs via a prefab editing world.
-- Prefabs the physical structures in the game world, and are saved as JSON files.
+- Les utilisateurs interagissent avec les prefabs via un monde d'édition de prefab.
+- Les Prefabs sont les structures physiques dans le monde du jeu, et sont sauvegardés en fichiers JSON.
 
-## How to Create a Prefab
+## Comment créer un Prefab
 
-Be sure to check the Known Issues section at the end of this guide if you encounter any problems.
+Consultez la section "Problèmes Connus" à la fin de ce guide si vous rencontrez des problèmes.
 
-1. `/editprefab new <world name>` to create a new prefab editing world: `/editprefab new my_prefab_world`
-   - Note that `my_prefab` is the name of the _world_, not the prefab itself. Worlds can contain multiple prefabs.
-2. Build whatever you want in the prefab editing world.
-3. Use the selection brush to select the area you want to save as a prefab.
-4. `/prefab save` to save the structure as a prefab.
-5. `/editprefab exit` to exit the prefab editing world.
-6. Using the Paste brush, press 'e' on your keyboard to select the prefab you just created. It will be in the "server" dropdown, which can be selected from the top right of the menu.
-   - You can also select it with `/prefab list` and selecting the prefab you just created.
+1. `/editprefab new <nom du monde>` pour créer un nouveau monde d'édition de prefab : `/editprefab new my_prefab_world`
+   - Notez que `my_prefab` est le nom du _monde_, pas le prefab lui-même. Les mondes peuvent contenir de multiples prefabs.
+2. Construisez ce que vous voulez dans le monde d'édition de prefab.
+3. Utilisez la brosse de sélection pour sélectionner la zone que vous voulez enregistrer en tant que prefab.
+4. `/prefab save` pour enregistrer la structure en tant que prefab.
+5. `/editprefab exit` pour quitter le monde d'édition du prefab.
+6. À l'aide de la brosse Coller, appuyez sur 'e' sur votre clavier pour sélectionner le prefab que vous venez de créer. Il sera dans le menu déroulant "serveur", qui peut être sélectionné en haut à droite du menu.
+   - Vous pouvez également le sélectionner avec `/prefab list` et en sélectionnant le prefab que vous venez de créer.
 
-There is a lot more that you can do with prefabs; this is just the basic flow. Keep reading for more information.
+Il y a beaucoup plus de choses que vous pouvez faire avec les prefabs ; il s'agit  simplement du fonctionnement de base. Continuez à lire pour plus d'informations.
 
-## Commands
+## Commandes
 
-There are two main commands for prefabs, `/prefab` and `/editprefab`.
+Il y a deux commandes principales pour les prefabs, `/prefab` et `/editprefab`.
 
-This list does not cover the various options for each command. You can use the `--help` flag at the end of any command to see the available options, e.g. `/prefab save --help`, or use `/help` in game and find the `prefab` and `editprefab` commands.
+Cette liste ne couvre pas les différentes options pour chaque commande. Vous pouvez utiliser le flag `--help` à la fin de n'importe quelle commande pour voir les options disponibles, par ex. `/prefab save --help`, ou utilisez `/help` dans le jeu et trouvez les commandes `prefab` et `editprefab`.
 
 ### `/prefab`
 
-This command allows the user to interact with an existing prefab's file.
+Cette commande permet à l'utilisateur d'interagir avec un fichier de prefab existant.
 
-Subcommands:
+Sous-commandes :
 
 - `save`
-  - Saves the prefab to the file system.
+  - Sauvegarde le prefab vers le système de fichiers.
 - `load`
-  - Loads the prefab into the game.
+  - Charge le prefab dans le jeu.
 - `delete`
-  - Deletes the prefab from the file system.
+  - Supprime le prefab du système de fichiers.
 - `list`
-  - Lists all prefabs in the file system.
+  - Liste tous les prefabs du système de fichiers.
 
 ### `/editprefab`
 
-The `/editprefab` command is used to create or edit the physical structure in the game the prefab is holding.
+La commande `/editprefab` est utilisée pour créer ou éditer la structure physique dans le jeu que le prefab contient.
 
-Subcommands:
+Sous-commandes :
 
 - `exit`
-  - Exits the current prefab editing world.
+  - Quitte le monde d'édition du prefab actuel.
 - `load`
-  - Creates a new prefab editing world to paste an existing prefab into.
+  - Crée un nouveau monde d'édition de préfab pour y coller un prefab existant.
 - `new`
-  - Creates a new prefab editing world to create a new prefab from scratch.
+  - Crée un nouveau monde d'édition de prefab pour créer un nouveau préfab à partir de rien.
 - `select`
-  - Selects the area of the prefab the user is looking at (within 200 blocks).
+  - Sélectionne la zone du prefab que l'utilisateur regarde (dans les 200 blocs).
 - `save`
-  - Saves the current prefab using the existing area, or the currently selected area.
+  - Enregistre le prefab courant en utilisant la zone existante, ou la zone actuellement sélectionnée.
 - `saveui`
-  - Opens the save UI for the current world, allowing the user to interact with all prefabs that are in the world.
+  - Ouvre l'interface utilisateur de sauvegarde pour le monde actuel, permettant à l'utilisateur d'interagir avec tous les prefabs présent dans le monde.
 - `kill`
-  - Despawn all entities in the currently selected prefab.
+  - Fais disparaître toutes les entités dans le prefab actuellement sélectionné.
 - `saveas`
-  - Save the selected prefab into a new file.
+  - Enregistre le prefab sélectionné dans un nouveau fichier.
 - `setbox`
-  - Set the bounding box of the currently selected prefab.
+  - Définissez la boîte englobante du prefab actuellement sélectionné.
 - `info`
-  - General information about the currently selected prefab.
+  - Informations générales sur le prefab actuellement sélectionné.
 - `tp`
-  - Opens the teleport UI to teleport to a prefab in the current editing world.
+  - Ouvre l'interface de téléportation pour se téléporter à un prefab dans le monde d'édition actuel.
 - `modified`
-  - Lists all modified prefabs with unsaved changes in the current editing world.
+  - Liste tous les prefabs modifiés avec des modifications non enregistrées dans le monde en cours d'édition.
 
-# Known Issues
+# Problèmes connus
 
-- After saving edits to an existing prefab, the prefab does not reflect the changes in the game.
-  - Workaround: exit and re-enter the world.
-- When pasting a prefab, the prefab is not always shown accurately.
-  - Workaround: hit 't' on your keyboard to toggle the material being shown; usually at least one view is accurate.
-- `/prefab delete` errors with `Assert not in thread`.
+- Après avoir sauvegardé les modifications dans un prefab existant, le prefab ne reflète pas les changements dans le jeu.
+  - Contournement : sortir et retourner dans le monde.
+- Lorsque vous collez un prefab, le prefab n'est pas toujours affiché avec précision.
+  - Contournement : appuyez sur 't' sur votre clavier pour activer/désactiver le matériel affiché ; généralement au moins une vue est précise.
+- Erreurs `/prefab delete` avec `Assert not in thread`.

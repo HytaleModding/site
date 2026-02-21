@@ -3,18 +3,18 @@
   "nav": {
     "title": "Hytale Modding",
     "documentation": "Документація",
-    "sponsors": "Спонсори",
+    "sponsors": "Меценати",
     "search": "Пошук"
   },
   "home": {
-    "title": "#1 ресурс для {flipwords} Hytale модингу",
+    "title": "#1 ресурс для {flipwords} модифікування Hytale ",
     "flipwords": [
       "Інструкцій",
       "Документацій",
       "Інструментів",
       "Підручників"
     ],
-    "description": "Ресурс спільноти #1 для Hytale модингу, з \nкомплексними інструкціями, детальними документаціями та корисними інструментами для початку вашої подорожі у світі модингу.",
+    "description": "Ресурс спільноти #1 для модифікування  Hytale, зі \nзмістовними інструкціями, детальними документаціями та корисними інструментами для початку вашої подорожі у світі модингу.",
     "documentation": "Документація",
     "forum": "Форум",
     "discord": "Приєднуйтеся до спільноти!",
@@ -29,8 +29,8 @@
   },
   "sponsors": {
     "title": "Підтримати нас",
-    "description": "HytaleModding — це спільнотний проєкт із відкритим кодом, і частиною управління спільнотою є оплата послуг, серверів та інфраструктури, як-от хостинг цього веб-сайту. Якщо ви хочете підтримати проєкт, подумайте про те, щоб стати спонсором! Ми ​​використовуємо OpenCollective, щоб ви могли бачити, як кошти використовуються для підтримки спільноти.",
-    "ourSponsors": "Наші спонсори"
+    "description": "HytaleModding — це проєкт спільноти із відкритим кодом, і частиною управління спільнотою є оплата послуг, серверів та інфраструктури, як-от хостинг цього веб-сайту. Якщо ви хочете підтримати проєкт, подумайте про те, щоб стати меценатом! Ми ​​використовуємо OpenCollective, щоб ви могли бачити, як кошти використовуються для підтримки спільноти.",
+    "ourSponsors": "Наші меценати"
   },
   "misc": {
     "loading": "Завантаження...",
@@ -39,8 +39,8 @@
     "credit": "Написана",
     "supportUs": "Підтримати нас",
     "officialDocumentationNotice": {
-      "title": "Official Hytale Documentation",
-      "description": "All content on this section is provided by **Hypixel Studios Canada Inc.** and is presented without any substantial changes, aside from visual design adjustments by the HytaleModding Team."
+      "title": "Офіційна документація Hytale",
+      "description": "Увесь контент у цьому розділі надається **Hypixel Studios Canada Inc.** та представляється без будь-яких суттєвих змін, окрім налаштувань візуального оформлення командою HytaleModing."
     }
   },
   "meta": {
@@ -50,7 +50,7 @@
       "server": {
         "title": "Сервер",
         "content_categories": {
-          "title": "Категорії контенту"
+          "title": "Категорії вмісту"
         },
         "interface": {
           "title": "Інтерфейс"
@@ -74,15 +74,15 @@
     },
     "official_documentation": {
       "worldgen": {
-        "title": "World Generation",
+        "title": "Генерація світу",
         "pack_tutorial": {
-          "title": "Worldgen Pack Tutorial"
+          "title": "Посібник з використання пакета Worldgen"
         },
         "technical_hytale_generator": {
-          "title": "Technical Hytale Generator"
+          "title": "Technical Hytale генератор"
         },
         "worldgen_tutorial": {
-          "title": "Worldgen Tutorial"
+          "title": "Підручник з Worldgen"
         }
       }
     },
