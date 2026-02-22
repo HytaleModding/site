@@ -33,6 +33,27 @@ const config = {
         permanent: false,
       },
       {
+        source:
+          "/:lang/docs/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts-1",
+        destination:
+          "/:lang/docs/official-documentation/worldgen/worldgen-tutorial/materials-generation-concepts",
+        permanent: true,
+      },
+      {
+        source:
+          "/:lang/docs/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts-2",
+        destination:
+          "/:lang/docs/official-documentation/worldgen/worldgen-tutorial/prop-generation-concepts",
+        permanent: true,
+      },
+      {
+        source:
+          "/:lang/docs/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts",
+        destination:
+          "/:lang/docs/official-documentation/worldgen/worldgen-tutorial/density-generation-concepts",
+        permanent: true,
+      },
+      {
         source: "/docs",
         destination: "/en/docs",
         permanent: false,
