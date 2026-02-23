@@ -7,10 +7,10 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Upload sources and translations to Crowdin
-        uses: crowdin/github-action@v2
+        uses: crowdin/github-action@5587c43063e52090026857d386174d2599ad323b
         with:
           upload_sources: true
           upload_translations: true
