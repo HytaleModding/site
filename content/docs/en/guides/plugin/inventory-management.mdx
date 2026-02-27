@@ -4,6 +4,8 @@ description: "Learn how to manage player inventories in your Hytale mod."
 authors:
     - name: "Neil Revin"
       url: "https://itsneil.dev"
+    - name: "jacobwojoski
+      url: "https://github.com/jacobwojoski"
 ---
 
 In this guide, you'll learn how to manage player inventories in your Hytale mod.
@@ -124,3 +126,77 @@ Or you can specify a certain slot to remove it from:
 ```java
 storageContainer.removeItemStackFromSlot((short) 4);
 ```
+
+## Custom Inventories (Item Containers)
+#### Adding an inventory to an item
+You can add a custom inventory by adding the following to the items json
+```json
+"Container": {
+    "Capacity": 9
+},
+```
+And adding the following interaction allows opening the inventory UI Page by using a pre defined UI page. It opens the UI like how it would for a backpackpack. 
+This allows the player to see their inventory along with the items.
+```
+"Interactions": {
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "OpenItemStackContainer"
+        }
+      ]
+    }
+},
+```
+
+#### Plugin Interaction of Container Items
+The items stored in an inventory are saved in the item BSON so they can not directly be access data through ECS.
+You will need to pull the data from the item to interact with it.
+
+```java
+// Get held item that we know has a container field & its position
+ItemStack heldItemStack = player.getInventory().getActiveHotbarItem();
+final short ACTIVE_HOTBAR_SLOT = player.getInventory().getActiveHotbarSlot();
+
+// Get the BSON of the item
+BsonDocument containerBSON = heldItemStack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
+
+// Get the items in the container
+ItemStack[] containerItems = ItemStackItemContainer.ITEMS_CODEC.getOrNull(containerBSON, new ExtraInfo());
+```
+
+You can then modify the list of items however you want but this will not modify the item directly as they are immutable.
+To update the container the player is holding you will need to do the following
+
+```java
+// For this example we are just removing the first item in the container (Continued from above)
+containerItems[0] = null;
+
+// Update the container fields in the BSON doc to have the removed item
+ItemStackItemContainer.ITEMS_CODEC.put(containerBSON, containerItems, new ExtraInfo());
+
+// Create a new version of the item
+ItemStack updatedItem = heldItemStack.withMetadata(ItemStackItemContainer.CONTAINER_CODEC, containerBSON);
+
+// Replace the equiped item in the players inventory with the new item as its not editable!
+// - remove original item
+player.getInventory().getHotbar().removeItemStackFromSlot(ACTIVE_HOTBAR_SLOT);
+// - add new item
+player.getInventory().getHotbar().setItemStackForSlot(ACTIVE_HOTBAR_SLOT updatedQuickAccessItem);
+
+```
+
+#### Getting Component on Container Item
+You can use a similar method ot get any component from an item in a container
+```java
+// Get the component data
+CustomComponent component = itemStack.getFromMetadataOrDefault(CustomComponent.CUSTOM_COMPONENT_ID, CustomComponent.CODEC);
+
+// Set the component data by creating new item with updated info
+ItemStack newItem = itemStack.withMetadata(
+        CustomComponent.CUSTOM_COMPONENT_ID,
+        CustomComponent.CODEC,
+        modifiedComponent
+    );
+```
+
