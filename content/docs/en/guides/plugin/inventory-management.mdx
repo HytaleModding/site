@@ -137,7 +137,7 @@ You can add a custom inventory by adding the following to the items json
 ```
 And adding the following interaction allows opening the inventory UI Page by using a pre defined UI page. It opens the UI like how it would for a backpackpack. 
 This allows the player to see their inventory along with the items.
-```
+```json
 "Interactions": {
     "Use": {
       "Interactions": [
@@ -186,7 +186,7 @@ player.getInventory().getHotbar().setItemStackForSlot(ACTIVE_HOTBAR_SLOT updated
 
 ```
 
-#### Getting Component on Container Item
+#### Getting Components from Container Items
 You can use a similar method ot get any component from an item in a container
 ```java
 // Get the component data
