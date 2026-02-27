@@ -1,0 +1,102 @@
+---
+title: World Structure
+description: Defines the contents of an entire world.
+authors:
+  - name: "Hypixel Studios Canada Inc."
+    url: "https://hytale.com"
+---
+
+<OfficialDocumentationNotice />
+
+The World Structure asset defines how every aspect of a world is generated. Below are all entries for this asset.
+
+### DefaultBiome
+
+* Type: String
+* Safe value: `"Basic"`
+
+This Biome is used everywhere outside the delimiters.
+
+### Density
+
+* Type: Density slot
+*   Safe value:
+
+    ```json
+    "Type": "Constant",
+    "Value": 1
+    ```
+
+Determines the Biome distribution in the world. The values are interpreted by the `Biomes` delimiter list.
+
+### Biomes
+
+* Type: list of Biome delimiters
+* Safe value: `[]`
+
+Each delimiter assigns a Biome to places in the world where the Density is within its bounds.
+
+### DefaultTransitionDistance
+
+* Type: integer
+* Safe value: `32`
+
+The distance, in blocks, it takes for one Biome to transition into another. The terrain in that region is interpolated between the two Biomes. Larger distances impact performance.
+
+### MaxBiomeEdgeDistance
+
+* Type: integer
+* Safe value: `0`
+
+The maximum distance from any Biome edge that world-gen tracks. This impacts Biomes that use the DistanceFromBiomeEdge Density node. Distances greater than this are read as `-1`.
+
+### SpawnPositions
+
+* Type: PositionProvider slot
+*   Safe value:
+
+    ```json
+    "Type": "List",
+    "Positions": [{"X": 0, "Y": 140, "Z": 0}]
+    ```
+
+The world's spawn positions.
+
+### Framework
+
+* Type: list of Framework modules
+* Safe value: `[]`
+
+The Framework helps define the world's high-level structure. It ensures consistency across multiple Biomes. For this to work, the Biomes in a World Structure must correctly interpret the Framework entries.
+
+```json
+// Example of a DecimalConstants Framework entry.
+"Framework": [
+  {
+    "Type": "DecimalConstants",
+    "Entries": [
+      {
+        "Name": "Base",
+        "Value": 100
+      }
+    ]
+  }
+]
+```
+
+Below are the types of Framework entries.
+
+#### Positions
+
+A list of named Positions fields for the world.
+
+* Entries: list of entries
+  * Name: string. The name to use when referencing this entry from inside the Biomes.
+  * Positions: PositionProvider slot.
+
+#### DecimalConstants
+
+A list of named decimal constants.
+
+* Name: string. The constant's name.
+* Value: decimal number.
