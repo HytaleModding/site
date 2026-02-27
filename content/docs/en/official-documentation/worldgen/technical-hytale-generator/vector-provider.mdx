@@ -12,72 +12,43 @@ authors:
 
 Generates the provided vector.
 
-#### Parameters:
+Parameters:
 
-<ParameterList
-  parameters={[
-    {
-      name: "Vector",
-      description: "3D decimal vector.",
-    },
-  ]}
-/>
+| Name   | Type              | Description |
+| ------ | ----------------- | ----------- |
+| Vector | 3D decimal vector |             |
 
----
+***
 
 ### DensityGradient
 
-Generates the gradient of the provided Density field. The resulting gradient vector shows in which direction the Density field is increasing and how fast the field is changing.;
+Generates the gradient of the provided Density field. The resulting gradient vector shows which direction the Density field increases and how quickly it changes.
 
-For more information about gradient vectors you can read: [https://en.wikipedia.org/wiki/Gradient](https://en.wikipedia.org/wiki/Gradient)
+For more information about gradient vectors, see: [https://en.wikipedia.org/wiki/Gradient](https://en.wikipedia.org/wiki/Gradient)
 
-#### Parameters:
+Parameters:
 
-<ParameterList
-  parameters={[
-    {
-      name: "SampleDistance",
-      description:
-        "positive decimal value. How far apart the Density field value samples are taken. The optimal value for performance is 1.0. Greater values could be useful for smoothing out results for specific applications.",
-    },
-    {
-      name: "Density",
-      description: "Density slot.",
-    },
-  ]}
-/>
+<table><thead><tr><th width="163.4554443359375">Name</th><th width="202.65338134765625">Type</th><th>Description</th></tr></thead><tbody><tr><td>SampleDistance</td><td>positive decimal value</td><td>How far apart the Density field value samples are taken. The optimal value for performance is 1.0. Greater values could be useful for smoothing out results for specific applications.</td></tr><tr><td>Density</td><td>Density slot</td><td></td></tr></tbody></table>
 
----
+***
 
 ### Cache
 
-Caches the input vector for each position.;
+Caches the input vector for each position.
 
-This should only be used if the downstream (child) VectorProvider is expensive and the same coordinate is queried more than once.
+Use this only if the downstream (child) VectorProvider is expensive and the same coordinate is queried more than once.
 
-#### Parameters:
+Parameters:
 
-<ParameterList
-  parameters={[
-    {
-      name: "SampleDistance",
-      description:
-        "positive decimal value. How far apart the Density field value samples are taken. The optimal value for performance is 1.0. Greater values could be useful for smoothing out results for specific applications.",
-    },
-    {
-      name: "Density",
-      description: "Density slot.",
-    },
-  ]}
-/>
+<table><thead><tr><th width="153.95050048828125">Name</th><th width="198.14862060546875">Type</th><th>Description</th></tr></thead><tbody><tr><td>SampleDistance</td><td>positive decimal value</td><td>How far apart the Density field value samples are taken. The optimal value for performance is 1.0. Greater values could be useful for smoothing out results for specific applications.</td></tr><tr><td>Density</td><td>Density slot</td><td></td></tr></tbody></table>
 
----
+***
 
 ### Exported
 
-Allows exporting a VectorProvider as a single instance. Enabling the SingleInstance on this node ensures all importers share the same logic.;
+Allows exporting a VectorProvider as a single instance. Enabling `SingleInstance` on this node ensures all importers share the same logic.
 
-By default a completely different instance is create for every Imported node. When there are multiple Imported nodes that import the same exported key, a new instance of that exported VectorProvider tree will be created for each one of the Imported nodes. SingleInstance ensures all importers share the same underlying instance of the node tree.
+By default, a completely different instance is created for every Imported node. When multiple Imported nodes import the same exported key, a new instance of that exported VectorProvider tree is created for each Imported node. `SingleInstance` ensures all importers share the same underlying instance of the node tree.
 
 This node can be used to optimize caching when an exported VectorProvider is imported multiple times in the same context and contains caches. The caches would be shared between the different imported instances.
 
@@ -85,35 +56,18 @@ _Important: This is still an experimental feature and could cause unexpected beh
 
 Expected Inputs: 1
 
-#### Parameters:
+Parameters:
 
-<ParameterList
-  parameters={[
-    {
-      name: "SingleInstance",
-      description:
-        "boolean. Enable to share the exported for all Imported nodes referencing this key.",
-    },
-    {
-      name: "VectorProvider",
-      description: "VectorProvider slot.",
-    },
-  ]}
-/>
+<table><thead><tr><th width="151.09893798828125">Name</th><th width="185.84161376953125">Type</th><th>Description</th></tr></thead><tbody><tr><td>SingleInstance</td><td>boolean</td><td>Enable this to share the export across all Imported nodes that reference this key.</td></tr><tr><td>VectorProvider</td><td>VectorProvider slot</td><td></td></tr></tbody></table>
 
----
+***
 
 ### Imported
 
 Imports an exported VectorProvider.
 
-#### Parameters:
+Parameters:
 
-<ParameterList
-  parameters={[
-    {
-      name: "Name",
-      description: "string. The exported VectorProvider.",
-    },
-  ]}
-/>
+| Name | Type   | Description                  |
+| ---- | ------ | ---------------------------- |
+| Name | string | The exported VectorProvider. |
