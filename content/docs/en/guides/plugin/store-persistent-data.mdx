@@ -84,9 +84,11 @@ Inside your main class's `setup()` method, register your new Component.
 public class YourPlugin extends JavaPlugin {
 
     private ComponentType<EntityStore, YourPlayerData> yourPlayerDataComponent;
+    public static YourPlugin instance;
 
     public YourPlugin(@Nonnull JavaPluginInit init) {
         super(init);
+        instance = this;
     }
 
     @Override
@@ -116,10 +118,10 @@ private void someEntryMethod(@Nonnull Ref<EntityStore> ref, @Nonnull Store<Entit
       Player player = (Player) store.getComponent(ref, Player.getComponentType());
 
       // since we're using putComponent, it could be useful to check if it already exists on the player in case we want to update it
-     if(store.getComponent(ref, YourPlugin.instance().getYourPlayerDataComponent()) != null)
+     if(store.getComponent(ref, YourPlugin.instance.getYourPlayerDataComponent()) != null)
      {
           // here we implement logic that updates the component
-         var comp = store.getComponent(ref, YourPlugin.instance().getYourPlayerDataComponent())
+         var comp = store.getComponent(ref, YourPlugin.instance.getYourPlayerDataComponent())
          // declare public fields or methods in the component class
          comp.SomeString = "An Updated Field";
      } else {
@@ -129,7 +131,7 @@ private void someEntryMethod(@Nonnull Ref<EntityStore> ref, @Nonnull Store<Entit
           myCustomComp.SomeString = "Edited String";
 
           // putComponent allows you to insert declared objects
-          store.putComponent(ref, YourPlugin.instance().getYourPlayerDataComponent(), myCustomComp);
+          store.putComponent(ref, YourPlugin.instance.getYourPlayerDataComponent(), myCustomComp);
      }
 }
 ```
