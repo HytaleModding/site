@@ -1,16 +1,16 @@
 ---
-title: Systems
-description: In this guide you will learn about how systems work inside of Hytale.
+title: Системы
+description: В этом руководстве вы узнаете, как системы работают внутри Hytale.
 authors:
   - name: oskarscot
     url: https://oskar.scot
 ---
 
-Systems are where the logic lives. While components are pure data containers, systems operate on entities that match specific component queries. The ECS scheduler runs systems each tick, passing in only the entities that have the components the system cares about.
+Системы - это место, где находится логика. Если компоненты являются просто хранилищами данных, то системы работают на сущностях с определёнными компонентами. Планировщик ECS запускает системы каждый тик, передавая им только те сущности, которые имеют компоненты, необходимые системе.
 
 ### EntityTickingSystem
 
-The most common system type. It runs every tick and processes each entity matching its query individually.
+Наиболее распространенный тип системы. Он запускается при каждом тике и обрабатывает каждую сущность, соответствующую его запросу, индивидуально.
 
 ```java
 public class PoisonSystem extends EntityTickingSystem<EntityStore> {
@@ -58,11 +58,11 @@ public class PoisonSystem extends EntityTickingSystem<EntityStore> {
 }
 ```
 
-The `tick` method receives `dt` which is delta time since the last tick. This lets you accumulate time for interval-based logic rather than counting ticks. The `ArchetypeChunk` gives you access to the entity's components via the index, and `getReferenceTo` returns the `Ref` you need for issuing commands.
+Метод `tick` получает `dt` - время, прошедшее с последнего тика. Это позволяет накапливать время для логики, основанной на интервалах, вместо подсчёта тиков. `ArchetypeChunk` даёт доступ к компонентам сущностей по индексу, а `getReferenceTo` возвращает `Ref`, который нужен для выполнения команд.
 
 ### TickingSystem
 
-Runs once per tick globally, not per-entity. Use this for world-wide updates or logic that doesn't target specific entities.
+Выполняется один раз за тик глобально, а не для каждой сущности. Используйте это для глобальных обновлений мира или логики, которая не относится к конкретным сущностям.
 
 ```java
 public class GlobalUpdateSystem extends TickingSystem<EntityStore> {
@@ -76,7 +76,7 @@ public class GlobalUpdateSystem extends TickingSystem<EntityStore> {
 
 ### DelayedEntitySystem
 
-Like `EntityTickingSystem` but with a built-in delay. The constructor takes a float representing seconds between executions.
+Похоже на `EntityTickingSystem`, но со встроенной задержкой. Конструктор принимает число с плавающей точкой — количество секунд между выполнениями.
 
 ```java
 public class HealthRegenSystem extends DelayedEntitySystem<EntityStore> {
@@ -88,7 +88,7 @@ public class HealthRegenSystem extends DelayedEntitySystem<EntityStore> {
   @Override
   public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
       @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
-    // Runs every 1 second per matching entity
+    // Выполняется каждую секунду для каждой совпадающей сущности
   }
 
   @Nonnull
@@ -101,8 +101,8 @@ public class HealthRegenSystem extends DelayedEntitySystem<EntityStore> {
 
 ### RefSystem
 
-We can also create systems to listen for changes on entities themselves. This is done through a `RefSystem`, for example let's say we want to perform an action whenever we add a component to an entity, update it or remove it.
-This can be done via the `RefChangeSystem<ECS_STORE, COMPONENT>`. Let's break down the example below:
+Мы также можем создавать системы для проверки изменений связанных с самими сущностями. Это делается с помощью `RefSystem`. Например, мы хотим выполнять определенные действия каждый раз, когда мы добавляем компонент к сущности, обновляем или удаляем его.
+Это можно сделать с помощью `RefChangeSystem<ECS_STORE, COMPONENT>`. Давайте разберём следующий пример:
 
 ```java
 public class PermissionAttachmentSystem extends RefChangeSystem<EntityStore, PermissionAttachment> {
@@ -120,7 +120,7 @@ public class PermissionAttachmentSystem extends RefChangeSystem<EntityStore, Per
     UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
     UUID playerUuid = component.getUuid();
 
-    // PermissionAttachment component was added to a new entity
+    // Компонент PermissionAttachment был удален
   }
 
   @Override
@@ -128,7 +128,7 @@ public class PermissionAttachmentSystem extends RefChangeSystem<EntityStore, Per
     UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
     UUID playerUuid = component.getUuid();
 
-    // PermissionAttachment component was updated using replaceComponent or putComponent
+    // Компонент был PermissionAttachment с использованием replaceComponent или putComponent
   }
 
   @Override
@@ -136,7 +136,7 @@ public class PermissionAttachmentSystem extends RefChangeSystem<EntityStore, Per
     UUIDComponent component = store.getComponent(ref, UUIDComponent.getComponentType());
     UUID playerUuid = component.getUuid();
 
-    // PermissionAttachment component was removed from an entity
+    // Компонент PermissionAttachment был удален из сущности
   }
 
   @Nullable
@@ -147,27 +147,29 @@ public class PermissionAttachmentSystem extends RefChangeSystem<EntityStore, Per
 }
 ```
 
-In this system we listen for changes on the `PermissionAttachment` component inside of the `EntityStore`. This gives us access to `onComponentAdded`, `onComponentSet` and `onComponentRemoved` which in this example caches and persists permission data
-which is stored on a player inside of a custom `PermissionAttachment` component.
+В этой системе мы проверяем изменения компонента `PermissionAttachment` внутри `EntityStore`. Это дает нам доступ к `onComponentAdded`, `onComponentSet` и `onComponentRemoved`, которые в данном примере сохраняют и кэшируют данные о правах
+которые хранятся в игроке внутри пользовательского компонента `PermissionAttachment`.
 
-## Queries
+## Запросы (Queries)
 
-Queries filter which entities a system processes. The ECS only passes entities to your system's `tick` method if they have all the components specified in the query.
+Запросы (Queries) фильтруют то, какие сущности будут обрабатываться системой. ECS передаёт сущности в метод `tick` вашей системы **только если у них есть все компоненты**, указанные в запросе.
 
 ```java
-// Single component - any entity with PoisonComponent
+// Один компонент — любые сущности с PoisonComponent
 Query.and(poisonComponentType)
 
-// Multiple components - entities with both
+// Несколько компонентов — сущности, у которых есть оба компонента
 Query.and(poisonComponentType, Player.getComponentType())
 
-// Exclusion - players that aren't dead
-Query.and(Player.getComponentType(), Query.not(DeathComponent.getComponentType()))
+// Исключение — игроки, которые не мертвы
+Query.and(
+    Player.getComponentType(),
+    Query.not(DeathComponent.getComponentType()))
 ```
 
-## SystemGroups and Dependencies
+## Группы систем и зависимости
 
-Systems can declare which group they belong to and what dependencies they have. This controls execution order which is critical for systems that interact.
+Системы могут указывать, к какой группе они принадлежат, и какие у них есть зависимости. Это контролирует порядок выполнения имеющий решающее значение для взаимодействующих систем.
 
 ```java
 @Nullable
@@ -177,7 +179,7 @@ public SystemGroup<EntityStore> getGroup() {
 }
 ```
 
-For more complex ordering you can override `getDependencies`:
+Для более комплексного порядка выполнения кода вы можете перезаписать `getDependencies`:
 
 ```java
 @Nonnull
@@ -189,11 +191,11 @@ public Set<Dependency<EntityStore>> getDependencies() {
 }
 ```
 
-The damage system is a good example of why ordering matters. Hytale's damage pipeline has four stages: GatherDamageGroup collects damage sources, FilterDamageGroup applies reductions and cancellations, then damage is applied to health, and finally InspectDamageGroup handles side effects like particles and sounds. If these ran in the wrong order you'd play death animations before the entity dies or apply armor reduction after health is already subtracted.
+Система урона — хороший пример того, почему порядок выполнения важен. Пайплайн урона в Hytale имеет четыре этапа: GatherDamageGroup собирает источники урона, FilterDamageGroup применяет уменьшения и отмены, затем урон применяется к здоровью, и наконец InspectDamageGroup обрабатывает побочные эффекты, такие как частицы и звуки. Если бы эти этапы выполнялись в неправильном порядке, анимация смерти проигрывалась до того, как сущность умерла, или значение параметра брони уменьшилось уже после получения урона.
 
-## Registering Components and Systems
+## Регистрация компонентов и систем
 
-Components and systems must be registered during plugin setup. The `EntityStoreRegistry` handles this.
+Компоненты и системы должны регистрироваться во время настройки плагина. Этим занимается `EntityStoreRegistry`.
 
 ```java
 public final class ExamplePlugin extends JavaPlugin {
@@ -227,4 +229,4 @@ public final class ExamplePlugin extends JavaPlugin {
 }
 ```
 
-The `registerComponent` method returns a `ComponentType` which acts as a key for accessing that component type throughout your plugin. Store it as a field and pass it to any systems that need it. The second argument is a factory for creating default instances.
+Метод `registerComponent` возвращает `ComponentType`, который действует как ключ для доступа к этому типу компонента во всем вашем плагине. Сохраните его как поле и передайте в любые системы, которым он нужен. Второй аргумент - это фабрика (функция или объект, который создаёт и возвращает другие объекты) для создания экземпляров по умолчанию.

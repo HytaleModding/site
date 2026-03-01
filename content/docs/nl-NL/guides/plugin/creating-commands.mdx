@@ -8,6 +8,8 @@ authors:
     url: https://oskar.scot
   - name: jacobwojoski
     url: https://github.com/jacobwojoski
+  - name: Marcel-TO
+    url: https://marcel-to.net
 ---
 
 In this guide, you will learn how to create custom commands for your Hytale mod.
@@ -36,7 +38,7 @@ The most basic command is an `AbstractAsyncCommand`. It has very minimal data av
   `AbstractAsyncCommand` runs on its own background thread. This means its execute is not tied to any world instance and because of this it can not edit any **Stores** or **Refs** without getting the desired world first. To access this data any of the other command types would be preferred and are likely what you will want to use instead.
 </Callout>
 
-The main purpose for a command like this would be for something that can happen everywhere and is not tied to a specific world. For example a `serverRules` command to tell the user thats running the command in chat what the servers rules are nomatter what world they are in.
+The main purpose for a command like this would be for something that can happen everywhere and is not tied to a specific world. For example a `serverRules` command to tell the user that's running the command in chat what the server's rules are no matter what world they are in.
 
 ```java
 // Command that can be run that lists the server rules in chat to the player
@@ -49,7 +51,7 @@ public class ServerRulesCommand extends AbstractAsyncCommand {
     }
 
     // Run the command
-    // conetext - info about who ran the command. Server console?, Some player?
+    // context - info about who ran the command. Server console?, Some player?
     @Override
     protected CompletableFuture<Void> executeAsync(@Nonnull CommandContext context) {
         context.sendMessage(Message.raw("The only rule is there are no rules."));
@@ -134,7 +136,7 @@ Uses a Ray to see what the player is looking at and tries to run the command on 
 
 ## Adding Arguments
 
-Arguments are additional fields that the user can input when running a command. The different types of arguments along with small snipits and a large example can be seen below.
+Arguments are additional fields that the user can input when running a command. The different types of arguments along with small snippets and a large example can be seen below.
 
 ### Command Argument Types
 
@@ -163,14 +165,14 @@ this.messageArg = this.withOptionalArg("message", "Message to print while healin
 
 ### Default Arguments
 
-Adding a default argument has two additional arguemnt for the default value and default value description. You need to use `withDefaultArg` method.
+Adding a default argument has two additional argument for the default value and default value description. You need to use `withDefaultArg` method.
 
 ```java
 // args <Command String> <Description> <Default Value> <Desc of default value>
 this.healthArg = this.withDefaultArg("health", "Amount to heal player", ArgTypes.FLOAT, (float)100, "Desc of Default: 100");
 ```
 
-### Flag Arguemnts
+### Flag Arguments
 
 Similar as above but the flags return is either true if it exists or false if it does not. You need to use `withFlagArg` method.
 
@@ -181,20 +183,13 @@ this.debugArg = this.withFlagArg("debug", "Add debug logs");
 
 ### ArgTypes
 
-The following ArgTypes are available (only lists common types):
-
-- `ArgTypes.STRING`
-- `ArgTypes.INTEGER`
-- `ArgTypes.BOOLEAN`
-- `ArgTypes.FLOAT`
-- `ArgTypes.DOUBLE`
-- `ArgTypes.UUID`
+You can find all the available argument types on the [ArgTypes](../../argtypes) page.
 
 ### Example Command Arg Types
 
-Shows all Command arguemnt types with different various input types.
+Shows all Command argument types with different various input types.
 
-**NOTE:** When getting the value of an argument during execute you need to pass the context with `someArg.get(commandContext)`. Where `commandContext` is the first variable in the execute funtion.
+**NOTE:** When getting the value of an argument during execute you need to pass the context with `someArg.get(commandContext)`. Where `commandContext` is the first variable in the execute function.
 
 ```java
 // Example usage: /healplayer --health 50 --message "Feels Good" --debug
@@ -204,7 +199,7 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
     private final FlagArg debugArg;
 
     public HealPlayerCommand() {
-        super("healplayer", "Healing a player for an <input> ammount of HP (default: 100)");
+        super("healplayer", "Healing a player for an <input> amount of HP (default: 100)");
 
         // Abstract TargetPlayerCommand passes the player that ran the command by default and implements
         // the use of `--player <value>` to specify someone else
@@ -213,10 +208,10 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
         this.healthArg = this.withDefaultArg("health", "Amount to heal player", ArgTypes.FLOAT, (float)100, "Desc of Default: 100");
 
         // Or you could do the following making the health value required instead of with a default.
-        //    You would need to change the decleration to RequiredArg<Float>
+        //    You would need to change the declaration to RequiredArg<Float>
         // this.healthArg = this.withRequiredArg("health", "Amount to heal player", ArgTypes.FLOAT);
 
-        // Optional args reguare the user the input `--<key> <value>` so the following would require `--message "Good Luck"`
+// Optional args require the user the input `--<key> <value>` so the following would require `--message "Good Luck"`
         this.messageArg = this.withOptionalArg("message", "Message to print while healing", ArgTypes.STRING);
 
         // No type needed due to being a bool
@@ -230,7 +225,7 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
             commandContext.sendMessage(Message.raw("We are debugging"));
         }
 
-        // Health is stored in a generic stat map to allowing mods/future contect to easily add more stats if desired.
+        // Health is stored in a generic stat map to allowing mods/future content to easily add more stats if desired.
         EntityStatMap stats = store.getComponent(ref, EntityStatMap.getComponentType());
         int healthIdx = DefaultEntityStatTypes.getHealth();
         EntityStatValue health = stats.get(healthIdx);
@@ -252,7 +247,7 @@ public class HealPlayerCommand extends AbstractTargetPlayerCommand {
 
 ## Argument Validators
 
-Argument validators are a way to check the command before the command gets executed. They are added with the `addValidator` method on an argument when calling `withXxxArg`. They provide a nice output to the user when an input value is invalid.
+Argument validators are a way to check the command before the command gets executed. They are added with the `addValidator` method on an argument when calling `withXxxArg`. They provide a nice output to the user when an input value is invalid. There are some common validators provided in the `Validators` class such as `greaterThan`, `lessThan`, and `or`, `max`, `range`, etc.
 
 ```java
 ...
@@ -260,16 +255,57 @@ Argument validators are a way to check the command before the command gets execu
     OptionalArg<Integer> healAmount = withOptionalArg("amount", "Heal Amount", ArgTypes.INTEGER)
         .addValidator(Validators.greaterThan(0))
         .addValidator(Validators.lessThan(1000));
-
-    // Custom check example
-    OptionalArg<Integer> healAmount = withOptionalArg("amount", "Heal Amount", ArgTypes.INTEGER)
-            .addValidator( value -> {
-                if (value != null && value <= 0) {
-                    return ValidationResult.error("ammount argument must be a positive number");
-                }
-                return ValidationResult.success();
-            });
 ...
+```
+
+### Custom Validators
+
+You can also create custom validators by implementing the `com.hypixel.hytale.codec.validation.Validator` interface. The interfaces forces you to implement the `accept` and `updateSchema` method. The `accept` method takes in the argument value and validates it. If the validation fails, you can use the `fail` method of the `com.hypixel.hytale.codec.validation.ValidationResults` class to return an error message.
+The `updateSchema` method is used to update the schema of the command argument. This is used for commands that have dynamic schemas based on the input value. For example, if you have a command that takes in a player name as an argument, you can use the `updateSchema` method to update the schema to include a list of online players for validation.
+
+Here is an example of a custom validator that checks if a string value is equal to a banned word. In this example, the banned word is "badword". If the input value is "badword", the validator will fail and return an error message.
+
+```java
+import com.hypixel.hytale.codec.schema.SchemaContext;
+import com.hypixel.hytale.codec.schema.config.Schema;
+import com.hypixel.hytale.codec.validation.ValidationResults;
+import com.hypixel.hytale.codec.validation.Validator;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public class MyCustomValidator implements Validator<String> {
+    @Nonnull
+    private final String value;
+
+    public MyCustomValidator(@Nonnull String value) {
+        this.value = value;
+    }
+
+    @Override
+    public void accept(@Nullable String input, @Nonnull ValidationResults results) {
+        if (this.value.equalsIgnoreCase(input)) {
+            results.fail("The given role has been banned.");
+        }
+    }
+
+    @Override
+    public void updateSchema(SchemaContext context, @Nonnull Schema target) {
+        // This method can be used to update the schema of the command argument. This is useful for commands that have dynamic schemas based on the input value. For example, if you have a command that takes in a player name as an argument, you can use the `updateSchema` method to update the schema to include a list of online players for validation.
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
+}
+```
+
+After the custom validator is created, you can add it to an argument like the following example. In this example, we add the `MyCustomValidator` to a string argument called "role". If the user inputs "badword" as the role, the command will fail and return the error message defined in the `MyCustomValidator`.
+
+```java
+    ...
+    // Custom validator example
+    String bannedRole = "badword";
+
+    OptionalArg<String> roleArg = withOptionalArg("role", "Role to assign", ArgTypes.STRING)
+        .addValidator(new MyCustomValidator(bannedRole));
+    ...
 ```
 
 ---
@@ -312,7 +348,7 @@ This allows the server to control who has access to specific commands. You add t
 
 If you want variants of the same command without doing argument parsing you can instead use `addUsageVariant(new OtherCommandClass())` in the original commands constructor.
 
-The only difference is in the `OtherCommandClass()` constrcutor you don't pass the command name to the super class.
+The only difference is in the `OtherCommandClass()` constructor you don't pass the command name to the super class.
 
 <Callout type="info">
   You can also use `addAliases("some_alias", "some_other_alias")` as a way to add shorthand or other ways to write the same command.
@@ -387,7 +423,7 @@ public class AdminCommand extends AbstractCommandCollection {
     public AdminCommand () {
         super("admin", "Admin commands");
         addSubCommand(new UserCommandCollection());
-        addSybCommand(new ServerCommandCollection);
+        addSubCommand(new ServerCommandCollection);
     }
 }
 ```
@@ -417,5 +453,5 @@ public class MyPlugin extends JavaPlugin {
 
 ## Video Link
 
-_Special Thanks to [TroubleDev](https://www.youtube.com/@TroubleDEV) for his excelent video guide on all of these features._
+_Special Thanks to [TroubleDev](https://www.youtube.com/@TroubleDEV) for his excellent video guide on all of these features._
 _Video Link: [TroubleDev - Hytale's Command API Explained](https://www.youtube.com/watch?v=KnmhG9MDMgo)_

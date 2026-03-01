@@ -1,0 +1,306 @@
+---
+title: 05 - Arrays
+description: Learn how to store and manage collections of data using arrays.
+---
+
+Arrays let you store multiple values of the same type in a single variable. Think of an array as a row of boxes, each holding one item.
+
+## Creating Arrays
+
+### Method 1: Declare and Initialize Separately
+
+```java
+int[] numbers;           // Declare
+numbers = new int[5];    // Create array with 5 spaces
+```
+
+### Method 2: All at Once
+
+```java
+int[] numbers = new int[5];
+```
+
+### Method 3: With Initial Values
+
+```java
+int[] numbers = {10, 20, 30, 40, 50};
+```
+
+<Callout type="info" title="Array Size">
+  Once you create an array, its size is **fixed**. You can't add or remove elements later!
+
+  ```java
+  int[] inventory = new int[9];  // Always has exactly 9 slots
+  ```
+</Callout>
+
+## Accessing Array Elements
+
+Arrays use **index** numbers starting from **0**:
+
+```java
+String[] players = {"Alice", "Bob", "Charlie"};
+
+System.out.println(players[0]); // "Alice"
+System.out.println(players[1]); // "Bob"
+System.out.println(players[2]); // "Charlie"
+```
+
+### Visual Representation
+
+| Index | 0       | 1     | 2         |
+| ----- | ------- | ----- | --------- |
+| Value | "Alice" | "Bob" | "Charlie" |
+
+## Modifying Array Values
+
+```java
+int[] health = {100, 80, 90};
+
+health[1] = 60;  // Change Bob's health to 60
+
+System.out.println(health[0]); // 100
+System.out.println(health[1]); // 60
+System.out.println(health[2]); // 90
+```
+
+## Array Length
+
+Use `.length` to get the size of an array:
+
+```java
+int[] scores = {45, 67, 89, 92, 55};
+System.out.println(scores.length); // 5
+```
+
+<Callout type="warning" title="Length is Not a Method">
+  Notice there are no parentheses! It's `array.length`, not `array.length()`.
+</Callout>
+
+## Looping Through Arrays
+
+### Using For Loop
+
+```java
+String[] items = {"Sword", "Shield", "Potion"};
+
+for (int i = 0; i < items.length; i++) {
+    System.out.println(items[i]);
+}
+```
+
+### Using Enhanced For Loop (For-Each)
+
+```java
+String[] items = {"Sword", "Shield", "Potion"};
+
+for (String item : items) {
+    System.out.println(item);
+}
+```
+
+<Callout type="info" title="Enhanced For Loop">
+  The enhanced for loop is simpler and safer, but you can't modify the array or know the current index.
+
+  ```java
+  // When you need the index
+  for (int i = 0; i < items.length; i++) {
+      System.out.println(i + ": " + items[i]);
+  }
+
+  // When you just need the values
+  for (String item : items) {
+      System.out.println(item);
+  }
+  ```
+</Callout>
+
+## Multidimensional Arrays
+
+Arrays can hold other arrays, creating a grid:
+
+```java
+int[][] grid = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+System.out.println(grid[0][0]); // 1
+System.out.println(grid[1][2]); // 6
+System.out.println(grid[2][1]); // 8
+```
+
+### Visual Representation
+
+|       | 0 | 1 | 2 |
+| ----- | - | - | - |
+| **0** | 1 | 2 | 3 |
+| **1** | 4 | 5 | 6 |
+| **2** | 7 | 8 | 9 |
+
+### Looping Through 2D Arrays
+
+```java tab="Code"
+int[][] grid = {
+    {1, 2, 3},
+    {4, 5, 6}
+};
+
+for (int row = 0; row < grid.length; row++) {
+    for (int col = 0; col < grid[row].length; col++) {
+        System.out.print(grid[row][col] + " ");
+    }
+    System.out.println();
+}
+```
+
+```java tab="Output"
+1 2 3
+4 5 6
+```
+
+## Practical Examples
+
+### Player Inventory System
+
+```java
+String[] inventory = new String[9]; // 9 hotbar slots
+
+// Add items
+inventory[0] = "Diamond Sword";
+inventory[1] = "Shield";
+inventory[8] = "Food";
+
+// Display inventory
+for (int i = 0; i < inventory.length; i++) {
+    if (inventory[i] != null) {
+        System.out.println("Slot " + i + ": " + inventory[i]);
+    } else {
+        System.out.println("Slot " + i + ": Empty");
+    }
+}
+```
+
+### Find Highest Score
+
+```java
+int[] scores = {45, 92, 67, 88, 55, 71};
+int highest = scores[0];
+
+for (int i = 1; i < scores.length; i++) {
+    if (scores[i] > highest) {
+        highest = scores[i];
+    }
+}
+
+System.out.println("Highest score: " + highest);
+```
+
+### Calculate Average
+
+```java
+double[] temperatures = {23.5, 25.0, 22.8, 24.3, 26.1};
+double sum = 0;
+
+for (double temp : temperatures) {
+    sum += temp;
+}
+
+double average = sum / temperatures.length;
+System.out.println("Average temperature: " + average);
+```
+
+### Block Grid (2D Array)
+
+```java
+String[][] terrain = new String[5][5];
+
+// Fill with grass
+for (int x = 0; x < 5; x++) {
+    for (int z = 0; z < 5; z++) {
+        terrain[x][z] = "grass";
+    }
+}
+
+// Place some stone
+terrain[2][2] = "stone";
+terrain[1][3] = "stone";
+
+// Display grid
+for (int x = 0; x < terrain.length; x++) {
+    for (int z = 0; z < terrain[x].length; z++) {
+        System.out.print(terrain[x][z] + " ");
+    }
+    System.out.println();
+}
+```
+
+## Common Array Operations
+
+### Copy an Array
+
+```java
+int[] original = {1, 2, 3, 4, 5};
+int[] copy = original.clone();
+
+// Or manually
+int[] copy2 = new int[original.length];
+for (int i = 0; i < original.length; i++) {
+    copy2[i] = original[i];
+}
+```
+
+### Search for a Value
+
+```java
+String[] items = {"Sword", "Shield", "Potion", "Bow"};
+String target = "Potion";
+int foundIndex = -1;
+
+for (int i = 0; i < items.length; i++) {
+    if (items[i].equals(target)) {
+        foundIndex = i;
+        break;
+    }
+}
+
+if (foundIndex != -1) {
+    System.out.println("Found at index: " + foundIndex);
+} else {
+    System.out.println("Not found");
+}
+```
+
+### Count Occurrences
+
+```java
+String[] blocks = {"stone", "dirt", "stone", "grass", "stone"};
+String searchFor = "stone";
+int count = 0;
+
+for (String block : blocks) {
+    if (block.equals(searchFor)) {
+        count++;
+    }
+}
+
+System.out.println(searchFor + " appears " + count + " times");
+```
+
+## Array Limitations
+
+<Callout type="warning" title="Fixed Size">
+  Arrays can't grow or shrink. If you need flexibility, you'll learn about `ArrayList` later!
+
+  ```java
+  int[] numbers = new int[5];
+  // Can't add a 6th element!
+
+  // If you need more space, create a new array
+  int[] bigger = new int[10];
+  for (int i = 0; i < numbers.length; i++) {
+      bigger[i] = numbers[i];
+  }
+  ```
+</Callout>

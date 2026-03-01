@@ -1,0 +1,93 @@
+{
+  "displayName": "English",
+  "nav": {
+    "title": "Hytale Modding",
+    "documentation": "Documentation",
+    "sponsors": "Sponsors",
+    "search": "Search"
+  },
+  "home": {
+    "title": "#1 Resource for Hytale Modding {flipwords}",
+    "flipwords": [
+      "Guides",
+      "Documentation",
+      "Tools",
+      "Tutorials"
+    ],
+    "description": "The number one community resource for modding Hytale, featuring\ncomprehensive guides, detailed documentation, and essential tools to\nkickstart your modding journey.",
+    "documentation": "Docs",
+    "forum": "Forum",
+    "discord": "Join the community!",
+    "memberCount": "{count} Members",
+    "countdown": "Hytale releases in {countdown}",
+    "countdownUnits": {
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
+    },
+    "hytaleReleased": "Hytale is out!"
+  },
+  "sponsors": {
+    "title": "Support Us",
+    "description": "HytaleModding is an open-source community project, and part of managing the community involves paying for services, servers and infrastructure, like hosting this website. If you would like to support the project, consider becoming a sponsor! We use OpenCollective so you can see how funds are being used to support the community.",
+    "ourSponsors": "Our Sponsors"
+  },
+  "misc": {
+    "loading": "Loading...",
+    "failedToLoad": "Failed to load.",
+    "gitInfoUnavailable": "Git info not available",
+    "credit": "Written by",
+    "supportUs": "Support Us",
+    "officialDocumentationNotice": {
+      "title": "Official Hytale Documentation",
+      "description": "All content on this section is provided by **Hypixel Studios Canada Inc.** and is presented without any substantial changes, aside from visual design adjustments by the HytaleModding Team."
+    }
+  },
+  "meta": {
+    "established_information": {
+      "title": "Established Information",
+      "separator": "Specific Categories",
+      "server": {
+        "title": "Server",
+        "content_categories": {
+          "title": "Content Categories"
+        },
+        "interface": {
+          "title": "Interface"
+        }
+      },
+      "client": {
+        "title": "Client"
+      },
+      "gameplay": {
+        "title": "Gameplay"
+      },
+      "misc": {
+        "title": "Miscellaneous"
+      }
+    },
+    "guides": {
+      "title": "Guides",
+      "java_basics": {
+        "title": "Java Basics"
+      }
+    },
+    "official_documentation": {
+      "worldgen": {
+        "title": "World Generation",
+        "pack_tutorial": {
+          "title": "Worldgen Pack Tutorial"
+        },
+        "technical_hytale_generator": {
+          "title": "Technical Hytale Generator"
+        },
+        "worldgen_tutorial": {
+          "title": "Worldgen Tutorial"
+        }
+      }
+    },
+    "community_projects": {
+      "title": "Community Projects"
+    }
+  }
+}

@@ -471,20 +471,20 @@ Vienkāršāk sakot: instances dalībnieki pieder objektiem; statiski dalībniek
 
 ```java
 class Data {
-    public int x; // Instances dalībnieks
-    public static int y = 1000; // Static dalībnieks
+    public int x; // Instanced member
+    public static int y = 1000; // Static member
 
     // Instanced member:
-    // var piekļut abiem - statiskiem un ne statiskiem dalībniekiem
+    // can access to both static and non-static members
     public void foo() {
-        x = 100; // OK - tas pats, kas this.x = 100;
-        y = 100; // OK - tas pats, kas Data.y = 200;
+        x = 100; // OK - same as this.x = 100;
+        y = 100; // OK - same as Data.y = 200;
     }
 
     // Static member:
-    // nevar piekļūt ne-static mainīgajiem
+    // cannot access to non-static variables
     public static void bar() {
-        x = 100; // Kļūda: ne-static mainīgais x nevar būt piesaukts no static konteksta
+        x = 100; // Error: non-static variable x cannot be referenced from a static context
         y = 100; // OK
     }
 }
@@ -504,7 +504,7 @@ Data.x = 1000; // Kļūda: nevar piekļūt instances mainīgajam iekš static ko
 
 ### Static Laukumi
 
-Static laukums pārstāv datu dalībniekus, kas pieder klases tipam, nevis objektam. Static laukumi arī tiek glabāti specifiskā atmiņas lokācijā ar kuru dalās starp visām objektu instancēm, kas tiek izveidotas.
+A static field represents a data member owned by the class type rather than the object. Static laukumi arī tiek glabāti specifiskā atmiņas lokācijā ar kuru dalās starp visām objektu instancēm, kas tiek izveidotas.
 
 Tas tiek deklarēts sekojoši:
 
