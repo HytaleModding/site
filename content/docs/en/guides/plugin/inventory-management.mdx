@@ -150,26 +150,27 @@ This allows the player to see their inventory along with the items.
 ```
 
 #### Plugin Interaction of Container Items
-The items stored in an inventory are saved in the item BSON so they can not directly be access data through ECS.
-You will need to pull the data from the item to interact with it.
+The items stored in an inventory are saved in the item BSON. Because of this they can not be access data through ECS when wanting to edit items.
+You will instead need to load the data from the BSON to interact with it and save it back to the BSON. 
 
 ```java
-// Get held item that we know has a container field & its position
+// Get held item that we know has a container field & its position in invenotory (Assume item its held for example)
 ItemStack heldItemStack = player.getInventory().getActiveHotbarItem();
 final short ACTIVE_HOTBAR_SLOT = player.getInventory().getActiveHotbarSlot();
 
-// Get the BSON of the item
+// Get the container BSON of the item
 BsonDocument containerBSON = heldItemStack.getFromMetadataOrNull(ItemStackItemContainer.CONTAINER_CODEC);
 
-// Get the items in the container
+// Get the array of items in the container BSON
 ItemStack[] containerItems = ItemStackItemContainer.ITEMS_CODEC.getOrNull(containerBSON, new ExtraInfo());
 ```
 
-You can then modify the list of items however you want but this will not modify the item directly as they are immutable.
-To update the container the player is holding you will need to do the following
+You can then modify the list of items however you want but this will not modify the item directly as item stacks on the player are immutable.
+To update the container the player is holding you will need to edit the item locally, then replace the held item with the newly made local copy.
+The following shows how to do that.
 
 ```java
-// For this example we are just removing the first item in the container (Continued from above)
+// For this example we are just removing the first item in the locally saved container (Continued from above)
 containerItems[0] = null;
 
 // Update the container fields in the BSON doc to have the removed item
@@ -182,15 +183,18 @@ ItemStack updatedItem = heldItemStack.withMetadata(ItemStackItemContainer.CONTAI
 // - remove original item
 player.getInventory().getHotbar().removeItemStackFromSlot(ACTIVE_HOTBAR_SLOT);
 // - add new item
-player.getInventory().getHotbar().setItemStackForSlot(ACTIVE_HOTBAR_SLOT updatedQuickAccessItem);
+player.getInventory().getHotbar().setItemStackForSlot(ACTIVE_HOTBAR_SLOT, updatedItem);
 
 ```
 
 #### Getting Components from Container Items
-You can use a similar method ot get any component from an item in a container
+You can use a similar method to get any component from an item in a container
 ```java
 // Get the component data
-CustomComponent component = itemStack.getFromMetadataOrDefault(CustomComponent.CUSTOM_COMPONENT_ID, CustomComponent.CODEC);
+CustomComponent customComponent = itemStack.getFromMetadataOrDefault(CustomComponent.CUSTOM_COMPONENT_ID, CustomComponent.CODEC);
+
+// Modify component data here
+customComponent.setSomeValue();
 
 // Set the component data by creating new item with updated info
 ItemStack newItem = itemStack.withMetadata(
@@ -198,5 +202,8 @@ ItemStack newItem = itemStack.withMetadata(
         CustomComponent.CODEC,
         modifiedComponent
     );
+
+// Add updated item to the player
+player.getInventory().getHotbar().setItemStackForSlot(0, newItem);
 ```
 
