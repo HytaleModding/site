@@ -111,3 +111,9 @@ It is located in the "m" icon on the right side:
 ![_readme_images/m.png](/assets/maven.png)  
 If you don't see it, enable it under View -> Tool Windows -> Maven.  
 ![_readme_images/tool_windows.png](/assets/view-windowtools-maven.png)  
+
+## Other option (with Gradle)
+
+With the example plugin (on GitHub) and IntellIj, you can run the `:decompileServer` Gradle Task.
+Please note that the downloading can take a very long time (sometime one hour). To significantly reduce this time, put `hytale.decompile_partial=true` in `gradle.properties`.
+Then go to any class of the com.hypixel.hytale package, and click the button "choose source" at the top of the screen. It will open your file browser, on a directory where you'll find and `HytaleServer - src.jar`. Double-click on it, and it's already done!

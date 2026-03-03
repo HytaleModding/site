@@ -1,24 +1,24 @@
 ---
-title: Formatting the chat
-description: Learn how to format the chat using the PlayerChatEvent and rich text with TinyMessage
+title: Styles du chat
+description: Apprenez comment formatter le chat avec PlayerChatEvent et TinyMessage
 authors:
   - name: oskarscot
     url: https://oskar.scot
 ---
 
-![chat format example](/assets/guides/chat-example.png)
+![Exemple de style de chat](/assets/guides/chat-example.png)
 
-The chat uses the PlayerChatEvent, it contains the formatter, the PlayerRef for the sender, the content as well as a list of targets (it's safe to assume the targets is the list of players who can see the chat message)
-You can cancel this event as well as modify the content and the formatter.
+Le chat utilise le PlayerChatEvent, qui contient le formatteur, la PlayerRef pour l'envoyeur, le contenu, ainsi que les destinataires (en considérant qu'ils constituent la liste des joueurs qui pourront voire le message)
+Vous pouvez annuler l'envoie et modifier le contenu et le style à tous moments, que ce soit pour un message envoyé par le serveur, ou encore n'importe quel joueur.
 
-## Manual Formatting (Standard Approach)
+## Styles manuels (Approche Standard)
 
 ```java
 public class ChatFormatter {
 
   public static void onPlayerChat(PlayerChatEvent event) {
     PlayerRef sender = event.getSender();
-    if(event.getContent().equalsIgnoreCase("poo")) {
+    if(event.getContent().equalsIgnoreCase("poo")) { // Retire les messages inappropriés, puis envoie un avertissement à l'envoyeur de ce message.
       event.setCancelled(true);
       sender.sendMessage(Message.raw("Hey, you cannot say that!").color(Color.RED));
     }
@@ -27,7 +27,7 @@ public class ChatFormatter {
       event.setContent("i stink");
     }
 
-    event.setFormatter((playerRed, message) ->
+    event.setFormatter((playerRed, message) ->  // stylise les "cool" en rouge, les nomp de joueurs en jaune, et les deux-points en rose
         Message.join(
             Message.raw("[COOL] ").color(Color.RED),
             Message.raw(sender.getUsername()).color(Color.YELLOW),
@@ -38,52 +38,49 @@ public class ChatFormatter {
 }
 ```
 
-The formatter is the following interface:
+L'interface du formatteur est la suivante:
 
 ```java
   public interface Formatter {
     @Nonnull
     Message format(@Nonnull PlayerRef playerRef, @Nonnull String message);
   }
-}
+
 ```
 
 ---
 
-## TinyMessage - Rich Text Formatting (Easy Alternative)
+## TinyMessage - Format de texte extensible (Alternative simple)
 
-![chat format example](/assets/guides/chat-tinymessage-example.png)
+![exemple de style de chat](/assets/guides/chat-tinymessage-example.png)
 
-**TinyMessage** is a lightweight, powerful rich text parser for Hytale servers that allows you to use simple tags to create gradients, hex colors, clickable links, and nested styles in chat messages. Similar to minecraft MiniMessage
+**TinyMessage** est un outils léger, puissant et riche fourni par Hytale pour utiliser des tags simples afin de créer des dégradés, d'utiliser des couleurs hexadécimales, de créer les liens et des styles imbriqués dans les messages du chat. Notez que son système ressemble aux ``MiniMessage`` Minecraft.
 
 ### Features
 
-- **Gradients:** `<gradient:red:blue>Hello</gradient>` or multi-color `<gradient:gold:red:black>...`
-- **Hex Colors:** `<color:#FF55FF>Custom Colors</color>` or `<color:red>Named Colors</color>`
+- **Dégradés:** `<gradient:red:blue>Hello</gradient>` ou multi-couleur `<gradient:gold:red:black>...`
+- **Couleurs headéciimales:** `<color:#FF55FF>Couleur personnalisée</color>` ou `<color:red>Couleurs simples (déjà nommées)</color>`
 - **Standard Styles:** `<b>Bold</b>`, `<i>Italic</i>`, `<u>Underline</u>`, `<mono>Monospace</mono>`
-- **Clickable Links:** `<link:https://google.com>Click me!</link>`
-- **Nested Styling:** Tags can be nested indefinitely
+- **Liens externes clickables:** `<link:https://google.com>Click moi!</link>`
+- **Styles imbriqués:** Tags can be nested indefinitely
 
-### Usage Examples
+### Exemples d'utilisation
 
 ```java
-import fi.sulku.hytale.TinyMsg;
-import com.hypixel.hytale.server.core.Message;
-
-// Parse a formatted string into a Message
+// Transforme une string en message formaté
 Message message = TinyMsg.parse("<gradient:red:blue>Hello World!</gradient>");
 player.sendMessage(message);
 
-// Multiple styles
+// Styles multiples
 TinyMsg.parse("<b><color:gold>Bold Gold Text</color></b>");
 
-// Clickable gradient link
+// Lien clickable en dégradé
 TinyMsg.parse("<link:https://example.com><gradient:aqua:blue>Click me!</gradient></link>");
 
-// Complex nested styling
+// Styles imbriqués complexes
 TinyMsg.parse("<b>Bold <i>and italic <color:red>and red</color></i></b>");
 
-// Reset styles mid-text
+// Réinitialise les styles au milieu de la string
 TinyMsg.parse("<b>Bold <reset>normal text");
 ```
 
@@ -112,20 +109,20 @@ public class ChatFormatter {
 Links:
 
 <a href="https://github.com/Zoltus/TinyMessage/" target="_blank" rel="noopener noreferrer">
-  Github Repository
+  Repository Github
 </a>
 
 <a href="https://github.com/Zoltus/TinyMessage/releases" target="_blank" rel="noopener noreferrer">
-  Github Releases
+  Versions sur Github
 </a>
 
-Curseforge (coming soon)
+Curseforge (prochainement)
 
-## Installation for server owners:
+## Installation pour les détenteurs d'un serveur:
 
-### Download the TinyMessage.jar
+### Téléchargez TinyMessage.jar
 
-Download the latest TinyMessage.jar from the releases page and place it in your server's `mods` folder.
+Téléchargez la dernière version de TinyMessage.jar depuis la page GitHub, et placez-là dans le dossier `mods` du dossier de votre serveur.
 
 ## Installation for developers:
 
