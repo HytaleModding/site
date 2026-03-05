@@ -18,7 +18,7 @@ Parameters:
 | -------- | ------------- | ----------- |
 | Material | Material slot |             |
 
-***
+---
 
 ### Solidity
 
@@ -31,7 +31,7 @@ Parameters:
 | Solid | Material Provider slot |             |
 | Empty | Material Provider slot |             |
 
-***
+---
 
 ### Queue
 
@@ -39,9 +39,24 @@ Goes through a queue of Material Provider slots from highest to lowest priority.
 
 Parameters:
 
-<table><thead><tr><th width="143.49505615234375">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Queue</td><td>list of Material Provider slots</td><td>Slots are queried from top to bottom.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="143.49505615234375">Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Queue</td>
+      <td>list of Material Provider slots</td>
+      <td>Slots are queried from top to bottom.</td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### SimpleHorizontal
 
@@ -51,9 +66,50 @@ If a BaseHeight is provided, the TopY and BottomY values are relative to the ref
 
 Parameters:
 
-<table><thead><tr><th width="193.87127685546875">Name</th><th width="200.010009765625">Type</th><th>Description</th></tr></thead><tbody><tr><td>TopY</td><td>integer</td><td>Y coordinate. Defines the vertical top <strong>exclusive</strong> limit of the region.</td></tr><tr><td>Top BaseHeight</td><td>string</td><td>DecimalConstant name.</td></tr><tr><td>BottomY</td><td>integer</td><td>Y coordinate. Defines the vertical bottom <strong>inclusive</strong> limit of the region.</td></tr><tr><td>Bottom BaseHeight</td><td>string</td><td>DecimalConstant name.</td></tr><tr><td>Material</td><td>Material Provider slot</td><td>Slot to query for the selected region.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="193.87127685546875">Name</th>
+      <th width="200.010009765625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TopY</td>
+      <td>integer</td>
+      <td>
+        Y coordinate. Defines the vertical top <strong>exclusive</strong> limit
+        of the region.
+      </td>
+    </tr>
+    <tr>
+      <td>Top BaseHeight</td>
+      <td>string</td>
+      <td>DecimalConstant name.</td>
+    </tr>
+    <tr>
+      <td>BottomY</td>
+      <td>integer</td>
+      <td>
+        Y coordinate. Defines the vertical bottom <strong>inclusive</strong>{" "}
+        limit of the region.
+      </td>
+    </tr>
+    <tr>
+      <td>Bottom BaseHeight</td>
+      <td>string</td>
+      <td>DecimalConstant name.</td>
+    </tr>
+    <tr>
+      <td>Material</td>
+      <td>Material Provider slot</td>
+      <td>Slot to query for the selected region.</td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Striped
 
@@ -63,9 +119,41 @@ Applies a Material Provider slot to a set of horizontal stripes of blocks of var
 
 Parameters:
 
-<table><thead><tr><th width="185.31683349609375">Name</th><th width="204.96038818359375">Type</th><th>Description</th></tr></thead><tbody><tr><td>Stripes</td><td>list of stripe assets</td><td>Each stripe contains <code>TopY</code> and <code>BottomY</code>.</td></tr><tr><td>Stripes[].TopY</td><td>integer</td><td>World Y value. Inclusive.</td></tr><tr><td>Stripes[].BottomY</td><td>integer</td><td>World Y value. Inclusive.</td></tr><tr><td>Material</td><td>Material Provider slot</td><td>Slot to query for the selected region.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="185.31683349609375">Name</th>
+      <th width="204.96038818359375">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Stripes</td>
+      <td>list of stripe assets</td>
+      <td>
+        Each stripe contains <code>TopY</code> and <code>BottomY</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>Stripes[].TopY</td>
+      <td>integer</td>
+      <td>World Y value. Inclusive.</td>
+    </tr>
+    <tr>
+      <td>Stripes[].BottomY</td>
+      <td>integer</td>
+      <td>World Y value. Inclusive.</td>
+    </tr>
+    <tr>
+      <td>Material</td>
+      <td>Material Provider slot</td>
+      <td>Slot to query for the selected region.</td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Weighted
 
@@ -75,7 +163,7 @@ Parameters:
 
 <table><thead><tr><th>Name</th><th width="244.24749755859375">Type</th><th>Description</th></tr></thead><tbody><tr><td>Seed</td><td>string</td><td></td></tr><tr><td>SkipChance</td><td>float (0.0–1.0)</td><td>Percentage of blocks to skip. When skipped, this provider returns no block and does not pick a slot.</td></tr><tr><td>WeightedMaterials</td><td>list of weighted Material Provider slots</td><td></td></tr><tr><td>WeightedMaterials[].Weight</td><td>number (> 0)</td><td>Higher value increases likelihood of being picked.</td></tr><tr><td>WeightedMaterials[].Material</td><td>Material Provider slot</td><td></td></tr></tbody></table>
 
-***
+---
 
 ### FieldFunction
 
@@ -83,9 +171,47 @@ Selects a 3D region using a noise function and value delimiters. The delimiters 
 
 Parameters:
 
-<table><thead><tr><th width="191.01983642578125">Name</th><th width="194.3564453125">Type</th><th>Description</th></tr></thead><tbody><tr><td>FieldFunction</td><td>field function asset</td><td>Defines the field value for each block. Same asset type used by DAOTerrain density.</td></tr><tr><td>Delimiters</td><td>list of delimiters</td><td>Higher entries have higher priority.</td></tr><tr><td>Delimiters[].From</td><td>float</td><td>Minimum limit of the delimiter’s range.</td></tr><tr><td>Delimiters[].To</td><td>float</td><td>Maximum limit of the delimiter’s range.</td></tr><tr><td>Delimiters[].Material</td><td>Material Provider slot</td><td>Slot linked to this delimiter.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="191.01983642578125">Name</th>
+      <th width="194.3564453125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FieldFunction</td>
+      <td>field function asset</td>
+      <td>
+        Defines the field value for each block. Same asset type used by
+        DAOTerrain density.
+      </td>
+    </tr>
+    <tr>
+      <td>Delimiters</td>
+      <td>list of delimiters</td>
+      <td>Higher entries have higher priority.</td>
+    </tr>
+    <tr>
+      <td>Delimiters[].From</td>
+      <td>float</td>
+      <td>Minimum limit of the delimiter’s range.</td>
+    </tr>
+    <tr>
+      <td>Delimiters[].To</td>
+      <td>float</td>
+      <td>Maximum limit of the delimiter’s range.</td>
+    </tr>
+    <tr>
+      <td>Delimiters[].Material</td>
+      <td>Material Provider slot</td>
+      <td>Slot linked to this delimiter.</td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### SpaceAndDepth
 
@@ -97,9 +223,45 @@ Conditions let you skip this Material Provider when they’re not met. An exampl
 
 Parameters:
 
-<table><thead><tr><th width="196.7227783203125">Name</th><th width="194.20794677734375">Type</th><th>Description</th></tr></thead><tbody><tr><td>LayerContext</td><td>string</td><td>Context the layers are applied on. Values: <code>DEPTH_INTO_FLOOR</code>, <code>DEPTH_INTO_CEILING</code>.</td></tr><tr><td>MaxExpectedDepth</td><td>positive integer</td><td>Optimization hint. Set to max expected combined layer depth. Too small can cut off layers. Too large can hurt performance.</td></tr><tr><td>Condition</td><td>Condition slot</td><td>Provider returns no block if the Condition fails.</td></tr><tr><td>Layers</td><td>list of Layer objects</td><td>Stacked top-to-bottom as depth increases into the context.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="196.7227783203125">Name</th>
+      <th width="194.20794677734375">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LayerContext</td>
+      <td>string</td>
+      <td>
+        Context the layers are applied on. Values: <code>DEPTH_INTO_FLOOR</code>
+        , <code>DEPTH_INTO_CEILING</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>MaxExpectedDepth</td>
+      <td>positive integer</td>
+      <td>
+        Optimization hint. Set to max expected combined layer depth. Too small
+        can cut off layers. Too large can hurt performance.
+      </td>
+    </tr>
+    <tr>
+      <td>Condition</td>
+      <td>Condition slot</td>
+      <td>Provider returns no block if the Condition fails.</td>
+    </tr>
+    <tr>
+      <td>Layers</td>
+      <td>list of Layer objects</td>
+      <td>Stacked top-to-bottom as depth increases into the context.</td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Condition
 
@@ -109,12 +271,12 @@ An example Condition could check if there are at least 5 blocks of empty space a
 
 ![](/assets/official-documentation/worldgen/technical-hytale-generator/material-providers/condition-space-above-floor.png)
 
-See the [JSON code here](https://miro.com/app/board/o9J_loYgP38=/?moveToWidget=3458764528990928227\&cot=14).
+See the [JSON code here](https://miro.com/app/board/o9J_loYgP38=/?moveToWidget=3458764528990928227&cot=14).
 
 The Condition’s `ContextToCheck` parameter selects which context value the Condition queries. In the example above, we’re checking the `SPACE_ABOVE_FLOOR` context, which is the number of blocks above the floor. There are currently two possible context values you can use:
 
-* `SPACE_ABOVE_FLOOR`
-* `SPACE_BELOW_CEILING`
+- `SPACE_ABOVE_FLOOR`
+- `SPACE_BELOW_CEILING`
 
 There are multiple Condition types that allow you to compose more complex Conditions from simpler ones. Below are the different types.
 
@@ -124,7 +286,30 @@ Validates only if a context value is equal to the Condition’s configured value
 
 Parameters:
 
-<table><thead><tr><th width="190.0693359375">Name</th><th width="251.38604736328125">Type</th><th>Description</th></tr></thead><tbody><tr><td>ContextToCheck</td><td>string (<code>SPACE_ABOVE_FLOOR</code> | <code>SPACE_BELOW_CEILING</code>)</td><td>Which context value the Condition queries.</td></tr><tr><td>Value</td><td>integer</td><td>Condition passes only if the context value equals this.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="190.0693359375">Name</th>
+      <th width="251.38604736328125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ContextToCheck</td>
+      <td>
+        string (<code>SPACE_ABOVE_FLOOR</code> |{" "}
+        <code>SPACE_BELOW_CEILING</code>)
+      </td>
+      <td>Which context value the Condition queries.</td>
+    </tr>
+    <tr>
+      <td>Value</td>
+      <td>integer</td>
+      <td>Condition passes only if the context value equals this.</td>
+    </tr>
+  </tbody>
+</table>
 
 **GreaterThanCondition**
 
@@ -132,7 +317,30 @@ Validates only if a context value is greater than the Condition’s configured t
 
 Parameters:
 
-<table><thead><tr><th width="176.76239013671875">Name</th><th width="243.17822265625">Type</th><th>Description</th></tr></thead><tbody><tr><td>ContextToCheck</td><td>string (<code>SPACE_ABOVE_FLOOR</code> | <code>SPACE_BELOW_CEILING</code>)</td><td>Which context value the Condition queries.</td></tr><tr><td>Threshold</td><td>integer</td><td>Condition passes only if the context value is greater than this.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="176.76239013671875">Name</th>
+      <th width="243.17822265625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ContextToCheck</td>
+      <td>
+        string (<code>SPACE_ABOVE_FLOOR</code> |{" "}
+        <code>SPACE_BELOW_CEILING</code>)
+      </td>
+      <td>Which context value the Condition queries.</td>
+    </tr>
+    <tr>
+      <td>Threshold</td>
+      <td>integer</td>
+      <td>Condition passes only if the context value is greater than this.</td>
+    </tr>
+  </tbody>
+</table>
 
 **SmallerThanCondition**
 
@@ -140,7 +348,30 @@ Validates only if a context value is smaller than the Condition’s configured t
 
 Parameters:
 
-<table><thead><tr><th width="189.1187744140625">Name</th><th width="238.12872314453125">Type</th><th>Description</th></tr></thead><tbody><tr><td>ContextToCheck</td><td>string (<code>SPACE_ABOVE_FLOOR</code> | <code>SPACE_BELOW_CEILING</code>)</td><td>Which context value the Condition queries.</td></tr><tr><td>Threshold</td><td>integer</td><td>Condition passes only if the context value is smaller than this.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="189.1187744140625">Name</th>
+      <th width="238.12872314453125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ContextToCheck</td>
+      <td>
+        string (<code>SPACE_ABOVE_FLOOR</code> |{" "}
+        <code>SPACE_BELOW_CEILING</code>)
+      </td>
+      <td>Which context value the Condition queries.</td>
+    </tr>
+    <tr>
+      <td>Threshold</td>
+      <td>integer</td>
+      <td>Condition passes only if the context value is smaller than this.</td>
+    </tr>
+  </tbody>
+</table>
 
 **AndCondition**
 
@@ -148,7 +379,22 @@ Logical AND Condition. Validates only if all child Conditions validate.
 
 Parameters:
 
-<table><thead><tr><th width="153.95050048828125">Name</th><th width="189.59405517578125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Conditions</td><td>list of Condition slots</td><td>Condition passes only if all child Conditions pass.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="153.95050048828125">Name</th>
+      <th width="189.59405517578125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Conditions</td>
+      <td>list of Condition slots</td>
+      <td>Condition passes only if all child Conditions pass.</td>
+    </tr>
+  </tbody>
+</table>
 
 **OrCondition**
 
@@ -156,7 +402,22 @@ Logical OR Condition. Validates if any child Condition validates.
 
 Parameters:
 
-<table><thead><tr><th width="146.3465576171875">Name</th><th width="198.2969970703125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Conditions</td><td>list of Condition slots</td><td>Condition passes if any child Condition passes.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="146.3465576171875">Name</th>
+      <th width="198.2969970703125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Conditions</td>
+      <td>list of Condition slots</td>
+      <td>Condition passes if any child Condition passes.</td>
+    </tr>
+  </tbody>
+</table>
 
 **NotCondition**
 
@@ -164,13 +425,30 @@ Logical NOT Condition. Validates only if its child Condition does not validate.
 
 Parameters:
 
-<table><thead><tr><th width="136.84161376953125">Name</th><th width="163.37628173828125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Condition</td><td>Condition slot</td><td>Single slot (not a list). Condition passes if the child Condition fails.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="136.84161376953125">Name</th>
+      <th width="163.37628173828125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Condition</td>
+      <td>Condition slot</td>
+      <td>
+        Single slot (not a list). Condition passes if the child Condition fails.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 **AlwaysTrueCondition**
 
 This Condition type always validates.
 
-***
+---
 
 ### Layer
 
@@ -180,27 +458,27 @@ Below are some examples that illustrate how layers work.
 
 Example 1:
 
-* Layer 1: grass of thickness 1.
+- Layer 1: grass of thickness 1.
 
 ![](/assets/official-documentation/worldgen/technical-hytale-generator/material-providers/layer-example-1.png)
 
 Example 2:
 
-* Layer 1: grass of thickness 1.
-* Layer 2: dirt of thickness ranging from 2 to 3.
+- Layer 1: grass of thickness 1.
+- Layer 2: dirt of thickness ranging from 2 to 3.
 
 ![](/assets/official-documentation/worldgen/technical-hytale-generator/material-providers/layer-example-2.png)
 
 Example 3:
 
-* Layer 1: mud of thickness 1 to 5 defined by a 2D simplex noise function.
-* Layer 2: dirt of thickness ranging from 2 to 3.
+- Layer 1: mud of thickness 1 to 5 defined by a 2D simplex noise function.
+- Layer 2: dirt of thickness ranging from 2 to 3.
 
 ![](/assets/official-documentation/worldgen/technical-hytale-generator/material-providers/layer-example-3.png)
 
 Example 4: This example shows how this can work not only on floors but also on ceilings by changing the LayerContext value to `DEPTH_INTO_CEILING`.
 
-* Layer 1: dirt of thickness in range 2 to 3.
+- Layer 1: dirt of thickness in range 2 to 3.
 
 ![](/assets/official-documentation/worldgen/technical-hytale-generator/material-providers/layer-example-4.png)
 
@@ -230,7 +508,32 @@ The thickness varies per XZ coordinate and is picked from a list of weighted thi
 
 Parameters:
 
-<table><thead><tr><th width="201.47528076171875">Name</th><th width="220.7227783203125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Material</td><td>Material Provider slot</td><td></td></tr><tr><td>PossibleThicknesses</td><td>list of weighted thickness values</td><td>Used to pick a thickness per XZ.</td></tr><tr><td>Seed</td><td>string</td><td>Seed used when picking the thickness.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="201.47528076171875">Name</th>
+      <th width="220.7227783203125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Material</td>
+      <td>Material Provider slot</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>PossibleThicknesses</td>
+      <td>list of weighted thickness values</td>
+      <td>Used to pick a thickness per XZ.</td>
+    </tr>
+    <tr>
+      <td>Seed</td>
+      <td>string</td>
+      <td>Seed used when picking the thickness.</td>
+    </tr>
+  </tbody>
+</table>
 
 **NoiseThickness**
 
@@ -238,9 +541,31 @@ The thickness varies per XZ coordinate and is determined by a noise function tre
 
 Parameters:
 
-<table><thead><tr><th width="219.5345458984375">Name</th><th width="235.48504638671875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Material</td><td>Material Provider slot</td><td></td></tr><tr><td>ThicknessFunctionXZ</td><td>noise function tree</td><td>Sampled as a 2D function on the XZ plane (Y is always <code>0</code>).</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="219.5345458984375">Name</th>
+      <th width="235.48504638671875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Material</td>
+      <td>Material Provider slot</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>ThicknessFunctionXZ</td>
+      <td>noise function tree</td>
+      <td>
+        Sampled as a 2D function on the XZ plane (Y is always <code>0</code>).
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Imported
 
@@ -248,4 +573,19 @@ Imports an exported Material Provider.
 
 Parameters:
 
-<table><thead><tr><th width="136.84161376953125">Name</th><th width="136.76239013671875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Name</td><td>string</td><td>The exported Material Provider.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="136.84161376953125">Name</th>
+      <th width="136.76239013671875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>string</td>
+      <td>The exported Material Provider.</td>
+    </tr>
+  </tbody>
+</table>

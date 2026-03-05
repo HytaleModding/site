@@ -18,7 +18,7 @@ Parameters:
 | ------ | ----------------- | ----------- |
 | Vector | 3D decimal vector |             |
 
-***
+---
 
 ### DensityGradient
 
@@ -28,9 +28,33 @@ For more information about gradient vectors, see: [https://en.wikipedia.org/wiki
 
 Parameters:
 
-<table><thead><tr><th width="163.4554443359375">Name</th><th width="202.65338134765625">Type</th><th>Description</th></tr></thead><tbody><tr><td>SampleDistance</td><td>positive decimal value</td><td>How far apart the Density field value samples are taken. The optimal value for performance is 1.0. Greater values could be useful for smoothing out results for specific applications.</td></tr><tr><td>Density</td><td>Density slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="163.4554443359375">Name</th>
+      <th width="202.65338134765625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SampleDistance</td>
+      <td>positive decimal value</td>
+      <td>
+        How far apart the Density field value samples are taken. The optimal
+        value for performance is 1.0. Greater values could be useful for
+        smoothing out results for specific applications.
+      </td>
+    </tr>
+    <tr>
+      <td>Density</td>
+      <td>Density slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Cache
 
@@ -40,9 +64,33 @@ Use this only if the downstream (child) VectorProvider is expensive and the same
 
 Parameters:
 
-<table><thead><tr><th width="153.95050048828125">Name</th><th width="198.14862060546875">Type</th><th>Description</th></tr></thead><tbody><tr><td>SampleDistance</td><td>positive decimal value</td><td>How far apart the Density field value samples are taken. The optimal value for performance is 1.0. Greater values could be useful for smoothing out results for specific applications.</td></tr><tr><td>Density</td><td>Density slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="153.95050048828125">Name</th>
+      <th width="198.14862060546875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SampleDistance</td>
+      <td>positive decimal value</td>
+      <td>
+        How far apart the Density field value samples are taken. The optimal
+        value for performance is 1.0. Greater values could be useful for
+        smoothing out results for specific applications.
+      </td>
+    </tr>
+    <tr>
+      <td>Density</td>
+      <td>Density slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Exported
 
@@ -58,9 +106,32 @@ Expected Inputs: 1
 
 Parameters:
 
-<table><thead><tr><th width="151.09893798828125">Name</th><th width="185.84161376953125">Type</th><th>Description</th></tr></thead><tbody><tr><td>SingleInstance</td><td>boolean</td><td>Enable this to share the export across all Imported nodes that reference this key.</td></tr><tr><td>VectorProvider</td><td>VectorProvider slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="151.09893798828125">Name</th>
+      <th width="185.84161376953125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SingleInstance</td>
+      <td>boolean</td>
+      <td>
+        Enable this to share the export across all Imported nodes that reference
+        this key.
+      </td>
+    </tr>
+    <tr>
+      <td>VectorProvider</td>
+      <td>VectorProvider slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Imported
 

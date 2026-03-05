@@ -14,7 +14,27 @@ Places a cuboid made from the provided materials.
 
 ##### Parameters
 
-<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Bounds</td><td>Bounds</td><td>Size of the cuboid.</td></tr><tr><td>Material</td><td>MaterialProvider slot</td><td>The materials the cuboid is made of.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="202.42584228515625">Name</th>
+      <th width="242.53466796875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bounds</td>
+      <td>Bounds</td>
+      <td>Size of the cuboid.</td>
+    </tr>
+    <tr>
+      <td>Material</td>
+      <td>MaterialProvider slot</td>
+      <td>The materials the cuboid is made of.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -24,7 +44,22 @@ Places manually configured blocks.
 
 ##### Parameters
 
-<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Blocks</td><td>Positioned block</td><td>Block relative to the Prop's anchor.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="202.42584228515625">Name</th>
+      <th width="242.53466796875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Blocks</td>
+      <td>Positioned block</td>
+      <td>Block relative to the Prop's anchor.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -34,7 +69,40 @@ Locates a valid position using a Pattern and a Scanner.
 
 ##### Parameters
 
-<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Prop</td><td>Prop slot</td><td>Prop to place at valid positions.</td></tr><tr><td>Pattern</td><td>Pattern slot</td><td>Defines what valid locations look like.</td></tr><tr><td>Scanner</td><td>Scanner slot</td><td>Scans relative to the anchor for valid locations.</td></tr><tr><td>PlacementCap</td><td>Integer ≥ 0</td><td>Limits the number of valid locations in which the child Prop is generated.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="202.42584228515625">Name</th>
+      <th width="242.53466796875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Prop</td>
+      <td>Prop slot</td>
+      <td>Prop to place at valid positions.</td>
+    </tr>
+    <tr>
+      <td>Pattern</td>
+      <td>Pattern slot</td>
+      <td>Defines what valid locations look like.</td>
+    </tr>
+    <tr>
+      <td>Scanner</td>
+      <td>Scanner slot</td>
+      <td>Scans relative to the anchor for valid locations.</td>
+    </tr>
+    <tr>
+      <td>PlacementCap</td>
+      <td>Integer ≥ 0</td>
+      <td>
+        Limits the number of valid locations in which the child Prop is
+        generated.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -46,7 +114,52 @@ Automatically checks the Pattern in different rotations and rotates the child Pr
 
 ##### Parameters
 
-<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Prop</td><td>Prop slot</td><td>Prop to place at valid positions.</td></tr><tr><td>Rotations</td><td>list of Rotations</td><td>Possible rotations.</td></tr><tr><td>Pattern</td><td>Pattern slot</td><td>Defines what valid locations look like.</td></tr><tr><td>Scanner</td><td>Scanner slot</td><td>Scans relative to the anchor for valid locations.</td></tr><tr><td>SelectionMode</td><td>String (<code>FirstValid</code> | <code>AllValid</code> | <code>RandomValid</code>)</td><td>Determines which valid rotation is generated:<br>- <code>FirstValid</code>: The first valid rotation in the Rotations list.<br>- <code>AllValid</code>: All valid rotations in the Rotations list.<br>- <code>RandomValid</code>: Picks one of the valid Rotations at random.</td></tr><tr><td>Seed</td><td>String</td><td>Determines which position is picked if <code>RandomValid</code>.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="202">Name</th>
+      <th width="242">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Prop</td>
+      <td>Prop slot</td>
+      <td>Prop to place at valid positions.</td>
+    </tr>
+    <tr>
+      <td>Rotations</td>
+      <td>list of Rotations</td>
+      <td>Possible rotations.</td>
+    </tr>
+    <tr>
+      <td>Pattern</td>
+      <td>Pattern slot</td>
+      <td>Defines what valid locations look like.</td>
+    </tr>
+    <tr>
+      <td>Scanner</td>
+      <td>Scanner slot</td>
+      <td>Scans relative to the anchor for valid locations.</td>
+    </tr>
+    <tr>
+      <td>SelectionMode</td>
+      <td>String (<code>FirstValid</code> | <code>AllValid</code> | <code>RandomValid</code>)</td>
+      <td>
+        Determines which valid rotation is generated:<br />
+        - <code>FirstValid</code>: The first valid rotation in the Rotations list.<br />
+        - <code>AllValid</code>: All valid rotations in the Rotations list.<br />
+        - <code>RandomValid</code>: Picks one of the valid Rotations at random.
+      </td>
+    </tr>
+    <tr>
+      <td>Seed</td>
+      <td>String</td>
+      <td>Determines which position is picked if <code>RandomValid</code>.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -56,7 +169,22 @@ Places the first Prop in the list that generates, and skips the rest.
 
 ##### Parameters
 
-<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Props</td><td>list of Prop slots</td><td>Ordered list making up the queue.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="202.42584228515625">Name</th>
+      <th width="242.53466796875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Props</td>
+      <td>list of Prop slots</td>
+      <td>Ordered list making up the queue.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -66,7 +194,27 @@ Masks the blocks placed by the child.
 
 ##### Parameters
 
-<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Prop</td><td>Prop slot</td><td>Prop to mask.</td></tr><tr><td>Mask</td><td>BlockMask</td><td>Determines which materials are allowed to be placed.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="202.42584228515625">Name</th>
+      <th width="242.53466796875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Prop</td>
+      <td>Prop slot</td>
+      <td>Prop to mask.</td>
+    </tr>
+    <tr>
+      <td>Mask</td>
+      <td>BlockMask</td>
+      <td>Determines which materials are allowed to be placed.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -76,7 +224,27 @@ Rotates the child Prop by a static Rotation.
 
 ##### Parameters
 
-<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Prop</td><td>Prop slot</td><td>Prop to rotate.</td></tr><tr><td>Rotation</td><td>Rotation</td><td>Child Prop's rotation relative to this Prop's direction.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="202.42584228515625">Name</th>
+      <th width="242.53466796875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Prop</td>
+      <td>Prop slot</td>
+      <td>Prop to rotate.</td>
+    </tr>
+    <tr>
+      <td>Rotation</td>
+      <td>Rotation</td>
+      <td>Child Prop's rotation relative to this Prop's direction.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -86,7 +254,41 @@ Rotates the child Prop by a random Rotation.
 
 ##### Parameters
 
-<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Prop</td><td>Prop slot</td><td>Prop to rotate.</td></tr><tr><td>Rotations</td><td>list of Rotations</td><td>The rotations to pick from.</td></tr><tr><td>HorizontalRotations</td><td>Boolean</td><td>Reduces the need to define four extra nodes for all X/Z rotations by adding them all automatically. Don’t use the Rotations pin if you enable this.</td></tr><tr><td>Seed</td><td>String</td><td>Determines which Rotation to pick.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="202.42584228515625">Name</th>
+      <th width="242.53466796875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Prop</td>
+      <td>Prop slot</td>
+      <td>Prop to rotate.</td>
+    </tr>
+    <tr>
+      <td>Rotations</td>
+      <td>list of Rotations</td>
+      <td>The rotations to pick from.</td>
+    </tr>
+    <tr>
+      <td>HorizontalRotations</td>
+      <td>Boolean</td>
+      <td>
+        Reduces the need to define four extra nodes for all X/Z rotations by
+        adding them all automatically. Don’t use the Rotations pin if you enable
+        this.
+      </td>
+    </tr>
+    <tr>
+      <td>Seed</td>
+      <td>String</td>
+      <td>Determines which Rotation to pick.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -98,7 +300,30 @@ The first delimiter whose range contains the Density value at the Prop’s posit
 
 ##### Parameters
 
-<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Delimiters</td><td>list of Delimiters</td><td>Determines which Prop is selected for which regions of the Density field.</td></tr><tr><td>Density</td><td>Density slot</td><td>The Density field.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="202.42584228515625">Name</th>
+      <th width="242.53466796875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Delimiters</td>
+      <td>list of Delimiters</td>
+      <td>
+        Determines which Prop is selected for which regions of the Density
+        field.
+      </td>
+    </tr>
+    <tr>
+      <td>Density</td>
+      <td>Density slot</td>
+      <td>The Density field.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -110,10 +335,34 @@ Below is an example of terrain with smaller dirt boulders on top of large stone 
 
 ![Example of Density Prop](/assets/official-documentation/worldgen/technical-hytale-generator/props/density-prop-example.png)
 
-
 ##### Parameters
 
-<table><thead><tr><th width="154.90106201171875">Name</th><th width="218.05938720703125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Bounds</td><td>Bounds</td><td>The maximum reach.</td></tr><tr><td>Density</td><td>Density asset slot</td><td>Gives shape to the Prop.</td></tr><tr><td>Material</td><td>MaterialProvider asset slot</td><td>Determines the block types to use.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="154.90106201171875">Name</th>
+      <th width="218.05938720703125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bounds</td>
+      <td>Bounds</td>
+      <td>The maximum reach.</td>
+    </tr>
+    <tr>
+      <td>Density</td>
+      <td>Density asset slot</td>
+      <td>Gives shape to the Prop.</td>
+    </tr>
+    <tr>
+      <td>Material</td>
+      <td>MaterialProvider asset slot</td>
+      <td>Determines the block types to use.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -145,7 +394,27 @@ Offsets the position of the child Prop.
 
 ##### Parameters
 
-<table><thead><tr><th width="127.33660888671875">Name</th><th width="165.52471923828125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Offset</td><td>3D integer vector</td><td>The direction in which to offset the child Prop’s position.</td></tr><tr><td>Prop</td><td>Prop slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="127.33660888671875">Name</th>
+      <th width="165.52471923828125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Offset</td>
+      <td>3D integer vector</td>
+      <td>The direction in which to offset the child Prop’s position.</td>
+    </tr>
+    <tr>
+      <td>Prop</td>
+      <td>Prop slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -167,16 +436,13 @@ The screenshots below show a few examples of ponds generated with this Prop.
 
 ![Example of PondFiller Prop1](/assets/official-documentation/worldgen/technical-hytale-generator/props/pondfiller-example-1.png)
 
-
 ![Example of PondFiller Prop2](/assets/official-documentation/worldgen/technical-hytale-generator/props/pondfiller-example-2.png)
-
 
 You can configure the bounding box inside which it will identify and fill existing terrain depressions. The bounding box’s size and shape determine how large the resulting ponds can be.
 
 The diagram below shows how the bounding box defines the outcome.
 
 ![Example of PondFiller bounding box](/assets/official-documentation/worldgen/technical-hytale-generator/props/pondfiller-bounding-box.png)
-
 
 The ponds that fit inside that bounding box are filled with the MaterialProvider.
 
@@ -186,7 +452,38 @@ Important: The performance impact of this Prop can be relatively high depending 
 
 ##### Parameters
 
-<table><thead><tr><th width="151.09912109375">Name</th><th width="202.95050048828125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Bounds</td><td>Bounds</td><td>The Prop's reach.</td></tr><tr><td>BarrierBlockSet</td><td>BlockSet asset slot</td><td>Defines the types of blocks that can make up the solid terrain, through which the pond material cannot seep.</td></tr><tr><td>FillMaterial</td><td>MaterialProvider asset slot</td><td>Determines the types of blocks used when filling up the ponds (for example, water).</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="151.09912109375">Name</th>
+      <th width="202.95050048828125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bounds</td>
+      <td>Bounds</td>
+      <td>The Prop's reach.</td>
+    </tr>
+    <tr>
+      <td>BarrierBlockSet</td>
+      <td>BlockSet asset slot</td>
+      <td>
+        Defines the types of blocks that can make up the solid terrain, through
+        which the pond material cannot seep.
+      </td>
+    </tr>
+    <tr>
+      <td>FillMaterial</td>
+      <td>MaterialProvider asset slot</td>
+      <td>
+        Determines the types of blocks used when filling up the ponds (for
+        example, water).
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 

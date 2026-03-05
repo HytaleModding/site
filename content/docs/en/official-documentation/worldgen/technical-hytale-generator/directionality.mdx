@@ -14,9 +14,35 @@ Allows you to specify the single direction the Prop will be placed in.
 
 Parameters:
 
-<table><thead><tr><th width="160">Name</th><th width="305.35638427734375">Type</th><th>Description</th></tr></thead><tbody><tr><td>Rotation</td><td>integer (optional, defaults to 0)</td><td>Allowed values: <code>0</code>, <code>90</code>, <code>180</code>, <code>270</code>.</td></tr><tr><td>Pattern</td><td>Pattern slot</td><td>Used to locate a suitable position for the Prop. Does not affect the Prefab’s direction.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="160">Name</th>
+      <th width="305.35638427734375">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Rotation</td>
+      <td>integer (optional, defaults to 0)</td>
+      <td>
+        Allowed values: <code>0</code>, <code>90</code>, <code>180</code>,{" "}
+        <code>270</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>Pattern</td>
+      <td>Pattern slot</td>
+      <td>
+        Used to locate a suitable position for the Prop. Does not affect the
+        Prefab’s direction.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Random
 
@@ -24,9 +50,32 @@ Gives the Prefab random directions, based on a seed.
 
 Parameters:
 
-<table><thead><tr><th width="160">Name</th><th width="141.871337890625">Type</th><th>Description</th></tr></thead><tbody><tr><td>Seed</td><td>string</td><td>Affects rotations.</td></tr><tr><td>Pattern</td><td>Pattern slot</td><td>Used to locate a suitable position for the Prop. Does not affect the Prefab’s direction.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="160">Name</th>
+      <th width="141.871337890625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Seed</td>
+      <td>string</td>
+      <td>Affects rotations.</td>
+    </tr>
+    <tr>
+      <td>Pattern</td>
+      <td>Pattern slot</td>
+      <td>
+        Used to locate a suitable position for the Prop. Does not affect the
+        Prefab’s direction.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Pattern _(Directionality type name)_
 
@@ -34,4 +83,60 @@ Allows the Prop to have the correct direction based on its environment. Allows y
 
 Parameters:
 
-<table><thead><tr><th width="139.089111328125">Name</th><th width="189.39605712890625">Type</th><th>Description</th></tr></thead><tbody><tr><td>InitialDirection</td><td>string (<code>N</code> | <code>S</code> | <code>E</code> | <code>W</code>)</td><td>The direction the Prop faces in its original state. Example: A balcony facing North means it is looking North.</td></tr><tr><td>NorthPattern</td><td>Pattern slot</td><td>Defines environments where this Prop should be placed facing North.</td></tr><tr><td>SouthPattern</td><td>Pattern slot</td><td>Defines environments where this Prop should be placed facing South.</td></tr><tr><td>EastPattern</td><td>Pattern slot</td><td>Defines environments where this Prop should be placed facing East.</td></tr><tr><td>WestPattern</td><td>Pattern slot</td><td>Defines environments where this Prop should be placed facing West.</td></tr><tr><td>Seed</td><td>string</td><td>Affects direction picking where more than one direction is possible.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="139.089111328125">Name</th>
+      <th width="189.39605712890625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>InitialDirection</td>
+      <td>
+        string (<code>N</code> | <code>S</code> | <code>E</code> |{" "}
+        <code>W</code>)
+      </td>
+      <td>
+        The direction the Prop faces in its original state. Example: A balcony
+        facing North means it is looking North.
+      </td>
+    </tr>
+    <tr>
+      <td>NorthPattern</td>
+      <td>Pattern slot</td>
+      <td>
+        Defines environments where this Prop should be placed facing North.
+      </td>
+    </tr>
+    <tr>
+      <td>SouthPattern</td>
+      <td>Pattern slot</td>
+      <td>
+        Defines environments where this Prop should be placed facing South.
+      </td>
+    </tr>
+    <tr>
+      <td>EastPattern</td>
+      <td>Pattern slot</td>
+      <td>
+        Defines environments where this Prop should be placed facing East.
+      </td>
+    </tr>
+    <tr>
+      <td>WestPattern</td>
+      <td>Pattern slot</td>
+      <td>
+        Defines environments where this Prop should be placed facing West.
+      </td>
+    </tr>
+    <tr>
+      <td>Seed</td>
+      <td>string</td>
+      <td>
+        Affects direction picking where more than one direction is possible.
+      </td>
+    </tr>
+  </tbody>
+</table>

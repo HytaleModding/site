@@ -11,7 +11,7 @@ authors:
 
 <OfficialDocumentationNotice />
 
-***
+---
 
 ### Manual
 
@@ -21,7 +21,7 @@ You can plot points that connect with lines to create the curve. The points are 
 
 The example above shows a function made of 3 points.
 
-***
+---
 
 ### DistanceExponential
 
@@ -31,9 +31,29 @@ The DistanceExponential Curve has the following shape depending on the Exponent 
 
 Parameters:
 
-<table><thead><tr><th width="114.02972412109375">Name</th><th width="148.21795654296875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Exponent</td><td>positive decimal number</td><td>Affects the curve’s shape like in the diagram above.</td></tr><tr><td>Range</td><td>positive decimal number</td><td>The value after which the curve outputs a constant 0.0.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="114.02972412109375">Name</th>
+      <th width="148.21795654296875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Exponent</td>
+      <td>positive decimal number</td>
+      <td>Affects the curve’s shape like in the diagram above.</td>
+    </tr>
+    <tr>
+      <td>Range</td>
+      <td>positive decimal number</td>
+      <td>The value after which the curve outputs a constant 0.0.</td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### DistanceS
 
@@ -47,9 +67,52 @@ Below are some examples of Positions2D terrain using this curve.
 
 Parameters:
 
-<table><thead><tr><th width="162.5050048828125">Name</th><th width="274.6336669921875">Type</th><th>Description</th></tr></thead><tbody><tr><td>ExponentA</td><td>decimal value greater than 0.0</td><td>Affects the curve’s shape in the first half of the range.</td></tr><tr><td>ExponentB</td><td>decimal value greater than 0.0</td><td>Affects the curve’s shape in the second half of the range.</td></tr><tr><td>Range</td><td>decimal value greater than 0.0</td><td>The value after which the curve outputs a constant 0.0.</td></tr><tr><td>Transition</td><td>optional decimal value between 0.0 and 1.0 with a default of 1.0</td><td>Values close to 0.0 create a curve with a faster, more sudden transition between ExponentA and ExponentB. Values of 1.0 transition from ExponentA to ExponentB over the entire curve.</td></tr><tr><td>TransitionSmooth</td><td>optional decimal value between 0.0 and 1.0 with a default of 1.0</td><td>Affects the shape of the transition. Lower values can result in a sharper curve in some situations. Try different values while you design to get a feel for it.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="162.5050048828125">Name</th>
+      <th width="274.6336669921875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ExponentA</td>
+      <td>decimal value greater than 0.0</td>
+      <td>Affects the curve’s shape in the first half of the range.</td>
+    </tr>
+    <tr>
+      <td>ExponentB</td>
+      <td>decimal value greater than 0.0</td>
+      <td>Affects the curve’s shape in the second half of the range.</td>
+    </tr>
+    <tr>
+      <td>Range</td>
+      <td>decimal value greater than 0.0</td>
+      <td>The value after which the curve outputs a constant 0.0.</td>
+    </tr>
+    <tr>
+      <td>Transition</td>
+      <td>optional decimal value between 0.0 and 1.0 with a default of 1.0</td>
+      <td>
+        Values close to 0.0 create a curve with a faster, more sudden transition
+        between ExponentA and ExponentB. Values of 1.0 transition from ExponentA
+        to ExponentB over the entire curve.
+      </td>
+    </tr>
+    <tr>
+      <td>TransitionSmooth</td>
+      <td>optional decimal value between 0.0 and 1.0 with a default of 1.0</td>
+      <td>
+        Affects the shape of the transition. Lower values can result in a
+        sharper curve in some situations. Try different values while you design
+        to get a feel for it.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Ceiling
 
@@ -57,9 +120,29 @@ This curve puts a ceiling on the output of the child curve asset.
 
 Parameters:
 
-<table><thead><tr><th width="121.6336669921875">Name</th><th width="228.40594482421875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Ceiling</td><td>decimal number</td><td>The maximum value this curve will output.</td></tr><tr><td>Curve</td><td>curve slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="121.6336669921875">Name</th>
+      <th width="228.40594482421875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ceiling</td>
+      <td>decimal number</td>
+      <td>The maximum value this curve will output.</td>
+    </tr>
+    <tr>
+      <td>Curve</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Floor
 
@@ -67,9 +150,29 @@ This curve puts a floor on the output of the child curve asset.
 
 Parameters:
 
-<table><thead><tr><th width="128.28717041015625">Name</th><th width="169.2772216796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Floor</td><td>decimal number</td><td>The minimum value this curve will output.</td></tr><tr><td>Curve</td><td>curve slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="128.28717041015625">Name</th>
+      <th width="169.2772216796875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Floor</td>
+      <td>decimal number</td>
+      <td>The minimum value this curve will output.</td>
+    </tr>
+    <tr>
+      <td>Curve</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### SmoothCeiling
 
@@ -77,11 +180,67 @@ This curve puts a ceiling on the output of the child curve asset. As the curve a
 
 Parameters:
 
-<table><thead><tr><th width="114.980224609375">Name</th><th width="194.33660888671875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Ceiling</td><td>decimal number</td><td>The maximum value this curve will output.</td></tr><tr><td>Range</td><td>decimal number, greater or equal to 0</td><td>The range determines how much smoothing is applied. A good starting value would be ¼ of the known range of your child curve.</td></tr><tr><td>Curve</td><td>curve slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="114.980224609375">Name</th>
+      <th width="194.33660888671875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ceiling</td>
+      <td>decimal number</td>
+      <td>The maximum value this curve will output.</td>
+    </tr>
+    <tr>
+      <td>Range</td>
+      <td>decimal number, greater or equal to 0</td>
+      <td>
+        The range determines how much smoothing is applied. A good starting
+        value would be ¼ of the known range of your child curve.
+      </td>
+    </tr>
+    <tr>
+      <td>Curve</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-<table><thead><tr><th width="114.980224609375">Name</th><th width="194.33660888671875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Ceiling</td><td>decimal number</td><td>The maximum value this curve will output.</td></tr><tr><td>Range</td><td>decimal number, greater than or equal to 0</td><td>The range determines how much smoothing is applied. A good starting value would be ¼ of the known range of your child curve.</td></tr><tr><td>Curve</td><td>curve slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="114.980224609375">Name</th>
+      <th width="194.33660888671875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ceiling</td>
+      <td>decimal number</td>
+      <td>The maximum value this curve will output.</td>
+    </tr>
+    <tr>
+      <td>Range</td>
+      <td>decimal number, greater than or equal to 0</td>
+      <td>
+        The range determines how much smoothing is applied. A good starting
+        value would be ¼ of the known range of your child curve.
+      </td>
+    </tr>
+    <tr>
+      <td>Curve</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### SmoothFloor
 
@@ -89,11 +248,67 @@ This curve puts a floor on the output of the child curve asset. As the curve app
 
 Parameters:
 
-<table><thead><tr><th width="112.1287841796875">Name</th><th width="192.48516845703125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Floor</td><td>decimal number</td><td>The minimum value this curve will output.</td></tr><tr><td>Range</td><td>decimal number, greater or equal to 0</td><td>The range determines how much smoothing is applied. A good starting value would be ¼ of the known range of your child curve.</td></tr><tr><td>Curve</td><td>curve slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="112.1287841796875">Name</th>
+      <th width="192.48516845703125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Floor</td>
+      <td>decimal number</td>
+      <td>The minimum value this curve will output.</td>
+    </tr>
+    <tr>
+      <td>Range</td>
+      <td>decimal number, greater or equal to 0</td>
+      <td>
+        The range determines how much smoothing is applied. A good starting
+        value would be ¼ of the known range of your child curve.
+      </td>
+    </tr>
+    <tr>
+      <td>Curve</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-<table><thead><tr><th width="112.1287841796875">Name</th><th width="192.48516845703125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Floor</td><td>decimal number</td><td>The minimum value this curve will output.</td></tr><tr><td>Range</td><td>decimal number, greater than or equal to 0</td><td>The range determines how much smoothing is applied. A good starting value would be ¼ of the known range of your child curve.</td></tr><tr><td>Curve</td><td>curve slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="112.1287841796875">Name</th>
+      <th width="192.48516845703125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Floor</td>
+      <td>decimal number</td>
+      <td>The minimum value this curve will output.</td>
+    </tr>
+    <tr>
+      <td>Range</td>
+      <td>decimal number, greater than or equal to 0</td>
+      <td>
+        The range determines how much smoothing is applied. A good starting
+        value would be ¼ of the known range of your child curve.
+      </td>
+    </tr>
+    <tr>
+      <td>Curve</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### SmoothClamp
 
@@ -101,11 +316,77 @@ This curve limits the range of the child curve asset within the provided walls. 
 
 Parameters:
 
-<table><thead><tr><th width="114.980224609375">Name</th><th width="194.336669921875">Type</th><th>Description</th></tr></thead><tbody><tr><td>WallA</td><td>decimal number</td><td></td></tr><tr><td>WallB</td><td>decimal number</td><td></td></tr><tr><td>Range</td><td>decimal number, greater or equal to 0</td><td>The range determines how much smoothing is applied. A good starting value would be ¼ of the known range of your child curve.</td></tr><tr><td>Curve</td><td>curve slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="114.980224609375">Name</th>
+      <th width="194.336669921875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>WallA</td>
+      <td>decimal number</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>WallB</td>
+      <td>decimal number</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Range</td>
+      <td>decimal number, greater or equal to 0</td>
+      <td>
+        The range determines how much smoothing is applied. A good starting
+        value would be ¼ of the known range of your child curve.
+      </td>
+    </tr>
+    <tr>
+      <td>Curve</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-<table><thead><tr><th width="114.980224609375">Name</th><th width="194.336669921875">Type</th><th>Description</th></tr></thead><tbody><tr><td>WallA</td><td>decimal number</td><td></td></tr><tr><td>WallB</td><td>decimal number</td><td></td></tr><tr><td>Range</td><td>decimal number, greater than or equal to 0</td><td>The range determines how much smoothing is applied. A good starting value would be ¼ of the known range of your child curve.</td></tr><tr><td>Curve</td><td>curve slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="114.980224609375">Name</th>
+      <th width="194.336669921875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>WallA</td>
+      <td>decimal number</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>WallB</td>
+      <td>decimal number</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Range</td>
+      <td>decimal number, greater than or equal to 0</td>
+      <td>
+        The range determines how much smoothing is applied. A good starting
+        value would be ¼ of the known range of your child curve.
+      </td>
+    </tr>
+    <tr>
+      <td>Curve</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### SmoothMax
 
@@ -113,9 +394,37 @@ This curve retrieves the maximum between the two curves provided. The intersecti
 
 Parameters:
 
-<table><thead><tr><th width="125.435546875">Name</th><th width="177.93060302734375">Type</th><th>Description</th></tr></thead><tbody><tr><td>Range</td><td>decimal number, greater than or equal to 0</td><td>The range determines how much smoothing is applied. A good starting value would be ¼ of the known range of your child curves.</td></tr><tr><td>CurveA</td><td>curve slot</td><td></td></tr><tr><td>CurveB</td><td>curve slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="125.435546875">Name</th>
+      <th width="177.93060302734375">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Range</td>
+      <td>decimal number, greater than or equal to 0</td>
+      <td>
+        The range determines how much smoothing is applied. A good starting
+        value would be ¼ of the known range of your child curves.
+      </td>
+    </tr>
+    <tr>
+      <td>CurveA</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>CurveB</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### SmoothMin
 
@@ -123,9 +432,37 @@ This curve retrieves the minimum between the two curves provided. The intersecti
 
 Parameters:
 
-<table><thead><tr><th width="147.2969970703125">Name</th><th width="184.03961181640625">Type</th><th>Description</th></tr></thead><tbody><tr><td>Range</td><td>decimal number, greater than or equal to 0</td><td>The range determines how much smoothing is applied. A good starting value would be ¼ of the known range of your child curves.</td></tr><tr><td>CurveA</td><td>curve slot</td><td></td></tr><tr><td>CurveB</td><td>curve slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="147.2969970703125">Name</th>
+      <th width="184.03961181640625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Range</td>
+      <td>decimal number, greater than or equal to 0</td>
+      <td>
+        The range determines how much smoothing is applied. A good starting
+        value would be ¼ of the known range of your child curves.
+      </td>
+    </tr>
+    <tr>
+      <td>CurveA</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>CurveB</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Clamp
 
@@ -133,9 +470,34 @@ This clamps the curve between the two wall values provided. The output of this c
 
 Parameters:
 
-<table><thead><tr><th width="111.17822265625">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>WallA</td><td>decimal number</td><td></td></tr><tr><td>WallB</td><td>decimal number</td><td></td></tr><tr><td>Curve</td><td>curve slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="111.17822265625">Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>WallA</td>
+      <td>decimal number</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>WallB</td>
+      <td>decimal number</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Curve</td>
+      <td>curve slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Inverter
 
@@ -147,7 +509,7 @@ Parameters:
 | ----- | ---------- | ----------- |
 | Curve | curve slot |             |
 
-***
+---
 
 ### Max
 
@@ -159,7 +521,7 @@ Parameters:
 | ------ | ------------------- | ----------- |
 | Curves | list of curve slots |             |
 
-***
+---
 
 ### Min
 
@@ -171,7 +533,7 @@ Parameters:
 | ------ | ------------------- | ----------- |
 | Curves | list of curve slots |             |
 
-***
+---
 
 ### Multiplier
 
@@ -183,7 +545,7 @@ Parameters:
 | ------ | ------------------- | ----------- |
 | Curves | list of curve slots |             |
 
-***
+---
 
 ### Not
 
@@ -195,7 +557,7 @@ Parameters:
 | ----- | ---------- | ----------- |
 | Curve | curve slot |             |
 
-***
+---
 
 ### Sum
 
@@ -207,7 +569,7 @@ Parameters:
 | ------ | ------------------- | ----------- |
 | Curves | list of curve slots |             |
 
-***
+---
 
 ### Imported
 

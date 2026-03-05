@@ -33,7 +33,7 @@ import HylandiaLogo from "./(showcaseImages)/Hylandia_Logo.png";
 import MagicCircleGust from "./(showcaseImages)/MagicCircleGust.gif";
 import Shroomie from "./(showcaseImages)/Shroomie.gif";
 import Froggy from "./(showcaseImages)/Froggy.gif";
-import VoileBanner from "./(showcaseImages)/voile.png"
+import VoileBanner from "./(showcaseImages)/voile.png";
 import { DiscordButton } from "./discord-button";
 import { SponsorButton } from "./support-button";
 import { GitInfoButton } from "@/components/git-info-button";
@@ -124,7 +124,7 @@ const showcaseItems: ShowcaseItem[] = [
     author: "by mayuna",
     image: VoileBanner,
     link: "https://www.curseforge.com/hytale/mods/docs",
-    type: "art"
+    type: "art",
   },
   {
     title: "Hylandia",

@@ -14,9 +14,24 @@ Assigns a Prop to all positions.
 
 Parameters:
 
-<table><thead><tr><th width="207.17828369140625">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Prop</td><td>Prop slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="207.17828369140625">Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Prop</td>
+      <td>Prop slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### FieldFunction
 
@@ -24,9 +39,44 @@ Allows you to select which Props to assign based on a Density field and your con
 
 Parameters:
 
-<table><thead><tr><th width="218.5841064453125">Name</th><th width="205.6929931640625">Type</th><th>Description</th></tr></thead><tbody><tr><td>FieldFunction</td><td>Density slot</td><td></td></tr><tr><td>Delimiters</td><td>list of delimiters</td><td>Attaches Props to value ranges of the Density field.</td></tr><tr><td>Delimiters[].Min</td><td>decimal number</td><td>Lower inclusive bound of the delimiter.</td></tr><tr><td>Delimiters[].Max</td><td>decimal number</td><td>Higher exclusive bound of the delimiter.</td></tr><tr><td>Delimiters[].Assignments</td><td>Assignments asset slot</td><td>The Assignments providing the Props to use.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="218.5841064453125">Name</th>
+      <th width="205.6929931640625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FieldFunction</td>
+      <td>Density slot</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Delimiters</td>
+      <td>list of delimiters</td>
+      <td>Attaches Props to value ranges of the Density field.</td>
+    </tr>
+    <tr>
+      <td>Delimiters[].Min</td>
+      <td>decimal number</td>
+      <td>Lower inclusive bound of the delimiter.</td>
+    </tr>
+    <tr>
+      <td>Delimiters[].Max</td>
+      <td>decimal number</td>
+      <td>Higher exclusive bound of the delimiter.</td>
+    </tr>
+    <tr>
+      <td>Delimiters[].Assignments</td>
+      <td>Assignments asset slot</td>
+      <td>The Assignments providing the Props to use.</td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Sandwich
 
@@ -36,9 +86,39 @@ Allows you to select which Props to assign based on their vertical (world Y) pos
 
 Parameters:
 
-<table><thead><tr><th width="225.23760986328125">Name</th><th width="206.82177734375">Type</th><th>Description</th></tr></thead><tbody><tr><td>Delimiters</td><td>list of height delimiters</td><td>Each delimiter defines a world height range and its Assignments.</td></tr><tr><td>Delimiters[].MinY</td><td>decimal number</td><td>Lower inclusive bound of the delimiter.</td></tr><tr><td>Delimiters[].MaxY</td><td>decimal number</td><td>Higher exclusive bound of the delimiter.</td></tr><tr><td>Delimiters[].Assignments</td><td>Assignments asset slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="225.23760986328125">Name</th>
+      <th width="206.82177734375">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Delimiters</td>
+      <td>list of height delimiters</td>
+      <td>Each delimiter defines a world height range and its Assignments.</td>
+    </tr>
+    <tr>
+      <td>Delimiters[].MinY</td>
+      <td>decimal number</td>
+      <td>Lower inclusive bound of the delimiter.</td>
+    </tr>
+    <tr>
+      <td>Delimiters[].MaxY</td>
+      <td>decimal number</td>
+      <td>Higher exclusive bound of the delimiter.</td>
+    </tr>
+    <tr>
+      <td>Delimiters[].Assignments</td>
+      <td>Assignments asset slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Weighted
 
@@ -53,7 +133,7 @@ Parameters:
 | WeightedAssignments | list of weighted Assignments slots |                                                     |
 | Assignments         | Assignments asset slot             |                                                     |
 
-***
+---
 
 ### Imported
 

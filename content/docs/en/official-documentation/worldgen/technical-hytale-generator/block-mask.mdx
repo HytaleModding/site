@@ -14,8 +14,8 @@ authors:
 
 If you're trying to place bricks in water, then bricks are the Source Material, and water is the Destination Material.
 
-* Source Material: the Material we're trying to place.
-* Destination Material: the Material that exists where we want to place the Source Material.
+- Source Material: the Material we're trying to place.
+- Destination Material: the Material that exists where we want to place the Source Material.
 
 #### DontPlace
 
@@ -31,9 +31,40 @@ The Advanced rules override the rules above for specific BlockSets.
 
 Each rule has:
 
-* A Source BlockSet that identifies which Source Materials the rule applies to.
-* A CanReplace BlockSet that determines which Destination Materials those sources can replace.
+- A Source BlockSet that identifies which Source Materials the rule applies to.
+- A CanReplace BlockSet that determines which Destination Materials those sources can replace.
 
 Parameters:
 
-<table><thead><tr><th width="165.3564453125">Name</th><th width="178.84161376953125">Type</th><th>Description</th></tr></thead><tbody><tr><td>DontPlace</td><td>BlockSet slot</td><td>Source Materials in this set will not be placed.</td></tr><tr><td>DontReplace</td><td>BlockSet slot</td><td>By default, Source Materials cannot replace Destination Materials in this set.</td></tr><tr><td>Advanced</td><td>list of rules</td><td>Per-BlockSet overrides. Each rule contains a Source BlockSet and a CanReplace BlockSet.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="165.3564453125">Name</th>
+      <th width="178.84161376953125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DontPlace</td>
+      <td>BlockSet slot</td>
+      <td>Source Materials in this set will not be placed.</td>
+    </tr>
+    <tr>
+      <td>DontReplace</td>
+      <td>BlockSet slot</td>
+      <td>
+        By default, Source Materials cannot replace Destination Materials in
+        this set.
+      </td>
+    </tr>
+    <tr>
+      <td>Advanced</td>
+      <td>list of rules</td>
+      <td>
+        Per-BlockSet overrides. Each rule contains a Source BlockSet and a
+        CanReplace BlockSet.
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -16,7 +16,22 @@ Checks against the block's Material.
 
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Material</td><td>block Material</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Material</td>
+      <td>block Material</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -26,7 +41,22 @@ Checks if the block's Material belongs to the BlockSet.
 
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>BlockSet</td><td>BlockSet slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>BlockSet</td>
+      <td>BlockSet slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -36,19 +66,59 @@ Offsets the child Pattern by the given vector.
 
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th width="203.158447265625">Type</th><th>Description</th></tr></thead><tbody><tr><td>Pattern</td><td>Pattern slot</td><td></td></tr><tr><td>Offset</td><td>3D integer vector</td><td>The direction to offset the child Pattern in.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th width="203.158447265625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pattern</td>
+      <td>Pattern slot</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Offset</td>
+      <td>3D integer vector</td>
+      <td>The direction to offset the child Pattern in.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
 ### Rotator
- 
+
 Rotates the child Pattern.
- 
+
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th width="203.158447265625">Type</th><th>Description</th></tr></thead><tbody><tr><td>Pattern</td><td>Pattern slot</td><td></td></tr><tr><td>Rotation</td><td>Rotation</td><td>The child's rotation.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th width="203.158447265625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pattern</td>
+      <td>Pattern slot</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Rotation</td>
+      <td>Rotation</td>
+      <td>The child's rotation.</td>
+    </tr>
+  </tbody>
+</table>
 
---- 
+---
 
 ### Floor
 
@@ -58,7 +128,27 @@ Checks if there is a floor below the position. The Origin validates the position
 
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th width="144.22772216796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Floor</td><td>Pattern slot</td><td>Validates the block under the Origin position.</td></tr><tr><td>Origin</td><td>Pattern slot</td><td>Validates the block at the Origin position.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th width="144.22772216796875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Floor</td>
+      <td>Pattern slot</td>
+      <td>Validates the block under the Origin position.</td>
+    </tr>
+    <tr>
+      <td>Origin</td>
+      <td>Pattern slot</td>
+      <td>Validates the block at the Origin position.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -70,7 +160,27 @@ Checks if there is a ceiling above the world position. The Origin validates the 
 
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th width="149.9306640625">Type</th><th>Description</th></tr></thead><tbody><tr><td>Ceiling</td><td>Pattern slot</td><td>Validates the coordinate above the Origin position.</td></tr><tr><td>Origin</td><td>Pattern slot</td><td>Validates the coordinate at the Origin position.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th width="149.9306640625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ceiling</td>
+      <td>Pattern slot</td>
+      <td>Validates the coordinate above the Origin position.</td>
+    </tr>
+    <tr>
+      <td>Origin</td>
+      <td>Pattern slot</td>
+      <td>Validates the coordinate at the Origin position.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -82,7 +192,41 @@ The size of the wall can be 1x1 blocks or larger.
 
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th width="208.86138916015625">Type</th><th>Description</th></tr></thead><tbody><tr><td>Wall</td><td>Pattern slot</td><td>Validates the coordinate next to the Origin position.</td></tr><tr><td>Origin</td><td>Pattern slot</td><td>Validates the coordinate at the Origin position.</td></tr><tr><td>Directions</td><td>list of string directional values</td><td>“N”, “S”, “E” or “W”.</td></tr><tr><td>RequireAllDirections</td><td>boolean</td><td>If true then all the directions you put in the list need to validate for the Pattern to validate a position. Otherwise only one of the list directions needs to validate.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th width="208.86138916015625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Wall</td>
+      <td>Pattern slot</td>
+      <td>Validates the coordinate next to the Origin position.</td>
+    </tr>
+    <tr>
+      <td>Origin</td>
+      <td>Pattern slot</td>
+      <td>Validates the coordinate at the Origin position.</td>
+    </tr>
+    <tr>
+      <td>Directions</td>
+      <td>list of string directional values</td>
+      <td>“N”, “S”, “E” or “W”.</td>
+    </tr>
+    <tr>
+      <td>RequireAllDirections</td>
+      <td>boolean</td>
+      <td>
+        If true then all the directions you put in the list need to validate for
+        the Pattern to validate a position. Otherwise only one of the list
+        directions needs to validate.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -146,7 +290,38 @@ Below is a 2D representation of this 3D Cuboid Pattern.
 
 #### Parameters:
 
-<table><thead><tr><th width="116.31683349609375">Name</th><th width="116.3465576171875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Min</td><td>3D point</td><td>Inclusive minimum point of the cuboid relative to the Pattern’s origin.</td></tr><tr><td>Max</td><td>3D point</td><td>Inclusive maximum point of the cuboid relative to the Pattern’s origin.</td></tr><tr><td>SubPattern</td><td>Pattern slot</td><td>The Cuboid uses this Pattern to validate the positions inside itself.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="116.31683349609375">Name</th>
+      <th width="116.3465576171875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Min</td>
+      <td>3D point</td>
+      <td>
+        Inclusive minimum point of the cuboid relative to the Pattern’s origin.
+      </td>
+    </tr>
+    <tr>
+      <td>Max</td>
+      <td>3D point</td>
+      <td>
+        Inclusive maximum point of the cuboid relative to the Pattern’s origin.
+      </td>
+    </tr>
+    <tr>
+      <td>SubPattern</td>
+      <td>Pattern slot</td>
+      <td>
+        The Cuboid uses this Pattern to validate the positions inside itself.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -156,7 +331,22 @@ Logical operation that validates only if all the Patterns in its list also valid
 
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Patterns</td><td>list of Pattern asset slots</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Patterns</td>
+      <td>list of Pattern asset slots</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -166,7 +356,22 @@ Logical operation that validates if at least one of the Patterns in its list val
 
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Patterns</td><td>list of Pattern asset slots</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Patterns</td>
+      <td>list of Pattern asset slots</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -176,7 +381,22 @@ Logical operation that validates only where the nested Pattern does not validate
 
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Pattern</td><td>Pattern asset slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pattern</td>
+      <td>Pattern asset slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -192,7 +412,37 @@ In the green box, the FieldFunction Pattern runs only on positions with a floor.
 
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th width="218.3663330078125">Type</th><th>Description</th></tr></thead><tbody><tr><td>FieldFunction</td><td>slot for a noise function RootNode</td><td></td></tr><tr><td>Delimiters</td><td>list of noise value delimiters</td><td></td></tr><tr><td>Delimiters[].Min</td><td>decimal number</td><td>Lower inclusive bound of the delimiter.</td></tr><tr><td>Delimiters[].Max</td><td>decimal number</td><td>Higher exclusive bound of the delimiter.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th width="218.3663330078125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FieldFunction</td>
+      <td>slot for a noise function RootNode</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Delimiters</td>
+      <td>list of noise value delimiters</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Delimiters[].Min</td>
+      <td>decimal number</td>
+      <td>Lower inclusive bound of the delimiter.</td>
+    </tr>
+    <tr>
+      <td>Delimiters[].Max</td>
+      <td>decimal number</td>
+      <td>Higher exclusive bound of the delimiter.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -202,4 +452,19 @@ Imports an exported Pattern.
 
 #### Parameters:
 
-<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Name</td><td>string</td><td>The exported Pattern.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>string</td>
+      <td>The exported Pattern.</td>
+    </tr>
+  </tbody>
+</table>
