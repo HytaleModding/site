@@ -232,6 +232,18 @@ public void updateText(String newText) {
 }
 ```
 
+## Localizing Values (Translating item object names)
+In some cases you will want to display the name of something you have the itemStack of or something in game.
+You can use the following to display the localized name:
+```java
+ItemStack heldItemStack = player.getInventory().getActiveHotbarItem();
+
+String itemId = heldItemStack.getItem.getId();
+String translationKey = Item.getAssetMap().getAsset(itemId).getTranslationKey();
+Message msg = Message.translation(translationKey);
+uiCommandBuilder.set("#MyButton.Text", msg);
+```
+
 ## Common Issues
 
 ### Failed to apply Custom UI HUD commands
