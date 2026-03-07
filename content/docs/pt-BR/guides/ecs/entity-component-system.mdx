@@ -1,6 +1,6 @@
 ---
 title: Entity Component System
-description: A basic introduction into ECS (Entity Component System)
+description: Uma introdução básica ao ECS (Entity Component System)
 ---
 
 <Callout type="warning">
@@ -31,34 +31,34 @@ We can describe composition as "has X" and inheritance as "is X".
 When we inherit a class in Java, we inherit all of its attributes and methods.
 While in composition we can choose for each object what it references and what systems will work on it.
 
-# Entities, Components and Systems
+# Entidades, componentes e sistemas
 
-## Entities
+## Entidades
 
-An Entity is just a unique identifier.
+Uma entidade é apenas um identificador único.
 
 - It contains no data.
 - It contains no logic
 
 Think of entities as nouns that can be described using components
 
-## Components
+## Componentes
 
 Components are just plain data containers.
 
-- They store only data
-- They contain no behavior or logic
-- They describe traits or aspects of an entity
+- Eles armazenam apenas dados;
+- Eles não contêm comportamento nem lógica;
+- Eles descrevem características ou aspectos de uma entidade.
 
-Examples of components:
+Exemplos de componentes:
 
-- A 'Position' component that stores X, Y and Z coordinates
-- A 'Velocity' component that stores the speed along each axis
-- A 'Health' component that stores the current health of the entity
+- Um componente "position" que armazena coordenadas X, Y e Z;
+- Um componente "velocity" que armazena a velocidade ao longo de cada eixo;
+- Um componente "health" que armazena a vida atual da entidade.
 
 Think of components as adjectives that describe an entity
 
-## Systems
+## Sistemas
 
 Systems contains the logic for your game (or in this case, a mod).
 
@@ -66,7 +66,7 @@ Systems contains the logic for your game (or in this case, a mod).
 - It Does not store entity data itself
 - It Applies behavior by reading and modifying component data
 
-For example:
+Por exemplo:
 
 - A "WinConditionSystem" may process every Entity that contains the components "Position" and "Velocity"
 - If an entity reaches the position `(0, 0, 0)`, the system will trigger a "You Won!" message.

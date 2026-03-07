@@ -1,0 +1,68 @@
+---
+title: 5 - NPC Sleep Behavior
+authors:
+  - name: Hypixel Studios Canada Inc.
+    url: https://hytale.com
+---
+
+<OfficialDocumentationNotice />
+
+Let's add a new top level **Sleep** state. For illustrative purposes, the Idle state has been truncated.
+
+```json
+{
+	"Sensor": {
+		"Type": "State",
+		"State": "Idle"
+	},
+	"Instructions": [ ... ],
+},
+{
+	"Sensor": {
+		"Type": "State",
+		"State": "Sleep"
+	},
+	"Instructions": [ ... ]
+}
+
+```
+
+And now we add another action to the **Random** action list to move to the **Sleep** state.
+
+```json
+{
+  "Sensor": {
+    "Type": "State",
+    "State": ".Default"
+  },
+  "Instructions": [
+    {
+      "Actions": [
+        {
+          "Type": "Random",
+          "Actions": [
+            {
+              "Weight": 80,
+              "Action": {
+                "Type": "State",
+                "State": ".Guard"
+              }
+            },
+            {
+              "Weight": 20,
+              "Action": {
+                "Type": "State",
+                "State": "Sleep"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+Notice the weights in this case - there's a 20% chance that the ogre will go to sleep any time it decides to switch behaviour, but an 80% chance that it'll just keep standing guard instead.
+
+We still need to actually add the sleeping behaviour, but first we'll add Instruction with the **Timeout** action to the beginning of the **Sleep** state, just like we did with **.Guard**. We just remove **"Continue": true** because we only have one instruction.

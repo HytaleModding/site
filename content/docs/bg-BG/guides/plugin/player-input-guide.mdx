@@ -1,0 +1,68 @@
+---
+title: Player Input Guide
+description: Learn how to handle player input.
+authors:
+  - name: Neil Revin
+    url: https://itsneil.dev
+  - name: Zoon20X
+---
+
+Hytale servers don't receive raw keyboard input. The client interprets keypresses and sends packets describing what action the player wants to perform. You need to intercept these packets or events to create custom behavior.
+
+We can use the `SyncInteractionChains` to check when a player interacts. This has a few InteractionTypes, which are listed at the end of this guide.
+
+We can use the following code to intercept the SyncInteractionChains packet, and run our code whenever a user interacts using the "F" keybind.
+
+```java
+public class PacketListener implements PacketWatcher {
+    @Override
+    public void accept(PacketHandler packetHandler, Packet packet) {
+        if (packet.getId() != 290) {
+            return;
+        }
+        SyncInteractionChains interactionChains = (SyncInteractionChains) packet;
+        SyncInteractionChain[] updates = interactionChains.updates;
+
+        for (SyncInteractionChain item : updates) {
+            PlayerAuthentication playerAuthentication = packetHandler.getAuth();
+            String uuid = playerAuthentication.getUuid().toString();
+            InteractionType interactionType = item.interactionType;
+            if(interactionType == InteractionType.Use){
+                // code here
+            }
+        }
+    }
+}
+```
+
+### Interaction Types
+
+You will majorly use the `Primary`, `Secondary` and `Use` interaction types. The `Primary` Interaction Type is triggered when a player left clicks, `Secondary` is triggered when a player right clicks, and `Use` is triggered when a player uses an item.
+
+Here's a list of all Interaction Types:
+
+- Primary (0)
+- Secondary (1)
+- Ability1 (2)
+- Ability2 (3)
+- Ability3 (4)
+- Use (5)
+- Pick (6)
+- Pickup (7)
+- CollisionEnter (8)
+- CollisionLeave (9)
+- Collision (10)
+- EntityStatEffect (11)
+- SwapTo (12)
+- SwapFrom (13)
+- Death (14)
+- Wielding (15)
+- ProjectileSpawn (16)
+- ProjectileHit (17)
+- ProjectileMiss (18)
+- ProjectileBounce (19)
+- Held (20)
+- HeldOffhand (21)
+- Equipped (22)
+- Dodge (23)
+- GameModeSwap (24)

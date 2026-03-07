@@ -471,20 +471,20 @@ In parole povere: i membri dell' istanza appartengono agli oggetti; i membri sta
 
 ```java
 class Data {
-    public int x; // Membro istanziato
-    public static int y = 1000; // Membro statico
+    public int x; // Instanced member
+    public static int y = 1000; // Static member
 
-    // Membro istanziato:
-    // può accedere sia a membri statici che non-statici
+    // Instanced member:
+    // can access to both static and non-static members
     public void foo() {
-        x = 100; // OK - equivalente a this.x = 100;
-        y = 100; // OK - equivalente a Data.y = 200;
+        x = 100; // OK - same as this.x = 100;
+        y = 100; // OK - same as Data.y = 200;
     }
 
-    // Membro statico:
-    // non può accedere a membri non statici
+    // Static member:
+    // cannot access to non-static variables
     public static void bar() {
-        x = 100; // Errore: la variable non statica x non può essere chiamata in un contesto statico
+        x = 100; // Error: non-static variable x cannot be referenced from a static context
         y = 100; // OK
     }
 }
@@ -504,7 +504,7 @@ Data.x = 1000; // Errore: non è possibile accedere alle variabili d'istanza in 
 
 ### Campi statici
 
-A static field represents a data member owned by the class type rather then the object. Static fields are also stored in a specific memory location that's been shared between all the object instances that are created.
+A static field represents a data member owned by the class type rather than the object. Static fields are also stored in a specific memory location that's been shared between all the object instances that are created.
 
 It is declared as following:
 

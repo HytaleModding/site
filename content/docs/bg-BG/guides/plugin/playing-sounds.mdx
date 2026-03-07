@@ -1,0 +1,64 @@
+---
+title: Playing Sounds
+description: Learn how to Play Sounds with your Hytale Plugin
+authors:
+  - name: Neil Revin
+    link: https://itsneil.dev
+---
+
+In this guide, you will learn how to play sounds to a player.
+
+## Sound Indexes
+
+We currently have a lot of Sounds available to be used as a key in the AssetMap, [click here](../../server/sounds) to see the full list of available sounds.
+
+You can use the `getAssetMap()` method from the `SoundEvent` class to get the index of a specified sound:
+
+```java
+int index = SoundEvent.getAssetMap().getIndex("SFX_Cactus_Large_Hit");
+```
+
+## The Transform Component
+
+The `TransformComponent` is the component that tells Hytale where to play the sound. You can get this in multiple ways.
+
+1. Getting the Transform Component from the `Player` object
+
+```java
+TransformComponent transform = store.getComponent(context.senderAsPlayerRef(), EntityModule.get().getTransformComponentType());
+```
+
+2. Generating a new TransformComponent (although this is not recommended, as if your player is not close enough they won't hear the sound)
+
+```java
+Vector3d vector3d = new Vector3d(0, 0, 0); // position
+Vector3f vector3f = new Vector3f(0, 0, 0); // rotation
+TransformComponent transform = new TransformComponent(vector3d, vector3f);
+```
+
+### PlayerRef
+
+You need a Player Reference, which is a instance of `Ref<EntityStore>`. If you have the `Player` object, you can use the `getReference()` method to get a Player Reference
+
+### World
+
+You need a World reference, as the sound needs to be played inside the `execute()` method from the `World` class.
+
+### SoundCategory
+
+There is a `SoundCategory` enum that defines different sound categories, such as `Music`, `Ambient`, `SFX` and `UI`. You can use these categories to specify the type of sound you are playing.
+
+## Playing Sounds
+
+You can use the `SoundUtil` class to play sounds, using the `playSoundEvent3dToPlayer` method.
+
+```java
+int index = SoundEvent.getAssetMap().getIndex("SFX_Cactus_Large_Hit");
+World world = player.getWorld();
+EntityStore store = world.getEntityStore();
+Ref<EntityStore> playerRef = player.getReference();
+world.execute(() -> {
+    TransformComponent transform = store.getStore().getComponent(playerRef, EntityModule.get().getTransformComponentType());
+    SoundUtil.playSoundEvent3dToPlayer(playerRef, index, SoundCategory.UI, transform.getPosition(), store.getStore());
+});
+```

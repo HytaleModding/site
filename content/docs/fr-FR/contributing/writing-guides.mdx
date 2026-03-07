@@ -1,86 +1,86 @@
 ---
-title: Writing Guides
+title: Écrire des guides
 ---
 
-## Creating a guide file
+## Créer un fichier de guide
 
-To start writing a guide, you need to create a file with extension `.mdx`. You need to create this file inside the `/content/docs/en` directory, now it depends in which section you want to make the guide, so you can decide which folder you should put it in after that.
+Pour commencer à écrire un guide, vous devez créer un fichier avec l'extension `.mdx`. Vous devez créer ce fichier dans le répertoire `/content/docs/en`, après tout dépend dans quelle section vous voulez faire le guide, donc vous pouvez décider dans quel sous-dossier vous devriez le mettre.
 
-Suppose I want to make a java basics guide, I'd put it in `/content/docs/en/guides/java-basics`. You'll have to do some digging to find out where you want to place it.
+Supposons que je veux faire un guide sur les bases de Java, je le mettrais dans `/content/docs/en/guides/java-basics`. Vous aurez à fouiller un peu pour trouver où vous voulez le mettre.
 
 <Callout>
-  If there's already a guide in the section you want to write about, you can just press on the "Edit On GitHub" button on our website and it'll take you to the folder, now you can write in the same folder to have your guide appear in the same section.
+  S'il y a déjà un guide dans la section sur laquelle vous souhaitez écrire, vous pouvez simplement appuyer sur le bouton "Modifier sur GitHub" sur notre site Web et il vous mènera dans le dossier, vous pouvez maintenant écrire dans le même dossier pour que votre guide apparaisse dans la même section.
 </Callout>
 
-## Frontmatter
+## Avant-propos
 
-Frontmatter is the metadata of your guide, it tells our website how to display your guide. This needs to be at the very top of the file, which starts with `---` and ends with `---`.
+L'avant-propos sont les métadonnées de votre guide, cela indique à notre site web comment afficher votre guide. Il doit être placé au tout début du fichier, et commence avec `---` et se finit par `---`.
 
-Here's an example:
+Voici un exemple :
 
 ```mdx
 ---
-title: "Java Basics"
-description: "Learn the basics of Java programming."
+title: "Bases de Java"
+description: "Apprenez les bases de la programmation Java."
 authors:
-    - name: "Your Name"
-      url: "https://yourwebsite.com"
+    - name: "Votre nom"
+      url: "https://votresiteweb.com"
 ---
 ```
 
-Now as you can see, it's pretty self explanatory, you just need to fill in the details for your specific guide. If you don't have a URL you want to link yourself to, just don't write that whole line. Additionally, the authors section is optional, so if you don't want to add it, you can just leave it out although we encourage you to do so and credit yourself.
+Comme vous pouvez le voir, c'est assez intuitif, vous avez juste besoin de remplir les détails pour votre guide. Si vous n'avez pas d'URL à laquelle vous voulez vous rattacher, n'écrivez juste pas cette ligne. De plus, la section auteurs est optionnelle, donc si vous ne voulez pas l'ajouter, vous pouvez juste l'omettre, même si nous vous encourageons à le faire et à vous créditer.
 
-The indentation in the frontmatter is important, so make sure to keep it consistent with the example.
+L'indentation dans l'avant-propos est important, donc soyez sûrs de le faire comme dans l'exemple.
 
-## Content Structure
+## Structure du contenu
 
-You should structure the content of your guide in a clear and organized manner. Here are some tips on how to do that:
+Vous devriez structurer le contenu de votre guide de manière claire et organisée. Voici quelques astuces pour le faire :
 
-- **Introduction:** Start with an overview of the topic and what the reader can expect to learn.
-- **Prerequisites:** List any prerequisites or prior knowledge the reader should have before diving into the guide.
-- **Step-by-Step Instructions:** Break down the content into clear, actionable steps. Use headings and subheadings to organize the information.
-- **Code Examples:** Include code snippets to illustrate key points. Make sure to explain each example thoroughly.
-- **Conclusion:** Summarize the main points and encourage the reader to explore further or try out what they've learned.
+- **Introduction :** Commencez avec un aperçu du sujet et ce que le lecteur peut espérer apprendre.
+- **Prérequis :** Listez tous les prérequis ou les connaissances préalables que le lecteur doit avoir avant de plonger dans le guide.
+- **Instructions pas-à-pas :** Divisez le contenu en étapes claires et concrètes. Utilisez les titres et sous-titres pour organiser les informations.
+- **Exemples de code :** Incluez des extraits de code pour illustrer les points clés. Soyez sûr d'expliquer chaque exemple rigoureusement.
+- **Conclusion :** Résumez les points importants et encouragez le lecteur à explorer plus loin ou essayer ce qu'ils ont appris.
 
-Now if you're writing a really big section, you should split this into multiple pages so that it's easier for the reader to digest the information. No one wants to read a big wall of text all at once!
+Maintenant, si vous rédigez une section vraiment importante, vous devriez la diviser en plusieurs pages afin de faciliter la lecture et la compréhension pour le lecteur. Personne n'a envie de lire un gros bloc de texte d'un seul coup !
 
-When we write guides, we should also think of how people will consume them, and many people prefer to skim content rather than read it in detail. This is why it's better to split information into multiple pages, so it looks like a smaller amount of information to the reader. Also, consider using bullet points, numbered lists, and other formatting techniques to make the content more scannable.
+Lorsque nous rédigeons des guides, nous devrions aussi réfléchir à la manière dont les lecteurs vont les consulter, car beaucoup de personne préfèrent parcourir le contenu plutôt que de le lire en détail. C'est pourquoi il est préférable de répartir l'information sur plusieurs pages, afin qu'elle paraisse moins volumineuse pour le lecteur. Pensez également à utiliser des listes à puces, des listes numérotées et d'autres techniques de mise en forme afin de rendre le contenu plus facile à parcourir.
 
-## Formatting
+## Mise en forme
 
-We use [Markdown](https://www.markdownguide.org/) for formatting our guides. Here are some key points to keep in mind:
+Nous utilisons [Markdown](https://www.markdownguide.org/) pour la mise en forme de nos guides. Voici quelques points clés à garder à l'esprit :
 
-- Use headings (`#`, `##`, `###`) to organize your content.
-- Use bullet points and numbered lists for clarity.
-- Use code blocks (\`\`\`) for code snippets.
-- Use links to reference other guides or external resources.
+- Utilisez les en-têtes (`#`, `##`, `###`) pour organiser votre contenu.
+- Utilisez des listes à puces et des listes numérotées pour plus de clarté.
+- Utilisez les blocs (\`\`\`) pour les extraits de code
+- Utilisez des liens pour référencer d'autres guides ou ressources externes.
 
-This is the same type of formatting you'll see on most documentation websites, and also social media platforms like Discord.
+Il s’agit du même type de mise en forme que vous verrez sur la plupart des sites de documentation, ainsi que sur des plateformes de médias sociaux comme Discord.
 
-You can also make a Callout to highlight important information or tips. Use the following syntax:
+Vous pouvez également créer un "Callout" pour mettre en avant des informations importantes ou des conseils. Utilisez la syntaxe suivante :
 
 ```mdx
 <Callout>
-    This is a callout message.
+    Ceci est un message de callout.
 </Callout>
 ```
 
 <Callout>
-  This is a callout message.
+  Ceci est un message de callout.
 </Callout>
 
-You can change the color of the callout by adding a `type` attribute. For example:
+Vous pouvez changer la couleur du callout en ajoutant un attribut `type`. Par exemple :
 
 ```mdx
 <Callout type="info">
-    This is an info callout.
+    Ceci est un callout d'information.
 </Callout>
 ```
 
-Available types are: `info`, `warning`, `error`, and `success`.
+Les types disponibles sont : `info`, `warning`, `error`, et `success`.
 
 ## Conclusion
 
-That's all! You are now a master at writing guides. Just remember, do not think you need to be perfect with your English, write the guide the way you will explain the topic to someone, and don't hesitate to ask for feedback or help if you need it.
+C'est tout! Vous êtes maintenant un maître dans la rédaction de guides. Rappelez-vous, ne pensez pas que vous devez être parfait avec votre anglais, écrivez le guide de la manière dont vous expliquerez le sujet à quelqu'un, et n'hésitez pas à demander des commentaires ou de l'aide si vous en avez besoin.
 
-Happy writing!
+Bonne écriture !
