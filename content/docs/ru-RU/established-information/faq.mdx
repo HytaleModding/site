@@ -1,45 +1,48 @@
 ---
-title: Frequently Asked Questions
-description: Frequently Asked Questions about Hytale modding.
+title: Часто задаваемые вопросы
+description: Часто задаваемые вопросы о моддинге Hytale.
 ---
 
-On this page, we'll answer some of your Frequently Asked Questions.
+На этой странице собраны ответы на частые вопросы о моддинге Hytale.
 
-## 1. Can the client be modded?
+## 1. Можно ли модифицировать клиент?
 
-No, the client is not able to be modded, although the Client will not have control over how the game and the UI looks.
+Нет, клиент модифицировать нельзя.
 
-The server decides the visuals, more like the "Resource Packs" available in Minecraft. The server decides what mods are used
+При этом клиент не будет определять, как именно выглядит игра и интерфейс.
 
-## 2. What Network Protocol will be used?
+Визуальную часть определяет сервер, примерно как в случае с "ресурспаками" в Minecraft. Сервер также решает, какие моды используются.
 
-Hytale will use the QUIC transport protocol.
+## 2. Какой сетевой протокол будет использоваться?
 
-For context, the two main Internet protocols are UDP and TCP.
+Hytale будет использовать транспортный протокол QUIC.
 
-* UDP is connectionless, fast, fire-and-forget packets but has less reliability as packets can be lost.
-* TCP is connection-based, slower than UDP, can guarantee packet delivery with much more reliability.
-  Both are pretty fast in modern times, games can run fine on both (but generally prefer UDP).
+Для понимания: два основных интернет-протокола - это UDP и TCP.
 
-QUIC is a **hybrid protocol** that builds off UDP to get the same speed benefits, but adds some layers of reliability like TCP.
-Essentially, a solid choice for game development that blends speed and reliability.
+- UDP не требует постоянного соединения, работает быстро и просто отправляет пакеты, но часть пакетов может потеряться.
+- TCP работает через соединение, обычно медленнее UDP, зато намного надёжнее доставляет пакеты.
+  Оба протокола сейчас достаточно быстрые, и игры могут нормально работать с любым из них, хотя чаще выбирают UDP.
 
-## 3. What are Transfer Packets?
+QUIC - это **гибридный протокол**, который построен на основе UDP. Он сохраняет его скорость, но добавляет часть надёжности, которую обычно связывают с TCP.
+Проще говоря, это хороший вариант для игр, потому что он сочетает скорость и надёжность.
 
-Трансфер пакеты в Hytale — это небольшие наборы данных *(4 кб)*, которые позволяют игрокам переходить с одного сервера на другой, сохраняя нужную информацию.
-They are not equivalent to something like BungeeCord or Velocity and are primarily intended for smaller servers.
+## 3. Что такое Transfer Packets?
 
-Unlike BungeeCord, they do not manage network-wide features such as global plugins.
-Implementing DDOS protection would also be incredibly hard for smaller networks by using transfer packets.
+Transfer packets в Hytale - это небольшие наборы данных *(4 кб)*, которые позволяют игрокам переходить с одного сервера на другой и переносить с собой нужную информацию.
 
-Transfer packets work quite well in scenarios such as small server networks or hubs where players will hop between servers without the loss of progress. For example, a player might finish a dungeon on one server and then move to a lobby or different game mode with their inventory and stats intact. This lessens server costs and enables the developers to put more effort into gameplay improvement rather than complicated network setups.
+Это не то же самое, что BungeeCord или Velocity, и в первую очередь они рассчитаны на небольшие серверы.
 
-## 4. Will Hytale support dedicated servers?
+В отличие от BungeeCord, они не управляют общими возможностями всей сети серверов, например глобальными плагинами.
+Также с помощью transfer packets небольшим сетям было бы очень сложно сделать нормальную защиту от DDoS-атак.
 
-Yes, Hytale will support dedicated servers. This allows server owners to host their own Hytale servers on their own hardware or through third-party hosting services.
+Transfer packets хорошо подходят для маленьких сетей серверов или хабов, где игроки переходят между серверами без потери прогресса. Например, игрок может пройти данж на одном сервере, а потом перейти в лобби или другой режим и сохранить инвентарь и характеристики. Это помогает снизить расходы на серверы и даёт разработчикам больше времени на улучшение игры, а не на сложную настройку всей сети.
 
-Dedicated servers provide more control over server settings, mods, and performance compared to using official hosting solutions.
+## 4. Будет ли Hytale поддерживать выделенные серверы?
 
-## 5. Will Hytale support modding on consoles?
+Да, Hytale будет поддерживать выделенные серверы. Это позволит владельцам серверов запускать свои Hytale-серверы на собственном оборудовании или через сторонние хостинги.
 
-As of now, Hytale modding is primarily focused on PC platforms.
+Выделенные серверы дают больше контроля над настройками сервера, модами и производительностью по сравнению с официальными вариантами хостинга.
+
+## 5. Будет ли в Hytale поддержка моддинга на консолях?
+
+На данный момент моддинг Hytale в первую очередь ориентирован на PC-платформы.
