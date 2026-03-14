@@ -58,77 +58,77 @@ interface ShowcaseItem {
 const showcaseItems: ShowcaseItem[] = [
   {
     title: "Hynergy: Electric Motor",
-    author: "by seyager",
+    author: "seyager",
     image: ElectricMotor,
     link: "https://x.com/SeyagerYT",
     type: "art",
   },
   {
     title: "[WIP] Hylamity: Wulfrum Prosthesis",
-    author: "by slader._.",
+    author: "slader._.",
     image: WulfrumProsthesis,
     link: "https://discord.gg/f2fMKYnRqR",
     type: "art",
   },
   {
     title: "[WIP] Soundscape: Melodium Chunk",
-    author: "by 44Hydras",
+    author: "44Hydras",
     image: Melodium,
     link: "https://discord.com/users/197065442479702016",
     type: "art",
   },
   {
     title: "Gale Wivern",
-    author: "by Nicolas | Tourne_Vis",
+    author: "Nicolas | Tourne_Vis",
     image: GaleWivern,
     link: "https://x.com/TourneVis_MC",
     type: "art",
   },
   {
     title: "[WIP] Hylamity: Wulfrum Armor",
-    author: "by slader._.",
+    author: "slader._.",
     image: WulfrumArmor,
     link: "https://discord.gg/f2fMKYnRqR",
     type: "art",
   },
   {
     title: "[WIP] Hylamity: Wulfrum Triangle",
-    author: "by slader._.",
+    author: "slader._.",
     image: WulfrumTriangle,
     link: "https://discord.gg/f2fMKYnRqR",
     type: "art",
   },
   {
     title: "Saqvobase's Spellcasting: Magic Circle - Gust",
-    author: "by Saqvobase",
+    author: "Saqvobase",
     image: MagicCircleGust,
     link: "",
     type: "art",
   },
   {
     title: "Shroomie",
-    author: "by Miyako Hikari",
+    author: "Miyako Hikari",
     image: Shroomie,
     link: "",
     type: "art",
   },
   {
     title: "Froggy",
-    author: "by Unknown Knight",
+    author: "Unknown Knight",
     image: Froggy,
     link: "",
     type: "art",
   },
   {
     title: "Voile",
-    author: "by mayuna",
+    author: "mayuna",
     image: VoileBanner,
     link: "https://www.curseforge.com/hytale/mods/docs",
     type: "art",
   },
   {
     title: "Hylandia",
-    author: "by Kristian / Hylandia Studios",
+    author: "Kristian / Hylandia Studios",
     logo: HylandiaLogo,
     banner: HylandiaBanner,
     link: "https://discord.gg/hylandia",
@@ -142,6 +142,7 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
   const hasImage = item.image;
   const hasLogo = item.logo;
   const hasBanner = item.banner;
+  const messages = useMessages();
 
   return (
     <Card className="relative h-64 w-96 overflow-hidden">
@@ -154,7 +155,7 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
                   {item.title}
                 </h3>
                 <p className="text-muted-foreground z-20 text-base">
-                  {item.author}
+                  {messages.showcaseItems.madeBy.replace("{author}", item.author)}
                 </p>
                 {item.description && (
                   <p className="text-muted-foreground z-20 mt-1 line-clamp-2 text-sm">

@@ -40,6 +40,10 @@ export function baseOptions(
         text: messages.nav.sponsors,
         url: `/${locale}/sponsors`,
       },
+      {
+        text: messages.nav.wiki,
+        url: "https://wiki.hytalemodding.dev"
+      }
     );
   }
 
