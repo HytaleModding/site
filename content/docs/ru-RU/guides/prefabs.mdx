@@ -1,92 +1,92 @@
 ---
-title: Префабы
-description: Документация по префабам в Hytale.
+title: Prefabs
+description: Documentation about Prefabs in Hytale.
 icon: Box
 authors:
   - name: Ben Cressman
     url: https://bencres.dev
 ---
 
-# Введение
+# Introduction
 
-Префабы в Hytale нужны для того, чтобы сохранять постройки и использовать их снова.
+Prefabs are Hytale's way of creating reusable structures.
 
-Вот что важно знать о префабах:
+There are a few fundamental concepts to understand about prefabs:
 
-- С префабами работают в отдельном мире для редактирования.
-- Сам префаб - это постройка в игровом мире, которая сохраняется в JSON-файл.
+- Users interact with prefabs via a prefab editing world.
+- Prefabs the physical structures in the game world, and are saved as JSON files.
 
-## Как создать префаб
+## How to Create a Prefab
 
-Если что-то пойдёт не так, загляните в раздел "Известные проблемы" в конце этой статьи.
+Be sure to check the Known Issues section at the end of this guide if you encounter any problems.
 
-1. Используйте `/editprefab new <world name>`, чтобы создать новый мир для редактирования префабов: `/editprefab new my_prefab_world`
-   - Обратите внимание, что `my_prefab` - это имя _мира_, а не самого префаба. В одном мире может быть несколько префабов.
-2. Постройте в этом мире всё, что нужно.
-3. Используйте кисть выделения, чтобы выбрать область, которую нужно сохранить как префаб.
-4. Используйте `/prefab save`, чтобы сохранить постройку как префаб.
-5. Используйте `/editprefab exit`, чтобы выйти из мира редактирования.
-6. Возьмите Paste brush и нажмите `e` на клавиатуре, чтобы выбрать только что созданный префаб. Он будет в выпадающем списке `"server"` в правом верхнем углу меню.
-   - Также его можно выбрать через `/prefab list`, найдя в списке только что созданный префаб.
+1. `/editprefab new <world name>` to create a new prefab editing world: `/editprefab new my_prefab_world`
+   - Note that `my_prefab` is the name of the _world_, not the prefab itself. Worlds can contain multiple prefabs.
+2. Build whatever you want in the prefab editing world.
+3. Use the selection brush to select the area you want to save as a prefab.
+4. `/prefab save` to save the structure as a prefab.
+5. `/editprefab exit` to exit the prefab editing world.
+6. Using the Paste brush, press 'e' on your keyboard to select the prefab you just created. It will be in the "server" dropdown, which can be selected from the top right of the menu.
+   - You can also select it with `/prefab list` and selecting the prefab you just created.
 
-С префабами можно делать намного больше, но выше показан базовый порядок действий. Ниже - дополнительная информация.
+There is a lot more that you can do with prefabs; this is just the basic flow. Keep reading for more information.
 
-## Команды
+## Commands
 
-Для префабов используются две основные команды: `/prefab` и `/editprefab`.
+There are two main commands for prefabs, `/prefab` and `/editprefab`.
 
-В этом списке показаны не все параметры команд. Чтобы увидеть доступные опции, добавьте флаг `--help` в конце команды, например `/prefab save --help`, или используйте `/help` в игре и найдите команды `prefab` и `editprefab`.
+This list does not cover the various options for each command. You can use the `--help` flag at the end of any command to see the available options, e.g. `/prefab save --help`, or use `/help` in game and find the `prefab` and `editprefab` commands.
 
 ### `/prefab`
 
-Эта команда нужна для работы с уже существующим префабом.
+This command allows the user to interact with an existing prefab's file.
 
-Подкоманды:
+Subcommands:
 
 - `save`
-  - Сохраняет префаб в файлы игры.
+  - Saves the prefab to the file system.
 - `load`
-  - Загружает префаб в игру.
+  - Loads the prefab into the game.
 - `delete`
-  - Удаляет префаб из файлов игры.
+  - Deletes the prefab from the file system.
 - `list`
-  - Показывает список всех сохранённых префабов.
+  - Lists all prefabs in the file system.
 
 ### `/editprefab`
 
-Команда `/editprefab` нужна, чтобы создать новый префаб или изменить уже существующий прямо в игре.
+The `/editprefab` command is used to create or edit the physical structure in the game the prefab is holding.
 
-Подкоманды:
+Subcommands:
 
 - `exit`
-  - Выходит из текущего мира редактирования.
+  - Exits the current prefab editing world.
 - `load`
-  - Создаёт новый мир редактирования, куда можно вставить существующий префаб.
+  - Creates a new prefab editing world to paste an existing prefab into.
 - `new`
-  - Создаёт новый мир редактирования для создания префаба с нуля.
+  - Creates a new prefab editing world to create a new prefab from scratch.
 - `select`
-  - Выделяет область префаба, на которую смотрит игрок, в пределах 200 блоков.
+  - Selects the area of the prefab the user is looking at (within 200 blocks).
 - `save`
-  - Сохраняет текущий префаб, используя уже заданную область или текущую выделенную область.
+  - Saves the current prefab using the existing area, or the currently selected area.
 - `saveui`
-  - Открывает окно сохранения для текущего мира, где можно работать со всеми префабами в этом мире.
+  - Opens the save UI for the current world, allowing the user to interact with all prefabs that are in the world.
 - `kill`
-  - Удаляет все сущности в выбранном префабе.
+  - Despawn all entities in the currently selected prefab.
 - `saveas`
-  - Сохраняет выбранный префаб в новый файл.
+  - Save the selected prefab into a new file.
 - `setbox`
-  - Задаёт границы для выбранного префаба.
+  - Set the bounding box of the currently selected prefab.
 - `info`
-  - Показывает общую информацию о выбранном префабе.
+  - General information about the currently selected prefab.
 - `tp`
-  - Открывает окно телепортации к префабу в текущем мире редактирования.
+  - Opens the teleport UI to teleport to a prefab in the current editing world.
 - `modified`
-  - Показывает список всех изменённых префабов с несохранёнными изменениями в текущем мире редактирования.
+  - Lists all modified prefabs with unsaved changes in the current editing world.
 
-# Известные проблемы
+# Known Issues
 
-- После сохранения изменений в существующем префабе эти изменения могут не отображаться в игре.
-  - Обходной путь: выйдите из мира и зайдите снова.
-- При вставке префаба он не всегда отображается корректно.
-  - Обходной путь: нажмите `t` на клавиатуре, чтобы переключить отображаемый материал; обычно хотя бы один режим отображается правильно.
-- Команда `/prefab delete` может выдавать ошибку `Assert not in thread`.
+- After saving edits to an existing prefab, the prefab does not reflect the changes in the game.
+  - Workaround: exit and re-enter the world.
+- When pasting a prefab, the prefab is not always shown accurately.
+  - Workaround: hit 't' on your keyboard to toggle the material being shown; usually at least one view is accurate.
+- `/prefab delete` errors with `Assert not in thread`.
