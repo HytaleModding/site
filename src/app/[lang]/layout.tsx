@@ -1,10 +1,10 @@
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { defineI18nUI } from "fumadocs-ui/i18n";
 import { i18n } from "@/lib/i18n";
-import Script from "next/script";
 import englishTranslations from "@/../messages/en.json";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
+import { baseUrl } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({
@@ -17,9 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-  ),
+  metadataBase: new URL(baseUrl),
   keywords: [
     "hytale modding",
     "hytale",
@@ -33,6 +31,14 @@ export const metadata: Metadata = {
     "how to start modding Hytale",
     "how to make a mod",
   ],
+  alternates: {
+    types: {
+      "text/plain": [
+        { url: "/llms.txt", title: "LLM-friendly site index" },
+        { url: "/llms-full.txt", title: "LLM-friendly full documentation" },
+      ],
+    },
+  },
 };
 
 const translations = Object.fromEntries(

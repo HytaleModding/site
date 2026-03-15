@@ -1,10 +1,9 @@
+import { baseUrl } from "@/lib/config";
 import { source } from "@/lib/source";
 import { i18n } from "@/lib/i18n";
 import { readdir } from "fs/promises";
 import { join } from "path";
 import type { MetadataRoute } from "next";
-
-const baseUrl = "https://hytalemodding.dev";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sitemap: MetadataRoute.Sitemap = [];

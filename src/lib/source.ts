@@ -18,10 +18,21 @@ export const source = loader({
 //   };
 // }
 
-export async function getLLMText(page: InferPageType<typeof source>) {
-  const processed = await page.data.getText("processed");
+function getEnglishPages() {
+  return source.getPages().filter((page) => page.locale === "en");
+}
 
-  return `# ${page.data.title}
+export function getLLMIndex(baseUrl: string) {
+  return getEnglishPages().map((page) => {
+    const desc = page.data.description ? `: ${page.data.description}` : "";
+    return `- [${page.data.title}](${baseUrl}${page.url})${desc}`;
+  });
+}
 
-${processed}`;
+export async function getLLMFullText() {
+  const pages = getEnglishPages().map(async (page) => {
+    const processed = await page.data.getText("processed");
+    return `# ${page.data.title}\n\n${processed}`;
+  });
+  return Promise.all(pages);
 }
