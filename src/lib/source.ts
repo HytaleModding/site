@@ -1,7 +1,9 @@
 import { docs } from "fumadocs-mdx:collections/server";
 import { type InferPageType, loader } from "fumadocs-core/source";
 import { lucideIconsPlugin } from "fumadocs-core/source/lucide-icons";
+import type { Node } from "fumadocs-core/page-tree";
 import { i18n } from "@/lib/i18n";
+import { localizePageTree } from "@/lib/tree-localization";
 
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
@@ -19,64 +21,50 @@ export const source = loader({
 // }
 
 function getEnglishPages() {
-  return source
-    .getPages()
-    .filter((page) => page.locale === "en")
-    .sort((a, b) => a.slugs.join("/").localeCompare(b.slugs.join("/")));
+  return source.getPages().filter((page) => page.locale === "en");
 }
 
 export function getLLMIndex(baseUrl: string) {
-  const pages = getEnglishPages();
-
-  type Node = {
-    page?: (typeof pages)[number];
-    children: Map<string, Node>;
-  };
-
-  const root: Node = { children: new Map() };
-
-  for (const page of pages) {
-    let current = root;
-
-    for (const slug of page.slugs) {
-      if (!current.children.has(slug)) {
-        current.children.set(slug, { children: new Map() });
-      }
-
-      current = current.children.get(slug)!;
-    }
-
-    current.page = page;
-  }
-
+  const tree = localizePageTree(source.pageTree["en"], "en");
   const lines: string[] = [];
 
-  function walk(node: Node, depth: number, slug?: string) {
-    if (node.page) {
-      const indent = "  ".repeat(depth);
-      const desc = node.page.data.description
-        ? `: ${node.page.data.description}`
-        : "";
+  function walk(nodes: Node[], depth: number) {
+    let inSeparator = false;
 
-      lines.push(
-        `${indent}- [${node.page.data.title}](${baseUrl}${node.page.url})${desc}`,
-      );
-    } else if (slug && node.children.size > 0) {
-      const indent = "  ".repeat(depth);
-      const label = slug
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase());
-      lines.push(`${indent}- ${label}`);
-    }
+    for (const node of nodes) {
+      if (node.type === "separator") {
+        if (node.name) {
+          const indent = "  ".repeat(depth);
+          lines.push(`${indent}- ${node.name}`);
+          inSeparator = true;
+        }
 
-    const hasEntry = node.page || (slug && node.children.size > 0);
+        continue;
+      }
 
-    for (const [key, child] of node.children) {
-      walk(child, hasEntry ? depth + 1 : depth, key);
+      const d = inSeparator ? depth + 1 : depth;
+      const indent = "  ".repeat(d);
+
+      if (node.type === "page") {
+        const desc = node.description ? `: ${node.description}` : "";
+        lines.push(`${indent}- [${node.name}](${baseUrl}${node.url})${desc}`);
+      } else if (node.type === "folder") {
+        if (node.index) {
+          const desc = node.index.description
+            ? `: ${node.index.description}`
+            : "";
+          lines.push(
+            `${indent}- [${node.name}](${baseUrl}${node.index.url})${desc}`,
+          );
+        } else {
+          lines.push(`${indent}- ${node.name}`);
+        }
+        walk(node.children, d + 1);
+      }
     }
   }
 
-  walk(root, 0);
+  walk(tree.children, 0);
   return lines;
 }
 

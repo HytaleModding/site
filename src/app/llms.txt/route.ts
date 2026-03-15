@@ -15,9 +15,8 @@ export async function GET() {
   ].join("\n");
 
   const footer = [
-    "",
+    "\n",
     "## Links",
-    "",
     `- [Full Documentation (LLM-optimized)](${baseUrl}/llms-full.txt)`,
     `- [Wiki](https://wiki.hytalemodding.dev) - This is the official Wiki project from HytaleModding. It allows mod teams to create and manage documentation for their mods, making it easy for players and developers to find the information they need.`,
     "",
