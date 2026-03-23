@@ -296,7 +296,7 @@ public class Player extends Entity {
     public void gainExperience(int amount) {
         int xpLimit = level * 100;
         experience += amount;
-        System.out.println("Gained " + amount + " XP");
+        System.out.println("+" + amount + " de XP obtida");
 
         while (experience >= xpLimit) {
             experience -= xpLimit;
