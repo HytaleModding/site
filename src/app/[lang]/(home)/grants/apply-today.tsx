@@ -28,7 +28,7 @@ export function ApplyToday() {
               resources.
             </p>
           </div>
-          <div className="flex gap-6">
+          <div className="flex gap-6 not-xl:flex-col not-xl:items-start">
             <BisectButton
               variant="alternative"
               href="/en/grants/apply"
@@ -36,7 +36,11 @@ export function ApplyToday() {
             >
               Apply Now
             </BisectButton>
-            <BisectButton variant="secondary" href="https://docs.google.com/document/d/e/2PACX-1vSBk6nq86dzmAHZSc9lFpIBkwAzgOaQop9b5OrSwVkMBdrBZjCtXlNb7Rd9PQFImrVHrExWgK73R8KX/pub" className="text-white hover:text-white">
+            <BisectButton
+              variant="secondary"
+              href="https://docs.google.com/document/d/e/2PACX-1vSBk6nq86dzmAHZSc9lFpIBkwAzgOaQop9b5OrSwVkMBdrBZjCtXlNb7Rd9PQFImrVHrExWgK73R8KX/pub"
+              className="text-white hover:text-white"
+            >
               <BookOpenTextIcon /> View Guidelines
             </BisectButton>
           </div>
@@ -46,8 +50,27 @@ export function ApplyToday() {
             fill
             className="-z-20 object-cover object-top"
           />
+          {/* mobile mascot */}
+          <div className="relative xl:hidden flex flex-col items-center">
+            <div className="h-40 w-90 sm:h-60 sm:w-120 relative">
+              <Image
+                src={Mascot}
+                alt="Yeti Mascot"
+                className="translate-x-8 -translate-y-16 -scale-x-100 -rotate-12 object-cover object-top"
+                draggable={false}
+              />
+              <Image
+                className="absolute top-0 left-0"
+                src={Cubes}
+                alt="Cubes Accent"
+                width={96}
+                height={96}
+              />
+            </div>
+          </div>
         </div>
-        <div className="absolute -right-8 bottom-0 h-80 w-xl overflow-hidden">
+        {/* desktop mascot */}
+        <div className="absolute -right-8 bottom-0 h-80 w-xl overflow-hidden not-xl:hidden">
           <div className="relative">
             <Image
               src={Mascot}
