@@ -14,7 +14,7 @@ Think of inheritance like a family tree. A child inherits traits from their pare
 public class Entity {
     protected String name;
     protected int health;
-    
+
     public Entity(String name, int health) {
         this.name = name;
         this.health = health;
@@ -294,11 +294,14 @@ public class Player extends Entity {
     }
     
     public void gainExperience(int amount) {
+        int xpLimit = level * 100;
         experience += amount;
         System.out.println("Gained " + amount + " XP");
-        
-        if (experience >= level * 100) {
+
+        while (experience >= xpLimit) {
+            experience -= xpLimit;
             levelUp();
+            xpLimit = level * 100;
         }
     }
     
