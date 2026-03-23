@@ -36,7 +36,7 @@ export function ApplyToday() {
             >
               Apply Now
             </BisectButton>
-            <BisectButton variant="secondary" href="https://docs.google.com/document/d/e/2PACX-1vSBk6nq86dzmAHZSc9lFpIBkwAzgOaQop9b5OrSwVkMBdrBZjCtXlNb7Rd9PQFImrVHrExWgK73R8KX/pub" className="text-white">
+            <BisectButton variant="secondary" href="https://docs.google.com/document/d/e/2PACX-1vSBk6nq86dzmAHZSc9lFpIBkwAzgOaQop9b5OrSwVkMBdrBZjCtXlNb7Rd9PQFImrVHrExWgK73R8KX/pub" className="text-white hover:text-white">
               <BookOpenTextIcon /> View Guidelines
             </BisectButton>
           </div>

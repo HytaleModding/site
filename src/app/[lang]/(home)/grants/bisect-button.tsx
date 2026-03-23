@@ -7,11 +7,11 @@ import { cn } from "@/lib/utils";
 
 const BisectButtonVariants = {
   primary:
-    "border-[#1B57C4] bg-[#0C46B0]! hover:border-[#89E6C4CC]! hover:bg-[#2278E9]! text-white",
+    "border-[#1B57C4] bg-[#0C46B0]! hover:border-[#89E6C4CC]! hover:bg-[#2278E9]! text-white hover:text-white",
   alternative:
     "border-[#E0EBFF] bg-white! hover:bg-[#CEDFFF]! hover:border-[#ACC9FF]! text-[#0C46B0] hover:text-[#0C46B0]",
   secondary:
-    "dark:border-white/20 dark:bg-white/5! dark:hover:bg-white/15! dark:hover:border-white/50!",
+    "dark:border-white/20 bg-white/5! hover:bg-white/15! dark:hover:border-white/50! dark:text-white! border-[#E0EBFF] hover:border-[#ACC9FF]!",
 };
 
 export function BisectButton({
