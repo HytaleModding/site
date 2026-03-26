@@ -6,6 +6,7 @@
     "build-and-test.mdx",
     "browsing-serverjar.mdx",
     "logging.mdx",
+    "add-mod-icon.mdx",
     "---Core Concepts---",
     "creating-commands.mdx",
     "creating-events.mdx",
