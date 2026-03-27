@@ -64,14 +64,14 @@ const showcaseItems: ShowcaseItem[] = [
     type: "art",
   },
   {
-    title: "[WIP] Hylamity: Wulfrum Prosthesis",
+    title: "Hylamity: Wulfrum Prosthesis",
     author: "slader._.",
     image: WulfrumProsthesis,
     link: "https://discord.gg/f2fMKYnRqR",
     type: "art",
   },
   {
-    title: "[WIP] Soundscape: Melodium Chunk",
+    title: "Soundscape: Melodium Chunk",
     author: "44Hydras",
     image: Melodium,
     link: "https://discord.com/users/197065442479702016",
@@ -85,14 +85,14 @@ const showcaseItems: ShowcaseItem[] = [
     type: "art",
   },
   {
-    title: "[WIP] Hylamity: Wulfrum Armor",
+    title: "Hylamity: Wulfrum Armor",
     author: "slader._.",
     image: WulfrumArmor,
     link: "https://discord.gg/f2fMKYnRqR",
     type: "art",
   },
   {
-    title: "[WIP] Hylamity: Wulfrum Triangle",
+    title: "Hylamity: Wulfrum Triangle",
     author: "slader._.",
     image: WulfrumTriangle,
     link: "https://discord.gg/f2fMKYnRqR",
@@ -125,16 +125,6 @@ const showcaseItems: ShowcaseItem[] = [
     image: VoileBanner,
     link: "https://www.curseforge.com/hytale/mods/docs",
     type: "art",
-  },
-  {
-    title: "Hylandia",
-    author: "Kristian / Hylandia Studios",
-    logo: HylandiaLogo,
-    banner: HylandiaBanner,
-    link: "https://discord.gg/hylandia",
-    type: "server",
-    description:
-      "A progressive minigames server for Hytale where your progress actually matters.",
   },
 ];
 
