@@ -2,10 +2,13 @@
 title: NPC Roles
 description: Step into your new role, Ms Fairy.
 ---
+
 # Describing your role
 > “*All the world's a stage, and all the men and women merely players: they have their exits and their entrances; and one man in his time plays many parts, his acts being seven ages.*”
 >
 >**\- Shakespeare (As You Like It)**
+
+![npc-guide](/assets/guides/tutorial_role_Shakespeare.jpg)
 
 Roles make up the core of a NPC in how it interacts with the world. It defines things like appearance, max health, equipped items, what it drops upon death, etc. at its most basic functionality. Think of this as defining how it looks and the statistics it has.
 
@@ -133,7 +136,7 @@ Square brackets `[ ]` are used for making arrays. Like string and numeric arrays
 - **\[0, 1, 2\]** : Numeric array
 - **\["A", "B", "C"\]** : String array
 
-Comparing things can also be done. Useful for setting a value in the **"Enabled** field in a **Instruction** for example.
+Comparing things can also be done. Useful for setting a value in the **"Enabled"** field in a **Instruction** for example.
 - `==` : Equals, if the left and right side are equal it is **true**. **Example:** left == right
 - `!=` : Not equal, if the left and right side are not equal it is **true**. **Example:** left != right
 - `>` : Greater than, if the left side is greater than the right side it is **true**. **Example:** left \> right
@@ -355,7 +358,7 @@ After that we implement our second instruction which checks if the **Timer** tha
 "Parameters":{
     "HeartTimer":{
         "Value":"HeartEmitterTimer",
-        "Description":""
+        "Description":"The name for the timer."
     }
 },
 "Instructions":[
@@ -450,7 +453,7 @@ For more advanced interaction logic consult the `Template_Livestock.json` file. 
     - Check if NPC is interactable.
     - Set as interactable with hint.
     - Execute actions upon interaction.
-- Set a not interactable.
+- Set as not interactable.
 
 **Note:** It can't override **blocking** actions in the main `"Instructions"`.
 ### Death instruction

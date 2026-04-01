@@ -1,0 +1,1872 @@
+{
+  "Type": "Abstract",
+  "StartState": "Idle",
+  "Parameters": {
+    "Appearance": {
+      "Value": "Kweebec_Sapling",
+      "Description": "Model to be used"
+    },
+    "WanderRadius": {
+      "Value": 15,
+      "Description": "General wander radius"
+    },
+    "ViewRange": {
+      "Value": 15,
+      "Description": "View range"
+    },
+    "ViewSector": {
+      "Value": 180,
+      "Description": "View sectordd"
+    },
+    "HearingRange": {
+      "Value": 10,
+      "Description": "Hearing range"
+    },
+    "AlertedRange": {
+      "Value": 30,
+      "Description": "A range within which the player can be seen/sensed when the NPC is alerted to their presence"
+    },
+    "GreetRange": {
+      "Value": 6,
+      "Description": "The range at which Kweebecs will greet nearby (non-hostile) targets"
+    },
+    "WatchRange": {
+      "Value": 3,
+      "Description": "The range at which Kweebecs will look at nearby (non-hostile) targets"
+    },
+    "DropList": {
+      "Value": "Drop_Kweebec_Sapling",
+      "Description": "Drop Items"
+    },
+    "MaxSpeed": {
+      "Value": 5,
+      "Description": "Maximum walking speed"
+    },
+    "AttitudeGroup": {
+      "Value": "Kweebec",
+      "Description": "This NPCs attitude group"
+    },
+    "Weapons": {
+      "Value": [],
+      "TypeHint": "String",
+      "Description": "NPC Weapons"
+    },
+    "FlockArray": {
+      "Value": [
+        "Kweebec_Seedling",
+        "Kweebec_Sproutling"
+      ],
+      "Description": "Array containing NPCs for this flock type"
+    },
+    "Component": {
+      "Value": "$Null"
+    },
+    "AnchorX": {
+      "Value": 0
+    },
+    "AnchorY": {
+      "Value": 0
+    },
+    "AnchorZ": {
+      "Value": 0
+    },
+    "MovementConfig": {
+      "Value": "Mount"
+    },
+    "MaxHealth": {
+      "Value": 100,
+      "Description": "Max health for the NPC"
+    },
+    "IsMemory": {
+      "Value": false,
+      "Description": "Defines if the NPC is a memory"
+    },
+    "MemoriesCategory": {
+      "Value": "Other",
+      "Description": "Defines the category of the memory"
+    },
+    "MemoriesNameOverride": {
+      "Value": "",
+      "Description": "Overrides the memory name if set"
+    },
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Template.name",
+      "Description": "Translation key for NPC name display"
+    },
+    "MinHeightOverGround": {
+      "Value": 1,
+      "Description": "Min Height over ground"
+    },
+    "MaxHeightOverGround": {
+      "Value": 2,
+      "Description": "Max Height over ground"
+    },
+    "FairyFollowRange": {
+      "Value": 5,
+      "Description": "Maximum range the fairy follow while being tempted by food."
+    },
+    "FairyThinkParticleOffset":{
+      "Value":[ 0, 1.0, 0 ],
+      "Description": "The offset for fairy think bubbles."
+    },
+    "FairyFood": {
+      "Value": [ 
+        "Food_Kebab_Vegetable", 
+        "Food_Kebab_Fruit", 
+        "Food_Pie_Apple", 
+        "Food_Salad_Berry", 
+        "Food_Pie_Pumpkin"],
+      "Description": "The kind of food fairies like."
+    },
+    "FairyMaxPlayerFollowDistance":{
+      "Value":30,
+      "Description":"The maximum distance a fairy will follow its recruiter before it gives up."
+    },
+    "FairyHomeRadius":{
+      "Value":30,
+      "Description":"How large the home radius of a fairy is. It's hardcoded to 30; for now."
+    },
+    "RecruitedAppearance":{
+      "Value":"Fairy_Cultivator_Recruited",
+      "Description":"The appearance to use when recruited."
+    },
+    "OriginalAppearance":{
+      "Value":"Fairy_Cultivator",
+      "Description":"The appearance to use when wild."
+    },
+    "FairyCanFarm":{
+      "Value":false,
+      "Description":"If true this fairy can farm in the home area."
+    },
+    "FairyHarvestingLongRange":{
+      "Value":18,
+      "Description":"The short range which a fairy can harvest plant blocks in."
+    },
+    "FairyHarvestingRange":{
+      "Value":6,
+      "Description":"The short range which a fairy can harvest plant blocks in."
+    },
+    "FairyCanMine":{
+      "Value":false,
+      "Description":"If true this fairy can mine nearby valuable blocks."
+    },
+    "FairyCanSort":{
+      "Value":false,
+      "Description":"If true this fairy can sort items in the home area."
+    }
+  },
+  "IsMemory": {
+    "Compute": "IsMemory"
+  },
+  "MemoriesCategory": {
+    "Compute": "MemoriesCategory"
+  },
+  "MemoriesNameOverride": {
+    "Compute": "MemoriesNameOverride"
+  },
+  "Appearance": {
+    "Compute": "Appearance"
+  },
+  "DropList": {
+    "Compute": "DropList"
+  },
+  "DisableDamageGroups": [
+    "Self"
+  ],
+  "HotbarItems": {
+    "Compute": "Weapons"
+  },
+  "DefaultNPCAttitude": "Ignore",
+  "DefaultPlayerAttitude": "Neutral",
+  "AttitudeGroup": {
+    "Compute": "AttitudeGroup"
+  },
+  "FlockSpawnTypes": {
+    "Compute": "FlockArray"
+  },
+  "FlockAllowedNPC": {
+    "Compute": "FlockArray"
+  },
+  "FlockSpawnTypesRandom": true,
+  "KnockbackScale": 0.5,
+  "MotionControllerList": [
+    {
+      "Type": "Fly",
+      "MaxHorizontalSpeed": { "Compute": "MaxSpeed" },
+      "MaxSinkSpeed": 2,
+      "MaxClimbSpeed": 2,
+      "MinAirSpeed": 0,
+      "Acceleration": 5,
+      "MinHeightOverGround": { "Compute": "MinHeightOverGround" },
+      "MaxHeightOverGround": { "Compute": "MaxHeightOverGround" },
+      "MaxRollAngle": 180,
+      "MaxTurnSpeed": 360
+    }
+  ],
+  "MaxHealth": {
+    "Compute": "MaxHealth"
+  },
+  "CombatConfig": {
+    "EntityEffect": "Immunity_Environmental"
+  },
+  "Instructions": [
+    {
+      "Instructions": [
+        {
+          "$Comment":"Setup all timers and other related things.",
+          "Sensor": {
+            "Type": "Any",
+            "Once": true
+          },
+          "Actions": [
+            {
+              "Type": "TimerStart",
+              "Name": "WatchTimer",
+              "StartValueRange": [
+                0.1,
+                0.1
+              ],
+              "RestartValueRange": [
+                10,
+                30
+              ]
+            },
+            {
+              "Type":"TimerStart",
+              "Name":"FollowPlayerRecruitWatch",
+              "StartValueRange": [
+                0.1
+                ,0.1
+              ],
+              "RestartValueRange": [
+                6,
+                8
+              ]
+            },
+            {
+              "Type": "TimerStart",
+              "Name": "WorkCheckTimer",
+              "StartValueRange": [
+                0.1,
+                0.1
+              ],
+              "RestartValueRange": [
+                6,
+                8
+              ]
+            }
+          ]
+        },
+        {
+          "$Comment":" === React to the Fairy Bell === ",
+          "Continue":true,
+          "Sensor":{
+            "Type":"LHFairyIsRecruited"
+          },
+          "Instructions":[
+            {
+              "Continue":true,
+              "Sensor":{
+                "Type":"And",
+                "Sensors":[
+                  {
+                    "Type":"Not",
+                    "Sensor":{
+                      "Type":"State",
+                      "State":"FollowPlayer"
+                    }
+                  },
+                  {
+                    "Type":"EntityMessage",
+                    "Message":"Bell"
+                  },
+                  {
+                    "Type": "Player",
+                    "Range": 30,
+                    "Filters": [
+                      {
+                        "Type": "LHFFairyRecruiter"
+                      },
+                      {
+                        "Type": "ItemInHand",
+                        "Items": ["Tool_Fairy_Bell"]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "Actions":[
+                {
+                  "Type": "SpawnParticles",
+                  "Offset": { "Compute": "FairyThinkParticleOffset" },
+                  "ParticleSystem": "Fairy_Ask_Follow"
+                },
+                {
+                  "Type":"State",
+                  "State":"FollowPlayer"
+                }
+              ]
+            }
+          ]
+        },
+
+
+        
+        {
+          "$Comment":" === Do work if the fairy can do farming === ",
+          "Enabled": { "Compute": "FairyCanFarm" },
+          "Continue":true,
+          "Sensor":{
+            "Type":"And",
+            "Sensors":[
+              {
+                "Type": "Timer",
+                "Name": "WorkCheckTimer",
+                "State": "Stopped"
+              },
+              {
+                "Type":"State",
+                "State":"Idle"
+              },
+              {
+                "Type":"LHFairyIsRecruited"
+              },
+              {
+                "Type":"LHFairyHome",
+                "HomeRadius": { "Compute":"FairyHomeRadius" }
+              },
+              {
+                "Type":"LHClosestHarvestable",
+                "Range": { "Compute":"FairyHarvestingLongRange + 1" }
+              }
+            ]
+          },
+          "Actions":[
+            {
+              "Type":"State",
+              "State":"Farming.Goto"
+            }
+          ]
+        },
+        {
+          "$Comment":"Reset the work timer.",
+          "Continue":true,
+          "Sensor":{
+            "Type": "Timer",
+            "Name": "WorkCheckTimer",
+            "State": "Stopped"
+          },
+          "Actions":[
+            {
+              "Type":"TimerRestart",
+              "Name":"WorkCheckTimer"
+            }
+          ]
+        },
+
+
+
+        {
+          "$Comment":"Main idle state. Further decisions are taken from here.",
+          "Sensor": {
+            "Type": "State",
+            "State": "Idle"
+          },
+          "Instructions": [
+            {
+              "Reference": "Component_Instruction_Clear_Status_Animation"
+            },
+            {
+              "$Comment":"Fleeing and panicking behavior from Template_Kweebec_Sapling",
+              "Reference": "Component_Instruction_Damage_Check",
+              "Modify": {
+                "_ExportStates": [
+                  "Flee",
+                  "Panic"
+                ],
+                "AlertedRange": {
+                  "Compute": "AlertedRange"
+                }
+              }
+            },
+            {
+              "$Comment":"Alerting behavior from Template_Kweebec_Sapling",
+              "Sensor": {
+                "Type": "Or",
+                "Sensors": [
+                  {
+                    "Reference": "Component_Sensor_Sight_By_Attitude",
+                    "Modify": {
+                      "ViewRange": {
+                        "Compute": "AlertedRange"
+                      },
+                      "ViewSector": {
+                        "Compute": "ViewSector"
+                      },
+                      "Attitudes": [
+                        "Hostile"
+                      ]
+                    }
+                  },
+                  {
+                    "Reference": "Component_Sensor_Sound_By_Attitude",
+                    "Modify": {
+                      "HearingRange": {
+                        "Compute": "HearingRange"
+                      },
+                      "Attitudes": [
+                        "Hostile"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "ActionsAtomic": true,
+              "Actions": [
+                {
+                  "Type": "Timeout",
+                  "Delay": [
+                    0,
+                    0.2
+                  ]
+                },
+                {
+                  "Type": "State",
+                  "State": "Alerted"
+                }
+              ]
+            },
+            {
+              "$Comment":"Watching behavior from Template_Kweebec_Sapling",
+              "Continue": true,
+              "Sensor": {
+                "Type": "And",
+                "Sensors": [
+                  {
+                    "Reference": "Component_Sensor_Sight_By_Attitude",
+                    "Modify": {
+                      "ViewRange": {
+                        "Compute": "WatchRange"
+                      },
+                      "ViewSector": {
+                        "Compute": "ViewSector * 0.8"
+                      },
+                      "Attitudes": [
+                        "Ignore"
+                      ],
+                      "GetNPCs": true
+                    }
+                  },
+                  {
+                    "Type": "Timer",
+                    "Name": "WatchTimer",
+                    "State": "Stopped"
+                  }
+                ]
+              },
+              "HeadMotion": {
+                "Type": "Watch"
+              },
+              "ActionsBlocking": true,
+              "Actions": [
+                {
+                  "Type": "Timeout",
+                  "Delay": [
+                    3,
+                    6
+                  ]
+                },
+                {
+                  "Type": "TimerRestart",
+                  "Name": "WatchTimer"
+                }
+              ]
+            },
+
+            {
+              "$Comment":"Try to stay within home area.",
+              "Sensor":{
+                "Type":"And",
+                "Sensors":[
+                  {
+                    "Type":"LHFairyIsRecruited"
+                  },
+                  {
+                    "Type":"LHFairyHome",
+                    "HomeRadius": { "Compute":"FairyHomeRadius" },
+                    "UsePosition":true,
+                    "Outside":true
+                  }
+                ]
+              },
+              "BodyMotion":{
+                "Type":"Seek",
+                "Reachable":false,
+                "HeightDifference":[-100,100],
+                "SwitchToSteeringDistance":5,
+                "SlowDownDistance":10,
+                "StopDistance":5
+              }
+            },
+
+            {
+              "Sensor": {
+                  "Type": "State",
+                  "State": ".AskTask1"
+              },
+              "Instructions":[
+                {
+                  "Reference": "Component_Fairy_Ask_Task",
+                  "Modify":{
+                    "_ExportStates":["Idle.AskTask1Decision"],
+                    "FairyThinkParticleOffset": { "Compute": "FairyThinkParticleOffset" },
+                    "FairyThinkParticleSystem": "Fairy_Ask_Status"
+                  }
+                }
+              ]
+            },
+            {
+              "$Comment":"Transitiory   state between .AskTask1 and .AskTask2",
+              "Sensor":{
+                "Type":"State",
+                "State":".AskTask1Decision"
+              },
+              "Instructions":[
+                {
+                  "Sensor":{
+                    "Type":"Flag",
+                    "Name":"TellStatusAction",
+                    "Set":false
+                  },
+                  "Actions":[
+                    {
+                      "Type":"State",
+                      "State":"Idle.AskTask2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Sensor": {
+                  "Type": "State",
+                  "State": ".AskTask2"
+              },
+              "Instructions":[
+                {
+                  "Reference": "Component_Fairy_Ask_Task",
+                  "Modify":{
+                    "_ExportStates":["Idle.AskTask2Decision"],
+                    "FairyThinkParticleOffset": { "Compute": "FairyThinkParticleOffset" },
+                    "FairyThinkParticleSystem": "Fairy_Ask_Follow"
+                  }
+                }
+              ]
+            },
+            {
+              "$Comment":"Transitiory state between .AskTask2 and .AskTask3",
+              "Sensor":{
+                "Type":"State",
+                "State":"Idle.AskTask2Decision"
+              },
+              "Instructions":[
+                {
+                  "Sensor":{
+                    "Type":"Flag",
+                    "Name":"FollowPlayerAction",
+                    "Set":false
+                  },
+                  "Actions":[
+                    {
+                      "Type":"State",
+                      "State":".AskTask3"
+                    }
+                  ]
+                },
+                {
+                  "$Comment":"Action: Follow player",
+                  "Sensor":{
+                    "Type":"Flag",
+                    "Name":"FollowPlayerAction",
+                    "Set":true
+                  },
+                  "ActionsBlocking":true,
+                  "Actions":[
+                    {
+                      "Type": "Timeout",
+                      "Delay": [ 0.3, 0.3 ],
+                      "Action":{
+                        "Type":"Sequence",
+                        "Actions":[
+                          {
+                            "Type": "SpawnParticles",
+                            "Offset": { "Compute": "FairyThinkParticleOffset" },
+                            "ParticleSystem": "Fairy_Ask_Confirm"
+                          },
+                          {
+                            "Type":"PlayAnimation",
+                            "Slot":"Status",
+                            "Animation":"Salute"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "Type": "Timeout",
+                      "Delay": [ 1.5, 1.5 ],
+                      "Action":{
+                        "Type":"Sequence",
+                        "Atomic":true,
+                        "Actions":[
+                          {
+                            "Type":"SetFlag",
+                            "Name":"FollowPlayerAction",
+                            "SetTo":false
+                          },
+                          {
+                            "Type":"State",
+                            "State":"FollowPlayer"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Sensor": {
+                  "Type": "State",
+                  "State": ".AskTask3"
+              },
+              "Instructions":[
+                {
+                  "Reference": "Component_Fairy_Ask_Task",
+                  "Modify":{
+                    "_ExportStates":["Idle.AskTask3Decision"],
+                    "FairyThinkParticleOffset": { "Compute": "FairyThinkParticleOffset" },
+                    "FairyThinkParticleSystem": "Fairy_Ask_Home"
+                  }
+                }
+              ]
+            },
+            {
+              "$Comment":"Transitiory state between .AskTask3 and Idle",
+              "Sensor":{
+                "Type":"State",
+                "State":".AskTask3Decision"
+              },
+              "Instructions":[
+                {
+                  "Sensor":{
+                    "Type":"Flag",
+                    "Name":"SetHomeAction",
+                    "Set":false
+                  },
+                  "Actions":[
+                    {
+                      "Type":"State",
+                      "State":"Idle"
+                    }
+                  ]
+                },
+                {
+                  "$Comment":"Action: Set Home",
+                  "Sensor":{
+                    "Type":"Flag",
+                    "Name":"SetHomeAction",
+                    "Set":true
+                  },
+                  "ActionsBlocking":true,
+                  "Actions":[
+                    {
+                      "Type": "Timeout",
+                      "Delay": [ 0.3, 0.3 ],
+                      "Action":{
+                        "Type":"Sequence",
+                        "Actions":[
+                          {
+                          "Type":"LHFairySetHome"
+                          },
+                          {
+                              "Type": "SpawnParticles",
+                              "Offset": { "Compute": "FairyThinkParticleOffset" },
+                              "ParticleSystem": "Fairy_Ask_Confirm"
+                          },
+                          {
+                            "Type":"PlayAnimation",
+                            "Slot":"Status",
+                            "Animation":"Salute"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "Type": "Timeout",
+                      "Delay": [ 1.5, 1.5 ],
+                      "Action": {
+                        "Type":"Sequence",
+                        "Atomic":true,
+                        "Actions":[
+                          {
+                            "Type":"SetFlag",
+                            "Name":"SetHomeAction",
+                            "SetTo":false
+                          },
+                          {
+                            "Type":"State",
+                            "State":"Idle"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+
+
+
+            {
+              "$Comment":"Only show interest in food if the fairy is not recruited.",
+              "Sensor": {
+                "Type":"And",
+                "Sensors":[
+                  {
+                    "Type":"Not",
+                    "Sensor":{
+                      "Type": "LHFairyIsRecruited"
+                    }
+                  },
+                  {
+                    "Type": "Player",
+                    "Range": { "Compute": "ViewRange" },
+                    "Filters": [
+                      {
+                        "Type": "LineOfSight"
+                      },
+                      {
+                        "Type": "ViewSector",
+                        "ViewSector": { "Compute": "ViewSector" }
+                      },
+                      {
+                        "Type": "ItemInHand",
+                        "Items": { "Compute": "FairyFood" }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "ActionsAtomic": true,
+              "Actions": [
+                {
+                  "Type": "Timeout",
+                  "Delay": [ 0.5, 0.8 ]
+                },
+                {
+                  "Type": "SpawnParticles",
+                  "Offset": {"Compute": "FairyThinkParticleOffset"},
+                  "ParticleSystem": "FairyQuestion"
+                },
+                {
+                  "Type": "PlayAnimation",
+                  "Slot": "Status",
+                  "Animation": "Beg"
+                },
+                {
+                  "Type": "State",
+                  "State": "FollowPlayerRecruit"
+                }
+              ]
+            },
+            {
+              "$Comment":"TODO: Add random cute behavior.",
+              "Type": "Random",
+              "Name": "Kweebec_Idle_Random_Day",
+              "Instructions": [
+                {
+                  "Weight": 50,
+                  "Instructions": [
+                    {
+                      "Continue": true,
+                      "ActionsAtomic": true,
+                      "Actions": [
+                        {
+                          "Type": "Timeout",
+                          "Delay": [
+                            15,
+                            20
+                          ]
+                        },
+                        {
+                          "Type": "ResetInstructions",
+                          "Instructions": [
+                            "Kweebec_Idle_Random_Day"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "Reference": "Component_Instruction_Intelligent_Idle_Motion_Wander"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+
+        {
+          "$Comment":" === Farming state === ",
+          "Enabled": { "Compute": "FairyCanFarm" },
+          "Sensor":{
+            "Type":"State",
+            "State":"Farming"
+          },
+          "Instructions":[
+            {
+              "Reference": "Component_Instruction_Clear_Status_Animation"
+            },
+            {
+              "$Comment":"Fleeing and panicking behavior from Template_Kweebec_Sapling",
+              "Reference": "Component_Instruction_Damage_Check",
+              "Modify": {
+                "_ExportStates": [
+                  "Flee",
+                  "Panic"
+                ],
+                "AlertedRange": {
+                  "Compute": "AlertedRange"
+                }
+              }
+            },
+            {
+              "$Comment":"Drop all items gained while farming.",
+              "Continue":true,
+              "Sensor":{
+                "Type":"Self",
+                "Filters":[
+                  {
+                    "Type":"Inventory",
+                    "Items":["*"]
+                  }
+                ]
+              },
+              "Actions":[
+                {
+                  "Type":"LHDumpInventory"
+                }
+              ]
+            },
+            {
+              "$Comment":"There is no farmable block. Go back to idle.",
+              "Continue":true,
+              "Sensor":{
+                "Type":"Not",
+                "Sensor":{
+                  "Type":"LHClosestHarvestable",
+                  "Range": { "Compute":"FairyHarvestingLongRange + 1" }
+                }
+              },
+              "Actions":[
+                {
+                  "Type":"State",
+                  "State":"Idle"
+                }
+              ]
+            },
+            {
+              "Sensor":{
+                "Type":"State",
+                "State":".Goto"
+              },
+              "Instructions":[
+                {
+                  "$Comment":"Move to closest farmable (Far away)",
+                  "Continue":true,
+                  "Sensor":{
+                    "Type":"LHClosestHarvestable",
+                    "Range": { "Compute":"FairyHarvestingLongRange" }
+                  },
+                  "BodyMotion":{
+                    "Type":"Seek",
+                    "Reachable": false,
+                    "RelativeSpeed": 1.0,
+                    "StopDistance":1,
+                    "RelaxedMoveConstraints": false
+                  }
+                },
+                {
+                  "$Comment":"Dirty trick to get around flying motion controller weirdness.",
+                  "Sensor":{
+                    "Type":"LHClosestHarvestable",
+                    "Range": { "Compute": "FairyHarvestingRange" }
+                  },
+                  "Actions":[
+                    {
+                      "Type": "SpawnParticles",
+                      "Offset": { "Compute": "FairyThinkParticleOffset" },
+                      "ParticleSystem": "Fairy_Task_Farm"
+                    },
+                    {
+                      "Type":"State",
+                      "State":".JobDriver"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Sensor":{
+              "Type":"State",
+              "State":".JobDriver"
+              },
+              "Instructions":[
+                {
+                  "$Comment":"Go back to idle if we can't farm.",
+                  "Sensor":{
+                    "Type": "Not",
+                    "Sensor":{
+                      "Type": "LHClosestHarvestable",
+                      "Range": { "Compute": "FairyHarvestingRange" }
+                    }
+                  },
+                  "Actions":[
+                    {
+                      "Type":"State",
+                      "State":"Idle"
+                    }
+                  ]
+                },
+                {
+                  "$Comment":"Move to closest farmable and farm (Nearby)",
+                  "Continue":true,
+                  "Sensor":{
+                    "Type":"LHClosestHarvestable",
+                    "Range": { "Compute": "FairyHarvestingRange" }
+                  },
+                  "BodyMotion":{
+                    "Type":"Seek",
+                    "Reachable": false,
+                    "RelativeSpeed": 0.6,
+                    "StopDistance": 1,
+                    "RelaxedMoveConstraints": false
+                  },
+                  "Actions":[
+                    {
+                      "Type":"Nothing"
+                    }
+                  ]
+                },
+                {
+                  "$Comment":"Harvest",
+                  "Sensor":{
+                    "Type":"LHClosestHarvestable",
+                    "Range": { "Compute": "FairyHarvestingRange - 2" }
+                  },
+                  "HeadMotion": {
+                    "Type": "Watch"
+                  },
+                  "BodyMotion": {
+                    "Type": "Nothing"
+                  },
+                  "ActionsBlocking":true,
+                  "Actions":[
+                    {
+                      "Type":"PlayAnimation",
+                      "Slot":"Action",
+                      "Animation":"Harvest"
+                    },
+                    {
+                      "Type":"Timeout",
+                      "Delay":[1, 1]
+                    },
+                    {
+                      "Type":"PlaySound",
+                      "SoundEventId":"SFX_Fairy_Harvest_Plant"
+                    },
+                    {
+                      "Type":"LHHarvest"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+
+        {
+          "$Comment":" === Follow player: Task === ",
+          "Sensor": {
+            "Type": "State",
+            "State": "FollowPlayer"
+          },
+          "Instructions":[
+            {
+              "Reference": "Component_Instruction_Clear_Status_Animation"
+            },
+            {
+              "$Comment":"Fleeing and panicking behavior from Template_Kweebec_Sapling",
+              "Reference": "Component_Instruction_Damage_Check",
+              "Modify": {
+                "_ExportStates": [
+                  "Flee",
+                  "Panic"
+                ],
+                "AlertedRange": {
+                  "Compute": "AlertedRange"
+                }
+              }
+            },
+            {
+              "Sensor":{
+                "Type":"And",
+                "Sensors":[
+                  {
+                    "Type":"EntityMessage",
+                    "Message":"Bell"
+                  },
+                  {
+                    "Type": "Player",
+                    "Range": 30,
+                    "Filters": [
+                      {
+                        "Type": "LHFFairyRecruiter"
+                      },
+                      {
+                        "Type": "ItemInHand",
+                        "Items": ["Tool_Fairy_Bell"]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "Actions":[
+                {
+                  "Type": "SpawnParticles",
+                  "Offset": { "Compute": "FairyThinkParticleOffset" },
+                  "ParticleSystem": "Fairy_Ask_Cancel"
+                },
+                {
+                  "Type":"State",
+                  "State":"Idle"
+                }
+              ]
+            },
+            {
+              "Sensor":{
+                "Type":"Not",
+                "Sensor":{
+                  "Type": "Player",
+                  "Range": { "Compute": "FairyMaxPlayerFollowDistance" },
+                  "Filters": [
+                    {
+                      "Type": "LHFFairyRecruiter"
+                    }
+                  ]
+                }
+              },
+              "ActionsBlocking":true,
+              "Actions":[
+                {
+                  "Type": "SpawnParticles",
+                  "Offset": {"Compute": "FairyThinkParticleOffset"},
+                  "ParticleSystem": "Alerted"
+                },
+                {
+                  "Type": "PlayAnimation",
+                  "Slot": "Status",
+                  "Animation": "Confused"
+                },
+                {
+                  "Type": "Timeout",
+                  "Delay": [ 1.5, 2.0 ]
+                },
+                {
+                  "Type": "State",
+                  "State": "Idle"
+                }
+              ]
+            },
+            {
+              "Sensor": {
+                "Type": "Player",
+                "Range": { "Compute": "FairyMaxPlayerFollowDistance" },
+                "Filters": [
+                  {
+                    "Type": "LHFFairyRecruiter"
+                  }
+                ]
+              },
+              "Instructions":[
+                {
+                  "Continue":true,
+                  "Sensor":{
+                    "Type": "Player",
+                    "Range": { "Compute": "FairyMaxPlayerFollowDistance" },
+                    "Filters": [
+                      {
+                        "Type": "LHFFairyRecruiter"
+                      }
+                    ]
+                  },
+                  "BodyMotion":{
+                    "Type":"Seek",
+                    "Reachable":false,
+                    "HeightDifference":[-100,100],
+                    "SwitchToSteeringDistance":5,
+                    "SlowDownDistance":7,
+                    "StopDistance":5
+                  }
+                }
+              ]
+            }
+          ]
+        },
+
+        {
+          "$Comment":" === Follow Player: Recruiting === ",
+          "Sensor": {
+            "Type": "State",
+            "State": "FollowPlayerRecruit"
+          },
+          "Instructions":[
+            {
+              "Reference": "Component_Instruction_Clear_Status_Animation"
+            },
+            {
+              "$Comment":"Fleeing and panicking behavior from Template_Kweebec_Sapling",
+              "Reference": "Component_Instruction_Damage_Check",
+              "Modify": {
+                "_ExportStates": [
+                  "Flee",
+                  "Panic"
+                ],
+                "AlertedRange": {
+                  "Compute": "AlertedRange"
+                }
+              }
+            },
+            {
+              "Sensor": {
+                "Type": "Any",
+                "Once": true
+              },
+              "Continue":true,
+              "Actions":[
+                {
+                  "Type":"TimerRestart",
+                  "Name":"FollowPlayerRecruitWatch"
+                }
+              ]
+            },
+            {
+              "Sensor":{
+                "Type":"Timer",
+                "Name":"FollowPlayerRecruitWatch",
+                "State":"Stopped"
+              },
+              "ActionsAtomic":true,
+              "ActionsBlocking":true,
+              "Actions":[
+                {
+                  "Type": "SpawnParticles",
+                  "Offset": {"Compute": "FairyThinkParticleOffset"},
+                  "ParticleSystem": "FairyQuestion"
+                },
+                {
+                  "Type": "PlayAnimation",
+                  "Slot": "Status",
+                  "Animation": "Confused"
+                },
+                {
+                  "Type": "Timeout",
+                  "Delay": [ 1.5, 2.0 ]
+                },
+                {
+                  "Type": "State",
+                  "State": "Idle"
+                }
+              ]
+            },
+            {
+              "Sensor": {
+                "Type": "Player",
+                "Range": 10,
+                "Filters": [
+                  {
+                    "Type": "ItemInHand",
+                    "Items": { "Compute": "FairyFood" }
+                  }
+                ]
+              },
+              "Instructions":[
+                {
+                  "Continue":true,
+                  "Sensor":{
+                    "Type": "Player",
+                    "Range": 10,
+                    "Filters": [
+                      {
+                        "Type": "ItemInHand",
+                        "Items": { "Compute": "FairyFood" }
+                      }
+                    ]
+                  },
+                  "BodyMotion":{
+                    "Type":"Seek",
+                    "Reachable":false,
+                    "HeightDifference":[-100,100],
+                    "SwitchToSteeringDistance":5,
+                    "SlowDownDistance":7,
+                    "StopDistance":5
+                  },
+                  "HeadMotion": {
+                    "Type": "Watch"
+                  }
+                }
+              ]
+            },
+            {
+              "Sensor":{
+                "Type":"Not",
+                "Sensor":{
+                  "Type": "Player",
+                  "Range": 10,
+                  "Filters": [
+                    {
+                      "Type": "ItemInHand",
+                      "Items": { "Compute": "FairyFood" }
+                    }
+                  ]
+                }
+              },
+              "ActionsAtomic": true,
+              "Actions":[
+                {
+                  "Type": "State",
+                  "State": "Idle"
+                }
+              ]
+            }
+          ]
+        },
+
+
+
+        {
+          "Sensor": {
+            "Type": "State",
+            "State": "Alerted"
+          },
+          "Instructions": [
+            {
+              "$Comment": "Animations",
+              "Sensor": {
+                "Type": "Any",
+                "Once": true
+              },
+              "Actions": [
+                {
+                  "Type": "PlayAnimation",
+                  "Slot": "Status",
+                  "Animation": "Alerted"
+                },
+                {
+                  "Type": "SpawnParticles",
+                  "Offset": {"Compute": "FairyThinkParticleOffset"},
+                  "ParticleSystem": "Alerted"
+                }
+              ]
+            },
+            {
+              "Reference": "Component_Instruction_Damage_Check",
+              "Modify": {
+                "_ExportStates": [
+                  "Flee",
+                  "Panic"
+                ],
+                "AlertedRange": {
+                  "Compute": "AlertedRange"
+                }
+              }
+            },
+            {
+              "Sensor": {
+                "Type": "Target",
+                "Range": {
+                  "Compute": "AlertedRange"
+                },
+                "Filters": [
+                  {
+                    "Type": "LineOfSight"
+                  }
+                ]
+              },
+              "Instructions": [
+                {
+                  "Sensor": {
+                    "Type": "Target",
+                    "Filters": [
+                      {
+                        "Type": "Attitude",
+                        "Attitudes": [
+                          "Hostile"
+                        ]
+                      }
+                    ]
+                  },
+                  "ActionsAtomic": true,
+                  "Actions": [
+                    {
+                      "Type": "Timeout",
+                      "Delay": [
+                        1,
+                        2
+                      ]
+                    },
+                    {
+                      "Type": "State",
+                      "State": "Flee"
+                    }
+                  ],
+                  "HeadMotion": {
+                    "Type": "Watch"
+                  }
+                }
+              ]
+            },
+            {
+              "Sensor": {
+                "Type": "Not",
+                "Sensor": {
+                  "Type": "Or",
+                  "Sensors": [
+                    {
+                      "Reference": "Component_Sensor_Sight_By_Attitude",
+                      "Modify": {
+                        "ViewRange": {
+                          "Compute": "AlertedRange"
+                        },
+                        "ViewSector": {
+                          "Compute": "ViewSector"
+                        },
+                        "Attitudes": [
+                          "Hostile",
+                          "Neutral"
+                        ]
+                      }
+                    },
+                    {
+                      "Reference": "Component_Sensor_Sound_By_Attitude",
+                      "Modify": {
+                        "HearingRange": {
+                          "Compute": "HearingRange"
+                        },
+                        "Attitudes": [
+                          "Hostile",
+                          "Neutral"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              "Actions": [
+                {
+                  "Type": "State",
+                  "State": "Idle"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "State",
+            "State": "Flee"
+          },
+          "Instructions": [
+            {
+              "Reference": "Component_Instruction_Clear_Status_Animation"
+            },
+            {
+              "Continue": true,
+              "Sensor": {
+                "Once": true,
+                "Type": "Target",
+                "Range": {
+                  "Compute": "AlertedRange"
+                }
+              },
+              "Actions": [
+                {
+                  "Type": "OverrideAttitude",
+                  "Attitude": "Hostile",
+                  "Duration": 600
+                }
+              ]
+            },
+            {
+              "Sensor": {
+                "Type": "Target",
+                "Range": {
+                  "Compute": "AlertedRange"
+                }
+              },
+              "BodyMotion": {
+                "Type": "Flee",
+                "SlowDownDistance": {
+                  "Compute": "AlertedRange - 5"
+                },
+                "StopDistance": {
+                  "Compute": "AlertedRange + 1"
+                }
+              }
+            },
+            {
+              "Actions": [
+                {
+                  "Type": "State",
+                  "State": "Panic"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "State",
+            "State": "Panic"
+          },
+          "Instructions": [
+            {
+              "Reference": "Component_Kweebec_Instruction_Panic",
+              "Modify": {
+                "_ExportStates": [
+                  "Alerted",
+                  "Flee",
+                  "Panic",
+                  "Idle"
+                ],
+                "ViewRange": {
+                  "Compute": "ViewRange"
+                },
+                "ViewSector": {
+                  "Compute": "ViewSector"
+                },
+                "HearingRange": {
+                  "Compute": "HearingRange"
+                },
+                "AlertedRange": {
+                  "Compute": "AlertedRange"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "InteractionInstruction": {
+    "Instructions":[
+      {
+        "$Comment":"Interaction: Recruiting fairy. Taken from: Template_Livestock",
+        "TreeMode":true,
+        "Instructions":[
+          {
+            "InvertTreeModeResult": true,
+            "Sensor":{
+              "Type":"Not",
+              "Sensor": {
+                "Type":"And",
+                "Sensors":[
+                  {
+                    "Type":"State",
+                    "State":"FollowPlayerRecruit"
+                  },
+                  {
+                    "Type":"Not",
+                    "Sensor":{
+                      "Type":"LHFairyIsRecruited"
+                    }
+                  }
+                ]
+              }
+            },
+            "Actions":[
+              {
+                "Type":"Nothing"
+              }
+            ]
+          },
+          {
+            "InvertTreeModeResult": true,
+            "Continue": true,
+            "Sensor": {
+              "Type": "Any"
+            },
+            "Actions": [
+              {
+                "Type": "SetInteractable",
+                "Interactable": true,
+                "Hint": "interactionHints.Little_Helpers.recruit"
+              }
+            ]
+          },
+          {
+            "Sensor": {
+              "Type":"HasInteracted"
+            },
+            "ActionsAtomic":true,
+            "Actions": [
+              {
+                "Type": "LHRecruitFairy",
+                "RecruitedAppearance":"Fairy_Cultivator_Recruited"
+              },
+              {
+                "Type":"SpawnParticles",
+                "Offset":{"Compute": "FairyThinkParticleOffset"},
+                "ParticleSystem":"Hearts_Subtle",
+                "TargetNodeName": "Head"
+              },
+              {
+                "Type": "State",
+                "State": "Idle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "$Comment":"Interaction: Asking the fairy.",
+        "TreeMode":true,
+        "Instructions":[
+          {
+            "InvertTreeModeResult": true,
+            "Sensor":{
+              "Type":"Not",
+              "Sensor":{
+                "Type":"And",
+                "Sensors":[
+                  {
+                    "Type":"State",
+                    "State":"Idle.Default"
+                  },
+                  {
+                    "Type":"LHFairyIsRecruited"
+                  }
+                ]
+              }
+            },
+            "Actions":[
+              {
+                "Type":"Nothing"
+              }
+            ]
+          },
+          {
+            "InvertTreeModeResult": true,
+            "Continue": true,
+            "Sensor": {
+              "Type": "Any"
+            },
+            "Actions": [
+              {
+                "Type": "SetInteractable",
+                "Interactable": true,
+                "Hint": "interactionHints.Little_Helpers.ask.whattodo"
+              }
+            ]
+          },
+          {
+            "Sensor": {
+              "Type":"HasInteracted"
+            },
+            "Actions": [
+              {
+                "Type":"State",
+                "State":"Idle.AskTask1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "$Comment":"Interaction: Task2: Stop following.",
+        "TreeMode":true,
+        "Instructions":[
+          {
+            "InvertTreeModeResult": true,
+            "Sensor":{
+              "Type":"Not",
+              "Sensor":{
+                "Type":"And",
+                "Sensors":[
+                  {
+                    "Type":"State",
+                    "State":"FollowPlayer.Default"
+                  },
+                  {
+                    "Type":"LHFairyIsRecruited"
+                  },
+                  {
+                    "Type": "Player",
+                    "Range": 5,
+                    "Filters": [
+                      {
+                        "Type": "LHFFairyRecruiter"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "Actions":[
+              {
+                "Type":"Nothing"
+              }
+            ]
+          },
+          {
+            "InvertTreeModeResult": true,
+            "Continue": true,
+            "Sensor": {
+              "Type": "Any"
+            },
+            "Actions": [
+              {
+                "Type": "SetInteractable",
+                "Interactable": true,
+                "Hint": "interactionHints.Little_Helpers.task.stopfollow"
+              }
+            ]
+          },
+          {
+            "Sensor": {
+              "Type":"HasInteracted"
+            },
+            "Actions": [
+              {
+                "Type":"State",
+                "State":"Idle.Default"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "$Comment":"Interaction: Task1: Asking the fairy: Status",
+        "TreeMode":true,
+        "Instructions":[
+          {
+            "InvertTreeModeResult": true,
+            "Sensor":{
+              "Type":"Not",
+              "Sensor":{
+                "Type":"And",
+                "Sensors":[
+                  {
+                    "Type":"State",
+                    "State":"Idle.AskTask1"
+                  },
+                  {
+                    "Type":"LHFairyIsRecruited"
+                  },
+                  {
+                    "Type": "Player",
+                    "Range": 5,
+                    "Filters": [
+                      {
+                        "Type": "LHFFairyRecruiter"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "Actions":[
+              {
+                "Type":"Nothing"
+              }
+            ]
+          },
+          {
+            "InvertTreeModeResult": true,
+            "Continue": true,
+            "Sensor": {
+              "Type": "Any"
+            },
+            "Actions": [
+              {
+                "Type": "SetInteractable",
+                "Interactable": true,
+                "Hint": "interactionHints.Little_Helpers.ask.status"
+              }
+            ]
+          },
+          {
+            "Sensor": {
+              "Type":"HasInteracted"
+            },
+            "Actions": [
+              {
+                "Type":"Nothing"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "$Comment":"Interaction: Task2: Asking the fairy: Follow the player",
+        "TreeMode":true,
+        "Instructions":[
+          {
+            "InvertTreeModeResult": true,
+            "Sensor":{
+              "Type":"Not",
+              "Sensor":{
+                "Type":"And",
+                "Sensors":[
+                  {
+                    "Type":"State",
+                    "State":"Idle.AskTask2"
+                  },
+                  {
+                    "Type":"LHFairyIsRecruited"
+                  },
+                  {
+                    "Type": "Player",
+                    "Range": 5,
+                    "Filters": [
+                      {
+                        "Type": "LHFFairyRecruiter"
+                      }
+                    ]
+                  },
+                  {
+                    "Type":"Flag",
+                    "Name":"FollowPlayerAction",
+                    "Set":false
+                  }
+                ]
+              }
+            },
+            "Actions":[
+              {
+                "Type":"Nothing"
+              }
+            ]
+          },
+          {
+            "InvertTreeModeResult": true,
+            "Continue": true,
+            "Sensor": {
+              "Type": "Any"
+            },
+            "Actions": [
+              {
+                "Type": "SetInteractable",
+                "Interactable": true,
+                "Hint": "interactionHints.Little_Helpers.ask.follow"
+              }
+            ]
+          },
+          {
+            "Sensor": {
+              "Type":"HasInteracted"
+            },
+            "Actions": [
+              {
+                "Type":"SetFlag",
+                "Name":"FollowPlayerAction",
+                "SetTo":true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "$Comment":"Interaction: Task3: Asking the fairy: Set home",
+        "TreeMode":true,
+        "Instructions":[
+          {
+            "InvertTreeModeResult": true,
+            "Sensor":{
+              "Type":"Not",
+              "Sensor":{
+                "Type":"And",
+                "Sensors":[
+                  {
+                    "Type":"State",
+                    "State":"Idle.AskTask3"
+                  },
+                  {
+                    "Type":"LHFairyIsRecruited"
+                  },
+                  {
+                    "Type": "Player",
+                    "Range": 5,
+                    "Filters": [
+                      {
+                        "Type": "LHFFairyRecruiter"
+                      }
+                    ]
+                  },
+                  {
+                    "Type":"Flag",
+                    "Name":"SetHomeAction",
+                    "Set":false
+                  }
+                ]
+              }
+            },
+            "Actions":[
+              {
+                "Type":"Nothing"
+              }
+            ]
+          },
+          {
+            "InvertTreeModeResult": true,
+            "Continue": true,
+            "Sensor": {
+              "Type": "Any"
+            },
+            "Actions": [
+              {
+                "Type": "SetInteractable",
+                "Interactable": true,
+                "Hint": "interactionHints.Little_Helpers.ask.home"
+              }
+            ]
+          },
+          {
+            "Sensor": {
+              "Type":"HasInteracted"
+            },
+            "Actions": [
+              {
+                "Type":"SetFlag",
+                "Name":"SetHomeAction",
+                "SetTo":true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "$Comment": "Only now that we've failed to match all possible interactions do we set interactability to false.",
+        "Actions": [
+          {
+            "Type": "SetInteractable",
+            "Interactable": false
+          }
+        ]
+      }
+    ]
+  },
+  "NameTranslationKey": {
+    "Compute": "NameTranslationKey"
+  }
+}

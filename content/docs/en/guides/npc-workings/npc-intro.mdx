@@ -8,29 +8,22 @@ authors:
 # NPCs - What are they?
 **Definition: NPC** stands for **N**on-**P**layable **C**haracter.
 
-**Explanation:** In the most basic terms is a **NPC** a collection of **Components** and **Systems** which are part of the **Hytale ECS (Entity Component System)**.
+NPCs is what populate the world of Hytale, from the smallest bug to colossal dragons. They all run on the same software while their exterior is only the representation of what they are.
 
-**Instructions, Actions and Sensors** interact with these for the NPC.
+There are also NPCs that can stretch on the definition; they are not really characters but they use the inner-workings of one to perform complicated behavior. An adventurous modder could use it to create intricate static mechanisms if they so feel inclined.
 
-A **NPC** has a **Role** it plays as if its part of a theatrical play or movie.
-## In simpler terms
-The NPC's **Role** explains to the world who or what it is and what it can do. The components which its made up of helps it interact with the world.
+In short, if it can move and reacts to the world it is a NPC. Or **Mob** if you like that term.
 
-For example a `FairyComponent` will help the NPC remember its recruiter, home area and its own needs like hunger and happiness.
+## Basics
+A NPC has a **Role** from which its functionality comes from. Without one it can't do anything at all. This is where you will spend the grand majority of your time editing. From defining its appearance and max health to laying down intricate **Instructions**.
 
-Using a **Sensor** can we check if the NPC is within its home area. With a **Action** can we set the home area of the NPC.
-## How does this relate to NPCs?
-You will need to be at least vaguely familiar with these concepts when you are instructing your NPCs on how to behave in the world. Each **Sensor** and **Action** pulls from these sources when interacting with the world.
-
-The main beating heart of a NPC lies in the **Instructions** part of the Json file. It is run through every game tick which is around 30 times per second.
-## The important bits
-A NPC uses its **Role** to lay down instruction on how it interact with the world. As if its reading from a script which is made by the writer which is ***you***.
-
-If you write a good script then the actor (NPC) will play out its part in your epic very well.
+The NPC goes through many **States** in its lifetime when it interacts and reacts with the world. From idling around to going into a panic or engaging in combat. **States** can be really simple to becoming really intricate branches of **Instructions**.
 ## What is a role?
-Don your clothes, put on your make-up and rehearse your lines. Now is the time to act.
+You set what *properties* a NPC has in a **Role** and this is where the actual logic rests in. Everything rests inside this Json file.
 
-The short of it is that a role defines **how** a NPC should act. How it moves, how it interacts with the environment, how it looks and what **Instructions** it has. Without a role a NPC wouldn't even know what it is.
+The **Role** Json files must be located in this directory inside your mod: `.\NPC\Roles`
+
+It is vital to place your **Role** Json files inside ***this*** directory because of how Hytale load mod assets. It is not the same directory structure that Hytale has, so keep that in mind. Other asset types also abide to these strict rules.
 ## What is a instruction?
 **Instructions** are the core of your NPC. They come in many forms but the main one you will be interacting with is the humble `Instructions` block in the Json file.
 
@@ -181,6 +174,8 @@ Keep in mind that we will be referencing the `Server\NPC\Roles` folder a lot dur
 
 ## TL;DR
 NPCs are derived from **Role** JSON files.
+
+The **Role** Json files ***must*** be located in this directory inside your mod: `.\NPC\Roles`
 
 NPC roles can be found in the `Server\NPC\Roles` folder in the Hytale `Assets.zip` archive.
 
