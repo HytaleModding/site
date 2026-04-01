@@ -71,19 +71,19 @@ public static void main(String[] args) {
 ```
 
 <Callout type="info" title="L'ordine dei parametri conta">
-  Quando si chiama un metodo, gli argomenti devono corrispondere all'ordine dei parametri:
+Quando si chiama un metodo, gli argomenti devono corrispondere all'ordine dei parametri:
 
-  ```java
-  public static void createItem(String name, int quantity, double price) {
-      // ...
-  }
+```java
+public static void createItem(String name, int quantity, double price) {
+    // ...
+}
 
-  // Giusto
-  createItem("Sword", 1, 50.0);
+// Giusto
+createItem("Sword", 1, 50.0);
 
-  // Sbagliato - L'ordine conta!
-  createItem(1, "Sword", 50.0);  // Errore!
-  ```
+// Sbagliato - L'ordine conta!
+createItem(1, "Sword", 50.0);  // Errore!
+```
 </Callout>
 
 ## Metodi che ritornano un valore
@@ -125,14 +125,14 @@ public static double calculateDamage(int attack, double multiplier) {
 ```
 
 <Callout type="warning" title="Return indica la fine della esecuzione">
-  Una volta che un metodo legge `return`, esce immediatamente. Il codice dopo il `return` non verra eseguito!
+Una volta che un metodo legge `return`, esce immediatamente. Il codice dopo il `return` non verra eseguito!
 
-  ```java
-  public static int getValue() {
-      return 10;
-      System.out.println("Questo non viene mai eseguito!");  // Codice irraggiungibile!
-  }
-  ```
+```java
+public static int getValue() {
+    return 10;
+    System.out.println("Questo non viene mai eseguito!");  // Codice irraggiungibile!
+}
+```
 </Callout>
 
 ## Esempi pratici
@@ -248,22 +248,21 @@ public static void main(String[] args) {
 ```
 
 <Callout type="info" title="Regole per l'Overloading dei Metodi">
-  I metodi sono considerati diversi se hanno:
+I metodi sono considerati diversi se hanno:
+* Un diverso numero di parametri
+* Un diverso tipo di parametri
+* Un diverso ordine di parametri
 
-  * Un diverso numero di parametri
-  * Un diverso tipo di parametri
-  * Un diverso ordine di parametri
+```java
+public static void test(int a) { }
+public static void test(int a, int b) { }        // Diverso numero di parametri
+public static void test(double a) { }            // Tipo diverso
+public static void test(String a, int b) { }     // Tipi diversi
+public static void test(int a, String b) { }     // Ordine diverso
 
-  ```java
-  public static void test(int a) { }
-  public static void test(int a, int b) { }        // Diverso numero di parametri
-  public static void test(double a) { }            // Tipo diverso
-  public static void test(String a, int b) { }     // Tipi diversi
-  public static void test(int a, String b) { }     // Ordine diverso
-
-  // Errato - Solo il tipo restituito e' diverso
-  public static int test(int a) { }
-  ```
+// Errato - Solo il tipo restituito e' diverso
+public static int test(int a) { }
+```
 </Callout>
 
 ## Pattern tipici nel Modding in Hytale
@@ -339,20 +338,20 @@ public static String getHealthStatus(int health, int maxHealth) {
 ## Buone pratiche
 
 <Callout type="info" title="Nomenclatura dei metodi">
-  Usa nomi descrittivi basati su verbi che spieghino cosa fa il metodo:
+Usa nomi descrittivi basati su verbi che spieghino cosa fa il metodo:
 
-  ```java
-  // Good
-  public static void calculateDamage() { }
-  public static boolean isPlayerAlive() { }
-  public static String getItemName() { }
-  public static void displayInventory() { }
+```java
+// Good
+public static void calculateDamage() { }
+public static boolean isPlayerAlive() { }
+public static String getItemName() { }
+public static void displayInventory() { }
 
-  // Bad
-  public static void dmg() { }        // Troppo corto
-  public static void method1() { }    // Non descrittivo
-  public static void stuff() { }      // Troppo vago
-  ```
+// Bad
+public static void dmg() { }        // Troppo corto
+public static void method1() { }    // Non descrittivo
+public static void stuff() { }      // Troppo vago
+```
 </Callout>
 
 ## Esercizi Pratici
@@ -377,24 +376,23 @@ public static String getHealthStatus(int health, int maxHealth) {
    * Restituisce vero se valido, falso altrimenti
 
 <Callout type="info" title="Division Note">
-  When writing a password validator, you may need a way to compare array values. For example:
+When writing a password validator, you may need a way to compare array values. For example:
+```java
+String[] array1 = {"Apple", "Banana"};
+String[] array2 = {"Apple", "Banana"};
 
-  ```java
-  String[] array1 = {"Apple", "Banana"};
-  String[] array2 = {"Apple", "Banana"};
+//Wrong:
+array1[0] == array2[0];       // false
+/*
+Array is a non-primitive data type. Java compares reference (non-primitive) data types by 
+their location in Java's memory, not by their values.
+*/
 
-  //Wrong:
-  array1[0] == array2[0];       // false
-  /*
-  Array is a non-primitive data type. Java compares reference (non-primitive) data types by 
-  their location in Java's memory, not by their values.
-  */
+// To compare the actual values of reference data types, use the .equals() method:
+array1[0].equals(array2[0]);       // true 
 
-  // To compare the actual values of reference data types, use the .equals() method:
-  array1[0].equals(array2[0]);       // true 
-
-  // This does not apply to primitive data types.
-  ```
+// This does not apply to primitive data types.
+```
 </Callout>
 
 ## Errori Comuni

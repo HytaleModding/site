@@ -38,23 +38,24 @@ while (condition) {
 ```
 
 <Callout type="warning" title="Loop tak terbatas/infinites loop">
-  Selalu pastikan kondisi loop-mu pada akhirnya akan menjadi salah/false, atau programmu akan berjalan selamanya!
+Selalu pastikan kondisi loop-mu pada akhirnya akan menjadi salah/false, atau programmu akan berjalan selamanya!
 
-  ```java tab="Bad Example"
-  int x = 0;
-  while (x < 10) {
-      System.out.println("Macet!");
-      // lupa menaikan nilai x!
-  }
-  ```
+```java tab="Bad Example"
+int x = 0;
+while (x < 10) {
+    System.out.println("Macet!");
+    // lupa menaikan nilai x!
+}
+```
 
-  ```java tab="Good Example"
-  int x = 0;
-  while (x < 10) {
-      System.out.println("Menghitung: " + x);
-      x++; // Ini menaikan nilai x! // [!code ++]
-  }
-  ```
+```java tab="Good Example"
+int x = 0;
+while (x < 10) {
+    System.out.println("Menghitung: " + x);
+    x++; // Ini menaikan nilai x! // [!code ++]
+}
+```
+
 </Callout>
 
 ## Do-While Loop
@@ -97,16 +98,18 @@ for (inisialisasi; kondisi; update) {
 ```
 
 <Callout type="info" title="Bagian-bagian For Loop">
-  ```java
-  for (int i = 0; i < 10; i++) {
-  //   ^         ^        ^
-  //   Mulai     Berhenti     Langkah
-  }
-  ```
 
-  * **Inisialisasi**: int i = 0 - Berjalan sekali di awal
-  * **Kondisi**: i < 10 - Dicek sebelum setiap putaran loop
-  * **Update**: i++ - Berjalan setelah setiap putaran loop
+```java
+for (int i = 0; i < 10; i++) {
+//   ^         ^        ^
+//   Mulai     Berhenti     Langkah
+}
+```
+
+* **Inisialisasi**: int i = 0 - Berjalan sekali di awal
+* **Kondisi**: i < 10 - Dicek sebelum setiap putaran loop
+* **Update**: i++ - Berjalan setelah setiap putaran loop
+
 </Callout>
 
 ## Pernyataan break
@@ -150,16 +153,14 @@ for (int i = 1; i <= 3; i++) {
 ```
 
 <Callout type="warning" title="Performa Nested Loop">
-  Hati-hati dengan nested loop! Mereka bisa memperlambat mod-mu secara signifikan.
-
-  ```java
-  // Ini berjalan 1,000,000 kali!
-  for (int i = 0; i < 1000; i++) {
-      for (int j = 0; j < 1000; j++) {
-          // Code disini
-      }
-  }
-  ```
-
-  Cobalah hindari nested loop yang dalam saat memproses data dalam jumlah besar.
+Hati-hati dengan nested loop! Mereka bisa memperlambat mod-mu secara signifikan.
+```java
+// Ini berjalan 1,000,000 kali!
+for (int i = 0; i < 1000; i++) {
+    for (int j = 0; j < 1000; j++) {
+        // Code disini
+    }
+}
+```
+Cobalah hindari nested loop yang dalam saat memproses data dalam jumlah besar.
 </Callout>

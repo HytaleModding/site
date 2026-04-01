@@ -26,12 +26,13 @@ public class Main {
 ```
 
 <Callout type="info" title="ArrayList pret Array">
-  | **Array**                                 | **ArrayList**                                              |
-  | ----------------------------------------- | ---------------------------------------------------------- |
-  | Fiksēta izmēra                            | Maināma izmēra (samazinās/palielinās)                      |
-  | Var turēt primitīvus (int, double u.tml.) | Spēj turēt tikai objektus (Integer, Double, String u.tml.) |
-  | Ātrāka piekļuve                           | Citas funkcijas (pievieno, noņem utt.)                     |
-  | `int[] skaitli = new int[10];`            | `ArrayList<Integer> skaitli = new ArrayList<>();`          |
+| **Array**                                 | **ArrayList**                                              |
+| ----------------------------------------- | ---------------------------------------------------------- |
+| Fiksēta izmēra                            | Maināma izmēra (samazinās/palielinās)                      |
+| Var turēt primitīvus (int, double u.tml.) | Spēj turēt tikai objektus (Integer, Double, String u.tml.) |
+| Ātrāka piekļuve                           | Citas funkcijas (pievieno, noņem utt.)                     |
+| `int[] skaitli = new int[10];`            | `ArrayList<Integer> skaitli = new ArrayList<>();`          |
+
 </Callout>
 
 ## ArrayLists Izveidošana
@@ -52,22 +53,21 @@ ArrayList<Boolean> karogi = new ArrayList<>();
 ```
 
 <Callout type="warning" title="ArrayList Primitīvi">
-  Tu nevari izmantot primitīvus tiešā veidā. Izmanto to iesaiņojuma klases:
+Tu nevari izmantot primitīvus tiešā veidā. Izmanto to iesaiņojuma klases:
 
-  ```java
-  // Nepareizi
-  ArrayList<int> skaitli = new ArrayList<>();
+```java
+// Nepareizi
+ArrayList<int> skaitli = new ArrayList<>();
 
-  // Pareizi - Ar iekapsulētu/Wrapped klasi
-  ArrayList<Integer> skaitli = new ArrayList<>();
-  ```
+// Pareizi - Ar iekapsulētu/Wrapped klasi
+ArrayList<Integer> skaitli = new ArrayList<>();
+```
 
-  Wrapper klases:
-
-  - `int` → `Integer`
-  - `double` → `Double`
-  - `boolean` → `Boolean`
-  - `char` → `Character`
+Wrapper klases:
+- `int` → `Integer`
+- `double` → `Double`
+- `boolean` → `Boolean`
+- `char` → `Character`
 </Callout>
 
 ## Biežākās ArrayList Metodes:

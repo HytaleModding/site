@@ -37,23 +37,24 @@ while (nosacījums) {
 ```
 
 <Callout type="warning" title="Bezgalīgi Cikli">
-  Vienmēr pārliecinies, ka cikla stāvoklis galu galā kļūs nepatiess, savādāk programma darbosies mūžīgi!
+Vienmēr pārliecinies, ka cikla stāvoklis galu galā kļūs nepatiess, savādāk programma darbosies mūžīgi!
 
-  ```java tab="Bad Example"
-  int x = 0;
-  while (x < 10) {
-      System.out.println("Bezgalīgi atkārtojas!");
-      // Aizmirsām palielināt x!
-  }
-  ```
+```java tab="Bad Example"
+int x = 0;
+while (x < 10) {
+    System.out.println("Bezgalīgi atkārtojas!");
+    // Aizmirsām palielināt x!
+}
+```
 
-  ```java tab="Good Example"
-  int x = 0;
-  while (x < 10) {
-      System.out.println("Skaitam: " + x);
-      x++; // Šis palielina x! // [!kods ++]
-  }
-  ```
+```java tab="Good Example"
+int x = 0;
+while (x < 10) {
+    System.out.println("Skaitam: " + x);
+    x++; // Šis palielina x! // [!kods ++]
+}
+```
+
 </Callout>
 
 ## Darīt-Kamēr Cikls
@@ -96,16 +97,18 @@ for (uzsākšana; nosacījumi; jauninājums) {
 ```
 
 <Callout type="info" title="For Loop Daļas">
-  ```java
-  for (int i = 0; i < 10; i++) {
-  //   ^         ^        ^
-  //   Start     Stop     Solis
-  }
-  ```
 
-  * **Uzsākšana**: int i = 0 - Nostrādā tikai pirmo reizi
-  * **Nosacījumi**: i < 10 - Pārbaudi pirms katra cikla
-  * **Jauninājums**: i++ - Nostrādā katru reizi pēc cikla
+```java
+for (int i = 0; i < 10; i++) {
+//   ^         ^        ^
+//   Start     Stop     Solis
+}
+```
+
+* **Uzsākšana**: int i = 0 - Nostrādā tikai pirmo reizi
+* **Nosacījumi**: i < 10 - Pārbaudi pirms katra cikla
+* **Jauninājums**: i++ - Nostrādā katru reizi pēc cikla
+
 </Callout>
 
 ## Izlaušanās Nosacījums
@@ -147,16 +150,14 @@ for (int i = 1; i <= 3; i++) {
 ```
 
 <Callout type="warning" title="Mitinātu Ciklu Veiktspēja">
-  Uzmanies ar iemitānitem cikliem! Tie var smagi palēnināt tavu mod.
-
-  ```java
-  // Šis atkārtosies 1,000,000 reizes!
-  for (int i = 0; i < 1000; i++) {
-      for (int j = 0; j < 1000; j++) {
-          // Kods
-      }
-  }
-  ```
-
-  Mēģini izvairīties no dziļi iemitinātiem cikliem strādājot ar lielu datu daudzumu.
+Uzmanies ar iemitānitem cikliem! Tie var smagi palēnināt tavu mod.
+```java
+// Šis atkārtosies 1,000,000 reizes!
+for (int i = 0; i < 1000; i++) {
+    for (int j = 0; j < 1000; j++) {
+        // Kods
+    }
+}
+```
+Mēģini izvairīties no dziļi iemitinātiem cikliem strādājot ar lielu datu daudzumu.
 </Callout>

@@ -1,86 +1,86 @@
 ---
-title: Developer Q&A Technical Insights
-description: Комплексний огляд технічних ідей розробників Hytale, що охоплюють архітектуру, модинг, ігрові системи та філософію розробки.
+title: Запитання та відповіді розробників з технічної інформації
+description: Комплексний огляд технічних ідей розробників Hytale, що охоплюють архітектуру, модифікування, ігрові системи та філософію розробки.
 ---
 
-# Developer Q&A Technical Insights
+# Запитання та відповіді розробників з технічної інформації
 
 Ця розширена сесія запитань і відповідей з розробниками Hytale розкриває важливі технічні деталі щодо архітектури гри, філософії модингу, ігрових систем та підходу до розробки.
 
-## Technical Architecture
+## Технічна архітектура
 
-### Network & Infrastructure
+### Мережа та інфраструктура
 
-* **Protocol**: Uses QUIC (reliable UDP with unreliable channels) instead of TCP
-* **Server Compatibility**: Runs on any platform supporting Java 25
-* **Connection Method**: Direct IP initially, server discovery planned post-launch
-* **Data Layer**: Current custom serialization format will be replaced post-launch
-* **Performance**: Multi-core support - each world has main thread + parallel execution
-* **Rendering**: OpenGL 3.3 for Mac compatibility, potential future Vulkan/Metal migration
-* **Tick Model**: Base server tick rate is 30 TPS by default; can be changed using server plugins.
+* **Протокол**: Використовує QUIC (надійний UDP з ненадійними каналами) замість TCP
+* **Сумісність із сервером**: Працює на будь-якій платформі, що підтримує Java 25
+* **Спосіб підключення**: Спочатку пряма IP-адреса, виявлення сервера планується після запуску
+* **Рівень даних**: Поточний формат користувацької серіалізації буде замінено після запуску
+* **Продуктивність**: Підтримка багатоядерних процесорів — кожен світ має головний потік + паралельне виконання
+* **Візуалізація**: OpenGL 3.3 для сумісності з Mac, можлива майбутня міграція на Vulkan/Metal
+* **Модель тактів**: Базова частота тактів сервера за замовчуванням становить 30 TPS; її можна змінити за допомогою плагінів сервера.
 
-### Security & Distribution
+### Безпека та розповсюдження
 
-* **No Client-Side Code Execution**: Prevents remote code execution exploits
-* **Downloads Limited To**: Configuration files and assets only
-* **Mod Distribution**: Community platforms (CurseForge, Modrinth), no immediate in-game marketplace
-* **Server Hosting**: Available day 1, no business agreements required (just EULA/TOS)
+* **Без виконання коду на стороні клієнта**: Запобігає лазівкам віддаленого виконання коду
+* **Обмеження завантажень**: Тільки файли конфігурації та ресурси
+* **Розповсюдження модифікацій**: Платформи спільноти (CurseForge, Modrinth), немає безпосереднього ігрового ринку
+* **Хостинг сервера**: Доступний з першого дня, жодних ділових угод не потрібно (лише ліцензійна угода/умови використання)
 
-## Можливості модингу
+## Можливості модифікування
 
-### Server-Side Power
+### Серверне живлення
 
-* **Full Java Access**: Database connections, web requests, any Java functionality
-* **Custom Libraries**: Can create Lua scripting, ML frameworks, or any Java library
-* **Server Modification**: Shared source code allows heavy server modifications
-* **Hot Reload**: Supported for most asset types
-* **Documentation**: Public GitBook planned, though initially sparse
+* **Повний доступ до Java**: підключення до бази даних, вебзапити, будь-які функції Java
+* **Користувацькі бібліотеки**: Можна створювати скрипти Lua, фреймворки машинного навчання або будь-яку бібліотеку Java
+* **Модифікація сервера**: Спільний вихідний код дозволяє суттєві модифікації сервера
+* **Гаряче перезавантаження**: Підтримується для більшості типів ресурсів
+* **Документація**: Публічний GitBook планується, хоча спочатку його небагато
 
-### Content Creation (No Code Required)
+### Створення контенту (код не потрібен)
 
-* **World Generation**: Custom biomes and maps without Java
-* **NPCs & Items**: JSON-based configuration
-* **Crafting Recipes**: Data-driven system
-* **Visual Scripting**: Replaces command blocks, fully sandboxed
-* **Prefab System**: Sophisticated building blocks with in-game editor
+* **Генерація світу**: Власні біоми та карти без Java
+* **NPC та предмети**: конфігурація на основі JSON
+* **Рецепти створення**: Система, керована даними
+* **Візуальне написання сценаріїв**: Замінює блоки команд, повністю ізольоване програмне забезпечення
+* **Система префабів**: Складні будівельні блоки з ігровим редактором
 
-### Advanced Modding
+### Розширене програмування
 
-* **Combat System**: Data-driven interaction system for attack chains and abilities
-* **Sub-Hitboxes**: Support for complex boss mechanics (needs improvement)
-* **Status Effects**: Buff/debuff system with custom effects and stats
-* **Custom UI**: NoesisGUI transition enables powerful interface customization
-* **Block Physics**: Selective system (trees fall, but placed blocks don't)
+* **Бойова система**: Система взаємодії на основі даних для ланцюжків атак та здібностей
+* **Підхітбокси**: Підтримка складної механіки босів (потребує покращення)
+* **Ефекти статусу**: Система посилення/послаблення з власними ефектами та характеристиками
+* **Налаштовуваний інтерфейс**: перехід NoesisGUI забезпечує потужне налаштування інтерфейсу
+* **Фізика блоків**: Вибіркова система (дерева падають, але розміщені блоки не падають)
 
-## Gameplay Systems
+## Ігрові системи
 
-### Core Mechanics
+### Основна механіка
 
-* **Stamina System**: No hunger by default (can be modded in)
-* **Gravity**: Selective block physics - trees collapse, buildings can float
-* **Lighting**: Major overhaul to fix model/voxel inconsistencies
-* **World Height**: Currently limited, may change with voxel storage updates
-* **Automation**: No redstone equivalent at launch (moddable)
+* **Система витривалості**: Голод відсутній за замовчуванням (можна модифікувати)
+* **Гравітація**: Фізика вибіркових блоків — дерева руйнуються, будівлі можуть плавати
+* **Освітлення**: Основні перебудови для виправлення невідповідності моделі / вокселів
+* **Висота світу**: Наразі обмежена, може змінитися після оновлення сховища вокселів
+* **Автоматизація**: Немає чогось рівноцінного до редстоуну на момент запуску (модифікується)
 
-### Player Systems
+### Системи гравця
 
-* **Character Models**: Humans by default, changeable in creative mode
-* **Multiplayer Avatars**: Server-controlled (no custom models in multiplayer)
-* **Skins**: Full customization possible ("mod yourself into a potato")
-* **Shapeshifting**: Transformation potions exist for fun/modding
+* **Моделі персонажів**: Люди за замовчуванням, їх можна змінити у режимі творчости
+* **Аватари для багатьох гравців**: Керуються сервером (без користувацьких моделей у багатокористувацькому режимі)
+* **Скіни**: Можливість повної кастомізації («перетворіть себе на картоплину»)
+* **Перетворення**: Зілля трансформації існують для розваги/модифікації
 
-### World & NPCs
+### Світ та NPC
 
-* **Faction System**: Living world with dynamic NPC interactions
-* **Village Systems**: Planned dynamic villages with relationships and behaviors
-* **Chunk Loading**: Entities unload when out of all players' render distance
-* **Seeds**: Shareable world generation seeds supported
+* **Система фракцій**: Живий світ з динамічною взаємодією з NPC
+* **Системи сіл**: Заплановані динамічні села з взаємовідносинами та моделями поведінки
+* **Завантаження фрагментів**: Сутності вивантажуються, коли перебувають поза зоною візуалізації всіх гравців.
+* **Сід**: Підтримуються спільні сіди для генерації світу
 
-## Development Philosophy
+## Філософія розвитку
 
-### Release Strategy
+### Стратегія випуску
 
-* **Base Game Priority**: Adventure mode is primary focus, modding architecture supports it
+* **Пріоритет базової гри**: Режим пригод є основним, архітектура модифікацій підтримує його
 * **Tech Debt**: Acknowledged as necessary for release, commitment to improvement
 * **Update Frequency**: Very frequent updates planned, especially post-launch
 * **Version Policy**: Always latest version, but servers can run modified versions

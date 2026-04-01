@@ -21,13 +21,14 @@ int remainder = a % b;  // Starpība (atlikums): 0
 ```
 
 <Callout type="info" title="Dalīšanas Piezīme">
-  Dalot veselus skaitļus, Java veic veselu skaitļu dalīšanu, kas nozīmē, ka tā atmet jebkuru decimāldaļu. Piemēram `7 / 2` rezultātā būs `3`, nevis `3.5`
+Dalot veselus skaitļus, Java veic veselu skaitļu dalīšanu, kas nozīmē, ka tā atmet jebkuru decimāldaļu. Piemēram `7 / 2` rezultātā būs `3`, nevis `3.5`
 
-  ```java
-  int x = 7 / 2;       // 3 (nevis 3.5!) - Integer dalīšana
-  double y = 7.0 / 2;  // 3.5 - Vismaz 1 decimālskaitlis aprēķinā rezultātā izdos decimālskaitli
-  double z = (double) 7 / 2;  // 3.5 - Pārveidošana arī strādā
-  ```
+```java
+int x = 7 / 2;       // 3 (nevis 3.5!) - Integer dalīšana
+double y = 7.0 / 2;  // 3.5 - Vismaz 1 decimālskaitlis aprēķinā rezultātā izdos decimālskaitli
+double z = (double) 7 / 2;  // 3.5 - Pārveidošana arī strādā
+```
+
 </Callout>
 
 ### Modulus (%) - Atlikuma operātors
@@ -65,11 +66,13 @@ a--; // Samazina: kļust atkal par 5
 ```
 
 <Callout type="info" title="Prefikss vs Postfix">
-  ```java
-  int a = 5;
-  int b = a++; // b ir 5, a tagad ir 6
-  int c = ++a; // a ir 7, c tagad ir 7
-  ```
+
+```java
+int a = 5;
+int b = a++; // b ir 5, a tagad ir 6
+int c = ++a; // a ir 7, c tagad ir 7
+```
+
 </Callout>
 
 ## Salīdzināšanas Operātori
@@ -119,7 +122,7 @@ String svieciensArVardu = "Hello, " + name + "!"; // "Hello, Alice!"
 
 ## Operātora Prioritāte
 
-Operātora prioritāte nozīmē, kurš operātors tiek novērtēts pirmais koda rindā. Domā par to kā darbības secību BODMAS/PEMDAS matemātikā!
+Operator Precedence means which operator gets evaluated first in an line of code. Domā par to kā darbības secību BODMAS/PEMDAS matemātikā!
 
 ```java
 int rezultats = 10 + 5 * 2; // rezultātā ir 20, nevis 30

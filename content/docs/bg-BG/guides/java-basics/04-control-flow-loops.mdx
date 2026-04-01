@@ -1,0 +1,165 @@
+---
+title: 04 - Control Flow Loops
+description: Learn how to repeat code efficiently using loops in Java
+---
+
+Loops let you repeat code without writing it over and over. They're essential for processing collections, generating worlds, and updating game objects.
+
+## While Loop
+
+Repeats code while a condition is true:
+
+```java tab="Code"
+
+int countdown = 5;
+
+while (countdown > 0) {
+    System.out.println(countdown);
+    countdown--;
+}
+System.out.println("Blast off!");
+```
+
+```java tab="Output"
+5
+4
+3
+2
+1
+Blast off!
+```
+
+### Structure
+
+```java
+while (condition) {
+    // code to repeat
+}
+```
+
+<Callout type="warning" title="Infinite Loops">
+  Always make sure your loop condition will eventually become false, or your program will run forever!
+
+  ```java tab="Bad Example"
+  int x = 0;
+  while (x < 10) {
+      System.out.println("Stuck!");
+      // Forgot to increase x!
+  }
+  ```
+
+  ```java tab="Good Example"
+  int x = 0;
+  while (x < 10) {
+      System.out.println("Counting: " + x);
+      x++; // This increases x! // [!code ++]
+  }
+  ```
+</Callout>
+
+## Do-While Loop
+
+Like a while loop, but always runs at least once:
+
+```java
+int health = 0;
+
+do {
+    System.out.println("Attempting respawn...");
+    health = 100;
+} while (health <= 0);
+```
+
+## For Loop
+
+Best when you know how many times to repeat:
+
+```java tab="Code"
+for (int i = 1; i <= 5; i++) {
+    System.out.println("Level " + i);
+}
+```
+
+```java tab="Output"
+Level 1
+Level 2
+Level 3
+Level 4
+Level 5
+```
+
+### Structure
+
+```java
+for (initialization; condition; update) {
+    // code to repeat
+}
+```
+
+<Callout type="info" title="For Loop Parts">
+  ```java
+  for (int i = 0; i < 10; i++) {
+  //   ^         ^        ^
+  //   Start     Stop     Step
+  }
+  ```
+
+  * **Initialization**: int i = 0 - Runs once at the start
+  * **Condition**: i < 10 - Checked before each loop
+  * **Update**: i++ - Runs after each loop
+</Callout>
+
+## Break Statement
+
+You can exit a loop early with `break`:
+
+```java
+
+for (int i = 1; i <= 10; i++) {
+    if (i == 6) {
+        break; // Exit loop when i is 6
+    }
+    System.out.println(i);
+}
+
+```
+
+## Continue Statement
+
+Skip to the next iteration with `continue`:
+
+```java
+for (int i = 1; i <= 10; i++) {
+    if (i % 2 == 0) {
+        continue; // Skip even numbers
+    }
+    System.out.println(i); // Prints only odd numbers
+}
+```
+
+## Nested Loops
+
+You can put loops inside other loops:
+
+```java
+for (int i = 1; i <= 3; i++) {
+    for (int j = 1; j <= 2; j++) {
+        System.out.println("i: " + i + ", j: " + j);
+    }
+}
+```
+
+<Callout type="warning" title="Nested Loop Performance">
+  Be careful with nested loops! They can slow down your mod significantly.
+
+  ```java
+  // This runs 1,000,000 times!
+  for (int i = 0; i < 1000; i++) {
+      for (int j = 0; j < 1000; j++) {
+          // Code here
+      }
+  }
+  ```
+
+  Try to avoid deeply nested loops when processing large amounts of data.
+</Callout>

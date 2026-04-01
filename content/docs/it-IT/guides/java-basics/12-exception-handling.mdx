@@ -34,21 +34,21 @@ System.out.println("Il programma continua...")
 ```
 
 <Callout type="info" title="Come Funziona Il Try-Catch">
-  1. Il codice nel blocco `try` viene eseguito normalmente
-  2. Se si verifica un'eccezione, l'esecuzione salta al blocco `catch`
-  3. Dopo il blocco `catch`, il programma continua normalmente
-  4. Se non si verifica alcuna eccezione, il blocco `catch` è saltato
+1. Il codice nel blocco `try` viene eseguito normalmente
+2. Se si verifica un'eccezione, l'esecuzione salta al blocco `catch`
+3. Dopo il blocco `catch`, il programma continua normalmente
+4. Se non si verifica alcuna eccezione, il blocco `catch` è saltato
 
-  ```java
-  try {
-      // Prova a fare qualcosa di rischioso
-      int result = 10 / 0;  // Divisione per zero!
-  } catch (ArithmeticException e) {
-      // Gestisci l'errore
-      System.out.println("Impossibile dividere per zero!");
-  }
-  // Il programma continua a funzionare
-  ```
+```java
+try {
+    // Prova a fare qualcosa di rischioso
+    int result = 10 / 0;  // Divisione per zero!
+} catch (ArithmeticException e) {
+    // Gestisci l'errore
+    System.out.println("Impossibile dividere per zero!");
+}
+// Il programma continua a funzionare
+```
 </Callout>
 
 ## Tipi Di Eccezioni Comuni
@@ -152,26 +152,25 @@ try {
 ```
 
 <Callout type="info" title="Quando usare finally">
-  Usa `finally` per operazioni di pulizia che devono sempre accadere:
+Usa `finally` per operazioni di pulizia che devono sempre accadere:
+- Chiusura dei file
+- Rilascio delle risorse
+- Salvataggio dati
+- Registro log
 
-  - Chiusura dei file
-  - Rilascio delle risorse
-  - Salvataggio dati
-  - Registro log
-
-  ```java
-  FileReader file = null;
-  try {
-      file = new FileReader("data.txt");
-      // Read file
-  } catch (Exception e) {
-      System.out.println("Errore leggendo il file");
-  } finally {
-      if (file != null) {
-          file.close();  // Sempre chiudere il file!
-      }
-  }
-  ```
+```java
+FileReader file = null;
+try {
+    file = new FileReader("data.txt");
+    // Read file
+} catch (Exception e) {
+    System.out.println("Errore leggendo il file");
+} finally {
+    if (file != null) {
+        file.close();  // Sempre chiudere il file!
+    }
+}
+```
 </Callout>
 
 ## Ottenere Informazioni Sull'Eccezione
@@ -439,56 +438,53 @@ public class Player {
 ```
 
 <Callout type="info" title="Quando lanciare le eccezioni">
-  Lancia delle eccezioni quando:
+Lancia delle eccezioni quando:
+- Il Metodo riceve input non valido
+- L'operazione non può essere completata
+- Non sono soddisfatte le condizioni preliminari
+- Qualcosa di inaspettato accade
 
-  - Il Metodo riceve input non valido
-  - L'operazione non può essere completata
-  - Non sono soddisfatte le condizioni preliminari
-  - Qualcosa di inaspettato accade
+```java
+public void damagePlayer(int damage) {
+    if (damage < 0) {
+        throw new IllegalArgumentException("Il danno deve essere positivo!");
+    }
+    // Applica danno
+}
 
-  ```java
-  public void damagePlayer(int damage) {
-      if (damage < 0) {
-          throw new IllegalArgumentException("Il danno deve essere positivo!");
-      }
-      // Applica danno
-  }
-
-  public Item getItem(int slot) {
-      if (slot < 0 || slot >= inventory.length) {
-          throw new IndexOutOfBoundsException("Slot dell'inventario non valido!");
-      }
-      return inventory[slot];
-  }
-  ```
+public Item getItem(int slot) {
+    if (slot < 0 || slot >= inventory.length) {
+        throw new IndexOutOfBoundsException("Slot dell'inventario non valido!");
+    }
+    return inventory[slot];
+}
+```
 </Callout>
 
 ## Checked vs Unchecked Exceptions
 
 <Callout type="warning" title="Tipi Di Eccezione">
-  **Eccezioni Unchecked** (RuntimeException):
+**Eccezioni Unchecked** (RuntimeException):
+- Non devono essere catturate
+- Normalmente errori di programmazione
+- Esempi: NullPointerException, ArrayIndexOutOfBoundsException
 
-  - Non devono essere catturate
-  - Normalmente errori di programmazione
-  - Esempi: NullPointerException, ArrayIndexOutOfBoundsException
+**Eccezioni Checked**:
+- Devono essere catturate o dichiarate
+- Normalmente errori esterni (file, rete)
+- Esempi: IOException, FileNotFoundException
 
-  **Eccezioni Checked**:
+```java
+// Unchecked - non serve catturarla
+int result = 10 / 0;  // ArithmeticException
 
-  - Devono essere catturate o dichiarate
-  - Normalmente errori esterni (file, rete)
-  - Esempi: IOException, FileNotFoundException
-
-  ```java
-  // Unchecked - non serve catturarla
-  int result = 10 / 0;  // ArithmeticException
-
-  // Checked - categorico dichiarare e catturare
-  try {
-      FileReader file = new FileReader("data.txt");  // IOException
-  } catch (IOException e) {
-      // Handle error
-  }
-  ```
+// Checked - categorico dichiarare e catturare
+try {
+    FileReader file = new FileReader("data.txt");  // IOException
+} catch (IOException e) {
+    // Handle error
+}
+```
 </Callout>
 
 ## Esercizi Pratici

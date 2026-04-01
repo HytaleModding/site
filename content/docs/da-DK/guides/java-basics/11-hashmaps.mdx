@@ -29,24 +29,24 @@ public class Main {
 ```
 
 <Callout type="info" title="HashMap vs ArrayList">
-  | **HashMap**                     | **ArrayList**                 |
-  | ------------------------------- | ----------------------------- |
-  | Unordered                       | Ordered by index (0, 1, 2...) |
-  | Access by key (can be any type) | Access by position            |
-  | Good for looking up values      | Good for lists of items       |
-  | Each key is unique              | Can have duplicates           |
+| **HashMap**                     | **ArrayList**                 |
+| ------------------------------- | ----------------------------- |
+| Unordered                       | Ordered by index (0, 1, 2...) |
+| Access by key (can be any type) | Access by position            |
+| Good for looking up values      | Good for lists of items       |
+| Each key is unique              | Can have duplicates           |
 
-  ```java
-  // ArrayList - access by number
-  ArrayList<String> players = new ArrayList<>();
-  players.add("Alice");
-  String player = players.get(0);  // Get first player
+```java
+// ArrayList - access by number
+ArrayList<String> players = new ArrayList<>();
+players.add("Alice");
+String player = players.get(0);  // Get first player
 
-  // HashMap - access by name
-  HashMap<String, Integer> levels = new HashMap<>();
-  levels.put("Alice", 10);
-  int level = levels.get("Alice");  // Get Alice's level
-  ```
+// HashMap - access by name
+HashMap<String, Integer> levels = new HashMap<>();
+levels.put("Alice", 10);
+int level = levels.get("Alice");  // Get Alice's level
+```
 </Callout>
 
 ## Common HashMap Methods
@@ -153,22 +153,22 @@ for (var entry : scores.entrySet()) {
 ```
 
 <Callout type="info" title="HashMap Order">
-  HashMap does **not** maintain insertion order! If you need order, use `LinkedHashMap`:
+HashMap does **not** maintain insertion order! If you need order, use `LinkedHashMap`:
 
-  ```java
-  import java.util.LinkedHashMap;
+```java
+import java.util.LinkedHashMap;
 
-  LinkedHashMap<String, Integer> orderedScores = new LinkedHashMap<>();
-  orderedScores.put("Alice", 100);
-  orderedScores.put("Bob", 150);
-  orderedScores.put("Charlie", 75);
+LinkedHashMap<String, Integer> orderedScores = new LinkedHashMap<>();
+orderedScores.put("Alice", 100);
+orderedScores.put("Bob", 150);
+orderedScores.put("Charlie", 75);
 
-  // Will print in insertion order
-  for (String name : orderedScores.keySet()) {
-      System.out.println(name);
-  }
-  // Output: Alice, Bob, Charlie (guaranteed order)
-  ```
+// Will print in insertion order
+for (String name : orderedScores.keySet()) {
+    System.out.println(name);
+}
+// Output: Alice, Bob, Charlie (guaranteed order)
+```
 </Callout>
 
 ## Practical Examples

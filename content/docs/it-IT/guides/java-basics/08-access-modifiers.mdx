@@ -124,25 +124,24 @@ System.out.println(player.getHealth());  // 0
 ```
 
 <Callout type="info" title="Nomenclatura Getter e Setter">
-  Seguire le convenzioni di nomenclatura di Java:
+Seguire le convenzioni di nomenclatura di Java:
+* **Getter**: `get` + nome della proprietà (in maiuscolo)
+* **Setter**: `set` + nome della proprietà (in maiuscolo)
+* **Boolean**: `is` + nome della proprietà (in maiuscolo)
 
-  * **Getter**: `get` + nome della proprietà (in maiuscolo)
-  * **Setter**: `set` + nome della proprietà (in maiuscolo)
-  * **Boolean**: `is` + nome della proprietà (in maiuscolo)
+```java
+private int health;
+public int getHealth() { }
+public void setHealth(int health) { }
 
-  ```java
-  private int health;
-  public int getHealth() { }
-  public void setHealth(int health) { }
+private boolean alive;
+public boolean isAlive() { }
+public void setAlive(boolean alive) { }
 
-  private boolean alive;
-  public boolean isAlive() { }
-  public void setAlive(boolean alive) { }
-
-  private String name;
-  public String getName() { }
-  public void setName(String name) { }
-  ```
+private String name;
+public String getName() { }
+public void setName(String name) { }
+```
 </Callout>
 
 ## Benefici dell’incapsulamento
@@ -384,38 +383,36 @@ public class ProtectedBlock {
 ## Quando utilizzare Private vs Public
 
 <Callout type="info" title="Regole Generali">
-  **Rendi privato per impostazione predefinita!** Rendi pubbliche solamente le cose che sono necessarie da accedere dall'esterno.
+**Rendi privato per impostazione predefinita!** Rendi pubbliche solamente le cose che sono necessarie da accedere dall'esterno.
 
-  **Private:**
+**Private:**
+* Dati interni (salute, posizione, inventario)
+* Metodi Helper utilizzati solo all'interno della classe
+* Tutto ciò che richiede convalida
 
-  * Dati interni (salute, posizione, inventario)
-  * Metodi Helper utilizzati solo all'interno della classe
-  * Tutto ciò che richiede convalida
+**Public:**
+* Metodi che definiscono il comportamento della classe
+* Costruttore
+* Metodi che altre classi devono chiamare
 
-  **Public:**
-
-  * Metodi che definiscono il comportamento della classe
-  * Costruttore
-  * Metodi che altre classi devono chiamare
-
-  ```java
-  public class Example {
-      // Private - dati interni
-      private int internalCounter;
-      private String secretKey;
-      
-      // Public - parte dell'interfaccia
-      public void doSomething() {
-          // Usa il metodo helper privato
-          validateData();
-      }
-      
-      // Private - helper interno
-      private void validateData() {
-          // ...
-      }
-  }
-  ```
+```java
+public class Example {
+    // Private - dati interni
+    private int internalCounter;
+    private String secretKey;
+    
+    // Public - parte dell'interfaccia
+    public void doSomething() {
+        // Usa il metodo helper privato
+        validateData();
+    }
+    
+    // Private - helper interno
+    private void validateData() {
+        // ...
+    }
+}
+```
 </Callout>
 
 ## La keyword `final`
@@ -471,20 +468,20 @@ In parole povere: i membri dell' istanza appartengono agli oggetti; i membri sta
 
 ```java
 class Data {
-    public int x; // Membro istanziato
-    public static int y = 1000; // Membro statico
+    public int x; // Instanced member
+    public static int y = 1000; // Static member
 
-    // Membro istanziato:
-    // può accedere sia a membri statici che non-statici
+    // Instanced member:
+    // can access to both static and non-static members
     public void foo() {
-        x = 100; // OK - equivalente a this.x = 100;
-        y = 100; // OK - equivalente a Data.y = 200;
+        x = 100; // OK - same as this.x = 100;
+        y = 100; // OK - same as Data.y = 200;
     }
 
-    // Membro statico:
-    // non può accedere a membri non statici
+    // Static member:
+    // cannot access to non-static variables
     public static void bar() {
-        x = 100; // Errore: la variable non statica x non può essere chiamata in un contesto statico
+        x = 100; // Error: non-static variable x cannot be referenced from a static context
         y = 100; // OK
     }
 }
@@ -504,7 +501,7 @@ Data.x = 1000; // Errore: non è possibile accedere alle variabili d'istanza in 
 
 ### Campi statici
 
-A static field represents a data member owned by the class type rather then the object. Static fields are also stored in a specific memory location that's been shared between all the object instances that are created.
+A static field represents a data member owned by the class type rather than the object. Static fields are also stored in a specific memory location that's been shared between all the object instances that are created.
 
 It is declared as following:
 

@@ -27,11 +27,12 @@ int[] numers = {10,20,30,40,50};
 ```
 
 <Callout type="info" title="Dimesione del Vettore">
-  Una volta creato un vettore, la sua dimensione è **fissa**. Non è possibile aggiungere o rimuovere degli spazi successivamente!
+Una volta creato un vettore, la sua dimensione è **fissa**. Non è possibile aggiungere o rimuovere degli spazi successivamente!
 
-  ```java
-  int[] inventario = new int[9];  // Ha sempre esattamente 9 slot
-  ```
+```java
+int[] inventario = new int[9];  // Ha sempre esattamente 9 slot
+```
+
 </Callout>
 
 ## Accedere agli Elementi di un Vettore
@@ -74,7 +75,8 @@ System.out.println(punti.length); // 5
 ```
 
 <Callout type="warning" title="La lunghezza Non è un Metodo">
-  Notate come non ci sono parentesi! È `array.length`, non `array.length()`.
+Notate come non ci sono parentesi! È `array.length`, non `array.length()`.
+
 </Callout>
 
 ## Ciclare i Valori di un Vettore
@@ -100,19 +102,20 @@ for (String oggetto : oggetti) {
 ```
 
 <Callout type="info" title="Ciclo For-Else">
-  Il ciclo for-each è più semplice e sicuro, ma non è possibile modificare il vettore o conoscere l'indice attuale.
+Il ciclo for-each è più semplice e sicuro, ma non è possibile modificare il vettore o conoscere l'indice attuale.
 
-  ```java
-  // Quando ti serve l'indice
-  for (int i = 0; i < oggetti.length; i++) {
-      System.out.println(i + ": " + oggetti[i]);
-  }
+```java
+// Quando ti serve l'indice
+for (int i = 0; i < oggetti.length; i++) {
+    System.out.println(i + ": " + oggetti[i]);
+}
 
-  // Quando ti servono solo i valori
-  for (String oggetto : oggetti) {
-      System.out.println(oggetto);
-  }
-  ```
+// Quando ti servono solo i valori
+for (String oggetto : oggetti) {
+    System.out.println(oggetto);
+}
+```
+
 </Callout>
 
 ## Matrici
@@ -291,16 +294,17 @@ System.out.println(obiettivo + " è presente " + occorrenze + " volte");
 ## Limiti dei Vettori
 
 <Callout type="warning" title="Dimensione Fissa">
-  I vettori non possono essere ingranditi o ridotti. Se hai bisogno di flessibilità, più avanti imparerai gli `ArrayList`!
+I vettori non possono essere ingranditi o ridotti. Se hai bisogno di flessibilità, più avanti imparerai gli `ArrayList`!
 
-  ```java
-  int[] numeri = new int[5];
-  // Impossibile aggiungere un sesto elemento
+```java
+int[] numeri = new int[5];
+// Impossibile aggiungere un sesto elemento
 
-  // Se ti serve più spazio, crea un nuovo vettore
-  int[] grande = new int[10];
-  for (int i = 0; i < numeri.length; i++) {
-      grande[i] = numeri[i];
-  }
-  ```
+// Se ti serve più spazio, crea un nuovo vettore
+int[] grande = new int[10];
+for (int i = 0; i < numeri.length; i++) {
+    grande[i] = numeri[i];
+}
+```
+
 </Callout>

@@ -12,137 +12,61 @@ authors:
 
 Only scans the origin position.
 
-No Parameters.
+No parameters.
 
 ---
 
-### ColumnLinear
+### Linear
 
-Applies the Pattern to a column of blocks bound by the MinY and MaxY values. The scan is performed linearly from one end of the column to the other and returns all the Pattern validated positions. You can specify the direction of the scan and the maximum valid positions it can return. You can also make the MinY/MaxY scan range local to the scan origin Y instead of the world’s Y:0.
+Scans linearly block by block.
 
-![Example of ColumnLinear Scanner](/assets/official-documentation/worldgen/technical-hytale-generator/scanners/columnlinear-example.png)
+Parameters:
 
-#### Parameters:
-
-<ParameterList
-  parameters={[
-   {
-     name: "MaxY",
-     description: "integer Y coordinate. Upper exclusive bound of the column.",
-   },
-   {
-     name: "MinY",
-     description: "integer Y coordinate. Lower inclusive bound of the column.",
-   },
-   {
-     name: "RelativeToPosition",
-     description:
-       "Boolean. If true the scan range will be relative to the origin Y of the scan and not the world's Y:0.",
-   },
-   {
-     name: "BaseHeightName",
-     description:
-       "string. Name of the BaseHeight the scan range will be relative to. If this is provided, then the RelativeToPosition is overridden.",
-   },
-   {
-     name: "TopDownOrder",
-     description:
-       "Boolean. If true the scan will start at the top of the column's range and go down.",
-   },
-   {
-     name: "ResultCap",
-     description:
-       "positive integer. The maximum number of valid results this scan will return",
-   },
-  ]}
-/>
+| Name    | Type                       | Description                                                                               |
+| ------- | -------------------------- | ----------------------------------------------------------------------------------------- |
+| Scanner | Optional Scanner slot      | The child Scanner to run for every block scanned by this Scanner. Not used if left empty. |
+| Range   | Integer Range              | The range of blocks around the anchor to scan.                                            |
+| Axis    | string (`X` \| `Y` \| `Z`) | Axis to scan along.                                                                       |
 
 ---
 
-### ColumnRandom
+### Random
 
-Applies the Pattern to a column of blocks bound by the MinY and MaxY values. The scan is performed randomly and returns all the valid positions. You can specify the scan strategy and the maximum valid positions it can return.
+Scans a line of blocks in a random order determined by the seed.
 
-There are two strategies you can use with this Scanner:
+Parameters:
 
-- DART_THROW: tries random blocks in the column and gathers the ones that validate the Pattern. This strategy is better for situations where there are many valid positions such as wall positions on the side of a cliff.
-- PICK_VALID: finds all the valid blocks in the column and randomly picks from the pile. This strategy is better for situations where there are fewer valid positions such as multiple floors stacked on top of each other.
-
-Ultimately, it is up to you to find the right one based on your intent and observation. So try them both!
-
-![Example of ColumnRandom Scanner](/assets/official-documentation/worldgen/technical-hytale-generator/scanners/columnrandom-example.png)
-
-#### Parameters:
-
-<ParameterList
-  parameters={[
-   {
-     name: "MaxY",
-     description: "integer Y coordinate. Upper exclusive bound of the column.",
-   },
-   {
-     name: "MinY",
-     description: "integer Y coordinate. Lower inclusive bound of the column.",
-   },
-   {
-     name: "Strategy",
-     description: "string enum value: DART_THROW or PICK_VALID.",
-   },
-   {
-     name: "Seed",
-     description: "string.",
-   },
-   {
-     name: "ResultCap",
-     description:
-       "positive integer. The maximum number of valid results this scan will return.",
-   },
-   {
-     name: "RelativeToPosition",
-     description:
-       "Boolean. If true the scan range will be relative to the origin Y of the scan and not the world's Y:0.",
-   },
-   {
-     name: "BaseHeightName",
-     description:
-       "string. The name of the BaseHeight the scan range will be relative to. If this is provided, then the RelativeToPosition is overridden.",
-   },
-  ]}
-/>
+| Name    | Type                       | Description                                                                               |
+| ------- | -------------------------- | ----------------------------------------------------------------------------------------- |
+| Scanner | Optional Scanner slot      | The child Scanner to run for every block scanned by this Scanner. Not used if left empty. |
+| Range   | Integer Range              | The range of blocks around the anchor to scan.                                            |
+| Axis    | string (`X` \| `Y` \| `Z`) | Axis to scan along.                                                                       |
+| Seed    | string                     | Determines the pseudo-random order.                                                       |
 
 ---
 
-### Area
+### Radial
 
-Useful for increasing the density of rarer props that are difficult to place.
+Starts at the anchor block, then moves outward from closest to farthest.
 
-Scans an area around the origin. This Scanner uses the ChildScanner asset slot and gradually scans it farther and farther away from the origin if it can’t find enough valid positions. It applies the ChildScanner on every column surrounding the origin up to the ScanRange distance. The ScanShape determines the shape from above of the total area it can scan. The ResultCap is the total number of valid positions this Scanner will try to find, it will start at the origin and scan more and more of the area until it finds enough results or until it runs out of area.
+Parameters:
 
-#### Parameters:
+| Name    | Type                  | Description                                                                               |
+| ------- | --------------------- | ----------------------------------------------------------------------------------------- |
+| Scanner | Optional Scanner slot | The child Scanner to run for every block scanned by this Scanner. Not used if left empty. |
+| Bounds  | Integer Bounds        | The reach of this Scanner around the anchor.                                              |
 
-<ParameterList
-  parameters={[
-   {
-     name: "ScanRange",
-     description:
-       "integer 0 or greater. Range in blocks from the scan origin of the area to scan. If the value is 0 then the ChildScanner is only applied on the origin column. A good starting value would be 0 and then increase it by 1 and see the results. In some situations higher values can have an impact on performance.",
-   },
-   {
-     name: "ScanShape",
-     description:
-       "string, can be CIRCLE or SQUARE. Determines the shape of the scan area.",
-   },
-   {
-     name: "ResultCap",
-     description:
-       "positive integer. The maximum number of valid results this scan will return",
-   },
-   {
-     name: "ChildScanner",
-     description: "Scanner slot used on each column of the area.",
-   },
-  ]}
-/>
+---
+
+### Queue
+
+Runs all the Scanners in the Queue, one after another.
+
+Parameters:
+
+| Name     | Type                  | Description                |
+| -------- | --------------------- | -------------------------- |
+| Scanners | list of Scanner slots | Scanners to run, in order. |
 
 ---
 
@@ -150,13 +74,8 @@ Scans an area around the origin. This Scanner uses the ChildScanner asset slot a
 
 Imports an exported Scanner.
 
-#### Parameters:
+Parameters:
 
-<ParameterList
-  parameters={[
-   {
-     name: "Name",
-     description: "string. The exported Scanner.",
-   },
-  ]}
-/>
+| Name | Type   | Description           |
+| ---- | ------ | --------------------- |
+| Name | string | The exported Scanner. |

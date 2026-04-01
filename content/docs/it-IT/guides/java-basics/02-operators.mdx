@@ -21,13 +21,14 @@ int resto = a % b;  // Modulo (Resto della Divisione): 0
 ```
 
 <Callout type="info" title="Nota sulle Divisioni">
-  Quando sia il divisore che il dividendo sono interi, Java esegue una divisione intera, scartando la parte decimale. Ad esempio, `7 / 2` restituirebbe `3`, non `3.5`.
+Quando sia il divisore che il dividendo sono interi, Java esegue una divisione intera, scartando la parte decimale. Ad esempio, `7 / 2` restituirebbe `3`, non `3.5`.
 
-  ```java
-  int x = 7 / 2;       // 3 (non 3.5!) - Divisione intera
-  double y = 7.0 / 2;  // 3.5 - Divisore o dividendo decimale danno risultato decimale
-  double z = (double) 7 / 2;  // 3.5 - È possibile anche usare il casting
-  ```
+```java
+int x = 7 / 2;       // 3 (non 3.5!) - Divisione intera
+double y = 7.0 / 2;  // 3.5 - Divisore o dividendo decimale danno risultato decimale
+double z = (double) 7 / 2;  // 3.5 - È possibile anche usare il casting
+```
+
 </Callout>
 
 ### Modulo (%) - L'Operatore Resto
@@ -65,11 +66,13 @@ a--; // Decremento: a diventa 5 nuovamente
 ```
 
 <Callout type="info" title="Prefisso o Suffisso">
-  ```java
-  int a = 5;
-  int b = a++; // b è 5, a ora è 6
-  int c = ++a; // a è 7, c ora è 7
-  ```
+
+```java
+int a = 5;
+int b = a++; // b è 5, a ora è 6
+int c = ++a; // a è 7, c ora è 7
+```
+
 </Callout>
 
 ## Operatori di Comparazione
@@ -119,7 +122,7 @@ String salutoConNome = "Ciao, " + name + "!"; // "Ciao, Alice!"
 
 ## Precedenza degli Operatori
 
-La Precedenza degli Operatori indica quale viene valutato prima in una singola linea di codice. Pensa a come funziona la precedenza in matematica!
+Operator Precedence means which operator gets evaluated first in an line of code. Pensa a come funziona la precedenza in matematica!
 
 ```java
 int risultato = 10 + 5 * 2; // risultato è 20, non 30

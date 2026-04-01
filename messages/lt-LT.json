@@ -4,7 +4,9 @@
     "title": "Hytale Modifikavimas",
     "documentation": "Dokumentacija",
     "sponsors": "Rėmėjai",
-    "search": "Ieškoti"
+    "wiki": "Wiki",
+    "search": "Ieškoti",
+    "grants": "Grants"
   },
   "home": {
     "title": "#1 Hytale modifikavimo resursas {flipwords}",
@@ -26,6 +28,9 @@
       "seconds": "s"
     },
     "hytaleReleased": "Hytale is out!"
+  },
+  "showcaseItems": {
+    "madeBy": "by {author}"
   },
   "sponsors": {
     "title": "Paremkite mus",
@@ -88,6 +93,17 @@
     },
     "community_projects": {
       "title": "Bendruomenės Projektai"
+    }
+  },
+  "callout": {
+    "defaultTitles": {
+      "info": "Info",
+      "warning": "Warning",
+      "danger": "Danger",
+      "success": "Success",
+      "lvl_beginner": "Level: Beginner",
+      "lvl_intermediate": "Level: Intermediate",
+      "lvl_advanced": "Level: Advanced"
     }
   }
 }

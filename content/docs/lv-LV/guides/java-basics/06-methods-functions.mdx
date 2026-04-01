@@ -71,19 +71,19 @@ public static void main(String[] args) {
 ```
 
 <Callout type="info" title="Parametru Kārtība ir Svarīga">
-  Kad izsauc metodi, argumentiem jāsakrīt ar parametru kārtību:
+Kad izsauc metodi, argumentiem jāsakrīt ar parametru kārtību:
 
-  ```java
-  public static void izveidotPrieksmetu(String nosaukums, int daudzums, double cena) {
-      // ...
-  }
+```java
+public static void izveidotPrieksmetu(String nosaukums, int daudzums, double cena) {
+    // ...
+}
 
-  // Pareizi
-  izveidotPrieksmetu("Zobens", 1, 50.0);
+// Pareizi
+izveidotPrieksmetu("Zobens", 1, 50.0);
 
-  // Nepareizi - Kārtība ir svarīga!
-  izveidotPrieksmetu(1, "Zobens", 50.0);  // Kļūda!
-  ```
+// Nepareizi - Kārtība ir svarīga!
+izveidotPrieksmetu(1, "Zobens", 50.0);  // Kļūda!
+```
 </Callout>
 
 ## Metodes ar Atgriešanas vērtībām
@@ -125,14 +125,14 @@ public static double aprekinatBojajumus(int bojajumi, double reizinatajs) {
 ```
 
 <Callout type="warning" title="Atgriešana Aptur Izpildi">
-  Kad metode sasniedz `return`, tā uzreiz iziet no virknes. Kods pēc `return` netiks palaists!
+Kad metode sasniedz `return`, tā uzreiz iziet no virknes. Kods pēc `return` netiks palaists!
 
-  ```java
-  public static int dabutVertibu() {
-      return 10;
-      System.out.println("Šis nekad netiks palaists!");  // Neaizsniedzama koda daļa!
-  }
-  ```
+```java
+public static int dabutVertibu() {
+    return 10;
+    System.out.println("Šis nekad netiks palaists!");  // Neaizsniedzama koda daļa!
+}
+```
 </Callout>
 
 ## Praktiski Piemēri
@@ -248,22 +248,21 @@ public static void main(String[] args) {
 ```
 
 <Callout type="info" title="Metodes Pārlādēšanas Noteikumi">
-  Metodes tiek uzskatītas par atšķirīgām, ja tām ir:
+Metodes tiek uzskatītas par atšķirīgām, ja tām ir:
+* Dažāds daudzums parametru
+* Dažādi tipa parametri
+* Dažāda parametru kārtība
 
-  * Dažāds daudzums parametru
-  * Dažādi tipa parametri
-  * Dažāda parametru kārtība
+```java
+public static void test(int a) { }
+public static void test(int a, int b) { }        // Dažāds daudzums
+public static void test(double a) { }            // Dažāds tips
+public static void test(String a, int b) { }     // Dažādi tipi
+public static void test(int a, String b) { }     // Dažāda kārtība
 
-  ```java
-  public static void test(int a) { }
-  public static void test(int a, int b) { }        // Dažāds daudzums
-  public static void test(double a) { }            // Dažāds tips
-  public static void test(String a, int b) { }     // Dažādi tipi
-  public static void test(int a, String b) { }     // Dažāda kārtība
-
-  // Nepareizi - Tikai atgriešanas tips nevar atšķirties
-  public static int test(int a) { }
-  ```
+// Nepareizi - Tikai atgriešanas tips nevar atšķirties
+public static int test(int a) { }
+```
 </Callout>
 
 ## Biežākie pielietojumi Hytale Modificēšanā
@@ -339,20 +338,20 @@ public static String dabutVeselibasStatusu(int veseliba, int maxVeseliba) {
 ## Labākā Prakse
 
 <Callout type="info" title="Metožu Nosaukšana">
-  Izmantojiet aprakstošus darbības vārdu nosaukumus, kas paskaidro, ko šī metode dara:
+Izmantojiet aprakstošus darbības vārdu nosaukumus, kas paskaidro, ko šī metode dara:
 
-  ```java
-  // Labi
-  public static void calculateDamage() { }
-  public static boolean isPlayerAlive() { }
-  public static String getItemName() { }
-  public static void displayInventory() { }
+```java
+// Labi
+public static void calculateDamage() { }
+public static boolean isPlayerAlive() { }
+public static String getItemName() { }
+public static void displayInventory() { }
 
-  // Slikti
-  public static void dmg() { }        // Par īsu
-  public static void method1() { }    // Neko neizsaka
-  public static void stuff() { }      // Par plašu
-  ```
+// Slikti
+public static void dmg() { }        // Par īsu
+public static void method1() { }    // Neko neizsaka
+public static void stuff() { }      // Par plašu
+```
 </Callout>
 
 ## Praktiskie Vingrinājumi
@@ -377,23 +376,22 @@ public static String dabutVeselibasStatusu(int veseliba, int maxVeseliba) {
    * Atgriež true, ja pareizi, savādāk false
 
 <Callout type="info" title="Dalīšanas Piezīme">
-  Kad izstrādā paroles pārbaudītāju, tev varētu būt vajadzīgs veids kā salīdzināt Array/Masīvu vērtības. Piemēram:
+Kad izstrādā paroles pārbaudītāju, tev varētu būt vajadzīgs veids kā salīdzināt Array/Masīvu vērtības. Piemēram:
+```java
+String[] array1 = {"Apple", "Banana"};
+String[] array2 = {"Apple", "Banana"};
 
-  ```java
-  String[] array1 = {"Apple", "Banana"};
-  String[] array2 = {"Apple", "Banana"};
+//Nepareizi:
+array1[0] == array2[0];       // false
+/*
+Array/Masīvs ir ne-primitīvs datu tips. Java salīdzina datu tipu references (ne-primitīvas) pēc to lokācijas Javas atmiņā, nevis pēc to vērtības.
+*/
 
-  //Nepareizi:
-  array1[0] == array2[0];       // false
-  /*
-  Array/Masīvs ir ne-primitīvs datu tips. Java salīdzina datu tipu references (ne-primitīvas) pēc to lokācijas Javas atmiņā, nevis pēc to vērtības.
-  */
+// Lai salīdzinātu reālās vērtības references datu tipos, izmanto .equals() metodi:
+array1[0].equals(array2[0]);       // true 
 
-  // Lai salīdzinātu reālās vērtības references datu tipos, izmanto .equals() metodi:
-  array1[0].equals(array2[0]);       // true 
-
-  // Šī metode nav pielietojama uz primitīviem datu tipiem.
-  ```
+// Šī metode nav pielietojama uz primitīviem datu tipiem.
+```
 </Callout>
 
 ## Bieži sastopamās kļūdas

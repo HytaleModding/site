@@ -29,7 +29,7 @@ for now this is the basic understanding for the `ChunkStore`. You can use it to 
 
 ## Holder
 
-A Holder is essentially a blueprint for an entity. Before an entity exists in the Store (and thus in the world), is exists as a `Holder`. It collects and holds all the necessary components (data). You can compare it analogous to shopping cart. You grab all components you need and once you have everything, check out at the store which will take your cart and create a valid entity ID and hand you back a receipt (a Ref).
+A Holder is essentially a blueprint for an entity. Before an entity exists in the Store (and thus in the world), it exists as a `Holder`. It collects and holds all the necessary components (data). You can compare it analogous to shopping cart. You grab all components you need and once you have everything, check out at the store which will take your cart and create a valid entity ID and hand you back a receipt (a Ref).
 
 Let's take a look at an example: initializing players. In `Universe`, the `addPlayer` method demonstrates it perfectly.
 When a player connects, we don't immediately throw them into the ECS. We first construct their data in a Holder.
@@ -167,7 +167,7 @@ MyComponent comp = commandBuffer.getComponent(ref, componentType);
 
 Codecs handle serialization and deserialization of components. Hytale uses them to save and load entity data to and from disk as well as sending component data over the network. When creating a custom component, you must also create a corresponding Codec.
 
-There are mutliple Codec types already implemented in the default Codec Interface:
+There are multiple Codec types already implemented in the default Codec Interface:
 
 - Codec.STRING
 - Codec.BOOLEAN
@@ -199,7 +199,7 @@ The `BuilderCodec` is a powerful utility for creating your custom codecs. It all
 - The KeyedCodec to use for serialization/deserialization of the field. This can be one of the built-in codecs or a custom codec if your field is a complex type. To initialize a KeyedCodec you need to provide a unique string identifier for the codec and the actual Codec instance to use for the field.
 
 <Callout type="warning">
-  Keep in mind that every KeyedCodec identifier string must start Uppercase and be unique across your entire mod. This means that if you have multiple components, each field's KeyedCodec identifier must not clash with any other field's identifier in any other component within your mod. Otherwise you may run into serialization issues.
+Keep in mind that every KeyedCodec identifier string must start Uppercase and be unique across your entire mod. This means that if you have multiple components, each field's KeyedCodec identifier must not clash with any other field's identifier in any other component within your mod. Otherwise you may run into serialization issues.
 </Callout>
 
 - A setter function to set the field value on the component
@@ -215,7 +215,7 @@ This might seem tedious at first but it ensures that your component can be corre
   KeyedCodec<Integer> exampleInt = new KeyedCodec<Integer>("ExampleIntIdForCodec", Codec.INTEGER);
   ```
 
-- **Setter Function**: This is a lambda function that takes an instance of your component and returns the value of the field you want to serialize. For example, if you have a field called `myCustomField` in your custom component, your getter function would look like this:
+- **Setter Function**: This is a lambda function that takes an instance of your component + the value to set and sets the field value on the component. For example, if you have a field called `myCustomField` in your custom component, your setter function would look like this:
   ```java
   (data, value) -> data.myCustomField = value
   ```
@@ -226,23 +226,21 @@ This might seem tedious at first but it ensures that your component can be corre
   ```
 
 <Callout type="info">
-  Lambda functions are a concise way to represent functional interfaces in Java. They allow you to pass behavior as parameters, making your code more flexible and reusable. In the context of Codec creation, they enable you to define how to get and set field values without needing to create separate classes or methods for each field.
+Lambda functions are a concise way to represent functional interfaces in Java. They allow you to pass behavior as parameters, making your code more flexible and reusable. In the context of Codec creation, they enable you to define how to get and set field values without needing to create separate classes or methods for each field.
 
-  If you are unfamiliar with lambda functions, you can view them as short and compressed methods that can be defined inline. They are particularly useful for scenarios where you need to pass simple behavior, such as getting or setting a value, without the overhead of creating a full class or method.
+If you are unfamiliar with lambda functions, you can view them as short and compressed methods that can be defined inline. They are particularly useful for scenarios where you need to pass simple behavior, such as getting or setting a value, without the overhead of creating a full class or method.
 
-  As an example, consider the following lambda function used as a getter:
+As an example, consider the following lambda function used as a getter:
+```java
+(data) -> data.myCustomField
+```
 
-  ```java
-  (data) -> data.myCustomField
-  ```
-
-  This lambda takes a single parameter `data` (which would be an instance of your component) and returns the value of `myCustomField`. It's equivalent to writing a method like this:
-
-  ```java
-  public Object getMyCustomField(MyComponent data) {
-      return data.myCustomField;
-  }
-  ```
+This lambda takes a single parameter `data` (which would be an instance of your component) and returns the value of `myCustomField`. It's equivalent to writing a method like this:
+```java
+public Object getMyCustomField(MyComponent data) {
+    return data.myCustomField;
+}
+```
 </Callout>
 
 After defining the necessary parameters, you can create a `BuilderCodec` for your component. As example let's look at how to create a Codec for the previously defined `PoisonComponent`. For the purpose of this example, let's assume that the `PoisonComponent` has only the following fields:
@@ -276,7 +274,7 @@ public class PoisonComponent implements Component<EntityStore> {
 
 You can also add validators to your Codec fields to ensure that the data being serialized/deserialized meets certain criteria. For example, if you want to ensure that the `damagePerTick` field is always non-negative or the poison name is never null, you can add a validator like this:
 
-````java
+```java
 .append(
     new KeyedCodec<Float>("DamagePerTick", Codec.FLOAT),
     (data, value) -> data.damagePerTick = value,
@@ -292,15 +290,16 @@ You can also add validators to your Codec fields to ensure that the data being s
 )
 .addValidator(Validators.nonNull())
 .add()
+```
 
 ### Complex Codec Examples
 
-If you want to have a map inside your component, you can use the MapCodec class to build a KeyedCoded for it. Here's an example of how to create a Codec for a Map field:
+If you want to have a map inside your component, you can use the MapCodec class to build a KeyedCodec for it. Here's an example of how to create a Codec for a Map field:
 
 ```java
 var damagePerTick = new KeyedCodec<>("DamagePerTick", new MapCodec<>(Codec.FLOAT, HashMap<String, Float>::new));
-````
+```
 
 <Callout type="info">
-  This also works with custom Objects as long as you have a Codec defined for the Object type.
+This also works with custom Objects as long as you have a Codec defined for the Object type.
 </Callout>

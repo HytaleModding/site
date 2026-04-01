@@ -4,7 +4,9 @@
     "title": "Moduri Hytale",
     "documentation": "Documentation",
     "sponsors": "Sponsors",
-    "search": "Search"
+    "wiki": "Wiki",
+    "search": "Search",
+    "grants": "Grants"
   },
   "home": {
     "title": "#1 Resource for Hytale Modding {flipwords}",
@@ -26,6 +28,9 @@
       "seconds": "s"
     },
     "hytaleReleased": "Hytale is out!"
+  },
+  "showcaseItems": {
+    "madeBy": "by {author}"
   },
   "sponsors": {
     "title": "Support Us",
@@ -88,6 +93,17 @@
     },
     "community_projects": {
       "title": "Community Projects"
+    }
+  },
+  "callout": {
+    "defaultTitles": {
+      "info": "Info",
+      "warning": "Warning",
+      "danger": "Danger",
+      "success": "Success",
+      "lvl_beginner": "Level: Beginner",
+      "lvl_intermediate": "Level: Intermediate",
+      "lvl_advanced": "Level: Advanced"
     }
   }
 }

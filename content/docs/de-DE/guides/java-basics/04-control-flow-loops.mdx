@@ -37,23 +37,24 @@ while (Bedingung) {
 ```
 
 <Callout type="warning" title="Endlose Schleifen">
-  Gehe immer sicher, dass deine Schleifenbedingung irgendwann falsch wird sonst läuft dein Programm immer weiter!
+Gehe immer sicher, dass deine Schleifenbedingung irgendwann falsch wird sonst läuft dein Programm immer weiter!
 
-  ```java tab="Bad Example"
-  int x = 0;
-  while (x < 10) {
-      System.out.println("Endlosschleife!");
-      // Du musst x erhöhen!
-  }
-  ```
+```java tab="Bad Example"
+int x = 0;
+while (x < 10) {
+    System.out.println("Endlosschleife!");
+    // Du musst x erhöhen!
+}
+```
 
-  ```java tab="Good Example"
-  int x = 0;
-  while (x < 10) {
-      System.out.println("x ist gerade: " + x);
-      x++; // Erhöht x! // [!code ++]
-  }
-  ```
+```java tab="Good Example"
+int x = 0;
+while (x < 10) {
+    System.out.println("x ist gerade: " + x);
+    x++; // Erhöht x! // [!code ++]
+}
+```
+
 </Callout>
 
 ## Do-While-Schleife
@@ -96,16 +97,18 @@ for (Initialisierung; Bedingung; Update) {
 ```
 
 <Callout type="info" title="Teile der For-Schleife">
-  ```java
-  for (int i = 0; i < 10; i++) {
-  //   ^         ^        ^
-  //   Start     Stop     Schritt
-  }
-  ```
 
-  * **Initialisierung**: int i = 0 - Läuft einmal am Anfang
-  * **Bedingung**: i < 10 - Überprüft vor jeder Schleife
-  * **Update**: i++ - Läuft nach jeder Schleife
+```java
+for (int i = 0; i < 10; i++) {
+//   ^         ^        ^
+//   Start     Stop     Schritt
+}
+```
+
+* **Initialisierung**: int i = 0 - Läuft einmal am Anfang
+* **Bedingung**: i < 10 - Überprüft vor jeder Schleife
+* **Update**: i++ - Läuft nach jeder Schleife
+
 </Callout>
 
 ## Break Statement
@@ -147,16 +150,14 @@ for (int i = 1; i <= 3; i++) {
 ```
 
 <Callout type="warning" title="Performance geschachtelter Schleifen">
-  Sei vorsichtig mit verschachtelten Schleifen! Sie können deine Mod erheblich verlangsamen.
-
-  ```java
-  // Dies läuft 1,000,000 mal!
-  for (int i = 0; i < 1000; i++) {
-      for (int j = 0; j < 1000; j++) {
-          // Code hier
-      }
-  }
-  ```
-
-  Versuche tief verschachtelte Schleifen bei der Verarbeitung großer Datenmengen zu vermeiden.
+Sei vorsichtig mit verschachtelten Schleifen! Sie können deine Mod erheblich verlangsamen.
+```java
+// Dies läuft 1,000,000 mal!
+for (int i = 0; i < 1000; i++) {
+    for (int j = 0; j < 1000; j++) {
+        // Code hier
+    }
+}
+```
+Versuche tief verschachtelte Schleifen bei der Verarbeitung großer Datenmengen zu vermeiden.
 </Callout>

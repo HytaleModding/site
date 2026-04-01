@@ -16,16 +16,16 @@ String tukss = "";
 ```
 
 <Callout type="warning" title="Virknes ir nemainīgas">
-  Pēc izveidošanas virkne \*\* nevar tikt mainīta\*\* Metodes, kas modificē virknes, īstenībā izveido jaunas virknes!
+Pēc izveidošanas virkne \*\* nevar tikt mainīta\*\* Metodes, kas modificē virknes, īstenībā izveido jaunas virknes!
 
-  ```java
-  String teksts = "Sveiki";
-  teksts.uzLieliemBurtiem();           // Izveido "HELLO" bet nesaglabā
-  System.out.println(teksts);     // Joprojām "Hello"
+```java
+String teksts = "Sveiki";
+teksts.uzLieliemBurtiem();           // Izveido "HELLO" bet nesaglabā
+System.out.println(teksts);     // Joprojām "Hello"
 
-  String lielieBurti = teksts.uzLieliemBurtiem();  // ✓ Saglabā rezultātu
-  System.out.println(lielieBurti);          // "HELLO"
-  ```
+String lielieBurti = teksts.uzLieliemBurtiem();  // ✓ Saglabā rezultātu
+System.out.println(lielieBurti);          // "HELLO"
+```
 </Callout>
 
 ## Virknes Metodes
@@ -71,16 +71,16 @@ String apVirkne2 = teksts.substring(6);      // "World"
 ```
 
 <Callout type="info" title="Apakšvirnes Indeksi">
-  `substring(start, end)` iekļauj `start` bet izņem `end`
+`substring(start, end)` iekļauj `start` bet izņem `end`
 
-  ```java
-  String teksts = "Hytale";
-  //             012345 (indeksi)
+```java
+String teksts = "Hytale";
+//             012345 (indeksi)
 
-  text.substring(0, 2);  // "Hy" (indeksē 0 un 1)
-  text.substring(2, 6);  // "tale" (indeksē 2, 3, 4, 5)
-  text.substring(2);     // "tale" (no 2 līdz galam)
-  ```
+text.substring(0, 2);  // "Hy" (indeksē 0 un 1)
+text.substring(2, 6);  // "tale" (indeksē 2, 3, 4, 5)
+text.substring(2);     // "tale" (no 2 līdz galam)
+```
 </Callout>
 
 ### Teksta Aizvietošana
@@ -117,27 +117,27 @@ System.out.println(dalas[3]);  // "5"
 ## Virkņu Salīdzināšana
 
 <Callout type="warning" title="Nekad neizmanto == priekš Virknēm">
-  Vienmēr izmanto `.equals()`, lai salīdzinātu saturu!
+Vienmēr izmanto `.equals()`, lai salīdzinātu saturu!
 
-  ```java
-  String vards1 = "Steve";
-  String vards2 = "Steve";
+```java
+String vards1 = "Steve";
+String vards2 = "Steve";
 
-  // Nepareizi - Salīdzina objektu references
-  if (vards1 == vards2) {
-      System.out.println("Vienādi");
-  }
+// Nepareizi - Salīdzina objektu references
+if (vards1 == vards2) {
+    System.out.println("Vienādi");
+}
 
-  // Pareizi - Salīdzina reālo tekstu
-  if (vards1.equals(vards2)) {
-      System.out.println("Vienādi");
-  }
+// Pareizi - Salīdzina reālo tekstu
+if (vards1.equals(vards2)) {
+    System.out.println("Vienādi");
+}
 
-  // Ignorē burtu lielumu, kad salīdzinam
-  if (vards1.equalsIgnoreCase("steve")) {
-      System.out.println("Vienādi (ignorējot lielos burtus)");
-  }
-  ```
+// Ignorē burtu lielumu, kad salīdzinam
+if (vards1.equalsIgnoreCase("steve")) {
+    System.out.println("Vienādi (ignorējot lielos burtus)");
+}
+```
 </Callout>
 
 ### Salīdzinājuma Secība
@@ -194,24 +194,24 @@ System.out.println(rezultats);
 ```
 
 <Callout type="info" title="Kāpēc StringBuilder?">
-  Parasti saliekot veidojas vairākas pagaidu virknes:
+Parasti saliekot veidojas vairākas pagaidu virknes:
 
-  ```java
-  // Nav efektīvi - Veidojot vairākas virknes
-  String rezultats = "";
-  for (int i = 0; i < 1000; i++) {
-      rezultats = rezultats + i;  // Izveidos 1000 pagaidu virknes!
-  }
+```java
+// Nav efektīvi - Veidojot vairākas virknes
+String rezultats = "";
+for (int i = 0; i < 1000; i++) {
+    rezultats = rezultats + i;  // Izveidos 1000 pagaidu virknes!
+}
 
-  // Efektīvi - StringBuilder ir pārveidojams
-  StringBuilder sb = new StringBuilder();
-  for (int i = 0; i < 1000; i++) {
-      sb.append(i);  // Modificē vienu objektu
-  }
-  String rezultats = sb.toString();
-  ```
+// Efektīvi - StringBuilder ir pārveidojams
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < 1000; i++) {
+    sb.append(i);  // Modificē vienu objektu
+}
+String rezultats = sb.toString();
+```
 
-  Izmanto `StringBuilder`, kad veido virknes ciklus!
+Izmanto `StringBuilder`, kad veido virknes ciklus!
 </Callout>
 
 ## Praktiski Piemēri
@@ -386,21 +386,20 @@ System.out.println(formatets);
 ```
 
 <Callout type="info" title="Formāta Apzīmētāji">
-  Biežākie formāta kodi:
+Biežākie formāta kodi:
+- `%s` - Virkne
+- `%d` - Skaitlis
+- `%f` - Peldošā punkta skaitlis vai decimālskaitlis
+- `%.2f` - Peld. punkta vērtība ar 2 decimālskaitļiem aiz punkta
+- `%n` - Jauna līnija (neatkarīgi no platformas)
 
-  - `%s` - Virkne
-  - `%d` - Skaitlis
-  - `%f` - Peldošā punkta skaitlis vai decimālskaitlis
-  - `%.2f` - Peld. punkta vērtība ar 2 decimālskaitļiem aiz punkta
-  - `%n` - Jauna līnija (neatkarīgi no platformas)
-
-  ```java
-  String.format("Vārds: %s", "Steve");          // "Vārds: Steve"
-  String.format("Līmenis: %d", 10);              // "Līmenis: 10"
-  String.format("Dzīvības: %.1f", 85.5);         // "Dzīvības: 85.5"
-  String.format("Pozīcija: (%d, %d, %d)", 
-                10, 64, -5);                    // "Pozīcija: (10, 64, -5)"
-  ```
+```java
+String.format("Vārds: %s", "Steve");          // "Vārds: Steve"
+String.format("Līmenis: %d", 10);              // "Līmenis: 10"
+String.format("Dzīvības: %.1f", 85.5);         // "Dzīvības: 85.5"
+String.format("Pozīcija: (%d, %d, %d)", 
+              10, 64, -5);                    // "Pozīcija: (10, 64, -5)"
+```
 </Callout>
 
 ## Biežas Virknes Operācijas

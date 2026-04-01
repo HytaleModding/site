@@ -16,16 +16,16 @@ String empty = "";
 ```
 
 <Callout type="warning" title="Le stringhe sono immutabili">
-  Una volta creata, una stringa **non può essere modificata**. I metodi che sembrano modificare una stringa in realtà ne creano una nuova!
+Una volta creata, una stringa **non può essere modificata**. I metodi che sembrano modificare una stringa in realtà ne creano una nuova!
 
-  ```java
-  String text = "Ciao";
-  text.toUpperCase();           // Crea "CIAO" ma non lo salva
-  System.out.println(text);     // Ancora "Ciao"
+```java
+String text = "Ciao";
+text.toUpperCase();           // Crea "CIAO" ma non lo salva
+System.out.println(text);     // Ancora "Ciao"
 
-  String upper = text.toUpperCase();  // ✓ Salva il risultato
-  System.out.println(upper);          // "CIAO"
-  ```
+String upper = text.toUpperCase();  // ✓ Salva il risultato
+System.out.println(upper);          // "CIAO"
+```
 </Callout>
 
 ## Metodi del tipo String
@@ -71,16 +71,16 @@ String sub2 = text.substring(6);      // "World
 ```
 
 <Callout type="info" title="Posizione nelle sottostringhe">
-  `substring(start, end)` include `start` ma esclude `end`:
+`substring(start, end)` include `start` ma esclude `end`:
 
-  ```java
-  String text = "Hytale";
-  //             012345 (indices)
+```java
+String text = "Hytale";
+//             012345 (indices)
 
-  text.substring(0, 2);  // "Hy" (posizioni 0 e 1)
-  text.substring(2, 6);  // "tale" (posizioni 2, 3, 4, 5)
-  text.substring(2);     // "tale" (da 2 a end)
-  ```
+text.substring(0, 2);  // "Hy" (posizioni 0 e 1)
+text.substring(2, 6);  // "tale" (posizioni 2, 3, 4, 5)
+text.substring(2);     // "tale" (da 2 a end)
+```
 </Callout>
 
 ### Sostituire del Testo
@@ -117,27 +117,27 @@ System.out.println(parts[3]);  // "5"
 ## Confronto stringhe
 
 <Callout type="warning" title="Non usare mai == per le stringhe">
-  Usa sempre `.equals()` per confrontare i contenuti delle stringhe!
+Usa sempre `.equals()` per confrontare i contenuti delle stringhe!
 
-  ```java
-  String name1 = "Steve";
-  String name2 = "Steve";
+```java
+String name1 = "Steve";
+String name2 = "Steve";
 
-  // Sbagliato - comparazione tra oggetti
-  if (name1 == name2) {
-      System.out.println("Uguali");
-  }
+// Sbagliato - comparazione tra oggetti
+if (name1 == name2) {
+    System.out.println("Uguali");
+}
 
-  // Corretto - comparazione tra i due testi
-  if (name1.equals(name2)) {
-      System.out.println("Uguali");
-  }
+// Corretto - comparazione tra i due testi
+if (name1.equals(name2)) {
+    System.out.println("Uguali");
+}
 
-  // Ignora le maiuscole nel comparare
-  if (name1.equalsIgnoreCase("steve")) {
-      System.out.println("Uguali (ignorando maiuscole)");
-  }
-  ```
+// Ignora le maiuscole nel comparare
+if (name1.equalsIgnoreCase("steve")) {
+    System.out.println("Uguali (ignorando maiuscole)");
+}
+```
 </Callout>
 
 ### Ordine Di Confronto
@@ -194,24 +194,24 @@ System.out.println(result);
 ```
 
 <Callout type="info" title="Perché StringBuilder?">
-  La concatenazione standard crea molte stringhe temporanee:
+La concatenazione standard crea molte stringhe temporanee:
 
-  ```java
-  // Inefficiente - Crea molte stringhe temporanee
-  String result = "";
-  for (int i = 0; i < 1000; i++) {
-      result = result + i;  // Crea 1000 stringhe temporanee!
-  }
+```java
+// Inefficiente - Crea molte stringhe temporanee
+String result = "";
+for (int i = 0; i < 1000; i++) {
+    result = result + i;  // Crea 1000 stringhe temporanee!
+}
 
-  // Efficiente - StringBuilder è mutabile
-  StringBuilder sb = new StringBuilder();
-  for (int i = 0; i < 1000; i++) {
-      sb.append(i);  // Modifica un oggetto
-  }
-  String result = sb.toString();
-  ```
+// Efficiente - StringBuilder è mutabile
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < 1000; i++) {
+    sb.append(i);  // Modifica un oggetto
+}
+String result = sb.toString();
+```
 
-  Usa `StringBuilder` quando costruisci stringhe in loop!
+Usa `StringBuilder` quando costruisci stringhe in loop!
 </Callout>
 
 ## Esempi Pratici
@@ -381,20 +381,19 @@ System.out.println(formatted);
 ```
 
 <Callout type="info" title="Specificatore di formato:">
-  Codici di formato comuni:
+Codici di formato comuni:
+- `%s` - String
+- `%d` - Intero
+- `%f` - Virgola mobile
+- `%.2f` - Virgola mobile con 2 decimali
+- `%n` - A capo (indipendente dalla piattaforma)
 
-  - `%s` - String
-  - `%d` - Intero
-  - `%f` - Virgola mobile
-  - `%.2f` - Virgola mobile con 2 decimali
-  - `%n` - A capo (indipendente dalla piattaforma)
-
-  ```java
-  String.format("Nome: %s", "Steve"); // "Nome: Steve"
-  String.format("Livello: %d", 10); // "Livello: 10"
-  String.format("Salute: %.1f", 85.5); // "Salute: 85.5"
-  String.format("Posizione: (%d, %d, %d)", 10, 64, -5);  // "Posizione: (10, 64, -5)"
-  ```
+```java
+String.format("Nome: %s", "Steve"); // "Nome: Steve"
+String.format("Livello: %d", 10); // "Livello: 10"
+String.format("Salute: %.1f", 85.5); // "Salute: 85.5"
+String.format("Posizione: (%d, %d, %d)", 10, 64, -5);  // "Posizione: (10, 64, -5)"
+```
 </Callout>
 
 ## Operazioni Comuni con le Stringhe

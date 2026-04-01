@@ -4,7 +4,9 @@
     "title": "Hytale Modding",
     "documentation": "Dökümantasyon",
     "sponsors": "Sponsorlar",
-    "search": "Ara"
+    "wiki": "Wiki",
+    "search": "Ara",
+    "grants": "Grants"
   },
   "home": {
     "title": "Hytale Modlama için 1 Numaralı Kaynak {flipwords}",
@@ -27,6 +29,9 @@
     },
     "hytaleReleased": "Hytale çıktı!"
   },
+  "showcaseItems": {
+    "madeBy": "by {author}"
+  },
   "sponsors": {
     "title": "Bizi destekleyin",
     "description": "HytaleModding açık kaynaklı bir topluluk projesidir ve topluluğu yönetmek; bu web sitesini barındırmak gibi hizmetler, sunucular ve altyapı masraflarını karşılamayı da içerir. Projeye destek olmak isterseniz, sponsor olmayı düşünebilirsiniz! Fonların topluluğu desteklemek amacıyla nasıl kullanıldığını görebilmeniz için OpenCollective kullanıyoruz.",
@@ -39,8 +44,8 @@
     "credit": "Yazan",
     "supportUs": "Bizi Destekle",
     "officialDocumentationNotice": {
-      "title": "Official Hytale Documentation",
-      "description": "All content on this section is provided by **Hypixel Studios Canada Inc.** and is presented without any substantial changes, aside from visual design adjustments by the HytaleModding Team."
+      "title": "Resmi Hytale Dokümantasyonu",
+      "description": "Bu bölümdeki tüm içerikler **Hypixel Studios Canada Inc.** tarafından sağlanmıştır ve HytaleModding ekibinin görsel tasarım düzenlemeleri dışında, içerik üzerinde önemli bir değişiklik yapılmadan sunulmuştur."
     }
   },
   "meta": {
@@ -88,6 +93,17 @@
     },
     "community_projects": {
       "title": "Topluluk Projeleri"
+    }
+  },
+  "callout": {
+    "defaultTitles": {
+      "info": "Info",
+      "warning": "Warning",
+      "danger": "Danger",
+      "success": "Success",
+      "lvl_beginner": "Level: Beginner",
+      "lvl_intermediate": "Level: Intermediate",
+      "lvl_advanced": "Level: Advanced"
     }
   }
 }

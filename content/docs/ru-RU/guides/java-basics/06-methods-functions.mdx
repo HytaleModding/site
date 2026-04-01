@@ -71,19 +71,19 @@ public static void main(String[] args) {
 ```
 
 <Callout type="info" title="Порядок параметров очень важен">
-  При вызове метода аргументы должны соответствовать порядку параметров:
+При вызове метода аргументы должны соответствовать порядку параметров:
 
-  ```java
-  public static void createItem(String name, int quantity, double price) {
-      // ...
-  }
+```java
+public static void createItem(String name, int quantity, double price) {
+    // ...
+}
 
-  // Правильный вариант
-  createItem("Sword", 1, 50.0);
+// Правильный вариант
+createItem("Sword", 1, 50.0);
 
-  //Неправильный порядок аргументов!
-  createItem(1, "Sword", 50.0);  // Ошибка!
-  ```
+//Неправильный порядок аргументов!
+createItem(1, "Sword", 50.0);  // Ошибка!
+```
 </Callout>
 
 ## Возвращение значений методов с помощью Return
@@ -125,14 +125,14 @@ public static double calculateDamage(int attack, double multiplier) {
 ```
 
 <Callout type="warning" title="Return прерывает выполнения метода">
-  Как только метод достигает `return`, он немедленно завершается. Код после `return` не будет работать!
+Как только метод достигает `return`, он немедленно завершается. Код после `return` не будет работать!
 
-  ```java
-  public static int getValue() {
-      return 10;
-      System.out.println("Hytale никогда не выйдет!!");  // Строка находится после return, значит она не будет выполнена!
-  }
-  ```
+```java
+public static int getValue() {
+    return 10;
+    System.out.println("Hytale никогда не выйдет!!");  // Строка находится после return, значит она не будет выполнена!
+}
+```
 </Callout>
 
 ## Практические примеры
@@ -247,22 +247,21 @@ public static void main(String[] args) {
 ```
 
 <Callout type="info" title="Правила Использования Перегрузки Метода">
-  Методы считаются разными, если они имеют:
+Методы считаются разными, если они имеют:
+* Разное количество параметров
+* Разные типы параметров
+* Разный порядок параметров
 
-  * Разное количество параметров
-  * Разные типы параметров
-  * Разный порядок параметров
+```java
+public static void test(int a) { }
+public static void test(int a, int b) { }        // Разное количество
+public static void test(double a) { }            // Другой тип данных
+public static void test(String a, int b) { }     // Несколько параметров с разным типом данных
+public static void test(int a, String b) { }     // Другой порядок
 
-  ```java
-  public static void test(int a) { }
-  public static void test(int a, int b) { }        // Разное количество
-  public static void test(double a) { }            // Другой тип данных
-  public static void test(String a, int b) { }     // Несколько параметров с разным типом данных
-  public static void test(int a, String b) { }     // Другой порядок
-
-  // Ошибка, метод отличается только возвращаемым типом данных
-  public static int test(int a) { }
-  ```
+// Ошибка, метод отличается только возвращаемым типом данных
+public static int test(int a) { }
+```
 </Callout>
 
 ## Шаблоны методов в Hytale моддинга
@@ -338,20 +337,20 @@ public static String getHealthStatus(int health, int maxHealth) {
 ## Рекомендации
 
 <Callout type="info" title="Наименование методов">
-  Старайтесь давать методам достаточно подробные наименования, чтобы было понятно, за что они отвечают:
+Старайтесь давать методам достаточно подробные наименования, чтобы было понятно, за что они отвечают:
 
-  ```java
-  // Хорошие примеры
-  public static void calculateDamage() { }
-  public static boolean isPlayerAlive() { }
-  public static String getItemName() { }
-  public static void displayInventory() { }
+```java
+// Хорошие примеры
+public static void calculateDamage() { }
+public static boolean isPlayerAlive() { }
+public static String getItemName() { }
+public static void displayInventory() { }
 
-  // Bad
-  public static void dmg() { }        // Слишком коротко
-  public static void method1() { }    // Недостаточно подробно
-  public static void stuff() { }      // Слишком расплывчатым
-  ```
+// Bad
+public static void dmg() { }        // Слишком коротко
+public static void method1() { }    // Недостаточно подробно
+public static void stuff() { }      // Слишком расплывчатым
+```
 </Callout>
 
 ## Практические Задания
@@ -376,24 +375,23 @@ public static String getHealthStatus(int health, int maxHealth) {
    * Возвращает true, если пароль достаточно надёжный, false, если нет
 
 <Callout type="info" title="Division Note">
-  When writing a password validator, you may need a way to compare array values. For example:
+When writing a password validator, you may need a way to compare array values. For example:
+```java
+String[] array1 = {"Apple", "Banana"};
+String[] array2 = {"Apple", "Banana"};
 
-  ```java
-  String[] array1 = {"Apple", "Banana"};
-  String[] array2 = {"Apple", "Banana"};
+//Wrong:
+array1[0] == array2[0];       // false
+/*
+Array is a non-primitive data type. Java compares reference (non-primitive) data types by 
+their location in Java's memory, not by their values.
+*/
 
-  //Wrong:
-  array1[0] == array2[0];       // false
-  /*
-  Array is a non-primitive data type. Java compares reference (non-primitive) data types by 
-  their location in Java's memory, not by their values.
-  */
+// To compare the actual values of reference data types, use the .equals() method:
+array1[0].equals(array2[0]);       // true 
 
-  // To compare the actual values of reference data types, use the .equals() method:
-  array1[0].equals(array2[0]);       // true 
-
-  // This does not apply to primitive data types.
-  ```
+// This does not apply to primitive data types.
+```
 </Callout>
 
 ## Распространённые ошибки

@@ -1,12 +1,12 @@
 ---
-title: Customizing Hotbar Actions
-description: Step by step breakdown on customizing hotbar functionality.
+title: Packet Interception
+description: Step by step breakdown on customizing hotbar functionality via packet interception.
 authors:
   - name: Vibe Theory
     url: https://discord.com/users/145420279294722048
 ---
 
-This guide walks you through creating a custom keybind system for Hytale servers. By the end, you'll understand how to intercept player inputs, block default behaviors, and trigger custom abilities - like launching a projectile when pressing a specific key.
+This guide teaches packet interception and modification using hotbar actions as a practical example. **If custom hotbar actions are your primary goal**, consider using item-level or unarmed interaction overrides instead. They're the native approach for that mechanic and avoid desync issues entirely (see _Native Interaction Overrides_ at the bottom). The hotbar use case makes a great learning example because it touches packet filtering, client-server desync, interaction chain cancellation, and thread safety.
 
 ## Learn By Doing
 
@@ -15,9 +15,6 @@ In this guide, We're going to turn hotbar slot 8 (the "9" key) into an ability t
 1. The normal slot-switching behavior is blocked
 2. The player stays on their current slot
 3. Some ideas to get started on what to have it actually do
-
-This same pattern can be adapted for any custom keybind system - dodge rolls, special attacks, spell casting, etc.
-**Critical Note:** This is for the hotbar only. Further guides on other keys available to override are coming, but each system requires a slightly different approach. This does mean you will lose a hotbar slot for every custom action you add.
 
 ---
 
@@ -134,33 +131,46 @@ public boolean test(@Nonnull PlayerRef playerRef, @Nonnull Packet packet) {
         return false;
     }
 
-    // Step 2
-    for (SyncInteractionChain chain : syncPacket.updates) {
-        if (chain.interactionType == InteractionType.SwapFrom
-                && chain.data != null
-                && chain.data.targetSlot == ABILITY_SLOT
-                && chain.initial) {
+   // Step 2: Separate ability chains from everything else
+   SyncInteractionChain abilityChain = null;
+   List<SyncInteractionChain> keep = new ArrayList<>();
 
-            int originalSlot = chain.activeHotbarSlot;
-            // Trigger ability and fix client state (covered in next sections)
-            handleAbilityTrigger(playerRef, originalSlot);
-            return true;
-        }
-    }
+   for (SyncInteractionChain chain : syncPacket.updates) {
+      if (chain.interactionType == InteractionType.SwapFrom
+             && chain.data != null
+             && chain.data.targetSlot == ABILITY_SLOT
+             && chain.initial
+             && abilityChain == null) {
+         abilityChain = chain;
+      } else {
+         keep.add(chain);
+      }
+   }
 
-    return false;
+   // No ability chain found — let packet through untouched
+   if (abilityChain == null) {
+        return false;
+   }
+
+   // Step 3: Cancel the ability chain and trigger the ability
+   handleAbilityTrigger(playerRef, abilityChain.activeHotbarSlot,
+           abilityChain.chainId, abilityChain.forkedId);
+
+   // Step 4: If the packet had other chains (attacks, block places, etc),
+   // strip the ability chain out and let the rest through
+   if (!keep.isEmpty()) {
+       syncPacket.updates = keep.toArray(new SyncInteractionChain[0]);
+       return false; // Modified packet passes through
+   }
+
+   // Packet only contained the ability chain — block it entirely
+   return true;
 }
 ```
 
-**Why these conditions?**
+Why not just block the whole packet? `SyncInteractionChains` can contain multiple chains bundled together. For example, a block placement and a slot swap in the same packet. If we return true to block everything, those other interactions get silently dropped. Instead, we strip out only the ability chain and let the rest pass through to the server normally.
 
-- `SwapFrom` - The client is leaving their current slot
-- `data.targetSlot == 8` - They're trying to go to slot 9
-- `initial == true` - This is a new interaction, not a continuation of an existing one
-
-Okay, now we are filtering for `SyncInteractionChains` packets and detecting when the player tries to switch to our designated ability slot.
-
----
+## So now we're detecting the ability trigger and preserving any other interactions in the same packet. But the client still doesn't know we rejected the ability chain. That's where `CancelInteractionChain` comes in.
 
 ## Part 4: The Client Desync Problem
 
@@ -171,15 +181,24 @@ Here's where it gets tricky, because the Client performs this action locally _be
 - **Server**: Player stays on slot 5 (we blocked the packet)
 - **Client**: Player is on slot 8 (already switched locally before sending)
 
-The client and server are now **desynced**. The player will appear to be on slot 9 but the server thinks they're on slot 5, so now we need to fix the client state.
+The client and server are now **desynced**, and it's deeper than just the visible hotbar slot. The client also started an interaction chain (identified by `chainId`) and is waiting for the server to acknowledge it. Since we blocked the packet that'll never happen, so the client's interaction prediction system will stay out of sync.
 
-### Fixing The Client State: SetActiveSlot Packet
+### Fixing The Client State: CancelInteractionChain & SetActiveSlot Packet
 
-You need to send `SetActiveSlot` (packet 177), which explicitly tells the client which slot to select:
+We need to match the pattern the engine itself uses when rejecting invalid chains (see `InteractionManager.java`):
+
+1. `CancelInteractionChain(chainId, forkedId)`: tells the client "the server rejected this chain, stop predicting it"
+2. `SetActiveSlot(HOTBAR_SECTION_ID, originalSlot)`: resyncs the visible hotbar slot
 
 ```java
+import com.hypixel.hytale.protocol.ForkedChainId;
+import com.hypixel.hytale.protocol.packets.interaction.CancelInteractionChain;
 import com.hypixel.hytale.protocol.packets.inventory.SetActiveSlot;
 import com.hypixel.hytale.server.core.inventory.Inventory;
+
+// Cancel interaction chain so the client stops predicting it
+playerRef.getPacketHandler().writeNoCache(
+        new CancelInteractionChain(chainId, forkedId));
 
 // Update server-side state
 playerComponent.getInventory().setActiveHotbarSlot((byte) originalSlot);
@@ -189,10 +208,10 @@ SetActiveSlot setActiveSlotPacket = new SetActiveSlot(
     Inventory.HOTBAR_SECTION_ID,  // -1 indicates the hotbar
     originalSlot                   // The slot index to select
 );
-playerRef.getPacketHandler().write(setActiveSlotPacket);
+playerRef.getPacketHandler().writeNoCache(setActiveSlotPacket);
 ```
 
-This directly tells the client "your selected slot is now X", fixing the desync!
+The `CancelInteractionChain` tells the client to stop predicting the rejected chain, and `SetActiveSlot` fixes the visible hotbar slot, fixing the desync!
 
 ---
 
@@ -203,7 +222,7 @@ Packet handlers run on network threads, but entity operations must run on the wo
 Schedule your entity operations on the world thread:
 
 ```java
-private void handleAbilityTrigger(PlayerRef playerRef, int originalSlot) {
+private void handleAbilityTrigger(PlayerRef playerRef, int originalSlot, int chainId, ForkedChainId forkedId) {
     Ref<EntityStore> entityRef = playerRef.getReference();
     if (entityRef == null || !entityRef.isValid()) {
         return;
@@ -217,6 +236,16 @@ private void handleAbilityTrigger(PlayerRef playerRef, int originalSlot) {
         if (playerComponent == null) {
             return;
         }
+
+        // Cancel the interaction chain & resync hotbar
+        playerRef.getPacketHandler().writeNoCache(
+                new CancelInteractionChain(chainId, forkedId));
+        playerComponent.getInventory().setActiveHotbarSlot((byte) originalSlot);
+        SetActiveSlot setActiveSlotPacket = new SetActiveSlot(
+            Inventory.HOTBAR_SECTION_ID,  // -1 indicates the hotbar
+            originalSlot                   // The slot index to select
+        );
+        playerRef.getPacketHandler().writeNoCache(setActiveSlotPacket);
 
         // Your ability logic here
     });
@@ -273,11 +302,31 @@ import java.util.logging.Level;
 - Are you sending `SetActiveSlot` correctly?
 - Verify the code running on the world thread with `world.execute()`.
 
+**Block placements or attacks get dropped when spamming them with ability keys:**
+
+- If you're using `return true` to block the entire packet, other interactions bundled in the same packet get silently dropped. Verify against Part 3 again to ensure you're only filtering for the correct packets.
+
 **Errors about threads or null components:**
 
 - Always check if `entityRef.isValid()` before using it.
 - Always null-check components - players can disconnect mid-operation.
 - Make sure entity operations are inside `world.execute()`.
+
+---
+
+## Native Interaction Overrides
+
+The packet filter approach above works by intercepting packets _outside_ the interaction system and manually cleaning up the desync. It's a great way to learn packet interception, but if custom hotbar actions are your end goal, there's 2 cleaner native approaches that avoids desync entirely.
+
+Hytale's interaction system uses `UnarmedInteractions`, a JSON asset that maps each `interactiontype` to a `RootInteraction`. By default, SwapFrom maps to ChangeActiveSlotInteraction, which is the built-in slot-switch logic. You can override this at two levels:
+
+**1: Item-level interactions:** Define a custom `RootInteraction` for `SwapFrom` or `SwapTo` on specific items. When that item is held and the player swaps, your interaction runs instead of the default. Both client and server execute the same interaction definition, so they stay in sync natively.
+
+**2: Override unarmed interactions globally:** Replace `SwapFrom`'s mapping in the `"Empty" UnarmedInteractions` asset in your asset pack, pointing it to your own interaction instead of `*Default_Swap`. This catches all hotbar swaps at the interaction level. No packet filtering, no cancel packets, no desync.
+
+\*Notes: Each of the above has considerations.
+1: Item-level requires the item be held at the start of the chain (your sword needs the command the mapping, not an ability item).
+2: Unarmed interactions is a global filter, you need to add supporting logic so it only covers specific hotbar slots under specific conditions, not all of them.
 
 ---
 

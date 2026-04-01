@@ -9,7 +9,7 @@ Para começar a escrever um guia, crie um arquivo com a extensão `.mdx`. Crie e
 Suponha que eu queira criar um guia de fundamentos do Java, então eu o colocaria em `/content/docs/en/guides/java-basics`. Você precisará investigar um pouco para descobrir onde deseja colocá-lo.
 
 <Callout>
-  Se já houver um guia na seção sobre a qual você deseja escrever, basta clicar no botão "Edit On GitHub" em nosso site. Isso levará você diretamente à pasta correta. Salve seu novo guia nela para que ele apareça na mesma seção.
+    Se já houver um guia na seção sobre a qual você deseja escrever, basta clicar no botão "Edit On GitHub" em nosso site. Isso levará você diretamente à pasta correta. Salve seu novo guia nela para que ele apareça na mesma seção.
 </Callout>
 
 ## Frontmatter
@@ -57,6 +57,38 @@ Utilizamos [Markdown](https://www.markdownguide.org/) para formatar os nossos gu
 
 Esse é o mesmo tipo de formatação que você verá na maioria dos sites de documentação e também em plataformas sociais, como o Discord.
 
+### Links
+
+Everyone knows what a link is. However, there is a difference between linking to an external resource and linking to an internal one.
+
+Em geral, em Markdown eles são escritos da seguinte forma: `[Seu texto](Seu link)`
+
+#### Externo
+
+Nada para explicar, apenas `https://exemplo.com`.
+
+#### Interno
+
+You cannot use regular links here. Let's say your link to another guide is `https://hytalemodding.dev/en/docs/quick-start`.
+You can't write it like that because you are not only referring to the page but also to the language, which is not correct.
+Instead, type `./quick-start` which is correct and links to the page in the user's language.
+
+**Acessando arquivos**
+
+- **Pasta atual**: `./`
+- **Folder above**: `../` as many times as this folder is higher in the hierarchy.
+
+## Ícones
+
+If you want to add an icon for your page then you should use [Lucide](https://lucide.dev/).
+
+1. Acesse o [site](https://lucide.dev/) e encontre um ícone que desejar;
+2. Após selecionar um ícone, clique nele e depois em "See in action";
+3. Em seguida, clique em "React" que estamos usando. Você apenas precisará do texto entre as chaves na primeira linha;
+4. Depois, cole `icon: SeuÍcone` no Frontmatter.
+
+## Callout
+
 Você também pode usar um callout para destacar informações ou dicas importantes. Use a seguinte sintaxe:
 
 ```mdx
@@ -66,7 +98,7 @@ Você também pode usar um callout para destacar informações ou dicas importan
 ```
 
 <Callout>
-  Esta é uma mensagem em destaque usando callout.
+    Esta é uma mensagem em destaque usando callout.
 </Callout>
 
 Você pode alterar a cor do callout adicionando um atributo `type`. Por exemplo:
@@ -78,6 +110,26 @@ Você pode alterar a cor do callout adicionando um atributo `type`. Por exemplo:
 ```
 
 Os tipos disponíveis são: `info`, `warning`,  `error`  e `success`.
+
+## Níveis de dificuldade
+
+These are types of callouts, they are optional, they show how complex your page can be.
+There are 3 main levels of complexity.
+
+<Callout type="lvl_beginner">
+    Use `lvl_beginner`. This page contains information for those who are starting out with modding.
+</Callout>
+
+<Callout type="lvl_intermediate">
+    Use `lvl_intermediate`. This page contains information for those who want to deepen their knowledge.
+</Callout>
+
+<Callout type="lvl_advanced">
+   Use `lvl_advanced`. This page contains information for those who already know how to make quality mods, and contains something additional.
+</Callout>
+
+Their usage is the same as in callout, but we would advise not to change the title. Inside,
+you write why your page is classified as this level and what the user should know.
 
 ## Conclusão
 

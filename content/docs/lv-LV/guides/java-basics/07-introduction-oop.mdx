@@ -50,10 +50,10 @@ public class Main {
 ```
 
 <Callout type="info" title="Klase pret Objektu">
-  **Klase** = Plāns (iedomājies spēlētāju)
-  **Objekts** = Reāla lieta (Alice, Bobs, specifiski spēlētāji)
+**Klase** = Plāns (iedomājies spēlētāju)
+**Objekts** = Reāla lieta (Alice, Bobs, specifiski spēlētāji)
 
-  Viena klase var izveidot vairākus objektus, tāpat kā viena recepte vairākas kūkas!
+Viena klase var izveidot vairākus objektus, tāpat kā viena recepte vairākas kūkas!
 </Callout>
 
 ## Vienkāršas Klases izveidošana
@@ -144,29 +144,29 @@ public class Main {
 ```
 
 <Callout type="info" title="Konstrukcijas Noteikumi">
-  * Vienāds nosaukums ar klasi
-  * Nav atgriešanas tipa (pat ne `void`)
-  * Izsaukts automātiski, kad izmanto `new`
-  * Var būt vairāki konstruktori (pārlādēšana)
+* Vienāds nosaukums ar klasi
+* Nav atgriešanas tipa (pat ne `void`)
+* Izsaukts automātiski, kad izmanto `new`
+* Var būt vairāki konstruktori (pārlādēšana)
 
-  ```java
-  public class Prieksmets {
-      String nosaukums;
-      int vertiba;
-      
-      // Konstrukcija ar visiem parametriem
-      public Prieksmets(String nosaukums, int vertiba) {
-          this.nosaukums = nosaukums;
-          this.vertiba = vertiba;
-      }
-      
-      // Konstrukcija tikai ar nosaukumu
-      public Prieksmets(String nosaukums) {
-          this.nosaukums = nosaukums;
-          this.vertiba = 0;  // Noklusējuma vērtība
-      }
-  }
-  ```
+```java
+public class Prieksmets {
+    String nosaukums;
+    int vertiba;
+    
+    // Konstrukcija ar visiem parametriem
+    public Prieksmets(String nosaukums, int vertiba) {
+        this.nosaukums = nosaukums;
+        this.vertiba = vertiba;
+    }
+    
+    // Konstrukcija tikai ar nosaukumu
+    public Prieksmets(String nosaukums) {
+        this.nosaukums = nosaukums;
+        this.vertiba = 0;  // Noklusējuma vērtība
+    }
+}
+```
 </Callout>
 
 ## Kas ir `this`
@@ -343,14 +343,13 @@ public class Example {
 Pagaidām izmanto `public` visam. Iemācīsimies lietot  `private` nākamajā sadaļā.
 
 <Callout type="info" title="Kāpēc Izmantot Klases?">
-  Klases palīdz:
+Klases palīdz:
+* **Organizēt** saistītos datus un metodes kopā
+* **Atkārtoti izmantojiet** kodu vienkārši (veido daudzus objektus no vienas klases)
+* **Modelēt** iekš-pasaules lietas (spēlētāji, priekšmeti, monstri)
+* **Uzturēt** kodu (izmaiņas vienuviet ietekmē visus objektus)
 
-  * **Organizēt** saistītos datus un metodes kopā
-  * **Atkārtoti izmantojiet** kodu vienkārši (veido daudzus objektus no vienas klases)
-  * **Modelēt** iekš-pasaules lietas (spēlētāji, priekšmeti, monstri)
-  * **Uzturēt** kodu (izmaiņas vienuviet ietekmē visus objektus)
-
-  Bez klasēm, lai pārvaldītu 100 spēlētājus, katrai īpašībai būtu nepieciešami 100 atsevišķi mainīgie. Ar klasēm tie ir tikai 100 spēlētāju objekti.
+Bez klasēm, lai pārvaldītu 100 spēlētājus, katrai īpašībai būtu nepieciešami 100 atsevišķi mainīgie. Ar klasēm tie ir tikai 100 spēlētāju objekti.
 </Callout>
 
 ## Praktisks Vingrinājums

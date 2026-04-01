@@ -43,18 +43,18 @@ public class Player extends Entity {
 ```
 
 <Callout type="info" title="Mantošanas Terminoloģija">
-  - **Superclass/Parent**: Klase no kuras tiek mantots (Entity)
-  - **Subclass/Child**: Klase, kas manto (Player)
-  - **extends**: Atslēgvārds, lai mantotu no klases
-  - **super**: Atslēgvārds, kas piekļūst vecāka klases locekļiem
+- **Superclass/Parent**: Klase no kuras tiek mantots (Entity)
+- **Subclass/Child**: Klase, kas manto (Player)
+- **extends**: Atslēgvārds, lai mantotu no klases
+- **super**: Atslēgvārds, kas piekļūst vecāka klases locekļiem
 
-  ```java
-  public class Monster extends Entity {
-      // Monstrs IR Entity
-      // Monstrs manto no Entity
-      // Entity ir vecāks, Monstrs ir bērns
-  }
-  ```
+```java
+public class Monster extends Entity {
+    // Monstrs IR Entity
+    // Monstrs manto no Entity
+    // Entity ir vecāks, Monstrs ir bērns
+}
+```
 </Callout>
 
 ## Extends atslēgvārds
@@ -112,23 +112,23 @@ public class Player extends Entity {
 ```
 
 <Callout type="warning" title="Konstruktora Noteikumi">
-  - `super()` jābūt **pirmajam** nosacījumam bērna konstruktorā
-  - Ja neizsauksi `super()`, Java automātiski izsauks bez-argumentu vecāku konstruktoru
-  - Ja vecākam nav bez-argumentu konstruktora, tev OBLIGĀTI jāizsauc `super()` ar argumentiem
+- `super()` jābūt **pirmajam** nosacījumam bērna konstruktorā
+- Ja neizsauksi `super()`, Java automātiski izsauks bez-argumentu vecāku konstruktoru
+- Ja vecākam nav bez-argumentu konstruktora, tev OBLIGĀTI jāizsauc `super()` ar argumentiem
 
-  ```java
-  // Nepareizi - super() nav vispirms
-  public Player(String name, int level) {
-      this.level = level;
-      super(name);  // Kļūda!
-  }
+```java
+// Nepareizi - super() nav vispirms
+public Player(String name, int level) {
+    this.level = level;
+    super(name);  // Kļūda!
+}
 
-  // Pareizi
-  public Player(String name, int level) {
-      super(name);  // Izsaukts pirmais
-      this.level = level;
-  }
-  ```
+// Pareizi
+public Player(String name, int level) {
+    super(name);  // Izsaukts pirmais
+    this.level = level;
+}
+```
 </Callout>
 
 ### Vecāku Metodes Izsaukšana
@@ -191,24 +191,23 @@ public class Main {
 ```
 
 <Callout type="info" title="@Override Anotācija">
-  Vienmēr izmanto `@Override`, kad pārraksti metodes:
+Vienmēr izmanto `@Override`, kad pārraksti metodes:
+- Palīdz noķert drukas kļūdas (ja metode neeksistē vecākā, pretīm izmetīs kļūdu)
+- Padara kodu tīrāku
+- Laba dokumentācija
 
-  - Palīdz noķert drukas kļūdas (ja metode neeksistē vecākā, pretīm izmetīs kļūdu)
-  - Padara kodu tīrāku
-  - Laba dokumentācija
+```java
+// Bez @Override - drukas kļūda netiek noķerta
+public void attac() {  // Drukas kļūda! Izveidos jaunu metodi
+    // ...
+}
 
-  ```java
-  // Bez @Override - drukas kļūda netiek noķerta
-  public void attac() {  // Drukas kļūda! Izveidos jaunu metodi
-      // ...
-  }
-
-  // Ar @Override - noķers kļūdu uzreiz
-  @Override
-  public void attac() {  // Kļūda: metode neeksistē vecākā
-      // ...
-  }
-  ```
+// Ar @Override - noķers kļūdu uzreiz
+@Override
+public void attac() {  // Kļūda: metode neeksistē vecākā
+    // ...
+}
+```
 </Callout>
 
 ## Pieejas Modifikātori iekš Mantojuma
@@ -505,20 +504,20 @@ for (Entity entity : entities) {
 ```
 
 <Callout type="info" title="Polimorfisma Guvumi">
-  Polimorfisms ļauj rakstīt kodu, kas strādā ar vecāku tipiem, bet apstrādā bērnu tipus korekti:
+Polimorfisms ļauj rakstīt kodu, kas strādā ar vecāku tipiem, bet apstrādā bērnu tipus korekti:
 
-  ```java
-  public void damageEntity(Entity entity, int damage) {
-      entity.takeDamage(damage);
-      // Darbojas priekš Spēlētāja, Monstra, Bosa u.c.
-      // Katrs izmanto savu takeDamage() versiju
-  }
+```java
+public void damageEntity(Entity entity, int damage) {
+    entity.takeDamage(damage);
+    // Darbojas priekš Spēlētāja, Monstra, Bosa u.c.
+    // Katrs izmanto savu takeDamage() versiju
+}
 
-  // Var izsaukt ar jebkuru vienības tipu
-  damageEntity(new Player("Alice"), 10);
-  damageEntity(new Monster("Goblin", 50, 10, "Hostile"), 10);
-  damageEntity(new Boss("Dragon", 500, 50), 10);
-  ```
+// Var izsaukt ar jebkuru vienības tipu
+damageEntity(new Player("Alice"), 10);
+damageEntity(new Monster("Goblin", 50, 10, "Hostile"), 10);
+damageEntity(new Boss("Dragon", 500, 50), 10);
+```
 </Callout>
 
 ## Objekta Klase

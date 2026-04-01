@@ -16,16 +16,16 @@ String empty = "";
 ```
 
 <Callout type="warning" title="Strings are Immutable">
-  Once created, a String **cannot be changed**. Methods that seem to modify a string actually create a new one!
+Once created, a String **cannot be changed**. Methods that seem to modify a string actually create a new one!
 
-  ```java
-  String text = "Hello";
-  text.toUpperCase();           // Creates "HELLO" but doesn't save it
-  System.out.println(text);     // Still "Hello"
+```java
+String text = "Hello";
+text.toUpperCase();           // Creates "HELLO" but doesn't save it
+System.out.println(text);     // Still "Hello"
 
-  String upper = text.toUpperCase();  // ✓ Save the result
-  System.out.println(upper);          // "HELLO"
-  ```
+String upper = text.toUpperCase();  // ✓ Save the result
+System.out.println(upper);          // "HELLO"
+```
 </Callout>
 
 ## String Methods
@@ -71,16 +71,16 @@ String sub2 = text.substring(6);      // "World"
 ```
 
 <Callout type="info" title="Substring Indices">
-  `substring(start, end)` includes `start` but excludes `end`:
+`substring(start, end)` includes `start` but excludes `end`:
 
-  ```java
-  String text = "Hytale";
-  //             012345 (indices)
+```java
+String text = "Hytale";
+//             012345 (indices)
 
-  text.substring(0, 2);  // "Hy" (indices 0 and 1)
-  text.substring(2, 6);  // "tale" (indices 2, 3, 4, 5)
-  text.substring(2);     // "tale" (from 2 to end)
-  ```
+text.substring(0, 2);  // "Hy" (indices 0 and 1)
+text.substring(2, 6);  // "tale" (indices 2, 3, 4, 5)
+text.substring(2);     // "tale" (from 2 to end)
+```
 </Callout>
 
 ### Replacing Text
@@ -117,27 +117,27 @@ System.out.println(parts[3]);  // "5"
 ## String Comparison
 
 <Callout type="warning" title="Never Use == for Strings">
-  Always use `.equals()` to compare string contents!
+Always use `.equals()` to compare string contents!
 
-  ```java
-  String name1 = "Steve";
-  String name2 = "Steve";
+```java
+String name1 = "Steve";
+String name2 = "Steve";
 
-  // Wrong - Compares object references
-  if (name1 == name2) {
-      System.out.println("Same");
-  }
+// Wrong - Compares object references
+if (name1 == name2) {
+    System.out.println("Same");
+}
 
-  // Correct - Compares actual text
-  if (name1.equals(name2)) {
-      System.out.println("Same");
-  }
+// Correct - Compares actual text
+if (name1.equals(name2)) {
+    System.out.println("Same");
+}
 
-  // Ignore case when comparing
-  if (name1.equalsIgnoreCase("steve")) {
-      System.out.println("Same (ignoring case)");
-  }
-  ```
+// Ignore case when comparing
+if (name1.equalsIgnoreCase("steve")) {
+    System.out.println("Same (ignoring case)");
+}
+```
 </Callout>
 
 ### Comparing Order
@@ -194,24 +194,24 @@ System.out.println(result);
 ```
 
 <Callout type="info" title="Why StringBuilder?">
-  Regular concatenation creates many temporary strings:
+Regular concatenation creates many temporary strings:
 
-  ```java
-  // Inefficient - Creates many temporary strings
-  String result = "";
-  for (int i = 0; i < 1000; i++) {
-      result = result + i;  // Creates 1000 temporary strings!
-  }
+```java
+// Inefficient - Creates many temporary strings
+String result = "";
+for (int i = 0; i < 1000; i++) {
+    result = result + i;  // Creates 1000 temporary strings!
+}
 
-  // Efficient - StringBuilder is mutable
-  StringBuilder sb = new StringBuilder();
-  for (int i = 0; i < 1000; i++) {
-      sb.append(i);  // Modifies one object
-  }
-  String result = sb.toString();
-  ```
+// Efficient - StringBuilder is mutable
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < 1000; i++) {
+    sb.append(i);  // Modifies one object
+}
+String result = sb.toString();
+```
 
-  Use `StringBuilder` when building strings in loops!
+Use `StringBuilder` when building strings in loops!
 </Callout>
 
 ## Practical Examples
@@ -386,21 +386,20 @@ System.out.println(formatted);
 ```
 
 <Callout type="info" title="Format Specifiers">
-  Common format codes:
+Common format codes:
+- `%s` - String
+- `%d` - Integer
+- `%f` - Floating point
+- `%.2f` - Float with 2 decimal places
+- `%n` - New line (platform independent)
 
-  - `%s` - String
-  - `%d` - Integer
-  - `%f` - Floating point
-  - `%.2f` - Float with 2 decimal places
-  - `%n` - New line (platform independent)
-
-  ```java
-  String.format("Name: %s", "Steve");          // "Name: Steve"
-  String.format("Level: %d", 10);              // "Level: 10"
-  String.format("Health: %.1f", 85.5);         // "Health: 85.5"
-  String.format("Position: (%d, %d, %d)", 
-                10, 64, -5);                    // "Position: (10, 64, -5)"
-  ```
+```java
+String.format("Name: %s", "Steve");          // "Name: Steve"
+String.format("Level: %d", 10);              // "Level: 10"
+String.format("Health: %.1f", 85.5);         // "Health: 85.5"
+String.format("Position: (%d, %d, %d)", 
+              10, 64, -5);                    // "Position: (10, 64, -5)"
+```
 </Callout>
 
 ## Common String Operations

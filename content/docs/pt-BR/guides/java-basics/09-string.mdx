@@ -16,16 +16,16 @@ String empty = "";
 ```
 
 <Callout type="warning" title="Strings são imutáveis">
-  Uma vez criada, uma string **não pode ser alterada**. Métodos que parecem modificar uma string e realmente criam uma nova!
+Uma vez criada, uma string **não pode ser alterada**. Métodos que parecem modificar uma string e realmente criam uma nova!
 
-  ```java
-  String text = "Olá";
-  text.toUpperCase();           // Cria "OLÁ", mas não o salva
-  System.out.println(text);     // Ainda "Olá"
+```java
+String text = "Olá";
+text.toUpperCase();           // Cria "OLÁ", mas não o salva
+System.out.println(text);     // Ainda "Olá"
 
-  String upper = text.toUpperCase();  // ✓ Salva o resultado
-  System.out.println(upper);          // "OLÁ"
-  ```
+String upper = text.toUpperCase();  // ✓ Salva o resultado
+System.out.println(upper);          // "OLÁ"
+```
 </Callout>
 
 ## Métodos de string
@@ -71,16 +71,16 @@ String sub2 = text.substring(6);      // "Mundo"
 ```
 
 <Callout type="info" title="Índices de substring">
-  `substring(start, end)` inclue `start`, mas não `end`:
+`substring(start, end)` inclue `start`, mas não `end`:
 
-  ```java
-  String text = "Hytale";
-  //             012345 (índices)
+```java
+String text = "Hytale";
+//             012345 (índices)
 
-  text.substring(0, 2);  // "Hy" (índices 0 e 1)
-  text.substring(2, 6);  // "tale" (índices 2, 3, 4, 5)
-  text.substring(2);     // "tale" (de 2 até o final)
-  ```
+text.substring(0, 2);  // "Hy" (índices 0 e 1)
+text.substring(2, 6);  // "tale" (índices 2, 3, 4, 5)
+text.substring(2);     // "tale" (de 2 até o final)
+```
 </Callout>
 
 ### Substituindo texto
@@ -117,27 +117,27 @@ System.out.println(parts[3]);  // "uma"
 ## Comparação de strings
 
 <Callout type="warning" title="Nunca use `==` para strings">
-  Sempre use `.equals()` para comparar os conteúdos das strings!
+Sempre use `.equals()` para comparar os conteúdos das strings!
 
-  ```java
-  String name1 = "Steve";
-  String name2 = "Steve";
+```java
+String name1 = "Steve";
+String name2 = "Steve";
 
-  // Errado — Compara referências de objetos
-  if (name1 == name2) {
-      System.out.println("Iguais");
-  }
+// Errado — Compara referências de objetos
+if (name1 == name2) {
+    System.out.println("Iguais");
+}
 
-  // Correto — Compara o texto real
-  if (name1.equals(name2)) {
-      System.out.println("Iguais");
-  }
+// Correto — Compara o texto real
+if (name1.equals(name2)) {
+    System.out.println("Iguais");
+}
 
-  // Ignora letras maiúsculas e minúsculas ao comparar.
-  if (name1.equalsIgnoreCase("steve")) {
-      System.out.println("Iguais (ignorando a capitalização");
-  }
-  ```
+// Ignora letras maiúsculas e minúsculas ao comparar.
+if (name1.equalsIgnoreCase("steve")) {
+    System.out.println("Iguais (ignorando a capitalização");
+}
+```
 </Callout>
 
 ### Comparando a ordem
@@ -194,24 +194,24 @@ System.out.println(result);
 ```
 
 <Callout type="info" title="Por que StringBuilder?">
-  A concatenação regular cria muitas strings temporárias:
+A concatenação regular cria muitas strings temporárias:
 
-  ```java
-  // Ineficiente — Cria muitas strings temporárias
-  String result = "";
-  for (int i = 0; i < 1000; i++) {
-      result = result + i;  // Cria 1000 strings temporárias!
-  }
+```java
+// Ineficiente — Cria muitas strings temporárias
+String result = "";
+for (int i = 0; i < 1000; i++) {
+    result = result + i;  // Cria 1000 strings temporárias!
+}
 
-  // Eficiente — StringBuilder é mutável
-  StringBuilder sb = new StringBuilder();
-  for (int i = 0; i < 1000; i++) {
-      sb.append(i);  // Modifica um objeto
-  }
-  String result = sb.toString();
-  ```
+// Eficiente — StringBuilder é mutável
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < 1000; i++) {
+    sb.append(i);  // Modifica um objeto
+}
+String result = sb.toString();
+```
 
-  Use `StringBuilder` ao montar strings em repetições!
+Use `StringBuilder` ao montar strings em repetições!
 </Callout>
 
 ## Exemplos práticos
@@ -386,21 +386,20 @@ System.out.println(formatted);
 ```
 
 <Callout type="info" title="Especificadores de formatação">
-  Códigos de formatação comuns:
+Códigos de formatação comuns:
+- `%s` — String
+- `%d` — Integer
+- `%f` — Ponto flutuante (decimal)
+- `%.2f` — Float com 2 casas decimais
+- `%n` — Nova linha (independente da plataforma)
 
-  - `%s` — String
-  - `%d` — Integer
-  - `%f` — Ponto flutuante (decimal)
-  - `%.2f` — Float com 2 casas decimais
-  - `%n` — Nova linha (independente da plataforma)
-
-  ```java
-  String.format("Nome: %s", "Steve");          // "Nome: Steve"
-  String.format("Nível: %d", 10);              // "Nível: 10"
-  String.format("Vida: %.1f", 85.5);         // "Vida: 85.5"
-  String.format("Posição: (%d, %d, %d)", 
-                10, 64, -5);                    // "Posição: (10, 64, -5)"
-  ```
+```java
+String.format("Nome: %s", "Steve");          // "Nome: Steve"
+String.format("Nível: %d", 10);              // "Nível: 10"
+String.format("Vida: %.1f", 85.5);         // "Vida: 85.5"
+String.format("Posição: (%d, %d, %d)", 
+              10, 64, -5);                    // "Posição: (10, 64, -5)"
+```
 </Callout>
 
 ## Operações comuns com as strings
@@ -436,8 +435,8 @@ public static int countOccurrences(String text, String target) {
     return count;
 }
 
-// Usage
-int count = countOccurrences("hello hello world", "hello");
+// Modo de uso
+int count = countOccurrences("olá olá mundo", "olá");
 System.out.println(count);  // 2
 ```
 
@@ -449,12 +448,12 @@ public static String reverse(String text) {
     return sb.reverse().toString();
 }
 
-// Usage
-String reversed = reverse("Hello");
-System.out.println(reversed);  // "olleH"
+// Modo de uso
+String reversed = reverse("Olá");
+System.out.println(reversed);  // "álO"
 ```
 
-### Check if Palindrome
+### Verifique se é um palíndromo
 
 ```java
 public static boolean isPalindrome(String text) {
@@ -463,31 +462,31 @@ public static boolean isPalindrome(String text) {
     return cleaned.equals(reversed);
 }
 
-// Usage
-System.out.println(isPalindrome("racecar"));     // true
-System.out.println(isPalindrome("hello"));       // false
+// Modo de uso
+System.out.println(isPalindrome("carrodecorrida"));     // Correto
+System.out.println(isPalindrome("olá"));       // Errado
 ```
 
 ## Exercícios práticos
 
-1. **Username Checker**: Write a method that checks if a username:
-   - Is between 3 and 16 characters
-   - Contains only letters, numbers, and underscores
-   - Doesn't start with a number
-   - Returns true if valid, false otherwise
+1. **Verificador de nome de usuário**: escreva um método que verifique se um nome de usuário:
+   - Deve ter entre 3 e 16 caracteres;
+   - Conter apenas letras, números e sublinhados;
+   - Não pode começar com um número;
+   - Retorna _true_ se for válido e _false_ se não for.
 
-2. **Command Parser**: Parse this command format: `/teleport x y z`
-   - Extract the coordinates
-   - Convert them to integers
-   - Return an array of the three values
+2. **Command `parse`**: realize o `parse` deste formato de comando: `/teleport x y z`:
+   - Extraia as coordenadas;
+   - Converta para números inteiros;
+   - Retorne um array de três valores.
 
-3. **Chat Formatter**: Create a method that formats chat messages:
-   - Input: player name, rank, message
-   - Output: `"[RANK] PlayerName: message"`
-   - If no rank, just show `"PlayerName: message"`
+3. **Formatador de bate-papo**: crie um método que formate as mensagens do bate-papo:
+   - Input: nome do jogador, rank, mensagem;
+   - Output: `"[RANK] nome do jogador: mensagem"`;
+   - Se não houver rank, apenas mostre `"Nome do jogador: mensagem"`.
 
-4. **Word Counter**: Count how many words are in a sentence (words are separated by spaces)
+4. **Contagem de palavras**: contar quantas palavras há em uma frase (as palavras são separadas por espaços).
 
-5. **Title Case**: Convert a string to title case:
-   - Input: `"hello world"`
-   - Output: `"Hello World"`
+5. **Title-case**: converter uma sequência de caracteres para maiúsculas e minúsculas:
+   - Input: `"olá mundo"`;
+   - Output: `"Olá Mundo"`.

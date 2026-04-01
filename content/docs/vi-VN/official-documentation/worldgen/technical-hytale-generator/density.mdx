@@ -17,12 +17,12 @@ Expected Inputs: 0
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Value",
-     description: "Decimal number.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Value",
+   description: "Decimal number.",
+ },
+]}
 />
 
 ---
@@ -38,32 +38,32 @@ Expected Inputs: 0
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Lacunarity",
-     description:
-       "Positive floating point number. Impacts the scale of each consecutive octave. A good starting value would be 2.0, which results in each consecutive octave having details that are 2x smaller than the previous. Higher values result in grainier noise.",
-   },
-   {
-     name: "Persistence",
-     description:
-       "Positive floating point number. Multiplies the intensity of each consecutive octave. A good starting value would be 0.5, which results in each consecutive octave being half as strong as the previous.",
-   },
-   {
-     name: "Scale",
-     description:
-       "Positive floating point number. Represents the field's period distance in blocks. Greater values stretch the noise field outward. A good starting value would be 50.",
-   },
-   {
-     name: "Octaves",
-     description:
-       "Integer greater than 0. Greater values result in more detail. A good starting value would be 4. Requiring values over 10 are uncommon.",
-   },
-   {
-     name: "Seed",
-     description: "A string.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Lacunarity",
+   description:
+     "Positive floating point number. Impacts the scale of each consecutive octave. A good starting value would be 2.0, which results in each consecutive octave having details that are 2x smaller than the previous. Higher values result in grainier noise.",
+ },
+ {
+   name: "Persistence",
+   description:
+     "Positive floating point number. Multiplies the intensity of each consecutive octave. A good starting value would be 0.5, which results in each consecutive octave being half as strong as the previous.",
+ },
+ {
+   name: "Scale",
+   description:
+     "Positive floating point number. Represents the field's period distance in blocks. Greater values stretch the noise field outward. A good starting value would be 50.",
+ },
+ {
+   name: "Octaves",
+   description:
+     "Integer greater than 0. Greater values result in more detail. A good starting value would be 4. Requiring values over 10 are uncommon.",
+ },
+ {
+   name: "Seed",
+   description: "A string.",
+ },
+]}
 />
 
 ---
@@ -77,37 +77,37 @@ Expected Inputs: 0
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Lacunarity",
-     description:
-       "Positive floating point number. Impacts the scale of each consecutive octave. A good starting value would be 2.0, which results in each consecutive octave having details that are 2x smaller than the previous. Higher values result in grainier noise.",
-   },
-   {
-     name: "Persistence",
-     description:
-       "Positive floating point number. Multiplies the intensity of each consecutive octave. A good starting value would be 0.5, which results in each consecutive octave being half as strong as the previous.",
-   },
-   {
-     name: "ScaleXZ",
-     description:
-       "Positive floating point number. Represents the field’s period distance in blocks on the horizontal XZ plane. Greater values stretch the noise field outward. A good starting value would be 50.",
-   },
-   {
-     name: "ScaleY",
-     description:
-       "Positive floating point number. Represents the field’s period distance in blocks on the vertical Y axis. Greater values stretch the noise field outward. A good starting value would be 50.",
-   },
-   {
-     name: "Octaves",
-     description:
-       "Integer greater than 0. Greater values result in more detail. A good starting value would be 4. Requiring values over 10 are uncommon.",
-   },
-   {
-     name: "Seed",
-     description: "A string.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Lacunarity",
+   description:
+     "Positive floating point number. Impacts the scale of each consecutive octave. A good starting value would be 2.0, which results in each consecutive octave having details that are 2x smaller than the previous. Higher values result in grainier noise.",
+ },
+ {
+   name: "Persistence",
+   description:
+     "Positive floating point number. Multiplies the intensity of each consecutive octave. A good starting value would be 0.5, which results in each consecutive octave being half as strong as the previous.",
+ },
+ {
+   name: "ScaleXZ",
+   description:
+     "Positive floating point number. Represents the field’s period distance in blocks on the horizontal XZ plane. Greater values stretch the noise field outward. A good starting value would be 50.",
+ },
+ {
+   name: "ScaleY",
+   description:
+     "Positive floating point number. Represents the field’s period distance in blocks on the vertical Y axis. Greater values stretch the noise field outward. A good starting value would be 50.",
+ },
+ {
+   name: "Octaves",
+   description:
+     "Integer greater than 0. Greater values result in more detail. A good starting value would be 4. Requiring values over 10 are uncommon.",
+ },
+ {
+   name: "Seed",
+   description: "A string.",
+ },
+]}
 />
 
 ---
@@ -121,28 +121,28 @@ Produces a 2D/3D density field in which the value is determined by each coordina
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Positions",
-     description:
-       "Positions slot. This provides the Positions of each cell's core.",
-   },
-   {
-     name: "ReturnType",
-     description:
-       "ReturnType slot. This determines how the distance from each Position point is interpreted to produce the density field.",
-   },
-   {
-     name: "DistanceFunction",
-     description:
-       "DistanceFunction slot. This determines how the distance is calculated.",
-   },
-   {
-     name: "MaxDistance",
-     description:
-       "Floating point value. The maximum distance around each Position that it has an effect on the Density field. A good starting value is putting it a bit over half the distance between two of your Position points. Greater values have a greater impact on performance.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Positions",
+   description:
+     "Positions slot. This provides the Positions of each cell's core.",
+ },
+ {
+   name: "ReturnType",
+   description:
+     "ReturnType slot. This determines how the distance from each Position point is interpreted to produce the density field.",
+ },
+ {
+   name: "DistanceFunction",
+   description:
+     "DistanceFunction slot. This determines how the distance is calculated.",
+ },
+ {
+   name: "MaxDistance",
+   description:
+     "Floating point value. The maximum distance around each Position that it has an effect on the Density field. A good starting value is putting it a bit over half the distance between two of your Position points. Greater values have a greater impact on performance.",
+ },
+]}
 />
 
 #### ReturnType
@@ -164,18 +164,18 @@ The images below show a 2D and a 3D output of the CellValue return type.
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Density",
-     description:
-       "Density asset slot. The Density value of each cell is sampled from this field at the cell's core Position point.",
-   },
-   {
-     name: "DefaultValue",
-     description:
-       "Floating point number. This value is used outside of cells. This can happen when the field's MaxDistance value is smaller than the distance between some Positions.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Density",
+   description:
+     "Density asset slot. The Density value of each cell is sampled from this field at the cell's core Position point.",
+ },
+ {
+   name: "DefaultValue",
+   description:
+     "Floating point number. This value is used outside of cells. This can happen when the field's MaxDistance value is smaller than the distance between some Positions.",
+ },
+]}
 />
 
 **Density**
@@ -191,18 +191,18 @@ Below is a screenshot showing a simple example of how you can anchor any Density
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Density",
-     description:
-       "Density asset slot. The Density value of each cell is sampled from this field at the cell's core Position point.",
-   },
-   {
-     name: "DefaultValue",
-     description:
-       "Floating point number. This value is used outside of cells. This can happen when the field's MaxDistance value is smaller than the distance between some Positions.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Density",
+   description:
+     "Density asset slot. The Density value of each cell is sampled from this field at the cell's core Position point.",
+ },
+ {
+   name: "DefaultValue",
+   description:
+     "Floating point number. This value is used outside of cells. This can happen when the field's MaxDistance value is smaller than the distance between some Positions.",
+ },
+]}
 />
 
 **Curve**
@@ -216,13 +216,13 @@ The Curve ReturnType allows you to use a Curve asset to define the value of the 
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Curve",
-     description:
-       "Curve asset slot. The Density value of each cell is defined by the curve. The curve's input is the distance in blocks between the closest Position, and the Curve's output becomes the field's value.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Curve",
+   description:
+     "Curve asset slot. The Density value of each cell is defined by the curve. The curve's input is the distance in blocks between the closest Position, and the Curve's output becomes the field's value.",
+ },
+]}
 />
 
 **Distance**
@@ -298,13 +298,13 @@ Expected Inputs: 0
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Curve",
-     description:
-       "A Curve asset slot, maps the Distance from the origin to a Density value.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Curve",
+   description:
+     "A Curve asset slot, maps the Distance from the origin to a Density value.",
+ },
+]}
 />
 
 ---
@@ -330,35 +330,35 @@ Expected Inputs: 0
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Curve",
-     description:
-       "A Curve asset slot, maps the Distance from the origin to a Density value.",
-   },
-   {
-     name: "Scale",
-     description:
-       "A 3D vector asset slot. Determines how much to stretch the Sphere in each direction.",
-   },
-   {
-     name: "X",
-     description: "A floating point number.",
-   },
-   {
-     name: "Y",
-     description: "A floating point number.",
-   },
-   {
-     name: "Z",
-     description: "A floating point number.",
-   },
-   {
-     name: "Spin",
-     description:
-       "A floating point number. Determines the angle in degrees by which to spin the Ellipsoid around its Y axis.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Curve",
+   description:
+     "A Curve asset slot, maps the Distance from the origin to a Density value.",
+ },
+ {
+   name: "Scale",
+   description:
+     "A 3D vector asset slot. Determines how much to stretch the Sphere in each direction.",
+ },
+ {
+   name: "X",
+   description: "A floating point number.",
+ },
+ {
+   name: "Y",
+   description: "A floating point number.",
+ },
+ {
+   name: "Z",
+   description: "A floating point number.",
+ },
+ {
+   name: "Spin",
+   description:
+     "A floating point number. Determines the angle in degrees by which to spin the Ellipsoid around its Y axis.",
+ },
+]}
 />
 
 ---
@@ -372,13 +372,13 @@ Expected Inputs: 0
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Curve",
-     description:
-       "A Curve asset slot, maps the Distance from the origin to a Density value.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Curve",
+   description:
+     "A Curve asset slot, maps the Distance from the origin to a Density value.",
+ },
+]}
 />
 
 ---
@@ -404,40 +404,40 @@ Expected Inputs: 0
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Curve",
-     description:
-       "A Curve asset slot, maps the Distance from the origin to a Density value.",
-   },
-   {
-     name: "Scale",
-     description:
-       "A 3D vector asset slot. Determines how much to stretch the Cube in each direction.",
-   },
-   {
-     name: "X",
-     description: "A floating point number.",
-   },
-   {
-     name: "Y",
-     description: "A floating point number.",
-   },
-   {
-     name: "Z",
-     description: "A floating point number.",
-   },
-   {
-     name: "Spin",
-     description:
-       "A floating point number. Determines the angle in degrees by which to spin the Ellipsoid around its Y axis.",
-   },
-   {
-     name: "NewYAxis",
-     description:
-       "Point3D asset slot. Let's you rotate the field around its origin.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Curve",
+   description:
+     "A Curve asset slot, maps the Distance from the origin to a Density value.",
+ },
+ {
+   name: "Scale",
+   description:
+     "A 3D vector asset slot. Determines how much to stretch the Cube in each direction.",
+ },
+ {
+   name: "X",
+   description: "A floating point number.",
+ },
+ {
+   name: "Y",
+   description: "A floating point number.",
+ },
+ {
+   name: "Z",
+   description: "A floating point number.",
+ },
+ {
+   name: "Spin",
+   description:
+     "A floating point number. Determines the angle in degrees by which to spin the Ellipsoid around its Y axis.",
+ },
+ {
+   name: "NewYAxis",
+   description:
+     "Point3D asset slot. Let's you rotate the field around its origin.",
+ },
+]}
 />
 
 ---
@@ -461,28 +461,28 @@ Expected Inputs: 0
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "AxialCurve",
-     description:
-       "A Curve asset slot, maps the Distance from the Cylinder's XZ-plane to a Density value.",
-   },
-   {
-     name: "RadialCurve",
-     description:
-       "A Curve asset slot, maps the Distance from the Cylinder's Y axis to a Density value.",
-   },
-   {
-     name: "Spin",
-     description:
-       "A floating point number. Determines the angle in degrees by which to spin the Ellipsoid around its original Y axis.",
-   },
-   {
-     name: "NewYAxis",
-     description:
-       "Point3D asset slot. In combination with the spin, this lets you rotate the Cylinder around its origin by aligning its original Y-axis with the provided one.",
-   },
-  ]}
+parameters={[
+ {
+   name: "AxialCurve",
+   description:
+     "A Curve asset slot, maps the Distance from the Cylinder's XZ-plane to a Density value.",
+ },
+ {
+   name: "RadialCurve",
+   description:
+     "A Curve asset slot, maps the Distance from the Cylinder's Y axis to a Density value.",
+ },
+ {
+   name: "Spin",
+   description:
+     "A floating point number. Determines the angle in degrees by which to spin the Ellipsoid around its original Y axis.",
+ },
+ {
+   name: "NewYAxis",
+   description:
+     "Point3D asset slot. In combination with the spin, this lets you rotate the Cylinder around its origin by aligning its original Y-axis with the provided one.",
+ },
+]}
 />
 
 ---
@@ -496,35 +496,35 @@ Expected Inputs: 0
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Axis",
-     description:
-       "3D vector asset slot determining the axis from which the distance is used.",
-   },
-   {
-     name: "X",
-     description: "Floating point number.",
-   },
-   {
-     name: "Y",
-     description: "Floating point number.",
-   },
-   {
-     name: "Z",
-     description: "Floating point number.",
-   },
-   {
-     name: "Curve",
-     description:
-       "Curve asset slot. Determines the Density value at any distance from the axis.",
-   },
-   {
-     name: "IsAnchored",
-     description:
-       "Boolean. If true, the Axis node will anchor itself to the closest anchor. Although you could use an Anchor node to anchor an Axis Density node, this internal method doesn't produce some artifacts.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Axis",
+   description:
+     "3D vector asset slot determining the axis from which the distance is used.",
+ },
+ {
+   name: "X",
+   description: "Floating point number.",
+ },
+ {
+   name: "Y",
+   description: "Floating point number.",
+ },
+ {
+   name: "Z",
+   description: "Floating point number.",
+ },
+ {
+   name: "Curve",
+   description:
+     "Curve asset slot. Determines the Density value at any distance from the axis.",
+ },
+ {
+   name: "IsAnchored",
+   description:
+     "Boolean. If true, the Axis node will anchor itself to the closest anchor. Although you could use an Anchor node to anchor an Axis Density node, this internal method doesn't produce some artifacts.",
+ },
+]}
 />
 
 ---
@@ -538,30 +538,30 @@ The Plane Density node allows you to define a Density field in function of the d
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "PlaneNormal",
-     description:
-       "3D vector asset slot determining the direction the plane is facing.",
-   },
-   {
-     name: "X",
-     description: "Floating point number.",
-   },
-   {
-     name: "Y",
-     description: "Floating point number.",
-   },
-   {
-     name: "Z",
-     description: "Floating point number.",
-   },
-   {
-     name: "Curve",
-     description:
-       "Curve asset slot. Determines the Density value at any distance from the plane.",
-   },
-  ]}
+parameters={[
+ {
+   name: "PlaneNormal",
+   description:
+     "3D vector asset slot determining the direction the plane is facing.",
+ },
+ {
+   name: "X",
+   description: "Floating point number.",
+ },
+ {
+   name: "Y",
+   description: "Floating point number.",
+ },
+ {
+   name: "Z",
+   description: "Floating point number.",
+ },
+ {
+   name: "Curve",
+   description:
+     "Curve asset slot. Determines the Density value at any distance from the plane.",
+ },
+]}
 />
 
 ---
@@ -577,40 +577,40 @@ The diagram below shows the anatomy of the Shell node and how its AngleCurve and
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Axis",
-     description:
-       "3D vector asset slot determining the axis against which the angle is calculated.",
-   },
-   {
-     name: "X",
-     description: "Floating point number.",
-   },
-   {
-     name: "Y",
-     description: "Floating point number.",
-   },
-   {
-     name: "Z",
-     description: "Floating point number.",
-   },
-   {
-     name: "Mirror",
-     description:
-       "Boolean value. If true then the angle is mirrored in both directions of the axis.",
-   },
-   {
-     name: "AngleCurve",
-     description:
-       "Curve asset slot. Determines the Density value at any given angle from the axis.",
-   },
-   {
-     name: "DistanceCurve",
-     description:
-       "Curve asset slot. Determines the Density value at any distance from the origin.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Axis",
+   description:
+     "3D vector asset slot determining the axis against which the angle is calculated.",
+ },
+ {
+   name: "X",
+   description: "Floating point number.",
+ },
+ {
+   name: "Y",
+   description: "Floating point number.",
+ },
+ {
+   name: "Z",
+   description: "Floating point number.",
+ },
+ {
+   name: "Mirror",
+   description:
+     "Boolean value. If true then the angle is mirrored in both directions of the axis.",
+ },
+ {
+   name: "AngleCurve",
+   description:
+     "Curve asset slot. Determines the Density value at any given angle from the axis.",
+ },
+ {
+   name: "DistanceCurve",
+   description:
+     "Curve asset slot. Determines the Density value at any distance from the origin.",
+ },
+]}
 />
 
 ---
@@ -624,12 +624,12 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Curve",
-     description: "The curve.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Curve",
+   description: "The curve.",
+ },
+]}
 />
 
 ---
@@ -727,13 +727,13 @@ Expected Inputs: 2
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Range",
-     description:
-       "Positive floating point number. Greater values result in more smoothing. A good starter value could be 0.2.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Range",
+   description:
+     "Positive floating point number. Greater values result in more smoothing. A good starter value could be 0.2.",
+ },
+]}
 />
 
 ---
@@ -747,13 +747,13 @@ Expected Inputs: 2
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Range",
-     description:
-       "Positive floating point number. Greater values result in more smoothing. A good starter value could be 0.2.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Range",
+   description:
+     "Positive floating point number. Greater values result in more smoothing. A good starter value could be 0.2.",
+ },
+]}
 />
 
 ---
@@ -767,16 +767,16 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "WallA",
-     description: "Any floating point number.",
-   },
-   {
-     name: "WallB",
-     description: "Any floating point number.",
-   },
-  ]}
+parameters={[
+ {
+   name: "WallA",
+   description: "Any floating point number.",
+ },
+ {
+   name: "WallB",
+   description: "Any floating point number.",
+ },
+]}
 />
 
 ---
@@ -790,21 +790,21 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "WallA",
-     description: "Any floating point number.",
-   },
-   {
-     name: "WallB",
-     description: "Any floating point number.",
-   },
-   {
-     name: "Range",
-     description:
-       "Floating point values above 0, larger values result in smoother transition when the input approaches or exceeds the walls.",
-   },
-  ]}
+parameters={[
+ {
+   name: "WallA",
+   description: "Any floating point number.",
+ },
+ {
+   name: "WallB",
+   description: "Any floating point number.",
+ },
+ {
+   name: "Range",
+   description:
+     "Floating point values above 0, larger values result in smoother transition when the input approaches or exceeds the walls.",
+ },
+]}
 />
 
 ---
@@ -888,13 +888,13 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Capacity",
-     description:
-       "Positive Integer. Determines how many coordinates this cache can hold at once. A safe value is 3.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Capacity",
+   description:
+     "Positive Integer. Determines how many coordinates this cache can hold at once. A safe value is 3.",
+ },
+]}
 />
 
 ---
@@ -908,16 +908,16 @@ Expected Inputs: 0
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Vector",
-     description: "3D vector.",
-   },
-   {
-     name: "VectorProvider",
-     description: "Procedural vector.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Vector",
+   description: "3D vector.",
+ },
+ {
+   name: "VectorProvider",
+   description: "Procedural vector.",
+ },
+]}
 />
 
 ---
@@ -957,12 +957,12 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Exponent",
-     description: "Any value, A good starting value would be 2.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Exponent",
+   description: "Any value, A good starting value would be 2.",
+ },
+]}
 />
 
 ---
@@ -986,20 +986,20 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "X",
-     description: "A floating point number.",
-   },
-   {
-     name: "Y",
-     description: "A floating point number.",
-   },
-   {
-     name: "Z",
-     description: "A floating point number.",
-   },
-  ]}
+parameters={[
+ {
+   name: "ScaleX",
+   description: "A floating point number.",
+ },
+ {
+   name: "ScaleY",
+   description: "A floating point number.",
+ },
+ {
+   name: "ScaleZ",
+   description: "A floating point number.",
+ },
+]}
 />
 
 ---
@@ -1035,29 +1035,29 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "NewYAxis",
-     description: "3D vector asset.",
-   },
-   {
-     name: "X",
-     description: "Floating point number.",
-   },
-   {
-     name: "Y",
-     description: "Floating point number.",
-   },
-   {
-     name: "Z",
-     description: "Floating point number.",
-   },
-   {
-     name: "SpinAngle",
-     description:
-       "Floating point number. The angle in degrees to spin the field around the new axis.",
-   },
-  ]}
+parameters={[
+ {
+   name: "NewYAxis",
+   description: "3D vector asset.",
+ },
+ {
+   name: "X",
+   description: "Floating point number.",
+ },
+ {
+   name: "Y",
+   description: "Floating point number.",
+ },
+ {
+   name: "Z",
+   description: "Floating point number.",
+ },
+ {
+   name: "SpinAngle",
+   description:
+     "Floating point number. The angle in degrees to spin the field around the new axis.",
+ },
+]}
 />
 
 ---
@@ -1071,20 +1071,20 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "SlideX",
-     description: "A floating point number.",
-   },
-   {
-     name: "SlideY",
-     description: "A floating point number.",
-   },
-   {
-     name: "SlideZ",
-     description: "A floating point number.",
-   },
-  ]}
+parameters={[
+ {
+   name: "SlideX",
+   description: "A floating point number.",
+ },
+ {
+   name: "SlideY",
+   description: "A floating point number.",
+ },
+ {
+   name: "SlideZ",
+   description: "A floating point number.",
+ },
+]}
 />
 
 ---
@@ -1114,43 +1114,43 @@ The PositionsMinY and PositionsMaxY parameters limit the vertical range queried 
 Expected Inputs: 1
 
 <ParameterList
-  parameters={[
-   {
-     name: "Positions",
-     description:
-       "Positions asset slot. The Positions are the anchors that pinch and expand the Density field around them.",
-   },
-   {
-     name: "PinchCurve",
-     description:
-       "Curve asset slot. The curve determines how the Density field is pinched or expanded depending on how close it is to a position.",
-   },
-   {
-     name: "MaxDistance",
-     description:
-       "Positive floating point number. The value represents how big the area of effect is in block units.",
-   },
-   {
-     name: "NormalizeDistance",
-     description:
-       "Boolean value, default is true. If true then the Curve’s input and output unit is normalized to the MaxDistance value, otherwise if false the Curve’s input and output unit is in blocks.",
-   },
-   {
-     name: "HorizontalPinch",
-     description:
-       "Boolean value, default is false. If true, the input is pinched horizontally only.",
-   },
-   {
-     name: "PositionsMaxY",
-     description:
-       "Floating point number. Determines the upper Y level bound of the region queried from the Positions field. Any Positions that are at or above this value are ignored.",
-   },
-   {
-     name: "PositionsMinY",
-     description:
-       "Floating point number. Determines the lower Y level bound of the region queried from the Positions field. Any Positions that are below this value are ignored.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Positions",
+   description:
+     "Positions asset slot. The Positions are the anchors that pinch and expand the Density field around them.",
+ },
+ {
+   name: "PinchCurve",
+   description:
+     "Curve asset slot. The curve determines how the Density field is pinched or expanded depending on how close it is to a position.",
+ },
+ {
+   name: "MaxDistance",
+   description:
+     "Positive floating point number. The value represents how big the area of effect is in block units.",
+ },
+ {
+   name: "NormalizeDistance",
+   description:
+     "Boolean value, default is true. If true then the Curve’s input and output unit is normalized to the MaxDistance value, otherwise if false the Curve’s input and output unit is in blocks.",
+ },
+ {
+   name: "HorizontalPinch",
+   description:
+     "Boolean value, default is false. If true, the input is pinched horizontally only.",
+ },
+ {
+   name: "PositionsMaxY",
+   description:
+     "Floating point number. Determines the upper Y level bound of the region queried from the Positions field. Any Positions that are at or above this value are ignored.",
+ },
+ {
+   name: "PositionsMinY",
+   description:
+     "Floating point number. Determines the lower Y level bound of the region queried from the Positions field. Any Positions that are below this value are ignored.",
+ },
+]}
 />
 
 ---
@@ -1178,45 +1178,45 @@ Below is an example configuration of a double twist where part of the curve twis
 Expected Inputs: 1
 
 <ParameterList
-  parameters={[
-   {
-     name: "Positions",
-     description:
-       "Positions asset slot. The Positions are the anchors that pinch and expand the Density field around them.",
-   },
-   {
-     name: "TwistCurve",
-     description:
-       "Curve asset slot. The curve determines how the Density field is twisted depending on how close it is to a position.",
-   },
-   {
-     name: "TwistAxis",
-     description:
-       "Vector asset slot. the axis around which the twisting happens.",
-   },
-   {
-     name: "X",
-     description: "Floating point number.",
-   },
-   {
-     name: "Y",
-     description: "Floating point number.",
-   },
-   {
-     name: "Z",
-     description: "Floating point number.",
-   },
-   {
-     name: "MaxDistance",
-     description:
-       "Positive floating point number. The value represents how big the area of effect is in block units.",
-   },
-   {
-     name: "NormalizeDistance",
-     description:
-       "Boolean value, default is true. If true then the Curve’s input unit is normalized to the MaxDistance value, otherwise if false the Curve’s input unit is in blocks.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Positions",
+   description:
+     "Positions asset slot. The Positions are the anchors that pinch and expand the Density field around them.",
+ },
+ {
+   name: "TwistCurve",
+   description:
+     "Curve asset slot. The curve determines how the Density field is twisted depending on how close it is to a position.",
+ },
+ {
+   name: "TwistAxis",
+   description:
+     "Vector asset slot. the axis around which the twisting happens.",
+ },
+ {
+   name: "X",
+   description: "Floating point number.",
+ },
+ {
+   name: "Y",
+   description: "Floating point number.",
+ },
+ {
+   name: "Z",
+   description: "Floating point number.",
+ },
+ {
+   name: "MaxDistance",
+   description:
+     "Positive floating point number. The value represents how big the area of effect is in block units.",
+ },
+ {
+   name: "NormalizeDistance",
+   description:
+     "Boolean value, default is true. If true then the Curve’s input unit is normalized to the MaxDistance value, otherwise if false the Curve’s input unit is in blocks.",
+ },
+]}
 />
 
 ---
@@ -1237,28 +1237,28 @@ Expected Inputs: 2
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "SampleRange",
-     description:
-       "Floating point number greater than 0. I recommend keeping this value at 1.",
-   },
-   {
-     name: "WarpFactor",
-     description:
-       "A floating point number greater than 0. With greater values you get more warping.",
-   },
-   {
-     name: "2D",
-     description:
-       "Boolean, if true the output of this node is 2D. An internal Cache2D is used.",
-   },
-   {
-     name: "YFor2D",
-     description:
-       "Floating point coordinate, default is 0. the Y coordinate used from the input to calculate the gradient from.",
-   },
-  ]}
+parameters={[
+ {
+   name: "SampleRange",
+   description:
+     "Floating point number greater than 0. I recommend keeping this value at 1.",
+ },
+ {
+   name: "WarpFactor",
+   description:
+     "A floating point number greater than 0. With greater values you get more warping.",
+ },
+ {
+   name: "2D",
+   description:
+     "Boolean, if true the output of this node is 2D. An internal Cache2D is used.",
+ },
+ {
+   name: "YFor2D",
+   description:
+     "Floating point coordinate, default is 0. the Y coordinate used from the input to calculate the gradient from.",
+ },
+]}
 />
 
 ---
@@ -1272,32 +1272,32 @@ Expected Inputs: 1
 - Input 1: Density field to be warped.
 
 <ParameterList
-  parameters={[
-   {
-     name: "WarpScale",
-     description:
-       "Floating point number greater than 0. This determines the scale of the internal warper noise field.",
-   },
-   {
-     name: "WarpLacunarity",
-     description:
-       "Decimal number greater than 0. The lacunarity of the internal simplex field.",
-   },
-   {
-     name: "WarpPersistence",
-     description:
-       "Decimal number greater than 0. The persistence of the internal simplex field.",
-   },
-   {
-     name: "WarpOctaves",
-     description: "Integer greater than 0. The internal field’s octaves.",
-   },
-   {
-     name: "WarpFactor",
-     description:
-       "Decimal number greater than 0. Themaximum distance coordinates can be warped.",
-   },
-  ]}
+parameters={[
+ {
+   name: "WarpScale",
+   description:
+     "Floating point number greater than 0. This determines the scale of the internal warper noise field.",
+ },
+ {
+   name: "WarpLacunarity",
+   description:
+     "Decimal number greater than 0. The lacunarity of the internal simplex field.",
+ },
+ {
+   name: "WarpPersistence",
+   description:
+     "Decimal number greater than 0. The persistence of the internal simplex field.",
+ },
+ {
+   name: "WarpOctaves",
+   description: "Integer greater than 0. The internal field’s octaves.",
+ },
+ {
+   name: "WarpFactor",
+   description:
+     "Decimal number greater than 0. Themaximum distance coordinates can be warped.",
+ },
+]}
 />
 
 ---
@@ -1320,30 +1320,30 @@ Expected Inputs: 2
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "WarpFactor",
-     description:
-       "A floating point number greater than 0. With greater values you get more warping.",
-   },
-   {
-     name: "WarpVector",
-     description:
-       "Vector asset slot. Can be any vector. This determines the direction in which the warping happens. Negative values of the factor or the warping density field will result in flipped warping direction.",
-   },
-   {
-     name: "X",
-     description: "Floating point number.",
-   },
-   {
-     name: "Y",
-     description: "Floating point number.",
-   },
-   {
-     name: "Z",
-     description: "Floating point number.",
-   },
-  ]}
+parameters={[
+ {
+   name: "WarpFactor",
+   description:
+     "A floating point number greater than 0. With greater values you get more warping.",
+ },
+ {
+   name: "WarpVector",
+   description:
+     "Vector asset slot. Can be any vector. This determines the direction in which the warping happens. Negative values of the factor or the warping density field will result in flipped warping direction.",
+ },
+ {
+   name: "X",
+   description: "Floating point number.",
+ },
+ {
+   name: "Y",
+   description: "Floating point number.",
+ },
+ {
+   name: "Z",
+   description: "Floating point number.",
+ },
+]}
 />
 
 ---
@@ -1365,13 +1365,13 @@ _Example: Say you have a Density field that creates a ball around its origin {0,
 Expected Inputs: 1
 
 <ParameterList
-  parameters={[
-   {
-     name: "Reverse",
-     description:
-       "Boolean. If true, the node will reverse the origin of the child to the world’s origin, or the origin before the previous Anchor node.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Reverse",
+   description:
+     "Boolean. If true, the node will reverse the origin of the child to the world’s origin, or the origin before the previous Anchor node.",
+ },
+]}
 />
 
 ---
@@ -1389,24 +1389,24 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "FromMin",
-     description: "Any floating point number.",
-   },
-   {
-     name: "FromMax",
-     description: "Any floating point number.",
-   },
-   {
-     name: "ToMin",
-     description: "Any floating point number.",
-   },
-   {
-     name: "ToMax",
-     description: "Any floating point number.",
-   },
-  ]}
+parameters={[
+ {
+   name: "FromMin",
+   description: "Any floating point number.",
+ },
+ {
+   name: "FromMax",
+   description: "Any floating point number.",
+ },
+ {
+   name: "ToMin",
+   description: "Any floating point number.",
+ },
+ {
+   name: "ToMax",
+   description: "Any floating point number.",
+ },
+]}
 />
 
 ---
@@ -1427,17 +1427,17 @@ Expected Inputs: 0
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "BaseHeightName",
-     description: "String, name of the BaseHeight to reference.",
-   },
-   {
-     name: "Distance",
-     description:
-       "Boolean value, toggles whether to output the raw Y coordinate of the BaseHeight or the distance from the BaseHeight from the query position.",
-   },
-  ]}
+parameters={[
+ {
+   name: "BaseHeightName",
+   description: "String, name of the BaseHeight to reference.",
+ },
+ {
+   name: "Distance",
+   description:
+     "Boolean value, toggles whether to output the raw Y coordinate of the BaseHeight or the distance from the BaseHeight from the query position.",
+ },
+]}
 />
 
 ---
@@ -1455,21 +1455,21 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "SwitchCases",
-     description: "Switch Case asset slots.",
-   },
-   {
-     name: "CaseState",
-     description:
-       "String. The name of the contextual SwitchCase required for this branch.",
-   },
-   {
-     name: "Density",
-     description: "Density asset slot.",
-   },
-  ]}
+parameters={[
+ {
+   name: "SwitchCases",
+   description: "Switch Case asset slots.",
+ },
+ {
+   name: "CaseState",
+   description:
+     "String. The name of the contextual SwitchCase required for this branch.",
+ },
+ {
+   name: "Density",
+   description: "Density asset slot.",
+ },
+]}
 />
 
 ---
@@ -1487,13 +1487,13 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "SwitchState",
-     description:
-       "String, name of the SwitchState to set for the children of this node.",
-   },
-  ]}
+parameters={[
+ {
+   name: "SwitchState",
+   description:
+     "String, name of the SwitchState to set for the children of this node.",
+ },
+]}
 />
 
 ---
@@ -1505,12 +1505,12 @@ Imports an exported Density asset.
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "Name",
-     description: "String. The exported Density.",
-   },
-  ]}
+parameters={[
+ {
+   name: "Name",
+   description: "String. The exported Density.",
+ },
+]}
 />
 
 ---
@@ -1530,15 +1530,15 @@ Expected Inputs: 1
 #### Parameters:
 
 <ParameterList
-  parameters={[
-   {
-     name: "SingleInstance",
-     description:
-       "Boolean. Enable to share the exported for all Imported nodes referencing this key.",
-   },
-   {
-     name: "Density",
-     description: "Density slot.",
-   },
-  ]}
+parameters={[
+ {
+   name: "SingleInstance",
+   description:
+     "Boolean. Enable to share the exported for all Imported nodes referencing this key.",
+ },
+ {
+   name: "Density",
+   description: "Density slot.",
+ },
+]}
 />

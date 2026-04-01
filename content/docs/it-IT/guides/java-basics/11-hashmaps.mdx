@@ -29,24 +29,24 @@ public class Main {
 ```
 
 <Callout type="info" title="HashMap vs ArrayList">
-  | **HashMap**                                        | **ArrayList**                    |
-  | -------------------------------------------------- | -------------------------------- |
-  | Non ordinato                                       | Ordinato per indice (0, 1, 2...) |
-  | Accesso tramite chiave (può essere qualsiasi tipo) | Accesso tramite posizione        |
-  | Utile per la ricerca di valori                     | Utile per l'elenco di elementi   |
-  | Ogni chiave è unica                                | Può avere duplicati              |
+| **HashMap**                                        | **ArrayList**                    |
+| -------------------------------------------------- | -------------------------------- |
+| Non ordinato                                       | Ordinato per indice (0, 1, 2...) |
+| Accesso tramite chiave (può essere qualsiasi tipo) | Accesso tramite posizione        |
+| Utile per la ricerca di valori                     | Utile per l'elenco di elementi   |
+| Ogni chiave è unica                                | Può avere duplicati              |
 
-  ```java
-  // ArrayList - accesso tramite posizione
-  ArrayList<String> players = new ArrayList<>();
-  players.add("Alice");
-  String player = players.get(0);  // Ottieni il primo giocatore
+```java
+// ArrayList - accesso tramite posizione
+ArrayList<String> players = new ArrayList<>();
+players.add("Alice");
+String player = players.get(0);  // Ottieni il primo giocatore
 
-  // HashMap - accesso tramite nome
-  HashMap<String, Integer> levels = new HashMap<>();
-  levels.put("Alice", 10);
-  int level = levels.get("Alice");  // Ottieni il livello di Alice
-  ```
+// HashMap - accesso tramite nome
+HashMap<String, Integer> levels = new HashMap<>();
+levels.put("Alice", 10);
+int level = levels.get("Alice");  // Ottieni il livello di Alice
+```
 </Callout>
 
 ## Metodi comuni dell'HashMap
@@ -153,22 +153,22 @@ for (var entry : scores.entrySet()) {
 ```
 
 <Callout type="info" title="Ordine dell'HashMap">
-  l'HashMap **non** mantiene l'ordine di inserimento! Se hai bisogno di un ordine, usa la `LinkedHashMap`:
+l'HashMap **non** mantiene l'ordine di inserimento! Se hai bisogno di un ordine, usa la `LinkedHashMap`:
 
-  ```java
-  import java.util.LinkedHashMap;
+```java
+import java.util.LinkedHashMap;
 
-  LinkedHashMap<String, Integer> orderedScores = new LinkedHashMap<>();
-  orderedScores.put("Alice", 100);
-  orderedScores.put("Bob", 150);
-  orderedScores.put("Charlie", 75);
+LinkedHashMap<String, Integer> orderedScores = new LinkedHashMap<>();
+orderedScores.put("Alice", 100);
+orderedScores.put("Bob", 150);
+orderedScores.put("Charlie", 75);
 
-  // Will print in insertion order
-  for (String name : orderedScores.keySet()) {
-      System.out.println(name);
-  }
-  // Output: Alice, Bob, Charlie (ordine garantito)
-  ```
+// Will print in insertion order
+for (String name : orderedScores.keySet()) {
+    System.out.println(name);
+}
+// Output: Alice, Bob, Charlie (ordine garantito)
+```
 </Callout>
 
 ## Esempi Pratici

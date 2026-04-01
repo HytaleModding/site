@@ -34,21 +34,21 @@ System.out.println("Programma var turpināt strādāt...");
 ```
 
 <Callout type="info" title="Kā Try-Catch Strādā">
-  1. Kods iekš `try` bloka strādā normāli
-  2. Ja parādāsizņēmums, izpildīšana pāriet uz `catch` bloku
-  3. Pēc `catch` bloka programma turpina strādāt kā iepriekš
-  4. Ja izņēmumi neparādās, `catch` tiek izlaists
+1. Kods iekš `try` bloka strādā normāli
+2. Ja parādāsizņēmums, izpildīšana pāriet uz `catch` bloku
+3. Pēc `catch` bloka programma turpina strādāt kā iepriekš
+4. Ja izņēmumi neparādās, `catch` tiek izlaists
 
-  ```java
-  try {
-      // Mēģini veikt riskantu darbību
-      int result = 10 / 0;  // Dalīšana ar 0!
-  } catch (ArithmeticException e) {
-      // Apstrādā kļūdu
-      System.out.println("Nulli nevar dalīt!");
-  }
-  // Programma turpina strādāt
-  ```
+```java
+try {
+    // Mēģini veikt riskantu darbību
+    int result = 10 / 0;  // Dalīšana ar 0!
+} catch (ArithmeticException e) {
+    // Apstrādā kļūdu
+    System.out.println("Nulli nevar dalīt!");
+}
+// Programma turpina strādāt
+```
 </Callout>
 
 ## Biežākie Izņēmuma Tipi
@@ -152,26 +152,25 @@ try {
 ```
 
 <Callout type="info" title="Kad Izmantot Finally">
-  Izmanto `finally` priekš tīrīšanas uzdevumiem, kam jānotiek vienmēr:
+Izmanto `finally` priekš tīrīšanas uzdevumiem, kam jānotiek vienmēr:
+- Aizverot failu
+- Atbrīvojot Resursus
+- Saglabājot datus
+- Darbību reģistrēšanai
 
-  - Aizverot failu
-  - Atbrīvojot Resursus
-  - Saglabājot datus
-  - Darbību reģistrēšanai
-
-  ```java
-  FileReader file = null;
-  try {
-      file = new FileReader("data.txt");
-      // Read file
-  } catch (Exception e) {
-      System.out.println("Kļūda lasot failu");
-  } finally {
-      if (file != null) {
-          file.close();  // Vienmēr aizver failu!
-      }
-  }
-  ```
+```java
+FileReader file = null;
+try {
+    file = new FileReader("data.txt");
+    // Read file
+} catch (Exception e) {
+    System.out.println("Kļūda lasot failu");
+} finally {
+    if (file != null) {
+        file.close();  // Vienmēr aizver failu!
+    }
+}
+```
 </Callout>
 
 ## Izņēmuma Informācijas Dabūšana
@@ -439,56 +438,53 @@ public class Player {
 ```
 
 <Callout type="info" title="Kad Uzmest Izņēmumus">
-  Uzmet tos, kad:
+Uzmet tos, kad:
+- Metode saņem nederīgu informāciju
+- Operāciju nevar izpildīt
+- Pirmsnosacījumi nav sasniegti
+- Kas negaidīts notiek
 
-  - Metode saņem nederīgu informāciju
-  - Operāciju nevar izpildīt
-  - Pirmsnosacījumi nav sasniegti
-  - Kas negaidīts notiek
+```java
+public void damagePlayer(int damage) {
+    if (damage < 0) {
+        throw new IllegalArgumentException("Bojājumiem jābūt pozitīvā!");
+    }
+    // Pēc pārbaudes turpināt apstrādāt bojājumus
+}
 
-  ```java
-  public void damagePlayer(int damage) {
-      if (damage < 0) {
-          throw new IllegalArgumentException("Bojājumiem jābūt pozitīvā!");
-      }
-      // Pēc pārbaudes turpināt apstrādāt bojājumus
-  }
-
-  public Item getItem(int slot) {
-      if (slot < 0 || slot >= inventory.length) {
-          throw new IndexOutOfBoundsException("Nederīga Inventāra vieta!");
-      }
-      return inventory[slot];
-  }
-  ```
+public Item getItem(int slot) {
+    if (slot < 0 || slot >= inventory.length) {
+        throw new IndexOutOfBoundsException("Nederīga Inventāra vieta!");
+    }
+    return inventory[slot];
+}
+```
 </Callout>
 
 ## Pārbaudīti pret Nepārbaudītiem Izņēmumiem
 
 <Callout type="warning" title="Izņēmumu Tipi">
-  **Nepārbaudīti Izņēmumi** (RuntimeException):
+**Nepārbaudīti Izņēmumi** (RuntimeException):
+- Nav jānoķer (try-catch)
+- Drīzāk programmēšanas kļūdas
+- Piemēri: NullPointerException, ArrayIndexOutOfBoundsException
 
-  - Nav jānoķer (try-catch)
-  - Drīzāk programmēšanas kļūdas
-  - Piemēri: NullPointerException, ArrayIndexOutOfBoundsException
+**Pārbaudīti Izņēmumi**
+- Jābūt noķertiem vai deklarētiem
+- Drīzāk ārējās kļūdas (faili, tīkls)
+- Piemēri: IOException, FileNotFoundException
 
-  **Pārbaudīti Izņēmumi**
+```java
+// Unchecked - nav jāķer
+int result = 10 / 0;  // ArithmeticException
 
-  - Jābūt noķertiem vai deklarētiem
-  - Drīzāk ārējās kļūdas (faili, tīkls)
-  - Piemēri: IOException, FileNotFoundException
-
-  ```java
-  // Unchecked - nav jāķer
-  int result = 10 / 0;  // ArithmeticException
-
-  // Checked - jāķer vai jādeklarē
-  try {
-      FileReader file = new FileReader("data.txt");  // IOException
-  } catch (IOException e) {
-      // Apstrādā kļūdu
-  }
-  ```
+// Checked - jāķer vai jādeklarē
+try {
+    FileReader file = new FileReader("data.txt");  // IOException
+} catch (IOException e) {
+    // Apstrādā kļūdu
+}
+```
 </Callout>
 
 ## Praktiskās Nodarbības

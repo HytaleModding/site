@@ -124,25 +124,24 @@ System.out.println(speletajs.dabutDzivibas());  // 0
 ```
 
 <Callout type="info" title="Dabūšanas un Nostādīšanas nosaukšana">
-  Angļu valodā ar Java seko šādām konvencijām:
+Angļu valodā ar Java seko šādām konvencijām:
+* **Dabūt**: `get` + īpašības nosaukums (lieliem sākumburtiem)
+* **Noteikt**: `set` + īpašības nosaukums (lieliem sākumburtiem)
+* **Vai kas ir**: `is` + īpašības nosaukums (lieliem sākumburtiem)
 
-  * **Dabūt**: `get` + īpašības nosaukums (lieliem sākumburtiem)
-  * **Noteikt**: `set` + īpašības nosaukums (lieliem sākumburtiem)
-  * **Vai kas ir**: `is` + īpašības nosaukums (lieliem sākumburtiem)
+```java
+private int health;
+public int getHealth() { }
+public void setHealth(int health) { }
 
-  ```java
-  private int health;
-  public int getHealth() { }
-  public void setHealth(int health) { }
+private boolean alive;
+public boolean isAlive() { }
+public void setAlive(boolean alive) { }
 
-  private boolean alive;
-  public boolean isAlive() { }
-  public void setAlive(boolean alive) { }
-
-  private String name;
-  public String getName() { }
-  public void setName(String name) { }
-  ```
+private String name;
+public String getName() { }
+public void setName(String name) { }
+```
 </Callout>
 
 ## Iekapsulēšanas Priekšrocības
@@ -384,38 +383,36 @@ public class AizsargatsBloks {
 ## Kad lietot Privāto un Publisko
 
 <Callout type="info" title="Vispārīgie Noteikumi">
-  **Viedo Privātu pirmajā vietā!** Padari lietas publiskas tikai tad, ja tām ir nepieciešams piekļūt no ārpuses.
+**Viedo Privātu pirmajā vietā!** Padari lietas publiskas tikai tad, ja tām ir nepieciešams piekļūt no ārpuses.
 
-  **Privāti:**
+**Privāti:**
+* Iekšējie dati (dzivibas, pozīcija, inventārs)
+* Palīgmetodes, ko izmanto tikai klasē
+* Viss, kas jāpārbauda un jāapstiprina
 
-  * Iekšējie dati (dzivibas, pozīcija, inventārs)
-  * Palīgmetodes, ko izmanto tikai klasē
-  * Viss, kas jāpārbauda un jāapstiprina
+**Publiskas:**
+* Metodes, kas nosaka klases uzvedību
+* Konstruktori
+* Metodes, kas jāizsauc citām klasēm
 
-  **Publiskas:**
-
-  * Metodes, kas nosaka klases uzvedību
-  * Konstruktori
-  * Metodes, kas jāizsauc citām klasēm
-
-  ```java
-  public class Piemers {
-      // Privāts - iekšējie dati
-      private int ieksejaisSkaititajs;
-      private String slepenaAtslega;
-      
-      // Publisks - daļa no interfeisa
-      public void daritKautKo() {
-          // Izmanto privāto palīdzētāja metodi
-          apstiprinatDatus();
-      }
-      
-      // Privāts - iekšējais palīdzētājs
-      private void apstiprinatDatus() {
-          // ...
-      }
-  }
-  ```
+```java
+public class Piemers {
+    // Privāts - iekšējie dati
+    private int ieksejaisSkaititajs;
+    private String slepenaAtslega;
+    
+    // Publisks - daļa no interfeisa
+    public void daritKautKo() {
+        // Izmanto privāto palīdzētāja metodi
+        apstiprinatDatus();
+    }
+    
+    // Privāts - iekšējais palīdzētājs
+    private void apstiprinatDatus() {
+        // ...
+    }
+}
+```
 </Callout>
 
 ## Atslēgvārds `final`
@@ -471,20 +468,20 @@ Vienkāršāk sakot: instances dalībnieki pieder objektiem; statiski dalībniek
 
 ```java
 class Data {
-    public int x; // Instances dalībnieks
-    public static int y = 1000; // Static dalībnieks
+    public int x; // Instanced member
+    public static int y = 1000; // Static member
 
     // Instanced member:
-    // var piekļut abiem - statiskiem un ne statiskiem dalībniekiem
+    // can access to both static and non-static members
     public void foo() {
-        x = 100; // OK - tas pats, kas this.x = 100;
-        y = 100; // OK - tas pats, kas Data.y = 200;
+        x = 100; // OK - same as this.x = 100;
+        y = 100; // OK - same as Data.y = 200;
     }
 
     // Static member:
-    // nevar piekļūt ne-static mainīgajiem
+    // cannot access to non-static variables
     public static void bar() {
-        x = 100; // Kļūda: ne-static mainīgais x nevar būt piesaukts no static konteksta
+        x = 100; // Error: non-static variable x cannot be referenced from a static context
         y = 100; // OK
     }
 }
@@ -504,7 +501,7 @@ Data.x = 1000; // Kļūda: nevar piekļūt instances mainīgajam iekš static ko
 
 ### Static Laukumi
 
-Static laukums pārstāv datu dalībniekus, kas pieder klases tipam, nevis objektam. Static laukumi arī tiek glabāti specifiskā atmiņas lokācijā ar kuru dalās starp visām objektu instancēm, kas tiek izveidotas.
+A static field represents a data member owned by the class type rather than the object. Static laukumi arī tiek glabāti specifiskā atmiņas lokācijā ar kuru dalās starp visām objektu instancēm, kas tiek izveidotas.
 
 Tas tiek deklarēts sekojoši:
 
