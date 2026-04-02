@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { FilloutFullScreenEmbed } from "@fillout/react";
 
 export default function ApplyPage() {

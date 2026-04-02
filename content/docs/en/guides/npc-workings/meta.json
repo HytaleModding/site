@@ -1,9 +1,5 @@
 {
   "title": "NPC Inner Workings",
   "icon": "IdCardLanyard",
-  "pages": [
-    "npc-intro.mdx",
-    "npc-role.mdx",
-    "npc-states.mdx"
-  ]
+  "pages": ["npc-intro.mdx", "npc-role.mdx", "npc-states.mdx"]
 }

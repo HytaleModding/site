@@ -51,8 +51,8 @@ export function ApplyToday() {
             className="-z-20 object-cover object-top"
           />
           {/* mobile mascot */}
-          <div className="relative xl:hidden flex flex-col items-center">
-            <div className="h-40 w-90 sm:h-60 sm:w-120 relative">
+          <div className="relative flex flex-col items-center xl:hidden">
+            <div className="relative h-40 w-90 sm:h-60 sm:w-120">
               <Image
                 src={Mascot}
                 alt="Yeti Mascot"

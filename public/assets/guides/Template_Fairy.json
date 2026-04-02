@@ -52,10 +52,7 @@
       "Description": "NPC Weapons"
     },
     "FlockArray": {
-      "Value": [
-        "Kweebec_Seedling",
-        "Kweebec_Sproutling"
-      ],
+      "Value": ["Kweebec_Seedling", "Kweebec_Sproutling"],
       "Description": "Array containing NPCs for this flock type"
     },
     "Component": {
@@ -105,54 +102,55 @@
       "Value": 5,
       "Description": "Maximum range the fairy follow while being tempted by food."
     },
-    "FairyThinkParticleOffset":{
-      "Value":[ 0, 1.0, 0 ],
+    "FairyThinkParticleOffset": {
+      "Value": [0, 1.0, 0],
       "Description": "The offset for fairy think bubbles."
     },
     "FairyFood": {
-      "Value": [ 
-        "Food_Kebab_Vegetable", 
-        "Food_Kebab_Fruit", 
-        "Food_Pie_Apple", 
-        "Food_Salad_Berry", 
-        "Food_Pie_Pumpkin"],
+      "Value": [
+        "Food_Kebab_Vegetable",
+        "Food_Kebab_Fruit",
+        "Food_Pie_Apple",
+        "Food_Salad_Berry",
+        "Food_Pie_Pumpkin"
+      ],
       "Description": "The kind of food fairies like."
     },
-    "FairyMaxPlayerFollowDistance":{
-      "Value":30,
-      "Description":"The maximum distance a fairy will follow its recruiter before it gives up."
+    "FairyMaxPlayerFollowDistance": {
+      "Value": 30,
+      "Description": "The maximum distance a fairy will follow its recruiter before it gives up."
     },
-    "FairyHomeRadius":{
-      "Value":30,
-      "Description":"How large the home radius of a fairy is. It's hardcoded to 30; for now."
+    "FairyHomeRadius": {
+      "Value": 30,
+      "Description": "How large the home radius of a fairy is. It's hardcoded to 30; for now."
     },
-    "RecruitedAppearance":{
-      "Value":"Fairy_Cultivator_Recruited",
-      "Description":"The appearance to use when recruited."
+    "RecruitedAppearance": {
+      "Value": "Fairy_Cultivator_Recruited",
+      "Description": "The appearance to use when recruited."
     },
-    "OriginalAppearance":{
-      "Value":"Fairy_Cultivator",
-      "Description":"The appearance to use when wild."
+    "OriginalAppearance": {
+      "Value": "Fairy_Cultivator",
+      "Description": "The appearance to use when wild."
     },
-    "FairyCanFarm":{
-      "Value":false,
-      "Description":"If true this fairy can farm in the home area."
+    "FairyCanFarm": {
+      "Value": false,
+      "Description": "If true this fairy can farm in the home area."
     },
-    "FairyHarvestingLongRange":{
-      "Value":18,
-      "Description":"The short range which a fairy can harvest plant blocks in."
+    "FairyHarvestingLongRange": {
+      "Value": 18,
+      "Description": "The short range which a fairy can harvest plant blocks in."
     },
-    "FairyHarvestingRange":{
-      "Value":6,
-      "Description":"The short range which a fairy can harvest plant blocks in."
+    "FairyHarvestingRange": {
+      "Value": 6,
+      "Description": "The short range which a fairy can harvest plant blocks in."
     },
-    "FairyCanMine":{
-      "Value":false,
-      "Description":"If true this fairy can mine nearby valuable blocks."
+    "FairyCanMine": {
+      "Value": false,
+      "Description": "If true this fairy can mine nearby valuable blocks."
     },
-    "FairyCanSort":{
-      "Value":false,
-      "Description":"If true this fairy can sort items in the home area."
+    "FairyCanSort": {
+      "Value": false,
+      "Description": "If true this fairy can sort items in the home area."
     }
   },
   "IsMemory": {
@@ -170,9 +168,7 @@
   "DropList": {
     "Compute": "DropList"
   },
-  "DisableDamageGroups": [
-    "Self"
-  ],
+  "DisableDamageGroups": ["Self"],
   "HotbarItems": {
     "Compute": "Weapons"
   },
@@ -213,7 +209,7 @@
     {
       "Instructions": [
         {
-          "$Comment":"Setup all timers and other related things.",
+          "$Comment": "Setup all timers and other related things.",
           "Sensor": {
             "Type": "Any",
             "Once": true
@@ -222,63 +218,45 @@
             {
               "Type": "TimerStart",
               "Name": "WatchTimer",
-              "StartValueRange": [
-                0.1,
-                0.1
-              ],
-              "RestartValueRange": [
-                10,
-                30
-              ]
+              "StartValueRange": [0.1, 0.1],
+              "RestartValueRange": [10, 30]
             },
             {
-              "Type":"TimerStart",
-              "Name":"FollowPlayerRecruitWatch",
-              "StartValueRange": [
-                0.1
-                ,0.1
-              ],
-              "RestartValueRange": [
-                6,
-                8
-              ]
+              "Type": "TimerStart",
+              "Name": "FollowPlayerRecruitWatch",
+              "StartValueRange": [0.1, 0.1],
+              "RestartValueRange": [6, 8]
             },
             {
               "Type": "TimerStart",
               "Name": "WorkCheckTimer",
-              "StartValueRange": [
-                0.1,
-                0.1
-              ],
-              "RestartValueRange": [
-                6,
-                8
-              ]
+              "StartValueRange": [0.1, 0.1],
+              "RestartValueRange": [6, 8]
             }
           ]
         },
         {
-          "$Comment":" === React to the Fairy Bell === ",
-          "Continue":true,
-          "Sensor":{
-            "Type":"LHFairyIsRecruited"
+          "$Comment": " === React to the Fairy Bell === ",
+          "Continue": true,
+          "Sensor": {
+            "Type": "LHFairyIsRecruited"
           },
-          "Instructions":[
+          "Instructions": [
             {
-              "Continue":true,
-              "Sensor":{
-                "Type":"And",
-                "Sensors":[
+              "Continue": true,
+              "Sensor": {
+                "Type": "And",
+                "Sensors": [
                   {
-                    "Type":"Not",
-                    "Sensor":{
-                      "Type":"State",
-                      "State":"FollowPlayer"
+                    "Type": "Not",
+                    "Sensor": {
+                      "Type": "State",
+                      "State": "FollowPlayer"
                     }
                   },
                   {
-                    "Type":"EntityMessage",
-                    "Message":"Bell"
+                    "Type": "EntityMessage",
+                    "Message": "Bell"
                   },
                   {
                     "Type": "Player",
@@ -295,79 +273,75 @@
                   }
                 ]
               },
-              "Actions":[
+              "Actions": [
                 {
                   "Type": "SpawnParticles",
                   "Offset": { "Compute": "FairyThinkParticleOffset" },
                   "ParticleSystem": "Fairy_Ask_Follow"
                 },
                 {
-                  "Type":"State",
-                  "State":"FollowPlayer"
+                  "Type": "State",
+                  "State": "FollowPlayer"
                 }
               ]
             }
           ]
         },
 
-
-        
         {
-          "$Comment":" === Do work if the fairy can do farming === ",
+          "$Comment": " === Do work if the fairy can do farming === ",
           "Enabled": { "Compute": "FairyCanFarm" },
-          "Continue":true,
-          "Sensor":{
-            "Type":"And",
-            "Sensors":[
+          "Continue": true,
+          "Sensor": {
+            "Type": "And",
+            "Sensors": [
               {
                 "Type": "Timer",
                 "Name": "WorkCheckTimer",
                 "State": "Stopped"
               },
               {
-                "Type":"State",
-                "State":"Idle"
+                "Type": "State",
+                "State": "Idle"
               },
               {
-                "Type":"LHFairyIsRecruited"
+                "Type": "LHFairyIsRecruited"
               },
               {
-                "Type":"LHFairyHome",
-                "HomeRadius": { "Compute":"FairyHomeRadius" }
+                "Type": "LHFairyHome",
+                "HomeRadius": { "Compute": "FairyHomeRadius" }
               },
               {
-                "Type":"LHClosestHarvestable",
-                "Range": { "Compute":"FairyHarvestingLongRange + 1" }
+                "Type": "LHClosestHarvestable",
+                "Range": { "Compute": "FairyHarvestingLongRange + 1" }
               }
             ]
           },
-          "Actions":[
+          "Actions": [
             {
-              "Type":"State",
-              "State":"Farming.Goto"
+              "Type": "State",
+              "State": "Farming.Goto"
             }
           ]
         },
         {
-          "$Comment":"Reset the work timer.",
-          "Continue":true,
-          "Sensor":{
+          "$Comment": "Reset the work timer.",
+          "Continue": true,
+          "Sensor": {
             "Type": "Timer",
             "Name": "WorkCheckTimer",
             "State": "Stopped"
           },
-          "Actions":[
+          "Actions": [
             {
-              "Type":"TimerRestart",
-              "Name":"WorkCheckTimer"
+              "Type": "TimerRestart",
+              "Name": "WorkCheckTimer"
             }
           ]
         },
 
-
-
         {
-          "$Comment":"Main idle state. Further decisions are taken from here.",
+          "$Comment": "Main idle state. Further decisions are taken from here.",
           "Sensor": {
             "Type": "State",
             "State": "Idle"
@@ -377,20 +351,17 @@
               "Reference": "Component_Instruction_Clear_Status_Animation"
             },
             {
-              "$Comment":"Fleeing and panicking behavior from Template_Kweebec_Sapling",
+              "$Comment": "Fleeing and panicking behavior from Template_Kweebec_Sapling",
               "Reference": "Component_Instruction_Damage_Check",
               "Modify": {
-                "_ExportStates": [
-                  "Flee",
-                  "Panic"
-                ],
+                "_ExportStates": ["Flee", "Panic"],
                 "AlertedRange": {
                   "Compute": "AlertedRange"
                 }
               }
             },
             {
-              "$Comment":"Alerting behavior from Template_Kweebec_Sapling",
+              "$Comment": "Alerting behavior from Template_Kweebec_Sapling",
               "Sensor": {
                 "Type": "Or",
                 "Sensors": [
@@ -403,9 +374,7 @@
                       "ViewSector": {
                         "Compute": "ViewSector"
                       },
-                      "Attitudes": [
-                        "Hostile"
-                      ]
+                      "Attitudes": ["Hostile"]
                     }
                   },
                   {
@@ -414,9 +383,7 @@
                       "HearingRange": {
                         "Compute": "HearingRange"
                       },
-                      "Attitudes": [
-                        "Hostile"
-                      ]
+                      "Attitudes": ["Hostile"]
                     }
                   }
                 ]
@@ -425,10 +392,7 @@
               "Actions": [
                 {
                   "Type": "Timeout",
-                  "Delay": [
-                    0,
-                    0.2
-                  ]
+                  "Delay": [0, 0.2]
                 },
                 {
                   "Type": "State",
@@ -437,7 +401,7 @@
               ]
             },
             {
-              "$Comment":"Watching behavior from Template_Kweebec_Sapling",
+              "$Comment": "Watching behavior from Template_Kweebec_Sapling",
               "Continue": true,
               "Sensor": {
                 "Type": "And",
@@ -451,9 +415,7 @@
                       "ViewSector": {
                         "Compute": "ViewSector * 0.8"
                       },
-                      "Attitudes": [
-                        "Ignore"
-                      ],
+                      "Attitudes": ["Ignore"],
                       "GetNPCs": true
                     }
                   },
@@ -471,10 +433,7 @@
               "Actions": [
                 {
                   "Type": "Timeout",
-                  "Delay": [
-                    3,
-                    6
-                  ]
+                  "Delay": [3, 6]
                 },
                 {
                   "Type": "TimerRestart",
@@ -484,64 +443,66 @@
             },
 
             {
-              "$Comment":"Try to stay within home area.",
-              "Sensor":{
-                "Type":"And",
-                "Sensors":[
+              "$Comment": "Try to stay within home area.",
+              "Sensor": {
+                "Type": "And",
+                "Sensors": [
                   {
-                    "Type":"LHFairyIsRecruited"
+                    "Type": "LHFairyIsRecruited"
                   },
                   {
-                    "Type":"LHFairyHome",
-                    "HomeRadius": { "Compute":"FairyHomeRadius" },
-                    "UsePosition":true,
-                    "Outside":true
+                    "Type": "LHFairyHome",
+                    "HomeRadius": { "Compute": "FairyHomeRadius" },
+                    "UsePosition": true,
+                    "Outside": true
                   }
                 ]
               },
-              "BodyMotion":{
-                "Type":"Seek",
-                "Reachable":false,
-                "HeightDifference":[-100,100],
-                "SwitchToSteeringDistance":5,
-                "SlowDownDistance":10,
-                "StopDistance":5
+              "BodyMotion": {
+                "Type": "Seek",
+                "Reachable": false,
+                "HeightDifference": [-100, 100],
+                "SwitchToSteeringDistance": 5,
+                "SlowDownDistance": 10,
+                "StopDistance": 5
               }
             },
 
             {
               "Sensor": {
-                  "Type": "State",
-                  "State": ".AskTask1"
+                "Type": "State",
+                "State": ".AskTask1"
               },
-              "Instructions":[
+              "Instructions": [
                 {
                   "Reference": "Component_Fairy_Ask_Task",
-                  "Modify":{
-                    "_ExportStates":["Idle.AskTask1Decision"],
-                    "FairyThinkParticleOffset": { "Compute": "FairyThinkParticleOffset" },
+                  "Modify": {
+                    "_ExportStates": ["Idle.AskTask1Decision"],
+                    "FairyThinkParticleOffset": {
+                      "Compute": "FairyThinkParticleOffset"
+                    },
                     "FairyThinkParticleSystem": "Fairy_Ask_Status"
                   }
                 }
               ]
             },
             {
-              "$Comment":"Transitiory   state between .AskTask1 and .AskTask2",
-              "Sensor":{
-                "Type":"State",
-                "State":".AskTask1Decision"
+              "$Comment": "Transitiory   state between .AskTask1 and .AskTask2",
+              "Sensor": {
+                "Type": "State",
+                "State": ".AskTask1Decision"
               },
-              "Instructions":[
+              "Instructions": [
                 {
-                  "Sensor":{
-                    "Type":"Flag",
-                    "Name":"TellStatusAction",
-                    "Set":false
+                  "Sensor": {
+                    "Type": "Flag",
+                    "Name": "TellStatusAction",
+                    "Set": false
                   },
-                  "Actions":[
+                  "Actions": [
                     {
-                      "Type":"State",
-                      "State":"Idle.AskTask2"
+                      "Type": "State",
+                      "State": "Idle.AskTask2"
                     }
                   ]
                 }
@@ -549,83 +510,85 @@
             },
             {
               "Sensor": {
-                  "Type": "State",
-                  "State": ".AskTask2"
+                "Type": "State",
+                "State": ".AskTask2"
               },
-              "Instructions":[
+              "Instructions": [
                 {
                   "Reference": "Component_Fairy_Ask_Task",
-                  "Modify":{
-                    "_ExportStates":["Idle.AskTask2Decision"],
-                    "FairyThinkParticleOffset": { "Compute": "FairyThinkParticleOffset" },
+                  "Modify": {
+                    "_ExportStates": ["Idle.AskTask2Decision"],
+                    "FairyThinkParticleOffset": {
+                      "Compute": "FairyThinkParticleOffset"
+                    },
                     "FairyThinkParticleSystem": "Fairy_Ask_Follow"
                   }
                 }
               ]
             },
             {
-              "$Comment":"Transitiory state between .AskTask2 and .AskTask3",
-              "Sensor":{
-                "Type":"State",
-                "State":"Idle.AskTask2Decision"
+              "$Comment": "Transitiory state between .AskTask2 and .AskTask3",
+              "Sensor": {
+                "Type": "State",
+                "State": "Idle.AskTask2Decision"
               },
-              "Instructions":[
+              "Instructions": [
                 {
-                  "Sensor":{
-                    "Type":"Flag",
-                    "Name":"FollowPlayerAction",
-                    "Set":false
+                  "Sensor": {
+                    "Type": "Flag",
+                    "Name": "FollowPlayerAction",
+                    "Set": false
                   },
-                  "Actions":[
+                  "Actions": [
                     {
-                      "Type":"State",
-                      "State":".AskTask3"
+                      "Type": "State",
+                      "State": ".AskTask3"
                     }
                   ]
                 },
                 {
-                  "$Comment":"Action: Follow player",
-                  "Sensor":{
-                    "Type":"Flag",
-                    "Name":"FollowPlayerAction",
-                    "Set":true
+                  "$Comment": "Action: Follow player",
+                  "Sensor": {
+                    "Type": "Flag",
+                    "Name": "FollowPlayerAction",
+                    "Set": true
                   },
-                  "ActionsBlocking":true,
-                  "Actions":[
+                  "ActionsBlocking": true,
+                  "Actions": [
                     {
                       "Type": "Timeout",
-                      "Delay": [ 0.3, 0.3 ],
-                      "Action":{
-                        "Type":"Sequence",
-                        "Actions":[
+                      "Delay": [0.3, 0.3],
+                      "Action": {
+                        "Type": "Sequence",
+                        "Actions": [
                           {
                             "Type": "SpawnParticles",
                             "Offset": { "Compute": "FairyThinkParticleOffset" },
                             "ParticleSystem": "Fairy_Ask_Confirm"
                           },
                           {
-                            "Type":"PlayAnimation",
-                            "Slot":"Status",
-                            "Animation":"Salute"
+                            "Type": "PlayAnimation",
+                            "Slot": "Status",
+                            "Animation": "Salute"
                           }
                         ]
                       }
                     },
                     {
                       "Type": "Timeout",
-                      "Delay": [ 1.5, 1.5 ],
-                      "Action":{
-                        "Type":"Sequence",
-                        "Atomic":true,
-                        "Actions":[
+                      "Delay": [1.5, 1.5],
+                      "Action": {
+                        "Type": "Sequence",
+                        "Atomic": true,
+                        "Actions": [
                           {
-                            "Type":"SetFlag",
-                            "Name":"FollowPlayerAction",
-                            "SetTo":false
+                            "Type": "SetFlag",
+                            "Name": "FollowPlayerAction",
+                            "SetTo": false
                           },
                           {
-                            "Type":"State",
-                            "State":"FollowPlayer"
+                            "Type": "State",
+                            "State": "FollowPlayer"
                           }
                         ]
                       }
@@ -636,86 +599,88 @@
             },
             {
               "Sensor": {
-                  "Type": "State",
-                  "State": ".AskTask3"
+                "Type": "State",
+                "State": ".AskTask3"
               },
-              "Instructions":[
+              "Instructions": [
                 {
                   "Reference": "Component_Fairy_Ask_Task",
-                  "Modify":{
-                    "_ExportStates":["Idle.AskTask3Decision"],
-                    "FairyThinkParticleOffset": { "Compute": "FairyThinkParticleOffset" },
+                  "Modify": {
+                    "_ExportStates": ["Idle.AskTask3Decision"],
+                    "FairyThinkParticleOffset": {
+                      "Compute": "FairyThinkParticleOffset"
+                    },
                     "FairyThinkParticleSystem": "Fairy_Ask_Home"
                   }
                 }
               ]
             },
             {
-              "$Comment":"Transitiory state between .AskTask3 and Idle",
-              "Sensor":{
-                "Type":"State",
-                "State":".AskTask3Decision"
+              "$Comment": "Transitiory state between .AskTask3 and Idle",
+              "Sensor": {
+                "Type": "State",
+                "State": ".AskTask3Decision"
               },
-              "Instructions":[
+              "Instructions": [
                 {
-                  "Sensor":{
-                    "Type":"Flag",
-                    "Name":"SetHomeAction",
-                    "Set":false
+                  "Sensor": {
+                    "Type": "Flag",
+                    "Name": "SetHomeAction",
+                    "Set": false
                   },
-                  "Actions":[
+                  "Actions": [
                     {
-                      "Type":"State",
-                      "State":"Idle"
+                      "Type": "State",
+                      "State": "Idle"
                     }
                   ]
                 },
                 {
-                  "$Comment":"Action: Set Home",
-                  "Sensor":{
-                    "Type":"Flag",
-                    "Name":"SetHomeAction",
-                    "Set":true
+                  "$Comment": "Action: Set Home",
+                  "Sensor": {
+                    "Type": "Flag",
+                    "Name": "SetHomeAction",
+                    "Set": true
                   },
-                  "ActionsBlocking":true,
-                  "Actions":[
+                  "ActionsBlocking": true,
+                  "Actions": [
                     {
                       "Type": "Timeout",
-                      "Delay": [ 0.3, 0.3 ],
-                      "Action":{
-                        "Type":"Sequence",
-                        "Actions":[
+                      "Delay": [0.3, 0.3],
+                      "Action": {
+                        "Type": "Sequence",
+                        "Actions": [
                           {
-                          "Type":"LHFairySetHome"
+                            "Type": "LHFairySetHome"
                           },
                           {
-                              "Type": "SpawnParticles",
-                              "Offset": { "Compute": "FairyThinkParticleOffset" },
-                              "ParticleSystem": "Fairy_Ask_Confirm"
+                            "Type": "SpawnParticles",
+                            "Offset": { "Compute": "FairyThinkParticleOffset" },
+                            "ParticleSystem": "Fairy_Ask_Confirm"
                           },
                           {
-                            "Type":"PlayAnimation",
-                            "Slot":"Status",
-                            "Animation":"Salute"
+                            "Type": "PlayAnimation",
+                            "Slot": "Status",
+                            "Animation": "Salute"
                           }
                         ]
                       }
                     },
                     {
                       "Type": "Timeout",
-                      "Delay": [ 1.5, 1.5 ],
+                      "Delay": [1.5, 1.5],
                       "Action": {
-                        "Type":"Sequence",
-                        "Atomic":true,
-                        "Actions":[
+                        "Type": "Sequence",
+                        "Atomic": true,
+                        "Actions": [
                           {
-                            "Type":"SetFlag",
-                            "Name":"SetHomeAction",
-                            "SetTo":false
+                            "Type": "SetFlag",
+                            "Name": "SetHomeAction",
+                            "SetTo": false
                           },
                           {
-                            "Type":"State",
-                            "State":"Idle"
+                            "Type": "State",
+                            "State": "Idle"
                           }
                         ]
                       }
@@ -725,16 +690,14 @@
               ]
             },
 
-
-
             {
-              "$Comment":"Only show interest in food if the fairy is not recruited.",
+              "$Comment": "Only show interest in food if the fairy is not recruited.",
               "Sensor": {
-                "Type":"And",
-                "Sensors":[
+                "Type": "And",
+                "Sensors": [
                   {
-                    "Type":"Not",
-                    "Sensor":{
+                    "Type": "Not",
+                    "Sensor": {
                       "Type": "LHFairyIsRecruited"
                     }
                   },
@@ -761,11 +724,11 @@
               "Actions": [
                 {
                   "Type": "Timeout",
-                  "Delay": [ 0.5, 0.8 ]
+                  "Delay": [0.5, 0.8]
                 },
                 {
                   "Type": "SpawnParticles",
-                  "Offset": {"Compute": "FairyThinkParticleOffset"},
+                  "Offset": { "Compute": "FairyThinkParticleOffset" },
                   "ParticleSystem": "FairyQuestion"
                 },
                 {
@@ -780,7 +743,7 @@
               ]
             },
             {
-              "$Comment":"TODO: Add random cute behavior.",
+              "$Comment": "TODO: Add random cute behavior.",
               "Type": "Random",
               "Name": "Kweebec_Idle_Random_Day",
               "Instructions": [
@@ -793,16 +756,11 @@
                       "Actions": [
                         {
                           "Type": "Timeout",
-                          "Delay": [
-                            15,
-                            20
-                          ]
+                          "Delay": [15, 20]
                         },
                         {
                           "Type": "ResetInstructions",
-                          "Instructions": [
-                            "Kweebec_Idle_Random_Day"
-                          ]
+                          "Instructions": ["Kweebec_Idle_Random_Day"]
                         }
                       ]
                     },
@@ -817,151 +775,148 @@
         },
 
         {
-          "$Comment":" === Farming state === ",
+          "$Comment": " === Farming state === ",
           "Enabled": { "Compute": "FairyCanFarm" },
-          "Sensor":{
-            "Type":"State",
-            "State":"Farming"
+          "Sensor": {
+            "Type": "State",
+            "State": "Farming"
           },
-          "Instructions":[
+          "Instructions": [
             {
               "Reference": "Component_Instruction_Clear_Status_Animation"
             },
             {
-              "$Comment":"Fleeing and panicking behavior from Template_Kweebec_Sapling",
+              "$Comment": "Fleeing and panicking behavior from Template_Kweebec_Sapling",
               "Reference": "Component_Instruction_Damage_Check",
               "Modify": {
-                "_ExportStates": [
-                  "Flee",
-                  "Panic"
-                ],
+                "_ExportStates": ["Flee", "Panic"],
                 "AlertedRange": {
                   "Compute": "AlertedRange"
                 }
               }
             },
             {
-              "$Comment":"Drop all items gained while farming.",
-              "Continue":true,
-              "Sensor":{
-                "Type":"Self",
-                "Filters":[
+              "$Comment": "Drop all items gained while farming.",
+              "Continue": true,
+              "Sensor": {
+                "Type": "Self",
+                "Filters": [
                   {
-                    "Type":"Inventory",
-                    "Items":["*"]
+                    "Type": "Inventory",
+                    "Items": ["*"]
                   }
                 ]
               },
-              "Actions":[
+              "Actions": [
                 {
-                  "Type":"LHDumpInventory"
+                  "Type": "LHDumpInventory"
                 }
               ]
             },
             {
-              "$Comment":"There is no farmable block. Go back to idle.",
-              "Continue":true,
-              "Sensor":{
-                "Type":"Not",
-                "Sensor":{
-                  "Type":"LHClosestHarvestable",
-                  "Range": { "Compute":"FairyHarvestingLongRange + 1" }
+              "$Comment": "There is no farmable block. Go back to idle.",
+              "Continue": true,
+              "Sensor": {
+                "Type": "Not",
+                "Sensor": {
+                  "Type": "LHClosestHarvestable",
+                  "Range": { "Compute": "FairyHarvestingLongRange + 1" }
                 }
               },
-              "Actions":[
+              "Actions": [
                 {
-                  "Type":"State",
-                  "State":"Idle"
+                  "Type": "State",
+                  "State": "Idle"
                 }
               ]
             },
             {
-              "Sensor":{
-                "Type":"State",
-                "State":".Goto"
+              "Sensor": {
+                "Type": "State",
+                "State": ".Goto"
               },
-              "Instructions":[
+              "Instructions": [
                 {
-                  "$Comment":"Move to closest farmable (Far away)",
-                  "Continue":true,
-                  "Sensor":{
-                    "Type":"LHClosestHarvestable",
-                    "Range": { "Compute":"FairyHarvestingLongRange" }
+                  "$Comment": "Move to closest farmable (Far away)",
+                  "Continue": true,
+                  "Sensor": {
+                    "Type": "LHClosestHarvestable",
+                    "Range": { "Compute": "FairyHarvestingLongRange" }
                   },
-                  "BodyMotion":{
-                    "Type":"Seek",
+                  "BodyMotion": {
+                    "Type": "Seek",
                     "Reachable": false,
                     "RelativeSpeed": 1.0,
-                    "StopDistance":1,
+                    "StopDistance": 1,
                     "RelaxedMoveConstraints": false
                   }
                 },
                 {
-                  "$Comment":"Dirty trick to get around flying motion controller weirdness.",
-                  "Sensor":{
-                    "Type":"LHClosestHarvestable",
+                  "$Comment": "Dirty trick to get around flying motion controller weirdness.",
+                  "Sensor": {
+                    "Type": "LHClosestHarvestable",
                     "Range": { "Compute": "FairyHarvestingRange" }
                   },
-                  "Actions":[
+                  "Actions": [
                     {
                       "Type": "SpawnParticles",
                       "Offset": { "Compute": "FairyThinkParticleOffset" },
                       "ParticleSystem": "Fairy_Task_Farm"
                     },
                     {
-                      "Type":"State",
-                      "State":".JobDriver"
+                      "Type": "State",
+                      "State": ".JobDriver"
                     }
                   ]
                 }
               ]
             },
             {
-              "Sensor":{
-              "Type":"State",
-              "State":".JobDriver"
+              "Sensor": {
+                "Type": "State",
+                "State": ".JobDriver"
               },
-              "Instructions":[
+              "Instructions": [
                 {
-                  "$Comment":"Go back to idle if we can't farm.",
-                  "Sensor":{
+                  "$Comment": "Go back to idle if we can't farm.",
+                  "Sensor": {
                     "Type": "Not",
-                    "Sensor":{
+                    "Sensor": {
                       "Type": "LHClosestHarvestable",
                       "Range": { "Compute": "FairyHarvestingRange" }
                     }
                   },
-                  "Actions":[
+                  "Actions": [
                     {
-                      "Type":"State",
-                      "State":"Idle"
+                      "Type": "State",
+                      "State": "Idle"
                     }
                   ]
                 },
                 {
-                  "$Comment":"Move to closest farmable and farm (Nearby)",
-                  "Continue":true,
-                  "Sensor":{
-                    "Type":"LHClosestHarvestable",
+                  "$Comment": "Move to closest farmable and farm (Nearby)",
+                  "Continue": true,
+                  "Sensor": {
+                    "Type": "LHClosestHarvestable",
                     "Range": { "Compute": "FairyHarvestingRange" }
                   },
-                  "BodyMotion":{
-                    "Type":"Seek",
+                  "BodyMotion": {
+                    "Type": "Seek",
                     "Reachable": false,
                     "RelativeSpeed": 0.6,
                     "StopDistance": 1,
                     "RelaxedMoveConstraints": false
                   },
-                  "Actions":[
+                  "Actions": [
                     {
-                      "Type":"Nothing"
+                      "Type": "Nothing"
                     }
                   ]
                 },
                 {
-                  "$Comment":"Harvest",
-                  "Sensor":{
-                    "Type":"LHClosestHarvestable",
+                  "$Comment": "Harvest",
+                  "Sensor": {
+                    "Type": "LHClosestHarvestable",
                     "Range": { "Compute": "FairyHarvestingRange - 2" }
                   },
                   "HeadMotion": {
@@ -970,23 +925,23 @@
                   "BodyMotion": {
                     "Type": "Nothing"
                   },
-                  "ActionsBlocking":true,
-                  "Actions":[
+                  "ActionsBlocking": true,
+                  "Actions": [
                     {
-                      "Type":"PlayAnimation",
-                      "Slot":"Action",
-                      "Animation":"Harvest"
+                      "Type": "PlayAnimation",
+                      "Slot": "Action",
+                      "Animation": "Harvest"
                     },
                     {
-                      "Type":"Timeout",
-                      "Delay":[1, 1]
+                      "Type": "Timeout",
+                      "Delay": [1, 1]
                     },
                     {
-                      "Type":"PlaySound",
-                      "SoundEventId":"SFX_Fairy_Harvest_Plant"
+                      "Type": "PlaySound",
+                      "SoundEventId": "SFX_Fairy_Harvest_Plant"
                     },
                     {
-                      "Type":"LHHarvest"
+                      "Type": "LHHarvest"
                     }
                   ]
                 }
@@ -996,35 +951,32 @@
         },
 
         {
-          "$Comment":" === Follow player: Task === ",
+          "$Comment": " === Follow player: Task === ",
           "Sensor": {
             "Type": "State",
             "State": "FollowPlayer"
           },
-          "Instructions":[
+          "Instructions": [
             {
               "Reference": "Component_Instruction_Clear_Status_Animation"
             },
             {
-              "$Comment":"Fleeing and panicking behavior from Template_Kweebec_Sapling",
+              "$Comment": "Fleeing and panicking behavior from Template_Kweebec_Sapling",
               "Reference": "Component_Instruction_Damage_Check",
               "Modify": {
-                "_ExportStates": [
-                  "Flee",
-                  "Panic"
-                ],
+                "_ExportStates": ["Flee", "Panic"],
                 "AlertedRange": {
                   "Compute": "AlertedRange"
                 }
               }
             },
             {
-              "Sensor":{
-                "Type":"And",
-                "Sensors":[
+              "Sensor": {
+                "Type": "And",
+                "Sensors": [
                   {
-                    "Type":"EntityMessage",
-                    "Message":"Bell"
+                    "Type": "EntityMessage",
+                    "Message": "Bell"
                   },
                   {
                     "Type": "Player",
@@ -1041,22 +993,22 @@
                   }
                 ]
               },
-              "Actions":[
+              "Actions": [
                 {
                   "Type": "SpawnParticles",
                   "Offset": { "Compute": "FairyThinkParticleOffset" },
                   "ParticleSystem": "Fairy_Ask_Cancel"
                 },
                 {
-                  "Type":"State",
-                  "State":"Idle"
+                  "Type": "State",
+                  "State": "Idle"
                 }
               ]
             },
             {
-              "Sensor":{
-                "Type":"Not",
-                "Sensor":{
+              "Sensor": {
+                "Type": "Not",
+                "Sensor": {
                   "Type": "Player",
                   "Range": { "Compute": "FairyMaxPlayerFollowDistance" },
                   "Filters": [
@@ -1066,11 +1018,11 @@
                   ]
                 }
               },
-              "ActionsBlocking":true,
-              "Actions":[
+              "ActionsBlocking": true,
+              "Actions": [
                 {
                   "Type": "SpawnParticles",
-                  "Offset": {"Compute": "FairyThinkParticleOffset"},
+                  "Offset": { "Compute": "FairyThinkParticleOffset" },
                   "ParticleSystem": "Alerted"
                 },
                 {
@@ -1080,7 +1032,7 @@
                 },
                 {
                   "Type": "Timeout",
-                  "Delay": [ 1.5, 2.0 ]
+                  "Delay": [1.5, 2.0]
                 },
                 {
                   "Type": "State",
@@ -1098,10 +1050,10 @@
                   }
                 ]
               },
-              "Instructions":[
+              "Instructions": [
                 {
-                  "Continue":true,
-                  "Sensor":{
+                  "Continue": true,
+                  "Sensor": {
                     "Type": "Player",
                     "Range": { "Compute": "FairyMaxPlayerFollowDistance" },
                     "Filters": [
@@ -1110,13 +1062,13 @@
                       }
                     ]
                   },
-                  "BodyMotion":{
-                    "Type":"Seek",
-                    "Reachable":false,
-                    "HeightDifference":[-100,100],
-                    "SwitchToSteeringDistance":5,
-                    "SlowDownDistance":7,
-                    "StopDistance":5
+                  "BodyMotion": {
+                    "Type": "Seek",
+                    "Reachable": false,
+                    "HeightDifference": [-100, 100],
+                    "SwitchToSteeringDistance": 5,
+                    "SlowDownDistance": 7,
+                    "StopDistance": 5
                   }
                 }
               ]
@@ -1125,23 +1077,20 @@
         },
 
         {
-          "$Comment":" === Follow Player: Recruiting === ",
+          "$Comment": " === Follow Player: Recruiting === ",
           "Sensor": {
             "Type": "State",
             "State": "FollowPlayerRecruit"
           },
-          "Instructions":[
+          "Instructions": [
             {
               "Reference": "Component_Instruction_Clear_Status_Animation"
             },
             {
-              "$Comment":"Fleeing and panicking behavior from Template_Kweebec_Sapling",
+              "$Comment": "Fleeing and panicking behavior from Template_Kweebec_Sapling",
               "Reference": "Component_Instruction_Damage_Check",
               "Modify": {
-                "_ExportStates": [
-                  "Flee",
-                  "Panic"
-                ],
+                "_ExportStates": ["Flee", "Panic"],
                 "AlertedRange": {
                   "Compute": "AlertedRange"
                 }
@@ -1152,26 +1101,26 @@
                 "Type": "Any",
                 "Once": true
               },
-              "Continue":true,
-              "Actions":[
+              "Continue": true,
+              "Actions": [
                 {
-                  "Type":"TimerRestart",
-                  "Name":"FollowPlayerRecruitWatch"
+                  "Type": "TimerRestart",
+                  "Name": "FollowPlayerRecruitWatch"
                 }
               ]
             },
             {
-              "Sensor":{
-                "Type":"Timer",
-                "Name":"FollowPlayerRecruitWatch",
-                "State":"Stopped"
+              "Sensor": {
+                "Type": "Timer",
+                "Name": "FollowPlayerRecruitWatch",
+                "State": "Stopped"
               },
-              "ActionsAtomic":true,
-              "ActionsBlocking":true,
-              "Actions":[
+              "ActionsAtomic": true,
+              "ActionsBlocking": true,
+              "Actions": [
                 {
                   "Type": "SpawnParticles",
-                  "Offset": {"Compute": "FairyThinkParticleOffset"},
+                  "Offset": { "Compute": "FairyThinkParticleOffset" },
                   "ParticleSystem": "FairyQuestion"
                 },
                 {
@@ -1181,7 +1130,7 @@
                 },
                 {
                   "Type": "Timeout",
-                  "Delay": [ 1.5, 2.0 ]
+                  "Delay": [1.5, 2.0]
                 },
                 {
                   "Type": "State",
@@ -1200,10 +1149,10 @@
                   }
                 ]
               },
-              "Instructions":[
+              "Instructions": [
                 {
-                  "Continue":true,
-                  "Sensor":{
+                  "Continue": true,
+                  "Sensor": {
                     "Type": "Player",
                     "Range": 10,
                     "Filters": [
@@ -1213,13 +1162,13 @@
                       }
                     ]
                   },
-                  "BodyMotion":{
-                    "Type":"Seek",
-                    "Reachable":false,
-                    "HeightDifference":[-100,100],
-                    "SwitchToSteeringDistance":5,
-                    "SlowDownDistance":7,
-                    "StopDistance":5
+                  "BodyMotion": {
+                    "Type": "Seek",
+                    "Reachable": false,
+                    "HeightDifference": [-100, 100],
+                    "SwitchToSteeringDistance": 5,
+                    "SlowDownDistance": 7,
+                    "StopDistance": 5
                   },
                   "HeadMotion": {
                     "Type": "Watch"
@@ -1228,9 +1177,9 @@
               ]
             },
             {
-              "Sensor":{
-                "Type":"Not",
-                "Sensor":{
+              "Sensor": {
+                "Type": "Not",
+                "Sensor": {
                   "Type": "Player",
                   "Range": 10,
                   "Filters": [
@@ -1242,7 +1191,7 @@
                 }
               },
               "ActionsAtomic": true,
-              "Actions":[
+              "Actions": [
                 {
                   "Type": "State",
                   "State": "Idle"
@@ -1251,8 +1200,6 @@
             }
           ]
         },
-
-
 
         {
           "Sensor": {
@@ -1274,7 +1221,7 @@
                 },
                 {
                   "Type": "SpawnParticles",
-                  "Offset": {"Compute": "FairyThinkParticleOffset"},
+                  "Offset": { "Compute": "FairyThinkParticleOffset" },
                   "ParticleSystem": "Alerted"
                 }
               ]
@@ -1282,10 +1229,7 @@
             {
               "Reference": "Component_Instruction_Damage_Check",
               "Modify": {
-                "_ExportStates": [
-                  "Flee",
-                  "Panic"
-                ],
+                "_ExportStates": ["Flee", "Panic"],
                 "AlertedRange": {
                   "Compute": "AlertedRange"
                 }
@@ -1310,9 +1254,7 @@
                     "Filters": [
                       {
                         "Type": "Attitude",
-                        "Attitudes": [
-                          "Hostile"
-                        ]
+                        "Attitudes": ["Hostile"]
                       }
                     ]
                   },
@@ -1320,10 +1262,7 @@
                   "Actions": [
                     {
                       "Type": "Timeout",
-                      "Delay": [
-                        1,
-                        2
-                      ]
+                      "Delay": [1, 2]
                     },
                     {
                       "Type": "State",
@@ -1351,10 +1290,7 @@
                         "ViewSector": {
                           "Compute": "ViewSector"
                         },
-                        "Attitudes": [
-                          "Hostile",
-                          "Neutral"
-                        ]
+                        "Attitudes": ["Hostile", "Neutral"]
                       }
                     },
                     {
@@ -1363,10 +1299,7 @@
                         "HearingRange": {
                           "Compute": "HearingRange"
                         },
-                        "Attitudes": [
-                          "Hostile",
-                          "Neutral"
-                        ]
+                        "Attitudes": ["Hostile", "Neutral"]
                       }
                     }
                   ]
@@ -1443,12 +1376,7 @@
             {
               "Reference": "Component_Kweebec_Instruction_Panic",
               "Modify": {
-                "_ExportStates": [
-                  "Alerted",
-                  "Flee",
-                  "Panic",
-                  "Idle"
-                ],
+                "_ExportStates": ["Alerted", "Flee", "Panic", "Idle"],
                 "ViewRange": {
                   "Compute": "ViewRange"
                 },
@@ -1469,34 +1397,34 @@
     }
   ],
   "InteractionInstruction": {
-    "Instructions":[
+    "Instructions": [
       {
-        "$Comment":"Interaction: Recruiting fairy. Taken from: Template_Livestock",
-        "TreeMode":true,
-        "Instructions":[
+        "$Comment": "Interaction: Recruiting fairy. Taken from: Template_Livestock",
+        "TreeMode": true,
+        "Instructions": [
           {
             "InvertTreeModeResult": true,
-            "Sensor":{
-              "Type":"Not",
+            "Sensor": {
+              "Type": "Not",
               "Sensor": {
-                "Type":"And",
-                "Sensors":[
+                "Type": "And",
+                "Sensors": [
                   {
-                    "Type":"State",
-                    "State":"FollowPlayerRecruit"
+                    "Type": "State",
+                    "State": "FollowPlayerRecruit"
                   },
                   {
-                    "Type":"Not",
-                    "Sensor":{
-                      "Type":"LHFairyIsRecruited"
+                    "Type": "Not",
+                    "Sensor": {
+                      "Type": "LHFairyIsRecruited"
                     }
                   }
                 ]
               }
             },
-            "Actions":[
+            "Actions": [
               {
-                "Type":"Nothing"
+                "Type": "Nothing"
               }
             ]
           },
@@ -1516,18 +1444,18 @@
           },
           {
             "Sensor": {
-              "Type":"HasInteracted"
+              "Type": "HasInteracted"
             },
-            "ActionsAtomic":true,
+            "ActionsAtomic": true,
             "Actions": [
               {
                 "Type": "LHRecruitFairy",
-                "RecruitedAppearance":"Fairy_Cultivator_Recruited"
+                "RecruitedAppearance": "Fairy_Cultivator_Recruited"
               },
               {
-                "Type":"SpawnParticles",
-                "Offset":{"Compute": "FairyThinkParticleOffset"},
-                "ParticleSystem":"Hearts_Subtle",
+                "Type": "SpawnParticles",
+                "Offset": { "Compute": "FairyThinkParticleOffset" },
+                "ParticleSystem": "Hearts_Subtle",
                 "TargetNodeName": "Head"
               },
               {
@@ -1539,29 +1467,29 @@
         ]
       },
       {
-        "$Comment":"Interaction: Asking the fairy.",
-        "TreeMode":true,
-        "Instructions":[
+        "$Comment": "Interaction: Asking the fairy.",
+        "TreeMode": true,
+        "Instructions": [
           {
             "InvertTreeModeResult": true,
-            "Sensor":{
-              "Type":"Not",
-              "Sensor":{
-                "Type":"And",
-                "Sensors":[
+            "Sensor": {
+              "Type": "Not",
+              "Sensor": {
+                "Type": "And",
+                "Sensors": [
                   {
-                    "Type":"State",
-                    "State":"Idle.Default"
+                    "Type": "State",
+                    "State": "Idle.Default"
                   },
                   {
-                    "Type":"LHFairyIsRecruited"
+                    "Type": "LHFairyIsRecruited"
                   }
                 ]
               }
             },
-            "Actions":[
+            "Actions": [
               {
-                "Type":"Nothing"
+                "Type": "Nothing"
               }
             ]
           },
@@ -1581,34 +1509,34 @@
           },
           {
             "Sensor": {
-              "Type":"HasInteracted"
+              "Type": "HasInteracted"
             },
             "Actions": [
               {
-                "Type":"State",
-                "State":"Idle.AskTask1"
+                "Type": "State",
+                "State": "Idle.AskTask1"
               }
             ]
           }
         ]
       },
       {
-        "$Comment":"Interaction: Task2: Stop following.",
-        "TreeMode":true,
-        "Instructions":[
+        "$Comment": "Interaction: Task2: Stop following.",
+        "TreeMode": true,
+        "Instructions": [
           {
             "InvertTreeModeResult": true,
-            "Sensor":{
-              "Type":"Not",
-              "Sensor":{
-                "Type":"And",
-                "Sensors":[
+            "Sensor": {
+              "Type": "Not",
+              "Sensor": {
+                "Type": "And",
+                "Sensors": [
                   {
-                    "Type":"State",
-                    "State":"FollowPlayer.Default"
+                    "Type": "State",
+                    "State": "FollowPlayer.Default"
                   },
                   {
-                    "Type":"LHFairyIsRecruited"
+                    "Type": "LHFairyIsRecruited"
                   },
                   {
                     "Type": "Player",
@@ -1622,9 +1550,9 @@
                 ]
               }
             },
-            "Actions":[
+            "Actions": [
               {
-                "Type":"Nothing"
+                "Type": "Nothing"
               }
             ]
           },
@@ -1644,34 +1572,34 @@
           },
           {
             "Sensor": {
-              "Type":"HasInteracted"
+              "Type": "HasInteracted"
             },
             "Actions": [
               {
-                "Type":"State",
-                "State":"Idle.Default"
+                "Type": "State",
+                "State": "Idle.Default"
               }
             ]
           }
         ]
       },
       {
-        "$Comment":"Interaction: Task1: Asking the fairy: Status",
-        "TreeMode":true,
-        "Instructions":[
+        "$Comment": "Interaction: Task1: Asking the fairy: Status",
+        "TreeMode": true,
+        "Instructions": [
           {
             "InvertTreeModeResult": true,
-            "Sensor":{
-              "Type":"Not",
-              "Sensor":{
-                "Type":"And",
-                "Sensors":[
+            "Sensor": {
+              "Type": "Not",
+              "Sensor": {
+                "Type": "And",
+                "Sensors": [
                   {
-                    "Type":"State",
-                    "State":"Idle.AskTask1"
+                    "Type": "State",
+                    "State": "Idle.AskTask1"
                   },
                   {
-                    "Type":"LHFairyIsRecruited"
+                    "Type": "LHFairyIsRecruited"
                   },
                   {
                     "Type": "Player",
@@ -1685,9 +1613,9 @@
                 ]
               }
             },
-            "Actions":[
+            "Actions": [
               {
-                "Type":"Nothing"
+                "Type": "Nothing"
               }
             ]
           },
@@ -1707,33 +1635,33 @@
           },
           {
             "Sensor": {
-              "Type":"HasInteracted"
+              "Type": "HasInteracted"
             },
             "Actions": [
               {
-                "Type":"Nothing"
+                "Type": "Nothing"
               }
             ]
           }
         ]
       },
       {
-        "$Comment":"Interaction: Task2: Asking the fairy: Follow the player",
-        "TreeMode":true,
-        "Instructions":[
+        "$Comment": "Interaction: Task2: Asking the fairy: Follow the player",
+        "TreeMode": true,
+        "Instructions": [
           {
             "InvertTreeModeResult": true,
-            "Sensor":{
-              "Type":"Not",
-              "Sensor":{
-                "Type":"And",
-                "Sensors":[
+            "Sensor": {
+              "Type": "Not",
+              "Sensor": {
+                "Type": "And",
+                "Sensors": [
                   {
-                    "Type":"State",
-                    "State":"Idle.AskTask2"
+                    "Type": "State",
+                    "State": "Idle.AskTask2"
                   },
                   {
-                    "Type":"LHFairyIsRecruited"
+                    "Type": "LHFairyIsRecruited"
                   },
                   {
                     "Type": "Player",
@@ -1745,16 +1673,16 @@
                     ]
                   },
                   {
-                    "Type":"Flag",
-                    "Name":"FollowPlayerAction",
-                    "Set":false
+                    "Type": "Flag",
+                    "Name": "FollowPlayerAction",
+                    "Set": false
                   }
                 ]
               }
             },
-            "Actions":[
+            "Actions": [
               {
-                "Type":"Nothing"
+                "Type": "Nothing"
               }
             ]
           },
@@ -1774,35 +1702,35 @@
           },
           {
             "Sensor": {
-              "Type":"HasInteracted"
+              "Type": "HasInteracted"
             },
             "Actions": [
               {
-                "Type":"SetFlag",
-                "Name":"FollowPlayerAction",
-                "SetTo":true
+                "Type": "SetFlag",
+                "Name": "FollowPlayerAction",
+                "SetTo": true
               }
             ]
           }
         ]
       },
       {
-        "$Comment":"Interaction: Task3: Asking the fairy: Set home",
-        "TreeMode":true,
-        "Instructions":[
+        "$Comment": "Interaction: Task3: Asking the fairy: Set home",
+        "TreeMode": true,
+        "Instructions": [
           {
             "InvertTreeModeResult": true,
-            "Sensor":{
-              "Type":"Not",
-              "Sensor":{
-                "Type":"And",
-                "Sensors":[
+            "Sensor": {
+              "Type": "Not",
+              "Sensor": {
+                "Type": "And",
+                "Sensors": [
                   {
-                    "Type":"State",
-                    "State":"Idle.AskTask3"
+                    "Type": "State",
+                    "State": "Idle.AskTask3"
                   },
                   {
-                    "Type":"LHFairyIsRecruited"
+                    "Type": "LHFairyIsRecruited"
                   },
                   {
                     "Type": "Player",
@@ -1814,16 +1742,16 @@
                     ]
                   },
                   {
-                    "Type":"Flag",
-                    "Name":"SetHomeAction",
-                    "Set":false
+                    "Type": "Flag",
+                    "Name": "SetHomeAction",
+                    "Set": false
                   }
                 ]
               }
             },
-            "Actions":[
+            "Actions": [
               {
-                "Type":"Nothing"
+                "Type": "Nothing"
               }
             ]
           },
@@ -1843,13 +1771,13 @@
           },
           {
             "Sensor": {
-              "Type":"HasInteracted"
+              "Type": "HasInteracted"
             },
             "Actions": [
               {
-                "Type":"SetFlag",
-                "Name":"SetHomeAction",
-                "SetTo":true
+                "Type": "SetFlag",
+                "Name": "SetHomeAction",
+                "SetTo": true
               }
             ]
           }

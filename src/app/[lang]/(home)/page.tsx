@@ -143,7 +143,10 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
                   {item.title}
                 </h3>
                 <p className="text-muted-foreground z-20 text-base">
-                  {messages.showcaseItems.madeBy.replace("{author}", item.author)}
+                  {messages.showcaseItems.madeBy.replace(
+                    "{author}",
+                    item.author,
+                  )}
                 </p>
                 {item.description && (
                   <p className="text-muted-foreground z-20 mt-1 line-clamp-2 text-sm">
