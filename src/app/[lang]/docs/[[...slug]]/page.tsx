@@ -25,18 +25,15 @@ export default async function Page(
 
   const messages = require(`@/../messages/${params.lang}.json`);
 
-  const MDX = page.data.body;
-  // const lastModified = await getGithubLastEdit({
-  //   owner: "HytaleModding",
-  //   repo: "site",
-  //   path: `content/docs/${page.path}`
-  // })
   const authors = page.data.authors;
+  const loadedPageData = await page.data.load();
+
+  const MDX = loadedPageData.body;
 
   return (
     <ViewTransition enter="blur-scale-transition" exit="blur-scale-transition">
       <DocsPage
-        toc={page.data.toc}
+        toc={loadedPageData.toc}
         tableOfContent={{
           style: "clerk",
         }}
@@ -95,6 +92,12 @@ export default async function Page(
 }
 
 export async function generateStaticParams() {
+  if (process.env.NODE_ENV === "development") {
+    console.log("in dev, skipping static params generation");
+    return [];
+  }
+
+  // we may want to filter this down to only specific languages in the future.
   return source.generateParams();
 }
 
