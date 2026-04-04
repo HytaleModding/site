@@ -7,7 +7,20 @@ import * as path from "path";
 export function localizePageTree(
   tree: DocsLayoutProps["tree"],
   lang: string,
+  options?: {
+    translateName?: boolean;
+    translateTitle?: boolean;
+    translateIndex?: boolean;
+    translateChildren?: boolean;
+  },
 ): DocsLayoutProps["tree"] {
+  const {
+    translateName = true,
+    translateTitle = true,
+    translateIndex = true,
+    translateChildren = true,
+  } = options ?? {};
+
   let translations = FallbackLanguage;
 
   if (lang !== "en") {
@@ -23,17 +36,17 @@ export function localizePageTree(
 
   function getTranslation(
     key: string,
-    translationMap: Record<string, string | Object>,
+    translationMap: Record<string, string | object>,
   ): string | undefined {
     const keys = key.split(".");
-    let translated: string | Record<string, string | Object> = translationMap;
+    let translated: string | Record<string, string | object> = translationMap;
 
     for (let i = 0; i < keys.length; i++) {
       if (translated == null || typeof translated !== "object")
         return undefined;
       translated = translated[keys[i]] as
         | string
-        | Record<string, string | Object>;
+        | Record<string, string | object>;
     }
 
     if (typeof translated !== "string") return undefined;
@@ -76,17 +89,22 @@ export function localizePageTree(
       return;
     }
 
-    if ("name" in node && typeof node.name === "string")
+    if (translateName && "name" in node && typeof node.name === "string")
       node.name = translateString(node.name);
 
-    if ("title" in node && typeof node.title === "string")
+    if (translateTitle && "title" in node && typeof node.title === "string")
       node.title = translateString(node.title);
 
-    if ("index" in node && typeof node.index === "object")
+    if (translateIndex && "index" in node && typeof node.index === "object")
       traverseNode(node.index);
 
-    if ("children" in node && Array.isArray(node.children))
+    if (
+      translateChildren &&
+      "children" in node &&
+      Array.isArray(node.children)
+    ) {
       traverseChildren(node.children);
+    }
   }
 
   traverseNode(tree);

@@ -10,7 +10,12 @@ export default async function Layout({
   children,
 }: LayoutProps<"/[lang]/docs">) {
   const { lang } = await params;
-  const tree = localizePageTree(source.pageTree[lang], lang);
+  const tree = localizePageTree(source.pageTree[lang], lang, {
+    translateName: true,
+    translateTitle: true,
+    translateIndex: false,
+    translateChildren: true,
+  });
 
   return (
     <ViewTransition update="none">
