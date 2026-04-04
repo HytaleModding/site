@@ -1,0 +1,188 @@
+---
+title: NPC Introduction
+description: A introduction and demystifier of NPCs.
+authors:
+    - name: "ChJees"
+---
+
+# NPCs - What are they?
+**Definition: NPC** stands for **N**on-**P**layable **C**haracter.
+
+NPCs is what populate the world of Hytale, from the smallest bug to colossal dragons. They all run on the same software while their exterior is only the representation of what they are.
+
+There are also NPCs that can stretch on the definition; they are not really characters but they use the inner-workings of one to perform complicated behavior. An adventurous modder could use it to create intricate static mechanisms if they so feel inclined.
+
+In short, if it can move and reacts to the world it is a NPC. Or **Mob** if you like that term.
+
+## Basics
+A NPC has a **Role** from which its functionality comes from. Without one it can't do anything at all. This is where you will spend the grand majority of your time editing. From defining its appearance and max health to laying down intricate **Instructions**.
+
+The NPC goes through many **States** in its lifetime when it interacts and reacts with the world. From idling around to going into a panic or engaging in combat. **States** can be really simple to becoming really intricate branches of **Instructions**.
+## What is a role?
+You set what *properties* a NPC has in a **Role** and this is where the actual logic rests in. Everything rests inside this JSON file.
+
+The **Role** JSON files must be located in this directory inside your mod: `.\NPC\Roles`
+
+It is vital to place your **Role** JSON files inside ***this*** directory because of how Hytale load mod assets. It is not the same directory structure that Hytale has, so keep that in mind. Other asset types also abide to these strict rules.
+## What is a instruction?
+**Instructions** are the core of your NPC. They come in many forms but the main one you will be interacting with is the humble `Instructions` block in the JSON file.
+
+It goes from top to bottom when executing the laid down instructions, only ever stopping if the most nested instruction matches its **Sensor**.
+
+```
+Scenario:
+  The NPC's State is Idle
+  A Player is nearby holding red berries in their hand.
+
+Instructions
+  Any: We do some check regardless of State (Continue after this)
+  State: Farming
+  State: Idle
+    Player: Has Red Berries
+  State: Alerted
+  State: Panicked
+```
+In this example will it first check the first instruction which as the **Any** sensor. Since it always matches it will execute the **Actions** of it. But since the instruction is told to **Continue** even if it matches it will go to the next one.
+
+The next instruction has the **Sensor** of the type **State** which checks if the NPC is in the state of Farming. But since it isn't it fails to match and go to the next one.
+
+It found a match in the instruction with the **State** of "Idle"! Since it did it will try to execute either **Actions** or **Instructions** nested inside it.
+
+Since there is a nested **Instruction** it will try to execute that. It is a match since there is a player nearby holding red berries in their hand.
+
+You would think that it would simply go out of the `Player: Has Red Berries` instruction now since there is no way but up? Nope, it will keep executing that instruction until it no longer matches. You can make it **Continue** on its way after if you really want to though.
+### Addressing the elephant in the room
+Can't we have both **Actions** and **Instructions** inside a **Instruction**? No we can't, why you wonder? They are incompatible in how they are executed inside a instruction. Since **Actions** can be blocking which means that the **Instruction** they are in are executed several times until all actions inside it are no longer blocking. This will be gone in-depth in another page.
+## What is a sensor?
+The sensor is the way NPCs react to the world around them. Without them they will not be able to do anything interesting. A instruction with no sensor will always execute its actions regardless of intent.
+```json
+"Sensor": {
+    "Type": "Player",
+    "Range": 8,
+    "Filters": [
+        {
+            "Type": "ItemInHand",
+            "Items": ["Plant_Fruit_Berries_Red"]
+        }
+    ]
+}
+```
+> *Mmm, a player has delicious berries within my range...*
+## What is a action?
+Attacking, equipping, playing animations, make particle effects... The list goes on. Actions are what make NPCs feel alive. They can be of the **blocking** type like `Timeout` which lets you make your NPCs perform actions in a sequence which makes for interesting theatrics.
+```json
+"ActionsBlocking": true,
+"Actions":[
+    {
+        "Type":"PlayAnimation",
+        "Animation":"Happy"
+    },
+    {
+        "Type": "SpawnParticles",
+        "Offset": [0, 1, 0],
+        "ParticleSystem": "Hearts",
+        "TargetNodeName": "Head"
+    },
+    {
+        "Type":"Timeout",
+        "Delay": [3.0, 3.0]
+    }
+]
+```
+> *I am so happy my heart can't contain it!*
+## But what about Body and Head motion?
+They will help your NPC move around in the world. Body motion tells the NPC how to move around with its assigned motion controller. Head motion will tell the NPC how to move its head around.
+
+For moving around the world will you interact with the body motion the most, meanwhile the head motion will be used for looking at things.
+
+The majority of these motion types require a **Target** to be acquired by a **Sensor** in order to be used. But some types like `Wander` for body motion doesn't require one.
+```json
+"Sensor": {
+    "Type": "Player",
+    "Range": 8,
+    "Filters": [
+        {
+            "Type": "ItemInHand",
+            "Items": ["Plant_Fruit_Berries_Red"]
+        }
+    ]
+},
+"HeadMotion": {
+    "Type": "Watch"
+},
+"BodyMotion":{
+    "Type":"Seek",
+    "RelativeSpeed": 0.6,
+    "StopDistance":3,
+}
+```
+> *That person with those berries makes me wanna seek them out for a closer look.*
+## So what about states?
+I know I avoided talking about **States** until now but its because at its ***core*** are states just another system with its own action and sensor pair. The main differentiator is that Hytale has it tightly integrated with NPCs to the point where its optimized into just being numeric values being checked when matching sensors and setting states.
+
+Are they bad? No, they are in fact the best way to change how a NPC acts in certain situations. Like the standard **Idle** state which tells the NPC how to act when its not in combat or panicking for example. Make it wander around and seem... Alive instead of just being a stationary loot dispenser.
+```json
+"Instructions":[
+    {
+        "Sensor":{
+            "Type":"State",
+            "State":"Idle"
+        },
+        "Instructions":[
+            {
+                "Sensor": {
+                    "Type": "Player",
+                    "Range": 8,
+                    "Filters": [
+                        {
+                            "Type": "ItemInHand",
+                            "Items": ["Plant_Fruit_Berries_Red"]
+                        }
+                    ]
+                },
+                "HeadMotion": {
+                    "Type": "Watch"
+                },
+                "BodyMotion":{
+                    "Type":"Seek",
+                    "RelativeSpeed": 0.6,
+                    "StopDistance":3,
+                }
+            },
+            {
+                "Reference": "Component_Instruction_Intelligent_Idle_Motion_Wander"
+            }
+        ]
+    }
+]
+```
+> *While I'm Idle, if a player with red berries in hand are around I will seek them out. Otherwise I will wander around.*
+
+You may wonder what **"Reference"** is at the last instruction, it will be covered in another page in detail. The very quick version is that it allows you to reuse parts of a JSON in many different files.
+## What to do now?
+Since you now have an inkling of what is in store for NPCs, the first thing you should do is to extract the **Server** and **Common** folders from the `Assets.zip` file from your Hytale installation. Exclude the `Prefabs` folder from **Server** since we won't need it. The main file we will be referencing a lot is the `Template_Livestock.json` since it contains a lot of useful tricks when it come to instructions.
+
+If you are modding for **Release** it can be found here: `%appdata%\Hytale\install\release\package\game\latest`
+
+If you are modding for **Pre-release** it can be found here: `%appdata%\Hytale\install\pre-release\package\game\latest`
+
+If you installed Hytale in custom directory then you can find Hytale from there instead.
+
+Doing this will make it significantly easier to mod and find other assets like animations, sound effects and particle effects.
+
+Keep in mind that we will be referencing the `Server\NPC\Roles` folder a lot during this guide so keep that folder bookmarked.
+
+## TL;DR
+NPCs are derived from **Role** JSON files.
+
+The **Role** JSON files ***must*** be located in this directory inside your mod: `.\NPC\Roles`
+
+NPC roles can be found in the `Server\NPC\Roles` folder in the Hytale `Assets.zip` archive.
+
+**Roles** have **Instructions** with **Sensors, Sub-Instructions, Actions Body motions & Head motions** which tell them how to interact with the world.
+
+**Instructions** is an **Instruction** in itself. That is why you need to put a second **Instructions** inside it.
+
+A **Instruction** with no **Sensor** acts like a **Any** Sensor.
+
+**Actions** are all executed instantly unless **ActionsBlocking** is set to `true` inside the **Instruction**.

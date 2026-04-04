@@ -4,7 +4,9 @@
     "title": "Hytale Modding",
     "documentation": "Dokumentáció",
     "sponsors": "Támogatók",
-    "search": "Keresés"
+    "wiki": "Wiki",
+    "search": "Keresés",
+    "grants": "Grants"
   },
   "home": {
     "title": "A Top 1 oldal Hytale modoláshoz {flipwords}",
@@ -26,6 +28,9 @@
       "seconds": "mp\n"
     },
     "hytaleReleased": "Megjelent a Hytale!"
+  },
+  "showcaseItems": {
+    "madeBy": "by {author}"
   },
   "sponsors": {
     "title": "Támogatás",
@@ -88,6 +93,17 @@
     },
     "community_projects": {
       "title": "Közösségi projektek"
+    }
+  },
+  "callout": {
+    "defaultTitles": {
+      "info": "Info",
+      "warning": "Warning",
+      "danger": "Danger",
+      "success": "Success",
+      "lvl_beginner": "Level: Beginner",
+      "lvl_intermediate": "Level: Intermediate",
+      "lvl_advanced": "Level: Advanced"
     }
   }
 }

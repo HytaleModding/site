@@ -4,7 +4,9 @@
     "title": "Modding d'Hytale",
     "documentation": "Documentation",
     "sponsors": "Sponsors",
-    "search": "Recherche"
+    "wiki": "Wiki",
+    "search": "Recherche",
+    "grants": "Grants"
   },
   "home": {
     "title": "Ressource #1 pour le modding Hytale {flipwords}",
@@ -27,6 +29,9 @@
     },
     "hytaleReleased": "Hytale est disponible !"
   },
+  "showcaseItems": {
+    "madeBy": "by {author}"
+  },
   "sponsors": {
     "title": "Soutenez-nous",
     "description": "HytaleModding est un projet communautaire open-source, et gérer la communauté implique en partie de financer des services, serveurs et infrastructure, comme héberger ce site web. Si vous voulez soutenir le projet, devenez un sponsor ! Nous utilisons OpenCollective pour que vous puissiez voir comment les fonds sont utilisés pour soutenir la communauté.",
@@ -39,8 +44,8 @@
     "credit": "Écrit par",
     "supportUs": "Soutenez-nous",
     "officialDocumentationNotice": {
-      "title": "Official Hytale Documentation",
-      "description": "All content on this section is provided by **Hypixel Studios Canada Inc.** and is presented without any substantial changes, aside from visual design adjustments by the HytaleModding Team."
+      "title": "Documentation officielle de Hytale",
+      "description": "Tout le contenu de cette section est fourni par **Hypixel Studios Canada Inc. * et est présenté sans aucun changement substantiel, en dehors des ajustements de design visuel par l'équipe HytaleModding."
     }
   },
   "meta": {
@@ -74,20 +79,31 @@
     },
     "official_documentation": {
       "worldgen": {
-        "title": "World Generation",
+        "title": "Génération de monde",
         "pack_tutorial": {
-          "title": "Worldgen Pack Tutorial"
+          "title": "Tutoriel du pack de génération de monde"
         },
         "technical_hytale_generator": {
-          "title": "Technical Hytale Generator"
+          "title": "Générateur technique de Hytale"
         },
         "worldgen_tutorial": {
-          "title": "Worldgen Tutorial"
+          "title": "Tutoriel de génération de monde"
         }
       }
     },
     "community_projects": {
       "title": "Projets de la communauté"
+    }
+  },
+  "callout": {
+    "defaultTitles": {
+      "info": "Info",
+      "warning": "Warning",
+      "danger": "Danger",
+      "success": "Success",
+      "lvl_beginner": "Level: Beginner",
+      "lvl_intermediate": "Level: Intermediate",
+      "lvl_advanced": "Level: Advanced"
     }
   }
 }

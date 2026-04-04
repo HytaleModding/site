@@ -9,7 +9,7 @@ To start writing a guide, you need to create a file with extension `.mdx`. You n
 Suppose I want to make a java basics guide, I'd put it in `/content/docs/en/guides/java-basics`. You'll have to do some digging to find out where you want to place it.
 
 <Callout>
-  If there's already a guide in the section you want to write about, you can just press on the "Edit On GitHub" button on our website and it'll take you to the folder, now you can write in the same folder to have your guide appear in the same section.
+    If there's already a guide in the section you want to write about, you can just press on the "Edit On GitHub" button on our website and it'll take you to the folder, now you can write in the same folder to have your guide appear in the same section.
 </Callout>
 
 ## Frontmatter
@@ -25,6 +25,7 @@ description: "Learn the basics of Java programming."
 authors:
     - name: "Your Name"
       url: "https://yourwebsite.com"
+icon: YourIcon 
 ---
 ```
 
@@ -57,6 +58,38 @@ We use [Markdown](https://www.markdownguide.org/) for formatting our guides. Her
 
 This is the same type of formatting you'll see on most documentation websites, and also social media platforms like Discord.
 
+### Links
+
+Everyone knows what a link is. However, there is a difference between linking to an external resource and linking to an internal one.
+
+In general, in Markdown they are written like this: `[Your Text](Your link)`
+
+#### External
+
+Nothing to explain, just `https://example.com`.
+
+#### Internal
+
+You cannot use regular links here. Let's say your link to another guide is `https://hytalemodding.dev/en/docs/quick-start`.
+You can't write it like that because you are not only referring to the page but also to the language, which is not correct.
+Instead, type `./quick-start` which is correct and links to the page in the user's language.
+
+**Accessing files**
+
+- **Current Folder**: `./`
+- **Folder above**: `../` as many times as this folder is higher in the hierarchy.
+
+## Icons
+
+If you want to add an icon for your page then you should use [Lucide](https://lucide.dev/).
+
+1. Go to the [site](https://lucide.dev/) and find an icon you like.
+2. Once you have selected an icon, click on it, then click "See in action"
+3. Next, click on "React" which we are using. You will only need the text in the curly brackets on the first line.
+4. Next, simply paste `icon: YourIcon` into Frontmatter.
+
+## Callout
+
 You can also make a Callout to highlight important information or tips. Use the following syntax:
 
 ```mdx
@@ -66,7 +99,7 @@ You can also make a Callout to highlight important information or tips. Use the 
 ```
 
 <Callout>
-  This is a callout message.
+    This is a callout message.
 </Callout>
 
 You can change the color of the callout by adding a `type` attribute. For example:
@@ -78,6 +111,26 @@ You can change the color of the callout by adding a `type` attribute. For exampl
 ```
 
 Available types are: `info`, `warning`, `error`, and `success`.
+
+## Difficulty levels
+
+These are types of callouts, they are optional, they show how complex your page can be.
+There are 3 main levels of complexity.
+
+<Callout type="lvl_beginner">
+    Use `lvl_beginner`. This page contains information for those who are starting out with modding.
+</Callout>
+
+<Callout type="lvl_intermediate">
+    Use `lvl_intermediate`. This page contains information for those who want to deepen their knowledge.
+</Callout>
+
+<Callout type="lvl_advanced">
+   Use `lvl_advanced`. This page contains information for those who already know how to make quality mods, and contains something additional.
+</Callout>
+
+Their usage is the same as in callout, but we would advise not to change the title. Inside,
+you write why your page is classified as this level and what the user should know.
 
 ## Conclusion
 

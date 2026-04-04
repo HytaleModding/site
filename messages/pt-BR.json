@@ -4,7 +4,9 @@
     "title": "Hytale Modding",
     "documentation": "Documentação",
     "sponsors": "Apoiadores",
-    "search": "Buscar"
+    "wiki": "Wiki",
+    "search": "Buscar",
+    "grants": "Grants"
   },
   "home": {
     "title": "Hytale Modding #1 em {flipwords}",
@@ -26,6 +28,9 @@
       "seconds": "s"
     },
     "hytaleReleased": "O Hytale está disponível!"
+  },
+  "showcaseItems": {
+    "madeBy": "por {author}"
   },
   "sponsors": {
     "title": "Apoie-nos",
@@ -88,6 +93,17 @@
     },
     "community_projects": {
       "title": "Projetos da comunidade"
+    }
+  },
+  "callout": {
+    "defaultTitles": {
+      "info": "Informação",
+      "warning": "Aviso",
+      "danger": "Perigoso",
+      "success": "Sucesso",
+      "lvl_beginner": "Nível: Iniciante",
+      "lvl_intermediate": "Nível: Intermediário",
+      "lvl_advanced": "Nível: Avançado"
     }
   }
 }

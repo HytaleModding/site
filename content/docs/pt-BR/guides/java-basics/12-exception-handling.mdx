@@ -34,21 +34,21 @@ System.out.println("Programa continua...");
 ```
 
 <Callout type="info" title="Como o Try-Catch funciona">
-  1. O código do bloco `try` executa normalmente;
-  2. Se um erro ocorrer, a execução avança para o bloco `catch`;
-  3. Depois do bloco `catch`, o programa continua normalmente;
-  4. Se nenhum erro ocorrer, o bloco `catch` é ignorado.
+1. O código do bloco `try` executa normalmente;
+2. Se um erro ocorrer, a execução avança para o bloco `catch`;
+3. Depois do bloco `catch`, o programa continua normalmente;
+4. Se nenhum erro ocorrer, o bloco `catch` é ignorado.
 
-  ```java
-  try {
-      // Tenta fazer algo arriscado
-      int result = 10 / 0;  // Divisão por zero!
-  } catch (ArithmeticException e) {
-      // Trata o erro
-      System.out.println("Não é possível dividir por zero!");
-  }
-  // O programa continua em execução
-  ```
+```java
+try {
+    // Tenta fazer algo arriscado
+    int result = 10 / 0;  // Divisão por zero!
+} catch (ArithmeticException e) {
+    // Trata o erro
+    System.out.println("Não é possível dividir por zero!");
+}
+// O programa continua em execução
+```
 </Callout>
 
 ## Tipos comuns de `Exception`
@@ -152,26 +152,25 @@ try {
 ```
 
 <Callout type="info" title="Quando usar o `Finally`">
-  Use o `finally` para tarefas de limpeza que sempre devem ocorrer, como:
+Use o `finally` para tarefas de limpeza que sempre devem ocorrer, como:
+- Fechar arquivos;
+- Liberar recursos;
+- Salvar dados;
+- Registrar informações.
 
-  - Fechar arquivos;
-  - Liberar recursos;
-  - Salvar dados;
-  - Registrar informações.
-
-  ```java
-  FileReader file = null;
-  try {
-      file = new FileReader("data.txt");
-      // Lê o arquivo
-  } catch (Exception e) {
-      System.out.println("Erro ao ler o arquivo");
-  } finally {
-      if (file != null) {
-          file.close();  // Sempre fecha o arquivo!
-      }
-  }
-  ```
+```java
+FileReader file = null;
+try {
+    file = new FileReader("data.txt");
+    // Lê o arquivo
+} catch (Exception e) {
+    System.out.println("Erro ao ler o arquivo");
+} finally {
+    if (file != null) {
+        file.close();  // Sempre fecha o arquivo!
+    }
+}
+```
 </Callout>
 
 ## Obtendo informações de `Exception`
@@ -439,56 +438,53 @@ public class Player {
 ```
 
 <Callout type="info" title="Quando lançar `Exceptions`">
-  Lance-as quando:
+Lance-as quando:
+- O método receber uma entrada inválida;
+- A operação não puder ser concluída;
+- As condições iniciais não forem cumpridas;
+- Algo inesperado ocorrer.
 
-  - O método receber uma entrada inválida;
-  - A operação não puder ser concluída;
-  - As condições iniciais não forem cumpridas;
-  - Algo inesperado ocorrer.
+```java
+public void damagePlayer(int damage) {
+    if (damage < 0) {
+        throw new IllegalArgumentException("O dano deve ser positivo!");
+    }
+    // Aplica o dano
+}
 
-  ```java
-  public void damagePlayer(int damage) {
-      if (damage < 0) {
-          throw new IllegalArgumentException("O dano deve ser positivo!");
-      }
-      // Aplica o dano
-  }
-
-  public Item getItem(int slot) {
-      if (slot < 0 || slot >= inventory.length) {
-          throw new IndexOutOfBoundsException("Espaço de inventário inválido!");
-      }
-      return inventory[slot];
-  }
-  ```
+public Item getItem(int slot) {
+    if (slot < 0 || slot >= inventory.length) {
+        throw new IndexOutOfBoundsException("Espaço de inventário inválido!");
+    }
+    return inventory[slot];
+}
+```
 </Callout>
 
 ## Exceptions verificadas e não verificadas
 
 <Callout type="warning" title="Tipos de `Exception`">
-  **Exceptions não verificadas** (`RuntimeException`):
+**Exceptions não verificadas** (`RuntimeException`):
+- Não precisam ser capturadas;
+- São normalmente um erro de programação;
+- Exemplos: `NullPointerException`, `ArrayIndexOutOfBoundsException`.
 
-  - Não precisam ser capturadas;
-  - São normalmente um erro de programação;
-  - Exemplos: `NullPointerException`, `ArrayIndexOutOfBoundsException`.
+**`Exceptions` verificadas**:
+- Devem ser capturadas ou declaradas;
+- São normalmente erros externos (como arquivos ou rede);
+- Exemplos: `IOException`, `FileNotFoundException`.
 
-  **`Exceptions` verificadas**:
+```java
+// Não verificada — não é necessário capturar
+int result = 10 / 0;  // ArithmeticException
 
-  - Devem ser capturadas ou declaradas;
-  - São normalmente erros externos (como arquivos ou rede);
-  - Exemplos: `IOException`, `FileNotFoundException`.
-
-  ```java
-  // Não verificada — não é necessário capturar
-  int result = 10 / 0;  // ArithmeticException
-
-  // Verificada — deve-se capturar ou declarar
-  try {
-      FileReader file = new FileReader("data.txt");  // IOException
-  } catch (IOException e) {
-      // Trata o erro
-  }
-  ```
+// Verificada — deve-se capturar ou declarar
+try {
+    FileReader file = new FileReader("data.txt");  // IOException
+} catch (IOException e) {
+    // Trata o erro
+}
+```
 </Callout>
 
 ## Exercícios práticos

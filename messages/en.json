@@ -6,7 +6,8 @@
     "documentation": "Documentation",
     "sponsors": "Sponsors",
     "wiki": "Wiki",
-    "search": "Search"
+    "search": "Search",
+    "grants": "Grants"
   },
 
   "home": {
@@ -26,7 +27,7 @@
     "hytaleReleased": "Hytale is out!"
   },
 
-  "showcaseItems":{
+  "showcaseItems": {
     "madeBy": "by {author}"
   },
 
@@ -96,15 +97,15 @@
     }
   },
 
-  "callout":{
-      "defaultTitles":{
-        "info": "Info",
-        "warning": "Warning",
-        "danger": "Danger",
-        "success": "Success",
-        "lvl_beginner": "Level: Beginner",
-        "lvl_intermediate":"Level: Intermediate",
-        "lvl_advanced": "Level: Advanced"
-      }
+  "callout": {
+    "defaultTitles": {
+      "info": "Info",
+      "warning": "Warning",
+      "danger": "Danger",
+      "success": "Success",
+      "lvl_beginner": "Level: Beginner",
+      "lvl_intermediate": "Level: Intermediate",
+      "lvl_advanced": "Level: Advanced"
+    }
   }
 }

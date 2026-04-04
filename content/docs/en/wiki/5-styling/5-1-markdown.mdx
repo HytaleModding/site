@@ -1,0 +1,147 @@
+---
+title: 5.1 - Markdown
+description: Markdown formatting reference for wiki pages.
+authors:
+    - name: "Dobya"
+      url: "https://discordapp.com/users/1242082598281281629"
+---
+
+## Text formatting
+```md
+**Bold text**
+*Italic text*
+~~Strikethrough~~
+**_Bold and italic_**
+```
+
+## Headings
+```md
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+```
+
+## Lists
+
+### Unordered
+```md
+- Item
+- Item
+  - Nested item
+  - Nested item
+- Item
+```
+
+### Ordered
+```md
+1. First
+2. Second
+   1. Nested
+   2. Nested
+3. Third
+```
+
+### Task list
+```md
+- [x] Done
+- [ ] Not done
+```
+
+## Links
+```md
+[Link text](https://example.com)
+[Link with title](https://example.com "Hover title")
+```
+
+## Images
+
+The site may contain images from external resources.
+
+```md
+![Alt text](https://example.com/image.png)
+![Alt text](https://example.com/image.png "Image title")
+```
+
+## Code
+
+### Inline
+```md
+Use `code` inside text.
+```
+
+### Block
+```md
+```js
+const hello = "world";
+console.log(hello);
+\```
+```
+
+Supported language hints: `js`, `ts`, `css`, `html`, `json`, `md`, `bash`, and others.
+
+## Blockquotes
+```md
+> This is a blockquote.
+> It can span multiple lines.
+>
+> And multiple paragraphs.
+```
+
+## Alerts
+
+Alerts are styled blockquotes for highlighting important information.
+```md
+> [!NOTE]
+> Useful information the reader should know.
+
+> [!TIP]
+> Helpful advice for doing things better.
+
+> [!IMPORTANT]
+> Key information the reader must be aware of.
+
+> [!WARNING]
+> Potential issues the reader should watch out for.
+
+> [!CAUTION]
+> Actions that may cause problems or data loss.
+```
+
+## Tables
+```md
+| Column A | Column B | Column C |
+| -------- | -------- | -------- |
+| Cell     | Cell     | Cell     |
+| Cell     | Cell     | Cell     |
+```
+
+Alignment:
+```md
+| Left     | Center   | Right    |
+| :------- | :------: | -------: |
+| Cell     | Cell     | Cell     |
+```
+
+## Horizontal rule
+```md
+---
+```
+
+## Footnotes
+```md
+Some text with a footnote.[^1]
+
+[^1]: This is the footnote content.
+```
+
+## Escaping characters
+```md
+\*Not italic\*
+\# Not a heading
+```
+
+<Callout type="info">
+  Imported components are only available when editing via GitHub sync.
+  The built-in editor supports custom components registered on the platform.
+</Callout>

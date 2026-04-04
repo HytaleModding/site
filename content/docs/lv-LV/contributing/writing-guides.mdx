@@ -9,7 +9,7 @@ Lai sāktu rakstīt pamācības, jums jāizveido fails ar nosaukumu ".mdx". Šis
 Pieņemsim, ka vēlamies izveidot java pamatu pamācību. Es to ieliku `/content/docs/en/guides/java-basics`. Jums vajadzēs nedaud parakties, lai noskaidrotu kur labāk ievietot pamācību.
 
 <Callout>
-  Ja sadaļā, par kuru vēlaties rakstīt, jau ir pamācība, varat nospiest pogu "Rediģēt GitHub" mūsu vietnē, un tas novirzīs jūs uz to mapi. Tagad varat rakstīt dokumentu šajā mapē, lai jūsu pamācība parādītos tajā pašā sadaļā. Sākotnējās pamācības jāraksta angliski un vēlāk kļūst tūlkojamas.
+    Ja sadaļā, par kuru vēlaties rakstīt, jau ir pamācība, varat nospiest pogu "Rediģēt GitHub" mūsu vietnē, un tas novirzīs jūs uz to mapi. Tagad varat rakstīt dokumentu šajā mapē, lai jūsu pamācība parādītos tajā pašā sadaļā. Sākotnējās pamācības jāraksta angliski un vēlāk kļūst tūlkojamas.
 </Callout>
 
 ## Priekšjautājums (Frontmatter)
@@ -25,6 +25,7 @@ description: "Learn the basics of Java programming."
 authors:
     - name: "Your Name"
       url: "https://yourwebsite.com"
+icon: YourIcon 
 ---
 ```
 
@@ -57,6 +58,38 @@ Mēs izmantojam [Markdown](https://www.markdownguide.org/) priekš pamācību fo
 
 Šo formatēšanu redzēsi visās citās dokumentācijas mājaslapās un sociālo mēdiju platformās, kā Discord.
 
+### Links
+
+Everyone knows what a link is. However, there is a difference between linking to an external resource and linking to an internal one.
+
+In general, in Markdown they are written like this: `[Your Text](Your link)`
+
+#### External
+
+Nothing to explain, just `https://example.com`.
+
+#### Internal
+
+You cannot use regular links here. Let's say your link to another guide is `https://hytalemodding.dev/en/docs/quick-start`.
+You can't write it like that because you are not only referring to the page but also to the language, which is not correct.
+Instead, type `./quick-start` which is correct and links to the page in the user's language.
+
+**Accessing files**
+
+- **Current Folder**: `./`
+- **Folder above**: `../` as many times as this folder is higher in the hierarchy.
+
+## Icons
+
+If you want to add an icon for your page then you should use [Lucide](https://lucide.dev/).
+
+1. Go to the [site](https://lucide.dev/) and find an icon you like.
+2. Once you have selected an icon, click on it, then click "See in action"
+3. Next, click on "React" which we are using. You will only need the text in the curly brackets on the first line.
+4. Next, simply paste `icon: YourIcon` into Frontmatter.
+
+## Callout
+
 Jūs varat arī izveidot Callout, lai izceltu svarīgu informāciju, vai ieteikumus. Izmanto sekojošo sintaksi:
 
 ```mdx
@@ -66,7 +99,7 @@ Jūs varat arī izveidot Callout, lai izceltu svarīgu informāciju, vai ieteiku
 ```
 
 <Callout>
-  Šī ziņa ir izcelta.
+    Šī ziņa ir izcelta.
 </Callout>
 
 Jūs varat nomainīt Callout krāsu pievienojot `type` īpašību. Piemēram:
@@ -78,6 +111,26 @@ Jūs varat nomainīt Callout krāsu pievienojot `type` īpašību. Piemēram:
 ```
 
 Pieejamie tipi ir: `info`, `warning`, `error`, un `success`.
+
+## Difficulty levels
+
+These are types of callouts, they are optional, they show how complex your page can be.
+There are 3 main levels of complexity.
+
+<Callout type="lvl_beginner">
+    Use `lvl_beginner`. This page contains information for those who are starting out with modding.
+</Callout>
+
+<Callout type="lvl_intermediate">
+    Use `lvl_intermediate`. This page contains information for those who want to deepen their knowledge.
+</Callout>
+
+<Callout type="lvl_advanced">
+   Use `lvl_advanced`. This page contains information for those who already know how to make quality mods, and contains something additional.
+</Callout>
+
+Their usage is the same as in callout, but we would advise not to change the title. Inside,
+you write why your page is classified as this level and what the user should know.
 
 ## Secinājumi
 

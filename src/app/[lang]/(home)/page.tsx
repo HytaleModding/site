@@ -28,8 +28,6 @@ import GaleWivern from "./(showcaseImages)/gale_wivern.gif";
 import WulfrumArmor from "./(showcaseImages)/Wulfrum_Armor.gif";
 import ElectricMotor from "./(showcaseImages)/HyEnergy_Electric_Motor.gif";
 import WulfrumTriangle from "./(showcaseImages)/Wulfrum_triangle.gif";
-import HylandiaBanner from "./(showcaseImages)/Hylandia_Banner.png";
-import HylandiaLogo from "./(showcaseImages)/Hylandia_Logo.png";
 import MagicCircleGust from "./(showcaseImages)/MagicCircleGust.gif";
 import Shroomie from "./(showcaseImages)/Shroomie.gif";
 import Froggy from "./(showcaseImages)/Froggy.gif";
@@ -64,14 +62,14 @@ const showcaseItems: ShowcaseItem[] = [
     type: "art",
   },
   {
-    title: "[WIP] Hylamity: Wulfrum Prosthesis",
+    title: "Hylamity: Wulfrum Prosthesis",
     author: "slader._.",
     image: WulfrumProsthesis,
     link: "https://discord.gg/f2fMKYnRqR",
     type: "art",
   },
   {
-    title: "[WIP] Soundscape: Melodium Chunk",
+    title: "Soundscape: Melodium Chunk",
     author: "44Hydras",
     image: Melodium,
     link: "https://discord.com/users/197065442479702016",
@@ -85,14 +83,14 @@ const showcaseItems: ShowcaseItem[] = [
     type: "art",
   },
   {
-    title: "[WIP] Hylamity: Wulfrum Armor",
+    title: "Hylamity: Wulfrum Armor",
     author: "slader._.",
     image: WulfrumArmor,
     link: "https://discord.gg/f2fMKYnRqR",
     type: "art",
   },
   {
-    title: "[WIP] Hylamity: Wulfrum Triangle",
+    title: "Hylamity: Wulfrum Triangle",
     author: "slader._.",
     image: WulfrumTriangle,
     link: "https://discord.gg/f2fMKYnRqR",
@@ -126,16 +124,6 @@ const showcaseItems: ShowcaseItem[] = [
     link: "https://www.curseforge.com/hytale/mods/docs",
     type: "art",
   },
-  {
-    title: "Hylandia",
-    author: "Kristian / Hylandia Studios",
-    logo: HylandiaLogo,
-    banner: HylandiaBanner,
-    link: "https://discord.gg/hylandia",
-    type: "server",
-    description:
-      "A progressive minigames server for Hytale where your progress actually matters.",
-  },
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
@@ -155,7 +143,10 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
                   {item.title}
                 </h3>
                 <p className="text-muted-foreground z-20 text-base">
-                  {messages.showcaseItems.madeBy.replace("{author}", item.author)}
+                  {messages.showcaseItems.madeBy.replace(
+                    "{author}",
+                    item.author,
+                  )}
                 </p>
                 {item.description && (
                   <p className="text-muted-foreground z-20 mt-1 line-clamp-2 text-sm">
@@ -326,13 +317,13 @@ export default function HomePage() {
                   scale={0.9}
                 />
                 <div className="bg-background hover:bg-background/85 relative mx-4 rounded-lg p-2 text-sm font-medium shadow-md transition-colors duration-200 ease-in-out">
-                  <Link
-                    href={"https://hytalemodjam.com"}
+                    <Link
+                    href={"https://hytalemodding.dev/en/grants"}
                     className="flex items-center justify-center gap-2 text-wrap"
-                  >
-                    We hosted the first Hytale Modjam with $5,000 in prizes!{" "}
-                    <ArrowRightIcon className="h4 w-4" />
-                  </Link>
+                    >
+                    We launched the HytaleModding x BisectHosting Grant Program!{" "}
+                    <ArrowRightIcon className="h-4 w-4" />
+                    </Link>
                 </div>
               </div> */}
               <h1 className="text-4xl font-semibold text-balance md:text-5xl">

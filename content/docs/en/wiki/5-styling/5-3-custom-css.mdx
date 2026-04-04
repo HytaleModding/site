@@ -1,0 +1,163 @@
+---
+title: 5.3 - Custom CSS
+description: How to customize the appearance of your wiki.
+authors:
+    - name: "Dobya"
+      url: "https://discordapp.com/users/1242082598281281629"
+---
+
+The wiki supports custom CSS, letting you change colors, typography, spacing, and more.
+To make the most of it, a basic understanding of CSS is recommended —
+if you're new to it, [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS) or [W3Schools](https://www.w3schools.com/css/default.asp) are great places to start.
+
+To add custom CSS, go to your mod page and find the **Custom CSS** field.
+
+## CSS variables
+
+The platform is built with [shadcn/ui](https://ui.shadcn.com) and [Tailwind CSS](https://tailwindcss.com).
+The most effective way to style your wiki is through CSS variables on `:root` —
+the platform exposes a set of them that control colors, borders, and states across the entire wiki.
+
+Overriding them affects every page of your mod at once:
+```css
+:root {
+  --primary: #e63946;
+  --background: #0d0d0d;
+}
+```
+
+### Variables reference
+```css
+:root {
+  /* Page */
+  --background: ;         /* Page background */
+  --foreground: ;         /* Main text color */
+  --border: ;             /* Element borders */
+  --radius: ;             /* Border radius */
+
+  /* Cards */
+  --card: ;               /* Card background */
+  --card-foreground: ;    /* Card text color */
+
+  /* Primary accent */
+  --primary: ;            /* Accent color — icons, mod title */
+  --primary-foreground: ; /* Text on primary-colored elements */
+
+  /* Secondary */
+  --secondary: ;            /* Secondary background */
+  --secondary-foreground: ; /* Secondary text */
+
+  /* Muted */
+  --muted: ;              /* Subtle background (badges, tags) */
+  --muted-foreground: ;   /* Subtle text (descriptions, timestamps) */
+
+  /* Hover / active states */
+  --accent: ;             /* Hover background */
+  --accent-foreground: ;  /* Hover text */
+
+  /* Danger */
+  --destructive: ;        /* Delete buttons, error states */
+}
+```
+
+### Direct selectors
+
+For things not covered by variables, you can target elements directly.
+
+By default, `--radius` is not applied to cards — but you can connect it manually:
+```css
+[data-slot="card"] {
+  border-radius: var(--radius);
+}
+```
+
+## Prose
+
+To style the content of your pages, use `.prose` combined with the element selector.
+For example, to make all `h1` headings red:
+```css
+.prose h1 {
+  color: red;
+}
+```
+
+### Selectors reference
+
+A full list of available selectors, matching the elements from [Markdown](./5-1-markdown):
+```css
+/* Headings */
+.prose h1 { }  /* # Heading 1 */
+.prose h2 { }  /* ## Heading 2 */
+.prose h3 { }  /* ### Heading 3 */
+.prose h4 { }  /* #### Heading 4 */
+
+/* Text */
+.prose p { }          /* Paragraph */
+.prose strong { }     /* **Bold** */
+.prose em { }         /* *Italic* */
+.prose del { }        /* ~~Strikethrough~~ */
+
+/* Links */
+.prose a { }          /* [Link](url) */
+
+/* Lists */
+.prose ul { }         /* - Unordered list */
+.prose ol { }         /* 1. Ordered list */
+.prose li { }         /* List item */
+.prose input[type="checkbox"] { } /* - [x] Task list checkbox */
+
+/* Images */
+.prose img { }        /* ![Alt](url) */
+
+/* Code */
+.prose code { }       /* `Inline code` */
+.prose pre { }        /* ```Code block``` */
+.prose pre code { }   /* Code inside block */
+
+/* Blockquote */
+.prose blockquote { } /* > Blockquote */
+
+/* Alerts */
+.prose .markdown-callout { }           /* > [!NOTE] wrapper */
+.prose .markdown-callout-note { }      /* > [!NOTE] */
+.prose .markdown-callout-tip { }       /* > [!TIP] */
+.prose .markdown-callout-important { } /* > [!IMPORTANT] */
+.prose .markdown-callout-warning { }   /* > [!WARNING] */
+.prose .markdown-callout-caution { }   /* > [!CAUTION] */
+.prose .markdown-callout-title { }     /* Alert title */
+.prose .markdown-callout-content { }   /* Alert body */
+
+/* Table */
+.prose table { }      /* | Table | */
+.prose thead { }      /* Header row */
+.prose th { }         /* Header cell */
+.prose td { }         /* Data cell */
+.prose tr { }         /* Row */
+
+/* Horizontal rule */
+.prose hr { }         /* --- */
+
+/* Footnotes */
+.prose sup { }        /* Footnote reference [^1] */
+.prose .footnotes { } /* Footnote block */
+```
+
+## Custom classes
+
+To style a specific part of a page, create a custom class in CSS and apply it as a `div` in MDX.
+
+For example, a `.green` class with green text:
+```css
+.prose .green {
+  color: green;
+}
+```
+```mdx
+<div class="green">
+  Green text!
+</div>
+```
+
+---
+
+Now you know how to style your wiki with custom CSS.

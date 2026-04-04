@@ -12,10 +12,10 @@ import { useState, useEffect, ViewTransition, startTransition } from "react";
 import { getSponsors } from "../actions";
 import { useMessages } from "@/lib/hooks/useMessages";
 
-import BisectHostingLight from "./featured-sponsor-img/bh/BH_LIGHT.svg";
-import BisectHostingDark from "./featured-sponsor-img/bh/BH_DARK.svg";
-import FiveManageLight from "./featured-sponsor-img/fivemanage/FM_LIGHT.svg";
-import FiveManageDark from "./featured-sponsor-img/fivemanage/FM_DARK.svg";
+import BisectHostingLight from "@/../public/branding/bisecthosting/BH_LIGHT.svg";
+import BisectHostingDark from "@/../public/branding/bisecthosting/BH_DARK.svg";
+import FiveManageLight from "@/../public/branding/fivemanage/FM_LIGHT.svg";
+import FiveManageDark from "@/../public/branding/fivemanage/FM_DARK.svg";
 
 type FeaturedSponsor = Omit<Sponsor, "image" | "website" | "MemberId"> & {
   image: { light: string; dark: string };

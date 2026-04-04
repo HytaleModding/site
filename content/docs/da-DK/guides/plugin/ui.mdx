@@ -155,8 +155,8 @@ Group {
 InteractiveCustomUIPage takes a generic argument, this is a class containing any UI data you want the client to send to the server.
 
 <Callout type="info">
-  Each variable you want to store in your component must have its own Codec field defined in the BuilderCodec.
-  For more information on how to create custom Codecs, check out the [ECS Codec Guide](../ecs/hytale-ecs-theory#codec).
+Each variable you want to store in your component must have its own Codec field defined in the BuilderCodec.
+For more information on how to create custom Codecs, check out the [ECS Codec Guide](../ecs/hytale-ecs-theory#codec).
 </Callout>
 
 ```java
@@ -247,6 +247,20 @@ public void updateText(String newText) {
   uiCommandBuilder.set("#MyLabel.TextSpans", Message.raw(newText));
   update(false, uiCommandBuilder); // false = don't clear existing UI
 }
+```
+
+## Localizing Values (Translating item object names)
+
+In some cases you will want to display the name of something you have the itemStack of or something in game.
+You can use the following to display the localized name:
+
+```java
+ItemStack heldItemStack = player.getInventory().getActiveHotbarItem();
+
+String itemId = heldItemStack.getItem.getId();
+String translationKey = Item.getAssetMap().getAsset(itemId).getTranslationKey();
+Message msg = Message.translation(translationKey);
+uiCommandBuilder.set("#MyButton.Text", msg);
 ```
 
 ## Common Issues

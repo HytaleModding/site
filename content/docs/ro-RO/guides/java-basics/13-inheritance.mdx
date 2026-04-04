@@ -43,18 +43,18 @@ public class Player extends Entity {
 ```
 
 <Callout type="info" title="Inheritance Terminology">
-  - **Superclass/Parent**: The class being inherited from (Entity)
-  - **Subclass/Child**: The class inheriting (Player)
-  - **extends**: Keyword to inherit from a class
-  - **super**: Keyword to access parent class members
+- **Superclass/Parent**: The class being inherited from (Entity)
+- **Subclass/Child**: The class inheriting (Player)
+- **extends**: Keyword to inherit from a class
+- **super**: Keyword to access parent class members
 
-  ```java
-  public class Monster extends Entity {
-      // Monster IS-A Entity
-      // Monster inherits from Entity
-      // Entity is the parent, Monster is the child
-  }
-  ```
+```java
+public class Monster extends Entity {
+    // Monster IS-A Entity
+    // Monster inherits from Entity
+    // Entity is the parent, Monster is the child
+}
+```
 </Callout>
 
 ## The extends Keyword
@@ -112,23 +112,23 @@ public class Player extends Entity {
 ```
 
 <Callout type="warning" title="Constructor Rules">
-  - `super()` must be the **first** statement in child constructor
-  - If you don't call `super()`, Java automatically calls the no-argument parent constructor
-  - If parent has no no-argument constructor, you MUST call `super()` with arguments
+- `super()` must be the **first** statement in child constructor
+- If you don't call `super()`, Java automatically calls the no-argument parent constructor
+- If parent has no no-argument constructor, you MUST call `super()` with arguments
 
-  ```java
-  // Wrong - super() not first
-  public Player(String name, int level) {
-      this.level = level;
-      super(name);  // Error!
-  }
+```java
+// Wrong - super() not first
+public Player(String name, int level) {
+    this.level = level;
+    super(name);  // Error!
+}
 
-  // Correct
-  public Player(String name, int level) {
-      super(name);  // First statement
-      this.level = level;
-  }
-  ```
+// Correct
+public Player(String name, int level) {
+    super(name);  // First statement
+    this.level = level;
+}
+```
 </Callout>
 
 ### Calling Parent Methods
@@ -191,24 +191,23 @@ public class Main {
 ```
 
 <Callout type="info" title="@Override Annotation">
-  Always use `@Override` when overriding methods:
+Always use `@Override` when overriding methods:
+- Helps catch typos (if method doesn't exist in parent, you get an error)
+- Makes code clearer
+- Good documentation
 
-  - Helps catch typos (if method doesn't exist in parent, you get an error)
-  - Makes code clearer
-  - Good documentation
+```java
+// Without @Override - typo not caught
+public void attac() {  // Typo! Creates new method instead
+    // ...
+}
 
-  ```java
-  // Without @Override - typo not caught
-  public void attac() {  // Typo! Creates new method instead
-      // ...
-  }
-
-  // With @Override - error caught immediately
-  @Override
-  public void attac() {  // Error: method doesn't exist in parent
-      // ...
-  }
-  ```
+// With @Override - error caught immediately
+@Override
+public void attac() {  // Error: method doesn't exist in parent
+    // ...
+}
+```
 </Callout>
 
 ## Access Modifiers in Inheritance
@@ -505,20 +504,20 @@ for (Entity entity : entities) {
 ```
 
 <Callout type="info" title="Polymorphism Benefits">
-  Polymorphism lets you write code that works with parent types but handles child types correctly:
+Polymorphism lets you write code that works with parent types but handles child types correctly:
 
-  ```java
-  public void damageEntity(Entity entity, int damage) {
-      entity.takeDamage(damage);
-      // Works for Player, Monster, Boss, etc.
-      // Each uses their own version of takeDamage()
-  }
+```java
+public void damageEntity(Entity entity, int damage) {
+    entity.takeDamage(damage);
+    // Works for Player, Monster, Boss, etc.
+    // Each uses their own version of takeDamage()
+}
 
-  // Can call with any Entity type
-  damageEntity(new Player("Alice"), 10);
-  damageEntity(new Monster("Goblin", 50, 10, "Hostile"), 10);
-  damageEntity(new Boss("Dragon", 500, 50), 10);
-  ```
+// Can call with any Entity type
+damageEntity(new Player("Alice"), 10);
+damageEntity(new Monster("Goblin", 50, 10, "Hostile"), 10);
+damageEntity(new Boss("Dragon", 500, 50), 10);
+```
 </Callout>
 
 ## The Object Class

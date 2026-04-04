@@ -124,25 +124,24 @@ System.out.println(player.getHealth());  // 0
 ```
 
 <Callout type="info" title="Getter and Setter Naming">
-  Follow Java naming conventions:
+Follow Java naming conventions:
+* **Getter**: `get` + property name (capitalized)
+* **Setter**: `set` + property name (capitalized)
+* **Boolean**: `is` + property name (capitalized)
 
-  * **Getter**: `get` + property name (capitalized)
-  * **Setter**: `set` + property name (capitalized)
-  * **Boolean**: `is` + property name (capitalized)
+```java
+private int health;
+public int getHealth() { }
+public void setHealth(int health) { }
 
-  ```java
-  private int health;
-  public int getHealth() { }
-  public void setHealth(int health) { }
+private boolean alive;
+public boolean isAlive() { }
+public void setAlive(boolean alive) { }
 
-  private boolean alive;
-  public boolean isAlive() { }
-  public void setAlive(boolean alive) { }
-
-  private String name;
-  public String getName() { }
-  public void setName(String name) { }
-  ```
+private String name;
+public String getName() { }
+public void setName(String name) { }
+```
 </Callout>
 
 ## Benefits of Encapsulation
@@ -384,38 +383,36 @@ public class ProtectedBlock {
 ## When to Use Private vs Public
 
 <Callout type="info" title="General Rules">
-  **Make it private by default!** Only make things public if they need to be accessed from outside.
+**Make it private by default!** Only make things public if they need to be accessed from outside.
 
-  **Private:**
+**Private:**
+* Internal data (health, position, inventory)
+* Helper methods used only within the class
+* Anything that needs validation
 
-  * Internal data (health, position, inventory)
-  * Helper methods used only within the class
-  * Anything that needs validation
+**Public:**
+* Methods that define the class's behavior
+* Constructor
+* Methods other classes need to call
 
-  **Public:**
-
-  * Methods that define the class's behavior
-  * Constructor
-  * Methods other classes need to call
-
-  ```java
-  public class Example {
-      // Private - internal data
-      private int internalCounter;
-      private String secretKey;
-      
-      // Public - part of the interface
-      public void doSomething() {
-          // Uses private helper method
-          validateData();
-      }
-      
-      // Private - internal helper
-      private void validateData() {
-          // ...
-      }
-  }
-  ```
+```java
+public class Example {
+    // Private - internal data
+    private int internalCounter;
+    private String secretKey;
+    
+    // Public - part of the interface
+    public void doSomething() {
+        // Uses private helper method
+        validateData();
+    }
+    
+    // Private - internal helper
+    private void validateData() {
+        // ...
+    }
+}
+```
 </Callout>
 
 ## The `final` Keyword
@@ -484,7 +481,7 @@ class Data {
     // Static member:
     // cannot access to non-static variables
     public static void bar() {
-        x = 100; // Error: non-static variable x cannot be renference from a static context
+        x = 100; // Error: non-static variable x cannot be referenced from a static context
         y = 100; // OK
     }
 }
@@ -504,7 +501,7 @@ Data.x = 1000; // Error: cannot access instanced variables in a static context
 
 ### Static Fields
 
-A static field represents a data member owned by the class type rather then the object. Static fields are also stored in a specific memory location that's been shared between all the object instances that are created.
+A static field represents a data member owned by the class type rather than the object. Static fields are also stored in a specific memory location that's been shared between all the object instances that are created.
 
 It is declared as following:
 

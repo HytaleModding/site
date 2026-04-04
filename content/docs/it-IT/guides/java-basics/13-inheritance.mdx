@@ -43,18 +43,18 @@ public class Player extends Entity {
 ```
 
 <Callout type="info" title="Terminologia nell'Ereditarietà">
-  - **Superclasse/Genitore**: La classe ereditata da (Entity)
-  - **Sottoclasse/Figlio**: La classe che eredita (Player)
-  - **extends**: keyword per ereditare da una classe
-  - **super**: keyword per accedere ai membri della classe padre
+- **Superclasse/Genitore**: La classe ereditata da (Entity)
+- **Sottoclasse/Figlio**: La classe che eredita (Player)
+- **extends**: keyword per ereditare da una classe
+- **super**: keyword per accedere ai membri della classe padre
 
-  ```java
-  public class Monster extends Entity {
-      // Monster È UN'Entità
-      // Monster eredita da Entity
-      // Entity è il genitore, Monster è il figlio
-  }
-  ```
+```java
+public class Monster extends Entity {
+    // Monster È UN'Entità
+    // Monster eredita da Entity
+    // Entity è il genitore, Monster è il figlio
+}
+```
 </Callout>
 
 ## La keyword extends
@@ -112,23 +112,23 @@ public class Player extends Entity {
 ```
 
 <Callout type="warning" title="Regole del Costruttore">
-  - `super()` deve essere la **prima** istruzione nel costruttore figlio.
-  - Se non si chiama `super()`, Java chiama automaticamente il costruttore padre senza argomento
-  - Se il padre non ha un costruttore senza argomenti, è NECESSARIO chiamare `super()` con gli argomenti.
+- `super()` deve essere la **prima** istruzione nel costruttore figlio.
+- Se non si chiama `super()`, Java chiama automaticamente il costruttore padre senza argomento
+- Se il padre non ha un costruttore senza argomenti, è NECESSARIO chiamare `super()` con gli argomenti.
 
-  ```java
-  // Sbagliato - super() non è il primo
-  public Player(String name, int level) {
-      this.level = level;
-      super(name);  // Errore!
-  }
+```java
+// Sbagliato - super() non è il primo
+public Player(String name, int level) {
+    this.level = level;
+    super(name);  // Errore!
+}
 
-  // Corretto
-  public Player(String name, int level) {
-      super(name);  // Prima istruzione
-      this.level = level;
-  }
-  ```
+// Corretto
+public Player(String name, int level) {
+    super(name);  // Prima istruzione
+    this.level = level;
+}
+```
 </Callout>
 
 ### Chiamata dei metodi del padre
@@ -191,24 +191,23 @@ public class Main {
 ```
 
 <Callout type="info" title="Annotazione @Override">
-  Usa sempre `@Override` quando si sovrascrivono dei metodi:
+Usa sempre `@Override` quando si sovrascrivono dei metodi:
+- Aiuta a catturare errori di battitura (se il metodo non esiste nel padre, si ottiene un errore)
+- Rende il codice più chiaro
+- È una buona documentazione.
 
-  - Aiuta a catturare errori di battitura (se il metodo non esiste nel padre, si ottiene un errore)
-  - Rende il codice più chiaro
-  - È una buona documentazione.
+```java
+// Senza @Override - errore di battitura (typo) non rilevato
+public void attac() {  // Typo! Crea un nuovo metodo
+    // ...
+}
 
-  ```java
-  // Senza @Override - errore di battitura (typo) non rilevato
-  public void attac() {  // Typo! Crea un nuovo metodo
-      // ...
-  }
-
-  // With @Override - errore rilevato immediatamente
-  @Override
-  public void attac() {  //  Errore: il metodo non esiste nel padre
-      // ...
-  }
-  ```
+// With @Override - errore rilevato immediatamente
+@Override
+public void attac() {  //  Errore: il metodo non esiste nel padre
+    // ...
+}
+```
 </Callout>
 
 ## Modificatori di accesso nell'ereditarietà
@@ -505,20 +504,20 @@ for (Entity entity : entities) {
 ```
 
 <Callout type="info" title="Benefici Del Polimorfismo">
-  Il polimorfismo consente di scrivere codice che funziona con i tipi padre ma gestisce correttamente i tipi figlio:
+Il polimorfismo consente di scrivere codice che funziona con i tipi padre ma gestisce correttamente i tipi figlio:
 
-  ```java
-  public void damageEntity(Entity entity, int damage) {
-      entity.takeDamage(damage);
-      // Funziona per Player, Monster, Boss, ecc.
-      // Ciascuno utilizza la propria versione di takeDamage()
-  }
+```java
+public void damageEntity(Entity entity, int damage) {
+    entity.takeDamage(damage);
+    // Funziona per Player, Monster, Boss, ecc.
+    // Ciascuno utilizza la propria versione di takeDamage()
+}
 
-  // È possibile chiamare con qualsiasi tipo di Entity
-  damageEntity(new Player("Alice"), 10);
-  damageEntity(new Monster("Goblin", 50, 10, "Ostile"), 10);
-  damageEntity(new Boss("Drago", 500, 50), 10);
-  ```
+// È possibile chiamare con qualsiasi tipo di Entity
+damageEntity(new Player("Alice"), 10);
+damageEntity(new Monster("Goblin", 50, 10, "Ostile"), 10);
+damageEntity(new Boss("Drago", 500, 50), 10);
+```
 </Callout>
 
 ## La Classe Object

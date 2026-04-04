@@ -4,7 +4,9 @@
     "title": "Hytale Modding",
     "documentation": "Documentatie",
     "sponsors": "Sponsoren",
-    "search": "Zoeken"
+    "wiki": "Wiki",
+    "search": "Zoeken",
+    "grants": "Grants"
   },
   "home": {
     "title": "Hytale Modding",
@@ -26,6 +28,9 @@
       "seconds": "s"
     },
     "hytaleReleased": "Hytale is uit!"
+  },
+  "showcaseItems": {
+    "madeBy": "by {author}"
   },
   "sponsors": {
     "title": "Steun ons",
@@ -88,6 +93,17 @@
     },
     "community_projects": {
       "title": "Community projecten"
+    }
+  },
+  "callout": {
+    "defaultTitles": {
+      "info": "Info",
+      "warning": "Warning",
+      "danger": "Danger",
+      "success": "Success",
+      "lvl_beginner": "Level: Beginner",
+      "lvl_intermediate": "Level: Intermediate",
+      "lvl_advanced": "Level: Advanced"
     }
   }
 }

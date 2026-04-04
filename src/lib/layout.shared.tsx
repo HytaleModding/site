@@ -42,8 +42,12 @@ export function baseOptions(
       },
       {
         text: messages.nav.wiki,
-        url: "https://wiki.hytalemodding.dev"
-      }
+        url: "https://wiki.hytalemodding.dev",
+      },
+      {
+        text: messages.nav.grants,
+        url: `/${locale}/grants`,
+      },
     );
   }
 

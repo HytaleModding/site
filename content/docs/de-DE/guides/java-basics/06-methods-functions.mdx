@@ -71,19 +71,19 @@ public static void main(String[] args) {
 ```
 
 <Callout type="info" title="Die Reihenfolge der Parameter ist wichtig">
-  Beim Aufruf einer Methode müssen die Argumente der Parameterreihenfolge entsprechen:
+Beim Aufruf einer Methode müssen die Argumente der Parameterreihenfolge entsprechen:
 
-  ```java
-  public static void createItem(String name, int quantity, double price) {
-      // ...
-  }
+```java
+public static void createItem(String name, int quantity, double price) {
+    // ...
+}
 
-  // Richtig
-  createItem("Schwert", 1, 50.0);
+// Richtig
+createItem("Schwert", 1, 50.0);
 
-  // Falsch - Reihenfolge beachten!
-  createItem(1, "Schwert", 50.0);  // Fehler!
-  ```
+// Falsch - Reihenfolge beachten!
+createItem(1, "Schwert", 50.0);  // Fehler!
+```
 </Callout>
 
 ## Methoden mit Rückgabewerten
@@ -125,14 +125,14 @@ public static double calculateDamage(int attack, double multiplier) {
 ```
 
 <Callout type="warning" title="Return stoppt die Ausführung">
-  Sobald eine Methode auf `return` trifft, wird sie sofort beendet. Code nach `return` wird nicht ausgeführt!
+Sobald eine Methode auf `return` trifft, wird sie sofort beendet. Code nach `return` wird nicht ausgeführt!
 
-  ```java
-  public static int getValue() {
-      return 10;
-      System.out.println("This never runs!");  // Unerreichbarer Code!
-  }
-  ```
+```java
+public static int getValue() {
+    return 10;
+    System.out.println("This never runs!");  // Unerreichbarer Code!
+}
+```
 </Callout>
 
 ## Praktische Beispiele
@@ -248,22 +248,21 @@ public static void main(String[] args) {
 ```
 
 <Callout type="info" title="Regeln der Methodenüberladung">
-  Methoden werden als anders angesehen, wenn sie eines des Folgenden haben:
+Methoden werden als anders angesehen, wenn sie eines des Folgenden haben:
+* Unterschiedliche Anzahl von Parametern
+* Verschiedene Arten von Parametern
+* Unterschiedliche Reihenfolge der Parameter
 
-  * Unterschiedliche Anzahl von Parametern
-  * Verschiedene Arten von Parametern
-  * Unterschiedliche Reihenfolge der Parameter
+```java
+public static void test(int a) { }
+public static void test(int a, int b) { }        // Anzahl anders
+public static void test(double a) { }            // Typ anders
+public static void test(String a, int b) { }     // Typen anders
+public static void test(int a, String b) { }     // Reihenfolge anders
 
-  ```java
-  public static void test(int a) { }
-  public static void test(int a, int b) { }        // Anzahl anders
-  public static void test(double a) { }            // Typ anders
-  public static void test(String a, int b) { }     // Typen anders
-  public static void test(int a, String b) { }     // Reihenfolge anders
-
-  // Falsch - Nur der return type ist anders
-  public static int test(int a) { }
-  ```
+// Falsch - Nur der return type ist anders
+public static int test(int a) { }
+```
 </Callout>
 
 ## Häufige Schema beim Hytale Modding
@@ -339,20 +338,20 @@ public static String getHealthStatus(int health, int maxHealth) {
 ## Bewährte Verfahren
 
 <Callout type="info" title="Methodenbezeichnung">
-  Beschreibende verb-basierte Namen, die erklären, was die Methode tut:
+Beschreibende verb-basierte Namen, die erklären, was die Methode tut:
 
-  ```java
-  // Gut
-  public static void calculateDamage() { }
-  public static boolean isPlayerAlive() { }
-  public static String getItemName() { }
-  public static void displayInventory() { }
+```java
+// Gut
+public static void calculateDamage() { }
+public static boolean isPlayerAlive() { }
+public static String getItemName() { }
+public static void displayInventory() { }
 
-  // Schlecht
-  public static void dmg() { }        // Zu kurz
-  public static void method1() { }    // Nicht beschreibend
-  public static void stuff() { }      // Zu vage
-  ```
+// Schlecht
+public static void dmg() { }        // Zu kurz
+public static void method1() { }    // Nicht beschreibend
+public static void stuff() { }      // Zu vage
+```
 </Callout>
 
 ## Übungsaufgaben
@@ -377,24 +376,23 @@ public static String getHealthStatus(int health, int maxHealth) {
    * Gibt true zurück wenn gültig, ansonsten false
 
 <Callout type="info" title="Division Note">
-  When writing a password validator, you may need a way to compare array values. For example:
+When writing a password validator, you may need a way to compare array values. For example:
+```java
+String[] array1 = {"Apple", "Banana"};
+String[] array2 = {"Apple", "Banana"};
 
-  ```java
-  String[] array1 = {"Apple", "Banana"};
-  String[] array2 = {"Apple", "Banana"};
+//Wrong:
+array1[0] == array2[0];       // false
+/*
+Array is a non-primitive data type. Java compares reference (non-primitive) data types by 
+their location in Java's memory, not by their values.
+*/
 
-  //Wrong:
-  array1[0] == array2[0];       // false
-  /*
-  Array is a non-primitive data type. Java compares reference (non-primitive) data types by 
-  their location in Java's memory, not by their values.
-  */
+// To compare the actual values of reference data types, use the .equals() method:
+array1[0].equals(array2[0]);       // true 
 
-  // To compare the actual values of reference data types, use the .equals() method:
-  array1[0].equals(array2[0]);       // true 
-
-  // This does not apply to primitive data types.
-  ```
+// This does not apply to primitive data types.
+```
 </Callout>
 
 ## Häufige Fehler

@@ -1,0 +1,142 @@
+---
+title: Prop Distributions
+description: Determines a field of Positioned Props.
+authors:
+  - name: Hypixel Studios Canada Inc.
+    url: https://hytale.com
+---
+
+<OfficialDocumentationNotice />
+
+### Constant
+
+Pairs the Prop with every position.
+
+#### Parameters
+
+<table>
+  <thead>
+    <tr>
+      <th width="124.871337890625">Name</th>
+      <th width="194.089111328125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Positions</td>
+      <td>PositionProvider slot</td>
+      <td>Positions to pair with the Prop.</td>
+    </tr>
+    <tr>
+      <td>Prop</td>
+      <td>Prop slot</td>
+      <td>The Prop.</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Positions
+
+Creates empty positions.
+
+#### Parameters
+
+<table>
+  <thead>
+    <tr>
+      <th width="124.871337890625">Name</th>
+      <th width="194.089111328125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Positions</td>
+      <td>PositionProvider slot</td>
+      <td>The positions.</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Assigned
+
+Assigns all empty positions coming from the child PropDistribution, using the Assignments. All non-empty positions are left unchanged.
+
+#### Parameters
+
+<table>
+  <thead>
+    <tr>
+      <th width="158.138671875">Name</th>
+      <th width="194.089111328125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PropDistribution</td>
+      <td>PropDistribution slot</td>
+      <td>The child PropDistribution to assign the empty positions from.</td>
+    </tr>
+    <tr>
+      <td>Assignments</td>
+      <td>Assignments slot</td>
+      <td>Assigns Props to the empty positions.</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Union
+
+Combines all children, keeping all their positioned Props.
+
+#### Parameters
+
+<table>
+  <thead>
+    <tr>
+      <th width="158.138671875">Name</th>
+      <th width="194.089111328125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PropDistributions</td>
+      <td>list of PropDistribution slots</td>
+      <td>The children to combine.</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+### Imported
+
+Imports an exported PropDistribution.
+
+#### Parameters
+
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>string</td>
+      <td>The exported PropDistribution name.</td>
+    </tr>
+  </tbody>
+</table>

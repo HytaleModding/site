@@ -50,10 +50,10 @@ public class Main {
 ```
 
 <Callout type="info" title="Class vs Object">
-  **Class** = Blueprint (the idea of a player)
-  **Object** = Actual thing (Alice, Bob, specific players)
+**Class** = Blueprint (the idea of a player)
+**Object** = Actual thing (Alice, Bob, specific players)
 
-  One class can create many objects, just like one recipe can make many cakes!
+One class can create many objects, just like one recipe can make many cakes!
 </Callout>
 
 ## Creating a Simple Class
@@ -144,29 +144,29 @@ public class Main {
 ```
 
 <Callout type="info" title="Constructor Rules">
-  * Same name as the class
-  * No return type (not even `void`)
-  * Called automatically when you use `new`
-  * Can have multiple constructors (overloading)
+* Same name as the class
+* No return type (not even `void`)
+* Called automatically when you use `new`
+* Can have multiple constructors (overloading)
 
-  ```java
-  public class Item {
-      String name;
-      int value;
-      
-      // Constructor with all parameters
-      public Item(String name, int value) {
-          this.name = name;
-          this.value = value;
-      }
-      
-      // Constructor with just name
-      public Item(String name) {
-          this.name = name;
-          this.value = 0;  // Default value
-      }
-  }
-  ```
+```java
+public class Item {
+    String name;
+    int value;
+    
+    // Constructor with all parameters
+    public Item(String name, int value) {
+        this.name = name;
+        this.value = value;
+    }
+    
+    // Constructor with just name
+    public Item(String name) {
+        this.name = name;
+        this.value = 0;  // Default value
+    }
+}
+```
 </Callout>
 
 ## The `this` Keyword
@@ -343,14 +343,13 @@ public class Example {
 For now, use `public` for everything. We'll learn when to use `private` in the next article.
 
 <Callout type="info" title="Why Use Classes?">
-  Classes help you:
+Classes help you:
+* **Organize** related data and methods together
+* **Reuse** code easily (create many objects from one class)
+* **Model** real-world things (players, items, monsters)
+* **Maintain** code (changes in one place affect all objects)
 
-  * **Organize** related data and methods together
-  * **Reuse** code easily (create many objects from one class)
-  * **Model** real-world things (players, items, monsters)
-  * **Maintain** code (changes in one place affect all objects)
-
-  Without classes, managing 100 players would require 100 separate variables for each property. With classes, it's just 100 Player objects!
+Without classes, managing 100 players would require 100 separate variables for each property. With classes, it's just 100 Player objects!
 </Callout>
 
 ## Practice Exercises

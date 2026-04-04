@@ -71,19 +71,19 @@ public static void main(String[] args) {
 ```
 
 <Callout type="info" title="Parameter Order Matters">
-  When calling a method, arguments must match the parameter order:
+When calling a method, arguments must match the parameter order:
 
-  ```java
-  public static void createItem(String name, int quantity, double price) {
-      // ...
-  }
+```java
+public static void createItem(String name, int quantity, double price) {
+    // ...
+}
 
-  // Correct
-  createItem("Sword", 1, 50.0);
+// Correct
+createItem("Sword", 1, 50.0);
 
-  // Wrong - Order matters!
-  createItem(1, "Sword", 50.0);  // Error!
-  ```
+// Wrong - Order matters!
+createItem(1, "Sword", 50.0);  // Error!
+```
 </Callout>
 
 ## Methods with Return Values
@@ -125,14 +125,14 @@ public static double calculateDamage(int attack, double multiplier) {
 ```
 
 <Callout type="warning" title="Return Stops Execution">
-  Once a method hits `return`, it immediately exits. Code after `return` won't run!
+Once a method hits `return`, it immediately exits. Code after `return` won't run!
 
-  ```java
-  public static int getValue() {
-      return 10;
-      System.out.println("This never runs!");  // Unreachable code!
-  }
-  ```
+```java
+public static int getValue() {
+    return 10;
+    System.out.println("This never runs!");  // Unreachable code!
+}
+```
 </Callout>
 
 ## Practical Examples
@@ -248,22 +248,21 @@ public static void main(String[] args) {
 ```
 
 <Callout type="info" title="Method Overloading Rules">
-  Methods are considered different if they have:
+Methods are considered different if they have:
+* Different number of parameters
+* Different types of parameters
+* Different order of parameters
 
-  * Different number of parameters
-  * Different types of parameters
-  * Different order of parameters
+```java
+public static void test(int a) { }
+public static void test(int a, int b) { }        // Different count
+public static void test(double a) { }            // Different type
+public static void test(String a, int b) { }     // Different types
+public static void test(int a, String b) { }     // Different order
 
-  ```java
-  public static void test(int a) { }
-  public static void test(int a, int b) { }        // Different count
-  public static void test(double a) { }            // Different type
-  public static void test(String a, int b) { }     // Different types
-  public static void test(int a, String b) { }     // Different order
-
-  // Wrong - Only return type is different
-  public static int test(int a) { }
-  ```
+// Wrong - Only return type is different
+public static int test(int a) { }
+```
 </Callout>
 
 ## Common Patterns in Hytale Modding
@@ -339,20 +338,20 @@ public static String getHealthStatus(int health, int maxHealth) {
 ## Best Practices
 
 <Callout type="info" title="Method Naming">
-  Use descriptive verb-based names that explain what the method does:
+Use descriptive verb-based names that explain what the method does:
 
-  ```java
-  // Good
-  public static void calculateDamage() { }
-  public static boolean isPlayerAlive() { }
-  public static String getItemName() { }
-  public static void displayInventory() { }
+```java
+// Good
+public static void calculateDamage() { }
+public static boolean isPlayerAlive() { }
+public static String getItemName() { }
+public static void displayInventory() { }
 
-  // Bad
-  public static void dmg() { }        // Too short
-  public static void method1() { }    // Not descriptive
-  public static void stuff() { }      // Too vague
-  ```
+// Bad
+public static void dmg() { }        // Too short
+public static void method1() { }    // Not descriptive
+public static void stuff() { }      // Too vague
+```
 </Callout>
 
 ## Practice Exercises
@@ -377,24 +376,23 @@ public static String getHealthStatus(int health, int maxHealth) {
    * Returns true if valid, false otherwise
 
 <Callout type="info" title="Division Note">
-  When writing a password validator, you may need a way to compare array values. For example:
+When writing a password validator, you may need a way to compare array values. For example:
+```java
+String[] array1 = {"Apple", "Banana"};
+String[] array2 = {"Apple", "Banana"};
 
-  ```java
-  String[] array1 = {"Apple", "Banana"};
-  String[] array2 = {"Apple", "Banana"};
+//Wrong:
+array1[0] == array2[0];       // false
+/*
+Array is a non-primitive data type. Java compares reference (non-primitive) data types by 
+their location in Java's memory, not by their values.
+*/
 
-  //Wrong:
-  array1[0] == array2[0];       // false
-  /*
-  Array is a non-primitive data type. Java compares reference (non-primitive) data types by 
-  their location in Java's memory, not by their values.
-  */
+// To compare the actual values of reference data types, use the .equals() method:
+array1[0].equals(array2[0]);       // true 
 
-  // To compare the actual values of reference data types, use the .equals() method:
-  array1[0].equals(array2[0]);       // true 
-
-  // This does not apply to primitive data types.
-  ```
+// This does not apply to primitive data types.
+```
 </Callout>
 
 ## Common Mistakes

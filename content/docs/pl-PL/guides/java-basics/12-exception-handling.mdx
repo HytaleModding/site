@@ -34,21 +34,21 @@ System.out.println("Program continues...");
 ```
 
 <Callout type="info" title="How Try-Catch Works">
-  1. Code in `try` block runs normally
-  2. If an exception occurs, execution jumps to `catch` block
-  3. After `catch` block, program continues normally
-  4. If no exception occurs, `catch` block is skipped
+1. Code in `try` block runs normally
+2. If an exception occurs, execution jumps to `catch` block
+3. After `catch` block, program continues normally
+4. If no exception occurs, `catch` block is skipped
 
-  ```java
-  try {
-      // Try to do something risky
-      int result = 10 / 0;  // Division by zero!
-  } catch (ArithmeticException e) {
-      // Handle the error
-      System.out.println("Can't divide by zero!");
-  }
-  // Program keeps running
-  ```
+```java
+try {
+    // Try to do something risky
+    int result = 10 / 0;  // Division by zero!
+} catch (ArithmeticException e) {
+    // Handle the error
+    System.out.println("Can't divide by zero!");
+}
+// Program keeps running
+```
 </Callout>
 
 ## Common Exception Types
@@ -152,26 +152,25 @@ try {
 ```
 
 <Callout type="info" title="When to Use Finally">
-  Use `finally` for cleanup tasks that must always happen:
+Use `finally` for cleanup tasks that must always happen:
+- Closing files
+- Releasing resources
+- Saving data
+- Logging
 
-  - Closing files
-  - Releasing resources
-  - Saving data
-  - Logging
-
-  ```java
-  FileReader file = null;
-  try {
-      file = new FileReader("data.txt");
-      // Read file
-  } catch (Exception e) {
-      System.out.println("Error reading file");
-  } finally {
-      if (file != null) {
-          file.close();  // Always close the file!
-      }
-  }
-  ```
+```java
+FileReader file = null;
+try {
+    file = new FileReader("data.txt");
+    // Read file
+} catch (Exception e) {
+    System.out.println("Error reading file");
+} finally {
+    if (file != null) {
+        file.close();  // Always close the file!
+    }
+}
+```
 </Callout>
 
 ## Getting Exception Information
@@ -439,56 +438,53 @@ public class Player {
 ```
 
 <Callout type="info" title="When to Throw Exceptions">
-  Throw exceptions when:
+Throw exceptions when:
+- Method receives invalid input
+- Operation cannot be completed
+- Preconditions are not met
+- Something unexpected happens
 
-  - Method receives invalid input
-  - Operation cannot be completed
-  - Preconditions are not met
-  - Something unexpected happens
+```java
+public void damagePlayer(int damage) {
+    if (damage < 0) {
+        throw new IllegalArgumentException("Damage must be positive!");
+    }
+    // Apply damage
+}
 
-  ```java
-  public void damagePlayer(int damage) {
-      if (damage < 0) {
-          throw new IllegalArgumentException("Damage must be positive!");
-      }
-      // Apply damage
-  }
-
-  public Item getItem(int slot) {
-      if (slot < 0 || slot >= inventory.length) {
-          throw new IndexOutOfBoundsException("Invalid inventory slot!");
-      }
-      return inventory[slot];
-  }
-  ```
+public Item getItem(int slot) {
+    if (slot < 0 || slot >= inventory.length) {
+        throw new IndexOutOfBoundsException("Invalid inventory slot!");
+    }
+    return inventory[slot];
+}
+```
 </Callout>
 
 ## Checked vs Unchecked Exceptions
 
 <Callout type="warning" title="Exception Types">
-  **Unchecked Exceptions** (RuntimeException):
+**Unchecked Exceptions** (RuntimeException):
+- Don't need to be caught
+- Usually programming errors
+- Examples: NullPointerException, ArrayIndexOutOfBoundsException
 
-  - Don't need to be caught
-  - Usually programming errors
-  - Examples: NullPointerException, ArrayIndexOutOfBoundsException
+**Checked Exceptions**:
+- Must be caught or declared
+- Usually external errors (files, network)
+- Examples: IOException, FileNotFoundException
 
-  **Checked Exceptions**:
+```java
+// Unchecked - no need to catch
+int result = 10 / 0;  // ArithmeticException
 
-  - Must be caught or declared
-  - Usually external errors (files, network)
-  - Examples: IOException, FileNotFoundException
-
-  ```java
-  // Unchecked - no need to catch
-  int result = 10 / 0;  // ArithmeticException
-
-  // Checked - must catch or declare
-  try {
-      FileReader file = new FileReader("data.txt");  // IOException
-  } catch (IOException e) {
-      // Handle error
-  }
-  ```
+// Checked - must catch or declare
+try {
+    FileReader file = new FileReader("data.txt");  // IOException
+} catch (IOException e) {
+    // Handle error
+}
+```
 </Callout>
 
 ## Practice Exercises

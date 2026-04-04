@@ -28,24 +28,24 @@ public class Main {
 ```
 
 <Callout type="info" title="HashMap pret ArrayList">
-  | **HashMap**                            | **ArrayList**                     |
-  | -------------------------------------- | --------------------------------- |
-  | Nekārtots                              | Kārtots pēc indeksa (0, 1, 2....) |
-  | Piekļūst ar atslēgvārdu (jebkura tipa) | piekļūst pēc pozīcijas            |
-  | Labs veids vērtības atrašanai          | Labs veids sarakstu veidošanai    |
-  | Katrs atslēgvārds unikāls              | Var būt dublikāti                 |
+| **HashMap**                            | **ArrayList**                     |
+| -------------------------------------- | --------------------------------- |
+| Nekārtots                              | Kārtots pēc indeksa (0, 1, 2....) |
+| Piekļūst ar atslēgvārdu (jebkura tipa) | piekļūst pēc pozīcijas            |
+| Labs veids vērtības atrašanai          | Labs veids sarakstu veidošanai    |
+| Katrs atslēgvārds unikāls              | Var būt dublikāti                 |
 
-  ```java
-  // ArrayList - pieeja ar skaitli
-  ArrayList<String> speletaji = new ArrayList<>();
-  speletaji.add("Alice");
-  String speletajs = speletaji.get(0);  // Atrod pirmo spēlētāju
+```java
+// ArrayList - pieeja ar skaitli
+ArrayList<String> speletaji = new ArrayList<>();
+speletaji.add("Alice");
+String speletajs = speletaji.get(0);  // Atrod pirmo spēlētāju
 
-  // HashMap - pieeja ar vārdu
-  HashMap<String, Integer> limeni = new HashMap<>();
-  limeni.put("Alice", 10);
-  int limenis = limeni.get("Alice");  // Atrod Alice līmeni
-  ```
+// HashMap - pieeja ar vārdu
+HashMap<String, Integer> limeni = new HashMap<>();
+limeni.put("Alice", 10);
+int limenis = limeni.get("Alice");  // Atrod Alice līmeni
+```
 </Callout>
 
 ## Biežākās HashMap Metodes
@@ -152,22 +152,22 @@ for (var ievaditais : scores.entrySet()) {
 ```
 
 <Callout type="info" title="HashMap Kārtība">
-  HashMap **neuztur** ievietošanas kārtību! Ja nepieciešama kārtība, izmanto `LinkedHashMap`:
+HashMap **neuztur** ievietošanas kārtību! Ja nepieciešama kārtība, izmanto `LinkedHashMap`:
 
-  ```java
-  import java.util.LinkedHashMap;
+```java
+import java.util.LinkedHashMap;
 
-  LinkedHashMap<String, Integer> sakartotiRezultati = new LinkedHashMap<>();
-  sakartotiRezultati.put("Alice", 100);
-  sakartotiRezultati.put("Bob", 150);
-  sakartotiRezultati.put("Charlie", 75);
+LinkedHashMap<String, Integer> sakartotiRezultati = new LinkedHashMap<>();
+sakartotiRezultati.put("Alice", 100);
+sakartotiRezultati.put("Bob", 150);
+sakartotiRezultati.put("Charlie", 75);
 
-  // Atgriezīs pēc ievietošanas kārtības
-  for (String vards : sakartotiRezultati.keySet()) {
-      System.out.println(vards);
-  }
-  // Izmetīs: Alice, Bob, Charlie (garantēti)
-  ```
+// Atgriezīs pēc ievietošanas kārtības
+for (String vards : sakartotiRezultati.keySet()) {
+    System.out.println(vards);
+}
+// Izmetīs: Alice, Bob, Charlie (garantēti)
+```
 </Callout>
 
 ## Praktiskie Piemēri

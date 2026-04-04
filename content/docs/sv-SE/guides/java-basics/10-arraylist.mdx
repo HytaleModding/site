@@ -26,12 +26,13 @@ public class Main {
 ```
 
 <Callout type="info" title="ArrayList vs Array">
-  | **Array**                               | **ArrayList**                                         |
-  | --------------------------------------- | ----------------------------------------------------- |
-  | Fixed size                              | Resizable (grows/shrinks)                             |
-  | Can hold primitives (int, double, etc.) | Can only hold objects (Integer, Double, String, etc.) |
-  | Faster access                           | More features (add, remove, etc.)                     |
-  | `int[] numbers = new int[10];`          | `ArrayList<Integer> numbers = new ArrayList<>();`     |
+| **Array**                               | **ArrayList**                                         |
+| --------------------------------------- | ----------------------------------------------------- |
+| Fixed size                              | Resizable (grows/shrinks)                             |
+| Can hold primitives (int, double, etc.) | Can only hold objects (Integer, Double, String, etc.) |
+| Faster access                           | More features (add, remove, etc.)                     |
+| `int[] numbers = new int[10];`          | `ArrayList<Integer> numbers = new ArrayList<>();`     |
+
 </Callout>
 
 ## Creating ArrayLists
@@ -52,22 +53,21 @@ ArrayList<Boolean> flags = new ArrayList<>();
 ```
 
 <Callout type="warning" title="Primitives in ArrayList">
-  You can't use primitives directly. Use their wrapper classes:
+You can't use primitives directly. Use their wrapper classes:
 
-  ```java
-  // Wrong
-  ArrayList<int> numbers = new ArrayList<>();
+```java
+// Wrong
+ArrayList<int> numbers = new ArrayList<>();
 
-  // Correct - Use wrapper class
-  ArrayList<Integer> numbers = new ArrayList<>();
-  ```
+// Correct - Use wrapper class
+ArrayList<Integer> numbers = new ArrayList<>();
+```
 
-  Wrapper classes:
-
-  - `int` → `Integer`
-  - `double` → `Double`
-  - `boolean` → `Boolean`
-  - `char` → `Character`
+Wrapper classes:
+- `int` → `Integer`
+- `double` → `Double`
+- `boolean` → `Boolean`
+- `char` → `Character`
 </Callout>
 
 ## Common ArrayList Methods

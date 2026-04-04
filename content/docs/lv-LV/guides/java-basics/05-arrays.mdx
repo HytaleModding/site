@@ -27,11 +27,12 @@ int[] skaitli = {10, 20, 30, 40, 50};
 ```
 
 <Callout type="info" title="Masīva Lielums">
-  Tiklīdz masīvs ir izveidots, tā lielums ir **fiksēts** Vēlāk tam nevar pievienot vai noņemt elementus!
+Tiklīdz masīvs ir izveidots, tā lielums ir **fiksēts** Vēlāk tam nevar pievienot vai noņemt elementus!
 
-  ```java
-  int[] inventārs = new int ; Vienmēr ir tieši 9 sloti
-  ```
+```java
+int[] inventārs = new int ; Vienmēr ir tieši 9 sloti
+```
+
 </Callout>
 
 ## Piekļuve Masīva Elementiem
@@ -73,7 +74,8 @@ int[] punkti = {45, 67, 89, 92, 55}; System.out.println(punkti.garums); // 5
 ```
 
 <Callout type="warning" title="Garums nav Metode">
-  Ievēro, ka nav iekavu! Tātad `array.length`, nevis `array.length()`.
+Ievēro, ka nav iekavu! Tātad `array.length`, nevis `array.length()`.
+
 </Callout>
 
 ## Masīvu Ciklēšana
@@ -99,19 +101,20 @@ for (String prieksmets : prieksmeti) {
 ```
 
 <Callout type="info" title="Uzlaboti For Loop">
-  Uzlabotie For Loop ir vienkāršāki un drošāki, bet tiem nevar modificēt masīvu vai zināt pašreizējo indeksu.
+Uzlabotie For Loop ir vienkāršāki un drošāki, bet tiem nevar modificēt masīvu vai zināt pašreizējo indeksu.
 
-  ```java
-  // Kad vajag zināt indeksu
-  for (int i = 0; i < prieksmeti.length; i++) {
-      System.out.println(i + ": " + prieksmeti[i]);
-  }
+```java
+// Kad vajag zināt indeksu
+for (int i = 0; i < prieksmeti.length; i++) {
+    System.out.println(i + ": " + prieksmeti[i]);
+}
 
-  // Kad vajag tikai vērtību
-  for (String prieksmets : prieksmeti) {
-      System.out.println(prieksmets);
-  }
-  ```
+// Kad vajag tikai vērtību
+for (String prieksmets : prieksmeti) {
+    System.out.println(prieksmets);
+}
+```
+
 </Callout>
 
 ## Daudzdimensiju Masīvi
@@ -290,16 +293,17 @@ System.out.println(meklet + " parādas " + skaits + " reizes");
 ## Masīva Limitācijas
 
 <Callout type="warning" title="Fiksēts Izmērs">
-  Masīvi nevar palielināties vai samazināties Ja ir nepieciešama elastība, tad uzzināsi par "ArrayList" vēlāk!
+Masīvi nevar palielināties vai samazināties Ja ir nepieciešama elastība, tad uzzināsi par "ArrayList" vēlāk!
 
-  ```java
-  int[] skaitli = new int[5];
-  // Nevar pievienot sesto elementu!
+```java
+int[] skaitli = new int[5];
+// Nevar pievienot sesto elementu!
 
-  // Ja vajag vairāk vietas, izveido jaunu masīvu
-  int[] vairakSkaitli = new int[10];
-  for (int i = 0; i < skaitli.length; i++) {
-      vairakSkaitli[i] = skaitli[i];
-  }
-  ```
+// Ja vajag vairāk vietas, izveido jaunu masīvu
+int[] vairakSkaitli = new int[10];
+for (int i = 0; i < skaitli.length; i++) {
+    vairakSkaitli[i] = skaitli[i];
+}
+```
+
 </Callout>

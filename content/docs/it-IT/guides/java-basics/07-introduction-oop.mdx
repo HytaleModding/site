@@ -50,10 +50,10 @@ public class Main {
 ```
 
 <Callout type="info" title="Classe vs Oggetto">
-  **Classe** = Progetto (l'idea di un giocatore)
-  **Object** = L'entità effettiva (Alice, Bob, giocatori specifici)
+**Classe** = Progetto (l'idea di un giocatore)
+**Object** = L'entità effettiva (Alice, Bob, giocatori specifici)
 
-  Una classe può creare molti oggetti, proprio come una ricetta può fare molte torte!
+Una classe può creare molti oggetti, proprio come una ricetta può fare molte torte!
 </Callout>
 
 ## Creare una semplice classe
@@ -144,29 +144,29 @@ public class Main {
 ```
 
 <Callout type="info" title="Regole del Costruttore">
-  * Stesso nome della classe
-  * Nessun tipo restituito (nemmeno `void`)
-  * Chiamato automaticamente quando si utilizza `new`
-  * Si possono avere più costruttori (overloading)
+* Stesso nome della classe
+* Nessun tipo restituito (nemmeno `void`)
+* Chiamato automaticamente quando si utilizza `new`
+* Si possono avere più costruttori (overloading)
 
-  ```java
-  public class Item {
-      String name;
-      int value;
-      
-      // Costruttore con tutti i parametri
-      public Item(String name, int value) {
-          this.name = name;
-          this.value = value;
-      }
-      
-      // Costruttore con solo il nome
-      public Item(String name) {
-          this.name = name;
-          this.value = 0;  // Valore di default
-      }
-  }
-  ```
+```java
+public class Item {
+    String name;
+    int value;
+    
+    // Costruttore con tutti i parametri
+    public Item(String name, int value) {
+        this.name = name;
+        this.value = value;
+    }
+    
+    // Costruttore con solo il nome
+    public Item(String name) {
+        this.name = name;
+        this.value = 0;  // Valore di default
+    }
+}
+```
 </Callout>
 
 ## La keyword `this`
@@ -343,14 +343,13 @@ public class Example {
 Per ora, usa `public` per tutto. Impareremo quando usare `private` nel prossimo articolo.
 
 <Callout type="info" title="Perché Usare le Classi?">
-  Le classi ti aiutano a:
+Le classi ti aiutano a:
+* **Organizzare** insieme dati e metodi correlati
+* **Riutilizzare** il codice facilmente (creare molti oggetti da una classe)
+* **Modellizzare** cose reali (giocatori, oggetti, mostri)
+* **Mantenere** codice (le modifiche in un unico posto riguardano tutti gli oggetti)
 
-  * **Organizzare** insieme dati e metodi correlati
-  * **Riutilizzare** il codice facilmente (creare molti oggetti da una classe)
-  * **Modellizzare** cose reali (giocatori, oggetti, mostri)
-  * **Mantenere** codice (le modifiche in un unico posto riguardano tutti gli oggetti)
-
-  Senza classi, gestire 100 giocatori richiederebbe 100 variabili separate per ogni proprietà. Con le classi, sono solo 100 oggetti Giocatore!
+Senza classi, gestire 100 giocatori richiederebbe 100 variabili separate per ogni proprietà. Con le classi, sono solo 100 oggetti Giocatore!
 </Callout>
 
 ## Esercizi Pratici

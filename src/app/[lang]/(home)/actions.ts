@@ -3,6 +3,17 @@
 import { Sponsor } from "@/lib/types/sponsor";
 
 export async function getDiscordStats() {
+  if (!process.env.INTERNAL_API_TOKEN) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn("INTERNAL_API_TOKEN is not set.");
+      return {
+        active_members: 0,
+        total_members: 0,
+      };
+    }
+    throw new Error("INTERNAL_API_TOKEN is not set");
+  }
+
   try {
     const response = await fetch(
       "https://api.internal.hytalemodding.guide/guild/stats",

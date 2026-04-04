@@ -1,0 +1,474 @@
+---
+title: NPC Roles
+description: Step into your new role, Ms Fairy.
+---
+
+# Describing your role
+> *All the world's a stage, and all the men and women merely players: they have their exits and their entrances; and one man in his time plays many parts, his acts being seven ages.*
+>
+>**\- Shakespeare (As You Like It)**
+
+![npc-guide](/assets/guides/tutorial_role_Shakespeare.jpg)
+
+Roles make up the core of a NPC in how it interacts with the world. It defines things like appearance, max health, equipped items, what it drops upon death, etc. at its most basic functionality. Think of this as defining how it looks and the statistics it has.
+
+Roles can be changed during the lifetime of an NPC, so the possibilities are well, not endless, but many in how your NPC becomes unique.
+## Types
+Roles come in three flavors: **Generic**, **Variant** & **Abstract**.
+
+Out of all three is **Generic** the default one. It is declared as is with no preprocessing needing to be done. What is preprocessing you wonder? In short it looks at the JSON file it is and see if anything needs to be changed before Hytale reads it for its data.
+
+It is rarely used outside of testing because **Templates** are a widely used practice, because it saves time and let you reuse data and instructions across several roles with just a simple reference. The most reused templates can be found in the `Server\NPC\Roles\_Core\Templates` folder.
+
+**Variant** and **Abstract** are tied together because one type relies on the other in order to do its preprocessing magic. The short version is that the **Variant** role copies the data from the **Abstract** role and then overwrite it withs own on top of that. A example will help visualize it.
+
+> **Template_Shape.json file**
+```json
+{
+    "Type":"Abstract",
+    "Appearance": { "Compute": "Appearance" },
+    "MaxHealth": { "Compute": "MaxHealth" },
+    "KnockbackScale": 0.5,
+    "Parameters":{
+        "Appearance":{
+            "Value":"Point",
+            "Description":"Model to be used"
+        },
+        "MaxHealth":{
+            "Value": 10,
+            "Description":"Max health for the NPC"
+        }
+    }
+}
+```
+
+> **Cube.json file**
+```json
+{
+    "Type":"Variant",
+    "Reference":"Template_Shape",
+    "Modify":{
+        "Appearance": "Cube",
+        "MaxHealth": 30
+    }
+}
+```
+
+Variant **Cube** inherits from the Abstract **Template_Shape** and creates JSON file that looks like this in memory after all preprocessing is done:
+> **Cube role JSON in memory**
+```json
+{
+    "Type":"Variant",
+    "Reference":"Template_Shape",
+    "Appearance": "Cube",
+    "MaxHealth":30,
+    "KnockbackScale": 0.5
+}
+```
+
+While this example has a incomplete role it helps to illustrate how role **Types** work for roles at a high level.
+## Parameters and modifying them
+You may noted that in the previous example was the fields **Parameters** and **Modify**. They are used with the preprocessor to help to both make **Abstract** roles modifiable in their **Variant** roles, they are also used in other contexts when it come to making NPCs. Such as passing data to **Components** (Not to be confused with components in the **ECS**)
+
+We can set the parameters easily in our role JSON file.
+```json
+"Parameters":{
+    "ParameterName1":{
+        "Value":"Apples",
+        "Description":"Put a short description that describes this parameter well. In this case a string."
+    },
+    "ParameterName2":{
+        "Value": 15,
+        "Description":"Numbers work well, integers and floating points are all good."
+    },
+    "ParameterName3":{
+        "Value": ["Food_Pie_Apple", "Food_Kebab_Vegetable"],
+        "Description":"You can store arrays of strings."
+    }
+}
+```
+
+Also easily modify them in another role JSON file that references our template:
+```json
+"Modify": {
+    "ParameterName1": "Oranges",
+    "ParameterName2": 42.67,
+    "ParameterName3": ["Rock_Stone"]
+}
+```
+## Compute or more preprocessing
+This **Compute** thing has appeared several times now but never truly been addressed, but it will be now.
+```json
+{ "Compute": "ParameterName" }
+```
+This wonderful tool can be used for more than just modifying parameters in a Role, in fact its vital when creating **Instructions** in order to ensure that you can correctly pass data to them in a readable way. Instead of using [magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)) you can just pass the parameter through a **Compute** preprocessor.
+
+At its most basic level all it does is pass a value from your **Parameters** but it can do much more. Like math for instance.
+```json
+"Parameters":{
+    "First":{
+        "Value":2,
+        "Description":"First number."
+    },
+    "Second":{
+        "Value": 3,
+        "Description":"Second number."
+    }
+},
+"MaxHealth": { "Compute": "First + Second"}
+```
+
+It supports the most common mathematical operations like addition, subtraction, multiplication and division.
+- `+` : Addition **Example:** left + right
+- `-` : Subtraction **Example:** left - right
+- `*` : Multiplication **Example:** left * right
+- `/` : Division **Example:** left / right
+
+**Compute** also supports more advanced operations like negating values and exponents:
+- `-` : Negates the numeric value after it. **Example:** 10 + -10 = 0
+- `E` : Scientific notation for large numbers. **Example:** 5**E**5 = 500,000
+- `%` : Remainder, also known as modulus. **Example:** 35 % 32 = 3
+- `**` : Exponent like 10² which would give you 100. **Example:** 10\*\*2 = 100
+
+You can also use open brackets like `( )` to make more complicated computation. **Example:** MaxHealth + (MaxHealth / 2)
+
+Square brackets `[ ]` are used for making arrays. Like string and numeric arrays in **Compute**. But the usage is quite limited at the moment.
+- **\[0, 1, 2\]** : Numeric array
+- **\["A", "B", "C"\]** : String array
+
+Comparing things can also be done. Useful for setting a value in the **"Enabled"** field in a **Instruction** for example.
+- `==` : Equals, if the left and right side are equal it is **true**. **Example:** left == right
+- `!=` : Not equal, if the left and right side are not equal it is **true**. **Example:** left != right
+- `>` : Greater than, if the left side is greater than the right side it is **true**. **Example:** left \> right
+- `>=` : Greater than or equals, if the left side is greater than or equals to the right side it is **true**. **Example:** left \>= right
+- `<` : Lesser than, if the left side is lesser than the right side it is **true**. **Example:** left \< right
+- `<=` : Lesser than or equals, if the left side is lesser than or equals to the right side it is **true**. **Example:** left \<= right
+
+There are other functions with **Compute** too that Hytale added in order to make their JSON preprocessing much easier. Here are all of them found so far:
+- **true** : Boolean constant for true.
+- **false** : Boolean constant for false.
+- **PI** : The value of [pi](https://en.wikipedia.org/wiki/Pi).
+- **max**( *first, second* ) : Puts the biggest of the two numbers in the **Compute**.
+- **min**( *first, second* ) : Puts the smallest of the two numbers in the **Compute**.
+- **isEmpty**( *argument* ) : Checks if the provided string or **Parameter** is empty.
+- **isEmptyStringArray**( *argument* ) : Checks if the provided string array or **Parameter** is empty.
+- **isEmptyNumberArray**( *argument* ) : Checks if the provided number array or **Parameter** is empty.
+- **random**() : Provides a random number between 0.0 and 1.0.
+- **randomInRange**( *first, second* ) : Provides a random number between *first* and *second* arguments.
+- **makeRange**( *argument* ) : Makes a number array with two values that are the same as the *argument*.
+
+**Note:** It is possible to extend the **Compute** functions in other ways but this won't be addressed here.
+## Motion controllers
+Motion controllers tell the NPC how to move around in its **Role**. Roles that walk on the ground use the **Walk** controller. A flying **Role** use the **Fly** controller. Meanwhile aquatic **Role**'s use the **Dive** controller.
+
+The motion controllers are used in conjunction with **"BodyMotion"** inside instructions in order to make the NPCs move around. But keep in mind that they are still affected by gravity and other external forces even without input from the instructions.
+
+In its current implementation in Hytale are multiplie motion controllers ill-advised because of how buggy it is. Even reference in the `Template_Birds_Passive.json` file that they need to hack it in order to make flying roles walk on the ground.
+
+> **Example from Template_Kweebec_Sapling.json**
+```json
+"MotionControllerList": [
+    {
+        "Type": "Walk",
+        "MaxWalkSpeed": { "Compute": "MaxSpeed" },
+        "Gravity": 10,
+        "RunThreshold": 0.3,
+        "MaxFallSpeed": 15,
+        "MaxRotationSpeed": 360,
+        "Acceleration": 10
+    }
+]
+```
+## Instructions
+With the skeleton of a **Role** being explained we now come to the meat of it. The beating *heart* of a NPC that let it do truly wondrous things.
+
+As was said in the introduction, are instructions executed from top to bottom. Stopping at the first deepest nested instruction whose **Sensor** that match.
+
+> **Taken from the introduction page**
+```json
+"Instructions":[
+    {
+        "Sensor":{
+            "Type":"State",
+            "State":"Idle"
+        },
+        "Instructions":[
+            {
+                "Sensor": {
+                    "Type": "Player",
+                    "Range": 8,
+                    "Filters": [
+                        {
+                            "Type": "ItemInHand",
+                            "Items": ["Plant_Fruit_Berries_Red"]
+                        }
+                    ]
+                },
+                "HeadMotion": {
+                    "Type": "Watch"
+                },
+                "BodyMotion":{
+                    "Type":"Seek",
+                    "RelativeSpeed": 0.6,
+                    "StopDistance":3,
+                }
+            },
+            {
+                "Reference": "Component_Instruction_Intelligent_Idle_Motion_Wander"
+            }
+        ]
+    }
+]
+```
+This is an example of a **2 deep** nested instructions. It goes from the **"Instructions"** from the role and then iterates through its only instruction it has. If the **State** of the NPC is `Idle` it ***matches*** and will try to either execute **Actions** or **Instructions**. Never both at the same time.
+
+Assuming that the NPC **State** is `Idle` it ***matches*** and will iterate through the instructions from that instruction.
+> **First match**
+```json
+"Instructions":[
+    {
+        "Sensor": {
+            "Type": "Player",
+            "Range": 8,
+            "Filters": [
+                {
+                    "Type": "ItemInHand",
+                    "Items": ["Plant_Fruit_Berries_Red"]
+                }
+            ]
+        },
+        "HeadMotion": {
+            "Type": "Watch"
+        },
+        "BodyMotion":{
+            "Type":"Seek",
+            "RelativeSpeed": 0.6,
+            "StopDistance":3,
+        }
+    },
+    {
+        "Reference": "Component_Instruction_Intelligent_Idle_Motion_Wander"
+    }
+]
+```
+It looks for a Player which holds red berries in hand but it can't find any in the first instruction which makes it NOT ***match***. So it tries the next one which is a reference to a **Component** that makes the NPC wander around in a idle manner.
+> **Final match**
+```json
+{
+    "Reference": "Component_Instruction_Intelligent_Idle_Motion_Wander"
+}
+```
+If nothing changes the NPC will continue executing this instruction until the first instruction matches.
+### Continue Vs. TreeMode
+The main difference between `"Continue"` and `"TreeMode"` in a instruction is how it handles finding matches.
+
+With `"Continue"` set to **true** the instruction executing it will continue executing instructions despite finding a match in this instruction.  It is useful for running logic in the background and perform reusable logic in a `Component`.
+
+With `"TreeMode"` set to **true** the instruction executing it will continue after all instructions inside this instruction fail to match. Confusing? Thought so. It acts like a behavior tree where it will lock onto the first matching instruction and keep executing it until it no longer matches.
+
+If you set `"InvertTreeModeResult"` to **true** in a instruction nested inside the `"TreeMode"` instruction will invert its behavior.
+> **Example tree**
+```json
+"Instructions":[
+    {
+        "TreeMode":true,
+        "Instructions":[
+            {
+                "Sensor":{
+                    "Type": "Player",
+                    "Range": 8,
+                    "Filters": [
+                        {
+                            "Type": "ItemInHand",
+                            "Items": ["Plant_Fruit_Berries_Red"]
+                        }
+                    ]
+                },
+                "Actions":[
+                    {
+                        "Type": "SpawnParticles",
+                        "Offset": [0, 1, 0],
+                        "ParticleSystem": "Hearts",
+                        "TargetNodeName": "Head"
+                    }
+                ]
+            },
+            {
+                "Sensor":{
+                    "Type": "Player",
+                    "Range": 8,
+                    "Filters": [
+                        {
+                            "Type": "ItemInHand",
+                            "Items": ["Food_Pie_Apple"]
+                        }
+                    ]
+                },
+                "Actions":[
+                    {
+                        "Type": "SpawnParticles",
+                        "Offset": [0, 1, 0],
+                        "ParticleSystem": "Stunned",
+                        "TargetNodeName": "Head"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "Sensor":{
+            "Type":"Any"
+        },
+        "Actions":[
+            {
+                "Type": "SpawnParticles",
+                "Offset": [0, 1, 0],
+                "ParticleSystem": "Question",
+                "TargetNodeName": "Head"
+            }
+        ]
+    }
+]
+```
+
+
+### Template_Livestock.json is your bible
+Why should you care about this file so much? It is because it contains all the *tricks* and good instruction *patterns* that you will need to make interesting NPCs with your **Roles**.
+
+It is located in: `Server\NPC\Roles\_Core\Templates`
+
+For example if you look at the `"InteractionInstructions"` in the file will you see a reusable tree structure for handling different cases where the player interacts with the NPC. It is easy to modify and get to work in your own Role JSON files.
+
+It also shows a good usage of the `"Enabled"` property in instructions which leads to highly modular templates that can be reused for ***many*** **Roles**.
+
+**Note:** For programmers is the `NPCPlugin` class your bible ***and*** documentation for NPCs. **Class path:** `com.hypixel.hytale.server.npc.NPCPlugin`
+### Main instructions
+In the **Role** `"Instructions"` is where the NPC truly comes alive. It is run every in-game tick where it executes instructions as far as it can.
+
+This is a good place to put "scripts" outside states which is run every tick. Let you reset things like *Alarms* and do **Flock** logic.
+
+Using our previous example we can make our NPC emit hearts every 2 to 3 seconds.
+
+To do that we first need to setup a **Timer** in our instructions. To do that we first make a instruction with a `Any` **Sensor** that is set to run only **Once**. Make sure to set `"Continue"` to **true** in it to ensure instructions after it can execute despite this always matching. 
+
+After that we implement our second instruction which checks if the **Timer** that we started has stopped with the `Timer` **Sensor**. It matches if the **Timer** has stopped and will execute its actions that spawns heart particles atop the NPCs head and restarts the timer.
+
+> **Modified example from the introduction**
+```json
+"Parameters":{
+    "HeartTimer":{
+        "Value":"HeartEmitterTimer",
+        "Description":"The name for the timer."
+    }
+},
+"Instructions":[
+    {
+        "$Comment":"Initialize our Timer.",
+        "Continue":true,
+        "Sensor":{
+            "Type":"Any",
+            "Once":true
+        },
+        "Actions":[
+            {
+              "Type": "TimerStart",
+              "Name": { "Compute": "HeartTimer" },
+              "StartValueRange": [0.1, 0.1],
+              "RestartValueRange": [2, 3]
+            }
+        ]
+    },
+    {
+        "$Comment":"Let us check if our heart timer is finished.",
+        "Continue":true,
+        "Sensor":{
+            "Type":"Timer",
+            "Name": { "Compute": "HeartTimer" },
+            "State":"Stopped"
+        },
+        "Actions":[
+            {
+                "Type": "SpawnParticles",
+                "Offset": [0, 1, 0],
+                "ParticleSystem": "Hearts",
+                "TargetNodeName": "Head"
+            },
+            {
+                "Type":"TimerRestart",
+                "Name": { "Compute": "HeartTimer" }
+            }
+        ]
+    },
+    {
+        "Sensor":{
+            "Type":"State",
+            "State":"Idle"
+        },
+        "Instructions":[
+            {
+                "Sensor": {
+                    "Type": "Player",
+                    "Range": 8,
+                    "Filters": [
+                        {
+                            "Type": "ItemInHand",
+                            "Items": ["Plant_Fruit_Berries_Red"]
+                        }
+                    ]
+                },
+                "HeadMotion": {
+                    "Type": "Watch"
+                },
+                "BodyMotion":{
+                    "Type":"Seek",
+                    "RelativeSpeed": 0.6,
+                    "StopDistance":3,
+                }
+            },
+            {
+                "Reference": "Component_Instruction_Intelligent_Idle_Motion_Wander"
+            }
+        ]
+    }
+]
+```
+### Interaction instructions
+In the **Role** `"InteractionInstruction"` is where it control how the NPC can interact with players. The interaction distance is generous so you can limit it by checking how far the matching player is.
+
+The theory is that you first run a check whether the player can interact with it, if it can't you set it as not interactable. If you can interact with the NPC then you set a hint message and make it interactable.
+
+Once it detects activation you run whatever actions you desire.
+
+You can find a reference in the `Kweebec_Merchant.json` for how it works.
+
+> **Simple interaction logic**
+- Check if NPC is not interactable.
+- Set as interactable with hint.
+- Execute actions upon interaction.
+
+For more advanced interaction logic consult the `Template_Livestock.json` file. It utilizes `"TreeMode"` on each scenario set to **true** to perform many interaction checks before finally setting the NPC as not interactable.
+
+> **Advanced interaction logic**
+- For each instruction with `"TreeMode"` set to to **true**.
+    - Check if NPC is interactable.
+    - Set as interactable with hint.
+    - Execute actions upon interaction.
+- Set as not interactable.
+
+**Note:** It can't override **blocking** actions in the main `"Instructions"`.
+### Death instruction
+In the **Role** `"DeathInstruction"` is where a single instruction will be run upon NPC death. It should be kept short to tie up any loose ends or do something as silly as spawn a mouse upon death. Otherwise it works like a normal instruction where it can have nested instructions.
+## Good practices
+Use **Parameters** when possible in the **Role** file. Can be ignored for single use cases where the same piece of data won't appear again.
+
+Use **Compute** wherever possible for both readability and being able to easily change parameters from one place while testing your NPC **Role**.
+
+Try to use *cheap* **Sensors** when possible to avoid lagging the server.
+
+Learn and understand the versatility of **States** because that is the main building block of your NPC **Role**. This is a topic for another page in itself.
+
+When you repeat the same piece of instructions, actions or sensors many times it may be worth looking into **Component** JSON files. But that is a topic for another page.
+## What now?
+Test a lot. Figure out what makes a NPC tick through its role. Look at existing roles made by the Hytale developers to see how they did it.
+
+Explore how combat works with the interaction system.

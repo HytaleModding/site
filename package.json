@@ -13,6 +13,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@fillout/react": "^3.0.0",
     "@mdx-js/mdx": "^3.1.1",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-collapsible": "^1.1.12",
@@ -33,7 +34,7 @@
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.559.0",
     "mathjs": "^14.6.0",
-    "motion": "^12.29.2",
+    "motion": "^12.38.0",
     "next": "16.1.5",
     "next-mdx-remote": "^5.0.0",
     "next-themes": "^0.4.6",

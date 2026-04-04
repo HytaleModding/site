@@ -38,23 +38,24 @@ while (condition) {
 ```
 
 <Callout type="warning" title="Infinite Loops">
-  Always make sure your loop condition will eventually become false, or your program will run forever!
+Always make sure your loop condition will eventually become false, or your program will run forever!
 
-  ```java tab="Bad Example"
-  int x = 0;
-  while (x < 10) {
-      System.out.println("Stuck!");
-      // Forgot to increase x!
-  }
-  ```
+```java tab="Bad Example"
+int x = 0;
+while (x < 10) {
+    System.out.println("Stuck!");
+    // Forgot to increase x!
+}
+```
 
-  ```java tab="Good Example"
-  int x = 0;
-  while (x < 10) {
-      System.out.println("Counting: " + x);
-      x++; // This increases x! // [!code ++]
-  }
-  ```
+```java tab="Good Example"
+int x = 0;
+while (x < 10) {
+    System.out.println("Counting: " + x);
+    x++; // This increases x! // [!code ++]
+}
+```
+
 </Callout>
 
 ## Do-While Loop
@@ -97,16 +98,18 @@ for (initialization; condition; update) {
 ```
 
 <Callout type="info" title="For Loop Parts">
-  ```java
-  for (int i = 0; i < 10; i++) {
-  //   ^         ^        ^
-  //   Start     Stop     Step
-  }
-  ```
 
-  * **Initialization**: int i = 0 - Runs once at the start
-  * **Condition**: i < 10 - Checked before each loop
-  * **Update**: i++ - Runs after each loop
+```java
+for (int i = 0; i < 10; i++) {
+//   ^         ^        ^
+//   Start     Stop     Step
+}
+```
+
+* **Initialization**: int i = 0 - Runs once at the start
+* **Condition**: i < 10 - Checked before each loop
+* **Update**: i++ - Runs after each loop
+
 </Callout>
 
 ## Break Statement
@@ -150,16 +153,14 @@ for (int i = 1; i <= 3; i++) {
 ```
 
 <Callout type="warning" title="Nested Loop Performance">
-  Be careful with nested loops! They can slow down your mod significantly.
-
-  ```java
-  // This runs 1,000,000 times!
-  for (int i = 0; i < 1000; i++) {
-      for (int j = 0; j < 1000; j++) {
-          // Code here
-      }
-  }
-  ```
-
-  Try to avoid deeply nested loops when processing large amounts of data.
+Be careful with nested loops! They can slow down your mod significantly.
+```java
+// This runs 1,000,000 times!
+for (int i = 0; i < 1000; i++) {
+    for (int j = 0; j < 1000; j++) {
+        // Code here
+    }
+}
+```
+Try to avoid deeply nested loops when processing large amounts of data.
 </Callout>

@@ -50,10 +50,10 @@ public class Main {
 ```
 
 <Callout type="info" title="Classe vs. Objeto ">
-  **Classe** = Diagrama (a ideia de um jogador)
-  **Objeto** = Coisa real (Alice, Bob, jogadores específicos)
+**Classe** = Diagrama (a ideia de um jogador)
+**Objeto** = Coisa real (Alice, Bob, jogadores específicos)
 
-  Uma classe pode criar vários objetos, assim como uma receita pode fazer vários bolos!
+Uma classe pode criar vários objetos, assim como uma receita pode fazer vários bolos!
 </Callout>
 
 ## Criando uma classe simples
@@ -144,29 +144,29 @@ public class Main {
 ```
 
 <Callout type="info" title="Regras do construtor">
-  * O mesmo nome que a classe
-  * Nenhum tipo de retorno, nem mesmo `void`
-  * Chamado automático ao usar `new`
-  * Pode ter vários construtores (sobrecarregamento)
+* O mesmo nome que a classe
+* Nenhum tipo de retorno, nem mesmo `void`
+* Chamado automático ao usar `new`
+* Pode ter vários construtores (sobrecarregamento)
 
-  ```java
-  public class Item {
-      String name;
-      int value;
-      
-      // Construtor com todos os parâmetros
-      public Item(String name, int value) {
-          this.name = name;
-          this.value = value;
-      }
-      
-      // Construtor com apenas o nome
-      public Item(String name) {
-          this.name = name;
-          this.value = 0;  // Valor padrão
-      }
-  }
-  ```
+```java
+public class Item {
+    String name;
+    int value;
+    
+    // Construtor com todos os parâmetros
+    public Item(String name, int value) {
+        this.name = name;
+        this.value = value;
+    }
+    
+    // Construtor com apenas o nome
+    public Item(String name) {
+        this.name = name;
+        this.value = 0;  // Valor padrão
+    }
+}
+```
 </Callout>
 
 ## A palavra-chave `this`
@@ -342,14 +342,13 @@ public class Example {
 Por enquanto, use o `public` para tudo. No próximo artigo, aprenderemos quando usar o `private`.
 
 <Callout type="info" title="Por que usar classes?">
-  Classes ajudam a:
+Classes ajudam a:
+* **Organizar** os dados e métodos relacionados em conjunto
+* **Reutilizar** o código facilmente (crie vários objetos a partir de uma classe)
+* **Modelar** coisas reais (jogadores, itens, monstros)
+* **Preservar** o código (alterações em um local afetam todos os objetos)
 
-  * **Organizar** os dados e métodos relacionados em conjunto
-  * **Reutilizar** o código facilmente (crie vários objetos a partir de uma classe)
-  * **Modelar** coisas reais (jogadores, itens, monstros)
-  * **Preservar** o código (alterações em um local afetam todos os objetos)
-
-  Sem classes, gerenciar 100 jogadores exigiria 100 variáveis separadas para cada propriedade. Com classes, são apenas 100 objetos `Player`!
+Sem classes, gerenciar 100 jogadores exigiria 100 variáveis separadas para cada propriedade. Com classes, são apenas 100 objetos `Player`!
 </Callout>
 
 ## Exercícios práticos

@@ -9,7 +9,7 @@ title: Написание руководств
 Предположим, я хочу создать руководство по основам java, тогда я помещу его в `/content/docs/ru/guides/java-basics`. Вам придется немного поискать, чтобы понять, где именно вы хотите это разместить.
 
 <Callout>
-  Если в разделе, о котором вы хотите написать, уже есть руководство, вы можете просто нажать кнопку "Edit On GitHub" на нашем сайте. Это перенаправит вас в нужную папку, и вы сможете писать в ней же, чтобы ваше руководство появилось в том же разделе.
+    Если в разделе, о котором вы хотите написать, уже есть руководство, вы можете просто нажать кнопку "Edit On GitHub" на нашем сайте. Это перенаправит вас в нужную папку, и вы сможете писать в ней же, чтобы ваше руководство появилось в том же разделе.
 </Callout>
 
 ## Frontmatter
@@ -20,11 +20,12 @@ Frontmatter — это метаданные вашего руководства;
 
 ```mdx
 ---
-title: "База Джавы"
-description: "Научимся базовым принципам программировании на Джава."
+title: "Java Basics"
+description: "Learn the basics of Java programming."
 authors:
-    - name: "Ваше имя"
+    - name: "Your Name"
       url: "https://yourwebsite.com"
+icon: YourIcon 
 ---
 ```
 
@@ -57,6 +58,38 @@ authors:
 
 Это тот же тип форматирования, который вы видите на большинстве сайтов с документацией, а также на социальных платформах, таких как Discord.
 
+### Links
+
+Everyone knows what a link is. However, there is a difference between linking to an external resource and linking to an internal one.
+
+In general, in Markdown they are written like this: `[Your Text](Your link)`
+
+#### External
+
+Nothing to explain, just `https://example.com`.
+
+#### Internal
+
+You cannot use regular links here. Let's say your link to another guide is `https://hytalemodding.dev/en/docs/quick-start`.
+You can't write it like that because you are not only referring to the page but also to the language, which is not correct.
+Instead, type `./quick-start` which is correct and links to the page in the user's language.
+
+**Accessing files**
+
+- **Current Folder**: `./`
+- **Folder above**: `../` as many times as this folder is higher in the hierarchy.
+
+## Icons
+
+If you want to add an icon for your page then you should use [Lucide](https://lucide.dev/).
+
+1. Go to the [site](https://lucide.dev/) and find an icon you like.
+2. Once you have selected an icon, click on it, then click "See in action"
+3. Next, click on "React" which we are using. You will only need the text in the curly brackets on the first line.
+4. Next, simply paste `icon: YourIcon` into Frontmatter.
+
+## Callout
+
 Вы также можете использовать выноски (Callouts), чтобы выделить важную информацию или советы. Используйте следующий синтаксис:
 
 ```mdx
@@ -66,7 +99,7 @@ authors:
 ```
 
 <Callout>
-  Это сообщение выноски (callout)
+    Это сообщение выноски (callout)
 </Callout>
 
 Вы можете изменить цвет выноски (callout), добавив атрибут 'type'. Например:
@@ -78,6 +111,26 @@ authors:
 ```
 
 Доступные типы: `info`, `warning`, `error` и `success`.
+
+## Difficulty levels
+
+These are types of callouts, they are optional, they show how complex your page can be.
+There are 3 main levels of complexity.
+
+<Callout type="lvl_beginner">
+    Use `lvl_beginner`. This page contains information for those who are starting out with modding.
+</Callout>
+
+<Callout type="lvl_intermediate">
+    Use `lvl_intermediate`. This page contains information for those who want to deepen their knowledge.
+</Callout>
+
+<Callout type="lvl_advanced">
+   Use `lvl_advanced`. This page contains information for those who already know how to make quality mods, and contains something additional.
+</Callout>
+
+Their usage is the same as in callout, but we would advise not to change the title. Inside,
+you write why your page is classified as this level and what the user should know.
 
 ## Заключение
 

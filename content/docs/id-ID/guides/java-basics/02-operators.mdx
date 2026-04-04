@@ -21,13 +21,14 @@ int remainder = a % b;  // Modulus (sisa bagi): 0
 ```
 
 <Callout type="info" title="Catatan Pembagian">
-  Saat membagi bilangan bulat (integer), Java melakukan pembagian integer, yang berarti Java membuang bagian desimalnya. Contohnya, `7 / 2` akan menghasilkan `3`, bukan `3.5`.
+Saat membagi bilangan bulat (integer), Java melakukan pembagian integer, yang berarti Java membuang bagian desimalnya. Contohnya, `7 / 2` akan menghasilkan `3`, bukan `3.5`.
 
-  ```java
-  int x = 7 / 2;       // 3 (bukan 3.5!) - Pembagian integer
-  double y = 7.0 / 2;  // 3.5 - Setidaknya satu tipe double menghasilkan hasil double
-  double z = (double) 7 / 2;  // 3.5 - Casting juga bisa digunakan
-  ```
+```java
+int x = 7 / 2;       // 3 (bukan 3.5!) - Pembagian integer
+double y = 7.0 / 2;  // 3.5 - Setidaknya satu tipe double menghasilkan hasil double
+double z = (double) 7 / 2;  // 3.5 - Casting juga bisa digunakan
+```
+
 </Callout>
 
 ### Modulus (%) - Operator Sisa Bagi
@@ -64,11 +65,13 @@ a--; // Decrement: a menjadi 5 lagi
 ```
 
 <Callout type="info" title="Prefix vs Postfix">
-  ```java
-  int a = 5;
-  int b = a++; // b adalah 5, a sekarang 6
-  int c = ++a; // a adalah 7, c sekarang 7
-  ```
+
+```java
+int a = 5;
+int b = a++; // b adalah 5, a sekarang 6
+int c = ++a; // a adalah 7, c sekarang 7
+```
+
 </Callout>
 
 ## Operator Perbandingan
@@ -118,7 +121,7 @@ String greetingWithName = "Hello, " + name + "!"; // "Hello, Alice!"
 
 ## Prioritas Operator (Precedence)
 
-Prioritas Operator berarti operator mana yang dievaluasi terlebih dahulu dalam satu baris kode. Anggap saja seperti BODMAS/PEMDAS dalam matematika!
+Operator Precedence means which operator gets evaluated first in an line of code. Anggap saja seperti BODMAS/PEMDAS dalam matematika!
 
 ```java
 int result = 10 + 5 * 2; // hasilnya 20, bukan 30

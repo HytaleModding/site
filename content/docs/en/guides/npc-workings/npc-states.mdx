@@ -1,0 +1,408 @@
+---
+title: NPC States
+description: The state of matter, or in this case the state of NPCs.
+---
+
+![npc-guide](/assets/guides/tutorial_states0.svg)
+
+# States
+You are in a state now even if you don't know it. You are now `Reading` this right? While reading this you occasionally take a `.Sip` from your trusty cup of coffee.
+
+What does this have to do with **States** you may wonder? Like your life a NPC goes through various states during its lifecycle in Hytale.
+## What is a state?
+In short is a **State** a way of keeping track of what a NPC is doing without requiring setting and reading numbers, instead Hytale does all that *work* for you by translating [human readable](https://en.wikipedia.org/wiki/Human-readable_medium_and_data) text into numbers. This creates a highly efficient system that is a lot less taxing for the game engine to deal with.
+
+The practical usage of **States** is that it makes writing and reading the **Instructions** of a NPC easier. The core of a **State** starts by placing down a **Sensor** with the name of it.
+
+```json
+"Sensor":{
+    "Type":"State",
+    "State":"Idle"
+}
+```
+
+You can make as many **States** as you want but ***REMEMBER*** they all must be **LINKED** together in some way from the **StartState** state. Otherwise your **Role** fails to validate in your JSON file and you will become very sad.
+
+Using the example above this **State** will work if you set `"StartState"` to `"Idle"` in your **Role**. If its not set the default state will be: `"start"`, so make sure to set it to a state that makes sense like `"Idle"`.
+
+```json
+{
+    "StartState":"Idle",
+    "Instructions":[
+        {
+            "Instructions":[
+                {
+                    "Sensor":{
+                        "Type":"State",
+                        "State":"Idle"
+                    },
+                    "Actions":[
+                        {
+                            "Type":"Nothing"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+How does this work? Let's map this to a table with **State transitions**.
+
+|Source|From|To|Trigger|
+|:---:|:---:|:---:|---|
+|**Role**|`"StartState"`|`Idle`|**Start**|
+
+This is valid because the `Idle` is referenced by the `"StartState"` from the **Role**, thus creating a link. Remember there cannot be any *stray* states.
+
+Its great and all, but it lacks transitions to other states. Here is another example with valid transitions between states.
+
+```json
+{
+    "StartState":"Idle",
+    "Instructions":[
+        {
+            "Instructions":[
+                {
+                    "Sensor":{
+                        "Type":"State",
+                        "State":"Idle"
+                    },
+                    "Instructions":[
+                        {
+                            "Sensor":{
+                                "Type": "Player",
+                                "Range": { "Compute": "ViewRange" },
+                                "Filters": [
+                                    {
+                                        "Type": "LineOfSight"
+                                    },
+                                    {
+                                        "Type": "ViewSector",
+                                        "ViewSector": 180
+                                    },
+                                    {
+                                        "Type": "ItemInHand",
+                                        "Items": ["Rock_Stone"]
+                                    }
+                                ]
+                            },
+                            "Actions":[
+                                {
+                                    "Type": "SpawnParticles",
+                                    "Offset": [0, 1, 0],
+                                    "ParticleSystem": "Hearts_Subtle"
+                                },
+                                {
+                                    "Type":"State",
+                                    "State":"Work"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "Sensor":{
+                        "Type":"State",
+                        "State":"Work"
+                    },
+                    "Instructions":[
+                        {
+                            "Sensor":{
+                                "Type": "Player",
+                                "Range": { "Compute": "ViewRange" },
+                                "Filters": [
+                                    {
+                                        "Type": "LineOfSight"
+                                    },
+                                    {
+                                        "Type": "ViewSector",
+                                        "ViewSector": 180
+                                    },
+                                    {
+                                        "Type": "ItemInHand",
+                                        "Items": ["Rock_Stone_Cobble"]
+                                    }
+                                ]
+                            },
+                            "Actions":[
+                                {
+                                    "Type": "SpawnParticles",
+                                    "Offset": [0, 1, 0],
+                                    "ParticleSystem": "Alerted"
+                                },
+                                {
+                                    "Type":"State",
+                                    "State":"Idle"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+The state transitions will look like this with this:
+
+|Source|From|To|Trigger|
+|:---:|:---:|:---:|---|
+|**Role**|`"StartState"`|`Idle`|**Start**|
+|Instruction|`Idle`|`Work`|Player with item in hand: Rock_Stone|
+|Instruction|`Work`|`Idle`|Player with item in hand: Rock_Stone_Cobble|
+
+As you can see from these transitions this makes a complete chain of states where no state is hanging loose. You may have noticed that we use a **Action** of the type `"State"` there, that is how we switch between states in NPCs.
+```json
+{
+    "Type":"State",
+    "State":"Work"
+}
+```
+
+The **Sensor** and **Action** `"State"` are interlinked, and Hytale makes sure of that. A lot goes on in the background to ensure NPCs will not infinitely get stuck in a **State**. Hytale outright refuses you to add or update **Roles** if **States** aren't linked.
+## Sub-states
+The **Sub-state** is like a **State** but its a smaller part of one. By default you enter one even if you haven't defined it. For example if you just go into the **State** of `"Idle"` without defining its **Sub-state** you in fact enter the `"Idle.Default"` **State**. Its more of a convenience feature instead of having to type it in every time you just want to enter the `"Idle"` **State**.
+
+But the main feature of **Sub-states** is that it let you partition states into different tasks you want a NPC to perform. For example you can make a Job driver where the NPC does work and it switches states until it exits it and goes back to being `"Idle"`.
+
+Within a **State** can you set or check what **Sub-state** it has by simply putting `.SubStateName` as its `State`. It is the `.` in the name that determines that it's a `Sub-state` its setting or checking.
+
+> **Checking for sub-state**
+
+```json
+{
+    "Sensor":{
+        "Type":"State",
+        "State":".SubStateName"
+    }
+}
+```
+
+> **Setting a sub-state**
+
+```json
+{
+    "Actions":[
+        {
+            "Type":"State",
+            "State":".SubStateName"
+        }
+    ]
+}
+```
+
+*In the example below the details will be omitted for clarity.*
+
+```json
+{
+    "StartState":"Idle",
+    "Instructions":[
+        {
+            "Instructions":[
+                {
+                    "$Comment":"Timer initialization.",
+                    "Sensor":{
+                        "Type":"Any",
+                        "Once":true
+                    }
+                },
+                {
+                    "$Comment":"Work timer is triggered and we will check if we can do farm work. If we can go to the Farm state.",
+                    "Continue":true,
+                    "Actions":[
+                        {
+                            "Type":"State",
+                            "State":"Farm.Goto"
+                        }
+                    ]
+                },
+                {
+                    "Sensor":{
+                        "Type":"State",
+                        "State":"Idle"
+                    }
+                },
+                {
+                    "$Comment":"Main state of 'Farm' where our logic lies in.",
+                    "Sensor":{
+                        "Type":"State",
+                        "State":"Farm.Goto"
+                    },
+                    "Instructions":[
+                        {
+                            "$Comment":"Perform checks to see if our Farming state fails, and if it does go back to being Idle.",
+                            "Continue":true
+                        },
+                        {
+                            "$Comment":"Go to our designated farming area.",
+                            "Sensor":{
+                                "Type":"State",
+                                "State":".Goto"
+                            },
+                            "Instructions":[
+                                {
+                                    "$Comment":"Reached our destination. Switch to '.Jobdriver' sub-state.",
+                                    "Actions":[
+                                        {
+                                            "Type":"State",
+                                            "State":".Jobdriver"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "$Comment":"Perform farming job until we no longe can.",
+                            "Sensor":{
+                                "Type":"State",
+                                "State":".Jobdriver"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+A example transition table could look this:
+
+|Source|From|To|Trigger|
+|:---:|:---:|:---:|---|
+|**Role**|`"StartState"`|`Idle`|**Start**|
+|Instruction|`Idle`|`Farm.Goto`|Timer for checking Work triggered and we can farm.|
+|Instruction|`Farm.Goto`|`Farm.Jobdriver`|NPC reached target destination.|
+|Instruction|`Farm`|`Idle`|No more farming work to be done.|
+
+Notice how we just went to the `Farm.Goto` **State** immediatly instead of first going to the `Farm` **State**? That is a feature of **Sub-states**. It let you do general logic inside a **State** while doing more fine-grained logic inside a **Sub-state**.
+
+With clever use of **Sub-states** will writing **Instructions** be a lot more enjoyable.
+
+**Note:** `"$Comment"` will be ignored by Hytale when reading the JSON file. Its used for commenting instructions and other things. There is also `"$Todo"` for the same purpose.
+
+## Parent state and JSON components
+If you ever looked into Hytale **Component** files then you will notice they don't use `"State"` **Actions** when setting state. That is because **Components** are special cases. You will need to instead use the type `"ParentState"` to set a **State** from a **Component**.
+
+> **Example from: Component_Instruction_Damage_Check.json**
+
+```json
+"Parameters": {
+    "_ImportStates": [ "Chase", "Search" ]
+}
+```
+
+```json
+{
+    "Type": "ParentState",
+    "State": "Search"
+}
+```
+
+The technical bits is that it uses the `"_ImportStates"` parameter in the **Component** parameters. The actual **State** names you define in the `"_ImportStates"` parameter are aliases or stand-ins for the actual **States** being passed in from the ***outside***. That way you can reuse the **Component** in many **Roles** which all can have different **State** names.
+
+In order to input the stand-in states for the real states you need to **Modify** them by setting the `"_ExportStates"` in the **Component** you **Reference** to inside the **Instruction\\Action\\Sensor**. You need to to input the **States** in the same order as the `"_ImportStates"` define it in the **Component** in order for it to work. The example below helps illustrate how it works.
+
+> **Example from: Template_Livestock.json**
+```json
+{
+    "Reference": "Component_Instruction_Damage_Check",
+    "Modify": {
+        "_ExportStates": [ "Flee.Switch", "Panic" ],
+        "AlertedRange": { "Compute": "AlertedRange" }
+    }
+}
+```
+## State transitions
+In a **Role** can you peform **Actions** between **States**. It is useful for doing things like clearing animations or other utilitarian tasks. CPU intensive **Actions** should be frowned upon because switching **States** may happen fast.
+
+The `"StateTransitions"` property contains conditions and **Actions** to perform *between* **State** transitions.
+
+> **Example from: Template_Livestock.json**
+```json
+{
+    "StateTransitions":[
+        {
+            "$Comment": "Always clear target and reset instructions when going back to idle.",
+            "States": [
+                {
+                    "To": [ "Idle" ],
+                    "From": [ ]
+                }
+            ],
+            "Actions": [
+                {
+                    "Type": "ReleaseTarget"
+                },
+                {
+                    "Type": "ResetInstructions"
+                },
+                {
+                    "Type": "PlayAnimation",
+                    "Slot": "Status"
+                }
+            ]
+        }
+    ]
+}
+```
+
+You may have noticed that `"From"` in `"States"` is empty. That means **from any State**. The same applies to `"To"`. You can define more than one **State** in each if you want to. Like going *from* `Idle` *to* your various jobs like `Farm` & `Mine`.
+
+> **Valid configuration**
+```json
+"States": [
+    {
+        "From": [ "Idle" ],
+        "To": [ ]
+    }
+]
+```
+
+> **Also valid configuration**
+```json
+"States": [
+    {
+        "From": [ ],
+        "To": [ "Idle" ]
+    }
+]
+```
+## Tricks with states
+Using all this knowledge you can do some neat tricks with **States**. You can use **States** as a intermediary evaluator with just the tools provided by Hytale for example. By setting them as a **Sub-state** inside your `Idle` **State** can you cycle through the **Sub-states** in order to do checks when combined with `"InteractionInstructions"` and blocking **Actions**. Hytale does not yet allow you to cancel a blocking **Action** when its running from the outside, so this is where this trick comes in place.
+
+### Case study
+You can study my old **Role** I used for my Little Helpers mod for insights on how it was accomplished. A good starting point is to look for the `.AskTask1` **Sub-state** where the cycle starts. This is before I implemented my own Java **Plugin** code to ease this kind of logic.
+
+**Role JSON:** [Template_Fairy.json](/assets/guides/Template_Fairy.json)
+
+> **From Template_Fairy.json**
+> 
+> In `Idle` **State**
+```json
+"Sensor": {
+    "Type": "State",
+    "State": ".AskTask1"
+}
+```
+> In `"InteractionInstructions"`
+```json
+"Sensor": {
+    "Type":"HasInteracted"
+},
+"Actions": [
+    {
+    "Type":"State",
+    "State":"Idle.AskTask1"
+    }
+]
+```
+
+**Note:** This won't work in Hytale as is because it uses **Plugin** specific **Action & Sensors**. And it uses **Components** that aren't from Hytale either.
+## Limitations
+You can't check for **Sub-states** inside a `"InteractionInstruction"`, so you have to type out the full **State** name with **Sub-state** included.
+
+While **States** are powerful in their simplicity, they don't allow for sub-**Sub-states**. To achieve that you would want to use the **Flag** system with its own **Action** and **Sensor**.

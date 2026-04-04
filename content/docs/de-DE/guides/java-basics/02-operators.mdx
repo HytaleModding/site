@@ -21,13 +21,14 @@ int remainder = a % b;  // Modulo (Rest): 0
 ```
 
 <Callout type="info" title="Hinweis zur Division">
-  Beim Teilen zweier Integer führt Java die sogenannte Integer-Division durch. Dadurch wird der gesamte Dezimalteil verworfen. Zum Beispiel würde `7/2` nicht `3.5`, sondern `3` ergeben.
+Beim Teilen zweier Integer führt Java die sogenannte Integer-Division durch. Dadurch wird der gesamte Dezimalteil verworfen. Zum Beispiel würde `7/2` nicht `3.5`, sondern `3` ergeben.
 
-  ```java
-  int x = 7 / 2;              // 3 (nicht 3.5!) - Integer-Division
-  double y = 7.0 / 2;         // 3.5 - Mindestens ein Wert als double erzeugt ein Ergebnis als double
-  double z = (double) 7 / 2;  // 3.5 - Typumwandlung (Casting) funktioniert auch
-  ```
+```java
+int x = 7 / 2;              // 3 (nicht 3.5!) - Integer-Division
+double y = 7.0 / 2;         // 3.5 - Mindestens ein Wert als double erzeugt ein Ergebnis als double
+double z = (double) 7 / 2;  // 3.5 - Typumwandlung (Casting) funktioniert auch
+```
+
 </Callout>
 
 ### Modulo (%) - Der Rest-Operator
@@ -65,11 +66,13 @@ a--; // Dekrement: a wird wieder 5
 ```
 
 <Callout type="info" title="Unterschied zwischen voran- und nachgestelltem Operator">
-  ```java
-  int a = 5;
-  int b = a++; // b ist 5, a ist jetzt 6
-  int c = ++a; // a ist 7, c ist jetzt auch 7
-  ```
+
+```java
+int a = 5;
+int b = a++; // b ist 5, a ist jetzt 6
+int c = ++a; // a ist 7, c ist jetzt auch 7
+```
+
 </Callout>
 
 ## Vergleichsoperatoren
@@ -119,7 +122,7 @@ String greetingWithName = "Hallo, " + name + "!"; // "Hallo, Alice!
 
 ## Vorrang von Operatoren
 
-Innerhalb einer Code-Zeile ist genau festgelegt, welcher Operator zuerst ausgewertet wird. Es ist wie in Mathe: Erst Klammern, dann Wurzeln/Potenzen. Danach gilt Punktrechnung vor Strichrechnung.
+Operator Precedence means which operator gets evaluated first in an line of code. Es ist wie in Mathe: Erst Klammern, dann Wurzeln/Potenzen. Danach gilt Punktrechnung vor Strichrechnung.
 
 ```java
 int result = 10 + 5 * 2; // Das Ergebnis ist 20, nicht 30.

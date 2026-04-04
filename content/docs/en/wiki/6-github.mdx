@@ -1,0 +1,89 @@
+---
+title: 6 - GitHub Sync
+description: How to sync your wiki documentation from a GitHub repository.
+authors:
+    - name: "Neil Revin"
+      url: "https://itsneil.dev"
+---
+
+## Overview
+
+If your documentation already lives on GitHub, you can sync it directly with your mod wiki.
+Changes pushed to your repository will automatically appear on the site — no manual updates needed.
+
+<Callout type="warning">
+  Once GitHub sync is enabled, the built-in editor will be disabled.
+  All edits must be made in your repository.
+</Callout>
+
+## Setting up
+
+Go to your mod settings and scroll down to **GitHub Repository URL**.
+Paste your repository link and save.
+
+If your documentation is inside a subfolder, set the path in **Repository Path**.
+If the entire repository is documentation, leave this field empty.
+
+## Repository structure
+
+Your repository should contain `.md` files at the root of your documentation folder:
+```
+my-repo/
+└── docs/
+    ├── intro.md
+    ├── installation.md
+    └── usage.md
+```
+
+Each file becomes a page on your wiki. The filename (without `.md`) is used as the page slug.
+
+## Frontmatter
+
+You can let our software know how you would like to configure and show your pages via the Frontmatter on all Markdown (.md) files. The Frontmatter must be at the very beginning of your files.
+
+Here is a table of available fields:
+
+| Field | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| title | string | No | Derived from filename | Override the page title. |
+| order | integer | No | Position in the file list | Sort among siblings (lower = appears first) |
+| published | boolean | No | false | Whether the page is published. |
+| draft | boolean | No | false | Whether the page is a draft. |
+
+### Example
+
+```md
+---
+title: "Introduction"
+order: 1
+published: true
+draft: false
+---
+
+# Introduction
+```
+
+## Categorys and Hierarchy
+
+If you want to make children pages under a page, you need to create a folder. If you want the parent page to have contents, you can make a file named `index.md` and put the content inside it. The rest of the pages in that folder will be children of the folder.
+
+If you want to create a category and do not want content on the parent page, you can make a `meta.json` file which will let you modify the title of the category, etc.
+
+### Example
+
+```json
+{
+  "title": "My Category",
+  "published": true
+}
+```
+
+
+## Updating documentation
+
+Push changes to your repository as usual — the wiki will update automatically.
+```bash
+git add .
+git commit -m "Update documentation"
+git push
+```

@@ -4,7 +4,9 @@
     "title": "Hytale Modding",
     "documentation": "Dokumentācija",
     "sponsors": "Sponsori",
-    "search": "Meklēt"
+    "wiki": "Wiki",
+    "search": "Meklēt",
+    "grants": "Grants"
   },
   "home": {
     "title": "#1 Resurss Hytale Modificēšanas {flipwords}",
@@ -26,6 +28,9 @@
       "seconds": "s"
     },
     "hytaleReleased": "Hytale ir iznācis!"
+  },
+  "showcaseItems": {
+    "madeBy": "by {author}"
   },
   "sponsors": {
     "title": "Atbalsti Mūs",
@@ -88,6 +93,17 @@
     },
     "community_projects": {
       "title": "Kopienas Projekti"
+    }
+  },
+  "callout": {
+    "defaultTitles": {
+      "info": "Info",
+      "warning": "Warning",
+      "danger": "Danger",
+      "success": "Success",
+      "lvl_beginner": "Level: Beginner",
+      "lvl_intermediate": "Level: Intermediate",
+      "lvl_advanced": "Level: Advanced"
     }
   }
 }

@@ -38,23 +38,24 @@ while (condizione) {
 ```
 
 <Callout type="warning" title="Cicli Infiniti">
-  Assicurati sempre che la condizione del ciclo diventi falsa, o il tuo programma verrà eseguito per sempre!
+Assicurati sempre che la condizione del ciclo diventi falsa, o il tuo programma verrà eseguito per sempre!
 
-  ```java tab="Bad Example"
-  int x = 0;
-  while (x < 10) {
-      System.out.println("Bloccato!");
-      // Hai dimenticato di incrementare x!
-  }
-  ```
+```java tab="Bad Example"
+int x = 0;
+while (x < 10) {
+    System.out.println("Bloccato!");
+    // Hai dimenticato di incrementare x!
+}
+```
 
-  ```java tab="Good Example"
-  int x = 0;
-  while (x < 10) {
-      System.out.println("Valore: " + x);
-      x++; // Questo incrementa x! // [!code ++]
-  }
-  ```
+```java tab="Good Example"
+int x = 0;
+while (x < 10) {
+    System.out.println("Valore: " + x);
+    x++; // Questo incrementa x! // [!code ++]
+}
+```
+
 </Callout>
 
 ## Ciclo Do-While
@@ -97,16 +98,18 @@ for (inizializzazione; condizione; aggiornamento) {
 ```
 
 <Callout type="info" title="Parti del Ciclo For">
-  ```java
-  for (int i = 0; i < 10; i++) {
-  //   ^         ^        ^
-  //   Inizio    Fine    Step
-  }
-  ```
 
-  * **Inizializzazione**: int i = 0 - Viene eseguito una volta all'inizio
-  * **Condizione**: i < 10 - Verificata prima di ogni ciclo
-  * **Aggiornamento**: i++ - Eseguito dopo ogni loop
+```java
+for (int i = 0; i < 10; i++) {
+//   ^         ^        ^
+//   Inizio    Fine    Step
+}
+```
+
+* **Inizializzazione**: int i = 0 - Viene eseguito una volta all'inizio
+* **Condizione**: i < 10 - Verificata prima di ogni ciclo
+* **Aggiornamento**: i++ - Eseguito dopo ogni loop
+
 </Callout>
 
 ## Istruzione Break
@@ -150,16 +153,14 @@ for (int i = 1; i <= 3; i++) {
 ```
 
 <Callout type="warning" title="Prestazioni dei Cicli Annidati">
-  Fai attenzione con i cicli annidati! Possono rallentare la tua mod in modo significativo.
-
-  ```java
-  // Questo viene eseguito 1.000.000 di volte!
-  for (int i = 0; i < 1000; i++) {
-      for (int j = 0; j < 1000; j++) {
-          //Codice qui
-      }
-  }
-  ```
-
-  Evita di annidare troppi cicli quando devi elaborare grandi quantità di dati.
+Fai attenzione con i cicli annidati! Possono rallentare la tua mod in modo significativo.
+```java
+// Questo viene eseguito 1.000.000 di volte!
+for (int i = 0; i < 1000; i++) {
+    for (int j = 0; j < 1000; j++) {
+        //Codice qui
+    }
+}
+```
+Evita di annidare troppi cicli quando devi elaborare grandi quantità di dati.
 </Callout>

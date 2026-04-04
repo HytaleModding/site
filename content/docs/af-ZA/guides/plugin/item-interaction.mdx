@@ -16,31 +16,28 @@ Creating a custom item follows the same setup than the [Creating custom blocks](
 2. Create the following folder structure:
 
 <Files>
-  <Folder name="resources" defaultOpen>
-    <Folder name="Server" defaultOpen>
-      <Folder name="Item" defaultOpen>
-        <Folder name="Items" defaultOpen>
-          <File name="my_new_item.json" />
+    <Folder name="resources" defaultOpen>
+        <Folder name="Server" defaultOpen>
+            <Folder name="Item" defaultOpen>
+                <Folder name="Items" defaultOpen>
+                    <File name="my_new_item.json" />
+                </Folder>
+            </Folder>
         </Folder>
-      </Folder>
+        <Folder name="Common" defaultOpen>
+            <Folder name="Icons" defaultOpen>
+                <Folder name="ItemsGenerated" defaultOpen>
+                    <File name="my_new_item_icon.png" />
+                </Folder>
+            </Folder>
+            <Folder name="Items" defaultOpen>
+                <Folder name="my_new_item" defaultOpen>
+                    <File name="model.blockymodel" />
+                    <File name="model_texture.png" />
+                </Folder>
+            </Folder>
+        </Folder>
     </Folder>
-
-    <Folder name="Common" defaultOpen>
-      <Folder name="Icons" defaultOpen>
-        <Folder name="ItemsGenerated" defaultOpen>
-          <File name="my_new_item_icon.png" />
-        </Folder>
-      </Folder>
-
-      <Folder name="Items" defaultOpen>
-        <Folder name="my_new_item" defaultOpen>
-          <File name="model.blockymodel" />
-
-          <File name="model_texture.png" />
-        </Folder>
-      </Folder>
-    </Folder>
-  </Folder>
 </Files>
 
 The following files are relevant for the item:
@@ -133,8 +130,8 @@ public class MyCustomInteraction extends SimpleInstantInteraction {
 What is missing is a custom CODEC to link the interaction to the item.
 
 <Callout type="info">
-  Each variable you want to store in your component must have its own Codec field defined in the BuilderCodec.
-  For more information on how to create custom Codecs, check out the [ECS Codec Guide](../ecs/hytale-ecs-theory#codec).
+Each variable you want to store in your component must have its own Codec field defined in the BuilderCodec.
+For more information on how to create custom Codecs, check out the [ECS Codec Guide](../ecs/hytale-ecs-theory#codec).
 </Callout>
 
 ```java
