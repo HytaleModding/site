@@ -17,7 +17,7 @@ import { SponsorButton } from "../../../components/support-button";
 import { ViewTransition } from "react";
 import { ShowcaseMarquee } from "@/components/showcase";
 import { Separator } from "@/components/ui/separator";
-import { DynamicLink } from 'fumadocs-core/dynamic-link';
+import { DynamicLink } from "fumadocs-core/dynamic-link";
 
 export default function HomePage() {
   const params = useParams();
@@ -98,10 +98,11 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
-          <p className="text-sm">Scroll down to learn more</p>
+        {/* TODO: decide if we're going to keep this */}
+        {/* <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
+          <p className="text-sm">Scroll down for more</p>
           <ArrowDownCircleIcon />
-        </div>
+        </div> */}
       </div>
 
       <div className="w-full pb-16">
