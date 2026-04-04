@@ -21,27 +21,24 @@ export function localizePageTree(
     }
   }
 
-  function getTranslation(key: string): string {
-    const parts = key.split(".");
-    let value = translations;
+  function getTranslation(
+    key: string,
+    translationMap: Record<string, string | Object>,
+  ): string | undefined {
+    const keys = key.split(".");
+    let translated: string | Record<string, string | Object> = translationMap;
 
-    for (const part of parts) {
-      if (value && typeof value === "object" && part in value) {
-        value = (value as Record<string, any>)[part];
-      } else {
-        value = FallbackLanguage;
-        for (const fallbackPart of parts) {
-          if (value && typeof value === "object" && fallbackPart in value) {
-            value = (value as Record<string, any>)[fallbackPart];
-          } else {
-            return key;
-          }
-        }
-        break;
-      }
+    for (let i = 0; i < keys.length; i++) {
+      if (translated == null || typeof translated !== "object")
+        return undefined;
+      translated = translated[keys[i]] as
+        | string
+        | Record<string, string | Object>;
     }
 
-    return typeof value === "string" ? value : key;
+    if (typeof translated !== "string") return undefined;
+
+    return translated;
   }
 
   function translateString(text: string): string {
@@ -49,16 +46,23 @@ export function localizePageTree(
 
     const match = text.match(/^\{(.+)\}$/);
     if (match) {
-      return getTranslation(match[1]);
+      let translation = getTranslation(match[1], translations);
+      if (translation) return translation;
+
+      console.debug(`key '{${match[1]}}' not found in '${lang}'`);
+      translation = getTranslation(match[1], FallbackLanguage);
+      if (translation) return translation;
+
+      console.warn(`key '{${match[1]}}' not found in '${lang}' and EN`);
+      return text;
     }
+
     return text;
   }
 
   function traverseNode<TraversableNode extends Node | Node[] | Root>(
     node: TraversableNode,
-  ): TraversableNode {
-    if (!node) return node;
-
+  ) {
     function traverseChildren(children: Node[]) {
       for (let i = 0; i < children.length; i++) {
         traverseNode(children[i]);
@@ -69,7 +73,7 @@ export function localizePageTree(
       for (let i = 0; i < node.length; i++) {
         traverseNode(node[i]);
       }
-      return node;
+      return;
     }
 
     if ("name" in node && typeof node.name === "string")
@@ -78,14 +82,14 @@ export function localizePageTree(
     if ("title" in node && typeof node.title === "string")
       node.title = translateString(node.title);
 
-    if ("index" in node && node.index && typeof node.index === "object")
+    if ("index" in node && typeof node.index === "object")
       traverseNode(node.index);
 
     if ("children" in node && Array.isArray(node.children))
       traverseChildren(node.children);
-
-    return node;
   }
 
-  return traverseNode(tree);
+  traverseNode(tree);
+
+  return tree;
 }
