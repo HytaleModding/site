@@ -12,12 +12,15 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useMessages } from "@/lib/hooks/useMessages";
 
-import { DiscordButton } from "../../../components/discord-button";
-import { SponsorButton } from "../../../components/support-button";
+import { DiscordButton } from "@/components/discord-button";
+import { SponsorButton } from "@/components/support-button";
 import { ViewTransition } from "react";
 import { ShowcaseMarquee } from "@/components/showcase";
 import { Separator } from "@/components/ui/separator";
-import { DynamicLink } from 'fumadocs-core/dynamic-link';
+import { DynamicLink } from "fumadocs-core/dynamic-link";
+import { CommunitySection } from "./community";
+import { UtilsSection } from "./utils";
+import { ProgramsSection } from "./programs";
 
 export default function HomePage() {
   const params = useParams();
@@ -30,7 +33,7 @@ export default function HomePage() {
         <div className="flex h-full w-full max-w-5xl flex-col items-center justify-around gap-6 space-y-8 text-center">
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
-              {/*<div className="relative mx-auto w-fit max-w-full">
+              {/* <div className="relative mx-auto w-fit max-w-full">
                 <GlowEffect
                   colors={["#FF5733", "#33FF57", "#3357FF", "#F1C40F"]}
                   mode="flowHorizontal"
@@ -40,14 +43,14 @@ export default function HomePage() {
                 />
                 <div className="bg-background hover:bg-background/85 relative mx-4 rounded-lg p-2 text-sm font-medium shadow-md transition-colors duration-200 ease-in-out">
                     <Link
-                    href={"https://hytalemodjam.com"}
+                    href={"https://hytalemodding.dev/en/grants"}
                     className="flex items-center justify-center gap-2 text-wrap"
                     >
-                    Hytale x HytaleModding ModJam is live!{" "}
+                    We launched the HytaleModding x BisectHosting Grant Program!{" "}
                     <ArrowRightIcon className="h-4 w-4" />
                     </Link>
                 </div>
-              </div>*/}
+              </div> */}
               <h1 className="text-4xl font-semibold text-balance md:text-5xl">
                 <div>{messages.home.title}</div>
               </h1>
@@ -60,15 +63,6 @@ export default function HomePage() {
           <div className="flex w-fit flex-col items-center gap-4">
             <div className="flex flex-wrap justify-center gap-4 px-4">
               <DiscordButton />
-              <SponsorButton />
-            </div>
-
-            <div className="flex w-full items-center gap-2">
-              <Separator className="flex-1" />
-              <p className="text-muted-foreground text-sm">
-                ... or use our tools below!
-              </p>
-              <Separator className="flex-1" />
             </div>
 
             <div className="flex flex-wrap justify-center gap-4 px-4">
@@ -98,15 +92,29 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
-          <p className="text-sm">Scroll down to learn more</p>
+        {/* TODO: decide if we're going to keep this */}
+        {/* <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
+          <p className="text-sm">Scroll down for more</p>
           <ArrowDownCircleIcon />
-        </div>
+        </div> */}
+        {/* TODO: decide if we're going to keep this */}
+        {/* <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
+          <p className="text-sm">Scroll down for more</p>
+          <ArrowDownCircleIcon />
+        </div> */}
       </div>
 
       <div className="w-full pb-16">
         <ShowcaseMarquee />
       </div>
+
+      <CommunitySection />
+      <Separator />
+
+      <UtilsSection />
+      <Separator />
+
+      <ProgramsSection />
     </div>
   );
 }

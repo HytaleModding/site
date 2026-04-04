@@ -8,7 +8,7 @@ import {
   useState,
   ViewTransition,
 } from "react";
-import { getSponsors } from "./actions";
+import { getSponsors } from "../app/[lang]/(home)/actions";
 import { useMessages } from "@/lib/hooks/useMessages";
 import Link from "next/link";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -83,11 +83,11 @@ export function SponsorButton() {
   }, []);
 
   return (
-    <Button className="relative mb-4" asChild>
+    <Button className="relative" asChild variant={"secondary"}>
       <Link href={`/${locale}/sponsors`}>
         <HeartHandshakeIcon />
         {messages.misc.supportUs}
-        <div className="absolute top-full mt-2 flex -space-x-2">
+        {/* <div className="absolute top-full mt-2 flex -space-x-2">
           {isError ? (
             <p className="text-destructive text-sm">Failed to load sponsors</p>
           ) : (
@@ -135,7 +135,7 @@ export function SponsorButton() {
                 )}
             </AnimatePresence>
           )}
-        </div>
+        </div> */}
       </Link>
     </Button>
   );

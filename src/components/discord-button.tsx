@@ -3,36 +3,36 @@ import { FaDiscord } from "react-icons/fa6";
 import { CircleUserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { startTransition, useEffect, useState, ViewTransition } from "react";
-import { getDiscordStats } from "./actions";
+import { getDiscordStats } from "../app/[lang]/(home)/actions";
 import { useMessages } from "@/lib/hooks/useMessages";
 import Link from "next/link";
 
 export function DiscordButton() {
   const messages = useMessages();
-  const [stats, setStats] = useState<{
-    active_members: number;
-    total_members: number;
-  } | null>(null);
-  const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
+  // const [stats, setStats] = useState<{
+  //   active_members: number;
+  //   total_members: number;
+  // } | null>(null);
+  // const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
 
-  useEffect(() => {
-    getDiscordStats()
-      .then((data) => {
-        setStats(data);
-        startTransition(() => setState("loaded"));
-      })
-      .catch((error) => {
-        console.error("Failed to fetch Discord stats:", error);
-        startTransition(() => setState("error"));
-      });
-  }, []);
+  // useEffect(() => {
+  //   getDiscordStats()
+  //     .then((data) => {
+  //       setStats(data);
+  //       startTransition(() => setState("loaded"));
+  //     })
+  //     .catch((error) => {
+  //       console.error("Failed to fetch Discord stats:", error);
+  //       startTransition(() => setState("error"));
+  //     });
+  // }, []);
 
   return (
-    <Button className="relative mb-4" asChild>
+    <Button className="relative" asChild variant={"primary"}>
       <Link href="https://discord.gg/hytalemodding" target="_blank">
         <FaDiscord />
         {messages.home.discord}
-        <div className="absolute top-full mt-2 flex">
+        {/* <div className="absolute top-full mt-2 flex">
           <ViewTransition>
             {state === "loading" ? (
               <p className="text-muted-foreground text-sm">
@@ -52,7 +52,7 @@ export function DiscordButton() {
               <p className="text-destructive text-sm">Failed to load stats</p>
             )}
           </ViewTransition>
-        </div>
+        </div> */}
       </Link>
     </Button>
   );
