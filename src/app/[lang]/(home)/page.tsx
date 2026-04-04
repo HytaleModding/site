@@ -1,351 +1,33 @@
 "use client";
 import {
-  ExternalLinkIcon,
   BookIcon,
   MessageSquareIcon,
-  ArrowUpRightIcon,
-  ArrowRightIcon,
+  SquarePenIcon,
+  ArrowDownCircleIcon,
+  CoinsIcon,
 } from "lucide-react";
-import { FlipWords } from "@/components/ui/flip-words";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Marquee,
-  MarqueeContent,
-  MarqueeFade,
-  MarqueeItem,
-} from "@/components/ui/shadcn-io/marquee";
-import Image, { StaticImageData } from "next/image";
-import { localizeHref } from "@/lib/locale";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useMessages } from "@/lib/hooks/useMessages";
 
-import WulfrumProsthesis from "./(showcaseImages)/wulfrum_prosthesis.png";
-import Melodium from "./(showcaseImages)/Melodium.gif";
-import GaleWivern from "./(showcaseImages)/gale_wivern.gif";
-import WulfrumArmor from "./(showcaseImages)/Wulfrum_Armor.gif";
-import ElectricMotor from "./(showcaseImages)/HyEnergy_Electric_Motor.gif";
-import WulfrumTriangle from "./(showcaseImages)/Wulfrum_triangle.gif";
-import MagicCircleGust from "./(showcaseImages)/MagicCircleGust.gif";
-import Shroomie from "./(showcaseImages)/Shroomie.gif";
-import Froggy from "./(showcaseImages)/Froggy.gif";
-import Sanguivar from "./(showcaseImages)/Sanguivar.gif";
-import VoileBanner from "./(showcaseImages)/voile.png";
-import MushroomLizard from "./(showcaseImages)/MushroomLizard.png";
-import AlecsTamework from "./(showcaseImages)/AlecsTamework.png";
-import Hexcode from "./(showcaseImages)/Hexcode.png";
-import HyYap from "./(showcaseImages)/HyYap.png";
-import { DiscordButton } from "./discord-button";
-import { SponsorButton } from "./support-button";
-import { GitInfoButton } from "@/components/git-info-button";
-import { useState, ViewTransition, useMemo } from "react";
-import { GlowEffect } from "@/components/ui/glow-effect";
-
-type ProjectType = "art" | "website" | "server" | "mod";
-
-const RELEASE_DATE = new Date("2026-01-13T15:00:00.000Z");
-
-interface ShowcaseItem {
-  title: string;
-  author: string;
-  image?: StaticImageData;
-  logo?: StaticImageData;
-  banner?: StaticImageData;
-  link: string;
-  type: ProjectType;
-  description?: string;
-}
-
-const showcaseItems: ShowcaseItem[] = [
-  {
-    title: "Hynergy: Electric Motor",
-    author: "seyager",
-    image: ElectricMotor,
-    link: "https://x.com/SeyagerYT",
-    type: "art",
-  },
-  {
-    title: "Hylamity: Wulfrum Prosthesis",
-    author: "slader._.",
-    image: WulfrumProsthesis,
-    link: "https://discord.gg/f2fMKYnRqR",
-    type: "art",
-  },
-  {
-    title: "Soundscape: Melodium Chunk",
-    author: "44Hydras",
-    image: Melodium,
-    link: "https://discord.com/users/197065442479702016",
-    type: "art",
-  },
-  {
-    title: "Gale Wivern",
-    author: "Nicolas | Tourne_Vis",
-    image: GaleWivern,
-    link: "https://x.com/TourneVis_MC",
-    type: "art",
-  },
-  {
-    title: "Hylamity: Wulfrum Armor",
-    author: "slader._.",
-    image: WulfrumArmor,
-    link: "https://discord.gg/f2fMKYnRqR",
-    type: "art",
-  },
-  {
-    title: "Hylamity: Wulfrum Triangle",
-    author: "slader._.",
-    image: WulfrumTriangle,
-    link: "https://discord.gg/f2fMKYnRqR",
-    type: "art",
-  },
-  {
-    title: "Saqvobase's Spellcasting: Magic Circle - Gust",
-    author: "Saqvobase",
-    image: MagicCircleGust,
-    link: "",
-    type: "art",
-  },
-  {
-    title: "Shroomie",
-    author: "Miyako Hikari",
-    image: Shroomie,
-    link: "",
-    type: "art",
-  },
-  {
-    title: "Froggy",
-    author: "Unknown Knight",
-    image: Froggy,
-    link: "",
-    type: "art",
-  },
-  {
-    title: "Voile",
-    author: "mayuna",
-    image: VoileBanner,
-    link: "https://www.curseforge.com/hytale/mods/docs",
-    type: "art",
-  },
-  {
-    title: "Mushroom Lizard",
-    author: "lulu",
-    image: MushroomLizard,
-    link: "https://discord.gg/hytalemodding",
-    type: "art",
-  },
-  {
-    title: "Alec's Tamework",
-    author: "Alec",
-    image: AlecsTamework,
-    link: "https://www.curseforge.com/hytale/mods/alecs-tamework",
-    type: "art",
-  },
-  {
-    title: "Sanguivar",
-    author: "lulu",
-    image: Sanguivar,
-    link: "https://discord.gg/hytalemodding",
-    type: "art"
-  },
-  {
-    title: "Hexcode",
-    author: "Riprod",
-    image: Hexcode,
-    link: "https://discord.gg/hytalemodding",
-    type: "art"
-  },
-  {
-    title: "HyYap",
-    author: "Azim",
-    image: HyYap,
-    link: "https://discord.gg/hytalemodding",
-    type: "art"
-  }
-];
-
-const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
-  const hasImage = item.image;
-  const hasLogo = item.logo;
-  const hasBanner = item.banner;
-  const messages = useMessages();
-
-  return (
-    <Card className="relative h-64 w-96 overflow-hidden">
-      <CardContent className="flex h-full items-center justify-center p-0">
-        {hasImage ? (
-          <>
-            <div className="from-card absolute z-20 flex size-full items-end bg-linear-to-t from-15% to-transparent to-30% p-6">
-              <div className="flex flex-1 flex-col">
-                <h3 className="z-20 line-clamp-2 text-xl font-bold">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground z-20 text-base">
-                  {messages.showcaseItems.madeBy.replace(
-                    "{author}",
-                    item.author,
-                  )}
-                </p>
-                {item.description && (
-                  <p className="text-muted-foreground z-20 mt-1 line-clamp-2 text-sm">
-                    {item.description}
-                  </p>
-                )}
-              </div>
-              <Button
-                size="default"
-                asChild
-                className="bg-background/90 text-foreground hover:bg-background ml-3"
-              >
-                <Link
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLinkIcon className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-            <Image
-              src={hasImage}
-              alt={item.title}
-              className="absolute size-full object-cover opacity-30 blur-sm"
-              fill
-            />
-            <div className="z-10 flex size-full items-center justify-center">
-              <Image
-                src={hasImage}
-                alt={item.title}
-                className="h-full w-auto overflow-hidden object-contain"
-                fill
-              />
-            </div>
-          </>
-        ) : hasBanner ? (
-          <>
-            <div className="from-card absolute z-20 flex size-full items-end bg-linear-to-t from-25% to-transparent to-50% p-6">
-              <div className="flex flex-1 flex-col">
-                {hasLogo && (
-                  <div className="mb-2">
-                    <Image
-                      src={hasLogo}
-                      alt={`${item.title} logo`}
-                      className="h-8 w-8 rounded object-contain"
-                      width={32}
-                      height={32}
-                    />
-                  </div>
-                )}
-                <h3 className="z-20 line-clamp-2 text-xl font-bold">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground z-20 text-base">
-                  {item.author}
-                </p>
-                {item.description && (
-                  <p className="text-muted-foreground z-20 mt-1 line-clamp-2 text-sm">
-                    {item.description}
-                  </p>
-                )}
-              </div>
-              <Button
-                size="default"
-                asChild
-                className="bg-background/90 text-foreground hover:bg-background ml-3"
-              >
-                <Link
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLinkIcon className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-            <Image
-              src={hasBanner}
-              alt={item.title}
-              className="absolute size-full object-cover"
-              fill
-            />
-          </>
-        ) : (
-          <div className="flex h-full w-full flex-col justify-between p-6">
-            <div className="flex flex-1 flex-col justify-center">
-              {hasLogo && (
-                <div className="mb-4 flex justify-center">
-                  <Image
-                    src={hasLogo}
-                    alt={`${item.title} logo`}
-                    className="h-16 w-16 rounded-lg object-contain"
-                    width={64}
-                    height={64}
-                  />
-                </div>
-              )}
-              <h3 className="mb-2 line-clamp-2 text-center text-xl font-bold">
-                {item.title}
-              </h3>
-              <p className="text-muted-foreground mb-3 text-center text-base">
-                {item.author}
-              </p>
-              {item.description && (
-                <p className="text-muted-foreground line-clamp-4 text-center text-sm">
-                  {item.description}
-                </p>
-              )}
-            </div>
-            <div className="flex justify-center pt-4">
-              <Button size="default" asChild>
-                <Link
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLinkIcon className="mr-2 h-4 w-4" />
-                  Visit
-                </Link>
-              </Button>
-            </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  );
-};
+import { DiscordButton } from "../../../components/discord-button";
+import { SponsorButton } from "../../../components/support-button";
+import { ViewTransition } from "react";
+import { ShowcaseMarquee } from "@/components/showcase";
+import { Separator } from "@/components/ui/separator";
+import { DynamicLink } from 'fumadocs-core/dynamic-link';
 
 export default function HomePage() {
   const params = useParams();
   const messages = useMessages();
 
-  const [repeatedItems] = useState(() => {
-    const shuffledItems = [...showcaseItems].sort(() => Math.random() - 0.5);
-    return [...shuffledItems, ...shuffledItems, ...shuffledItems];
-  });
-
   return (
-    <div className="relative flex flex-1 flex-col overflow-hidden">
+    <div className="flex flex-1 flex-col">
       <Spotlight />
-      <GitInfoButton />
-      {/* <div className="absolute top-4 right-4 z-10 max-w-xs">
-        <p className="text-muted-foreground mb-2 text-right text-xs">
-          Proudly sponsored by
-        </p>
-        <div className="flex justify-end">
-          <Image
-            src="/branding/logo-light-348.png"
-            alt="Sponsor Logo"
-            width={40}
-            height={20}
-            className="object-contain"
-          />
-        </div>
-      </div> */}
-
-      <div className="container mx-auto flex flex-1 flex-col items-center justify-center px-4 py-8 md:px-12">
-        <div className="w-full max-w-5xl space-y-8 pt-16 text-center md:pt-0">
+      <div className="relative container mx-auto flex h-192 max-h-[calc(100vh-12rem)] min-h-fit flex-col items-center justify-center px-4 py-32 md:px-12">
+        <div className="flex h-full w-full max-w-5xl flex-col items-center justify-around gap-6 space-y-8 text-center">
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
               {/* <div className="relative mx-auto w-fit max-w-full">
@@ -367,65 +49,63 @@ export default function HomePage() {
                 </div>
               </div> */}
               <h1 className="text-4xl font-semibold text-balance md:text-5xl">
-                <div>{messages.home.title.split("{flipwords}")[0]}</div>
-                <div>
-                  <FlipWords words={messages.home.flipwords} />
-                </div>
-                <div>{messages.home.title.split("{flipwords}")[1]}</div>
+                <div>{messages.home.title}</div>
               </h1>
               <h2 className="text-muted-foreground text-lg text-balance md:text-xl">
                 {messages.home.description}
               </h2>
             </div>
-
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="flex flex-wrap justify-center gap-4">
-                <Button asChild>
-                  <Link href={localizeHref("/docs", params.lang?.toString())}>
-                    <BookIcon /> {messages.home.documentation}
-                  </Link>
-                </Button>
-                <Button asChild>
-                  <Link
-                    href="https://forum.hytalemodding.dev"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <MessageSquareIcon /> {messages.home.forum}{" "}
-                    <ExternalLinkIcon />
-                  </Link>
-                </Button>
-              </div>
-              <div className="flex flex-wrap justify-center gap-4">
-                <DiscordButton />
-                <SponsorButton />
-              </div>
-            </div>
           </ViewTransition>
+
+          <div className="flex w-fit flex-col items-center gap-4">
+            <div className="flex flex-wrap justify-center gap-4 px-4">
+              <DiscordButton />
+              <SponsorButton />
+            </div>
+
+            <div className="flex w-full items-center gap-2">
+              <Separator className="flex-1" />
+              <p className="text-muted-foreground text-sm">
+                ... or use our tools below!
+              </p>
+              <Separator className="flex-1" />
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-4 px-4">
+              <Button asChild>
+                <DynamicLink href="/[lang]/docs">
+                  <BookIcon /> {messages.home.documentation}
+                </DynamicLink>
+              </Button>
+              <Button asChild>
+                <Link href="https://wiki.hytalemodding.dev" target="_blank">
+                  <SquarePenIcon />
+                  Wiki
+                </Link>
+              </Button>
+              <Button asChild>
+                <Link href="https://forum.hytalemodding.dev" target="_blank">
+                  <MessageSquareIcon />
+                  {messages.home.forum}
+                </Link>
+              </Button>
+              <Button asChild>
+                <DynamicLink href="/[lang]/grants">
+                  <CoinsIcon />
+                  Grant Program
+                </DynamicLink>
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
+          <p className="text-sm">Scroll down to learn more</p>
+          <ArrowDownCircleIcon />
         </div>
       </div>
 
-      <div className="mt-auto mb-8 w-full py-8">
-        <Marquee className="h-64 w-full">
-          <MarqueeFade side="left" className="w-12" />
-          <MarqueeContent speed={200} autoFill={false}>
-            {repeatedItems.map((item, index) => (
-              <MarqueeItem key={`${item.title}-${index}`} className="mx-2">
-                <ShowcaseCard item={item} />
-              </MarqueeItem>
-            ))}
-          </MarqueeContent>
-          <MarqueeFade side="right" className="w-12" />
-        </Marquee>
-
-        {/* <div className="mt-6 flex justify-center">
-            <Button asChild>
-              <Link href={params?.lang?.toString() + "/projects"}>
-                <ArrowUpRightIcon className="mr-2 h-4 w-4" />
-                View More Projects
-              </Link>
-            </Button>
-          </div> */}
+      <div className="w-full pb-16">
+        <ShowcaseMarquee />
       </div>
     </div>
   );
