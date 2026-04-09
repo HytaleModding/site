@@ -65,10 +65,6 @@ export function baseOptions(
         active: "nested-url",
       },
       {
-        text: messages.nav.sponsors,
-        url: `/${locale}/sponsors`,
-      },
-      {
         text: messages.nav.wiki,
         url: "https://wiki.hytalemodding.dev",
       },
@@ -79,6 +75,14 @@ export function baseOptions(
       {
         text: messages.nav.blogs ?? "Blogs",
         url: "/news",
+      },
+      {
+        text: messages.nav.forum,
+        url: "https://forum.hytalemodding.dev",
+      },
+      {
+        text: messages.nav.sponsors,
+        url: `/${locale}/sponsors`,
       },
     );
   }
