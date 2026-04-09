@@ -83,7 +83,7 @@ export function SponsorButton() {
   }, []);
 
   return (
-    <Button className="relative" asChild variant={"secondary"}>
+    <Button className="relative" asChild>
       <Link href={`/${locale}/sponsors`}>
         <HeartHandshakeIcon />
         {messages.misc.supportUs}

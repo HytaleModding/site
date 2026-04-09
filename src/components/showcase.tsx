@@ -38,6 +38,7 @@ interface ShowcaseItem {
   link: string;
   type: ProjectType;
   description?: string;
+  unoptimized?: boolean;
 }
 
 const showcaseItems: ShowcaseItem[] = [
@@ -61,6 +62,7 @@ const showcaseItems: ShowcaseItem[] = [
     image: Melodium,
     link: "https://discord.com/users/197065442479702016",
     type: "art",
+    unoptimized: true,
   },
   {
     title: "Gale Wivern",
@@ -68,6 +70,7 @@ const showcaseItems: ShowcaseItem[] = [
     image: GaleWivern,
     link: "https://x.com/TourneVis_MC",
     type: "art",
+    unoptimized: true,
   },
   {
     title: "Hylamity: Wulfrum Armor",
@@ -75,6 +78,7 @@ const showcaseItems: ShowcaseItem[] = [
     image: WulfrumArmor,
     link: "https://discord.gg/f2fMKYnRqR",
     type: "art",
+    unoptimized: true,
   },
   {
     title: "Hylamity: Wulfrum Triangle",
@@ -82,6 +86,7 @@ const showcaseItems: ShowcaseItem[] = [
     image: WulfrumTriangle,
     link: "https://discord.gg/f2fMKYnRqR",
     type: "art",
+    unoptimized: true,
   },
   {
     title: "Saqvobase's Spellcasting: Magic Circle - Gust",
@@ -89,6 +94,7 @@ const showcaseItems: ShowcaseItem[] = [
     image: MagicCircleGust,
     link: "",
     type: "art",
+    unoptimized: true,
   },
   {
     title: "Shroomie",
@@ -96,6 +102,7 @@ const showcaseItems: ShowcaseItem[] = [
     image: Shroomie,
     link: "",
     type: "art",
+    unoptimized: true,
   },
   {
     title: "Froggy",
@@ -103,6 +110,7 @@ const showcaseItems: ShowcaseItem[] = [
     image: Froggy,
     link: "",
     type: "art",
+    unoptimized: true,
   },
   {
     title: "Voile",
@@ -188,6 +196,7 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
             alt={item.title}
             className="h-full w-auto overflow-hidden object-contain object-top"
             fill
+            unoptimized={item.unoptimized}
           />
         </div>
       </CardContent>

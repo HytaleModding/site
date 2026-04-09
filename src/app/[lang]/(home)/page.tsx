@@ -18,6 +18,9 @@ import { ViewTransition } from "react";
 import { ShowcaseMarquee } from "@/components/showcase";
 import { Separator } from "@/components/ui/separator";
 import { DynamicLink } from "fumadocs-core/dynamic-link";
+import { CommunitySection } from "./community";
+import { UtilsSection } from "./utils";
+import { ProgramsSection } from "./programs";
 
 export default function HomePage() {
   const params = useParams();
@@ -27,7 +30,7 @@ export default function HomePage() {
     <div className="flex flex-1 flex-col">
       <Spotlight />
       <div className="relative container mx-auto flex h-192 max-h-[calc(100vh-12rem)] min-h-fit flex-col items-center justify-center px-4 py-32 md:px-12">
-        <div className="flex h-full w-full max-w-5xl flex-col items-center justify-around gap-6 space-y-8 text-center">
+        <div className="flex h-full w-full max-w-5xl flex-col items-center justify-center gap-32 text-center">
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
               {/* <div className="relative mx-auto w-fit max-w-full">
@@ -57,21 +60,9 @@ export default function HomePage() {
             </div>
           </ViewTransition>
 
-          <div className="flex w-fit flex-col items-center gap-4">
-            <div className="flex flex-wrap justify-center gap-4 px-4">
-              <DiscordButton />
-              <SponsorButton />
-            </div>
-
-            <div className="flex w-full items-center gap-2">
-              <Separator className="flex-1" />
-              <p className="text-muted-foreground text-sm">
-                ... or use our tools below!
-              </p>
-              <Separator className="flex-1" />
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-4 px-4">
+          <div className="flex w-fit flex-col items-center gap-6">
+            <DiscordButton />
+            <div className="flex max-w-lg flex-wrap justify-center gap-4 px-4">
               <Button asChild>
                 <DynamicLink href="/[lang]/docs">
                   <BookIcon /> {messages.home.documentation}
@@ -105,9 +96,17 @@ export default function HomePage() {
         </div> */}
       </div>
 
-      <div className="w-full pb-16">
+      <div className="mb-24 w-full">
         <ShowcaseMarquee />
       </div>
+
+      <CommunitySection />
+      <Separator />
+
+      <UtilsSection />
+      <Separator />
+
+      <ProgramsSection />
     </div>
   );
 }

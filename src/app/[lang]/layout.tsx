@@ -80,15 +80,16 @@ export default async function RootLayout({
 
   return (
     <html lang={lang} dir={dir} suppressHydrationWarning>
-      <body className="transition-colors">
-        <div
-          className={cn(
-            geist.variable,
-            geistMono.variable,
-            lexend.variable,
-            nunitoSans.variable,
-          )}
-        >
+      <body
+        className={cn(
+          "transition-colors",
+          geist.variable,
+          geistMono.variable,
+          lexend.variable,
+          nunitoSans.variable,
+        )}
+      >
+        <div>
           <RootProvider i18n={provider(lang)}>{children}</RootProvider>
         </div>
       </body>
