@@ -3,6 +3,7 @@ import { source } from "@/lib/source";
 import { baseOptions } from "@/lib/layout.shared";
 import { ViewTransition } from "react";
 import { localizePageTree } from "@/lib/tree-localization";
+import { cn } from "@/lib/utils";
 
 export default async function Layout({
   params,

@@ -80,7 +80,7 @@ export default async function RootLayout({
 
   return (
     <html lang={lang} dir={dir} suppressHydrationWarning>
-      <body>
+      <body className="transition-colors">
         <div
           className={cn(
             geist.variable,
