@@ -15,6 +15,7 @@ import { ViewTransition } from "react";
 import Link from "next/link";
 import { ogLanguageBlacklist } from "@/lib/i18n";
 import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
 
 export default async function Page(
   props: PageProps<"/[lang]/docs/[[...slug]]">,
@@ -31,63 +32,77 @@ export default async function Page(
   const MDX = loadedPageData.body;
 
   return (
-    <ViewTransition enter="blur-scale-transition" exit="blur-scale-transition">
-      <DocsPage
-        toc={loadedPageData.toc}
-        tableOfContent={{
-          style: "clerk",
-        }}
-        full={page.data.full}
-        editOnGithub={{
-          owner: "HytaleModding",
-          repo: "site",
-          path: `content/docs/${page.path}`,
-          sha: branch,
-        }}
+    <>
+      <Image
+        src="/assets/official-documentation/background/content-lower.webp"
+        alt="Background"
+        fill
+        className="mask -z-10 hidden mask-b-from-50% mask-b-to-transparent mask-b-to-85% object-contain object-top opacity-50 not-md:hidden! not-dark:hidden! in-[.official]:block"
+      />
+      <ViewTransition
+        enter="blur-scale-transition"
+        exit="blur-scale-transition"
+        name="docs-page"
       >
-        <DocsTitle>{page.data.title}</DocsTitle>
-        <DocsDescription className="mb-0">
-          {page.data.description}
-        </DocsDescription>
+        {/* <div className="flex"> */}
+        <DocsPage
+          toc={loadedPageData.toc}
+          tableOfContent={{
+            style: "clerk",
+          }}
+          full={page.data.full}
+          editOnGithub={{
+            owner: "HytaleModding",
+            repo: "site",
+            path: `content/docs/${page.path}`,
+            sha: branch,
+          }}
+        >
+          <DocsTitle>{page.data.title}</DocsTitle>
+          <DocsDescription className="mb-0">
+            {page.data.description}
+          </DocsDescription>
 
-        {/* Authors section */}
-        {authors && authors.length > 0 && (
-          <div className="text-muted-foreground mt-4 text-sm">
-            {messages.misc.credit}{" "}
-            {authors.map((author, index) => (
-              <span key={index}>
-                {author.url ? (
-                  <Link
-                    href={author.url}
-                    className="text-foreground hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {author.name}
-                  </Link>
-                ) : (
-                  <span className="text-foreground">{author.name}</span>
-                )}
-                {index < authors.length - 1 && ", "}
-              </span>
-            ))}
-          </div>
-        )}
+          {/* Authors section */}
+          {authors && authors.length > 0 && (
+            <div className="text-muted-foreground mt-4 text-sm">
+              {messages.misc.credit}{" "}
+              {authors.map((author, index) => (
+                <span key={index}>
+                  {author.url ? (
+                    <Link
+                      href={author.url}
+                      className="text-foreground hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {author.name}
+                    </Link>
+                  ) : (
+                    <span className="text-foreground">{author.name}</span>
+                  )}
+                  {index < authors.length - 1 && ", "}
+                </span>
+              ))}
+            </div>
+          )}
 
-        <Separator className="mt-4 mb-6" />
+          <Separator className="mt-4 mb-6" />
 
-        <DocsBody>
-          <MDX
-            components={getMDXComponents({
-              // this allows you to link to other pages with relative file paths
-              a: createRelativeLink(source, page),
-            })}
-          />
-        </DocsBody>
+          <DocsBody>
+            <MDX
+              components={getMDXComponents({
+                // this allows you to link to other pages with relative file paths
+                a: createRelativeLink(source, page),
+              })}
+            />
+          </DocsBody>
 
-        {/* {lastModified && <PageLastUpdate date={lastModified} />} */}
-      </DocsPage>
-    </ViewTransition>
+          {/* {lastModified && <PageLastUpdate date={lastModified} />} */}
+        </DocsPage>
+        {/* </div> */}
+      </ViewTransition>
+    </>
   );
 }
 

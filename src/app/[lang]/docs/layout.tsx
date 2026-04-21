@@ -9,25 +9,9 @@ export default async function Layout({
   params,
   children,
 }: LayoutProps<"/[lang]/docs">) {
-  const { lang } = await params;
-  const tree = localizePageTree(source.pageTree[lang], lang, {
-    translateName: true,
-    translateTitle: true,
-    translateIndex: false,
-    translateChildren: true,
-  });
-
   return (
     <ViewTransition update="none">
-      <div className="flex min-h-screen flex-col">
-        <DocsLayout
-          tree={tree}
-          {...baseOptions(lang, true)}
-          githubUrl="https://github.com/HytaleModding/site"
-        >
-          {children}
-        </DocsLayout>
-      </div>
+      <div className="flex min-h-screen flex-col">{children}</div>
     </ViewTransition>
   );
 }
