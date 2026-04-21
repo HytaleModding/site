@@ -15,6 +15,7 @@ import { ViewTransition } from "react";
 import Link from "next/link";
 import { ogLanguageBlacklist } from "@/lib/i18n";
 import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
 
 export default async function Page(
   props: PageProps<"/[lang]/docs/[[...slug]]">,
@@ -32,6 +33,12 @@ export default async function Page(
 
   return (
     <ViewTransition enter="blur-scale-transition" exit="blur-scale-transition">
+      <Image
+        src="/assets/official-documentation/background/content-lower.webp"
+        alt="Background"
+        fill
+        className="mask -z-10 mask-b-from-50% mask-b-to-transparent mask-b-to-85% object-contain object-top opacity-0 transition-opacity not-md:hidden! not-dark:hidden! in-[.official]:opacity-50"
+      />
       <DocsPage
         toc={loadedPageData.toc}
         tableOfContent={{
