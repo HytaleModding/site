@@ -1,0 +1,11 @@
+{
+  "icon": "PackageOpen",
+  "pages": [
+    "early-plugins.mdx",
+    "plugins.mdx",
+    "asset-packs.mdx",
+    "saves.mdx",
+    "universes.mdx",
+    "worlds.mdx"
+  ]
+}

@@ -1,4 +1,10 @@
 {
   "icon": "FileText",
-  "pages": ["modtale.mdx", "curseforge.mdx", "builtbybit.mdx", "modifold.mdx"]
+  "pages": [
+    "modtale.mdx",
+    "curseforge.mdx",
+    "builtbybit.mdx",
+    "modifold.mdx",
+    "thunderstore"
+  ]
 }
