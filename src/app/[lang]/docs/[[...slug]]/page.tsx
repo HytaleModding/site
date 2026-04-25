@@ -40,7 +40,6 @@ export default async function Page(
         className="mask -z-10 hidden mask-b-from-50% mask-b-to-transparent mask-b-to-85% object-contain object-top opacity-50 not-md:hidden! not-dark:hidden! in-[.official]:block"
       />
       <ViewTransition share="blur-scale-transition" name="docs-page">
-        {/* <div className="flex"> */}
         <DocsPage
           toc={loadedPageData.toc}
           tableOfContent={{
@@ -93,10 +92,7 @@ export default async function Page(
               })}
             />
           </DocsBody>
-
-          {/* {lastModified && <PageLastUpdate date={lastModified} />} */}
         </DocsPage>
-        {/* </div> */}
       </ViewTransition>
     </>
   );
