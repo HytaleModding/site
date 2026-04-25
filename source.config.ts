@@ -1,3 +1,4 @@
+import { remarkMdxMermaid } from "fumadocs-core/mdx-plugins";
 import {
   defineConfig,
   defineDocs,
@@ -45,5 +46,6 @@ export default defineConfig({
         dark: "github-dark",
       },
     },
+    remarkPlugins: [remarkMdxMermaid]
   },
 });
