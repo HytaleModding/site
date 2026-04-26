@@ -35,6 +35,7 @@ import Sanguivar from "./(showcaseImages)/Sanguivar.gif";
 import VoileBanner from "./(showcaseImages)/voile.png";
 import MushroomLizard from "./(showcaseImages)/MushroomLizard.png";
 import AlecsTamework from "./(showcaseImages)/AlecsTamework.png";
+import Hexcode from "./(showcaseImages)/Hexcode.png";
 import { DiscordButton } from "./discord-button";
 import { SponsorButton } from "./support-button";
 import { GitInfoButton } from "@/components/git-info-button";
@@ -145,6 +146,13 @@ const showcaseItems: ShowcaseItem[] = [
     title: "Sanguivar",
     author: "lulu",
     image: Sanguivar,
+    link: "https://discord.gg/hytalemodding",
+    type: "art"
+  },
+  {
+    title: "Hexcode",
+    author: "Riprod",
+    image: Hexcode,
     link: "https://discord.gg/hytalemodding",
     type: "art"
   }
