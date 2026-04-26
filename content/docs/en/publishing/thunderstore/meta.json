@@ -1,0 +1,12 @@
+{
+  "icon": "Zap",
+  "pages": [
+    "---Package Creation and Publishing---",
+    "package-basics.mdx",
+    "package-setup",
+    "package-upload.mdx",
+    "package-update.mdx",
+    "---Package Installation---",
+    "package-install"
+  ]
+}

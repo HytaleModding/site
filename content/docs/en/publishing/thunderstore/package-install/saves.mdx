@@ -1,0 +1,28 @@
+---
+title: "Saves"
+description: "Let's go over how to install Saves from the Thunderstore Package."
+authors:
+    - name: "Chaosyr"
+      url: "https://Thunderstore.io/c/hytale"
+---
+
+## Client Side
+This is a little involved, but this should be intuitive
+
+1. Navigate to your equivalent of `C:\Users\(Your User)\AppData\Roaming\Hytale\UserData`.
+2. Navigate into `Saves`.
+3. In a new Window/Tab navigate to the packages `saves` folder, copy the contents.
+4. Go to the Games `Saves` folder, and paste the contents.
+5. Next time you launch the game, you should see the new Saves in the World selection.
+
+___
+
+## Server Side
+Since these are intended for Client Side, saves will be wonky to work with and may alter the server (namely, the banlist, permissions, config, whitelist, and client_metadata may be changed), it is **highly** advised that you use a **WORLD** or **UNIVERSE** instead in this case. If you wish to proceed, do so with Caution and **MAKE A BACKUP**.
+
+1. First Navigate to your equivalent of `D:\Hytale Server\2026.02.19-1a311a592\Server`.
+2. Since a Save is pretty much the Servers root, ensure you have a Backup of your server's setup, you'll need it to carry over the permissions, banlist, whitelist and such, if you care about those, after inputting the saves contents.
+3. In a new Window/Tab navigate to the packages `saves` folder and choose one if there are multiple.
+4. Enter that folder, and hit `CTRL+A`, followed by `CTRL+C`.
+5. Go to the servers root, **after making the backup**, and hit `CTRL+V`.
+6. When you launch the server, the save should take effect.

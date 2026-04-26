@@ -1,0 +1,37 @@
+---
+title: "4. Thunderstore Package Updating"
+description: "Let's go over the basics of updating a Thunderstore package."
+authors:
+    - name: "Chaosyr"
+      url: "https://Thunderstore.io/c/hytale"
+---
+
+## How to Update the Package
+
+This will cover the simple topic of how to update your package.
+
+Updating a package is nearly the same as uploading a package. There's just one catch, ***you must bump up your packages manifest version number***.
+
+### The Version System
+
+If you recall the versions use the `Major.Minor.Patch` format.
+
+What this means is if your version number was lets say `1.0.4` and you had a update you can increment any part of the system to push a valid update.
+
+How would it be reccomended to uptick the version? Well think about it based on how large the Update is.
+
+* A Large Update with massive breaking changes.
+* A Minor Update with small changes.
+* A Patch Update with bug fixes.
+
+Based on that you can determine what to use for the uptick. 
+
+1. If the first bullet applies to the update uptick the Major, think of the Major as a piece for things like Code Rewrites or API refactoring, or removal of widely used code, and things of the like usually it is rarely upticked.
+2. If the second bullet applies to the update uptick the Minor, think of the Minor as a peice for things like Adding content to the package, removing content from the package that doesn't break another package dependant of it, tweaking content within the package.
+3. Lastly, if the third bullet applies to the update uptick the Patch, think of the Patch as a peice for things like Pushing out Bugfixes or Hotfixes without adding, removing or tweaking content of the package.
+
+Now that you hopefully upticked your manifest's version number, if your keeping a Changelog, go and update the Changelog with a detailed "What did this update do/change in the package". 
+
+___
+
+Than with that out of the way zip the new package version and follow the [Upload Guide](./package-upload) to upload it.
