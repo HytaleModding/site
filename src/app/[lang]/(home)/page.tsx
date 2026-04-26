@@ -33,6 +33,7 @@ import Shroomie from "./(showcaseImages)/Shroomie.gif";
 import Froggy from "./(showcaseImages)/Froggy.gif";
 import VoileBanner from "./(showcaseImages)/voile.png";
 import MushroomLizard from "./(showcaseImages)/MushroomLizard.png";
+import AlecsTamework from "./(showcaseImages)/AlecsTamework.png";
 import { DiscordButton } from "./discord-button";
 import { SponsorButton } from "./support-button";
 import { GitInfoButton } from "@/components/git-info-button";
@@ -132,6 +133,13 @@ const showcaseItems: ShowcaseItem[] = [
     link: "https://discord.gg/hytalemodding",
     type: "art",
   },
+  {
+    title: "Alec's Tamework",
+    author: "Alec",
+    image: AlecsTamework,
+    link: "https://www.curseforge.com/hytale/mods/alecs-tamework",
+    type: "art",
+  }
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
