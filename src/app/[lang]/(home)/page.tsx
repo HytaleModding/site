@@ -36,6 +36,7 @@ import VoileBanner from "./(showcaseImages)/voile.png";
 import MushroomLizard from "./(showcaseImages)/MushroomLizard.png";
 import AlecsTamework from "./(showcaseImages)/AlecsTamework.png";
 import Hexcode from "./(showcaseImages)/Hexcode.png";
+import HyYap from "./(showcaseImages)/HyYap.png";
 import { DiscordButton } from "./discord-button";
 import { SponsorButton } from "./support-button";
 import { GitInfoButton } from "@/components/git-info-button";
@@ -153,6 +154,13 @@ const showcaseItems: ShowcaseItem[] = [
     title: "Hexcode",
     author: "Riprod",
     image: Hexcode,
+    link: "https://discord.gg/hytalemodding",
+    type: "art"
+  },
+  {
+    title: "HyYap",
+    author: "Azim",
+    image: HyYap,
     link: "https://discord.gg/hytalemodding",
     type: "art"
   }
