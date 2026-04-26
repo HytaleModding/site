@@ -32,6 +32,7 @@ import MagicCircleGust from "./(showcaseImages)/MagicCircleGust.gif";
 import Shroomie from "./(showcaseImages)/Shroomie.gif";
 import Froggy from "./(showcaseImages)/Froggy.gif";
 import VoileBanner from "./(showcaseImages)/voile.png";
+import MushroomLizard from "./(showcaseImages)/MushroomLizard.png";
 import { DiscordButton } from "./discord-button";
 import { SponsorButton } from "./support-button";
 import { GitInfoButton } from "@/components/git-info-button";
@@ -122,6 +123,13 @@ const showcaseItems: ShowcaseItem[] = [
     author: "mayuna",
     image: VoileBanner,
     link: "https://www.curseforge.com/hytale/mods/docs",
+    type: "art",
+  },
+  {
+    title: "Mushroom Lizard",
+    author: "lulu",
+    image: MushroomLizard,
+    link: "https://discord.gg/hytalemodding",
     type: "art",
   },
 ];
