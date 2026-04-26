@@ -63,15 +63,6 @@ export default function HomePage() {
           <div className="flex w-fit flex-col items-center gap-4">
             <div className="flex flex-wrap justify-center gap-4 px-4">
               <DiscordButton />
-              <SponsorButton />
-            </div>
-
-            <div className="flex w-full items-center gap-2">
-              <Separator className="flex-1" />
-              <p className="text-muted-foreground text-sm">
-                ... or use our tools below!
-              </p>
-              <Separator className="flex-1" />
             </div>
 
             <div className="flex flex-wrap justify-center gap-4 px-4">

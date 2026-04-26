@@ -19,7 +19,14 @@ import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import { Button } from "./ui/button";
-import { Card, CardContent } from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { useState } from "react";
 import {
   Marquee,
@@ -37,7 +44,6 @@ interface ShowcaseItem {
   image: StaticImageData;
   link: string;
   type: ProjectType;
-  description?: string;
 }
 
 const showcaseItems: ShowcaseItem[] = [
@@ -151,46 +157,55 @@ const showcaseItems: ShowcaseItem[] = [
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
   const messages = useMessages();
 
+  const cardContent = (
+    <>
+      <Image
+        src={item.image}
+        alt={`${item.title} background`}
+        aria-hidden
+        fill
+        draggable={false}
+        className="border-card z-10 rounded-lg border mask-b-from-90% object-contain"
+      />
+      <Image
+        src={item.image}
+        alt={`${item.title} background`}
+        aria-hidden
+        fill
+        draggable={false}
+        className="border-card rounded-lg border mask-b-from-90% object-cover opacity-50 blur-xl"
+      />
+
+      <div className="from-card/65 to-card group-hover:from-card relative z-20 mt-auto flex flex-col justify-between gap-2 border-t bg-linear-to-b pt-4 backdrop-blur-md transition-colors">
+        <CardHeader className="block">
+          <CardTitle className="flex items-center gap-4 p-0">
+            <p>{item.title}</p>
+          </CardTitle>
+        </CardHeader>
+        <CardFooter className="flex gap-4 pb-4 text-sm">
+          <p className="text-muted-foreground">{item.author}</p>
+        </CardFooter>
+        {item.link && (
+          <ExternalLinkIcon className="text-muted-foreground absolute right-4 bottom-4 ml-auto h-4 w-4" />
+        )}
+      </div>
+    </>
+  );
+
   return (
-    <Card className="relative h-64 overflow-hidden p-0 w-96">
-      <CardContent className="dark! flex h-full w-full items-end p-0">
-        <div className="bg-card/70 absolute z-20 mt-auto flex w-full flex-col justify-end border-t backdrop-blur-lg">
-          <div className="relative flex items-center gap-2 p-4">
-            <div className="relative flex flex-1 flex-col">
-              <h3 className="z-20 line-clamp-2 text-xl font-bold">
-                {item.title}
-              </h3>
-              <p className="text-muted-foreground z-20 text-base">
-                {messages.showcaseItems.madeBy.replace("{author}", item.author)}
-              </p>
-              {item.description && (
-                <p className="text-muted-foreground z-20 mt-1 line-clamp-2 text-sm">
-                  {item.description}
-                </p>
-              )}
-            </div>
-            <Button size="icon" asChild className="z-20">
-              <Link href={item.link} target="_blank" rel="noopener">
-                <ExternalLinkIcon className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-        <Image
-          src={item.image}
-          alt={item.title}
-          className="absolute isolate size-full object-cover opacity-40 blur-2xl"
-          fill
-        />
-        <div className="flex size-full items-center justify-center">
-          <Image
-            src={item.image}
-            alt={item.title}
-            className="h-full w-auto overflow-hidden object-contain object-top"
-            fill
-          />
-        </div>
-      </CardContent>
+    <Card className="h-64 w-96 overflow-hidden py-0 lg:data-[expanded=true]:col-span-2">
+      {item.link ? (
+        <Link
+          href={item.link}
+          className="group relative flex h-full flex-col"
+          target="_blank"
+          rel="noopener"
+        >
+          {cardContent}
+        </Link>
+      ) : (
+        <div className="relative flex h-full flex-col">{cardContent}</div>
+      )}
     </Card>
   );
 };
