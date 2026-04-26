@@ -31,6 +31,7 @@ import WulfrumTriangle from "./(showcaseImages)/Wulfrum_triangle.gif";
 import MagicCircleGust from "./(showcaseImages)/MagicCircleGust.gif";
 import Shroomie from "./(showcaseImages)/Shroomie.gif";
 import Froggy from "./(showcaseImages)/Froggy.gif";
+import Sanguivar from "./(showcaseImages)/Sanguivar.gif";
 import VoileBanner from "./(showcaseImages)/voile.png";
 import MushroomLizard from "./(showcaseImages)/MushroomLizard.png";
 import AlecsTamework from "./(showcaseImages)/AlecsTamework.png";
@@ -139,6 +140,13 @@ const showcaseItems: ShowcaseItem[] = [
     image: AlecsTamework,
     link: "https://www.curseforge.com/hytale/mods/alecs-tamework",
     type: "art",
+  },
+  {
+    title: "Sanguivar",
+    author: "lulu",
+    image: Sanguivar,
+    link: "https://discord.gg/hytalemodding",
+    type: "art"
   }
 ];
 
