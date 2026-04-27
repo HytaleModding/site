@@ -37,7 +37,7 @@ export default async function Page(
         src="/assets/official-documentation/background/content-lower.webp"
         alt="Background"
         fill
-        className="mask -z-10 hidden mask-b-from-50% mask-b-to-transparent mask-b-to-85% object-contain object-top opacity-50 not-md:hidden! not-dark:hidden! in-[.official]:block"
+        className="fixed inset-0 -z-10 hidden w-screen h-screen mask mask-b-from-50% mask-b-to-transparent mask-b-to-85% object-cover opacity-50 not-md:hidden! not-dark:hidden! in-[.official]:block pointer-events-none"
       />
       <ViewTransition share="blur-scale-transition" name="docs-page">
         <DocsPage
