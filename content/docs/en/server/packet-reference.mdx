@@ -1,0 +1,458 @@
+---
+title: "Packet Reference"
+description: "This page is a high-level reference for the network packets Hytale uses to communicate between server and client."
+authors:
+    - name: "Lord Zibblington"
+      url: "https://github.com/LordZibblington/hytale-pathfinder"
+---
+
+This page is a high-level reference for the network packets Hytale uses to communicate between server and client.
+
+<details>
+<summary><h3>Asset Editor</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Asset Editor | 300 | FailureReply | <ul><li>Token (int, required)</li> <li>Message (FormattedMessage, optional)</li></ul> | Server ↔ Client | No |
+| Asset Editor | 301 | SuccessReply | <ul><li>Token (int, required)</li> <li>Message (FormattedMessage, optional)</li></ul> | Server ↔ Client | No |
+| Asset Editor | 302 | AssetEditorInitialize | NULL | Client → Server | No |
+| Asset Editor | 303 | AssetEditorAuthorization | <ul><li>CanUse (bool, required)</li></ul> | Server → Client | No |
+| Asset Editor | 304 | AssetEditorCapabilities | <ul><li>CanDiscardAssets (bool, required)</li> <li>CanEditAssets (bool, required)</li> <li>CanCreateAssetPacks (bool, required)</li> <li>CanEditAssetPacks (bool, required)</li> <li>CanDeleteAssetPacks (bool, required)</li></ul> | Server → Client | No |
+| Asset Editor | 305 | AssetEditorSetupSchemas | NULL | Server → Client | Yes |
+| Asset Editor | 306 | AssetEditorSetupAssetTypes | NULL | Server → Client | No |
+| Asset Editor | 307 | AssetEditorCreateDirectory | <ul><li>Token (int, required)</li> <li>Path (AssetPath, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 308 | AssetEditorDeleteDirectory | <ul><li>Token (int, required)</li> <li>Path (AssetPath, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 309 | AssetEditorRenameDirectory | <ul><li>Token (int, required)</li> <li>Path (AssetPath, optional)</li> <li>NewPath (AssetPath, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 310 | AssetEditorFetchAsset | <ul><li>Token (int, required)</li> <li>Path (AssetPath, optional)</li> <li>IsFromOpenedTab (bool, required)</li></ul> | Client → Server | No |
+| Asset Editor | 311 | AssetEditorFetchJsonAssetWithParents | <ul><li>Token (int, required)</li> <li>Path (AssetPath, optional)</li> <li>IsFromOpenedTab (bool, required)</li></ul> | Client → Server | No |
+| Asset Editor | 312 | AssetEditorFetchAssetReply | <ul><li>Token (int, required)</li></ul> | Server → Client | No |
+| Asset Editor | 313 | AssetEditorFetchJsonAssetWithParentsReply | <ul><li>Token (int, required)</li></ul> | Server → Client | Yes |
+| Asset Editor | 314 | AssetEditorAssetPackSetup | NULL | Server → Client | No |
+| Asset Editor | 315 | AssetEditorUpdateAssetPack | <ul><li>Id (string, optional)</li> <li>Manifest (AssetPackManifest, optional)</li></ul> | Server ↔ Client | No |
+| Asset Editor | 316 | AssetEditorCreateAssetPack | <ul><li>Token (int, required)</li> <li>Manifest (AssetPackManifest, optional)</li> <li>TargetDirectoryIndex (int, required)</li></ul> | Client → Server | No |
+| Asset Editor | 317 | AssetEditorDeleteAssetPack | <ul><li>Id (string, optional)</li></ul> | Server ↔ Client | No |
+| Asset Editor | 319 | AssetEditorAssetListSetup | <ul><li>Pack (string, optional)</li> <li>IsReadOnly (bool, required)</li> <li>CanBeDeleted (bool, required)</li> <li>Tree (AssetEditorFileTree, required)</li></ul> | Server → Client | Yes |
+| Asset Editor | 320 | AssetEditorAssetListUpdate | <ul><li>Pack (string, optional)</li></ul> | Server → Client | Yes |
+| Asset Editor | 321 | AssetEditorRequestChildrenList | <ul><li>Path (AssetPath, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 322 | AssetEditorRequestChildrenListReply | <ul><li>Path (AssetPath, optional)</li></ul> | Server → Client | No |
+| Asset Editor | 323 | AssetEditorUpdateJsonAsset | <ul><li>Token (int, required)</li> <li>AssetType (string, optional)</li> <li>Path (AssetPath, optional)</li></ul> | Client → Server | Yes |
+| Asset Editor | 324 | AssetEditorUpdateAsset | <ul><li>Token (int, required)</li> <li>AssetType (string, optional)</li> <li>Path (AssetPath, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 325 | AssetEditorJsonAssetUpdated | <ul><li>Path (AssetPath, optional)</li></ul> | Server → Client | No |
+| Asset Editor | 326 | AssetEditorAssetUpdated | <ul><li>Path (AssetPath, optional)</li></ul> | Server → Client | No |
+| Asset Editor | 327 | AssetEditorCreateAsset | <ul><li>Token (int, required)</li> <li>Path (AssetPath, optional)</li> <li>RebuildCaches (AssetEditorRebuildCaches, optional)</li> <li>ButtonId (string, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 328 | AssetEditorRenameAsset | <ul><li>Token (int, required)</li> <li>Path (AssetPath, optional)</li> <li>NewPath (AssetPath, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 329 | AssetEditorDeleteAsset | <ul><li>Token (int, required)</li> <li>Path (AssetPath, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 330 | AssetEditorDiscardChanges | NULL | Client → Server | No |
+| Asset Editor | 331 | AssetEditorFetchAutoCompleteData | <ul><li>Token (int, required)</li> <li>Dataset (string, optional)</li> <li>Query (string, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 332 | AssetEditorFetchAutoCompleteDataReply | <ul><li>Token (int, required)</li></ul> | Server → Client | No |
+| Asset Editor | 333 | AssetEditorRequestDataset | <ul><li>Name (string, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 334 | AssetEditorRequestDatasetReply | <ul><li>Name (string, optional)</li></ul> | Server → Client | No |
+| Asset Editor | 335 | AssetEditorActivateButton | <ul><li>ButtonId (string, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 336 | AssetEditorSelectAsset | <ul><li>Path (AssetPath, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 337 | AssetEditorPopupNotification | <ul><li>Type (AssetEditorPopupNotificationType, required)</li> <li>Message (FormattedMessage, optional)</li></ul> | Server → Client | No |
+| Asset Editor | 338 | AssetEditorFetchLastModifiedAssets | NULL | Client → Server | No |
+| Asset Editor | 339 | AssetEditorLastModifiedAssets | NULL | Server → Client | No |
+| Asset Editor | 340 | AssetEditorModifiedAssetsCount | <ul><li>Count (int, required)</li></ul> | Server → Client | No |
+| Asset Editor | 341 | AssetEditorSubscribeModifiedAssetsChanges | <ul><li>Subscribe (bool, required)</li></ul> | Client → Server | No |
+| Asset Editor | 342 | AssetEditorExportAssets | NULL | Client → Server | No |
+| Asset Editor | 343 | AssetEditorExportAssetInitialize | <ul><li>Asset (AssetEditorAsset, optional)</li> <li>OldPath (AssetPath, optional)</li> <li>Size (int, required)</li> <li>Failed (bool, required)</li></ul> | Server → Client | No |
+| Asset Editor | 344 | AssetEditorExportAssetPart | NULL | Server → Client | Yes |
+| Asset Editor | 345 | AssetEditorExportAssetFinalize | NULL | Server → Client | No |
+| Asset Editor | 346 | AssetEditorExportDeleteAssets | NULL | Server → Client | No |
+| Asset Editor | 347 | AssetEditorExportComplete | NULL | Server → Client | No |
+| Asset Editor | 349 | AssetEditorUndoChanges | <ul><li>Token (int, required)</li> <li>Path (AssetPath, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 350 | AssetEditorRedoChanges | <ul><li>Token (int, required)</li> <li>Path (AssetPath, optional)</li></ul> | Client → Server | No |
+| Asset Editor | 351 | AssetEditorUndoRedoReply | <ul><li>Token (int, required)</li> <li>Command (JsonUpdateCommand, optional)</li></ul> | Server → Client | No |
+| Asset Editor | 352 | AssetEditorSetGameTime | <ul><li>GameTime (InstantData, optional)</li> <li>Paused (bool, required)</li></ul> | Client → Server | No |
+| Asset Editor | 353 | AssetEditorUpdateSecondsPerGameDay | <ul><li>DaytimeDurationSeconds (int, required)</li> <li>NighttimeDurationSeconds (int, required)</li></ul> | Server → Client | No |
+| Asset Editor | 354 | AssetEditorUpdateWeatherPreviewLock | <ul><li>Locked (bool, required)</li></ul> | Client → Server | No |
+| Asset Editor | 355 | AssetEditorUpdateModelPreview | <ul><li>AssetPath (AssetPath, optional)</li> <li>Model (Model, optional)</li> <li>Block (BlockType, optional)</li> <li>Camera (AssetEditorPreviewCameraSettings, optional)</li></ul> | Server → Client | No |
+| Asset Editor | 356 | AssetEditorModsDirectories | NULL | Server → Client | No |
+</details>
+
+<details>
+<summary><h3>Assets</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Assets | 40 | UpdateBlockTypes | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li> <li>UpdateBlockTextures (bool, required)</li> <li>UpdateModelTextures (bool, required)</li> <li>UpdateModels (bool, required)</li> <li>UpdateMapGeometry (bool, required)</li></ul> | Server → Client | Yes |
+| Assets | 41 | UpdateBlockHitboxes | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 42 | UpdateBlockSoundSets | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 43 | UpdateItemSoundSets | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 44 | UpdateBlockParticleSets | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 45 | UpdateBlockBreakingDecals | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 46 | UpdateBlockSets | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 47 | UpdateWeathers | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 48 | UpdateTrails | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 49 | UpdateParticleSystems | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 50 | UpdateParticleSpawners | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 51 | UpdateEntityEffects | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 52 | UpdateItemPlayerAnimations | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 53 | UpdateModelvfxs | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 54 | UpdateItems | <ul><li>Type (UpdateType, required)</li> <li>UpdateModels (bool, required)</li> <li>UpdateIcons (bool, required)</li></ul> | Server → Client | Yes |
+| Assets | 55 | UpdateItemQualities | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 56 | UpdateItemCategories | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 57 | UpdateItemReticles | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 58 | UpdateFieldcraftCategories | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 59 | UpdateResourceTypes | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 60 | UpdateRecipes | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 61 | UpdateEnvironments | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li> <li>RebuildMapGeometry (bool, required)</li></ul> | Server → Client | Yes |
+| Assets | 62 | UpdateAmbienceFX | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 63 | UpdateFluidFX | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 64 | UpdateTranslations | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 65 | UpdateSoundEvents | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 66 | UpdateInteractions | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 67 | UpdateRootInteractions | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 68 | UpdateUnarmedInteractions | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 69 | TrackOrUpdateObjective | <ul><li>Objective (Objective, optional)</li></ul> | Server → Client | No |
+| Assets | 70 | UntrackObjective | <ul><li>ObjectiveUuid (Guid, required)</li></ul> | Server → Client | No |
+| Assets | 71 | UpdateObjectiveTask | <ul><li>ObjectiveUuid (Guid, required)</li> <li>TaskIndex (int, required)</li> <li>Task (ObjectiveTask, optional)</li></ul> | Server → Client | No |
+| Assets | 72 | UpdateEntityStatTypes | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 73 | UpdateEntityUIComponents | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 74 | UpdateHitboxCollisionConfig | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 75 | UpdateRepulsionConfig | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 76 | UpdateViewBobbing | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 77 | UpdateCameraShake | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 78 | UpdateBlockGroups | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 79 | UpdateSoundSets | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 80 | UpdateAudioCategories | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 81 | UpdateReverbEffects | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 82 | UpdateEqualizerEffects | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 83 | UpdateFluids | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 84 | UpdateTagPatterns | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 85 | UpdateProjectileConfigs | <ul><li>Type (UpdateType, required)</li></ul> | Server → Client | Yes |
+| Assets | 86 | UpdateEmotes | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 87 | UpdatePhysicalMaterials | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+| Assets | 88 | UpdateMusicContainers | <ul><li>Type (UpdateType, required)</li> <li>MaxId (int, required)</li></ul> | Server → Client | Yes |
+
+</details>
+
+<details>
+<summary><h3>Auth</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Auth | 11 | AuthGrant | <ul><li>AuthorizationGrant (string, optional)</li> <li>ServerIdentityToken (string, optional)</li></ul> | Server → Client | No |
+| Auth | 12 | AuthToken | <ul><li>AccessToken (string, optional)</li> <li>ServerAuthorizationGrant (string, optional)</li></ul> | Client → Server | No |
+| Auth | 13 | ServerAuthToken | <ul><li>ServerAccessToken (string, optional)</li></ul> | Server → Client | No |
+| Auth | 14 | ConnectAccept | NULL | Server → Client | No |
+| Auth | 15 | PasswordResponse | NULL | Client → Server | No |
+| Auth | 16 | PasswordAccepted | NULL | Server → Client | No |
+| Auth | 17 | PasswordRejected | <ul><li>AttemptsRemaining (int, required)</li></ul> | Server → Client | No |
+| Auth | 18 | ClientReferral | <ul><li>HostTo (HostAddress, optional)</li></ul> | Server → Client | No |
+
+</details>
+
+<details>
+<summary><h3>BuilderTools</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Builder Tools | 400 | BuilderToolArgUpdate | <ul><li>Token (int, required)</li> <li>Section (int, required)</li> <li>Slot (int, required)</li> <li>Id (string, optional)</li> <li>Value (string, optional)</li></ul> | Client → Server | No |
+| Builder Tools | 401 | BuilderToolEntityAction | <ul><li>EntityId (int, required)</li> <li>Action (EntityToolAction, required)</li></ul> | Client → Server | No |
+| Builder Tools | 402 | BuilderToolSetEntityTransform | <ul><li>EntityId (int, required)</li> <li>ModelTransform (ModelTransform, optional)</li> <li>IsSessionEnd (bool, required)</li></ul> | Client → Server | No |
+| Builder Tools | 403 | BuilderToolExtrudeAction | <ul><li>X (int, required)</li> <li>Y (int, required)</li> <li>Z (int, required)</li> <li>XNormal (int, required)</li> <li>YNormal (int, required)</li> <li>ZNormal (int, required)</li> <li>Mode (ExtrudeMode, required)</li> <li>IsHoldDownInteraction (bool, required)</li> <li>UndoGroupSize (int, required)</li></ul> | Client → Server | No |
+| Builder Tools | 404 | BuilderToolStackArea | <ul><li>SelectionMin (BlockPosition, optional)</li> <li>SelectionMax (BlockPosition, optional)</li> <li>XNormal (int, required)</li> <li>YNormal (int, required)</li> <li>ZNormal (int, required)</li> <li>NumStacks (int, required)</li></ul> | Client → Server | No |
+| Builder Tools | 405 | BuilderToolSelectionTransform | <ul><li>Rotation (Quaternion, optional)</li> <li>TranslationOffset (BlockPosition, optional)</li> <li>InitialSelectionMin (BlockPosition, optional)</li> <li>InitialSelectionMax (BlockPosition, optional)</li> <li>CutOriginal (bool, required)</li> <li>ApplyTransformationToSelectionMinMax (bool, required)</li> <li>IsExitingTransformMode (bool, required)</li> <li>InitialPastePointForClipboardPaste (BlockPosition, optional)</li></ul> | Client → Server | No |
+| Builder Tools | 406 | BuilderToolRotateClipboard | <ul><li>Angle (int, required)</li> <li>Axis (Axis, required)</li></ul> | Client → Server | No |
+| Builder Tools | 407 | BuilderToolPasteClipboard | <ul><li>X (int, required)</li> <li>Y (int, required)</li> <li>Z (int, required)</li></ul> | Client → Server | No |
+| Builder Tools | 408 | BuilderToolSetTransformationModeState | <ul><li>Enabled (bool, required)</li></ul> | Client → Server | No |
+| Builder Tools | 409 | BuilderToolSelectionUpdate | <ul><li>XMin (int, required)</li> <li>YMin (int, required)</li> <li>ZMin (int, required)</li> <li>XMax (int, required)</li> <li>YMax (int, required)</li> <li>ZMax (int, required)</li></ul> | Client → Server | No |
+| Builder Tools | 410 | BuilderToolSelectionToolAskForClipboard | NULL | Client → Server | No |
+| Builder Tools | 411 | BuilderToolSelectionToolReplyWithClipboard | NULL | Server → Client | Yes |
+| Builder Tools | 412 | BuilderToolGeneralAction | <ul><li>Action (BuilderToolAction, required)</li></ul> | Client → Server | No |
+| Builder Tools | 413 | BuilderToolOnUseInteraction | <ul><li>Type (InteractionType, required)</li> <li>X (int, required)</li> <li>Y (int, required)</li> <li>Z (int, required)</li> <li>OffsetForPaintModeX (int, required)</li> <li>OffsetForPaintModeY (int, required)</li> <li>OffsetForPaintModeZ (int, required)</li> <li>IsAltPlaySculptBrushModDown (bool, required)</li> <li>IsHoldDownInteraction (bool, required)</li> <li>IsDoServerRaytraceForPosition (bool, required)</li> <li>IsShowEditNotifications (bool, required)</li> <li>MaxLengthToolIgnoreHistory (int, required)</li> <li>RaycastOriginX (float, required)</li> <li>RaycastOriginY (float, required)</li> <li>RaycastOriginZ (float, required)</li> <li>RaycastDirectionX (float, required)</li> <li>RaycastDirectionY (float, required)</li> <li>RaycastDirectionZ (float, required)</li> <li>UndoGroupSize (int, required)</li></ul> | Client → Server | No |
+| Builder Tools | 414 | BuilderToolLineAction | <ul><li>XStart (int, required)</li> <li>YStart (int, required)</li> <li>ZStart (int, required)</li> <li>XEnd (int, required)</li> <li>YEnd (int, required)</li> <li>ZEnd (int, required)</li></ul> | Client → Server | No |
+| Builder Tools | 415 | BuilderToolShowAnchor | <ul><li>X (int, required)</li> <li>Y (int, required)</li> <li>Z (int, required)</li></ul> | Server → Client | No |
+| Builder Tools | 416 | BuilderToolHideAnchors | NULL | Server → Client | No |
+| Builder Tools | 417 | PrefabUnselectPrefab | NULL | Client → Server | No |
+| Builder Tools | 418 | BuilderToolsSetSoundSet | <ul><li>SoundSetIndex (int, required)</li></ul> | Server → Client | No |
+| Builder Tools | 419 | BuilderToolLaserPointer | <ul><li>PlayerNetworkId (int, required)</li> <li>StartX (float, required)</li> <li>StartY (float, required)</li> <li>StartZ (float, required)</li> <li>EndX (float, required)</li> <li>EndY (float, required)</li> <li>EndZ (float, required)</li> <li>Color (int, required)</li> <li>DurationMs (int, required)</li></ul> | Server → Client | No |
+| Builder Tools | 420 | BuilderToolSetEntityScale | <ul><li>EntityId (int, required)</li> <li>Scale (float, required)</li></ul> | Client → Server | No |
+| Builder Tools | 421 | BuilderToolSetEntityPickupEnabled | <ul><li>EntityId (int, required)</li> <li>Enabled (bool, required)</li></ul> | Client → Server | No |
+| Builder Tools | 422 | BuilderToolSetEntityLight | <ul><li>EntityId (int, required)</li> <li>Light (ColorLight, optional)</li></ul> | Client → Server | No |
+| Builder Tools | 423 | BuilderToolSetNPCDebug | <ul><li>EntityId (int, required)</li> <li>Enabled (bool, required)</li></ul> | Client → Server | No |
+| Builder Tools | 425 | BuilderToolSetEntityCollision | <ul><li>EntityId (int, required)</li> <li>CollisionType (string, optional)</li></ul> | Client → Server | No |
+| Builder Tools | 426 | PrefabSetAnchor | <ul><li>X (int, required)</li> <li>Y (int, required)</li> <li>Z (int, required)</li></ul> | Client → Server | No |
+| Builder Tools | 427 | BuilderToolResetClipboardRotation | NULL | Client → Server | No |
+
+</details>
+
+<details>
+<summary><h3>Camera</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Camera | 280 | SetServerCamera | <ul><li>ClientCameraView (ClientCameraView, required)</li> <li>IsLocked (bool, required)</li> <li>CameraSettings (ServerCameraSettings, optional)</li></ul> | Server → Client | No |
+| Camera | 281 | CameraShakeEffect | <ul><li>CameraShakeId (int, required)</li> <li>Intensity (float, required)</li> <li>Mode (AccumulationMode, required)</li></ul> | Server → Client | No |
+| Camera | 282 | RequestFlyCameraMode | <ul><li>Entering (bool, required)</li></ul> | Client → Server | No |
+| Camera | 283 | SetFlyCameraMode | <ul><li>Entering (bool, required)</li></ul> | Server → Client | No |
+
+</details>
+
+<details>
+<summary><h3>Connection</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Connection | 1 | ClientDisconnect | <ul><li>Reason (ClientDisconnectReason, required)</li> <li>Type (DisconnectType, required)</li></ul> | Client → Server | No |
+| Connection | 2 | ServerDisconnect | <ul><li>Reason (FormattedMessage, optional)</li> <li>Type (DisconnectType, required)</li></ul> | Server → Client | No |
+| Connection | 3 | Ping | <ul><li>Id (int, required)</li> <li>Time (InstantData, optional)</li> <li>LastPingValueRaw (int, required)</li> <li>LastPingValueDirect (int, required)</li> <li>LastPingValueTick (int, required)</li></ul> | Server → Client | No |
+| Connection | 4 | Pong | <ul><li>Id (int, required)</li> <li>Time (InstantData, optional)</li> <li>Type (PongType, required)</li> <li>PacketQueueSize (short, required)</li></ul> | Client → Server | No |
+| Connection | 363 | InsecurePlayerOptions | <ul><li>Uuid (Guid, required)</li> <li>Skin (PlayerSkin, optional)</li></ul> | Client → Server | No |
+| Connection | 364 | RequestInsecurePlayerOptions | NULL | Server → Client | No |
+
+</details>
+
+<details>
+<summary><h3>Entities</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Entities | 160 | SetEntitySeed | <ul><li>EntitySeed (int, required)</li></ul> | Server → Client | No |
+| Entities | 161 | EntityUpdates | NULL | Server → Client | Yes |
+| Entities | 162 | PlayAnimation | <ul><li>EntityId (int, required)</li> <li>ItemAnimationsId (string, optional)</li> <li>AnimationId (string, optional)</li> <li>Slot (AnimationSlot, required)</li></ul> | Server → Client | No |
+| Entities | 163 | ChangeVelocity | <ul><li>X (float, required)</li> <li>Y (float, required)</li> <li>Z (float, required)</li> <li>ChangeType (ChangeVelocityType, required)</li> <li>Config (VelocityConfig, optional)</li></ul> | Server → Client | No |
+| Entities | 164 | ApplyKnockback | <ul><li>HitPosition (Position, optional)</li> <li>X (float, required)</li> <li>Y (float, required)</li> <li>Z (float, required)</li> <li>ChangeType (ChangeVelocityType, required)</li></ul> | Server → Client | No |
+| Entities | 165 | SpawnModelParticles | <ul><li>EntityId (int, required)</li></ul> | Server → Client | No |
+| Entities | 166 | MountMovement | <ul><li>AbsolutePosition (Position, optional)</li> <li>BodyOrientation (Direction, optional)</li> <li>MovementStates (MovementStates, optional)</li></ul> | Client → Server | No |
+| Entities | 167 | PlayEmote | <ul><li>EmoteId (string, optional)</li></ul> | Client → Server | No |
+
+</details>
+
+<details>
+<summary><h3>Interaction</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Interaction | 290 | SyncInteractionChains | NULL | Server ↔ Client | No |
+| Interaction | 291 | CancelInteractionChain | <ul><li>ChainId (int, required)</li> <li>ForkedId (ForkedChainId, optional)</li></ul> | Server → Client | No |
+| Interaction | 292 | PlayInteractionFor | <ul><li>EntityId (int, required)</li> <li>ChainId (int, required)</li> <li>ForkedId (ForkedChainId, optional)</li> <li>OperationIndex (int, required)</li> <li>InteractionId (int, required)</li> <li>InteractedItemId (string, optional)</li> <li>InteractionType (InteractionType, required)</li> <li>Cancel (bool, required)</li></ul> | Server → Client | No |
+| Interaction | 293 | MountNPC | <ul><li>AnchorX (float, required)</li> <li>AnchorY (float, required)</li> <li>AnchorZ (float, required)</li> <li>EntityId (int, required)</li></ul> | Server → Client | No |
+| Interaction | 294 | DismountNPC | NULL | Server ↔ Client | No |
+
+</details>
+
+<details>
+<summary><h3>Interface</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Interface | 210 | ServerMessage | <ul><li>Type (ChatType, required)</li> <li>Message (FormattedMessage, optional)</li></ul> | Server → Client | No |
+| Interface | 211 | ChatMessage | <ul><li>Message (string, optional)</li></ul> | Client → Server | No |
+| Interface | 212 | Notification | <ul><li>Message (FormattedMessage, optional)</li> <li>SecondaryMessage (FormattedMessage, optional)</li> <li>Icon (string, optional)</li> <li>Item (ItemWithAllMetadata, optional)</li> <li>Style (NotificationStyle, required)</li></ul> | Server → Client | No |
+| Interface | 213 | KillFeedMessage | <ul><li>Killer (FormattedMessage, optional)</li> <li>Decedent (FormattedMessage, optional)</li> <li>Icon (string, optional)</li></ul> | Server → Client | No |
+| Interface | 214 | ShowEventTitle | <ul><li>FadeInDuration (float, required)</li> <li>FadeOutDuration (float, required)</li> <li>Duration (float, required)</li> <li>Icon (string, optional)</li> <li>IsMajor (bool, required)</li> <li>PrimaryTitle (FormattedMessage, optional)</li> <li>SecondaryTitle (FormattedMessage, optional)</li></ul> | Server → Client | No |
+| Interface | 215 | HideEventTitle | <ul><li>FadeOutDuration (float, required)</li></ul> | Server → Client | No |
+| Interface | 216 | SetPage | <ul><li>Page (Page, required)</li> <li>CanCloseThroughInteraction (bool, required)</li></ul> | Server → Client | No |
+| Interface | 217 | CustomHud | <ul><li>ZOrder (int, required)</li> <li>Clear (bool, required)</li></ul> | Server → Client | Yes |
+| Interface | 218 | CustomPage | <ul><li>Key (string, optional)</li> <li>IsInitial (bool, required)</li> <li>Clear (bool, required)</li> <li>Lifetime (CustomPageLifetime, required)</li></ul> | Server → Client | Yes |
+| Interface | 219 | CustomPageEvent | <ul><li>Type (CustomPageEventType, required)</li> <li>Data (string, optional)</li></ul> | Client → Server | No |
+| Interface | 222 | EditorBlocksChange | <ul><li>Selection (EditorSelection, optional)</li> <li>BlocksCount (int, required)</li> <li>AdvancedPreview (bool, required)</li> <li>SkipPreviewRebuild (bool, required)</li></ul> | Server → Client | Yes |
+| Interface | 223 | ServerInfo | <ul><li>ServerName (string, optional)</li> <li>Motd (string, optional)</li> <li>MaxPlayers (int, required)</li> <li>FallbackServer (HostAddress, optional)</li></ul> | Server → Client | No |
+| Interface | 224 | AddToServerPlayerList | NULL | Server → Client | No |
+| Interface | 225 | RemoveFromServerPlayerList | NULL | Server → Client | No |
+| Interface | 226 | UpdateServerPlayerList | NULL | Server → Client | No |
+| Interface | 227 | UpdateServerPlayerListPing | NULL | Server → Client | No |
+| Interface | 228 | UpdateKnownRecipes | NULL | Server → Client | No |
+| Interface | 229 | UpdatePortal | <ul><li>State (PortalState, optional)</li> <li>Definition (PortalDef, optional)</li></ul> | Server → Client | No |
+| Interface | 230 | UpdateVisibleHudComponents | NULL | Server → Client | No |
+| Interface | 231 | ResetUserInterfaceState | NULL | Server → Client | No |
+| Interface | 232 | UpdateLanguage | <ul><li>Language (string, optional)</li></ul> | Client → Server | No |
+| Interface | 233 | WorldSavingStatus | <ul><li>IsWorldSaving (bool, required)</li></ul> | Server → Client | No |
+| Interface | 234 | OpenChatWithCommand | <ul><li>Command (string, optional)</li></ul> | Server → Client | No |
+| Interface | 235 | UpdateAnchorUI | <ul><li>AnchorId (string, optional)</li> <li>Clear (bool, required)</li></ul> | Server → Client | Yes |
+| Interface | 236 | CommandSuggestionsRequest | <ul><li>Command (string, optional)</li> <li>CursorPosition (int, required)</li> <li>SelectedVariant (int, required)</li></ul> | Client → Server | No |
+| Interface | 237 | CommandSuggestionsResponse | <ul><li>StartPosition (int, required)</li> <li>Length (int, required)</li> <li>UsageText (string, optional)</li> <li>CurrentArgStart (int, required)</li> <li>CurrentArgLength (int, required)</li></ul> | Server → Client | No |
+| Interface | 238 | CommandTreeSync | NULL | Server → Client | Yes |
+| Interface | 239 | ArgValuesRequest | <ul><li>ArgTypeId (string, optional)</li> <li>Partial (string, optional)</li></ul> | Client → Server | No |
+| Interface | 247 | ArgValuesResponse | <ul><li>ArgTypeId (string, optional)</li> <li>IsComplete (bool, required)</li></ul> | Server → Client | No |
+| Interface | 248 | ArgCacheInvalidation | NULL | Server → Client | No |
+| Interface | 1200 | UpdateServersideUIPage | NULL | Server → Client | No |
+| Interface | 1202 | ExecuteServersidePageCommand | <ul><li>Param (UIDataValue, optional)</li></ul> | Client → Server | No |
+
+</details>
+
+<details>
+<summary><h3>Inventory</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Inventory | 170 | UpdatePlayerInventory | <ul><li>Storage (InventorySection, optional)</li> <li>Armor (InventorySection, optional)</li> <li>Hotbar (InventorySection, optional)</li> <li>Utility (InventorySection, optional)</li> <li>Tools (InventorySection, optional)</li> <li>Backpack (InventorySection, optional)</li></ul> | Server → Client | Yes |
+| Inventory | 171 | SetCreativeItem | <ul><li>Override (bool, required)</li></ul> | Client → Server | No |
+| Inventory | 172 | DropCreativeItem | NULL | Client → Server | No |
+| Inventory | 173 | SmartGiveCreativeItem | NULL | Client → Server | No |
+| Inventory | 174 | DropItemStack | NULL | Client → Server | No |
+| Inventory | 175 | MoveItemStack | NULL | Client → Server | No |
+| Inventory | 176 | SmartMoveItemStack | NULL | Server ↔ Client | No |
+| Inventory | 177 | SetActiveSlot | NULL | Server ↔ Client | No |
+| Inventory | 178 | SwitchHotbarBlockSet | <ul><li>ItemId (string, optional)</li></ul> | Client → Server | No |
+| Inventory | 179 | InventoryAction | NULL | Client → Server | No |
+
+</details>
+
+<details>
+<summary><h3>Machinima</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Machinima | 260 | RequestMachinimaActorModel | <ul><li>ModelId (string, optional)</li> <li>SceneName (string, optional)</li> <li>ActorName (string, optional)</li></ul> | Client → Server | No |
+| Machinima | 261 | SetMachinimaActorModel | <ul><li>Model (Model, optional)</li> <li>SceneName (string, optional)</li> <li>ActorName (string, optional)</li></ul> | Server → Client | No |
+| Machinima | 262 | UpdateMachinimaScene | <ul><li>Player (string, optional)</li> <li>SceneName (string, optional)</li> <li>Frame (float, required)</li> <li>UpdateType (SceneUpdateType, required)</li></ul> | Server ↔ Client | Yes |
+
+</details>
+
+<details>
+<summary><h3>Player</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Player | 100 | SetClientId | <ul><li>ClientId (int, required)</li></ul> | Server → Client | No |
+| Player | 101 | SetGameMode | <ul><li>GameMode (GameMode, required)</li></ul> | Server → Client | No |
+| Player | 102 | SetMovementStates | <ul><li>MovementStates (SavedMovementStates, optional)</li></ul> | Server → Client | No |
+| Player | 103 | SetBlockPlacementOverride | <ul><li>Enabled (bool, required)</li></ul> | Server → Client | No |
+| Player | 104 | JoinWorld | <ul><li>ClearWorld (bool, required)</li> <li>FadeInOut (bool, required)</li> <li>WorldUuid (Guid, required)</li></ul> | Server → Client | No |
+| Player | 105 | ClientReady | <ul><li>ReadyForChunks (bool, required)</li> <li>ReadyForGameplay (bool, required)</li></ul> | Client → Server | No |
+| Player | 106 | LoadHotbar | <ul><li>InventoryRow (byte, required)</li></ul> | Client → Server | No |
+| Player | 107 | SaveHotbar | <ul><li>InventoryRow (byte, required)</li></ul> | Client → Server | No |
+| Player | 108 | ClientMovement | <ul><li>MovementStates (MovementStates, optional)</li> <li>RelativePosition (HalfFloatPosition, optional)</li> <li>AbsolutePosition (Position, optional)</li> <li>BodyOrientation (Direction, optional)</li> <li>LookOrientation (Direction, optional)</li> <li>TeleportAck (TeleportAck, optional)</li> <li>WishMovement (Position, optional)</li> <li>Velocity (Vector3d, optional)</li> <li>MountedTo (int, required)</li> <li>RiderMovementStates (MovementStates, optional)</li></ul> | Client → Server | No |
+| Player | 109 | ClientTeleport | <ul><li>TeleportId (byte, required)</li> <li>ModelTransform (ModelTransform, optional)</li> <li>ResetVelocity (bool, required)</li></ul> | Server → Client | No |
+| Player | 110 | UpdateMovementSettings | <ul><li>MovementSettings (MovementSettings, optional)</li></ul> | Server → Client | No |
+| Player | 111 | MouseInteraction | <ul><li>ItemInHandId (string, optional)</li> <li>MouseButton (MouseButtonEvent, optional)</li> <li>MouseMotion (MouseMotionEvent, optional)</li> <li>WorldInteraction (WorldInteraction, optional)</li></ul> | Client → Server | No |
+| Player | 112 | DamageInfo | <ul><li>DamageSourcePosition (Vector3d, optional)</li> <li>DamageAmount (float, required)</li> <li>DamageCause (DamageCause, optional)</li></ul> | Server → Client | No |
+| Player | 113 | ReticleEvent | <ul><li>EventIndex (int, required)</li></ul> | Server → Client | No |
+| Player | 114 | DisplayDebug | <ul><li>Shape (DebugShape, required)</li> <li>Time (float, required)</li> <li>Flags (byte, required)</li> <li>Opacity (float, required)</li></ul> | Server → Client | No |
+| Player | 115 | ClearDebugShapes | NULL | Server → Client | No |
+| Player | 116 | SyncPlayerPreferences | <ul><li>ShowEntityMarkers (bool, required)</li> <li>ArmorItemsPreferredPickupLocation (PickupLocation, required)</li> <li>WeaponAndToolItemsPreferredPickupLocation (PickupLocation, required)</li> <li>UsableItemsItemsPreferredPickupLocation (PickupLocation, required)</li> <li>SolidBlockItemsPreferredPickupLocation (PickupLocation, required)</li> <li>MiscItemsPreferredPickupLocation (PickupLocation, required)</li> <li>AllowNPCDetection (bool, required)</li> <li>RespondToHit (bool, required)</li> <li>HideHelmet (bool, required)</li> <li>HideCuirass (bool, required)</li> <li>HideGauntlets (bool, required)</li> <li>HidePants (bool, required)</li> <li>PlaceMode (string, optional)</li> <li>CreativeInteractionDistance (int, required)</li></ul> | Client → Server | No |
+| Player | 117 | ClientPlaceBlock | <ul><li>Position (BlockPosition, optional)</li> <li>Rotation (BlockRotation, optional)</li> <li>PlacedBlockId (int, required)</li> <li>QuickReplace (bool, required)</li> <li>QuickRetype (bool, required)</li> <li>NoPhysics (bool, required)</li></ul> | Client → Server | No |
+| Player | 118 | UpdateMemoriesFeatureStatus | <ul><li>IsFeatureUnlocked (bool, required)</li></ul> | Server → Client | No |
+| Player | 119 | RemoveMapMarker | <ul><li>MarkerId (string, optional)</li></ul> | Client → Server | No |
+| Player | 470 | UpdateTriggerVolumeDisplay | NULL | Server → Client | No |
+| Player | 471 | AddOrUpdateTriggerVolumeDisplay | NULL | Server → Client | No |
+| Player | 472 | RemoveTriggerVolumeDisplay | NULL | Server → Client | No |
+| Player | 480 | TriggerVolumeToolCreate | <ul><li>ShapeType (TriggerVolumeShapeType, required)</li> <li>Param2 (Vector3, required)</li> <li>Name (string, optional)</li></ul> | Client → Server | No |
+| Player | 481 | TriggerVolumeToolMove | NULL | Client → Server | No |
+| Player | 482 | TriggerVolumeToolResize | <ul><li>ShapeType (TriggerVolumeShapeType, required)</li> <li>Param2 (Vector3, required)</li> <li>NewPosition (Vector3, optional)</li></ul> | Client → Server | No |
+| Player | 483 | TriggerVolumeToolDelete | NULL | Client → Server | No |
+| Player | 484 | TriggerVolumeToolEquip | <ul><li>Active (bool, required)</li></ul> | Client → Server | No |
+| Player | 485 | TriggerVolumeToolCreateResponse | NULL | Server → Client | No |
+| Player | 486 | TriggerVolumeToolGroupCreate | NULL | Client → Server | No |
+| Player | 487 | TriggerVolumeToolGroupCreateResponse | <ul><li>Color (int, required)</li> <li>Success (bool, required)</li> <li>SkippedCount (int, required)</li></ul> | Server → Client | No |
+| Player | 488 | TriggerVolumeToolUngroup | NULL | Client → Server | No |
+| Player | 489 | TriggerVolumeToolGroupMove | NULL | Client → Server | No |
+| Player | 490 | TriggerVolumeToolSelect | <ul><li>VolumeId (string, optional)</li></ul> | Client → Server | No |
+| Player | 491 | TriggerVolumeToolMultiMove | NULL | Client → Server | No |
+| Player | 492 | TriggerVolumeToolSetColor | NULL | Client → Server | No |
+| Player | 493 | TriggerVolumeToolSetTargetTypes | <ul><li>TargetTypes (byte, required)</li></ul> | Client → Server | No |
+| Player | 500 | TriggerVolumeToolSetKeepLoaded | <ul><li>KeepLoaded (bool, required)</li></ul> | Client → Server | No |
+| Player | 501 | TriggerVolumeToolSetCooldown | <ul><li>Cooldown (float, required)</li> <li>CooldownMode (byte, required)</li></ul> | Client → Server | No |
+| Player | 502 | TriggerVolumeToolSetActivationDelay | <ul><li>ActivationDelay (float, required)</li></ul> | Client → Server | No |
+| Player | 503 | SelectionToolShowTriggerVolumes | <ul><li>Active (bool, required)</li></ul> | Client → Server | No |
+
+</details>
+
+<details>
+<summary><h3>ServerAccess</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Server Access | 250 | RequestServerAccess | <ul><li>Access (Access, required)</li> <li>ExternalPort (short, required)</li></ul> | Server → Client | No |
+| Server Access | 251 | UpdateServerAccess | <ul><li>Access (Access, required)</li></ul> | Client → Server | No |
+| Server Access | 252 | SetServerAccess | <ul><li>Access (Access, required)</li> <li>Password (string, optional)</li></ul> | Client → Server | No |
+
+</details>
+
+<details>
+<summary><h3>Setup</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Setup | 20 | WorldSettings | <ul><li>WorldHeight (int, required)</li></ul> | Server → Client | Yes |
+| Setup | 21 | WorldLoadProgress | <ul><li>Status (FormattedMessage, optional)</li> <li>PercentComplete (int, required)</li> <li>PercentCompleteSubitem (int, required)</li></ul> | Server → Client | No |
+| Setup | 22 | WorldLoadFinished | NULL | Server → Client | No |
+| Setup | 23 | RequestAssets | NULL | Client → Server | Yes |
+| Setup | 24 | AssetInitialize | NULL | Server → Client | No |
+| Setup | 25 | AssetPart | NULL | Server → Client | Yes |
+| Setup | 26 | AssetFinalize | NULL | Server → Client | No |
+| Setup | 27 | RemoveAssets | NULL | Server → Client | No |
+| Setup | 28 | RequestCommonAssetsRebuild | NULL | Server → Client | No |
+| Setup | 29 | SetUpdateRate | <ul><li>UpdatesPerSecond (int, required)</li></ul> | Server → Client | No |
+| Setup | 30 | SetTimeDilation | <ul><li>TimeDilation (float, required)</li></ul> | Server → Client | No |
+| Setup | 31 | UpdateFeatures | NULL | Server → Client | No |
+| Setup | 32 | ViewRadius | <ul><li>Value (int, required)</li></ul> | Server ↔ Client | No |
+| Setup | 33 | SetupFinalize | NULL | Client → Server | No |
+| Setup | 34 | ServerTags | NULL | Server → Client | No |
+
+</details>
+
+<details>
+<summary><h3>Stream</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Stream | 460 | StreamOpen | <ul><li>Type (StreamType, required)</li></ul> | Client → Server | No |
+| Stream | 461 | StreamOpenResponse | <ul><li>Type (StreamType, required)</li> <li>Accepted (bool, required)</li> <li>RejectionReason (string, optional)</li></ul> | Server → Client | No |
+
+</details>
+
+<details>
+<summary><h3>Voice</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Voice | 452 | VoiceConfig | <ul><li>VoiceEnabled (bool, required)</li> <li>Codec (VoiceCodec, required)</li> <li>SampleRate (int, required)</li> <li>Channels (byte, required)</li> <li>MaxHearingDistance (float, required)</li> <li>ReferenceDistance (float, required)</li> <li>SupportsVoiceStream (bool, required)</li> <li>MaxPacketsPerSecond (byte, required)</li></ul> | Server → Client | No |
+
+</details>
+
+<details>
+<summary><h3>Window</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| Window | 200 | OpenWindow | <ul><li>Id (int, required)</li> <li>WindowType (WindowType, required)</li> <li>WindowData (string, optional)</li> <li>Inventory (InventorySection, optional)</li> <li>ExtraResources (ExtraResources, optional)</li></ul> | Server → Client | Yes |
+| Window | 201 | UpdateWindow | <ul><li>Id (int, required)</li> <li>WindowData (string, optional)</li> <li>Inventory (InventorySection, optional)</li> <li>ExtraResources (ExtraResources, optional)</li></ul> | Server → Client | Yes |
+| Window | 202 | CloseWindow | <ul><li>Id (int, required)</li></ul> | Server ↔ Client | No |
+| Window | 203 | SendWindowAction | NULL | Client → Server | No |
+| Window | 204 | ClientOpenWindow | <ul><li>Type (WindowType, required)</li></ul> | Client → Server | No |
+
+</details>
+
+<details>
+<summary><h3>World</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| World | 145 | UpdateTimeSettings | <ul><li>DaytimeDurationSeconds (int, required)</li> <li>NighttimeDurationSeconds (int, required)</li> <li>TotalMoonPhases (byte, required)</li> <li>TimePaused (bool, required)</li></ul> | Server → Client | No |
+| World | 146 | UpdateTime | <ul><li>GameTime (InstantData, optional)</li></ul> | Server → Client | No |
+| World | 147 | UpdateEditorTimeOverride | <ul><li>GameTime (InstantData, optional)</li> <li>Paused (bool, required)</li></ul> | Server → Client | No |
+| World | 148 | ClearEditorTimeOverride | NULL | Server → Client | No |
+| World | 149 | UpdateWeather | <ul><li>WeatherIndex (int, required)</li> <li>TransitionSeconds (float, required)</li></ul> | Server → Client | No |
+| World | 150 | UpdateEditorWeatherOverride | <ul><li>WeatherIndex (int, required)</li></ul> | Server → Client | No |
+| World | 151 | UpdateForcedMusic | <ul><li>ContainerIndex (int, required)</li></ul> | Server → Client | No |
+| World | 152 | SpawnParticleSystem | <ul><li>ParticleSystemId (string, optional)</li> <li>Position (Position, optional)</li> <li>Rotation (Direction, optional)</li> <li>Scale (float, required)</li> <li>Color (Color, optional)</li></ul> | Server → Client | No |
+| World | 153 | SpawnBlockParticleSystem | <ul><li>BlockId (int, required)</li> <li>ParticleType (BlockParticleEvent, required)</li> <li>Position (Position, optional)</li></ul> | Server → Client | No |
+| World | 154 | PlaySoundEvent2D | <ul><li>SoundEventIndex (int, required)</li> <li>Category (SoundCategory, required)</li> <li>VolumeModifier (float, required)</li> <li>PitchModifier (float, required)</li></ul> | Server → Client | No |
+| World | 155 | PlaySoundEvent3D | <ul><li>SoundEventIndex (int, required)</li> <li>Category (SoundCategory, required)</li> <li>Position (Position, optional)</li> <li>VolumeModifier (float, required)</li> <li>PitchModifier (float, required)</li></ul> | Server → Client | No |
+| World | 156 | PlaySoundEventEntity | <ul><li>SoundEventIndex (int, required)</li> <li>NetworkId (int, required)</li> <li>VolumeModifier (float, required)</li> <li>PitchModifier (float, required)</li></ul> | Server → Client | No |
+| World | 157 | UpdateSleepState | <ul><li>GrayFade (bool, required)</li> <li>SleepUi (bool, required)</li> <li>Clock (SleepClock, optional)</li> <li>Multiplayer (SleepMultiplayer, optional)</li></ul> | Server → Client | No |
+| World | 158 | SetPaused | <ul><li>Paused (bool, required)</li></ul> | Client → Server | No |
+| World | 159 | ServerSetPaused | <ul><li>Paused (bool, required)</li></ul> | Server → Client | No |
+| World | 362 | PlaySoundEventLocalPlayer | <ul><li>LocalSoundEventIndex (int, required)</li> <li>WorldSoundEventIndex (int, required)</li> <li>Category (SoundCategory, required)</li> <li>VolumeModifier (float, required)</li> <li>PitchModifier (float, required)</li></ul> | Server → Client | No |
+| World | 360 | UpdateSunSettings | <ul><li>HeightPercentage (float, required)</li> <li>AngleRadians (float, required)</li></ul> | Server → Client | No |
+| World | 361 | UpdatePostFxSettings | <ul><li>GlobalIntensity (float, required)</li> <li>Power (float, required)</li> <li>SunshaftScale (float, required)</li> <li>SunIntensity (float, required)</li> <li>SunshaftIntensity (float, required)</li></ul> | Server → Client | No |
+| World | 168 | UpdateMusicState | <ul><li>ContainerIndex (int, required)</li> <li>StateIndex (int, required)</li> <li>FadeDuration (float, required)</li></ul> | Server → Client | No |
+
+</details>
+
+<details>
+<summary><h3>WorldMap</h3></summary>
+
+| Module | Packet ID | Packet Name | Fields | Direction | Compressed |
+|--------|-----------|-------------|--------|-----------|------------|
+| World Map | 240 | UpdateWorldMapSettings | <ul><li>AllowTeleportToCoordinates (bool, required)</li> <li>AllowTeleportToMarkers (bool, required)</li> <li>AllowShowOnMapToggle (bool, required)</li> <li>AllowCompassTrackingToggle (bool, required)</li> <li>AllowCreatingMapMarkers (bool, required)</li> <li>AllowRemovingOtherPlayersMarkers (bool, required)</li></ul> | Server → Client | No |
+| World Map | 243 | UpdateWorldMapVisible | <ul><li>Visible (bool, required)</li></ul> | Client → Server | No |
+| World Map | 244 | TeleportToWorldMapMarker | <ul><li>Id (string, optional)</li></ul> | Client → Server | No |
+| World Map | 245 | TeleportToWorldMapPosition | <ul><li>X (int, required)</li> <li>Y (int, required)</li></ul> | Client → Server | No |
+| World Map | 246 | CreateUserMarker | <ul><li>X (float, required)</li> <li>Z (float, required)</li> <li>Name (string, optional)</li> <li>MarkerImage (string, optional)</li> <li>TintColor (Color, optional)</li> <li>Shared (bool, required)</li></ul> | Client → Server | No |
+
+</details>
