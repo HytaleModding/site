@@ -34,6 +34,20 @@ const normalizedChartData = chartData
   .filter((d) => new Date(d.date).getTime() <= chartEndDate)
   .map((d) => ({ ...d, date: new Date(d.date).getTime() }));
 
+function setActiveMilestone(dateStr: string | null) {
+  document
+    .querySelectorAll<HTMLElement>("[data-snap-section][data-date]")
+    .forEach((element) => {
+      const isActive = dateStr !== null && element.dataset.date === dateStr;
+
+      if (isActive) {
+        element.dataset.active = "true";
+      } else {
+        delete element.dataset.active;
+      }
+    });
+}
+
 function easeInOutCubic(t: number) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
@@ -107,18 +121,24 @@ export function MilestoneChart() {
         });
 
         if (activeDates.size > 0) {
-          const dates = Array.from(activeDates).map((d) =>
-            new Date(d).getTime(),
+          const dates = Array.from(activeDates).map((d) => ({
+            dateStr: d,
+            time: new Date(d).getTime(),
+          }));
+          const nextTargetTime = Math.max(...dates.map((date) => date.time));
+          const nextActiveDate = dates.find(
+            (date) => date.time === nextTargetTime,
           );
-          const nextTargetTime = Math.max(...dates);
 
           setTargetDate((currentTargetDate) =>
             currentTargetDate?.getTime() === nextTargetTime
               ? currentTargetDate
               : new Date(nextTargetTime),
           );
+          setActiveMilestone(nextActiveDate?.dateStr ?? null);
           setIsVisible(true);
         } else {
+          setActiveMilestone(null);
           setIsVisible(false);
         }
       },
@@ -138,7 +158,10 @@ export function MilestoneChart() {
     // Small delay to ensure elements are mounted
     setTimeout(checkElements, 100);
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      setActiveMilestone(null);
+    };
   }, []);
 
   useEffect(() => {

@@ -62,7 +62,7 @@ function MilestoneCard(milestone: Milestone) {
       style={{ minHeight: milestone.minHeight }}
     >
       <div className="flex flex-1 flex-col gap-3">
-        <div className="bg-background ring-background group-hover:border-primary absolute top-1/2 -left-8 size-4 -translate-x-1/2 rounded-full border shadow-sm ring-4 transition-colors md:-left-16" />
+        <div className="bg-background ring-background group-data-[active=true]:border-primary absolute top-1/2 -left-8 size-4 -translate-x-1/2 rounded-full border shadow-sm ring-4 transition-colors md:-left-16" />
         <time
           dateTime={milestone.date.toISOString()}
           className="text-primary/80 flex items-center gap-4 text-sm font-medium"
@@ -104,7 +104,7 @@ function MilestoneCard(milestone: Milestone) {
           <Image
             src={milestone.image}
             alt={milestone.title}
-            className="my-auto rounded-md"
+            className="my-auto size-full scale-125 rounded-md mask-b-from-60% object-cover"
           />
         )}
       </div>
