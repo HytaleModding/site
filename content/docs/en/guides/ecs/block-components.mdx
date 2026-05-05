@@ -179,9 +179,9 @@ return BlockTickStrategy.CONTINUE;
 
 ```java
 public class ExamplePlugin extends JavaPlugin {
-    protected static ExamplePlugin instance;
+    private static ExamplePlugin instance;
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    private ComponentType exampleBlockComponentType;
+    private ComponentType<ChunkStore, ExampleBlock> exampleBlockComponentType;
 
     public static ExamplePlugin get() {
         return instance;
@@ -205,7 +205,7 @@ public class ExamplePlugin extends JavaPlugin {
 		this.getChunkStoreRegistry().registerSystem(new ExampleInitializer());
 	}
 
-    public ComponentType getExampleBlockComponentType() {
+    public ComponentType<ChunkStore, ExampleBlock> getExampleBlockComponentType() {
         return this.exampleBlockComponentType;
     }
 }
