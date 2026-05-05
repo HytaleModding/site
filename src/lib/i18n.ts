@@ -3,17 +3,14 @@ import { defineI18n } from "fumadocs-core/i18n";
 export const i18n = defineI18n({
   defaultLanguage: "en",
   languages: [
-    "af-ZA",
     "ar-SA",
     "de-DE",
     "en",
     "es-ES",
     "fr-FR",
-    "hi-IN",
     "id-ID",
     "it-IT",
     "ja-JP",
-    "lv-LV",
     "lt-LT",
     "nl-NL",
     "pt-BR",
@@ -23,7 +20,6 @@ export const i18n = defineI18n({
     "ru-RU",
     "tr-TR",
     "uk-UA",
-    "vi-VN",
   ],
   parser: "dir",
 });
