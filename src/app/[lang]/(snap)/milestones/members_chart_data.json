@@ -1,0 +1,812 @@
+[
+  {
+    "date": "2025-11-24",
+    "averageMembers": 364,
+    "currentMembers": 364
+  },
+  {
+    "date": "2025-11-25",
+    "averageMembers": 374,
+    "currentMembers": 383
+  },
+  {
+    "date": "2025-11-26",
+    "averageMembers": 386,
+    "currentMembers": 410
+  },
+  {
+    "date": "2025-11-27",
+    "averageMembers": 395,
+    "currentMembers": 424
+  },
+  {
+    "date": "2025-11-28",
+    "averageMembers": 405,
+    "currentMembers": 442
+  },
+  {
+    "date": "2025-11-29",
+    "averageMembers": 414,
+    "currentMembers": 461
+  },
+  {
+    "date": "2025-11-30",
+    "averageMembers": 422,
+    "currentMembers": 473
+  },
+  {
+    "date": "2025-12-01",
+    "averageMembers": 430,
+    "currentMembers": 484
+  },
+  {
+    "date": "2025-12-02",
+    "averageMembers": 439,
+    "currentMembers": 509
+  },
+  {
+    "date": "2025-12-03",
+    "averageMembers": 446,
+    "currentMembers": 510
+  },
+  {
+    "date": "2025-12-04",
+    "averageMembers": 452,
+    "currentMembers": 516
+  },
+  {
+    "date": "2025-12-05",
+    "averageMembers": 458,
+    "currentMembers": 520
+  },
+  {
+    "date": "2025-12-06",
+    "averageMembers": 463,
+    "currentMembers": 522
+  },
+  {
+    "date": "2025-12-07",
+    "averageMembers": 469,
+    "currentMembers": 543
+  },
+  {
+    "date": "2025-12-08",
+    "averageMembers": 475,
+    "currentMembers": 561
+  },
+  {
+    "date": "2025-12-09",
+    "averageMembers": 481,
+    "currentMembers": 569
+  },
+  {
+    "date": "2025-12-10",
+    "averageMembers": 486,
+    "currentMembers": 576
+  },
+  {
+    "date": "2025-12-11",
+    "averageMembers": 492,
+    "currentMembers": 582
+  },
+  {
+    "date": "2025-12-12",
+    "averageMembers": 497,
+    "currentMembers": 588
+  },
+  {
+    "date": "2025-12-13",
+    "averageMembers": 502,
+    "currentMembers": 604
+  },
+  {
+    "date": "2025-12-14",
+    "averageMembers": 508,
+    "currentMembers": 636
+  },
+  {
+    "date": "2025-12-15",
+    "averageMembers": 508,
+    "currentMembers": 659
+  },
+  {
+    "date": "2025-12-16",
+    "averageMembers": 523,
+    "currentMembers": 678
+  },
+  {
+    "date": "2025-12-17",
+    "averageMembers": 539,
+    "currentMembers": 707
+  },
+  {
+    "date": "2025-12-18",
+    "averageMembers": 555,
+    "currentMembers": 719
+  },
+  {
+    "date": "2025-12-19",
+    "averageMembers": 570,
+    "currentMembers": 728
+  },
+  {
+    "date": "2025-12-20",
+    "averageMembers": 585,
+    "currentMembers": 739
+  },
+  {
+    "date": "2025-12-21",
+    "averageMembers": 599,
+    "currentMembers": 748
+  },
+  {
+    "date": "2025-12-22",
+    "averageMembers": 613,
+    "currentMembers": 759
+  },
+  {
+    "date": "2025-12-23",
+    "averageMembers": 627,
+    "currentMembers": 767
+  },
+  {
+    "date": "2025-12-24",
+    "averageMembers": 640,
+    "currentMembers": 771
+  },
+  {
+    "date": "2025-12-25",
+    "averageMembers": 652,
+    "currentMembers": 772
+  },
+  {
+    "date": "2025-12-26",
+    "averageMembers": 664,
+    "currentMembers": 793
+  },
+  {
+    "date": "2025-12-27",
+    "averageMembers": 676,
+    "currentMembers": 805
+  },
+  {
+    "date": "2025-12-28",
+    "averageMembers": 688,
+    "currentMembers": 813
+  },
+  {
+    "date": "2025-12-29",
+    "averageMembers": 700,
+    "currentMembers": 827
+  },
+  {
+    "date": "2025-12-30",
+    "averageMembers": 713,
+    "currentMembers": 844
+  },
+  {
+    "date": "2025-12-31",
+    "averageMembers": 725,
+    "currentMembers": 855
+  },
+  {
+    "date": "2026-01-01",
+    "averageMembers": 738,
+    "currentMembers": 875
+  },
+  {
+    "date": "2026-01-02",
+    "averageMembers": 752,
+    "currentMembers": 893
+  },
+  {
+    "date": "2026-01-03",
+    "averageMembers": 766,
+    "currentMembers": 915
+  },
+  {
+    "date": "2026-01-04",
+    "averageMembers": 781,
+    "currentMembers": 934
+  },
+  {
+    "date": "2026-01-05",
+    "averageMembers": 798,
+    "currentMembers": 978
+  },
+  {
+    "date": "2026-01-06",
+    "averageMembers": 822,
+    "currentMembers": 1069
+  },
+  {
+    "date": "2026-01-07",
+    "averageMembers": 847,
+    "currentMembers": 1098
+  },
+  {
+    "date": "2026-01-08",
+    "averageMembers": 911,
+    "currentMembers": 1558
+  },
+  {
+    "date": "2026-01-09",
+    "averageMembers": 984,
+    "currentMembers": 1724
+  },
+  {
+    "date": "2026-01-10",
+    "averageMembers": 1058,
+    "currentMembers": 1802
+  },
+  {
+    "date": "2026-01-11",
+    "averageMembers": 1132,
+    "currentMembers": 1882
+  },
+  {
+    "date": "2026-01-12",
+    "averageMembers": 1210,
+    "currentMembers": 2000
+  },
+  {
+    "date": "2026-01-13",
+    "averageMembers": 1319,
+    "currentMembers": 2411
+  },
+  {
+    "date": "2026-01-14",
+    "averageMembers": 1477,
+    "currentMembers": 3061
+  },
+  {
+    "date": "2026-01-15",
+    "averageMembers": 1663,
+    "currentMembers": 3525
+  },
+  {
+    "date": "2026-01-16",
+    "averageMembers": 1865,
+    "currentMembers": 3891
+  },
+  {
+    "date": "2026-01-17",
+    "averageMembers": 2079,
+    "currentMembers": 4221
+  },
+  {
+    "date": "2026-01-18",
+    "averageMembers": 2307,
+    "currentMembers": 4588
+  },
+  {
+    "date": "2026-01-19",
+    "averageMembers": 2553,
+    "currentMembers": 5013
+  },
+  {
+    "date": "2026-01-20",
+    "averageMembers": 2802,
+    "currentMembers": 5298
+  },
+  {
+    "date": "2026-01-21",
+    "averageMembers": 3051,
+    "currentMembers": 5546
+  },
+  {
+    "date": "2026-01-22",
+    "averageMembers": 3297,
+    "currentMembers": 5758
+  },
+  {
+    "date": "2026-01-23",
+    "averageMembers": 3549,
+    "currentMembers": 6071
+  },
+  {
+    "date": "2026-01-24",
+    "averageMembers": 3800,
+    "currentMembers": 6315
+  },
+  {
+    "date": "2026-01-25",
+    "averageMembers": 4047,
+    "currentMembers": 6524
+  },
+  {
+    "date": "2026-01-26",
+    "averageMembers": 4286,
+    "currentMembers": 6681
+  },
+  {
+    "date": "2026-01-27",
+    "averageMembers": 4513,
+    "currentMembers": 6790
+  },
+  {
+    "date": "2026-01-28",
+    "averageMembers": 4727,
+    "currentMembers": 6873
+  },
+  {
+    "date": "2026-01-29",
+    "averageMembers": 4958,
+    "currentMembers": 7278
+  },
+  {
+    "date": "2026-01-30",
+    "averageMembers": 5213,
+    "currentMembers": 7770
+  },
+  {
+    "date": "2026-01-31",
+    "averageMembers": 5464,
+    "currentMembers": 7975
+  },
+  {
+    "date": "2026-02-01",
+    "averageMembers": 5708,
+    "currentMembers": 8151
+  },
+  {
+    "date": "2026-02-02",
+    "averageMembers": 5939,
+    "currentMembers": 8259
+  },
+  {
+    "date": "2026-02-03",
+    "averageMembers": 6163,
+    "currentMembers": 8404
+  },
+  {
+    "date": "2026-02-04",
+    "averageMembers": 6379,
+    "currentMembers": 8542
+  },
+  {
+    "date": "2026-02-05",
+    "averageMembers": 6582,
+    "currentMembers": 8612
+  },
+  {
+    "date": "2026-02-06",
+    "averageMembers": 6772,
+    "currentMembers": 8681
+  },
+  {
+    "date": "2026-02-07",
+    "averageMembers": 6951,
+    "currentMembers": 8743
+  },
+  {
+    "date": "2026-02-08",
+    "averageMembers": 7119,
+    "currentMembers": 8802
+  },
+  {
+    "date": "2026-02-09",
+    "averageMembers": 7277,
+    "currentMembers": 8867
+  },
+  {
+    "date": "2026-02-10",
+    "averageMembers": 7424,
+    "currentMembers": 8899
+  },
+  {
+    "date": "2026-02-11",
+    "averageMembers": 7559,
+    "currentMembers": 8917
+  },
+  {
+    "date": "2026-02-12",
+    "averageMembers": 7685,
+    "currentMembers": 8953
+  },
+  {
+    "date": "2026-02-13",
+    "averageMembers": 7802,
+    "currentMembers": 8978
+  },
+  {
+    "date": "2026-02-14",
+    "averageMembers": 7911,
+    "currentMembers": 9003
+  },
+  {
+    "date": "2026-02-15",
+    "averageMembers": 8012,
+    "currentMembers": 9023
+  },
+  {
+    "date": "2026-02-16",
+    "averageMembers": 8107,
+    "currentMembers": 9058
+  },
+  {
+    "date": "2026-02-17",
+    "averageMembers": 8196,
+    "currentMembers": 9095
+  },
+  {
+    "date": "2026-02-18",
+    "averageMembers": 8281,
+    "currentMembers": 9132
+  },
+  {
+    "date": "2026-02-19",
+    "averageMembers": 8360,
+    "currentMembers": 9155
+  },
+  {
+    "date": "2026-02-20",
+    "averageMembers": 8434,
+    "currentMembers": 9175
+  },
+  {
+    "date": "2026-02-21",
+    "averageMembers": 8503,
+    "currentMembers": 9194
+  },
+  {
+    "date": "2026-02-22",
+    "averageMembers": 8568,
+    "currentMembers": 9218
+  },
+  {
+    "date": "2026-02-23",
+    "averageMembers": 8628,
+    "currentMembers": 9230
+  },
+  {
+    "date": "2026-02-24",
+    "averageMembers": 8683,
+    "currentMembers": 9236
+  },
+  {
+    "date": "2026-02-25",
+    "averageMembers": 8734,
+    "currentMembers": 9245
+  },
+  {
+    "date": "2026-02-26",
+    "averageMembers": 8783,
+    "currentMembers": 9279
+  },
+  {
+    "date": "2026-02-27",
+    "averageMembers": 8831,
+    "currentMembers": 9314
+  },
+  {
+    "date": "2026-02-28",
+    "averageMembers": 8877,
+    "currentMembers": 9337
+  },
+  {
+    "date": "2026-03-01",
+    "averageMembers": 8919,
+    "currentMembers": 9345
+  },
+  {
+    "date": "2026-03-02",
+    "averageMembers": 8959,
+    "currentMembers": 9362
+  },
+  {
+    "date": "2026-03-03",
+    "averageMembers": 8996,
+    "currentMembers": 9371
+  },
+  {
+    "date": "2026-03-04",
+    "averageMembers": 9031,
+    "currentMembers": 9384
+  },
+  {
+    "date": "2026-03-05",
+    "averageMembers": 9064,
+    "currentMembers": 9397
+  },
+  {
+    "date": "2026-03-06",
+    "averageMembers": 9097,
+    "currentMembers": 9431
+  },
+  {
+    "date": "2026-03-07",
+    "averageMembers": 9130,
+    "currentMembers": 9468
+  },
+  {
+    "date": "2026-03-08",
+    "averageMembers": 9164,
+    "currentMembers": 9513
+  },
+  {
+    "date": "2026-03-09",
+    "averageMembers": 9197,
+    "currentMembers": 9531
+  },
+  {
+    "date": "2026-03-10",
+    "averageMembers": 9228,
+    "currentMembers": 9544
+  },
+  {
+    "date": "2026-03-11",
+    "averageMembers": 9259,
+    "currentMembers": 9577
+  },
+  {
+    "date": "2026-03-12",
+    "averageMembers": 9288,
+    "currentMembers": 9583
+  },
+  {
+    "date": "2026-03-13",
+    "averageMembers": 9316,
+    "currentMembers": 9599
+  },
+  {
+    "date": "2026-03-14",
+    "averageMembers": 9343,
+    "currentMembers": 9617
+  },
+  {
+    "date": "2026-03-15",
+    "averageMembers": 9370,
+    "currentMembers": 9641
+  },
+  {
+    "date": "2026-03-16",
+    "averageMembers": 9396,
+    "currentMembers": 9656
+  },
+  {
+    "date": "2026-03-17",
+    "averageMembers": 9420,
+    "currentMembers": 9668
+  },
+  {
+    "date": "2026-03-18",
+    "averageMembers": 9444,
+    "currentMembers": 9685
+  },
+  {
+    "date": "2026-03-19",
+    "averageMembers": 9467,
+    "currentMembers": 9697
+  },
+  {
+    "date": "2026-03-20",
+    "averageMembers": 9489,
+    "currentMembers": 9716
+  },
+  {
+    "date": "2026-03-21",
+    "averageMembers": 9511,
+    "currentMembers": 9738
+  },
+  {
+    "date": "2026-03-22",
+    "averageMembers": 9533,
+    "currentMembers": 9756
+  },
+  {
+    "date": "2026-03-23",
+    "averageMembers": 9554,
+    "currentMembers": 9770
+  },
+  {
+    "date": "2026-03-24",
+    "averageMembers": 9574,
+    "currentMembers": 9774
+  },
+  {
+    "date": "2026-03-25",
+    "averageMembers": 9593,
+    "currentMembers": 9783
+  },
+  {
+    "date": "2026-03-26",
+    "averageMembers": 9612,
+    "currentMembers": 9802
+  },
+  {
+    "date": "2026-03-27",
+    "averageMembers": 9630,
+    "currentMembers": 9813
+  },
+  {
+    "date": "2026-03-28",
+    "averageMembers": 9647,
+    "currentMembers": 9823
+  },
+  {
+    "date": "2026-03-29",
+    "averageMembers": 9663,
+    "currentMembers": 9829
+  },
+  {
+    "date": "2026-03-30",
+    "averageMembers": 9679,
+    "currentMembers": 9842
+  },
+  {
+    "date": "2026-03-31",
+    "averageMembers": 9694,
+    "currentMembers": 9849
+  },
+  {
+    "date": "2026-04-01",
+    "averageMembers": 9707,
+    "currentMembers": 9839
+  },
+  {
+    "date": "2026-04-02",
+    "averageMembers": 9719,
+    "currentMembers": 9839
+  },
+  {
+    "date": "2026-04-03",
+    "averageMembers": 9730,
+    "currentMembers": 9850
+  },
+  {
+    "date": "2026-04-04",
+    "averageMembers": 9741,
+    "currentMembers": 9857
+  },
+  {
+    "date": "2026-04-05",
+    "averageMembers": 9751,
+    "currentMembers": 9860
+  },
+  {
+    "date": "2026-04-06",
+    "averageMembers": 9761,
+    "currentMembers": 9869
+  },
+  {
+    "date": "2026-04-07",
+    "averageMembers": 9771,
+    "currentMembers": 9871
+  },
+  {
+    "date": "2026-04-08",
+    "averageMembers": 9780,
+    "currentMembers": 9875
+  },
+  {
+    "date": "2026-04-09",
+    "averageMembers": 9788,
+    "currentMembers": 9878
+  },
+  {
+    "date": "2026-04-10",
+    "averageMembers": 9797,
+    "currentMembers": 9889
+  },
+  {
+    "date": "2026-04-11",
+    "averageMembers": 9806,
+    "currentMembers": 9904
+  },
+  {
+    "date": "2026-04-12",
+    "averageMembers": 9815,
+    "currentMembers": 9907
+  },
+  {
+    "date": "2026-04-13",
+    "averageMembers": 9823,
+    "currentMembers": 9909
+  },
+  {
+    "date": "2026-04-14",
+    "averageMembers": 9831,
+    "currentMembers": 9920
+  },
+  {
+    "date": "2026-04-15",
+    "averageMembers": 9838,
+    "currentMembers": 9916
+  },
+  {
+    "date": "2026-04-16",
+    "averageMembers": 9844,
+    "currentMembers": 9913
+  },
+  {
+    "date": "2026-04-17",
+    "averageMembers": 9850,
+    "currentMembers": 9916
+  },
+  {
+    "date": "2026-04-18",
+    "averageMembers": 9854,
+    "currentMembers": 9900
+  },
+  {
+    "date": "2026-04-19",
+    "averageMembers": 9858,
+    "currentMembers": 9905
+  },
+  {
+    "date": "2026-04-20",
+    "averageMembers": 9862,
+    "currentMembers": 9906
+  },
+  {
+    "date": "2026-04-21",
+    "averageMembers": 9866,
+    "currentMembers": 9916
+  },
+  {
+    "date": "2026-04-22",
+    "averageMembers": 9870,
+    "currentMembers": 9917
+  },
+  {
+    "date": "2026-04-23",
+    "averageMembers": 9875,
+    "currentMembers": 9926
+  },
+  {
+    "date": "2026-04-24",
+    "averageMembers": 9879,
+    "currentMembers": 9927
+  },
+  {
+    "date": "2026-04-25",
+    "averageMembers": 9882,
+    "currentMembers": 9919
+  },
+  {
+    "date": "2026-04-26",
+    "averageMembers": 9886,
+    "currentMembers": 9926
+  },
+  {
+    "date": "2026-04-27",
+    "averageMembers": 9889,
+    "currentMembers": 9919
+  },
+  {
+    "date": "2026-04-28",
+    "averageMembers": 9892,
+    "currentMembers": 9928
+  },
+  {
+    "date": "2026-04-29",
+    "averageMembers": 9898,
+    "currentMembers": 9964
+  },
+  {
+    "date": "2026-04-30",
+    "averageMembers": 9904,
+    "currentMembers": 9966
+  },
+  {
+    "date": "2026-05-01",
+    "averageMembers": 9909,
+    "currentMembers": 9967
+  },
+  {
+    "date": "2026-05-02",
+    "averageMembers": 9914,
+    "currentMembers": 9973
+  },
+  {
+    "date": "2026-05-03",
+    "averageMembers": 9919,
+    "currentMembers": 9978
+  },
+  {
+    "date": "2026-05-04",
+    "averageMembers": 9924,
+    "currentMembers": 9981
+  }
+]

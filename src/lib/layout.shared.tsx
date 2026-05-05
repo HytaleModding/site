@@ -77,6 +77,10 @@ export function baseOptions(
         text: messages.nav.grants,
         url: `/${locale}/grants`,
       },
+      {
+        text: messages.nav.milestones,
+        url: `/${locale}/milestones`,
+      },
     );
   }
 
