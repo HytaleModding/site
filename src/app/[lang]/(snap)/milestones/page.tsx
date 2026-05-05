@@ -13,7 +13,6 @@ import { MilestoneChart } from "./chart";
 export default function MilestonesPage() {
   return (
     <div className="relative overflow-hidden">
-      <GitInfoButton />
       <Spotlight />
 
       <MilestoneChart />
