@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/chart";
 import chartData from "./members_chart_data.json";
 
+import { milestones } from "./data";
+
 const chartConfig = {
   averageMembers: {
     label: "Average Members",
@@ -24,21 +26,101 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+const chartStartDate = new Date("2026-01-01").getTime();
+const chartEndDate = milestones[milestones.length - 1].date.getTime();
+const chartRevealDuration = 800;
+
+const normalizedChartData = chartData
+  .filter((d) => new Date(d.date).getTime() <= chartEndDate)
+  .map((d) => ({ ...d, date: new Date(d.date).getTime() }));
+
+function easeInOutCubic(t: number) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+function getRevealedChartData(cutoffDate: number | null) {
+  if (cutoffDate === null) return [];
+
+  const clampedCutoffDate = Math.min(
+    Math.max(cutoffDate, chartStartDate),
+    chartEndDate,
+  );
+  const revealedData = normalizedChartData.filter(
+    (d) => d.date <= clampedCutoffDate,
+  );
+  const nextPoint = normalizedChartData.find((d) => d.date > clampedCutoffDate);
+  const previousPoint = revealedData[revealedData.length - 1];
+
+  if (
+    !previousPoint ||
+    !nextPoint ||
+    previousPoint.date === clampedCutoffDate
+  ) {
+    return revealedData;
+  }
+
+  const progress =
+    (clampedCutoffDate - previousPoint.date) /
+    (nextPoint.date - previousPoint.date);
+
+  return [
+    ...revealedData,
+    {
+      ...previousPoint,
+      date: clampedCutoffDate,
+      averageMembers:
+        previousPoint.averageMembers +
+        (nextPoint.averageMembers - previousPoint.averageMembers) * progress,
+      currentMembers:
+        previousPoint.currentMembers +
+        (nextPoint.currentMembers - previousPoint.currentMembers) * progress,
+    },
+  ];
+}
+
 export function MilestoneChart() {
-  const [targetDate, setTargetDate] = useState<Date>(new Date());
+  const [targetDate, setTargetDate] = useState<Date | null>(null);
+  const [revealedDate, setRevealedDate] = useState<number | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const animationFrameRef = useRef<number | null>(null);
+
+  const displayedChartData = useMemo(
+    () => getRevealedChartData(revealedDate),
+    [revealedDate],
+  );
 
   useEffect(() => {
     const scroller = document.querySelector("[data-snap-scroller]");
+    const activeDates = new Set<string>();
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const dateStr = entry.target.getAttribute("data-date");
+          if (!dateStr) return;
+
           if (entry.isIntersecting) {
-            const dateStr = entry.target.getAttribute("data-date");
-            if (dateStr) {
-              setTargetDate(new Date(dateStr));
-            }
+            activeDates.add(dateStr);
+          } else {
+            activeDates.delete(dateStr);
           }
         });
+
+        if (activeDates.size > 0) {
+          const dates = Array.from(activeDates).map((d) =>
+            new Date(d).getTime(),
+          );
+          const nextTargetTime = Math.max(...dates);
+
+          setTargetDate((currentTargetDate) =>
+            currentTargetDate?.getTime() === nextTargetTime
+              ? currentTargetDate
+              : new Date(nextTargetTime),
+          );
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
       },
       {
         root: scroller,
@@ -59,14 +141,59 @@ export function MilestoneChart() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!targetDate) return;
+
+    const targetTime = targetDate.getTime();
+
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+
+    setRevealedDate((currentRevealedDate) => {
+      const startTime = currentRevealedDate ?? chartStartDate;
+      const distance = Math.abs(targetTime - startTime);
+
+      if (distance === 0) return targetTime;
+
+      const startedAt = performance.now();
+
+      const animate = (now: number) => {
+        const progress = Math.min((now - startedAt) / chartRevealDuration, 1);
+        const easedProgress = easeInOutCubic(progress);
+
+        setRevealedDate(startTime + (targetTime - startTime) * easedProgress);
+
+        if (progress < 1) {
+          animationFrameRef.current = requestAnimationFrame(animate);
+        } else {
+          animationFrameRef.current = null;
+        }
+      };
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+
+      return startTime;
+    });
+
+    return () => {
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+    };
+  }, [targetDate]);
+
   return (
     <ChartContainer
       config={chartConfig}
-      className="fixed bottom-0 -z-10 h-[calc(100vh-100px)] w-screen opacity-50"
+      className="pointer-events-none fixed bottom-0 -z-10 h-[calc(100vh-100px)] w-screen"
+      style={{
+        opacity: isVisible ? 0.5 : 0,
+        transition: "opacity 0.5s ease-in-out",
+      }}
     >
-      <AreaChart
-        data={chartData.filter((data) => new Date(data.date) <= targetDate)}
-      >
+      <AreaChart data={displayedChartData}>
         <defs>
           <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
             <stop
@@ -100,6 +227,9 @@ export function MilestoneChart() {
           axisLine={false}
           tickMargin={8}
           minTickGap={32}
+          domain={[chartStartDate, chartEndDate]}
+          type="number"
+          scale="time"
           tickFormatter={(value) => {
             const date = new Date(value);
             return date.toLocaleDateString("en-US", {
@@ -114,6 +244,10 @@ export function MilestoneChart() {
           axisLine={false}
           tickMargin={8}
           minTickGap={32}
+          domain={[
+            0,
+            Math.max(...normalizedChartData.map((d) => d.currentMembers)),
+          ]}
         />
         <Area
           dataKey="currentMembers"
@@ -121,6 +255,8 @@ export function MilestoneChart() {
           fill="var(--color-background)"
           stroke="var(--color-currentMembers)"
           stackId="a"
+          isAnimationActive={false}
+          connectNulls={false}
         />
       </AreaChart>
     </ChartContainer>
