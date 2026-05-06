@@ -4,6 +4,7 @@ export const i18n = defineI18n({
   defaultLanguage: "en",
   languages: [
     "ar-SA",
+    "cs-CZ",
     "de-DE",
     "en",
     "es-ES",
@@ -15,7 +16,6 @@ export const i18n = defineI18n({
     "pt-BR",
     "pt-PT",
     "pl-PL",
-    "ro-RO",
     "ru-RU",
     "tr-TR",
     "uk-UA",
