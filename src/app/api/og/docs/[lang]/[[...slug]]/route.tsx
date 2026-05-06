@@ -31,6 +31,7 @@ const promises: Promise<Buffer>[] = [];
   // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-BlackItalic.otf")));
 
   promises.push(readFile(join(process.cwd(), "public/branding/logo-light-348.png")));
+  promises.push(readFile(join(process.cwd(), "public/assets/official-documentation/background/content-lower.png")));
 }
 
 export async function GET(
@@ -70,54 +71,108 @@ export async function GET(
     // BlackItalic,
 
     logoImage,
+    contentLowerImage,
   ] = await Promise.all(promises);
+
+  const isOfficialDocumentation = slug.includes("official-documentation");
+  const backgroundImage = isOfficialDocumentation
+    ? `data:image/png;base64,${Buffer.from(contentLowerImage).toString("base64")}`
+    : undefined;
+
+  const containerStyle = {
+    backgroundColor: isOfficialDocumentation ? "#162039" : "#0a0a0a",
+    color: isOfficialDocumentation ? "#b7cedd" : "white",
+    height: "100%",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    padding: "96px",
+    position: "relative",
+    overflow: "hidden",
+  } as const;
+
+  const titleStyle = isOfficialDocumentation
+    ? {
+        fontSize: 64,
+        fontWeight: 600,
+        color: "#0000",
+        backgroundImage: "linear-gradient(#ffe98d, #e19f27)",
+        backgroundClip: "text",
+        WebkitBackgroundClip: "text",
+      }
+    : {
+        fontSize: 64,
+        fontWeight: 600,
+        color: "white",
+      };
+
+  const descriptionStyle = {
+    fontSize: 40,
+    fontWeight: 400,
+    color: isOfficialDocumentation ? "#9eb2c0" : "lightgray",
+  } as const;
+
+  const footerStyle = {
+    display: "flex",
+    gap: "24px",
+    alignItems: "center",
+    fontSize: 48,
+    fontWeight: 600,
+    color: isOfficialDocumentation ? "#ffffff" : "white",
+    position: "relative",
+    zIndex: 1,
+  } as const;
 
   return new ImageResponse(
     <div
-      style={{
-        backgroundColor: "#0a0a0a",
-        color: "white",
-        height: "100%",
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        padding: "96px",
-      }}
+      style={containerStyle}
     >
+      {backgroundImage ? (
+        <img
+          src={backgroundImage}
+          alt=""
+          width={1200}
+          height={630}
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            width: 1200,
+            height: 630,
+            minWidth: "100%",
+            minHeight: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+            transform: "scale(1.02)",
+            zIndex: 0,
+          }}
+        />
+      ) : null}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           gap: "16px",
+          position: "relative",
+          zIndex: 1,
         }}
       >
         <span
-          style={{
-            fontSize: 64,
-            fontWeight: 600,
-          }}
+          style={titleStyle}
         >
           {page.data.title}
         </span>
         <span
-          style={{
-            fontSize: 40,
-            fontWeight: 400,
-            color: "lightgray",
-          }}
+          style={descriptionStyle}
         >
           {page.data.description}
         </span>
       </div>
       <div
-        style={{
-          display: "flex",
-          gap: "24px",
-          alignItems: "center",
-          fontSize: 48,
-          fontWeight: 600,
-        }}
+        style={footerStyle}
       >
         <img
           src={`data:image/png;base64,${Buffer.from(logoImage).toString("base64")}`}
@@ -125,7 +180,7 @@ export async function GET(
           width={64}
           height={64}
         />
-        <span>Hytale Modding</span>
+        <span>HytaleModding</span>
       </div>
     </div>,
     {
