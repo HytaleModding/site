@@ -11,7 +11,6 @@ export const i18n = defineI18n({
     "id-ID",
     "it-IT",
     "ja-JP",
-    "lt-LT",
     "nl-NL",
     "pt-BR",
     "pt-PT",
