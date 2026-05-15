@@ -9,398 +9,398 @@ authors:
 <OfficialDocumentationNotice />
 
 # Table of Contents [#top]
-1. [List of Builders](builders)
-2. [List of Roles](roles)
-    1. [Abstract](role_abstract)
-    2. [Generic](role_generic)
-    3. [Variant](role_variant)
-3. [List of Motion Controllers](motioncontrollers)
-    1. [Dive](motioncontroller_dive)
-    2. [Fly](motioncontroller_fly)
-    3. [Walk](motioncontroller_walk)
-4. [List of Misc Parts](miscparts)
-    1. [ActionList](actionlist_actionlist)
-    2. [Aim](headmotion_aim)
-    3. [AimCharge](bodymotion_aimcharge)
-    4. [Altitude](ientityfilter_altitude)
-    5. [And (IEntityFilter)](ientityfilter_and)
-    6. [Attitude (ISensorEntityPrioritiser)](isensorentityprioritiser_attitude)
-    7. [Attitude (IEntityFilter)](ientityfilter_attitude)
-    8. [Combat](ientityfilter_combat)
-    9. [CombatTargets](isensorentitycollector_combattargets)
-    10. [Flee](bodymotion_flee)
-    11. [Flock (BodyMotion)](bodymotion_flock)
-    12. [Flock (IEntityFilter)](ientityfilter_flock)
-    13. [HashMap](hashmap_hashmap)
-    14. [HeightDifference](ientityfilter_heightdifference)
-    15. [InsideBlock](ientityfilter_insideblock)
-    16. [Instruction](instruction_instruction)
-    17. [Inventory](ientityfilter_inventory)
-    18. [ItemInHand](ientityfilter_iteminhand)
-    19. [Land](bodymotion_land)
-    20. [Leave](bodymotion_leave)
-    21. [LineOfSight](ientityfilter_lineofsight)
-    22. [MaintainDistance](bodymotion_maintaindistance)
-    23. [MatchLook](bodymotion_matchlook)
-    24. [MovementState](ientityfilter_movementstate)
-    25. [NPCGroup](ientityfilter_npcgroup)
-    26. [Not](ientityfilter_not)
-    27. [Nothing (BodyMotion)](bodymotion_nothing)
-    28. [Nothing (HeadMotion)](headmotion_nothing)
-    29. [Observe](headmotion_observe)
-    30. [Or](ientityfilter_or)
-    31. [Path (Path)](path_path)
-    32. [Path (BodyMotion)](bodymotion_path)
-    34. [Random (Instruction)](instruction_random)
-    35. [Reference](instruction_reference)
-    36. [RelativeWaypointDefinition](relativewaypointdefinition_relativewaypointdefinition)
-    37. [Seek](bodymotion_seek)
-    38. [Sequence (BodyMotion)](bodymotion_sequence)
-    39. [Sequence (HeadMotion)](headmotion_sequence)
-    40. [SpotsMe](ientityfilter_spotsme)
-    41. [StandingOnBlock](ientityfilter_standingonblock)
-    42. [Stat](ientityfilter_stat)
-    43. [StateTransition](statetransition_statetransition)
-    44. [StateTransitionController](statetransitioncontroller_statetransitioncontroller)
-    45. [StateTransitionEdges](statetransitionedges_statetransitionedges)
-    46. [TakeOff](bodymotion_takeoff)
-    47. [Teleport](bodymotion_teleport)
-    48. [TestProbe](bodymotion_testprobe)
-    49. [Timer (BodyMotion)](bodymotion_timer)
-    50. [Timer (HeadMotion)](headmotion_timer)
-    51. [ValueToParameterMapping](valuetoparametermapping_valuetoparametermapping)
-    52. [ViewSector](ientityfilter_viewsector)
-    53. [Wander](bodymotion_wander)
-    54. [WanderInCircle](bodymotion_wanderincircle)
-    55. [WanderInRect](bodymotion_wanderinrect)
-    56. [Watch](headmotion_watch)
-    57. [WeightedAction](weightedaction_weightedaction)
-5. [List of Core Components (AudioVisual)](corecomponents_audiovisual)
-    1. [Animation (Sensor)](sensor_animation)
-    2. [Appearance](action_appearance)
-    3. [DisplayName](action_displayname)
-    4. [ModelAttachment](action_modelattachment)
-    5. [PlayAnimation](action_playanimation)
-    6. [PlaySound](action_playsound)
-    7. [SpawnParticles](action_spawnparticles)
-6. [List of Core Components (Combat)](corecomponents_combat)
-    1. [ApplyEntityEffect](action_applyentityeffect)
-    2. [Attack](action_attack)
-    3. [Damage (Sensor)](sensor_damage)
-    4. [IsBackingAway (Sensor)](sensor_isbackingaway)
-7. [List of Core Components (CoreComponents)](corecomponents_corecomponents)
-    1. [AddToHostileTargetMemory](action_addtohostiletargetmemory)
-    2. [CombatAbility](action_compatability)
-    3. [CombatActionEvaluator (Sensor)](sensor_combatactionevaluator)
-    4. [FlockBeacon](action_flockbeacon)
-    5. [FlockCombatDamage (Sensor)](sensor_flockcombatdamage)
-    6. [FlockLeader (Sensor)](sensor_flockleader)
-    7. [FlockState](action_flockstate)
-    8. [FlockTarget](action_flocktarget)
-    9. [HasHostileTargetMemory (Sensor)](sensor_hashostiletargetmemory)
-    10. [InflictedDamage (Sensor)](sensor_inflicteddamage)
-    11. [JoinFlock](action_joinflock)
-    12. [LeaveFlock](action_leaveflock)
-    13. [TriggerSpawnBeacon](action_triggerspawnbeacon)
-8. [List of Core Components (Debug)](corecomponents_debug)
-    1. [Log](action_log)
-    2. [Test (DO NOT USE)](action_test)
-9. [List of Core Components (Entity)](corecomponents_entity)
-    1. [Beacon (Sensor)](sensor_beacon)
-    2. [Count (Sensor)](sensor_count)
-    3. [IgnoreForAvoidance](action_ignoreforavoidance)
-    4. [Kill (Sensor)](sensor_kill)
-    5. [Mob (Sensor)](sensor_mob)
-    6. [OverrideAttitude](action_overrideattitude)
-    7. [Player (Sensor)](sensor_player)
-    8. [ReleaseTarget](action_releasetarget)
-    9. [Self (Sensor)](sensor_self)
-    10. [SetMarkedTarget](action_setmarkedtarget)
-    11. [SetStat](action_setstat)
-    12. [Target (Sensor)](sensor_target)
-10. [List of Core Components (Interaction)](corecomponents_interaction)
-    1. [CanInteract (Sensor)](sensor_caninteract)
-    2. [HasInteracted (Sensor)](sensor_hasinteracted)
-    3. [InteractionContext (Sensor)](sensor_interactioncontext)
-    4. [LockOnInteractionTarget](action_lockoninteractiontarget)
-    5. [SetInteractable](action_setinteractable)
-11. [List of Core Components (Items)](corecomponents_items)
-    1. [DropItem](action_dropitem)
-    2. [DroppedItem (Sensor)](sensor_droppeditem)
-    3. [Inventory](action_inventory)
-    4. [PickUpItem](action_pickupitem)
-12. [List of Core Components (Lifecycle)](corecomponents_lifecycle)
-    1. [Age (Sensor)](sensor_age)
-    2. [DelayDespawn](action_delaydespawn)
-    3. [Despawn](action_despawn)
-    4. [Die](action_die)
-    5. [Remove](action_remove)
-    6. [Role](action_role)
-    7. [Spawn](action_spawn)
-13. [List of Core Components (Message)](corecomponents_message)
-    1. [Beacon](action_beacon)
-    2. [Notify](action_notify)
-14. [List of Core Components (Movement)](corecomponents_movement)
-    1. [Crouch](action_crouch)
-    2. [InAir (Sensor)](sensor_inair)
-    3. [MotionController (Sensor)](sensor_motioncontroller)
-    4. [Nav (Sensor)](sensor_nav)
-    5. [OnGround (Sensor)](sensor_onground)
-    6. [OverrideAltitude](action_overridealtitude)
-    7. [RecomputePath](action_recomputepath)
-15. [List of Core Components (NPC)](corecomponents_npc)
-    1. [CompleteTask](action_completetask)
-    2. [HasTask (Sensor)](sensor_hastask)
-    3. [Mount](action_mount)
-    4. [OpenBarterShop](action_openbartershop)
-    5. [OpenShop](action_openshop)
-    6. [StartObjective](action_startobjective)
-16. [List of Core Components (Path)](corecomponents_path)
-    1. [MakePath](action_makepath)
-    2. [Path (Sensor)](sensor_path)
-17. [List of Core Components (StateMachine)](corecomponents_statemachine)
-    1. [IsBusy (Sensor)](sensor_isbusy)
-    2. [ParentState](action_parentstate)
-    3. [State](action_state)
-    4. [State (Sensor)](sensor_state)
-    5. [ToggleStateEvaluator](action_togglestateevaluator)
-18. [List of Core Components (Timer)](corecomponents_timer)
-    1. [Alarm (Sensor)](sensor_alarm)
-    2. [SetAlarm](action_setalarm)
-    3. [Timer (Sensor)](sensor_timer)
-    4. [TimerContinue](action_timercontinue)
-    5. [TimerModify](action_timermodify)
-    6. [TimerPause](action_timerpause)
-    7. [TimerRestart](action_timerrestart)
-    8. [TimerStart](action_timerstart)
-    9. [TimerStop](action_timerstop)
-19. [List of Core Components (Utility](corecomponents_utility)
-    1. [AdjustPosition (Sensor)](sensor_adjustposition)
-    2. [And (Sensor)](sensor_and)
-    3. [Any (Sensor)](sensor_any)
-    4. [Eval (Sensor)](sensor_eval)
-    5. [Flag (Sensor)](sensor_flag)
-    6. [Not (Sensor)](sensor_not)
-    7. [Nothing (Action)](action_nothing)
-    8. [Or (Sensor)](sensor_or)
-    9. [Random (Action)](action_random)
-    10. [Random (Sensor)](sensor_random)
-    11. [ResetInstructions](action_resetinstructions)
-    12. [Sequence](action_sequence)
-    13. [SetFlag](action_setflag)
-    14. [Switch (Sensor)](sensor_switch)
-    15. [Timeout](action_timeout)
-    16. [ValueProviderWrapper (Sensor)](sensor_valueproviderwrapper)
-20. [List of Core Components (World)](corecomponents_world)
-    1. [Block (Sensor)](sensor_block)
-    2. [BlockChange (Sensor)](sensor_blockchange)
-    3. [BlockType (Sensor)](sensor_blocktype)
-    4. [CanPlaceBlock (Sensor)](sensor_canplaceblock)
-    5. [EntityEvent (Sensor)](sensor_entityevent)
-    6. [InWater (Sensor)](sensor_inwater)
-    7. [Leash (Sensor)](sensor_leash)
-    8. [Light (Sensor)](sensor_light)
-    9. [PlaceBlock](action_placeblock)
-    10. [ReadPosition (Sensor)](sensor_readposition)
-    11. [ResetBlockSensors](action_resetblocksensors)
-    12. [ResetPath](action_resetpath)
-    13. [ResetSearchRays](action_resetsearchrays)
-    14. [SearchRay (Sensor)](sensor_searchray)
-    15. [SetBlockToPlace](action_setblocktoplace)
-    16. [SetLeashPosition](action_setleashposition)
-    17. [StorePosition](action_storeposition)
-    18. [Time (Sensor)](sensor_time)
-    19. [TriggerSpawners](action_triggerspawners)
-    20. [Weather (Sensor)](sensor_weather)
+1. [List of Builders](##builders)
+2. [List of Roles](#roles)
+    1. [Abstract](#role_abstract)
+    2. [Generic](#role_generic)
+    3. [Variant](#role_variant)
+3. [List of Motion Controllers](#motioncontrollers)
+    1. [Dive](#motioncontroller_dive)
+    2. [Fly](#motioncontroller_fly)
+    3. [Walk](#motioncontroller_walk)
+4. [List of Misc Parts](#miscparts)
+    1. [ActionList](#actionlist_actionlist)
+    2. [Aim](#headmotion_aim)
+    3. [AimCharge](#bodymotion_aimcharge)
+    4. [Altitude](#ientityfilter_altitude)
+    5. [And (IEntityFilter)](#ientityfilter_and)
+    6. [Attitude (ISensorEntityPrioritiser)](#isensorentityprioritiser_attitude)
+    7. [Attitude (IEntityFilter)](#ientityfilter_attitude)
+    8. [Combat](#ientityfilter_combat)
+    9. [CombatTargets](#isensorentitycollector_combattargets)
+    10. [Flee](#bodymotion_flee)
+    11. [Flock (BodyMotion)](#bodymotion_flock)
+    12. [Flock (IEntityFilter)](#ientityfilter_flock)
+    13. [HashMap](#hashmap_hashmap)
+    14. [HeightDifference](#ientityfilter_heightdifference)
+    15. [InsideBlock](#ientityfilter_insideblock)
+    16. [Instruction](#instruction_instruction)
+    17. [Inventory](#ientityfilter_inventory)
+    18. [ItemInHand](#ientityfilter_iteminhand)
+    19. [Land](#bodymotion_land)
+    20. [Leave](#bodymotion_leave)
+    21. [LineOfSight](#ientityfilter_lineofsight)
+    22. [MaintainDistance](#bodymotion_maintaindistance)
+    23. [MatchLook](#bodymotion_matchlook)
+    24. [MovementState](#ientityfilter_movementstate)
+    25. [NPCGroup](#ientityfilter_npcgroup)
+    26. [Not](#ientityfilter_not)
+    27. [Nothing (BodyMotion)](#bodymotion_nothing)
+    28. [Nothing (HeadMotion)](#headmotion_nothing)
+    29. [Observe](#headmotion_observe)
+    30. [Or](#ientityfilter_or)
+    31. [Path (Path)](#path_path)
+    32. [Path (BodyMotion)](#bodymotion_path)
+    34. [Random (Instruction)](#instruction_random)
+    35. [Reference](#instruction_reference)
+    36. [RelativeWaypointDefinition](#relativewaypointdefinition_relativewaypointdefinition)
+    37. [Seek](#bodymotion_seek)
+    38. [Sequence (BodyMotion)](#bodymotion_sequence)
+    39. [Sequence (HeadMotion)](#headmotion_sequence)
+    40. [SpotsMe](#ientityfilter_spotsme)
+    41. [StandingOnBlock](#ientityfilter_standingonblock)
+    42. [Stat](#ientityfilter_stat)
+    43. [StateTransition](#statetransition_statetransition)
+    44. [StateTransitionController](#statetransitioncontroller_statetransitioncontroller)
+    45. [StateTransitionEdges](#statetransitionedges_statetransitionedges)
+    46. [TakeOff](#bodymotion_takeoff)
+    47. [Teleport](#bodymotion_teleport)
+    48. [TestProbe](#bodymotion_testprobe)
+    49. [Timer (BodyMotion)](#bodymotion_timer)
+    50. [Timer (HeadMotion)](#headmotion_timer)
+    51. [ValueToParameterMapping](#valuetoparametermapping_valuetoparametermapping)
+    52. [ViewSector](#ientityfilter_viewsector)
+    53. [Wander](#bodymotion_wander)
+    54. [WanderInCircle](#bodymotion_wanderincircle)
+    55. [WanderInRect](#bodymotion_wanderinrect)
+    56. [Watch](#headmotion_watch)
+    57. [WeightedAction](#weightedaction_weightedaction)
+5. [List of Core Components (AudioVisual)](#corecomponents_audiovisual)
+    1. [Animation (Sensor)](#sensor_animation)
+    2. [Appearance](#action_appearance)
+    3. [DisplayName](#action_displayname)
+    4. [ModelAttachment](#action_modelattachment)
+    5. [PlayAnimation](#action_playanimation)
+    6. [PlaySound](#action_playsound)
+    7. [SpawnParticles](#action_spawnparticles)
+6. [List of Core Components (Combat)](#corecomponents_combat)
+    1. [ApplyEntityEffect](#action_applyentityeffect)
+    2. [Attack](#action_attack)
+    3. [Damage (Sensor)](#sensor_damage)
+    4. [IsBackingAway (Sensor)](#sensor_isbackingaway)
+7. [List of Core Components (CoreComponents)](#corecomponents_corecomponents)
+    1. [AddToHostileTargetMemory](#action_addtohostiletargetmemory)
+    2. [CombatAbility](#action_compatability)
+    3. [CombatActionEvaluator (Sensor)](#sensor_combatactionevaluator)
+    4. [FlockBeacon](#action_flockbeacon)
+    5. [FlockCombatDamage (Sensor)](#sensor_flockcombatdamage)
+    6. [FlockLeader (Sensor)](#sensor_flockleader)
+    7. [FlockState](#action_flockstate)
+    8. [FlockTarget](#action_flocktarget)
+    9. [HasHostileTargetMemory (Sensor)](#sensor_hashostiletargetmemory)
+    10. [InflictedDamage (Sensor)](#sensor_inflicteddamage)
+    11. [JoinFlock](#action_joinflock)
+    12. [LeaveFlock](#action_leaveflock)
+    13. [TriggerSpawnBeacon](#action_triggerspawnbeacon)
+8. [List of Core Components (Debug)](#corecomponents_debug)
+    1. [Log](#action_log)
+    2. [Test (DO NOT USE)](#action_test)
+9. [List of Core Components (Entity)](#corecomponents_entity)
+    1. [Beacon (Sensor)](#sensor_beacon)
+    2. [Count (Sensor)](#sensor_count)
+    3. [IgnoreForAvoidance](#action_ignoreforavoidance)
+    4. [Kill (Sensor)](#sensor_kill)
+    5. [Mob (Sensor)](#sensor_mob)
+    6. [OverrideAttitude](#action_overrideattitude)
+    7. [Player (Sensor)](#sensor_player)
+    8. [ReleaseTarget](#action_releasetarget)
+    9. [Self (Sensor)](#sensor_self)
+    10. [SetMarkedTarget](#action_setmarkedtarget)
+    11. [SetStat](#action_setstat)
+    12. [Target (Sensor)](#sensor_target)
+10. [List of Core Components (Interaction)](#corecomponents_interaction)
+    1. [CanInteract (Sensor)](#sensor_caninteract)
+    2. [HasInteracted (Sensor)](#sensor_hasinteracted)
+    3. [InteractionContext (Sensor)](#sensor_interactioncontext)
+    4. [LockOnInteractionTarget](#action_lockoninteractiontarget)
+    5. [SetInteractable](#action_setinteractable)
+11. [List of Core Components (Items)](#corecomponents_items)
+    1. [DropItem](#action_dropitem)
+    2. [DroppedItem (Sensor)](#sensor_droppeditem)
+    3. [Inventory](#action_inventory)
+    4. [PickUpItem](#action_pickupitem)
+12. [List of Core Components (Lifecycle)](#corecomponents_lifecycle)
+    1. [Age (Sensor)](#sensor_age)
+    2. [DelayDespawn](#action_delaydespawn)
+    3. [Despawn](#action_despawn)
+    4. [Die](#action_die)
+    5. [Remove](#action_remove)
+    6. [Role](#action_role)
+    7. [Spawn](#action_spawn)
+13. [List of Core Components (Message)](#corecomponents_message)
+    1. [Beacon](#action_beacon)
+    2. [Notify](#action_notify)
+14. [List of Core Components (Movement)](#corecomponents_movement)
+    1. [Crouch](#action_crouch)
+    2. [InAir (Sensor)](#sensor_inair)
+    3. [MotionController (Sensor)](#sensor_motioncontroller)
+    4. [Nav (Sensor)](#sensor_nav)
+    5. [OnGround (Sensor)](#sensor_onground)
+    6. [OverrideAltitude](#action_overridealtitude)
+    7. [RecomputePath](#action_recomputepath)
+15. [List of Core Components (NPC)](#corecomponents_npc)
+    1. [CompleteTask](#action_completetask)
+    2. [HasTask (Sensor)](#sensor_hastask)
+    3. [Mount](#action_mount)
+    4. [OpenBarterShop](#action_openbartershop)
+    5. [OpenShop](#action_openshop)
+    6. [StartObjective](#action_startobjective)
+16. [List of Core Components (Path)](#corecomponents_path)
+    1. [MakePath](#action_makepath)
+    2. [Path (Sensor)](#sensor_path)
+17. [List of Core Components (StateMachine)](#corecomponents_statemachine)
+    1. [IsBusy (Sensor)](#sensor_isbusy)
+    2. [ParentState](#action_parentstate)
+    3. [State](#action_state)
+    4. [State (Sensor)](#sensor_state)
+    5. [ToggleStateEvaluator](#action_togglestateevaluator)
+18. [List of Core Components (Timer)](#corecomponents_timer)
+    1. [Alarm (Sensor)](#sensor_alarm)
+    2. [SetAlarm](#action_setalarm)
+    3. [Timer (Sensor)](#sensor_timer)
+    4. [TimerContinue](#action_timercontinue)
+    5. [TimerModify](#action_timermodify)
+    6. [TimerPause](#action_timerpause)
+    7. [TimerRestart](#action_timerrestart)
+    8. [TimerStart](#action_timerstart)
+    9. [TimerStop](#action_timerstop)
+19. [List of Core Components (Utility](#corecomponents_utility)
+    1. [AdjustPosition (Sensor)](#sensor_adjustposition)
+    2. [And (Sensor)](#sensor_and)
+    3. [Any (Sensor)](#sensor_any)
+    4. [Eval (Sensor)](#sensor_eval)
+    5. [Flag (Sensor)](#sensor_flag)
+    6. [Not (Sensor)](#sensor_not)
+    7. [Nothing (Action)](#action_nothing)
+    8. [Or (Sensor)](#sensor_or)
+    9. [Random (Action)](#action_random)
+    10. [Random (Sensor)](#sensor_random)
+    11. [ResetInstructions](#action_resetinstructions)
+    12. [Sequence](#action_sequence)
+    13. [SetFlag](#action_setflag)
+    14. [Switch (Sensor)](#sensor_switch)
+    15. [Timeout](#action_timeout)
+    16. [ValueProviderWrapper (Sensor)](#sensor_valueproviderwrapper)
+20. [List of Core Components (World)](#corecomponents_world)
+    1. [Block (Sensor)](#sensor_block)
+    2. [BlockChange (Sensor)](#sensor_blockchange)
+    3. [BlockType (Sensor)](#sensor_blocktype)
+    4. [CanPlaceBlock (Sensor)](#sensor_canplaceblock)
+    5. [EntityEvent (Sensor)](#sensor_entityevent)
+    6. [InWater (Sensor)](#sensor_inwater)
+    7. [Leash (Sensor)](#sensor_leash)
+    8. [Light (Sensor)](#sensor_light)
+    9. [PlaceBlock](#action_placeblock)
+    10. [ReadPosition (Sensor)](#sensor_readposition)
+    11. [ResetBlockSensors](#action_resetblocksensors)
+    12. [ResetPath](#action_resetpath)
+    13. [ResetSearchRays](#action_resetsearchrays)
+    14. [SearchRay (Sensor)](#sensor_searchray)
+    15. [SetBlockToPlace](#action_setblocktoplace)
+    16. [SetLeashPosition](#action_setleashposition)
+    17. [StorePosition](#action_storeposition)
+    18. [Time (Sensor)](#sensor_time)
+    19. [TriggerSpawners](#action_triggerspawners)
+    20. [Weather (Sensor)](#sensor_weather)
 
 
 # List of Builders [#builders]
 
 |     | Name                                                                                 | Type                       | Description                                                                                                                                            |
 | --- | ------------------------------------------------------------------------------------ | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1   | [Abstract](role_abstract)                                                           | Role                       | Generic role for NPC                                                                                                                                   |
-| 2   | [ActionList](actionlist_actionlist)                                                 | ActionList                 | An array of actions to be executed                                                                                                                     |
-| 3   | [AddToHostileTargetMemory](action_addtohostiletargetmemory)                         | Action                     | Adds the passed target from the sensor to the hostile target memory                                                                                    |
-| 4   | [AdjustPosition](sensor_adjustposition)                                             | Sensor                     | Perform adjustments to the wrapped sensor&#x27;s returned position                                                                                     |
-| 5   | [Age](sensor_age)                                                                   | Sensor                     | Triggers when the age of the NPC falls between a certain range                                                                                         |
-| 6   | [Aim](headmotion_aim)                                                               | HeadMotion                 | Aim at target                                                                                                                                          |
-| 7   | [AimCharge](bodymotion_aimcharge)                                                   | BodyMotion                 | Aim the NPC at a target position for performing a charge based on aiming information and ensure that the charge is possible before it&#x27;s executed. |
-| 8   | [Alarm](sensor_alarm)                                                               | Sensor                     | Check the state of a named alarm                                                                                                                       |
-| 9   | [Altitude](ientityfilter_altitude)                                                  | IEntityFilter              | Matches targets if they&#x27;re within the defined range above the ground                                                                              |
-| 10  | [And](sensor_and)                                                                   | Sensor                     | Logical AND of list of sensors                                                                                                                         |
-| 11  | [And](ientityfilter_and)                                                            | IEntityFilter              | Logical AND of a list of filters                                                                                                                       |
-| 12  | [Animation](sensor_animation)                                                       | Sensor                     | Check if a given animation is being played                                                                                                             |
-| 13  | [Any](sensor_any)                                                                   | Sensor                     | Return always true                                                                                                                                     |
-| 14  | [Appearance](action_appearance)                                                     | Action                     | Set model displayed for NPC                                                                                                                            |
-| 15  | [ApplyEntityEffect](action_applyentityeffect)                                       | Action                     | Applies an entity effect to the target or self                                                                                                         |
-| 16  | [Attack](action_attack)                                                             | Action                     | Starts attack                                                                                                                                          |
-| 17  | [Attitude](isensorentityprioritiser_attitude)                                       | ISensorEntityPrioritiser   | Prioritises return entities by attitude                                                                                                                |
-| 18  | [Attitude](ientityfilter_attitude)                                                  | IEntityFilter              | Matches the attitude towards the locked target                                                                                                         |
-| 19  | [Beacon](action_beacon)                                                             | Action                     | Send Beacon Message                                                                                                                                    |
-| 20  | [Beacon](sensor_beacon)                                                             | Sensor                     | Checks to see if any messages have been broadcasted by nearby NPCs                                                                                     |
-| 21  | [Block](sensor_block)                                                               | Sensor                     | Checks for one of a set of blocks in the nearby area                                                                                                   |
-| 22  | [BlockChange](sensor_blockchange)                                                   | Sensor                     | Matches when a block from a blockset within a certain range is changed or interacted with                                                              |
-| 23  | [BlockType](sensor_blocktype)                                                       | Sensor                     | Checks if the block at the given position matches the provided block set                                                                               |
-| 24  | [CanInteract](sensor_caninteract)                                                   | Sensor                     | Checks whether or not the player being iterated by the interaction instruction can interact with this NPC                                              |
-| 25  | [CanPlaceBlock](sensor_canplaceblock)                                               | Sensor                     | Test if the currently set block can be placed at the relative position given direction and offset                                                      |
-| 26  | [Combat](ientityfilter_combat)                                                      | IEntityFilter              | Check the target&#x27;s combat state                                                                                                                   |
-| 27  | [CombatAbility](action_combatability)                                               | Action                     | Starts the combat ability selected by the combat action evaluator.                                                                                     |
-| 28  | [CombatActionEvaluator](sensor_combatactionevaluator)                               | Sensor                     | A sensor which handles funnelling information to actions and motions from the combat action evaluator.                                                 |
-| 29  | [CombatTargets](isensorentitycollector_combattargets)                               | ISensorEntityCollector     | A collector which processes matched friendly and hostile targets and adds them to the NPC&#x27;s short-term combat memory.                             |
-| 30  | [CompleteTask](action_completetask)                                                 | Action                     | Complete a task                                                                                                                                        |
-| 31  | [Count](sensor_count)                                                               | Sensor                     | Check if there is a certain number of NPCs or players within a specific range                                                                          |
-| 32  | [Crouch](action_crouch)                                                             | Action                     | Set NPC crouching state                                                                                                                                |
-| 33  | [Damage](sensor_damage)                                                             | Sensor                     | Test if NPC suffered damage                                                                                                                            |
-| 34  | [DelayDespawn](action_delaydespawn)                                                 | Action                     | Delay the despawning cycle for some amount of time                                                                                                     |
-| 35  | [Despawn](action_despawn)                                                           | Action                     | Trigger the NPC to despawn                                                                                                                             |
-| 36  | [Die](action_die)                                                                   | Action                     | Kill the NPC                                                                                                                                           |
-| 37  | [DisplayName](action_displayname)                                                   | Action                     | Set display name.                                                                                                                                      |
-| 38  | [Dive](motioncontroller_dive)                                                       | MotionController           | Provide diving abilities for NPC                                                                                                                       |
-| 39  | [DropItem](action_dropitem)                                                         | Action                     | Drop an item                                                                                                                                           |
-| 40  | [DroppedItem](sensor_droppeditem)                                                   | Sensor                     | Triggers if a given item is within a certain range of the NPC.                                                                                         |
-| 41  | [EntityEvent](sensor_entityevent)                                                   | Sensor                     | Matches when an entity from a specific NPC group within a certain range is damaged, killed, or interacted with                                         |
-| 42  | [Eval](sensor_eval)                                                                 | Sensor                     | Evaluate javascript expression and test if true                                                                                                        |
-| 43  | [Flag](sensor_flag)                                                                 | Sensor                     | Test if a named flag is set or not                                                                                                                     |
-| 44  | [Flee](bodymotion_flee)                                                             | BodyMotion                 | Move away from target                                                                                                                                  |
-| 45  | [Flock](bodymotion_flock)                                                           | BodyMotion                 | Flocking - WIP                                                                                                                                         |
-| 46  | [Flock](ientityfilter_flock)                                                        | IEntityFilter              | Test for flock membership and related properties                                                                                                       |
-| 47  | [FlockBeacon](action_flockbeacon)                                                   | Action                     | Send beacon message to flock                                                                                                                           |
-| 48  | [FlockCombatDamage](sensor_flockcombatdamage)                                       | Sensor                     | Test if flock with NPC received combat damage                                                                                                          |
-| 49  | [FlockLeader](sensor_flockleader)                                                   | Sensor                     | Test for the presence and provide position of the flock leader                                                                                         |
-| 50  | [FlockState](action_flockstate)                                                     | Action                     | Set state name for flock.                                                                                                                              |
-| 51  | [FlockTarget](action_flocktarget)                                                   | Action                     | Set or clear locked target for flock.                                                                                                                  |
-| 52  | [Fly](motioncontroller_fly)                                                         | MotionController           | Flight motion controller                                                                                                                               |
-| 53  | [Generic](role_generic)                                                             | Role                       | Generic role for NPC                                                                                                                                   |
-| 54  | [HasHostileTargetMemory](sensor_hashostiletargetmemory)                             | Sensor                     | Checks if there is currently a hostile target in the target memory.                                                                                    |
-| 55  | [HasInteracted](sensor_hasinteracted)                                               | Sensor                     | Checks whether the currently iterated player in the interaction instruction has interacted with this NPC                                               |
-| 56  | [HasTask](sensor_hastask)                                                           | Sensor                     | Checks whether or not the player being iterated by the interaction instruction has any of the given tasks                                              |
-| 57  | [HashMap](hashmap_hashmap)                                                          | HashMap                    | List of motion controllers                                                                                                                             |
-| 58  | [HeightDifference](ientityfilter_heightdifference)                                  | IEntityFilter              | Matches entities within the given height range                                                                                                         |
-| 59  | [IgnoreForAvoidance](action_ignoreforavoidance)                                     | Action                     | Set the target slot of an entity that should be ignored during avoidance                                                                               |
-| 60  | [InAir](sensor_inair)                                                               | Sensor                     | Test if NPC is not on ground                                                                                                                           |
-| 61  | [InWater](sensor_inwater)                                                           | Sensor                     | Check if NPC is currently in water                                                                                                                     |
-| 62  | [InflictedDamage](sensor_inflicteddamage)                                           | Sensor                     | Test if an individual or the flock it belongs to inflicted combat damage                                                                               |
-| 63  | [InsideBlock](ientityfilter_insideblock)                                            | IEntityFilter              | Matches if the entity is inside any of the blocks in the BlockSet                                                                                      |
-| 64  | [Instruction](instruction_instruction)                                              | Instruction                | An instruction with Sensor, and Motions and Actions, or a list of nested instructions.                                                                 |
-| 65  | [InteractionContext](sensor_interactioncontext)                                     | Sensor                     | Checks whether the currently iterated player in the interaction instruction has interacted with this NPC in the given context                          |
-| 66  | [Inventory](action_inventory)                                                       | Action                     | Add or remove items from inventory.                                                                                                                    |
-| 67  | [Inventory](ientityfilter_inventory)                                                | IEntityFilter              | Test various conditions relating to entity inventory                                                                                                   |
-| 68  | [IsBackingAway](sensor_isbackingaway)                                               | Sensor                     | Test if the NPC is currently backing away from something.                                                                                              |
-| 69  | [IsBusy](sensor_isbusy)                                                             | Sensor                     | Tests if an NPC is in one of the defined Busy States.                                                                                                  |
-| 70  | [ItemInHand](ientityfilter_iteminhand)                                              | IEntityFilter              | Check if entity is holding an item                                                                                                                     |
-| 71  | [JoinFlock](action_joinflock)                                                       | Action                     | Join/build a flock with other entity                                                                                                                   |
-| 72  | [Kill](sensor_kill)                                                                 | Sensor                     | Test if NPC made a kill                                                                                                                                |
-| 73  | [Land](bodymotion_land)                                                             | BodyMotion                 | Try to land at the given position                                                                                                                      |
-| 74  | [Leash](sensor_leash)                                                               | Sensor                     | Triggers when the NPC is outside a specified range from the leash point                                                                                |
-| 75  | [Leave](bodymotion_leave)                                                           | BodyMotion                 | Leave place                                                                                                                                            |
-| 76  | [LeaveFlock](action_leaveflock)                                                     | Action                     | Leave flock.                                                                                                                                           |
-| 77  | [Light](sensor_light)                                                               | Sensor                     | Check the light levels of the block an entity is standing on                                                                                           |
-| 78  | [LineOfSight](ientityfilter_lineofsight)                                            | IEntityFilter              | Matches if there is line of sight to the target                                                                                                        |
-| 79  | [LockOnInteractionTarget](action_lockoninteractiontarget)                           | Action                     | Locks on to the currently iterated player in the interaction instruction                                                                               |
-| 80  | [Log](action_log)                                                                   | Action                     | Log a message to console.                                                                                                                              |
-| 81  | [MaintainDistance](bodymotion_maintaindistance)                                     | BodyMotion                 | Maintain distance from a given position                                                                                                                |
-| 82  | [MakePath](action_makepath)                                                         | Action                     | Constructs a transient path for the NPC based on a series of rotations and distances                                                                   |
-| 83  | [MatchLook](bodymotion_matchlook)                                                   | BodyMotion                 | Make NPC body rotate to match look direction                                                                                                           |
-| 84  | [Mob](sensor_mob)                                                                   | Sensor                     | Test if entity matching specific attributes and filters is in range                                                                                    |
-| 85  | [ModelAttachment](action_modelattachment)                                           | Action                     | Set an attachment on the current NPC model                                                                                                             |
-| 86  | [MotionController](sensor_motioncontroller)                                         | Sensor                     | Test if specific motion controller is active.                                                                                                          |
-| 87  | [Mount](action_mount)                                                               | Action                     | Enable the player to mount the entity                                                                                                                  |
-| 88  | [MovementState](ientityfilter_movementstate)                                        | IEntityFilter              | Check if the entity is in the given movement state                                                                                                     |
-| 89  | [NPCGroup](ientityfilter_npcgroup)                                                  | IEntityFilter              | Returns whether the entity matches one of the provided NPCGroups                                                                                       |
-| 90  | [Nav](sensor_nav)                                                                   | Sensor                     | Queries navigation state                                                                                                                               |
-| 91  | [Not](sensor_not)                                                                   | Sensor                     | Invert sensor test                                                                                                                                     |
-| 92  | [Not](ientityfilter_not)                                                            | IEntityFilter              | Invert filter test                                                                                                                                     |
-| 93  | [Nothing](action_nothing)                                                           | Action                     | Do nothing                                                                                                                                             |
-| 94  | [Nothing](bodymotion_nothing)                                                       | BodyMotion                 | Do nothing                                                                                                                                             |
-| 95  | [Nothing](headmotion_nothing)                                                       | HeadMotion                 | Do nothing                                                                                                                                             |
-| 96  | [Notify](action_notify)                                                             | Action                     | Directly notifies a target NPC with a beacon message                                                                                                   |
-| 97  | [Observe](headmotion_observe)                                                       | HeadMotion                 | Observe surroundings in various ways.                                                                                                                  |
-| 98  | [OnGround](sensor_onground)                                                         | Sensor                     | Test if NPC is on ground                                                                                                                               |
-| 99  | [OpenBarterShop](action_openbartershop)                                             | Action                     | Open the barter shop UI for the current player                                                                                                         |
-| 100 | [OpenShop](action_openshop)                                                         | Action                     | Open the shop UI for the current player                                                                                                                |
-| 101 | [Or](sensor_or)                                                                     | Sensor                     | Logical OR of list of sensors                                                                                                                          |
-| 102 | [Or](ientityfilter_or)                                                              | IEntityFilter              | Logical OR of a list of filters                                                                                                                        |
-| 103 | [OverrideAltitude](action_overridealtitude)                                         | Action                     | Temporarily override the preferred altitude of a flying NPC                                                                                            |
-| 104 | [OverrideAttitude](action_overrideattitude)                                         | Action                     | Override this NPCs attitude towards the provided target for a given duration                                                                           |
-| 105 | [ParentState](action_parentstate)                                                   | Action                     | Set the main state of NPC from within a component                                                                                                      |
-| 106 | [Path](path_path)                                                                   | Path                       | List of transient path points                                                                                                                          |
-| 107 | [Path](sensor_path)                                                                 | Sensor                     | Find a path based on various criteria                                                                                                                  |
-| 108 | [Path](bodymotion_path)                                                             | BodyMotion                 | Walk along a path                                                                                                                                      |
-| 109 | [PickUpItem](action_pickupitem)                                                     | Action                     | Pick up an item                                                                                                                                        |
-| 110 | [PlaceBlock](action_placeblock)                                                     | Action                     | Place a block (chosen by another action) at a position returned by a Sensor if close enough                                                            |
-| 111 | [PlayAnimation](action_playanimation)                                               | Action                     | Play an animation                                                                                                                                      |
-| 112 | [PlaySound](action_playsound)                                                       | Action                     | Plays a sound to players within a specified range.                                                                                                     |
-| 113 | [Player](sensor_player)                                                             | Sensor                     | Test if player matching specific attributes and filters is in range                                                                                    |
-| 114 | [Random](action_random)                                                             | Action                     | Execute a single random action from a list of weighted actions.                                                                                        |
-| 115 | [Random](sensor_random)                                                             | Sensor                     | Alternates between returning true and false for specified random durations                                                                             |
-| 116 | [Random](instruction_random)                                                        | Instruction                | Randomised list of weighted instructions.                                                                                                              |
-| 117 | [ReadPosition](sensor_readposition)                                                 | Sensor                     | Read a stored position with some conditions                                                                                                            |
-| 118 | [RecomputePath](action_recomputepath)                                               | Action                     | Force recomputation of path finder solution                                                                                                            |
-| 119 | [Reference](instruction_reference)                                                  | Instruction                | Prioritized instruction list that can be referenced from elsewhere in the file                                                                         |
-| 120 | [RelativeWaypointDefinition](relativewaypointdefinition_relativewaypointdefinition) | RelativeWaypointDefinition | A simple path waypoint definition where each waypoint is relative to the previous                                                                      |
-| 121 | [ReleaseTarget](action_releasetarget)                                               | Action                     | Clear locked target                                                                                                                                    |
-| 122 | [Remove](action_remove)                                                             | Action                     | Erase the target entity from the world (no death animation).                                                                                           |
-| 123 | [ResetBlockSensors](action_resetblocksensors)                                       | Action                     | Resets a specific block sensor by name, or all block sensors                                                                                           |
-| 124 | [ResetInstructions](action_resetinstructions)                                       | Action                     | Force reset instructionList                                                                                                                            |
-| 125 | [ResetPath](action_resetpath)                                                       | Action                     | Resets the current patrol path this NPC follows.                                                                                                       |
-| 126 | [ResetSearchRays](action_resetsearchrays)                                           | Action                     | Resets a specific search ray sensor cached position by name, or all search ray sensors                                                                 |
-| 127 | [Role](action_role)                                                                 | Action                     | Change the Role of the NPC                                                                                                                             |
-| 128 | [SearchRay](sensor_searchray)                                                       | Sensor                     | Fire a ray at a specific angle to see if what it hits matches a given sought block                                                                     |
-| 129 | [Seek](bodymotion_seek)                                                             | BodyMotion                 | Chase target                                                                                                                                           |
-| 130 | [Self](sensor_self)                                                                 | Sensor                     | Test if the NPC itself matches a set of entity filters                                                                                                 |
-| 131 | [Sequence](action_sequence)                                                         | Action                     | List of actions.                                                                                                                                       |
-| 132 | [Sequence](bodymotion_sequence)                                                     | BodyMotion                 | (Looped)Sequence of motions                                                                                                                            |
-| 133 | [Sequence](headmotion_sequence)                                                     | HeadMotion                 | (Looped)Sequence of motions                                                                                                                            |
-| 134 | [SetAlarm](action_setalarm)                                                         | Action                     | Set a named alarm on the NPC                                                                                                                           |
-| 135 | [SetBlockToPlace](action_setblocktoplace)                                           | Action                     | Set the block type the NPC will place                                                                                                                  |
-| 136 | [SetFlag](action_setflag)                                                           | Action                     | Set a named flag to a boolean value                                                                                                                    |
-| 137 | [SetInteractable](action_setinteractable)                                           | Action                     | Set whether the currently iterated player in the interaction instruction should be able to interact with this NPC                                      |
-| 138 | [SetLeashPosition](action_setleashposition)                                         | Action                     | Sets the NPCs current position to the spawn/leash position                                                                                             |
-| 139 | [SetMarkedTarget](action_setmarkedtarget)                                           | Action                     | Explicitly sets a marked target in a given slot.                                                                                                       |
-| 140 | [SetStat](action_setstat)                                                           | Action                     | Sets (or adds to) an entity stat on the NPC.                                                                                                           |
-| 141 | [Spawn](action_spawn)                                                               | Action                     | Spawn an NPC                                                                                                                                           |
-| 142 | [SpawnParticles](action_spawnparticles)                                             | Action                     | Spawn particle system visible within a given range with an offset relative to npc heading                                                              |
-| 143 | [SpotsMe](ientityfilter_spotsme)                                                    | IEntityFilter              | Checks if the entity can view the NPC in a given view sector or cone and without obstruction.                                                          |
-| 144 | [StandingOnBlock](ientityfilter_standingonblock)                                    | IEntityFilter              | Matches the block directly beneath the entity against a BlockSet                                                                                       |
-| 145 | [StartObjective](action_startobjective)                                             | Action                     | Start the given objective for the currently iterated player in the interaction instruction                                                             |
-| 146 | [Stat](ientityfilter_stat)                                                          | IEntityFilter              | Match stat values of the entity                                                                                                                        |
-| 147 | [State](action_state)                                                               | Action                     | Set state of NPC                                                                                                                                       |
-| 148 | [State](sensor_state)                                                               | Sensor                     | Test for a specific state                                                                                                                              |
-| 149 | [StateTransition](statetransition_statetransition)                                  | StateTransition            | An entry containing a list of actions to execute when moving from one state to another                                                                 |
-| 150 | [StateTransitionController](statetransitioncontroller_statetransitioncontroller)    | StateTransitionController  | A list of state transitions                                                                                                                            |
-| 151 | [StateTransitionEdges](statetransitionedges_statetransitionedges)                   | StateTransitionEdges       | Sets of from and to states defining state transitions                                                                                                  |
-| 152 | [StorePosition](action_storeposition)                                               | Action                     | Store the position from the attached sensor                                                                                                            |
-| 153 | [Switch](sensor_switch)                                                             | Sensor                     | Check if a computed boolean is true                                                                                                                    |
-| 154 | [TakeOff](bodymotion_takeoff)                                                       | BodyMotion                 | Switch NPC from walking to flying motion controller                                                                                                    |
-| 155 | [Target](sensor_target)                                                             | Sensor                     | Test if given target matches a series of criteria and optional entity filters                                                                          |
-| 156 | [Teleport](bodymotion_teleport)                                                     | BodyMotion                 | Teleport NPC to a position given by a sensor                                                                                                           |
-| 157 | [Test](action_test)                                                                 | Action                     | Test action to exercise attribute evaluation (DO NOT USE)                                                                                              |
-| 158 | [TestProbe](bodymotion_testprobe)                                                   | BodyMotion                 | Debugging - Test probing                                                                                                                               |
-| 159 | [Time](sensor_time)                                                                 | Sensor                     | Check if the day/year time is within some specified time.                                                                                              |
-| 160 | [Timeout](action_timeout)                                                           | Action                     | Delay an action, or insert a delay in a sequence of actions                                                                                            |
-| 161 | [Timer](sensor_timer)                                                               | Sensor                     | Tests if a timer exists and the value is within a certain range                                                                                        |
-| 162 | [Timer](bodymotion_timer)                                                           | BodyMotion                 | Execute a Motion for a specific maximum time                                                                                                           |
-| 163 | [Timer](headmotion_timer)                                                           | HeadMotion                 | Execute a Motion for a specific maximum time                                                                                                           |
-| 164 | [TimerContinue](action_timercontinue)                                               | Action                     | Continue a timer                                                                                                                                       |
-| 165 | [TimerModify](action_timermodify)                                                   | Action                     | Modify values of a timer                                                                                                                               |
-| 166 | [TimerPause](action_timerpause)                                                     | Action                     | Pause a timer                                                                                                                                          |
-| 167 | [TimerRestart](action_timerrestart)                                                 | Action                     | Restart a timer                                                                                                                                        |
-| 168 | [TimerStart](action_timerstart)                                                     | Action                     | Start a timer                                                                                                                                          |
-| 169 | [TimerStop](action_timerstop)                                                       | Action                     | Stop a timer                                                                                                                                           |
-| 170 | [ToggleStateEvaluator](action_togglestateevaluator)                                 | Action                     | Enable or disable the NPC&#x27;s state evaluator                                                                                                       |
-| 171 | [TriggerSpawnBeacon](action_triggerspawnbeacon)                                     | Action                     | Trigger the nearest spawn beacon matching the configuration id                                                                                         |
-| 172 | [TriggerSpawners](action_triggerspawners)                                           | Action                     | Trigger all, or up to a certain number of manual spawn markers in a radius around the NPC                                                              |
-| 173 | [ValueProviderWrapper](sensor_valueproviderwrapper)                                 | Sensor                     | Wraps a sensor and passes down some additional parameter overrides pulled from the value store                                                         |
-| 174 | [ValueToParameterMapping](valuetoparametermapping_valuetoparametermapping)          | ValueToParameterMapping    | An entry containing a list of actions to execute when moving from one state to another                                                                 |
-| 175 | [Variant](role_variant)                                                             | Role                       | Create a variant from an existing NPC JSON file                                                                                                        |
-| 176 | [ViewSector](ientityfilter_viewsector)                                              | IEntityFilter              | Matches entities within the given view sector                                                                                                          |
-| 177 | [Walk](motioncontroller_walk)                                                       | MotionController           | Provide walk on ground abilities for NPC                                                                                                               |
-| 178 | [Wander](bodymotion_wander)                                                         | BodyMotion                 | Random movement                                                                                                                                        |
-| 179 | [WanderInCircle](bodymotion_wanderincircle)                                         | BodyMotion                 | Random movement in circle around spawn position                                                                                                        |
-| 180 | [WanderInRect](bodymotion_wanderinrect)                                             | BodyMotion                 | Random movement in rectangle around spawn position                                                                                                     |
-| 181 | [Watch](headmotion_watch)                                                           | HeadMotion                 | Rotate to target                                                                                                                                       |
-| 182 | [Weather](sensor_weather)                                                           | Sensor                     | Matches the current weather at the NPCs position against a set of weather globs                                                                        |
-| 183 | [WeightedAction](weightedaction_weightedaction)                                     | WeightedAction             | A wrapped and weighted action intended to be used for Random action lists.                                                                             |
+| 1   | [Abstract](#role_abstract)                                                           | Role                       | Generic role for NPC                                                                                                                                   |
+| 2   | [ActionList](#actionlist_actionlist)                                                 | ActionList                 | An array of actions to be executed                                                                                                                     |
+| 3   | [AddToHostileTargetMemory](#action_addtohostiletargetmemory)                         | Action                     | Adds the passed target from the sensor to the hostile target memory                                                                                    |
+| 4   | [AdjustPosition](#sensor_adjustposition)                                             | Sensor                     | Perform adjustments to the wrapped sensor&#x27;s returned position                                                                                     |
+| 5   | [Age](#sensor_age)                                                                   | Sensor                     | Triggers when the age of the NPC falls between a certain range                                                                                         |
+| 6   | [Aim](#headmotion_aim)                                                               | HeadMotion                 | Aim at target                                                                                                                                          |
+| 7   | [AimCharge](#bodymotion_aimcharge)                                                   | BodyMotion                 | Aim the NPC at a target position for performing a charge based on aiming information and ensure that the charge is possible before it&#x27;s executed. |
+| 8   | [Alarm](#sensor_alarm)                                                               | Sensor                     | Check the state of a named alarm                                                                                                                       |
+| 9   | [Altitude](#ientityfilter_altitude)                                                  | IEntityFilter              | Matches targets if they&#x27;re within the defined range above the ground                                                                              |
+| 10  | [And](#sensor_and)                                                                   | Sensor                     | Logical AND of list of sensors                                                                                                                         |
+| 11  | [And](#ientityfilter_and)                                                            | IEntityFilter              | Logical AND of a list of filters                                                                                                                       |
+| 12  | [Animation](#sensor_animation)                                                       | Sensor                     | Check if a given animation is being played                                                                                                             |
+| 13  | [Any](#sensor_any)                                                                   | Sensor                     | Return always true                                                                                                                                     |
+| 14  | [Appearance](#action_appearance)                                                     | Action                     | Set model displayed for NPC                                                                                                                            |
+| 15  | [ApplyEntityEffect](#action_applyentityeffect)                                       | Action                     | Applies an entity effect to the target or self                                                                                                         |
+| 16  | [Attack](#action_attack)                                                             | Action                     | Starts attack                                                                                                                                          |
+| 17  | [Attitude](#isensorentityprioritiser_attitude)                                       | ISensorEntityPrioritiser   | Prioritises return entities by attitude                                                                                                                |
+| 18  | [Attitude](#ientityfilter_attitude)                                                  | IEntityFilter              | Matches the attitude towards the locked target                                                                                                         |
+| 19  | [Beacon](#action_beacon)                                                             | Action                     | Send Beacon Message                                                                                                                                    |
+| 20  | [Beacon](#sensor_beacon)                                                             | Sensor                     | Checks to see if any messages have been broadcasted by nearby NPCs                                                                                     |
+| 21  | [Block](#sensor_block)                                                               | Sensor                     | Checks for one of a set of blocks in the nearby area                                                                                                   |
+| 22  | [BlockChange](#sensor_blockchange)                                                   | Sensor                     | Matches when a block from a blockset within a certain range is changed or interacted with                                                              |
+| 23  | [BlockType](#sensor_blocktype)                                                       | Sensor                     | Checks if the block at the given position matches the provided block set                                                                               |
+| 24  | [CanInteract](#sensor_caninteract)                                                   | Sensor                     | Checks whether or not the player being iterated by the interaction instruction can interact with this NPC                                              |
+| 25  | [CanPlaceBlock](#sensor_canplaceblock)                                               | Sensor                     | Test if the currently set block can be placed at the relative position given direction and offset                                                      |
+| 26  | [Combat](#ientityfilter_combat)                                                      | IEntityFilter              | Check the target&#x27;s combat state                                                                                                                   |
+| 27  | [CombatAbility](#action_combatability)                                               | Action                     | Starts the combat ability selected by the combat action evaluator.                                                                                     |
+| 28  | [CombatActionEvaluator](#sensor_combatactionevaluator)                               | Sensor                     | A sensor which handles funnelling information to actions and motions from the combat action evaluator.                                                 |
+| 29  | [CombatTargets](#isensorentitycollector_combattargets)                               | ISensorEntityCollector     | A collector which processes matched friendly and hostile targets and adds them to the NPC&#x27;s short-term combat memory.                             |
+| 30  | [CompleteTask](#action_completetask)                                                 | Action                     | Complete a task                                                                                                                                        |
+| 31  | [Count](#sensor_count)                                                               | Sensor                     | Check if there is a certain number of NPCs or players within a specific range                                                                          |
+| 32  | [Crouch](#action_crouch)                                                             | Action                     | Set NPC crouching state                                                                                                                                |
+| 33  | [Damage](#sensor_damage)                                                             | Sensor                     | Test if NPC suffered damage                                                                                                                            |
+| 34  | [DelayDespawn](#action_delaydespawn)                                                 | Action                     | Delay the despawning cycle for some amount of time                                                                                                     |
+| 35  | [Despawn](#action_despawn)                                                           | Action                     | Trigger the NPC to despawn                                                                                                                             |
+| 36  | [Die](#action_die)                                                                   | Action                     | Kill the NPC                                                                                                                                           |
+| 37  | [DisplayName](#action_displayname)                                                   | Action                     | Set display name.                                                                                                                                      |
+| 38  | [Dive](#motioncontroller_dive)                                                       | MotionController           | Provide diving abilities for NPC                                                                                                                       |
+| 39  | [DropItem](#action_dropitem)                                                         | Action                     | Drop an item                                                                                                                                           |
+| 40  | [DroppedItem](#sensor_droppeditem)                                                   | Sensor                     | Triggers if a given item is within a certain range of the NPC.                                                                                         |
+| 41  | [EntityEvent](#sensor_entityevent)                                                   | Sensor                     | Matches when an entity from a specific NPC group within a certain range is damaged, killed, or interacted with                                         |
+| 42  | [Eval](#sensor_eval)                                                                 | Sensor                     | Evaluate javascript expression and test if true                                                                                                        |
+| 43  | [Flag](#sensor_flag)                                                                 | Sensor                     | Test if a named flag is set or not                                                                                                                     |
+| 44  | [Flee](#bodymotion_flee)                                                             | BodyMotion                 | Move away from target                                                                                                                                  |
+| 45  | [Flock](#bodymotion_flock)                                                           | BodyMotion                 | Flocking - WIP                                                                                                                                         |
+| 46  | [Flock](#ientityfilter_flock)                                                        | IEntityFilter              | Test for flock membership and related properties                                                                                                       |
+| 47  | [FlockBeacon](#action_flockbeacon)                                                   | Action                     | Send beacon message to flock                                                                                                                           |
+| 48  | [FlockCombatDamage](#sensor_flockcombatdamage)                                       | Sensor                     | Test if flock with NPC received combat damage                                                                                                          |
+| 49  | [FlockLeader](#sensor_flockleader)                                                   | Sensor                     | Test for the presence and provide position of the flock leader                                                                                         |
+| 50  | [FlockState](#action_flockstate)                                                     | Action                     | Set state name for flock.                                                                                                                              |
+| 51  | [FlockTarget](#action_flocktarget)                                                   | Action                     | Set or clear locked target for flock.                                                                                                                  |
+| 52  | [Fly](#motioncontroller_fly)                                                         | MotionController           | Flight motion controller                                                                                                                               |
+| 53  | [Generic](#role_generic)                                                             | Role                       | Generic role for NPC                                                                                                                                   |
+| 54  | [HasHostileTargetMemory](#sensor_hashostiletargetmemory)                             | Sensor                     | Checks if there is currently a hostile target in the target memory.                                                                                    |
+| 55  | [HasInteracted](#sensor_hasinteracted)                                               | Sensor                     | Checks whether the currently iterated player in the interaction instruction has interacted with this NPC                                               |
+| 56  | [HasTask](#sensor_hastask)                                                           | Sensor                     | Checks whether or not the player being iterated by the interaction instruction has any of the given tasks                                              |
+| 57  | [HashMap](#hashmap_hashmap)                                                          | HashMap                    | List of motion controllers                                                                                                                             |
+| 58  | [HeightDifference](#ientityfilter_heightdifference)                                  | IEntityFilter              | Matches entities within the given height range                                                                                                         |
+| 59  | [IgnoreForAvoidance](#action_ignoreforavoidance)                                     | Action                     | Set the target slot of an entity that should be ignored during avoidance                                                                               |
+| 60  | [InAir](#sensor_inair)                                                               | Sensor                     | Test if NPC is not on ground                                                                                                                           |
+| 61  | [InWater](#sensor_inwater)                                                           | Sensor                     | Check if NPC is currently in water                                                                                                                     |
+| 62  | [InflictedDamage](#sensor_inflicteddamage)                                           | Sensor                     | Test if an individual or the flock it belongs to inflicted combat damage                                                                               |
+| 63  | [InsideBlock](#ientityfilter_insideblock)                                            | IEntityFilter              | Matches if the entity is inside any of the blocks in the BlockSet                                                                                      |
+| 64  | [Instruction](#instruction_instruction)                                              | Instruction                | An instruction with Sensor, and Motions and Actions, or a list of nested instructions.                                                                 |
+| 65  | [InteractionContext](#sensor_interactioncontext)                                     | Sensor                     | Checks whether the currently iterated player in the interaction instruction has interacted with this NPC in the given context                          |
+| 66  | [Inventory](#action_inventory)                                                       | Action                     | Add or remove items from inventory.                                                                                                                    |
+| 67  | [Inventory](#ientityfilter_inventory)                                                | IEntityFilter              | Test various conditions relating to entity inventory                                                                                                   |
+| 68  | [IsBackingAway](#sensor_isbackingaway)                                               | Sensor                     | Test if the NPC is currently backing away from something.                                                                                              |
+| 69  | [IsBusy](#sensor_isbusy)                                                             | Sensor                     | Tests if an NPC is in one of the defined Busy States.                                                                                                  |
+| 70  | [ItemInHand](#ientityfilter_iteminhand)                                              | IEntityFilter              | Check if entity is holding an item                                                                                                                     |
+| 71  | [JoinFlock](#action_joinflock)                                                       | Action                     | Join/build a flock with other entity                                                                                                                   |
+| 72  | [Kill](#sensor_kill)                                                                 | Sensor                     | Test if NPC made a kill                                                                                                                                |
+| 73  | [Land](#bodymotion_land)                                                             | BodyMotion                 | Try to land at the given position                                                                                                                      |
+| 74  | [Leash](#sensor_leash)                                                               | Sensor                     | Triggers when the NPC is outside a specified range from the leash point                                                                                |
+| 75  | [Leave](#bodymotion_leave)                                                           | BodyMotion                 | Leave place                                                                                                                                            |
+| 76  | [LeaveFlock](#action_leaveflock)                                                     | Action                     | Leave flock.                                                                                                                                           |
+| 77  | [Light](#sensor_light)                                                               | Sensor                     | Check the light levels of the block an entity is standing on                                                                                           |
+| 78  | [LineOfSight](#ientityfilter_lineofsight)                                            | IEntityFilter              | Matches if there is line of sight to the target                                                                                                        |
+| 79  | [LockOnInteractionTarget](#action_lockoninteractiontarget)                           | Action                     | Locks on to the currently iterated player in the interaction instruction                                                                               |
+| 80  | [Log](#action_log)                                                                   | Action                     | Log a message to console.                                                                                                                              |
+| 81  | [MaintainDistance](#bodymotion_maintaindistance)                                     | BodyMotion                 | Maintain distance from a given position                                                                                                                |
+| 82  | [MakePath](#action_makepath)                                                         | Action                     | Constructs a transient path for the NPC based on a series of rotations and distances                                                                   |
+| 83  | [MatchLook](#bodymotion_matchlook)                                                   | BodyMotion                 | Make NPC body rotate to match look direction                                                                                                           |
+| 84  | [Mob](#sensor_mob)                                                                   | Sensor                     | Test if entity matching specific attributes and filters is in range                                                                                    |
+| 85  | [ModelAttachment](#action_modelattachment)                                           | Action                     | Set an attachment on the current NPC model                                                                                                             |
+| 86  | [MotionController](#sensor_motioncontroller)                                         | Sensor                     | Test if specific motion controller is active.                                                                                                          |
+| 87  | [Mount](#action_mount)                                                               | Action                     | Enable the player to mount the entity                                                                                                                  |
+| 88  | [MovementState](#ientityfilter_movementstate)                                        | IEntityFilter              | Check if the entity is in the given movement state                                                                                                     |
+| 89  | [NPCGroup](#ientityfilter_npcgroup)                                                  | IEntityFilter              | Returns whether the entity matches one of the provided NPCGroups                                                                                       |
+| 90  | [Nav](#sensor_nav)                                                                   | Sensor                     | Queries navigation state                                                                                                                               |
+| 91  | [Not](#sensor_not)                                                                   | Sensor                     | Invert sensor test                                                                                                                                     |
+| 92  | [Not](#ientityfilter_not)                                                            | IEntityFilter              | Invert filter test                                                                                                                                     |
+| 93  | [Nothing](#action_nothing)                                                           | Action                     | Do nothing                                                                                                                                             |
+| 94  | [Nothing](#bodymotion_nothing)                                                       | BodyMotion                 | Do nothing                                                                                                                                             |
+| 95  | [Nothing](#headmotion_nothing)                                                       | HeadMotion                 | Do nothing                                                                                                                                             |
+| 96  | [Notify](#action_notify)                                                             | Action                     | Directly notifies a target NPC with a beacon message                                                                                                   |
+| 97  | [Observe](#headmotion_observe)                                                       | HeadMotion                 | Observe surroundings in various ways.                                                                                                                  |
+| 98  | [OnGround](#sensor_onground)                                                         | Sensor                     | Test if NPC is on ground                                                                                                                               |
+| 99  | [OpenBarterShop](#action_openbartershop)                                             | Action                     | Open the barter shop UI for the current player                                                                                                         |
+| 100 | [OpenShop](#action_openshop)                                                         | Action                     | Open the shop UI for the current player                                                                                                                |
+| 101 | [Or](#sensor_or)                                                                     | Sensor                     | Logical OR of list of sensors                                                                                                                          |
+| 102 | [Or](#ientityfilter_or)                                                              | IEntityFilter              | Logical OR of a list of filters                                                                                                                        |
+| 103 | [OverrideAltitude](#action_overridealtitude)                                         | Action                     | Temporarily override the preferred altitude of a flying NPC                                                                                            |
+| 104 | [OverrideAttitude](#action_overrideattitude)                                         | Action                     | Override this NPCs attitude towards the provided target for a given duration                                                                           |
+| 105 | [ParentState](#action_parentstate)                                                   | Action                     | Set the main state of NPC from within a component                                                                                                      |
+| 106 | [Path](#path_path)                                                                   | Path                       | List of transient path points                                                                                                                          |
+| 107 | [Path](#sensor_path)                                                                 | Sensor                     | Find a path based on various criteria                                                                                                                  |
+| 108 | [Path](#bodymotion_path)                                                             | BodyMotion                 | Walk along a path                                                                                                                                      |
+| 109 | [PickUpItem](#action_pickupitem)                                                     | Action                     | Pick up an item                                                                                                                                        |
+| 110 | [PlaceBlock](#action_placeblock)                                                     | Action                     | Place a block (chosen by another action) at a position returned by a Sensor if close enough                                                            |
+| 111 | [PlayAnimation](#action_playanimation)                                               | Action                     | Play an animation                                                                                                                                      |
+| 112 | [PlaySound](#action_playsound)                                                       | Action                     | Plays a sound to players within a specified range.                                                                                                     |
+| 113 | [Player](#sensor_player)                                                             | Sensor                     | Test if player matching specific attributes and filters is in range                                                                                    |
+| 114 | [Random](#action_random)                                                             | Action                     | Execute a single random action from a list of weighted actions.                                                                                        |
+| 115 | [Random](#sensor_random)                                                             | Sensor                     | Alternates between returning true and false for specified random durations                                                                             |
+| 116 | [Random](#instruction_random)                                                        | Instruction                | Randomised list of weighted instructions.                                                                                                              |
+| 117 | [ReadPosition](#sensor_readposition)                                                 | Sensor                     | Read a stored position with some conditions                                                                                                            |
+| 118 | [RecomputePath](#action_recomputepath)                                               | Action                     | Force recomputation of path finder solution                                                                                                            |
+| 119 | [Reference](#instruction_reference)                                                  | Instruction                | Prioritized instruction list that can be referenced from elsewhere in the file                                                                         |
+| 120 | [RelativeWaypointDefinition](#relativewaypointdefinition_relativewaypointdefinition) | RelativeWaypointDefinition | A simple path waypoint definition where each waypoint is relative to the previous                                                                      |
+| 121 | [ReleaseTarget](#action_releasetarget)                                               | Action                     | Clear locked target                                                                                                                                    |
+| 122 | [Remove](#action_remove)                                                             | Action                     | Erase the target entity from the world (no death animation).                                                                                           |
+| 123 | [ResetBlockSensors](#action_resetblocksensors)                                       | Action                     | Resets a specific block sensor by name, or all block sensors                                                                                           |
+| 124 | [ResetInstructions](#action_resetinstructions)                                       | Action                     | Force reset instructionList                                                                                                                            |
+| 125 | [ResetPath](#action_resetpath)                                                       | Action                     | Resets the current patrol path this NPC follows.                                                                                                       |
+| 126 | [ResetSearchRays](#action_resetsearchrays)                                           | Action                     | Resets a specific search ray sensor cached position by name, or all search ray sensors                                                                 |
+| 127 | [Role](#action_role)                                                                 | Action                     | Change the Role of the NPC                                                                                                                             |
+| 128 | [SearchRay](#sensor_searchray)                                                       | Sensor                     | Fire a ray at a specific angle to see if what it hits matches a given sought block                                                                     |
+| 129 | [Seek](#bodymotion_seek)                                                             | BodyMotion                 | Chase target                                                                                                                                           |
+| 130 | [Self](#sensor_self)                                                                 | Sensor                     | Test if the NPC itself matches a set of entity filters                                                                                                 |
+| 131 | [Sequence](#action_sequence)                                                         | Action                     | List of actions.                                                                                                                                       |
+| 132 | [Sequence](#bodymotion_sequence)                                                     | BodyMotion                 | (Looped)Sequence of motions                                                                                                                            |
+| 133 | [Sequence](#headmotion_sequence)                                                     | HeadMotion                 | (Looped)Sequence of motions                                                                                                                            |
+| 134 | [SetAlarm](#action_setalarm)                                                         | Action                     | Set a named alarm on the NPC                                                                                                                           |
+| 135 | [SetBlockToPlace](#action_setblocktoplace)                                           | Action                     | Set the block type the NPC will place                                                                                                                  |
+| 136 | [SetFlag](#action_setflag)                                                           | Action                     | Set a named flag to a boolean value                                                                                                                    |
+| 137 | [SetInteractable](#action_setinteractable)                                           | Action                     | Set whether the currently iterated player in the interaction instruction should be able to interact with this NPC                                      |
+| 138 | [SetLeashPosition](#action_setleashposition)                                         | Action                     | Sets the NPCs current position to the spawn/leash position                                                                                             |
+| 139 | [SetMarkedTarget](#action_setmarkedtarget)                                           | Action                     | Explicitly sets a marked target in a given slot.                                                                                                       |
+| 140 | [SetStat](#action_setstat)                                                           | Action                     | Sets (or adds to) an entity stat on the NPC.                                                                                                           |
+| 141 | [Spawn](#action_spawn)                                                               | Action                     | Spawn an NPC                                                                                                                                           |
+| 142 | [SpawnParticles](#action_spawnparticles)                                             | Action                     | Spawn particle system visible within a given range with an offset relative to npc heading                                                              |
+| 143 | [SpotsMe](#ientityfilter_spotsme)                                                    | IEntityFilter              | Checks if the entity can view the NPC in a given view sector or cone and without obstruction.                                                          |
+| 144 | [StandingOnBlock](#ientityfilter_standingonblock)                                    | IEntityFilter              | Matches the block directly beneath the entity against a BlockSet                                                                                       |
+| 145 | [StartObjective](#action_startobjective)                                             | Action                     | Start the given objective for the currently iterated player in the interaction instruction                                                             |
+| 146 | [Stat](#ientityfilter_stat)                                                          | IEntityFilter              | Match stat values of the entity                                                                                                                        |
+| 147 | [State](#action_state)                                                               | Action                     | Set state of NPC                                                                                                                                       |
+| 148 | [State](#sensor_state)                                                               | Sensor                     | Test for a specific state                                                                                                                              |
+| 149 | [StateTransition](#statetransition_statetransition)                                  | StateTransition            | An entry containing a list of actions to execute when moving from one state to another                                                                 |
+| 150 | [StateTransitionController](#statetransitioncontroller_statetransitioncontroller)    | StateTransitionController  | A list of state transitions                                                                                                                            |
+| 151 | [StateTransitionEdges](#statetransitionedges_statetransitionedges)                   | StateTransitionEdges       | Sets of from and to states defining state transitions                                                                                                  |
+| 152 | [StorePosition](#action_storeposition)                                               | Action                     | Store the position from the attached sensor                                                                                                            |
+| 153 | [Switch](#sensor_switch)                                                             | Sensor                     | Check if a computed boolean is true                                                                                                                    |
+| 154 | [TakeOff](#bodymotion_takeoff)                                                       | BodyMotion                 | Switch NPC from walking to flying motion controller                                                                                                    |
+| 155 | [Target](#sensor_target)                                                             | Sensor                     | Test if given target matches a series of criteria and optional entity filters                                                                          |
+| 156 | [Teleport](#bodymotion_teleport)                                                     | BodyMotion                 | Teleport NPC to a position given by a sensor                                                                                                           |
+| 157 | [Test](#action_test)                                                                 | Action                     | Test action to exercise attribute evaluation (DO NOT USE)                                                                                              |
+| 158 | [TestProbe](#bodymotion_testprobe)                                                   | BodyMotion                 | Debugging - Test probing                                                                                                                               |
+| 159 | [Time](#sensor_time)                                                                 | Sensor                     | Check if the day/year time is within some specified time.                                                                                              |
+| 160 | [Timeout](#action_timeout)                                                           | Action                     | Delay an action, or insert a delay in a sequence of actions                                                                                            |
+| 161 | [Timer](#sensor_timer)                                                               | Sensor                     | Tests if a timer exists and the value is within a certain range                                                                                        |
+| 162 | [Timer](#bodymotion_timer)                                                           | BodyMotion                 | Execute a Motion for a specific maximum time                                                                                                           |
+| 163 | [Timer](#headmotion_timer)                                                           | HeadMotion                 | Execute a Motion for a specific maximum time                                                                                                           |
+| 164 | [TimerContinue](#action_timercontinue)                                               | Action                     | Continue a timer                                                                                                                                       |
+| 165 | [TimerModify](#action_timermodify)                                                   | Action                     | Modify values of a timer                                                                                                                               |
+| 166 | [TimerPause](#action_timerpause)                                                     | Action                     | Pause a timer                                                                                                                                          |
+| 167 | [TimerRestart](#action_timerrestart)                                                 | Action                     | Restart a timer                                                                                                                                        |
+| 168 | [TimerStart](#action_timerstart)                                                     | Action                     | Start a timer                                                                                                                                          |
+| 169 | [TimerStop](#action_timerstop)                                                       | Action                     | Stop a timer                                                                                                                                           |
+| 170 | [ToggleStateEvaluator](#action_togglestateevaluator)                                 | Action                     | Enable or disable the NPC&#x27;s state evaluator                                                                                                       |
+| 171 | [TriggerSpawnBeacon](#action_triggerspawnbeacon)                                     | Action                     | Trigger the nearest spawn beacon matching the configuration id                                                                                         |
+| 172 | [TriggerSpawners](#action_triggerspawners)                                           | Action                     | Trigger all, or up to a certain number of manual spawn markers in a radius around the NPC                                                              |
+| 173 | [ValueProviderWrapper](#sensor_valueproviderwrapper)                                 | Sensor                     | Wraps a sensor and passes down some additional parameter overrides pulled from the value store                                                         |
+| 174 | [ValueToParameterMapping](#valuetoparametermapping_valuetoparametermapping)          | ValueToParameterMapping    | An entry containing a list of actions to execute when moving from one state to another                                                                 |
+| 175 | [Variant](#role_variant)                                                             | Role                       | Create a variant from an existing NPC JSON file                                                                                                        |
+| 176 | [ViewSector](#ientityfilter_viewsector)                                              | IEntityFilter              | Matches entities within the given view sector                                                                                                          |
+| 177 | [Walk](#motioncontroller_walk)                                                       | MotionController           | Provide walk on ground abilities for NPC                                                                                                               |
+| 178 | [Wander](#bodymotion_wander)                                                         | BodyMotion                 | Random movement                                                                                                                                        |
+| 179 | [WanderInCircle](#bodymotion_wanderincircle)                                         | BodyMotion                 | Random movement in circle around spawn position                                                                                                        |
+| 180 | [WanderInRect](#bodymotion_wanderinrect)                                             | BodyMotion                 | Random movement in rectangle around spawn position                                                                                                     |
+| 181 | [Watch](#headmotion_watch)                                                           | HeadMotion                 | Rotate to target                                                                                                                                       |
+| 182 | [Weather](#sensor_weather)                                                           | Sensor                     | Matches the current weather at the NPCs position against a set of weather globs                                                                        |
+| 183 | [WeightedAction](#weightedaction_weightedaction)                                     | WeightedAction             | A wrapped and weighted action intended to be used for Random action lists.                                                                             |
 
 # List of Roles [#roles]
 
@@ -840,7 +840,7 @@ Generic role for NPC with a core planner and list of Motion controllers.
 
 - At least one of BreathesInAir, BreathesInWater must be true
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Generic: Role (Stable) [#role_generic]
 
@@ -1278,13 +1278,13 @@ Generic role for NPC with a core planner and list of Motion controllers.
 
 - At least one of BreathesInAir, BreathesInWater must be true
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Variant: Role (WorkInProgress) [#role_variant]
 
 Create a variant from an existing NPC JSON file
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Motion Controllers [#motioncontrollers]
 
@@ -1448,7 +1448,7 @@ Provide diving abilities for NPC
 
 - MinSwimSpeed must be less or equal than MaxSwimSpeed
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Fly: MotionController (WorkInProgress) [#motioncontroller_fly]
 
@@ -1617,7 +1617,7 @@ Flight motion controller
 - **Type**: `Double`, **Optional** (Default: 0.0)
 - **Constraint**: Value must be greater or equal than 0 and less or equal than 1
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Walk: MotionController (WorkInProgress) [#motioncontroller_walk]
 
@@ -1906,7 +1906,7 @@ Provide walk on ground abilities for NPC
 - MinHoverDrop must be less or equal than MinHover
 - MinWalkSpeed must be less or equal than MaxWalkSpeed
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Misc Parts [#miscparts]
 
@@ -1917,7 +1917,7 @@ An array of actions to be executed
 - List of actions
 - **Type**: `Array`, **Required**, **Element Type**: Action
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Aim: HeadMotion (Stable) [#headmotion_aim]
 
@@ -1952,7 +1952,7 @@ Aim at target considering weapon in hand.
 
 - Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## AimCharge: BodyMotion (Stable) [#bodymotion_aimcharge]
 
@@ -1970,7 +1970,7 @@ Aim the NPC at a target position for performing a charge based on aiming informa
 
 - Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Altitude: IEntityFilter (Stable) [#ientityfilter_altitude]
 
@@ -1989,7 +1989,7 @@ Matches targets if they're within the defined range above the ground
 - **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
 - **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
 
-[(Top)](top)
+[(Top)](#top)
 
 ## And: IEntityFilter (Stable) [#ientityfilter_and]
 
@@ -2008,7 +2008,7 @@ Logical AND of a list of filters
 - **Type**: `Array`, **Required**, **Element Type**: IEntityFilter
 - **Constraint**: Array must not be empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Attitude: ISensorEntityPrioritiser (Stable) [#isensorentityprioritiser_attitude]
 
@@ -2028,7 +2028,7 @@ Prioritises return entities by attitude
   - `NEUTRAL`: is neutral towards the target
 - **Constraint**: Array must not contain duplicates
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Attitude: IEntityFilter (Stable) [#ientityfilter_attitude]
 
@@ -2054,7 +2054,7 @@ Matches the attitude towards the locked target
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Combat: IEntityFilter (Stable) [#ientityfilter_combat]
 
@@ -2096,13 +2096,13 @@ Check the target's combat state. This includes whether they're attacking at all,
 
 - If Mode is Sequence, the asset Sequencemust be provided
 
-[(Top)](top)
+[(Top)](#top)
 
 ## CombatTargets: ISensorEntityCollector (Stable) [#isensorentitycollector_combattargets]
 
 A collector which processes matched friendly and hostile targets and adds them to the NPC's short-term combat memory.
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Flee: BodyMotion (Experimental) [#bodymotion_flee]
 
@@ -2327,7 +2327,7 @@ Move away from a target using path finding or steering
 - Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
 - SlowDownDistance must be less or equal than StopDistance
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Flock: BodyMotion (Experimental) [#bodymotion_flock]
 
@@ -2335,7 +2335,7 @@ Flocking - WIP
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Flock: IEntityFilter (Stable) [#ientityfilter_flock]
 
@@ -2378,7 +2378,7 @@ Test for flock membership and related properties
 - If true, will filter entities in a flock the executor can join
 - **Type**: `Boolean`, **Optional** (Default: false)
 
-[(Top)](top)
+[(Top)](#top)
 
 ## HashMap: HashMap (Stable) [#hashmap_hashmap]
 
@@ -2388,7 +2388,7 @@ Non-empty list of motion controllers.
 - **Type**: `Array`, **Required**, **Element Type**: MotionController
 - **Constraint**: Array must not be empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## HeightDifference: IEntityFilter (Stable) [#ientityfilter_heightdifference]
 
@@ -2414,7 +2414,7 @@ Matches entities within the given height range
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## InsideBlock: IEntityFilter (Stable) [#ientityfilter_insideblock]
 
@@ -2432,7 +2432,7 @@ Matches if the entity is inside any of the blocks in the BlockSet
 - The BlockSet to match against
 - **Type**: `Asset`, **Required**, **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Instruction: Instruction (WorkInProgress) [#instruction_instruction]
 
@@ -2519,7 +2519,7 @@ An instruction with Sensor, and Motions and Actions, or a list of nested instruc
 - At most one or none of Actions, Instructions must be provided
 - If TreeMode is true, Continue must be false
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Inventory: IEntityFilter (Stable) [#ientityfilter_inventory]
 
@@ -2549,7 +2549,7 @@ Test various conditions relating to entity inventory. This includes whether it c
 - **Type**: `Array`, **Optional** (Default: [0, 2147483647]), **Computable**, **Element Type**: integer
 - **Constraint**: Values must be greater or equal than 0, less or equal than 2147483647and in weakly ascending order
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ItemInHand: IEntityFilter (Stable) [#ientityfilter_iteminhand]
 
@@ -2576,7 +2576,7 @@ Check if entity is holding an item
   - `Main`: The main hand
   - `Both`: Both hands
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Land: BodyMotion (Experimental) [#bodymotion_land]
 
@@ -2795,7 +2795,7 @@ Try to land at the given position using a seek like motion
 - SlowDownDistance must be greater or equal than StopDistance
 - Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Leave: BodyMotion (Experimental) [#bodymotion_leave]
 
@@ -2925,7 +2925,7 @@ Get away from current position using path finding
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## LineOfSight: IEntityFilter (Stable) [#ientityfilter_lineofsight]
 
@@ -2940,7 +2940,7 @@ Matches if there is line of sight to the target
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## MaintainDistance: BodyMotion (Stable) [#bodymotion_maintaindistance]
 
@@ -3000,7 +3000,7 @@ Maintain distance from a given position
 
 - Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## MatchLook: BodyMotion (Stable) [#bodymotion_matchlook]
 
@@ -3008,7 +3008,7 @@ Make NPC body rotate to match look direction
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## MovementState: IEntityFilter (Stable) [#ientityfilter_movementstate]
 
@@ -3037,7 +3037,7 @@ Check if the entity is in the given movement state
   - `ANY`: Any
   - `JUMPING`: Jumping
 
-[(Top)](top)
+[(Top)](#top)
 
 ## NPCGroup: IEntityFilter (Stable) [#ientityfilter_npcgroup]
 
@@ -3064,7 +3064,7 @@ Returns whether the entity matches one of the provided NPCGroups
 
 - One (and only one) of IncludeGroups, ExcludeGroups must be provided
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Not: IEntityFilter (WorkInProgress) [#ientityfilter_not]
 
@@ -3082,7 +3082,7 @@ Invert filter test
 - Filter to test
 - **Type**: `ObjectRef`, **Required**, **Object Type**: IEntityFilter
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Nothing: BodyMotion (Stable) [#bodymotion_nothing]
 
@@ -3090,7 +3090,7 @@ Do nothing
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Nothing: HeadMotion (Stable) [#headmotion_nothing]
 
@@ -3098,7 +3098,7 @@ Do nothing
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Observe: HeadMotion (Stable) [#headmotion_observe]
 
@@ -3137,7 +3137,7 @@ Observe surroundings in various ways. This includes looking in random directions
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Or: IEntityFilter (Stable) [#ientityfilter_or]
 
@@ -3156,7 +3156,7 @@ Logical OR of a list of filters
 - **Type**: `Array`, **Required**, **Element Type**: IEntityFilter
 - **Constraint**: Array must not be empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Path: Path (Stable) [#path_path]
 
@@ -3175,7 +3175,7 @@ List of transient path points
 - **Type**: `Double`, **Optional** (Default: 1.0), **Computable**
 - **Constraint**: Value must be greater than 0
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Path: BodyMotion (Stable) [#bodymotion_path]
 
@@ -3291,7 +3291,7 @@ Walk along a path.
 - MinNodeDelay must be less or equal than MaxNodeDelay
 - Must be attached to a sensor that provides one of path
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Random: Instruction (Stable) [#instruction_random]
 
@@ -3361,7 +3361,7 @@ Randomised list of weighted instructions. One will be selected at random and exe
 
 - If TreeMode is true, Continue must be false
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Reference: Instruction (Stable) [#instruction_reference]
 
@@ -3453,7 +3453,7 @@ Prioritized instruction list that can be referenced from elsewhere in the file. 
 - At most one or none of Actions, Instructions must be provided
 - If TreeMode is true, Continue must be false
 
-[(Top)](top)
+[(Top)](#top)
 
 ## RelativeWaypointDefinition: RelativeWaypointDefinition (Stable) [#relativewaypointdefinition_relativewaypointdefinition]
 
@@ -3473,7 +3473,7 @@ A simple path waypoint definition where each waypoint is relative to the previou
 - **Type**: `Double`, **Required**
 - **Constraint**: Value must be greater than 0
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Seek: BodyMotion (Experimental) [#bodymotion_seek]
 
@@ -3686,7 +3686,7 @@ Move towards a target using path finding or steering
 - SlowDownDistance must be greater or equal than StopDistance
 - Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Sequence: BodyMotion (Stable) [#bodymotion_sequence]
 
@@ -3712,7 +3712,7 @@ Sequence of motions. Can be used in conjunction with 'Timer' to model more compl
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Sequence: HeadMotion (Stable) [#headmotion_sequence]
 
@@ -3738,7 +3738,7 @@ Sequence of motions. Can be used in conjunction with 'Timer' to model more compl
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## SpotsMe: IEntityFilter (Stable) [#ientityfilter_spotsme]
 
@@ -3773,7 +3773,7 @@ Checks if the entity can view the NPC in a given view sector or cone and without
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## StandingOnBlock: IEntityFilter (Stable) [#ientityfilter_standingonblock]
 
@@ -3791,7 +3791,7 @@ Matches the block directly beneath the entity against a BlockSet
 - The BlockSet to match against
 - **Type**: `Asset`, **Required**, **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Stat: IEntityFilter (Stable) [#ientityfilter_stat]
 
@@ -3838,7 +3838,7 @@ Match stat values of the entity
 - **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
 - **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
 
-[(Top)](top)
+[(Top)](#top)
 
 ## StateTransition: StateTransition (Stable) [#statetransition_statetransition]
 
@@ -3861,7 +3861,7 @@ An entry containing a list of actions to execute when moving from one state to a
 - Whether this sensor should be enabled on the NPC
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## StateTransitionController: StateTransitionController (Stable) [#statetransitioncontroller_statetransitioncontroller]
 
@@ -3870,7 +3870,7 @@ A list of state transitions
 - A list of state transition entries with lists of actions
 - **Type**: `Array`, **Required**, **Element Type**: StateTransition
 
-[(Top)](top)
+[(Top)](#top)
 
 ## StateTransitionEdges: StateTransitionEdges (Stable) [#statetransitionedges_statetransitionedges]
 
@@ -3901,7 +3901,7 @@ Sets of from and to states defining state transitions
 - Whether this sensor should be enabled on the NPC
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## TakeOff: BodyMotion (Experimental) [#bodymotion_takeoff]
 
@@ -3917,7 +3917,7 @@ Switch NPC from walking to flying motion controller
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Teleport: BodyMotion (Experimental) [#bodymotion_teleport]
 
@@ -3957,7 +3957,7 @@ Teleport NPC to a position given by a sensor or to a random position nearby with
 - Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
 - If Orientation is UseTarget, must be attached to a sensor that provides one of player target, NPC target, dropped item target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## TestProbe: BodyMotion (Experimental) [#bodymotion_testprobe]
 
@@ -3997,7 +3997,7 @@ Debugging - Test probing
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Timer: BodyMotion (Stable) [#bodymotion_timer]
 
@@ -4018,7 +4018,7 @@ Execute a Motion for a specific maximum time. If the motion finishes earlier the
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Timer: HeadMotion (Stable) [#headmotion_timer]
 
@@ -4039,7 +4039,7 @@ Execute a Motion for a specific maximum time. If the motion finishes earlier the
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ValueToParameterMapping: ValueToParameterMapping (Stable) [#valuetoparametermapping_valuetoparametermapping]
 
@@ -4068,7 +4068,7 @@ An entry containing a list of actions to execute when moving from one state to a
 - **Type**: `String`, **Required**
 - **Constraint**: String must be not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ViewSector: IEntityFilter (Stable) [#ientityfilter_viewsector]
 
@@ -4089,7 +4089,7 @@ Matches entities within the given view sector
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Wander: BodyMotion (Stable) [#bodymotion_wander]
 
@@ -4171,7 +4171,7 @@ Random movement in short linear pieces.
 - MinWalkTime must be less or equal than MaxWalkTime
 - MinHeadingChange must be less or equal than MaxHeadingChange
 
-[(Top)](top)
+[(Top)](#top)
 
 ## WanderInCircle: BodyMotion (Stable) [#bodymotion_wanderincircle]
 
@@ -4269,7 +4269,7 @@ Random movement in short linear pieces inside circle around spawn position.
 - MinWalkTime must be less or equal than MaxWalkTime
 - MinHeadingChange must be less or equal than MaxHeadingChange
 
-[(Top)](top)
+[(Top)](#top)
 
 ## WanderInRect: BodyMotion (Stable) [#bodymotion_wanderinrect]
 
@@ -4363,7 +4363,7 @@ Random movement in short linear pieces inside rectangle around spawn position.
 - MinWalkTime must be less or equal than MaxWalkTime
 - MinHeadingChange must be less or equal than MaxHeadingChange
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Watch: HeadMotion (Stable) [#headmotion_watch]
 
@@ -4381,7 +4381,7 @@ Rotate to target.
 
 - Must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## WeightedAction: WeightedAction (Stable) [#weightedaction_weightedaction]
 
@@ -4400,7 +4400,7 @@ A wrapped and weighted action intended to be used for Random action lists.
 - **Type**: `Double`, **Required**, **Computable**
 - **Constraint**: Value must be greater than 0
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (audiovisual) [#corecomponents_audiovisual]
 
@@ -4435,7 +4435,7 @@ Check if a given animation is being played
 - **Type**: `String`, **Required**, **Computable**
 - **Constraint**: String must be not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Appearance: Action (Stable) [#action_appearance]
 
@@ -4453,7 +4453,7 @@ Change model of NPC to given appearance.
 - Model name to use
 - **Type**: `Asset`, **Required**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## DisplayName: Action (Stable) [#action_displayname]
 
@@ -4471,7 +4471,7 @@ Set the name displayed above NPC
 - Name to display above NPC
 - **Type**: `String`, **Required**, **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ModelAttachment: Action (Stable) [#action_modelattachment]
 
@@ -4495,7 +4495,7 @@ Set an attachment on the current NPC model
 - The attachment to set, or empty to remove
 - **Type**: `String`, **Required**, **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## PlayAnimation: Action (Experimental) [#action_playanimation]
 
@@ -4522,7 +4522,7 @@ Play an animation
 - The animation ID to play
 - **Type**: `String`, **Optional** (Default: null), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## PlaySound: Action (Stable) [#action_playsound]
 
@@ -4540,7 +4540,7 @@ Plays a sound to players within a specified range.
 - The sound event to play
 - **Type**: `Asset`, **Required**, **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## SpawnParticles: Action (WorkInProgress) [#action_spawnparticles]
 
@@ -4569,7 +4569,7 @@ Spawn particle system visible within a given range with an offset relative to np
 - Offset relative to footpoint in view direction of NPC
 - **Type**: `Array`, **Optional** (Default: null), **Computable**, **Element Type**: Double
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (combat) [#corecomponents_combat]
 
@@ -4598,7 +4598,7 @@ Applies an entity effect to the target or self
 
 - If UseTarget is true, must be attached to a sensor that provides one of player target, NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Attack: Action (Experimental) [#action_attack]
 
@@ -4696,7 +4696,7 @@ Let NPC start an attack. When an attack is running no new attack is started.
 
 - If SkipAiming is true, LineOfSight, AvoidFriendlyFire must be false
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Damage: Sensor (Stable) [#sensor_damage]
 
@@ -4756,7 +4756,7 @@ Test if NPC suffered damage. A position is only returned when NPC suffered comba
 - NPC target
 - Dropped item target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## IsBackingAway: Sensor (Stable) [#sensor_isbackingaway]
 
@@ -4774,7 +4774,7 @@ Test if the NPC is currently backing away from something.
 - Whether this sensor should be enabled on the NPC
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (corecomponents) [#corecomponents_corecomponents]
 
@@ -4793,7 +4793,7 @@ Adds the passed target from the sensor to the hostile target memory
 
 - Must be attached to a sensor that provides one of player target, NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## CombatAbility: Action (Stable) [#action_combatability]
 
@@ -4806,7 +4806,7 @@ Starts the combat ability selected by the combat action evaluator.
 - Execute only once
 - **Type**: `Boolean`, **Optional** (Default: false)
 
-[(Top)](top)
+[(Top)](#top)
 
 ## CombatActionEvaluator: Sensor (Experimental) [#sensor_combatactionevaluator]
 
@@ -4840,7 +4840,7 @@ A sensor which handles funnelling information to actions and motions from the co
 - Player target
 - NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## FlockBeacon: Action (Experimental) [#action_flockbeacon]
 
@@ -4881,7 +4881,7 @@ Let the NPC send out a message to the flock members
 - Only send the message to the leader of the flock
 - **Type**: `Boolean`, **Optional** (Default: false)
 
-[(Top)](top)
+[(Top)](#top)
 
 ## FlockCombatDamage: Sensor (Stable) [#sensor_flockcombatdamage]
 
@@ -4909,7 +4909,7 @@ Return true if flock with NPC received combat damage. Target position is entity 
 - Player target
 - NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## FlockLeader: Sensor (Stable) [#sensor_flockleader]
 
@@ -4932,7 +4932,7 @@ Test for the presence and provide position of the flock leader
 - Player target
 - NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## FlockState: Action (Stable) [#action_flockstate]
 
@@ -4953,7 +4953,7 @@ Sets the state name for the flock the NPC is member of.The flock leader is expli
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## FlockTarget: Action (Stable) [#action_flocktarget]
 
@@ -4981,7 +4981,7 @@ Sets or clears the locked target for the flock the NPC is member of. If Clear fl
 
 - Must be attached to a sensor that provides one of player target, NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## HasHostileTargetMemory: Sensor (Stable) [#sensor_hashostiletargetmemory]
 
@@ -4999,7 +4999,7 @@ Checks if there is currently a hostile target in the target memory.
 - Whether this sensor should be enabled on the NPC
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## InflictedDamage: Sensor (Stable) [#sensor_inflicteddamage]
 
@@ -5036,7 +5036,7 @@ Return true if an individual or the flock it belongs to inflicted combat damage.
 - Player target
 - NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## JoinFlock: Action (Stable) [#action_joinflock]
 
@@ -5058,7 +5058,7 @@ Tries to build/join flock with target. Fails if both NPC and target are in a flo
 
 - Must be attached to a sensor that provides one of player target, NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## LeaveFlock: Action (Stable) [#action_leaveflock]
 
@@ -5071,7 +5071,7 @@ NPC leaves flock currently in. Does nothing when not in flock.
 - Execute only once
 - **Type**: `Boolean`, **Optional** (Default: false)
 
-[(Top)](top)
+[(Top)](#top)
 
 ## TriggerSpawnBeacon: Action (Stable) [#action_triggerspawnbeacon]
 
@@ -5101,7 +5101,7 @@ Trigger the nearest spawn beacon matching the configuration id
 - **Type**: `String`, **Optional** (Default: null)
 - **Constraint**: String value must be either null or not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (debug) [#corecomponents_debug]
 
@@ -5121,7 +5121,7 @@ Log a message to console.
 - Text to print to console.
 - **Type**: `String`, **Required**, **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Test: Action (Experimental) [#action_test]
 
@@ -5248,7 +5248,7 @@ Test action to exercise attribute evaluation (DO NOT USE)
 - StringArray [a,b] 0-10
 - **Type**: `Array`, **Optional** (Default: [a, b]), **Computable**, **Element Type**: String
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (entity) [#corecomponents_entity]
 
@@ -5297,7 +5297,7 @@ Checks to see if any messages have been broadcasted by nearby NPCs.
 - NPC target
 - Dropped item target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Count: Sensor (Stable) [#sensor_count]
 
@@ -5337,7 +5337,7 @@ Check if there is a certain number of NPCs or players within a specific range
 - Never match NPCs in these groups
 - **Type**: `AssetArray`, **Optional** (Default: null), **Element Type**: TagSet
 
-[(Top)](top)
+[(Top)](#top)
 
 ## IgnoreForAvoidance: Action (Stable) [#action_ignoreforavoidance]
 
@@ -5356,7 +5356,7 @@ Set the target slot of an entity that should be ignored during avoidance
 - **Type**: `String`, **Required**, **Computable**
 - **Constraint**: String must be not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Kill: Sensor (Stable) [#sensor_kill]
 
@@ -5384,7 +5384,7 @@ Return true if NPC made a kill. Target position is killed entity position.
 
 - Vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Mob: Sensor (Stable) [#sensor_mob]
 
@@ -5486,7 +5486,7 @@ Return true if entity matching specific attributes and filters is in range. Targ
 - Player target
 - NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## OverrideAttitude: Action (Stable) [#action_overrideattitude]
 
@@ -5520,7 +5520,7 @@ Override this NPCs attitude towards the provided target for a given duration
 
 - Must be attached to a sensor that provides one of player target, NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Player: Sensor (Stable) [#sensor_player]
 
@@ -5606,7 +5606,7 @@ Return true if player matching specific attributes and filters is in range. Targ
 - Player target
 - NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ReleaseTarget: Action (Stable) [#action_releasetarget]
 
@@ -5625,7 +5625,7 @@ Clear locked target for NPC.
 - **Type**: `String`, **Optional** (Default: LockedTarget), **Computable**
 - **Constraint**: String must be not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Self: Sensor (Stable) [#sensor_self]
 
@@ -5652,7 +5652,7 @@ Test if the NPC itself matches a set of entity filters
 
 - Vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## SetMarkedTarget: Action (Stable) [#action_setmarkedtarget]
 
@@ -5675,7 +5675,7 @@ Explicitly sets a marked target in a given slot.
 
 - Must be attached to a sensor that provides one of player target, NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## SetStat: Action (Stable) [#action_setstat]
 
@@ -5703,7 +5703,7 @@ Sets (or adds to) an entity stat on the NPC.
 - Add the value to the existing value instead of setting it.
 - **Type**: `Boolean`, **Optional** (Default: false), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Target: Sensor (Stable) [#sensor_target]
 
@@ -5748,7 +5748,7 @@ Test if given target matches a series of criteria and optional entity filters
 - Player target
 - NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (interaction) [#corecomponents_interaction]
 
@@ -5787,7 +5787,7 @@ Checks whether or not the player being iterated by the interaction instruction c
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## HasInteracted: Sensor (Stable) [#sensor_hasinteracted]
 
@@ -5807,7 +5807,7 @@ Checks whether the currently iterated player in the interaction instruction has 
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## InteractionContext: Sensor (Stable) [#sensor_interactioncontext]
 
@@ -5833,7 +5833,7 @@ Checks whether the currently iterated player in the interaction instruction has 
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## LockOnInteractionTarget: Action (Stable) [#action_lockoninteractiontarget]
 
@@ -5854,7 +5854,7 @@ Locks on to the currently iterated player in the interaction instruction
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## SetInteractable: Action (Stable) [#action_setinteractable]
 
@@ -5884,7 +5884,7 @@ Set whether the currently iterated player in the interaction instruction should 
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (items)
 
@@ -5942,7 +5942,7 @@ Drop an item. Can be a specific item, or from a drop table
 
 - One (and only one) of Item, DropList must be provided
 
-[(Top)](top)
+[(Top)](#top)
 
 ## DroppedItem: Sensor (Stable) [#sensor_droppeditem]
 
@@ -5997,7 +5997,7 @@ Triggers if a given item is within a certain range of the NPC. Will match anythi
 
 - Dropped item target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Inventory: Action (Stable) [#action_inventory]
 
@@ -6050,7 +6050,7 @@ Add or remove a number of items from an inventory. Can also be used to equip the
 
 - If UseTarget is true, must be attached to a sensor that provides one of player target, NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## PickUpItem: Action (Stable) [#action_pickupitem]
 
@@ -6098,7 +6098,7 @@ Pick up an item. In hoover mode, will match to the Item array. Otherwise, requir
 
 - If Hoover is false, must be attached to a sensor that provides dropped item target
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (lifecycle) [#corecomponents_lifecycle]
 
@@ -6124,7 +6124,7 @@ Triggers when the age of the NPC falls between a certain range. Range is defined
 - **Type**: `Array`, **Required**, **Computable**, **Element Type**: TemporalAmount
 - **Constraint**: Values must be greater or equal than a few seconds, less or equal than 5879611 years, in strictly ascending order and either all Periods or all Durations
 
-[(Top)](top)
+[(Top)](#top)
 
 ## DelayDespawn: Action (Stable) [#action_delaydespawn]
 
@@ -6148,7 +6148,7 @@ Delay the despawning cycle for some amount of time
 - Set the delay to either the current delay or the given time. Whatever is smaller.
 - **Type**: `Boolean`, **Optional** (Default: false)
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Despawn: Action (Stable) [#action_despawn]
 
@@ -6166,7 +6166,7 @@ Trigger the NPC to start the despawning cycle. If the script contains a despawn 
 - Force the NPC to remove automatically
 - **Type**: `Boolean`, **Optional** (Default: false)
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Die: Action (Stable) [#action_die]
 
@@ -6179,7 +6179,7 @@ Kill the NPC
 - Execute only once
 - **Type**: `Boolean`, **Optional** (Default: false)
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Remove: Action (Stable) [#action_remove]
 
@@ -6201,7 +6201,7 @@ Erase the target entity from the world (no death animation).
 
 - If UseTarget is true, must be attached to a sensor that provides one of player target, NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Role: Action (Stable) [#action_role]
 
@@ -6230,7 +6230,7 @@ Change the Role of the NPC
 - **Type**: `String`, **Optional** (Default: null), **Computable**
 - **Constraint**: String must be a valid state string. A main state must be included before the period (e.g. Main.Test). State strings consist of a main state and a sub state (e.g. Main.Test). If nested within a substate, the main state may be omitted (e.g. .Test) when referencing.
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Spawn: Action (Experimental) [#action_spawn]
 
@@ -6326,7 +6326,7 @@ Spawn an NPC
 
 - If LaunchAtTarget is true, must be attached to a sensor that provides one of player target, NPC target, dropped item target, vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (message) [#corecomponents_message]
 
@@ -6376,7 +6376,7 @@ Let the NPC send out a message to a target group of entities within a certain di
 - **Type**: `Integer`, **Optional** (Default: -1)
 - **Constraint**: Value must be greater than 0 or equal -1
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Notify: Action (Stable) [#action_notify]
 
@@ -6411,7 +6411,7 @@ Directly notifies a target NPC with a beacon message
 
 - If UseTargetSlot is false, must be attached to a sensor that provides NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (movement)
 
@@ -6431,7 +6431,7 @@ Set NPC crouching state
 - True for crouching, false for non-crouching
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## InAir: Sensor (Stable) [#sensor_inair]
 
@@ -6449,7 +6449,7 @@ Return true if NPC is not on ground. No target is returned.
 - Whether this sensor should be enabled on the NPC
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## MotionController: Sensor (Experimental) [#sensor_motioncontroller]
 
@@ -6473,7 +6473,7 @@ Test if specific motion controller is active.
 - **Type**: `String`, **Required**
 - **Constraint**: String must be not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Nav: Sensor (Stable) [#sensor_nav]
 
@@ -6515,7 +6515,7 @@ Queries navigation state
 - **Type**: `Double`, **Optional** (Default: 0.0), **Computable**
 - **Constraint**: Value must be greater or equal than 0
 
-[(Top)](top)
+[(Top)](#top)
 
 ## OnGround: Sensor (Stable) [#sensor_onground]
 
@@ -6533,7 +6533,7 @@ Return true if NPC is on ground. No target is returned.
 - Whether this sensor should be enabled on the NPC
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## OverrideAltitude: Action (Stable) [#action_overridealtitude]
 
@@ -6552,7 +6552,7 @@ Temporarily override the preferred altitude of a flying NPC. Must be refreshed e
 - **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
 - **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
 
-[(Top)](top)
+[(Top)](#top)
 
 ## RecomputePath: Action (Stable) [#action_recomputepath]
 
@@ -6565,7 +6565,7 @@ Force recomputation of path finder solution
 - Execute only once
 - **Type**: `Boolean`, **Optional** (Default: false)
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (npc) [#corecomponents_npc]
 
@@ -6601,7 +6601,7 @@ Complete a task. Tasks are picked based on those provided to SensorCanInteract.
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## HasTask: Sensor (Stable) [#sensor_hastask]
 
@@ -6627,7 +6627,7 @@ Checks whether or not the player being iterated by the interaction instruction h
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Mount: Action (Stable) [#action_mount]
 
@@ -6660,7 +6660,7 @@ Enable the player to mount the entity
 - The MovementConfig to use for this mount
 - **Type**: `String`, **Required**, **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## OpenBarterShop: Action (Stable) [#action_openbartershop]
 
@@ -6680,7 +6680,7 @@ Open the barter shop UI for the current player
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## OpenShop: Action (Stable) [#action_openshop]
 
@@ -6700,7 +6700,7 @@ Open the shop UI for the current player
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## StartObjective: Action (Stable) [#action_startobjective]
 
@@ -6720,7 +6720,7 @@ Start the given objective for the currently iterated player in the interaction i
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (path) [#corecomponents_path]
 
@@ -6740,7 +6740,7 @@ Constructs a transient path for the NPC based on a series of rotations and dista
 - A transient path definition
 - **Type**: `ObjectRef`, **Required**, **Object Type**: Path
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Path: Sensor (Stable) [#sensor_path]
 
@@ -6788,7 +6788,7 @@ Find a path based on various criteria. Provides the position of the nearest wayp
 - Vector position
 - Path
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (statemachine) [#corecomponents_statemachine]
 
@@ -6808,7 +6808,7 @@ Tests if an NPC is in one of the defined Busy States.
 - Whether this sensor should be enabled on the NPC
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ParentState: Action (Stable) [#action_parentstate]
 
@@ -6831,7 +6831,7 @@ Set the main state of NPC from within a component
 
 - May only be included within a component
 
-[(Top)](top)
+[(Top)](#top)
 
 ## State: Action (Stable) [#action_state]
 
@@ -6857,7 +6857,7 @@ Set state of NPC. The state can be queried with a sensor later on.
 
 ### Constraints
 
-[(Top)](top)
+[(Top)](#top)
 
 ## State: Sensor (Stable) [#sensor_state]
 
@@ -6886,7 +6886,7 @@ Signal if NPC is set to specific state.
 - Override and ignore checks for matching setter action that sets this state. Intended for use in cases such as the FlockState action which sets the state via another NPC
 - **Type**: `Boolean`, **Optional** (Default: false)
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ToggleStateEvaluator: Action (Stable) [#action_togglestateevaluator]
 
@@ -6904,7 +6904,7 @@ Enable or disable the NPC's state evaluator
 - Whether or not to enable the state evaluator
 - **Type**: `Boolean`, **Required**
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (timer) [#corecomponents_timer]
 
@@ -6944,7 +6944,7 @@ Check the state of a named alarm and optionally clear it if the time has passed
 - Whether to clear the alarm (unset it) if it has passed
 - **Type**: `Boolean`, **Optional** (Default: false), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## SetAlarm: Action (Stable) [#action_setalarm]
 
@@ -6969,7 +6969,7 @@ Set a named alarm on the NPC
 - **Type**: `Array`, **Required**, **Computable**, **Element Type**: TemporalAmount
 - **Constraint**: Values must be greater or equal than a few seconds, less or equal than 5879611 years, in weakly ascending order and either all Periods or all Durations
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Timer: Sensor (Stable) [#sensor_timer]
 
@@ -7009,7 +7009,7 @@ Tests if a timer exists and the value is within a certain range.
 - **Type**: `Array`, **Optional** (Default: [0.0, 1.7976931348623157E308]), **Computable**, **Element Type**: Double
 - **Constraint**: Values must be greater or equal than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
 
-[(Top)](top)
+[(Top)](#top)
 
 ## TimerContinue: Action (Stable) [#action_timercontinue]
 
@@ -7028,7 +7028,7 @@ Continue a timer
 - **Type**: `String`, **Required**, **Computable**
 - **Constraint**: String must be not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## TimerModify: Action (Stable) [#action_timermodify]
 
@@ -7076,7 +7076,7 @@ Modify values of a timer
 - Whether to repeat the timer when countdown finishes
 - **Type**: `Boolean`, **Optional** (Default: false), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## TimerPause: Action (Stable) [#action_timerpause]
 
@@ -7095,7 +7095,7 @@ Pause a timer
 - **Type**: `String`, **Required**, **Computable**
 - **Constraint**: String must be not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## TimerRestart: Action (Stable) [#action_timerrestart]
 
@@ -7114,7 +7114,7 @@ Restart a timer. Will be set to the original initial values.
 - **Type**: `String`, **Required**, **Computable**
 - **Constraint**: String must be not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## TimerStart: Action (Stable) [#action_timerstart]
 
@@ -7156,7 +7156,7 @@ Start a timer
 - Whether to repeat the timer when countdown finishes
 - **Type**: `Boolean`, **Optional** (Default: false), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## TimerStop: Action (Stable) [#action_timerstop]
 
@@ -7175,7 +7175,7 @@ Stop a timer
 - **Type**: `String`, **Required**, **Computable**
 - **Constraint**: String must be not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (utility) [#corecomponents_utility]
 
@@ -7209,7 +7209,7 @@ Perform adjustments to the wrapped sensor's returned position
 
 - Vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## And: Sensor (Stable) [#sensor_and]
 
@@ -7239,7 +7239,7 @@ Evaluate all sensors and execute action only when all sensor signal true. Target
 - **Type**: `String`, **Optional** (Default: null), **Computable**
 - **Constraint**: String value must be either null or not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Any: Sensor (Stable) [#sensor_any]
 
@@ -7257,7 +7257,7 @@ Sensor always signals true but doesn't return a target.
 - Whether this sensor should be enabled on the NPC
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Eval: Sensor (Experimental) [#sensor_eval]
 
@@ -7281,7 +7281,7 @@ Evaluate javascript expression and test truth value. Current values accessible a
 - **Type**: `String`, **Required**
 - **Constraint**: String must be not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Flag: Sensor (Stable) [#sensor_flag]
 
@@ -7310,7 +7310,7 @@ Test if a named flag is set or not
 - Whether the flag should be set or not
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Not: Sensor (WorkInProgress) [#sensor_not]
 
@@ -7345,7 +7345,7 @@ Return true when the given sensor test fails.
 - **Type**: `String`, **Optional** (Default: null), **Computable**
 - **Constraint**: String value must be either null or not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Nothing: Action (Stable) [#action_nothing]
 
@@ -7358,7 +7358,7 @@ Do nothing. Used often as placeholder.
 - Execute only once
 - **Type**: `Boolean`, **Optional** (Default: false)
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Or: Sensor (Stable) [#sensor_or]
 
@@ -7388,7 +7388,7 @@ Evaluate sensors and execute action when at least one sensor signals true. Targe
 - **Type**: `String`, **Optional** (Default: null), **Computable**
 - **Constraint**: String value must be either null or not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Random: Action (Stable) [#action_random]
 
@@ -7406,7 +7406,7 @@ Execute a single random action from a list of weighted actions.
 - List of possible actions
 - **Type**: `Array`, **Required**, **Element Type**: WeightedAction
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Random: Sensor (Stable) [#sensor_random]
 
@@ -7436,7 +7436,7 @@ Alternates between returning true and false for specified random durations
 - **Type**: `Array`, **Required**, **Computable**, **Element Type**: Double
 - **Constraint**: Values must be greater than 0, less or equal than 1.7976931348623157e+308and in weakly ascending order
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ResetInstructions: Action (Stable) [#action_resetinstructions]
 
@@ -7455,7 +7455,7 @@ Force reset instructionList, either by name, or as a whole
 - **Type**: `Array`, **Optional** (Default: null), **Computable**, **Element Type**: String
 - **Constraint**: Strings in array must not be empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Sequence: Action (Stable) [#action_sequence]
 
@@ -7483,7 +7483,7 @@ Execute list of actions.
 - List of actions
 - **Type**: `ObjectRef`, **Required**, **Object Type**: ActionList
 
-[(Top)](top)
+[(Top)](#top)
 
 ## SetFlag: Action (Stable) [#action_setflag]
 
@@ -7507,7 +7507,7 @@ Set a named flag to a boolean value
 - The value to set the flag to
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Switch: Sensor (Stable) [#sensor_switch]
 
@@ -7530,7 +7530,7 @@ Check if a computed boolean is true
 - The switch to check
 - **Type**: `Boolean`, **Required**, **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Timeout: Action (Stable) [#action_timeout]
 
@@ -7559,7 +7559,7 @@ Delay an action by a time which is randomly picked between a given minimum and m
 - Optional action to delay
 - **Type**: `ObjectRef`, **Optional** (Default: null), **Object Type**: Action
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ValueProviderWrapper: Sensor (Stable) [#sensor_valueproviderwrapper]
 
@@ -7593,7 +7593,7 @@ Wraps a sensor and passes down some additional parameter overrides pulled from t
 - **Type**: `Array`, **Required**, **Element Type**: ValueToParameterMapping
 - **Constraint**: Array must not be empty
 
-[(Top)](top)
+[(Top)](#top)
 
 # List of Core Components (world) [#corecomponents_world]
 
@@ -7644,7 +7644,7 @@ Checks for one of a set of blocks in the nearby area and caches the result until
 
 - Vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## BlockChange: Sensor (Stable) [#sensor_blockchange]
 
@@ -7703,7 +7703,7 @@ Matches when a block from a blockset within a certain range is changed or intera
 - Player target
 - NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## BlockType: Sensor (Stable) [#sensor_blocktype]
 
@@ -7731,7 +7731,7 @@ Checks if the block at the given position matches the provided block set
 - Block set to check against
 - **Type**: `Asset`, **Required**, **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## CanPlaceBlock: Sensor (Stable) [#sensor_canplaceblock]
 
@@ -7783,7 +7783,7 @@ Test if the currently set block can be placed at the relative position given dir
 
 - Vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## EntityEvent: Sensor (Stable) [#sensor_entityevent]
 
@@ -7847,7 +7847,7 @@ Matches when an entity from a specific NPC group within a certain range is damag
 - Player target
 - NPC target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## InWater: Sensor (Stable) [#sensor_inwater]
 
@@ -7865,7 +7865,7 @@ Check if NPC is currently in water
 - Whether this sensor should be enabled on the NPC
 - **Type**: `Boolean`, **Optional** (Default: true), **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Leash: Sensor (Stable) [#sensor_leash]
 
@@ -7893,7 +7893,7 @@ Triggers when the NPC is outside a specified range from the leash point
 
 - Vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Light: Sensor (Stable) [#sensor_light]
 
@@ -7953,7 +7953,7 @@ Check the light levels of the block an entity is standing on. Can test light int
 - **Type**: `String`, **Optional** (Default: null), **Computable**
 - **Constraint**: String value must be either null or not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## PlaceBlock: Action (Stable) [#action_placeblock]
 
@@ -7981,7 +7981,7 @@ Place a block (chosen by another action) at a position returned by a Sensor if c
 
 - Must be attached to a sensor that provides one of vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ReadPosition: Sensor (Stable) [#sensor_readposition]
 
@@ -8026,7 +8026,7 @@ Read a stored position with some conditions
 
 - Vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ResetBlockSensors: Action (Stable) [#action_resetblocksensors]
 
@@ -8044,7 +8044,7 @@ Resets a specific block sensor by name, or all block sensors by clearing the cur
 - The searched blocksets to reset block sensors for. If left empty, will reset all block sensors and found blocks
 - **Type**: `AssetArray`, **Optional** (Default: null), **Computable**, **Element Type**: BlockSet
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ResetPath: Action (Stable) [#action_resetpath]
 
@@ -8057,7 +8057,7 @@ Resets the current patrol path this NPC follows.
 - Execute only once
 - **Type**: `Boolean`, **Optional** (Default: false)
 
-[(Top)](top)
+[(Top)](#top)
 
 ## ResetSearchRays: Action (Stable) [#action_resetsearchrays]
 
@@ -8076,7 +8076,7 @@ Resets a specific search ray sensor cached position by name, or all search ray s
 - **Type**: `Array`, **Optional** (Default: null), **Computable**, **Element Type**: String
 - **Constraint**: Strings in array must not be empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## SearchRay: Sensor (Stable) [#sensor_searchray]
 
@@ -8139,7 +8139,7 @@ Fire a ray at a specific angle to see if what it hits matches a given sought blo
 
 - Vector position
 
-[(Top)](top)
+[(Top)](#top)
 
 ## SetBlockToPlace: Action (Stable) [#action_setblocktoplace]
 
@@ -8157,7 +8157,7 @@ Set the block type the NPC will place
 - The block item type
 - **Type**: `Asset`, **Required**, **Computable**
 
-[(Top)](top)
+[(Top)](#top)
 
 ## SetLeashPosition: Action (Stable) [#action_setleashposition]
 
@@ -8185,7 +8185,7 @@ Sets the NPCs current position to the spawn/leash position to be used with the L
 - At least one of ToCurrent, ToTarget must be true
 - If ToTarget is true, must be attached to a sensor that provides one of player target, NPC target, dropped item target
 
-[(Top)](top)
+[(Top)](#top)
 
 ## StorePosition: Action (Stable) [#action_storeposition]
 
@@ -8204,7 +8204,7 @@ Store the position from the attached sensor
 - **Type**: `String`, **Required**, **Computable**
 - **Constraint**: String must be not empty
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Time: Sensor (Stable) [#sensor_time]
 
@@ -8243,7 +8243,7 @@ Check if the day/year time is within some specified time. If you want to check a
 - Whether to use a relative scale for the day time. Sunrise will be at relative 6, Noon at 12, and Sunset at 18, regardless of actual in-game time
 - **Type**: `Boolean`, **Optional** (Default: true)
 
-[(Top)](top)
+[(Top)](#top)
 
 ## TriggerSpawners: Action (Stable) [#action_triggerspawners]
 
@@ -8273,7 +8273,7 @@ Trigger all, or up to a certain number of manual spawn markers in a radius aroun
 - **Type**: `Integer`, **Optional** (Default: 0.0), **Computable**
 - **Constraint**: Value must be greater or equal than 0
 
-[(Top)](top)
+[(Top)](#top)
 
 ## Weather: Sensor (Stable) [#sensor_weather]
 
@@ -8296,4 +8296,4 @@ Matches the current weather at the NPCs position against a set of weather globs
 - The glob patterns to match against weather
 - **Type**: `AssetArray`, **Required**, **Computable**, **Element Type**: Weather
 
-[(Top)](top)
+[(Top)](#top)
