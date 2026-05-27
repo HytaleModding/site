@@ -6,6 +6,7 @@ import { ParameterList } from "@/components/mdx/parameter-list";
 import { OfficialDocumentationNotice } from "@/components/mdx/official-documentation-notice";
 import * as TabsComponents from "fumadocs-ui/components/tabs";
 import { Card, Cards } from "fumadocs-ui/components/card";
+import { Answer } from "@/components/mdx/answer";
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
@@ -18,5 +19,6 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     img: ImageZoom,
     Card,
     Cards,
+    Answer,
   };
 }
