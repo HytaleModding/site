@@ -8,6 +8,8 @@ authors:
 
 <OfficialDocumentationNotice />
 
+# Vector Provider
+
 ### Constant
 
 Generates the provided vector.
@@ -18,7 +20,175 @@ Parameters:
 | ------ | ----------------- | ----------- |
 | Vector | 3D decimal vector |             |
 
----
+***
+
+### SetX
+
+Sets the value of the vector's X compnent.
+
+Parameters:
+
+| Name           | Type                | Description |
+| -------------- | ------------------- | ----------- |
+| VectorProvider | VectorProvider slot |             |
+| Value          | Density slot        |             |
+
+***
+
+### SetY
+
+Sets the value of the vector's Y compnent.
+
+Parameters:
+
+| Name           | Type                | Description |
+| -------------- | ------------------- | ----------- |
+| VectorProvider | VectorProvider slot |             |
+| Value          | Density slot        |             |
+
+***
+
+### SetZ
+
+Sets the value of the vector's Z compnent.
+
+Parameters:
+
+| Name           | Type                | Description |
+| -------------- | ------------------- | ----------- |
+| VectorProvider | VectorProvider slot |             |
+| Value          | Density slot        |             |
+
+***
+
+### Adder
+
+Adds all the input vectors.
+
+This is component-wise addition. If the inputs are $$v_1, v_2, \dots, v_n$$, the result is $$\sum_i v_i$$, so each output component is the sum of the matching input components: $$x=\sum_i x_i$$, $$y=\sum_i y_i$$, $$z=\sum_i z_i$$.
+
+Parameters:
+
+| Name   | Type                 | Description |
+| ------ | -------------------- | ----------- |
+| Inputs | VectorProvider slots |             |
+
+***
+
+### Subtracter
+
+Subtracts vector B from vector A.
+
+This is component-wise subtraction. If $$A=(a_x,a_y,a_z)$$ and $$B=(b_x,b_y,b_z)$$, the result is $$A-B=(a_x-b_x,\ a_y-b_y,\ a_z-b_z)$$, which you can read as the vector that points from **B** to **A**.
+
+Parameters:
+
+| Name            | Type                | Description |
+| --------------- | ------------------- | ----------- |
+| VectorProviderA | VectorProvider slot |             |
+| VectorProviderB | VectorProvider slot |             |
+
+***
+
+### Random
+
+Generates a unit vector in a random direction.
+
+Parameters:
+
+<table><thead><tr><th width="97.87127685546875">Name</th><th width="116.841552734375">Type</th><th>Description</th></tr></thead><tbody><tr><td>Seed</td><td>String</td><td>Determines pseudo-random outcome.</td></tr></tbody></table>
+
+***
+
+### Normalizer
+
+Sets the vector's length to the provided magnitude. The vector keeps its direction.
+
+For any non-zero vector $$v$$, this computes $$m \cdot \frac{v}{\|v\|}$$, where $$\|v\|=\sqrt{x^2+y^2+z^2}$$ and $$m$$ is the target magnitude. In other words, it keeps the direction and rescales the length to exactly match the provided value.
+
+Parameters:
+
+| Name           | Type                | Description                          |
+| -------------- | ------------------- | ------------------------------------ |
+| VectorProvider | VectorProvider slot |                                      |
+| Magnitude      | Density slot        | Determines the length of the vector. |
+
+***
+
+### ScalarMultiplier
+
+Multiplies the vector by a scalar.
+
+If the input vector is $$v=(x,y,z)$$ and the scalar is $$k$$, the result is $$kv=(kx,ky,kz)$$. This scales the length by $$|k|$$, and a negative scalar also flips the direction.
+
+Parameters:
+
+| Name           | Type                | Description |
+| -------------- | ------------------- | ----------- |
+| VectorProvider | VectorProvider slot |             |
+| Density        | Density slot        | Scalar.     |
+
+***
+
+### Multiplier
+
+Multiplies all the provided vectors.
+
+This is component-wise multiplication, not a dot or cross product. For vectors $$A=(a_x,a_y,a_z)$$ and $$B=(b_x,b_y,b_z)$$, the result is $$(a_xb_x,\ a_yb_y,\ a_zb_z)$$, and the same rule extends across any number of inputs.
+
+Parameters:
+
+| Name   | Type                 | Description          |
+| ------ | -------------------- | -------------------- |
+| Inputs | VectorProvider slots | Vectors to multiply. |
+
+***
+
+### Cross
+
+Finds the cross product of the provided vectors: A cross B.
+
+The cross product produces a vector perpendicular to both inputs. Its magnitude is $$\|A\|\|B\|\sin(\theta)$$, where $$\theta$$ is the angle between them, so it is largest for perpendicular vectors and zero for parallel ones.
+
+Parameters:
+
+| Name            | Type                | Description |
+| --------------- | ------------------- | ----------- |
+| VectorProviderA | VectorProvider slot |             |
+| VectorProviderB | VectorProvider slot |             |
+
+***
+
+### PlaneProjector
+
+Projects the vector onto a plane defined by the vectors PlaneA and PlaneB.
+
+This keeps only the part of the vector that lies in the plane spanned by **PlaneA** and **PlaneB**. If $$n$$ is the plane normal, usually from $$n = \frac{A \times B}{\|A \times B\|}$$, then the projection is $$v - (v \cdot n)n$$, which removes the component orthogonal to the plane.
+
+Parameters:
+
+| Name           | Type                | Description            |
+| -------------- | ------------------- | ---------------------- |
+| VectorProvider | VectorProvider slot | The vector to project. |
+| PlaneA         | VectorProvider slot | Defines the plane.     |
+| PlaneB         | VectorProvider slot | Defines the plane.     |
+
+***
+
+### VectorProjector
+
+Projects the vector onto another vector.
+
+This keeps only the component of **Source** that points along **Target**. For non-zero target vector $$t$$ and source vector $$s$$, the projection is $$\mathrm{proj}_t(s)=\frac{s \cdot t}{t \cdot t}t$$.
+
+Parameters:
+
+| Name   | Type                | Description |
+| ------ | ------------------- | ----------- |
+| Source | VectorProvider slot |             |
+| Target | VectorProvider slot |             |
+
+***
 
 ### DensityGradient
 
@@ -28,33 +198,9 @@ For more information about gradient vectors, see: [https://en.wikipedia.org/wiki
 
 Parameters:
 
-<table>
-  <thead>
-    <tr>
-      <th width="163.4554443359375">Name</th>
-      <th width="202.65338134765625">Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>SampleDistance</td>
-      <td>positive decimal value</td>
-      <td>
-        How far apart the Density field value samples are taken. The optimal
-        value for performance is 1.0. Greater values could be useful for
-        smoothing out results for specific applications.
-      </td>
-    </tr>
-    <tr>
-      <td>Density</td>
-      <td>Density slot</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+<table><thead><tr><th width="163.4554443359375">Name</th><th width="202.65338134765625">Type</th><th>Description</th></tr></thead><tbody><tr><td>SampleDistance</td><td>positive decimal value</td><td>How far apart the Density field value samples are taken. The optimal value for performance is 1.0. Greater values could be useful for smoothing out results for specific applications.</td></tr><tr><td>Density</td><td>Density slot</td><td></td></tr></tbody></table>
 
----
+***
 
 ### Cache
 
@@ -64,33 +210,9 @@ Use this only if the downstream (child) VectorProvider is expensive and the same
 
 Parameters:
 
-<table>
-  <thead>
-    <tr>
-      <th width="153.95050048828125">Name</th>
-      <th width="198.14862060546875">Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>SampleDistance</td>
-      <td>positive decimal value</td>
-      <td>
-        How far apart the Density field value samples are taken. The optimal
-        value for performance is 1.0. Greater values could be useful for
-        smoothing out results for specific applications.
-      </td>
-    </tr>
-    <tr>
-      <td>Density</td>
-      <td>Density slot</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+<table><thead><tr><th width="153.95050048828125">Name</th><th width="198.14862060546875">Type</th><th>Description</th></tr></thead><tbody><tr><td>SampleDistance</td><td>positive decimal value</td><td>How far apart the Density field value samples are taken. The optimal value for performance is 1.0. Greater values could be useful for smoothing out results for specific applications.</td></tr><tr><td>Density</td><td>Density slot</td><td></td></tr></tbody></table>
 
----
+***
 
 ### Exported
 
@@ -106,32 +228,9 @@ Expected Inputs: 1
 
 Parameters:
 
-<table>
-  <thead>
-    <tr>
-      <th width="151.09893798828125">Name</th>
-      <th width="185.84161376953125">Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>SingleInstance</td>
-      <td>boolean</td>
-      <td>
-        Enable this to share the export across all Imported nodes that reference
-        this key.
-      </td>
-    </tr>
-    <tr>
-      <td>VectorProvider</td>
-      <td>VectorProvider slot</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+<table><thead><tr><th width="151.09893798828125">Name</th><th width="185.84161376953125">Type</th><th>Description</th></tr></thead><tbody><tr><td>SingleInstance</td><td>boolean</td><td>Enable this to share the export across all Imported nodes that reference this key.</td></tr><tr><td>VectorProvider</td><td>VectorProvider slot</td><td></td></tr></tbody></table>
 
----
+***
 
 ### Imported
 
