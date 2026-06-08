@@ -1,6 +1,4 @@
 import React from "react";
-import { Separator } from "../ui/separator";
-import { cn } from "@/lib/utils";
 
 export function Answer({
   profile,
