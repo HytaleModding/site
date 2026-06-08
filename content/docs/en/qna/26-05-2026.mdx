@@ -146,23 +146,23 @@ HytaleModding interviewed Slikey, ZeroErrors and DevSlashNull about the future o
 
 ### Can the NPC system change NPCs real-time (texture, size, attributes) without respawning?
 <Answer profile={ZeroErrorsProfile}>
-    There is no reason why it shouldn't be possible for it to be able to change its appearance by swapping out the model or changing its transform to be scaled larger.  I am pretty confident I've seen in the past NPCs with the ability to switch their appearance. 
+    There is no reason why it shouldn't be possible for it to be able to change its appearance by swapping out the model or changing its transform to be scaled larger. I am pretty confident I've seen in the past NPCs with the ability to switch their appearance. 
 
-    If it doesn't work, a small reproducible NPC configuration would let us confirm whether its a bug or a limitation that shouldn't exist
+    If it doesn't work, a small reproducible NPC configuration would let us confirm whether it's a bug or a limitation that shouldn't exist
 </Answer>
 
 ### Closer to Adventure Mode, will there be a more diverse NPC system with a Quest system, easy for modders to interface with, maybe a visual quest editor?
 <Answer profile={SlikeyProfile}>
-    The objective system is still in the codebase, we just removed all usages of it. It is kind of abandoned right now, but likely to make a reappearance in dungeons that are going to come up. The open design question is **implied quests** (craft this, gather that, done) versus **explicit quests** (enter a portal, fight enemies, hud progression) - and this is upto the design team.
+    The objective system is still in the codebase, we just removed all usages of it. It is kind of abandoned right now, but likely to make a reappearance in dungeons that are going to come up. The open design question is **implied quests** (craft this, gather that, done) versus **explicit quests** (enter a portal, fight enemies, hud progression) - and this is up to the design team.
 
-    Any system we introduce ffor quests, modders will be able to hook into. The objective plugin works today if you wish to use it.
+    Any system we introduce for quests, modders will be able to hook into. The objective plugin works today if you wish to use it.
 </Answer>
 
 # Performance
 
 ### Single instance seems to be mostly bound to one CPU thread, limiting players per instance. Is multithreading / scalable instance architecture being worked on? Soon or long-term?
 <Answer profile={ZeroErrorsProfile}>
-    We're generally working on performance improvements, such as MachineBreaker working on various things in the ECS and the server. Some systems already leverage multi-core and parallelism, but for smaller-scale systems going could be worse. We can spend more time waiting on synchronization. Before launch, we had to disable a bunch of systems for running multi-threaded because it was worse performance for people playing in single player, which was our primary target then. No ship date for full multicore, its ongoing.
+    We're generally working on performance improvements, such as MachineBreaker working on various things in the ECS and the server. Some systems already leverage multi-core and parallelism, but for smaller-scale systems going could be worse. We can spend more time waiting on synchronization. Before launch, we had to disable a bunch of systems running multi-threaded because it was worse performance for people playing in single player, which was our primary target then. No ship date for full multicore, it's ongoing.
 
     We are actively working on improving this, if you see places that have specific performance issues, we'd be happy to hear about them and take a look.
 </Answer>
@@ -175,12 +175,12 @@ HytaleModding interviewed Slikey, ZeroErrors and DevSlashNull about the future o
 
     Currently, you can transfer to the same server with additional data, or use the domain to switch. 
 
-    We have shipped Crash Fallback, you can specify a single fallback server the client connects to if disconnected by an error. Multiple addresses per transfer packet do not exist. You can also use Cloudflare load balancing.
+    We have shipped Crash Fallback, you can specify a single fallback server the client connects to if disconnected by an error. Multiple addresses per transfer packet do not exist. You can also use Cloudflare Load Balancing.
 </Answer>
 
 ### Will you support server sharding and server sync?
 <Answer profile={ZeroErrorsProfile}>
-    Its not a thing that we directly need to support. Synchronizing gameplay elements across server boundaries gets very complicated very quickly, so its better for a server host that wants to do sharding in a specific way to build it in a way that makes sense for them. If something established emerges in the community, we might consider it.
+    It's not a thing that we directly need to support. Synchronizing gameplay elements across server boundaries gets very complicated very quickly, so it's better for a server host that wants to do sharding in a specific way to build it in a way that makes sense for them. If something established emerges in the community, we might consider it.
 </Answer>
 
 # Modding Ergonomics
@@ -207,17 +207,17 @@ HytaleModding interviewed Slikey, ZeroErrors and DevSlashNull about the future o
 
 ### Worldgen V2 currently uses a 2D biome map, with cubic chunks coming, will we get a 3D Biome Map?
 <Answer profile={ZeroErrorsProfile}>
-    As we add the ability to have basically infinite height, it definitely makes sense to also have biomes vertically, so its definitely a thing we'll look at improving as we go through. 
+    As we add the ability to have basically infinite height, it definitely makes sense to also have biomes vertically, so it's definitely a thing we'll look at improving as we go through. 
 </Answer>
 
 ### Are we getting Modpacks soon, via CurseForge or a built-in solution?
 <Answer profile={DevSlashNullProfile}>
-    We are building and shipping the mod browser in an upcoming update, with potential to integrate some form of getting mods in a bundled experience. Modpacks are definitely useful, and we know we want to do it, but there's currently nothing plans. I foresee a steam-workshop-like subscribe model, where curators bundle mods that you can subscribe to. 
+    We are building and shipping the mod browser in an upcoming update, with potential to integrate some form of getting mods in a bundled experience. Modpacks are definitely useful, and we know we want to do it, but there's currently nothing planned. I foresee a Steam Workshop-like subscription model, where curators bundle mods that you can subscribe to. 
 </Answer>
 
 ### With the Movement System changes, when might proper Mount Controls (e.g., flying mounts) arrive?
 <Answer profile={ZeroErrorsProfile}>
-    No date. The recent movement changes were a big clean up to improve the general way player movement is handled, and I'm pretty confident that extends into mount stuff in the future... its definitely a thing we'd like to improve.
+    No date. The recent movement changes were a big clean up to improve the general way player movement is handled, and I'm pretty confident that extends into mount stuff in the future... it's definitely a thing we'd like to improve.
 </Answer>
 
 ### If Hytale implements its own Tech System in the future, would existing Tech Mods be consulted for maximum compatibility?
