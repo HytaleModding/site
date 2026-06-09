@@ -8,7 +8,213 @@ authors:
 
 <OfficialDocumentationNotice />
 
-# List of Builders [#top]
+# Table of Contents [#top]
+1. [List of Builders](#builders)
+2. [List of Roles](#roles)
+    1. [Abstract](#role_abstract)
+    2. [Generic](#role_generic)
+    3. [Variant](#role_variant)
+3. [List of Motion Controllers](#motioncontrollers)
+    1. [Dive](#motioncontroller_dive)
+    2. [Fly](#motioncontroller_fly)
+    3. [Walk](#motioncontroller_walk)
+4. [List of Misc Parts](#miscparts)
+    1. [ActionList](#actionlist_actionlist)
+    2. [Aim](#headmotion_aim)
+    3. [AimCharge](#bodymotion_aimcharge)
+    4. [Altitude](#ientityfilter_altitude)
+    5. [And (IEntityFilter)](#ientityfilter_and)
+    6. [Attitude (ISensorEntityPrioritiser)](#isensorentityprioritiser_attitude)
+    7. [Attitude (IEntityFilter)](#ientityfilter_attitude)
+    8. [Combat](#ientityfilter_combat)
+    9. [CombatTargets](#isensorentitycollector_combattargets)
+    10. [Flee](#bodymotion_flee)
+    11. [Flock (BodyMotion)](#bodymotion_flock)
+    12. [Flock (IEntityFilter)](#ientityfilter_flock)
+    13. [HashMap](#hashmap_hashmap)
+    14. [HeightDifference](#ientityfilter_heightdifference)
+    15. [InsideBlock](#ientityfilter_insideblock)
+    16. [Instruction](#instruction_instruction)
+    17. [Inventory](#ientityfilter_inventory)
+    18. [ItemInHand](#ientityfilter_iteminhand)
+    19. [Land](#bodymotion_land)
+    20. [Leave](#bodymotion_leave)
+    21. [LineOfSight](#ientityfilter_lineofsight)
+    22. [MaintainDistance](#bodymotion_maintaindistance)
+    23. [MatchLook](#bodymotion_matchlook)
+    24. [MovementState](#ientityfilter_movementstate)
+    25. [NPCGroup](#ientityfilter_npcgroup)
+    26. [Not](#ientityfilter_not)
+    27. [Nothing (BodyMotion)](#bodymotion_nothing)
+    28. [Nothing (HeadMotion)](#headmotion_nothing)
+    29. [Observe](#headmotion_observe)
+    30. [Or](#ientityfilter_or)
+    31. [Path (Path)](#path_path)
+    32. [Path (BodyMotion)](#bodymotion_path)
+    34. [Random (Instruction)](#instruction_random)
+    35. [Reference](#instruction_reference)
+    36. [RelativeWaypointDefinition](#relativewaypointdefinition_relativewaypointdefinition)
+    37. [Seek](#bodymotion_seek)
+    38. [Sequence (BodyMotion)](#bodymotion_sequence)
+    39. [Sequence (HeadMotion)](#headmotion_sequence)
+    40. [SpotsMe](#ientityfilter_spotsme)
+    41. [StandingOnBlock](#ientityfilter_standingonblock)
+    42. [Stat](#ientityfilter_stat)
+    43. [StateTransition](#statetransition_statetransition)
+    44. [StateTransitionController](#statetransitioncontroller_statetransitioncontroller)
+    45. [StateTransitionEdges](#statetransitionedges_statetransitionedges)
+    46. [TakeOff](#bodymotion_takeoff)
+    47. [Teleport](#bodymotion_teleport)
+    48. [TestProbe](#bodymotion_testprobe)
+    49. [Timer (BodyMotion)](#bodymotion_timer)
+    50. [Timer (HeadMotion)](#headmotion_timer)
+    51. [ValueToParameterMapping](#valuetoparametermapping_valuetoparametermapping)
+    52. [ViewSector](#ientityfilter_viewsector)
+    53. [Wander](#bodymotion_wander)
+    54. [WanderInCircle](#bodymotion_wanderincircle)
+    55. [WanderInRect](#bodymotion_wanderinrect)
+    56. [Watch](#headmotion_watch)
+    57. [WeightedAction](#weightedaction_weightedaction)
+5. [List of Core Components (AudioVisual)](#corecomponents_audiovisual)
+    1. [Animation (Sensor)](#sensor_animation)
+    2. [Appearance](#action_appearance)
+    3. [DisplayName](#action_displayname)
+    4. [ModelAttachment](#action_modelattachment)
+    5. [PlayAnimation](#action_playanimation)
+    6. [PlaySound](#action_playsound)
+    7. [SpawnParticles](#action_spawnparticles)
+6. [List of Core Components (Combat)](#corecomponents_combat)
+    1. [ApplyEntityEffect](#action_applyentityeffect)
+    2. [Attack](#action_attack)
+    3. [Damage (Sensor)](#sensor_damage)
+    4. [IsBackingAway (Sensor)](#sensor_isbackingaway)
+7. [List of Core Components (CoreComponents)](#corecomponents_corecomponents)
+    1. [AddToHostileTargetMemory](#action_addtohostiletargetmemory)
+    2. [CombatAbility](#action_compatability)
+    3. [CombatActionEvaluator (Sensor)](#sensor_combatactionevaluator)
+    4. [FlockBeacon](#action_flockbeacon)
+    5. [FlockCombatDamage (Sensor)](#sensor_flockcombatdamage)
+    6. [FlockLeader (Sensor)](#sensor_flockleader)
+    7. [FlockState](#action_flockstate)
+    8. [FlockTarget](#action_flocktarget)
+    9. [HasHostileTargetMemory (Sensor)](#sensor_hashostiletargetmemory)
+    10. [InflictedDamage (Sensor)](#sensor_inflicteddamage)
+    11. [JoinFlock](#action_joinflock)
+    12. [LeaveFlock](#action_leaveflock)
+    13. [TriggerSpawnBeacon](#action_triggerspawnbeacon)
+8. [List of Core Components (Debug)](#corecomponents_debug)
+    1. [Log](#action_log)
+    2. [Test (DO NOT USE)](#action_test)
+9. [List of Core Components (Entity)](#corecomponents_entity)
+    1. [Beacon (Sensor)](#sensor_beacon)
+    2. [Count (Sensor)](#sensor_count)
+    3. [IgnoreForAvoidance](#action_ignoreforavoidance)
+    4. [Kill (Sensor)](#sensor_kill)
+    5. [Mob (Sensor)](#sensor_mob)
+    6. [OverrideAttitude](#action_overrideattitude)
+    7. [Player (Sensor)](#sensor_player)
+    8. [ReleaseTarget](#action_releasetarget)
+    9. [Self (Sensor)](#sensor_self)
+    10. [SetMarkedTarget](#action_setmarkedtarget)
+    11. [SetStat](#action_setstat)
+    12. [Target (Sensor)](#sensor_target)
+10. [List of Core Components (Interaction)](#corecomponents_interaction)
+    1. [CanInteract (Sensor)](#sensor_caninteract)
+    2. [HasInteracted (Sensor)](#sensor_hasinteracted)
+    3. [InteractionContext (Sensor)](#sensor_interactioncontext)
+    4. [LockOnInteractionTarget](#action_lockoninteractiontarget)
+    5. [SetInteractable](#action_setinteractable)
+11. [List of Core Components (Items)](#corecomponents_items)
+    1. [DropItem](#action_dropitem)
+    2. [DroppedItem (Sensor)](#sensor_droppeditem)
+    3. [Inventory](#action_inventory)
+    4. [PickUpItem](#action_pickupitem)
+12. [List of Core Components (Lifecycle)](#corecomponents_lifecycle)
+    1. [Age (Sensor)](#sensor_age)
+    2. [DelayDespawn](#action_delaydespawn)
+    3. [Despawn](#action_despawn)
+    4. [Die](#action_die)
+    5. [Remove](#action_remove)
+    6. [Role](#action_role)
+    7. [Spawn](#action_spawn)
+13. [List of Core Components (Message)](#corecomponents_message)
+    1. [Beacon](#action_beacon)
+    2. [Notify](#action_notify)
+14. [List of Core Components (Movement)](#corecomponents_movement)
+    1. [Crouch](#action_crouch)
+    2. [InAir (Sensor)](#sensor_inair)
+    3. [MotionController (Sensor)](#sensor_motioncontroller)
+    4. [Nav (Sensor)](#sensor_nav)
+    5. [OnGround (Sensor)](#sensor_onground)
+    6. [OverrideAltitude](#action_overridealtitude)
+    7. [RecomputePath](#action_recomputepath)
+15. [List of Core Components (NPC)](#corecomponents_npc)
+    1. [CompleteTask](#action_completetask)
+    2. [HasTask (Sensor)](#sensor_hastask)
+    3. [Mount](#action_mount)
+    4. [OpenBarterShop](#action_openbartershop)
+    5. [OpenShop](#action_openshop)
+    6. [StartObjective](#action_startobjective)
+16. [List of Core Components (Path)](#corecomponents_path)
+    1. [MakePath](#action_makepath)
+    2. [Path (Sensor)](#sensor_path)
+17. [List of Core Components (StateMachine)](#corecomponents_statemachine)
+    1. [IsBusy (Sensor)](#sensor_isbusy)
+    2. [ParentState](#action_parentstate)
+    3. [State](#action_state)
+    4. [State (Sensor)](#sensor_state)
+    5. [ToggleStateEvaluator](#action_togglestateevaluator)
+18. [List of Core Components (Timer)](#corecomponents_timer)
+    1. [Alarm (Sensor)](#sensor_alarm)
+    2. [SetAlarm](#action_setalarm)
+    3. [Timer (Sensor)](#sensor_timer)
+    4. [TimerContinue](#action_timercontinue)
+    5. [TimerModify](#action_timermodify)
+    6. [TimerPause](#action_timerpause)
+    7. [TimerRestart](#action_timerrestart)
+    8. [TimerStart](#action_timerstart)
+    9. [TimerStop](#action_timerstop)
+19. [List of Core Components (Utility](#corecomponents_utility)
+    1. [AdjustPosition (Sensor)](#sensor_adjustposition)
+    2. [And (Sensor)](#sensor_and)
+    3. [Any (Sensor)](#sensor_any)
+    4. [Eval (Sensor)](#sensor_eval)
+    5. [Flag (Sensor)](#sensor_flag)
+    6. [Not (Sensor)](#sensor_not)
+    7. [Nothing (Action)](#action_nothing)
+    8. [Or (Sensor)](#sensor_or)
+    9. [Random (Action)](#action_random)
+    10. [Random (Sensor)](#sensor_random)
+    11. [ResetInstructions](#action_resetinstructions)
+    12. [Sequence](#action_sequence)
+    13. [SetFlag](#action_setflag)
+    14. [Switch (Sensor)](#sensor_switch)
+    15. [Timeout](#action_timeout)
+    16. [ValueProviderWrapper (Sensor)](#sensor_valueproviderwrapper)
+20. [List of Core Components (World)](#corecomponents_world)
+    1. [Block (Sensor)](#sensor_block)
+    2. [BlockChange (Sensor)](#sensor_blockchange)
+    3. [BlockType (Sensor)](#sensor_blocktype)
+    4. [CanPlaceBlock (Sensor)](#sensor_canplaceblock)
+    5. [EntityEvent (Sensor)](#sensor_entityevent)
+    6. [InWater (Sensor)](#sensor_inwater)
+    7. [Leash (Sensor)](#sensor_leash)
+    8. [Light (Sensor)](#sensor_light)
+    9. [PlaceBlock](#action_placeblock)
+    10. [ReadPosition (Sensor)](#sensor_readposition)
+    11. [ResetBlockSensors](#action_resetblocksensors)
+    12. [ResetPath](#action_resetpath)
+    13. [ResetSearchRays](#action_resetsearchrays)
+    14. [SearchRay (Sensor)](#sensor_searchray)
+    15. [SetBlockToPlace](#action_setblocktoplace)
+    16. [SetLeashPosition](#action_setleashposition)
+    17. [StorePosition](#action_storeposition)
+    18. [Time (Sensor)](#sensor_time)
+    19. [TriggerSpawners](#action_triggerspawners)
+    20. [Weather (Sensor)](#sensor_weather)
+
+
+# List of Builders [#builders]
 
 |     | Name                                                                                 | Type                       | Description                                                                                                                                            |
 | --- | ------------------------------------------------------------------------------------ | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -196,7 +402,7 @@ authors:
 | 182 | [Weather](#sensor_weather)                                                           | Sensor                     | Matches the current weather at the NPCs position against a set of weather globs                                                                        |
 | 183 | [WeightedAction](#weightedaction_weightedaction)                                     | WeightedAction             | A wrapped and weighted action intended to be used for Random action lists.                                                                             |
 
-# List of Roles
+# List of Roles [#roles]
 
 ## Abstract: Role (Stable) [#role_abstract]
 
@@ -1080,7 +1286,7 @@ Create a variant from an existing NPC JSON file
 
 [(Top)](#top)
 
-# List of Motion Controllers
+# List of Motion Controllers [#motioncontrollers]
 
 ## Dive: MotionController (WorkInProgress) [#motioncontroller_dive]
 
@@ -1702,7 +1908,7 @@ Provide walk on ground abilities for NPC
 
 [(Top)](#top)
 
-# List of Misc Parts
+# List of Misc Parts [#miscparts]
 
 ## ActionList: ActionList (Stable) [#actionlist_actionlist]
 
@@ -4196,7 +4402,7 @@ A wrapped and weighted action intended to be used for Random action lists.
 
 [(Top)](#top)
 
-# List of Core Components (audiovisual)
+# List of Core Components (audiovisual) [#corecomponents_audiovisual]
 
 ## Animation: Sensor (Stable) [#sensor_animation]
 
@@ -4365,7 +4571,7 @@ Spawn particle system visible within a given range with an offset relative to np
 
 [(Top)](#top)
 
-# List of Core Components (combat)
+# List of Core Components (combat) [#corecomponents_combat]
 
 ## ApplyEntityEffect: Action (Stable) [#action_applyentityeffect]
 
@@ -4570,7 +4776,7 @@ Test if the NPC is currently backing away from something.
 
 [(Top)](#top)
 
-# List of Core Components (corecomponents)
+# List of Core Components (corecomponents) [#corecomponents_corecomponents]
 
 ## AddToHostileTargetMemory: Action (Stable) [#action_addtohostiletargetmemory]
 
@@ -4897,7 +5103,7 @@ Trigger the nearest spawn beacon matching the configuration id
 
 [(Top)](#top)
 
-# List of Core Components (debug)
+# List of Core Components (debug) [#corecomponents_debug]
 
 ## Log: Action (Stable) [#action_log]
 
@@ -5044,7 +5250,7 @@ Test action to exercise attribute evaluation (DO NOT USE)
 
 [(Top)](#top)
 
-# List of Core Components (entity)
+# List of Core Components (entity) [#corecomponents_entity]
 
 ## Beacon: Sensor (Stable) [#sensor_beacon]
 
@@ -5544,7 +5750,7 @@ Test if given target matches a series of criteria and optional entity filters
 
 [(Top)](#top)
 
-# List of Core Components (interaction)
+# List of Core Components (interaction) [#corecomponents_interaction]
 
 ## CanInteract: Sensor (Stable) [#sensor_caninteract]
 
@@ -5894,7 +6100,7 @@ Pick up an item. In hoover mode, will match to the Item array. Otherwise, requir
 
 [(Top)](#top)
 
-# List of Core Components (lifecycle)
+# List of Core Components (lifecycle) [#corecomponents_lifecycle]
 
 ## Age: Sensor (Stable) [#sensor_age]
 
@@ -6122,7 +6328,7 @@ Spawn an NPC
 
 [(Top)](#top)
 
-# List of Core Components (message)
+# List of Core Components (message) [#corecomponents_message]
 
 ## Beacon: Action (Experimental) [#action_beacon]
 
@@ -6361,7 +6567,7 @@ Force recomputation of path finder solution
 
 [(Top)](#top)
 
-# List of Core Components (npc)
+# List of Core Components (npc) [#corecomponents_npc]
 
 ## CompleteTask: Action (Stable) [#action_completetask]
 
@@ -6516,7 +6722,7 @@ Start the given objective for the currently iterated player in the interaction i
 
 [(Top)](#top)
 
-# List of Core Components (path)
+# List of Core Components (path) [#corecomponents_path]
 
 ## MakePath: Action (WorkInProgress) [#action_makepath]
 
@@ -6584,7 +6790,7 @@ Find a path based on various criteria. Provides the position of the nearest wayp
 
 [(Top)](#top)
 
-# List of Core Components (statemachine)
+# List of Core Components (statemachine) [#corecomponents_statemachine]
 
 ## IsBusy: Sensor (Stable) [#sensor_isbusy]
 
@@ -6700,7 +6906,7 @@ Enable or disable the NPC's state evaluator
 
 [(Top)](#top)
 
-# List of Core Components (timer)
+# List of Core Components (timer) [#corecomponents_timer]
 
 ## Alarm: Sensor (Stable) [#sensor_alarm]
 
@@ -6971,7 +7177,7 @@ Stop a timer
 
 [(Top)](#top)
 
-# List of Core Components (utility)
+# List of Core Components (utility) [#corecomponents_utility]
 
 ## AdjustPosition: Sensor (Stable) [#sensor_adjustposition]
 
@@ -7389,7 +7595,7 @@ Wraps a sensor and passes down some additional parameter overrides pulled from t
 
 [(Top)](#top)
 
-# List of Core Components (world)
+# List of Core Components (world) [#corecomponents_world]
 
 ## Block: Sensor (Experimental) [#sensor_block]
 
