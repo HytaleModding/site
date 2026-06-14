@@ -2,7 +2,7 @@ FROM oven/bun:alpine AS base
 WORKDIR /app
 
 FROM base AS deps
-RUN apk add --no-cache python3 make g++
+RUN apk add --no-cache python3 make g++ git
 COPY bun.lock package.json ./
 COPY source.config.ts tsconfig.json ./
 RUN mkdir -p content/docs
@@ -10,18 +10,20 @@ RUN bun install --frozen-lockfile
 
 FROM base AS builder
 WORKDIR /app
-ARG GIT_BRANCH
-ARG GIT_COMMIT
+RUN apk add --no-cache git
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+COPY .git ./.git
 
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN GIT_BRANCH=$GIT_BRANCH GIT_COMMIT=$GIT_COMMIT bun run build
+RUN bun run build
 
 FROM oven/bun:alpine AS runner
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 WORKDIR /app
+
+RUN apk add --no-cache git
 
 COPY --from=builder --chown=nextjs:nodejs /app .
 
