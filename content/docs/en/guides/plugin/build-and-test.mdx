@@ -3,23 +3,29 @@ title: "Build and Test Your Mod"
 description: "Learn how to build your Hytale mod and test it in-game."
 authors:
     - name: "Michael B"
+    - name: "AzureDoom"
+      link: "https://azuredoom.com"
 ---
 
 If you followed along with the [Setting Up Your Development Environment](./setting-up-env) page, you should now be able to build your project.
 
 ## Building Your Mod
 
-In our case, we've **Gradle** as the build system. Gradle is a powerful build automation tool that manages dependencies, compiles your code, and packages everything into a distributable JAR file.
+In our case, we've used **Gradle** as the build system. Gradle is a powerful build automation tool that manages dependencies, compiles your code, and packages everything into a distributable JAR file.
 
 ### Understanding Gradle
 
-Gradle can use a `build.gradle.kts` file (Kotlin DSL) to define your project's configuration, dependencies, and build settings. You can learn more about Gradle at the [official Gradle website](https://gradle.org/).
+Gradle can use a `build.gradle.kts` file (Kotlin DSL) and `gradle.properties` to define your project's configuration, dependencies, and build settings. You can learn more about Gradle at the [official Gradle website](https://gradle.org/).
 
 ### Building with Gradle
 
 To build your mod, open a terminal in your project directory and run:
 
 ```bash
+// Windows
+gradlew.bat build
+
+// Linux/MacOS
 ./gradlew build
 ```
 
@@ -29,19 +35,15 @@ This command will:
 3. Package everything into a JAR file
 
 <Callout type="info">
-If you are using the plugin template from the [Setting Up Your Development Environment](./setting-up-env) guide, then the build script is already set up for you. It includes paths to your Hytale game library and handles the packaging of your mod, managing hytale dependencies and manifest changes.
+If you are using the plugin template from the [Setting Up Your Development Environment](./setting-up-env) guide, then the build script is already set up for you. It automatically grabs Hytale server jar/assets and handles the packaging of your mod, managing hytale dependencies and manifest changes.
 
-If you have a different path to your Hytale installation, you may receive the following error:
-```bash
-FAILURE: Build failed with an exception.
-
-* What went wrong:
-Failed to find Hytale at the expected location. Please make sure you have installed the game. The expected location can be changed using the hytale.home_path property. Currently looking in 'C:\Path\To\Hytale'
-```
-
-You can change the path by adding a property to your `gradle.properties` file (if it doesn't exist, create it in the root of your project):
+You can change the project to using your game installs Asset zip by uncommenting a property to your `gradle.properties` file:
 ```properties
-hytale.home_path=C:\Correct\Path\To\Hytale
+hytaleHomeOverride=/path/to/Hytale/install/release/package/game/latest/Assets.zip
+```
+and `build.gradle.kts` file:
+```kts
+hytaleHomeOverride = property("hytaleHomeOverride").toString()
 ```
 
 </Callout>
@@ -54,7 +56,7 @@ ExamplePlugin-1.0.jar
 ```
 
 <Callout type="info">
-The exact name may vary depending on what you configured in your `build.gradle.kts` and `settings.gradle.kts` file. Check the `rootProject.name` and `version` fields to see what your JAR will be named.
+The exact name may vary depending on what you configured in your `gradle.properties` file. Check the `mod_name` and `version` fields to see what your JAR will be named.
 </Callout>
 
 ## Testing Your Mod
@@ -91,6 +93,20 @@ Copy the `ExamplePlugin-1.0.jar` file from your project's `build/libs` directory
 5. **See your mod** in the list!
 
 If your mod appears in the list, congratulations! Your mod has been successfully loaded by Hytale.
+
+## Testing Your Mod Without Building
+
+Now that you have verified your project builds and runs in Hytale, you'll want to test it as you do development. To do this, simply run the `runServer` task or manually via:
+
+```bash
+// Windows
+gradlew.bat runServer
+
+// Linux/MacOS
+./gradlew runServer
+```
+
+This will start and run a local Hytale server. You'll connect in your game adding a private server pointing to `localhost`. This server will run your mod and any dependencies you have added via your `build.gradle.kts` file.
 
 ## Troubleshooting
 
