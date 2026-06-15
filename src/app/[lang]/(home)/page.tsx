@@ -149,29 +149,29 @@ const showcaseItems: ShowcaseItem[] = [
     author: "lulu",
     image: Sanguivar,
     link: "https://discord.gg/hytalemodding",
-    type: "art"
+    type: "art",
   },
   {
     title: "Hexcode",
     author: "Riprod",
     image: Hexcode,
     link: "https://docs.hexcodec.com",
-    type: "art"
+    type: "art",
   },
   {
     title: "HyYap",
     author: "Azim",
     image: HyYap,
     link: "https://discord.gg/hytalemodding",
-    type: "art"
+    type: "art",
   },
   {
     title: "Arcanum",
     author: "zenkuro",
     image: Arcanum,
     link: "https://wiki.hytalemodding.dev/mod/zens-arcanum",
-    type: "art"
-  }
+    type: "art",
+  },
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
@@ -365,13 +365,13 @@ export default function HomePage() {
                   scale={0.9}
                 />
                 <div className="bg-background hover:bg-background/85 relative mx-4 rounded-lg p-2 text-sm font-medium shadow-md transition-colors duration-200 ease-in-out">
-                    <Link
-                    href={"https://hytalemodding.dev/en/grants"}
+                  <Link
+                    href={"https://hytalemodjam.com/"}
                     className="flex items-center justify-center gap-2 text-wrap"
-                    >
+                  >
                     Hytale x HytaleModding ModJam is live!{" "}
                     <ArrowRightIcon className="h-4 w-4" />
-                    </Link>
+                  </Link>
                 </div>
               </div>
               <h1 className="text-4xl font-semibold text-balance md:text-5xl">
