@@ -366,7 +366,7 @@ export default function HomePage() {
                 />
                 <div className="bg-background hover:bg-background/85 relative mx-4 rounded-lg p-2 text-sm font-medium shadow-md transition-colors duration-200 ease-in-out">
                     <Link
-                    href={"https://hytalemodding.dev/en/grants"}
+                    href={"https://hytalemodjam.com"}
                     className="flex items-center justify-center gap-2 text-wrap"
                     >
                     Hytale x HytaleModding ModJam is live!{" "}
