@@ -3,114 +3,470 @@ title: "Modtale"
 description: "Complete guide to publishing and managing your Hytale mods on Modtale."
 ---
 
-# Publishing Your Mod on Modtale
+# Publishing Your Project on Modtale
 
-[Modtale](https://modtale.net) is the Hytale Community Repository for discovering mods, asset packs, worlds, and modpacks.
+[Modtale](https://modtale.net) is a Hytale project repository for server plugins, data assets, art assets, worlds, and modpacks.
 
-This guide will walk you through the complete process of publishing your mod.
+This guide follows the current Modtale publishing workflow from draft creation to review, release management, gallery media, team permissions, project settings, and API-key based automation.
 
-## Prerequisites
+## Before You Start
 
-Before you start, make sure you have:
-- A compiled `.jar` file of your plugin, or `.zip` of your asset pack
-- A description of your mod's features
+You will need a signed-in Modtale account. Some publishing actions, including project creation and API key generation, require a verified email address.
 
-We also recommended:
-- High-quality screenshots or images of your mod in action
-- A clear logo or icon (recommended size: 512x512px)
-- Any dependencies or requirements documented
+Prepare the parts of your project before opening the upload flow:
 
-## Step-by-Step Publishing Process
+- A project title and short summary.
+- A compiled project artifact, if your project type uses direct uploads.
+- Screenshots, renders, or videos that show what users are getting.
+- A license choice.
+- Tags that describe the project clearly.
+- Any required dependencies, incompatible projects, and version notes.
+- Optional links such as source code, documentation, issue tracker, wiki, or community server.
 
-### 1. Account Setup
-Sign in to [Modtale](https://modtale.net) using your preferred method. If you don't have an account, create one first.
+Current upload limits and validation rules to keep in mind:
 
-### 2. Start Creating
-Click on the **"Create"** button in the navigation bar or go directly to the [upload page](https://modtale.net/upload).
+- Project files must be no larger than 100 MB.
+- Version numbers must use strict SemVer, such as `1.0.0`, `1.0.0-rc.1`, or `1.0.0+build`.
+- Project icons must be square, using a 1:1 aspect ratio.
+- Project banners must use a 3:1 aspect ratio.
+- Gallery images must use a 16:9 aspect ratio.
+- A project can have up to 20 gallery images.
+- A user can upload up to 5 versions per day and 30 versions per month.
+- A user can have up to 10 active API keys.
 
-### 3. Choose Content Type
-Select the appropriate content type for your submission:
-- **Server Plugins** - For Hytale server-side plugins and modifications
-- **Data Assets** - For custom data packs, loot tables, and other data-driven content
-- **Art Assets** - For texture packs, models, and other artistic content
-- **Worlds** - For custom Hytale worlds
-- **Modpacks** - For curated collections of mods and assets
+## 1. Start a Draft
 
-![Content Type Selection](/assets/guides/modtale_type.png)
+Open [Modtale](https://modtale.net), sign in, and choose **Create** from the site navigation. You can also go directly to [modtale.net/upload](https://modtale.net/upload).
 
-### 4. Basic Information
-Fill in the essential details:
-- **Name**: Choose a clear, descriptive name for your mod
-- **Summary**: Write a brief description (1-2 sentences, 250 char max) that explains what your mod does
+The first screen asks what you are creating.
 
-![Project Title and Description](/assets/guides/modtale_title.png)
+![Content type selection](/assets/guides/modtale_type.png)
 
-### 5. Project Configuration
-Now you're on your project's management page. Here you can:
+Choose the type that matches the project you are publishing:
 
-#### Upload Files
-Navigate to the **"Files"** tab and upload your `.jar` or `.zip` file:
-- Drag and drop your file or use the upload button
-- Add version notes describing changes and new features
-- Mark release type (Release, Beta, Alpha)
+- **Plugins** are server-side logic, tools, and scripts. Plugin uploads usually use `.jar` files.
+- **Data Assets** are blocks, loot tables, functions, and other data-driven content. These can use `.jar` or `.zip` uploads.
+- **Art Assets** are models, textures, and art resources. These can use `.jar` or `.zip` uploads.
+- **Worlds** are shared saves, schematics, or lobbies. These use `.zip` uploads.
+- **Modpacks** bundle multiple projects into a pack. Modpack versions are assembled from selected Modtale projects rather than a direct file upload.
 
-![File Upload Interface](/assets/guides/modtale_upload.png)
+After choosing a type, Modtale asks who owns the project and what it is called.
 
-#### Customize Your Project
-- **Logo**: Upload a high-quality logo (512x512 recommended)
-- **Banner**: Upload a banner for your page (1920x640 recommended)
-- **Screenshots**: Add multiple screenshots showing your mod in action
-- **Description**: Write a comprehensive description using Markdown formatting
-- **Links**: Add links to your source code, Discord server, or documentation
-- **Tags**: Add relevant tags to help users find your mod
-- **License**: Indicate what license your mod uses from a selection of common licenses, or use a custom license
+![Project owner, title, and summary](/assets/guides/modtale_title.png)
 
-## Best Practices
+Fill in:
 
-### Documentation
+- **Project Owner**: your personal account or an organization you can publish under.
+- **Project Title**: the public name of the project.
+- **Short Summary**: a concise description shown on cards and near the project title. The publish checklist expects this to be 10-250 characters.
+
+Creating the project sends you into the project editor as a draft.
+
+## 2. Learn the Project Editor
+
+The editor is where all publishing work happens. The top bar includes **View Project**, **Submit**, and **Save**. The tabs below the project header organize the workflow.
+
+![Project editor details tab](/assets/guides/modtale_editor_details.png)
+
+The main tabs are:
+
+- **Details**: description, preview, metadata, tags, links, license, icon, and banner.
+- **Files**: version uploads, version metadata, dependencies, incompatibilities, and changelogs.
+- **Gallery**: screenshots, YouTube videos, captions, and embed snippets.
+- **Team**: contributors, invites, and project roles.
+- **Settings**: visibility, slug, project ID, modpack/comment toggles, wiki integration, and deletion.
+- **Wiki Preview**: appears when the HytaleModding Wiki integration is enabled.
+
+Use **Save** whenever you change project metadata. Modtale tracks unsaved changes, and the project cannot be submitted while required changes are still unsaved.
+
 <Callout type="info">
-Always include comprehensive documentation in your mod description. Users should understand what your mod does, how to use it, and any special requirements.
+Draft projects are editable. Once a project is submitted for review, the editor becomes read-only until it is approved, rejected, or reverted back to draft.
 </Callout>
 
-### Version Notes
-When uploading new versions:
-- You must adhere to SemVer
-- Clearly document all changes and new features
-- Include bug fixes and known issues
-- Mention any breaking changes or migration steps
-- List new dependencies or requirement changes
+## 3. Complete the Details Tab
 
-### Visual Appeal
-- Use high-quality screenshots that showcase your mod's features in the gallery
-- Create an eye-catching logo that represents your mod
-- Consider adding a banner image for your project page
+The Details tab is where you make the page understandable before anyone downloads it.
 
-### Community Engagement
-- Respond to comments and feedback promptly
-- Consider creating a Discord server for community support
-- Regularly update your mod based on user feedback
+### Description
 
-## After Publishing
+Write the long project description in Markdown. Use it to explain:
 
-### Automated updates
- - You can configure your project to automatically upload new versions using Github Actions, Gradle, Maven, or Go. See examples [here](https://github.com/Modtale/modtale-example)
+- What the project does.
+- How to install or use it.
+- What changed users should notice first.
+- Which Hytale versions are supported.
+- Required dependencies and known incompatibilities.
+- Screenshots, videos, configuration notes, or usage examples.
 
-### Monitoring Your Project
-- Check the analytics to see download statistics
-- Monitor comments and reviews
-- Keep track of bug reports and feature requests
+The editor has **Write** and **Preview** modes. Preview renders the Markdown as it will appear on the project page.
 
-### Marketing Your Mod
-- Share your mod on relevant Hytale communities
-- Create showcase videos or tutorials
-- Engage with other modders and creators
+You can add `[gallery]` once in the description to place the gallery carousel inside the description. Leave the marker out if you only want the normal gallery tab. If you use it, put it where the media helps the explanation most, usually after the first overview section.
+
+### Icon and Banner
+
+Upload an icon and banner that identify the project quickly.
+
+- Use a square icon. The backend validates this as 1:1.
+- Use a wide banner. The backend validates this as 3:1.
+- Avoid tiny text in the icon. It will be shown at small sizes.
+- Use the banner for a readable in-game scene, render, or polished project image.
+
+### Tags
+
+Choose at least one tag before submitting. Tags are validated against Modtale's allowed tag list, so use the picker instead of typing custom values.
+
+Good tags describe what users search for, such as `World Gen`, `NPCs`, `Admin Tools`, `Decoration`, `Models`, `Textures`, `Magic`, `Survival`, or `Library`.
+
+### Links and Repository URL
+
+Add useful links only when they are ready for users.
+
+Recommended links include:
+
+- Documentation or wiki.
+- Issue tracker.
+- Discord or community support.
+- Source repository.
+
+The repository URL field is validated separately. It must be an HTTPS link to GitHub, GitLab, or Codeberg using the form `https://github.com/owner/repository`, `https://gitlab.com/owner/repository`, or `https://codeberg.org/owner/repository`.
+
+### License
+
+Select a license before submitting. If you choose a custom license, provide the license URL. The submit checklist will block publication if the license is missing or the custom license link is incomplete.
+
+## 4. Upload a Version
+
+Open the **Files** tab to add the first downloadable version.
+
+![Version upload workflow](/assets/guides/modtale_upload.png)
+
+The upload form is intentionally detailed because each version carries its own compatibility and release information.
+
+### Project File
+
+For project types that upload an artifact, drag the file onto the upload area or click the upload box to choose a file.
+
+Supported file behavior:
+
+- Plugins, Data Assets, and Art Assets accept `.jar` and `.zip`.
+- Worlds accept `.zip`.
+- Modpacks use **Included Projects** instead of a direct file picker.
+- The file limit is 100 MB.
+
+For plugin `.jar` uploads, Modtale can inspect `manifest.json`. When it finds useful metadata, it can fill the version number, select a matching game version, and suggest dependency matches.
+
+Modtale can also adjust mutable project classifications based on the uploaded artifact. For example, a `.jar` upload is treated as a plugin artifact, while a `.zip` uploaded to a plugin project can be resolved as a data asset. Worlds and modpacks keep their selected classification.
+
+### Version Number
+
+Use strict SemVer:
+
+```text
+1.0.0
+1.0.0-beta.1
+1.0.0+build.5
+1.0.0-rc.1+exp
+```
+
+Each version number must be unique for the project. Use a new version when you are releasing a new build. Use replacement only when you intentionally need to overwrite an existing version entry.
+
+### Game Versions
+
+Choose every Hytale game version the upload supports. The list comes from Modtale's game version catalog, so it can include release and pre-release versions as the platform updates.
+
+If a plugin manifest includes a recognized game version, Modtale can preselect it during upload. Check the selection before uploading, especially for beta or compatibility builds.
+
+### Release Channel
+
+Choose the release channel that sets user expectations:
+
+- **Release**: stable build recommended for normal users.
+- **Beta**: feature-complete or near-stable build that still needs broader testing.
+- **Alpha**: early build for testing, experiments, or previews.
+
+### Dependencies
+
+For plugins, data assets, and art assets, use **Dependencies** to mark projects that must be installed for this version to work.
+
+The dependency picker stores version relationship metadata, not just text. This helps users and automated tools understand what should be installed together.
+
+If the manifest inspection finds dependencies that match Modtale projects, review the suggestions and add the correct ones.
+
+### Included Projects for Modpacks
+
+For modpacks, use **Included Projects** to select the projects that make up that modpack version. This is the core of the modpack publishing flow.
+
+Choose included projects carefully:
+
+- Keep the modpack coherent.
+- Confirm compatibility with the selected game version.
+- Avoid including projects that do not allow modpack inclusion.
+- Use the changelog to explain pack-level changes, not just individual project changes.
+
+### Incompatible Mods
+
+Use **Incompatible Mods** for projects that should not be installed alongside this version.
+
+This is useful when:
+
+- Two plugins patch the same behavior.
+- A data asset replaces the same content as another project.
+- A world or pack expects a specific project set.
+- A newer version removes compatibility with another project.
+
+World uploads do not show this section. Other project types can use it to warn users before they combine conflicting projects.
+
+### Changelog
+
+Write the changelog in Markdown. Keep it focused on the uploaded version.
+
+Good changelogs include:
+
+- Added features.
+- Fixed bugs.
+- Breaking changes.
+- New dependencies.
+- Removed compatibility.
+- Migration notes.
+
+### Reusing and Replacing Version Setup
+
+When a project already has versions, Modtale can reuse the latest setup so you do not have to re-enter every dependency or compatibility relationship.
+
+If you upload a version number and game version combination that already exists, the editor can show a replacement option. Use it when you are fixing or replacing that exact release. Replacing an existing version may send that version back through review.
+
+Draft projects are meant to carry the initial release. Once a draft already has its first uploaded version, the new-upload form may be hidden until the project leaves draft. After the project is published or made private, you can continue managing versions from the Files tab if you have the right permissions.
+
+### Existing Versions
+
+The Files tab also lists existing versions. From there, permitted team members can:
+
+- Review release channel, game versions, and changelog.
+- Edit version metadata.
+- Delete a version.
+- Download or inspect release information.
+
+New non-draft uploads can be queued for scanning and review. Treat every uploaded artifact as something that may be checked before users see it publicly.
+
+## 5. Check Publish Requirements
+
+When you are ready, use the **Submit** button in the editor header. Hovering or focusing the requirements panel shows what is still missing.
+
+![Submit requirements checklist](/assets/guides/modtale_submit_requirements.png)
+
+The submit checklist expects:
+
+- Project title.
+- Short summary between 10 and 250 characters.
+- At least one tag.
+- At least one uploaded version, except for project types that do not use direct upload the same way.
+- A selected license.
+- All changes saved.
+- Valid repository URL, if one is set.
+- Valid URL slug, if one is set.
+- Description under the current length limit.
+
+After submission, the project status changes to pending review. Pending projects are read-only for normal editing. If you need to make changes before review finishes, use **Revert to Draft** if that action is available to you.
+
+When approved, the project can become public. If rejected, fix the review feedback, save your changes, and submit again.
+
+## 6. Build the Gallery
+
+Open the **Gallery** tab to add media that helps users evaluate the project before downloading.
+
+![Gallery management](/assets/guides/modtale_gallery.png)
+
+Gallery features include:
+
+- Uploading 16:9 images in PNG, JPEG, or WEBP format.
+- Adding YouTube videos by URL.
+- Writing captions up to 240 characters.
+- Deleting gallery items.
+- Copying an embed snippet for a gallery image or video.
+
+Use gallery images for visible project behavior, not just logos. A good gallery makes the project legible in seconds:
+
+- Show before/after comparisons for visual assets.
+- Show real UI or commands for admin tools.
+- Show generated terrain for world-gen projects.
+- Show several representative locations for worlds.
+- Show the included experience for modpacks.
+
+If you used `[gallery]` in the Details description, the gallery carousel appears in the description preview at that marker.
+
+## 7. Manage Visibility and Project Settings
+
+Use the **Settings** tab for project-level controls that affect how the page behaves.
+
+![Project settings](/assets/guides/modtale_settings.png)
+
+### Visibility States
+
+The visibility controls are:
+
+- **Published**: visible to everyone.
+- **Private**: hidden, but fully editable.
+- **Unlisted**: hidden from search, but accessible by link.
+- **Archived**: read-only state for projects that should remain available as an archive.
+
+Pending projects cannot be freely moved through all visibility states while they are under review.
+
+### Project ID and Slug
+
+The settings page shows the project ID. Keep it handy for API usage, support requests, automation, or identifying the project unambiguously.
+
+You can also configure the project slug. Slugs must be 3-50 characters, lowercase letters or numbers with dashes allowed, and they cannot start or end with a dash.
+
+### Modpacks, Comments, and Wiki
+
+Other project settings include:
+
+- **Allow Modpacks**: lets other creators include your project in modpacks.
+- **Allow Comments**: enables or disables community comments on the project.
+- **HytaleModding Wiki**: embeds a HytaleModding Wiki project directly into the Modtale project page.
+
+When the wiki toggle is enabled, provide the wiki project slug or ID. Modtale will populate the wiki link for the project when it can safely do so.
+
+### Delete Project
+
+The delete action appears for users with delete permission. Use it carefully. Deletion removes the project from normal publishing workflows and should not be used as a substitute for archiving an old but still useful project.
+
+## 8. Invite Contributors and Configure Roles
+
+Open the **Team** tab when more than one person needs to maintain the project.
+
+![Team and roles management](/assets/guides/modtale_team.png)
+
+The project author is always shown as the owner. Additional contributors are managed through roles.
+
+To invite someone:
+
+- Create at least one project role.
+- Search for the user's username.
+- Select the role they should receive.
+- Send the invite.
+
+The Team tab shows active team members and pending invites. Depending on your permissions, you can update contributor roles, cancel pending invites, remove contributors, or leave the project yourself.
+
+Project roles can grant scoped permissions. The available project permission groups include:
+
+- **Project Management**: read projects, create projects, edit metadata, edit icon, edit banner, delete projects.
+- **Versions & Releases**: read versions, upload versions, edit versions, delete versions, download files.
+- **Visibility & Publishing**: submit for review, revert to draft, archive, unlist, publish.
+- **Community & Media**: add gallery images, remove gallery images, delete comments, reply as developer.
+- **Team Management**: invite contributors, remove contributors, manage roles, request transfer, resolve transfer.
+
+Give contributors only the access they need. For example, an artist may need gallery and metadata access, while a release manager may need version upload and submit permissions.
+
+## 9. Automate Publishing with API Keys
+
+Modtale supports API keys for scripts and integrations. Open your account menu, go to **Developer Settings**, and create a key for the context you want to automate.
+
+![Developer settings and API keys](/assets/guides/modtale_api_keys.png)
+
+API keys are context-aware. A key can have permissions for:
+
+- Your personal account.
+- An organization.
+- A specific project.
+
+Choose the smallest useful permission set. For automated publishing, the most relevant groups are usually **Project Management**, **Versions & Releases**, and **Visibility & Publishing**. Read-only tools may only need read/download permissions.
+
+When a key is generated, copy it immediately. Modtale only shows the full key once. Existing keys show their prefix, creation time, last-used time, context permissions, and revoke control.
+
+API requests authenticate with the `X-MODTALE-KEY` header against `/api/v1` endpoints. The current API includes project, version, media, team, visibility, and API-key endpoints, and the Swagger/OpenAPI docs document request and response shapes.
+
+Common publishing endpoint families include:
+
+```text
+POST   /api/v1/projects
+PUT    /api/v1/projects/{id}
+POST   /api/v1/projects/{id}/submit
+POST   /api/v1/projects/{id}/revert
+POST   /api/v1/projects/{id}/archive
+POST   /api/v1/projects/{id}/unlist
+POST   /api/v1/projects/{id}/private
+POST   /api/v1/projects/{id}/publish
+
+POST   /api/v1/projects/{id}/versions
+PUT    /api/v1/projects/{id}/versions/{versionId}
+DELETE /api/v1/projects/{id}/versions/{versionId}
+POST   /api/v1/projects/{id}/versions/dependency-suggestions
+
+PUT    /api/v1/projects/{id}/icon
+PUT    /api/v1/projects/{id}/banner
+POST   /api/v1/projects/{id}/gallery
+POST   /api/v1/projects/{id}/gallery/youtube
+PUT    /api/v1/projects/{id}/gallery/caption
+DELETE /api/v1/projects/{id}/gallery
+```
+
+Example header:
+
+```bash
+curl \
+  -H "X-MODTALE-KEY: mt_live_your_key_here" \
+  https://modtale.net/api/v1/projects/{project-id}/versions
+```
 
 <Callout type="warning">
-Remember to keep your mod updated for new Hytale versions and maintain compatibility with Hytale's modding framework to maximize your audience reach.
+Treat API keys like passwords. Store them in your CI secret manager, never commit them to source control, and revoke keys immediately if they leak.
 </Callout>
+
+## 10. Maintain the Project After Publishing
+
+Publishing is not the end of the workflow. Keep the project useful by maintaining the page and releases.
+
+After approval:
+
+- Upload new versions from the Files tab.
+- Keep dependencies and incompatibilities accurate.
+- Use release channels honestly.
+- Update screenshots when features change.
+- Keep the description current.
+- Monitor comments if comments are enabled.
+- Archive or unlist old projects instead of deleting them when users may still need history.
+
+For each new version, repeat the same release discipline:
+
+- Use a unique SemVer version number.
+- Select accurate game versions.
+- Update dependency and incompatibility relationships.
+- Write a useful changelog.
+- Submit or wait for review when the workflow requires it.
+
+## Troubleshooting
+
+If the submit button is blocked, open the requirements panel first. It tells you which publish requirement is still missing.
+
+Common fixes:
+
+- Save pending changes.
+- Add at least one tag.
+- Upload the first version.
+- Select a license.
+- Shorten or complete the summary.
+- Fix the repository URL.
+- Fix the custom URL slug.
+- Add a custom license URL if using a custom license.
+
+If an upload fails:
+
+- Check the file size is 100 MB or smaller.
+- Make sure the file extension matches the project type.
+- Confirm the version number uses SemVer.
+- Pick at least one game version.
+- Avoid uploading the exact same artifact again.
+- Review any manifest inspection errors shown by the editor.
+
+If API automation fails:
+
+- Confirm the key is active.
+- Confirm the request includes `X-MODTALE-KEY`.
+- Confirm the key has permissions for the right context.
+- Confirm the target project ID or slug is correct.
+- Use the API docs to compare your request body with the current schema.
 
 ## Getting Help
 
-If you encounter any issues during the publishing process:
-- Join their Discord community for support
-- Contact the Modtale team directly through their support channels
+If you get stuck during publishing, gather the project ID, the action you were trying to perform, and any error message from the editor or API response. Then contact the Modtale team through their support channels or community Discord.
