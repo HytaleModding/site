@@ -376,6 +376,19 @@ When a key is generated, copy it immediately. Modtale only shows the full key on
 
 API requests authenticate with the `X-MODTALE-KEY` header against `/api/v1` endpoints. The current API includes project, version, media, team, visibility, and API-key endpoints, and the Swagger/OpenAPI docs document request and response shapes.
 
+### Reference Implementations and Helpers
+
+Use these repositories when you want to automate the publishing flow instead of uploading through the web editor:
+
+- [AzureDoom/HytalePublisher](https://github.com/AzureDoom/HytalePublisher) is a Gradle publishing plugin for Hytale projects. It can publish to Modtale, CurseForge, Modifold, and Thunderstore from one Gradle DSL. For Modtale, it supports `publishToModtale`, `publishAll`, `projectId`, `releaseType`, `changelogFile`, dependency declarations, dynamic Hytale game-version selectors, and optional replacement of existing Modtale versions. It reads Modtale credentials from `modTaleKey` in `key.properties` or the `MODTALE_KEY` environment variable, which makes it suitable for local builds and CI/CD.
+- [Modtale/modtale-example](https://github.com/Modtale/modtale-example) is the Modtale-specific public upload API example repo. It includes GitHub Actions examples for Java plugin JARs and resource pack ZIPs, a local Gradle `publishToModtale` task, a Maven publishing profile, a small Go uploader, and a Gradle example for resolving Modtale downloads as dependencies. Use it when you want to see raw multipart upload requests to `/api/v1/projects/{id}/versions` or copy a minimal workflow into your own project.
+
+Pick the one that matches your setup:
+
+- Use **HytalePublisher** if your project already builds with Gradle and you want reusable multi-platform publishing tasks.
+- Use **modtale-example** if you want direct API examples, GitHub Actions templates, or language-specific reference code.
+- In either case, create the project manually first, copy the project ID from the Settings tab, and store the API key in your local secret file or CI secret manager.
+
 Common publishing endpoint families include:
 
 ```text
