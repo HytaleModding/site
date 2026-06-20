@@ -10,7 +10,7 @@ In this guide you're going to learn how to write your own custom trigger effects
 
 ## Creating a Custom Trigger Effect
 
-First, let's make a class that extends `[TriggerEffect](https://release.server.docs.hytale.com/com/hypixel/hytale/builtin/triggervolumes/effect/TriggerEffect)`. This class will be the effect that is executed when the trigger volume is activated.
+First, let's make a class that extends [TriggerEffect](https://release.server.docs.hytale.com/com/hypixel/hytale/builtin/triggervolumes/effect/TriggerEffect). This class will be the effect that is executed when the trigger volume is activated.
 
 ```java
 public class YourEffect extends TriggerEffect {
@@ -23,7 +23,7 @@ public class YourEffect extends TriggerEffect {
 
 You can find all the functions and variables available in the `TriggerContext` class [here](https://release.server.docs.hytale.com/com/hypixel/hytale/builtin/triggervolumes/effect/TriggerContext).
 
-Next up, we need to make a CODEC for our trigger effect. This is how the game will know how to serialize and deserialize our trigger effect. We're going to use the `BuilderCodec` for this and add the `BASE_CODEC` from the `[TriggerEffect](https://release.server.docs.hytale.com/com/hypixel/hytale/builtin/triggervolumes/effect/TriggerEffect)` class.
+Next up, we need to make a CODEC for our trigger effect. This is how the game will know how to serialize and deserialize our trigger effect. We're going to use the `BuilderCodec` for this and add the `BASE_CODEC` from the [TriggerEffect](https://release.server.docs.hytale.com/com/hypixel/hytale/builtin/triggervolumes/effect/TriggerEffect) class.
 
 ```java
     public static final BuilderCodec<YourEffect> CODEC = BuilderCodec.builder(YourEffect.class, YourEffect::new, BASE_CODEC)
