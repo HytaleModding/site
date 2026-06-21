@@ -1,6 +1,6 @@
 ---
-title: "Creating Custom Trigger Effects"
-description: "Learn how to create custom trigger effects for your Hytale mod."
+title: "Creating Custom Trigger Effects & Conditions"
+description: "Learn how to create custom trigger effects and conditions for your Hytale mod."
 authors:
     - name: "Neil Revin"
       url: "https://itsneil.dev"
@@ -33,7 +33,7 @@ Next up, we need to make a CODEC for our trigger effect. This is how the game wi
 
 It's very important to add the `BASE_CODEC`, otherwise your trigger effect will not be able to be serialized and deserialized properly.
 
-## Registering the Trigger Effect
+### Registering the Trigger Effect
 
 Let's now register the trigger effect so that the game knows about it. This is done in the `setup` function of your main plugin class.
 
@@ -44,9 +44,9 @@ Let's now register the trigger effect so that the game knows about it. This is d
     }
 ```
 
-## Final Example Code
+### Final Example Code
 
-### YourEffect.java
+#### YourEffect.java
 ```java
 public class YourEffect extends TriggerEffect {
 
@@ -59,6 +59,30 @@ public class YourEffect extends TriggerEffect {
     @Override
     public void execute(@Nonnull TriggerContext context) {
         // Do something with the context and someValue
+    }
+
+}
+```
+
+## Creating a Custom Trigger Condition
+
+Let's first make a class that extends [TriggerCondition](https://release.server.docs.hytale.com/com/hypixel/hytale/builtin/triggervolumes/effect/TriggerCondition) and define a BuilderCodec that chains from the `BASE_CODEC`.
+
+After this, we can override the `test` function to define our custom condition. This function will be called when the trigger volume is activated and will determine if the trigger effect should be executed.
+
+```java
+public class YourCondition extends TriggerCondition {
+
+    public static final BuilderCodec<YourCondition> CODEC = BuilderCodec.builder(YourCondition.class, YourCondition::new, BASE_CODEC)
+            .append(new KeyedCodec<>("SomeKey", Codec.STRING), (o, v) -> o.someValue = v, o -> o.someValue).add()
+            .build();
+
+    private String someValue;
+
+    @Override
+    public boolean test(@Nonnull TriggerContext context) {
+        // Do something with the context and someValue
+        return true;
     }
 
 }
