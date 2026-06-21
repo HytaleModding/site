@@ -87,3 +87,12 @@ public class YourCondition extends TriggerCondition {
 
 }
 ```
+
+Now let's register the trigger condition in the `setup` function of your main plugin class.
+
+```java
+    @Override
+    public void setup() {
+        TriggerCondition.CODEC.register("YourConditionID", YourCondition.class, YourCondition.CODEC);
+    }
+```
