@@ -16,7 +16,7 @@ Here is how to store persistent data using a custom component on a Player.
 
 ## Build your Component Class
 
-Creating a custom component class leverages the Component system made with the ECS architecture in mind. For more information on Components, check out the [ECS Guide](../ecs/hytale-ecs-theory#components).
+Creating a custom component class leverages the Component system made with the ECS architecture in mind. For more information on Components, check out the [ECS Guide on Components](../ecs/hytale-ecs-theory#components).
 
 Start by creating your custom component class. This will be extremely similar to how regular components are created, however we'll setup a custom Codec so the server can translate this data to BSON, or the server's internal json encoder.
 
@@ -74,6 +74,10 @@ public class YourPlayerData implements Component<EntityStore> {
     public Component<EntityStore> clone() {
         return new YourPlayerData(this);
     }
+
+    public static ComponentType<EntityStore, YourPlayerData> getComponentType() {
+        return YourPlugin.instance.getYourPlayerDataComponent();
+    }
 }
 ```
 
@@ -99,10 +103,6 @@ public class YourPlugin extends JavaPlugin {
             YourPlayerData.CODEC
         );
     }
-
-    public ComponentType<EntityStore, YourPlayerData> getYourPlayerDataComponent() {
-        return this.yourPlayerDataComponent;
-    }
 }
 ```
 
@@ -118,12 +118,14 @@ private void someEntryMethod(@Nonnull Ref<EntityStore> ref, @Nonnull Store<Entit
       Player player = (Player) store.getComponent(ref, Player.getComponentType());
 
       // since we're using putComponent, it could be useful to check if it already exists on the player in case we want to update it
-     if(store.getComponent(ref, YourPlugin.instance.getYourPlayerDataComponent()) != null)
+     if(store.getComponent(ref, YourPlayerData.getComponentType()) != null)
      {
           // here we implement logic that updates the component
-         var comp = store.getComponent(ref, YourPlugin.instance.getYourPlayerDataComponent())
+         var comp = store.getComponent(ref, YourPlayerData.getComponentType())
          // declare public fields or methods in the component class
          comp.SomeString = "An Updated Field";
+         // replace the component with the new updated one
+         store.replaceComponent(ref, YourPlayerData.getComponentType(), comp);
      } else {
           // Here we put the component
           var myCustomComp = new CustomComponent();
@@ -131,7 +133,7 @@ private void someEntryMethod(@Nonnull Ref<EntityStore> ref, @Nonnull Store<Entit
           myCustomComp.SomeString = "Edited String";
 
           // putComponent allows you to insert declared objects
-          store.putComponent(ref, YourPlugin.instance.getYourPlayerDataComponent(), myCustomComp);
+          store.putComponent(ref, YourPlayerData.getComponentType(), myCustomComp);
      }
 }
 ```
@@ -157,7 +159,7 @@ public class IncompleteCustomCommand extends AbstractPlayerCommand {
         @NonNullDecl PlayerRef playerRef,
         @NonNullDecl World world
     ) {
-        YourPlayerData customData = store.ensureAndGetComponent(ref, YourPlugin.instance().getYourPlayerDataComponent());
+        YourPlayerData customData = store.ensureAndGetComponent(ref, YourPlayerData.getComponentType());
         // ensureAndGetComponent adds the component to the ref, with the default values defined inside your component.
  		// use your data
     }
