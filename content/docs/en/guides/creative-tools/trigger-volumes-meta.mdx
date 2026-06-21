@@ -1,0 +1,481 @@
+---
+title: Trigger Volumes Reference
+description: This guide contains all the settings, effects and conditoins for Trigger Volumes.
+authors:
+    - name: Neil Revin
+      url: https://itsneil.dev
+---
+
+## What is a Trigger Volume?
+A trigger volume is a 3-dimensional area in the world that can detect when an entity enters or exits it. Trigger volumes are often used to create interactive experiences, such as opening doors, starting cutscenes, or triggering events when a player enters a specific area.
+
+## Creating a Trigger Volume
+To create a trigger volume, you will need to get the "Trigger Volume Tool" from the Creative Tools Menu. Once you have the tool, you can place a trigger volume in the world by clicking and dragging to define the area.
+
+## How Trigger Volumes Work
+Think about each trigger volume as a simple rule:
+
+1. A volume defines where the check happens.
+2. A trigger decides when the check should run.
+3. A condition decides whether the trigger is allowed to continue.
+4. An effect is what happens if the condition passes.
+
+## Volume Settings
+Volume settings control the shape and behavior of the trigger area itself. If your tool has different names for these settings, swap them into the template below.
+
+| Setting | What it changes | Notes |
+| --- | --- | --- |
+| ID | The unique identifier for the volume |   |
+| Color | The color of the volume |  |
+| Shape | The shape of the volume | Box, Sphere, Cylinder |
+| Position | The position of the volume | X, Y, Z |
+| Dimensions | The dimensions of the volume | X, Y, Z |
+| Target Types | The types of entities that can trigger the volume | None, Player, NPC, Item Drop, Projectile, All |
+| Projectile Source | The source of the projectile that can trigger the volume | Shooter, Projectile |
+| Enabled | Whether the volume is enabled |  |
+| Keep Loaded | Whether the volume should stay loaded when no players are nearby |  |
+| Cancel Delayed On Exit | Whether to cancel any delayed effects when a player exits the volume |  |
+| All Effects Delay | Number | The delay in seconds before all effects are run. | |
+| Cooldown | Number | The cooldown in seconds before the volume can be triggered again. | |
+| Cooldown Mode | Enum | The scope of the cooldown | Per Entity, Total |
+| Cooldown Timing | Enum | When the cooldown starts | Before Volume Delay, After Volume Delay |
+| Rejection Delay | Enum | When the rejection delay starts | Use Volume Delay, Immediate |
+
+## Triggers
+Triggers control when the volume fires. 
+
+### On Enter
+Fires when an entity enters the volume.
+
+### On Exit
+Fires when an entity leaves the volume.
+
+### On Tag Added
+Fires when a matching tag is added.
+
+### On Tag Removed
+Fires when a matching tag is removed.
+
+### On Block Placed
+Fires when a block is placed inside the trigger volume
+
+### On Block Broken
+Fires when a block is broken inside the trigger volume.
+
+## Conditions
+Conditions are filters that decide whether a trigger should actually run. If the trigger fires but the condition fails, the effect should not run.
+
+### Block Type Condition
+
+What it checks:
+Checks if the Block Placed or Broken is from a specific block type.
+
+Required values:
+| Variable | Type | Required | Description |
+| --- | --- | --- |
+| Block Type | Asset | The type of block to check for |
+
+### Cooldown Condition
+
+What it checks:
+Applies a cooldown to the trigger volume, preventing it from firing again for a set amount of time.
+
+Required values:
+| Variable | Type | Required | Description |
+| --- | --- | --- |
+| Cooldown Time | Number | The amount of time (in seconds) to wait before the trigger can fire again |
+| Scope | Enum | The scope of the cooldown (Entire Volume or Per Player) |
+
+### Game Mode Condition
+
+What it checks:
+Checks if the player is in a specific game mode.
+
+Required values:
+| Variable | Type | Required | Description |
+| --- | --- | --- |
+| GameMode | GameMode | The game mode to check for |
+
+### Item Conditon
+
+What it checks:
+Checks if the player has a specific item in their inventory, hotbar or in-hand.
+
+Required values:
+| Variable | Type |  Description |
+| --- | --- | --- |
+| Item | Asset | The item to check for |
+| Location | Enum | Where to check for the item (Inventory, Hotbar, In-Hand) |
+| Quantity | Number | The amount of the item to check for (default is 1) |
+| Consume on Pass | Boolean | If true, the item will be removed from the player's inventory when they pass through the volume |
+
+### Permission Condition
+
+What it checks:
+Checks if the player has a specific permission.
+
+Required values:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Permission| String | The permission node to check for |
+
+### Player Count Condition
+
+What it checks:
+Checks if the number of players in the volume is greater than or equal to a specific number.
+
+Required values:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Comparison | Enum | A comparison operator (At Least, At Most, Exactly, More Than, Less Than) |
+| Player Count | Number | The number of players to compare against |
+
+### Random Chance Condition
+
+What it checks:
+Random chance to pass or fail the condition.
+
+Required values:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Chance | Number | The probability of the condition passing. |
+
+### Tag Condition
+
+What it checks:
+It allows you to validate the existence of tags and their value in events, groups, or volumes found within the specified radius. You can filter which volumes within the radius will be used in the verification with the "Radius Tag" values
+
+Required values:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Source | Enum | Where to check for the tag itself. Self checks on that volume, group checks within a group volume, and radius looks for key / value within a radius of that volume |
+| Tag Key | String | The key you are looking for |
+| Tag Value | String | The value you are looking for on the Tag Key|
+| Radius Tag Key | String | This is only used when radius is selected as the Source. When used, it is the key/volume you're looking for. |
+| Radius Tag Value | String | The value you are looking for on the Radius Tag Key |
+| Radius | Number | How far you want to search for within a distance. 0 checks the entire world |
+| Center | Enum | The center of the radius check. Volume checks from the center of the volume, Entity checks from the entity that triggered the volume |
+| Minimum Count | Number | The minimum number of volumes that must match the tag key/value for the condition to pass |
+
+## Effects
+Effects are the actions that happen after a trigger fires and the condition passes. If an effect has variables, list every variable in the same format so readers can copy it quickly.
+
+### Control Doors
+
+What it does:
+Open / Close doors inside the volume when triggered.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Action | Enum | Door action to apply. (Open, Close) |
+
+### Damage Entity
+
+What it does:
+Damage entity that triggered the volume.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Mode | Enum | Damage mode. (Flat, Percent Max, Percent Current) |
+| Amount | Number | The amount of damage to apply |
+
+### Delete Volume
+
+What it does:
+Delete a nearby volume with a specific tag.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Tag Key | String | The key of the tag to look for |
+| Tag Value | String | The value of the tag to look for |
+| Radius | Number | The radius to search for the volume with the tag. 0 checks the entire world |
+| Center | Enum | The center of the radius check. Volume checks from the center of the volume, Entity checks from the entity that triggered the volume |
+
+### Disable Volume
+
+What it does:
+Disable a nearby volume with a specific tag.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Tag Key | String | The key of the tag to look for |
+| Tag Value | String | The value of the tag to look for |
+| Radius | Number | The radius to search for the volume with the tag. 0 checks the entire world |
+| Center | Enum | The center of the radius check. Volume checks from the center of the volume, Entity checks from the entity that triggered the volume |
+
+### Enable Volume
+
+What it does:
+Enable a nearby volume with a specific tag.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Tag Key | String | The key of the tag to look for |
+| Tag Value | String | The value of the tag to look for |
+| Radius | Number | The radius to search for the volume with the tag. 0 checks the entire world |
+| Center | Enum | The center of the radius check. Volume checks from the center of the volume, Entity checks from the entity that triggered the volume |
+
+### Entity Effect
+
+What it does:
+Apply or remove an effect on the entity that triggered the volume.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Effect | Asset | The effect to apply or remove |
+| Mode | Enum | Whether to apply or remove the effect |
+| Duration | Number | The duration of the effect in seconds. Only used when applying an effect. |
+
+### Give Item
+
+What it does:
+Give an item to the entity that triggered the volume.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Item | Asset | The item to give to the entity |
+| Quantity | Number | The amount of the item to give to the entity |
+| Overflow Behavior | Enum | What to do if the entity's inventory is full. (Drop, Ignore, Require Full Stack) |
+
+### Control Doors
+
+What it does:
+Open / Close doors inside the volume when triggered.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Action | Enum | Door action to apply. (Open, Close) |
+
+### Modify Tags
+
+What it does:
+Open / Close doors inside the volume when triggered.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Action | Enum | Door action to apply. (Open, Close) |
+
+### Paste Prefab
+
+What it does:
+Paste a prefab at a specific location when the volume is triggered.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Prefab List | Asset List | Prefab List asset used to choose a random prefab |
+| Prefab | Asset | Prefab asset to paste |
+| Position | Vector3 | The position to paste the prefab at. If left empty, the prefab will be pasted at the center of the volume |
+| Relative To Volume Origin | Boolean | Whether to paste the prefab relative to the volume's origin or at the absolute position specified |
+| Show particles | Boolean | Whether to show particles when the prefab is pasted |
+
+Note: There is a "Show preview" option which you can turn on to see how the prefab will be pasted in the world before you trigger the volume.
+
+### Paste Block
+
+What it does:
+Paste a block at a specific location when the volume is triggered.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Block Type | Asset | The type of block to paste |
+| Position | Vector3 | The position to paste the block at. If left empty, the block will be pasted at the center of the volume |
+| Origin | Enum | Volume Origin, Entity, World Absolute |
+| Replace Mode | Enum | Always, Only Air |
+
+### Play VFX
+
+What it does:
+Play a visual effect at a specific location when the volume is triggered.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Particle System | Asset | The particle system to play |
+| Offset | Vector3 | The offset from the volume's origin or entity origin to play the particle system at |
+| At Entity | Boolean | Whether to play the particle system at the entity's position or at the volume's origin |
+| Scale | Number | The scale of the particle system |
+| Rotation | Vector3 | The rotation of the particle system |
+| Duration | Number | The duration of the particle system. If left empty, the particle system will play for its default duration |
+
+### Replace Block Type
+
+What it does:
+Replace blocks of a specific type with another type..
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| From Block Types | Asset | The type of block to replace |
+| To Block Types | Asset | The type of block to replace with |
+| Bounds | Enum | Shape, AABB |
+| X | Number | AABB Size along the X axis, starting from offset. Only used when Bounds is set to AABB |
+| Y | Number | AABB Size along the Y axis, starting from offset. Only used when Bounds is set to AABB |
+| Z | Number | AABB Size along the Z axis, starting from offset. Only used
+| Offset | Vector3 | The offset from the volume's origin or entity origin to start replacing blocks at |
+
+### Run Root Interaction
+
+What it does:
+Run a root interaction on the entity that triggered the volume.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Root Interaction | Asset | The root interaction to run |
+| Interaction Type | Enum | Primary, Secondary, Ability 1, Ability 2, Ability 3, Use, Pick, Pickup, Collision Enter, Collision Leave, Collision, Entity Stat Effect, Swap To, Swap From, Death, Wielding, Projectile Spawn, Projectile Hit, Projectile Miss, Projectile Bounce, Held, Held Offhand, Equipped, Dodge, Game Mode Swap |
+
+### Send Message
+
+What it does:
+Send a message to the entity that triggered the volume.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Message | String | The message to send |
+
+### Set Game Mode
+
+What it does:
+Set the game mode of the entity that triggered the volume.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Game Mode | Enum | Adventure, Creative |
+
+### Set Music
+
+What it does:
+Set the music of the entity that triggered the volume.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Music Container | Asset | The music container to set |
+| Clear Music | | Boolean | Whether to clear the current music before setting the new music |
+
+### Set Velocity
+
+What it does:
+Set the velocity of the entity that triggered the volume.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Velocity | Vector3 | The velocity to set |
+| Additive | Boolean | Whether to add the velocity to the current velocity or set it directly |
+| Relative Mode | Enum | Absolute, Horizontal Facing, Full Look |
+
+### Set weather
+
+What it does:
+Set the weather of the world (or for the player) that the volume is in.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Weather | Asset | The weather to set |
+| Player Only | Boolean | Whether to set the weather for the player only or for the entire world |
+| Reset Weather | Boolean | Whether to reset the weather |
+
+### Show Event Title
+
+What it does:
+Show an event title to the entity that triggered the volume.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Primary Title | String | The primary title to display |
+| Secondary Title | String | The secondary title to display |
+| Is Major | Boolean | Whether we should use the major event title presentation or not |
+| Icon | String | The icon to display with the event title | 
+| Duration | Number | The duration to display the event title for |
+| Fade In Duration | Number | The duration to fade in the event title for |
+| Fade Out Duration | Number | The duration to fade out the event title for |
+
+### Teleport
+
+What it does:
+Teleport the entity that triggered the volume to a specific location.
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Position | Vector3 | The position to teleport the entity to |
+| World | String | The world to teleport the entity to. If left empty, the entity will be teleported in the same world |
+| Reset Velocity | Boolean | Whether to reset the entity's velocity after teleporting |
+| Relative to Entity | Boolean | Whether to teleport the entity relative to its current position or to the absolute position specified |
+| Relative to Volume | Boolean | Whether to teleport the entity relative to the volume's origin or to the absolute position specified |
+| Use Rotation | Boolean | Whether to use the rotation specified below |
+| Rotation | Vector3 | The rotation to set the entity to after teleporting. Only used if "Use Rotation" is true |
+
+### Trigger NPC Markers
+
+What it does:
+Trigger NPC markers that are inside the volume or within a radius
+
+Variables:
+| Variable | Type | Description |
+| --- | --- | --- |
+| Interval | Number | Minimum seconds between repeated fires |
+| Effect Delay | Number | Seconds to wait before this effect fires after its event triggers |
+| Marker Type | Asset | The marker type to trigger |
+| Range | Number | The range to search for the marker. 0 checks the entire world |
+| Match Tag | String | The tag to match on the marker. If left empty, all markers will be triggered |
+| Radius | Number | The radius to search for the marker. 0 checks the entire world |
+| Center | Enum | The center of the radius check. Volume checks from the center of the volume, Entity checks from the entity that triggered the volume |

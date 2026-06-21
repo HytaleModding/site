@@ -1,0 +1,98 @@
+---
+title: "Creating Custom Trigger Effects & Conditions"
+description: "Learn how to create custom trigger effects and conditions for your Hytale mod."
+authors:
+    - name: "Neil Revin"
+      url: "https://itsneil.dev"
+---
+
+In this guide you're going to learn how to write your own custom trigger effects for your Hytale mod. Trigger effects are the actions that happen when a trigger volume is activated. You can create your own custom trigger effects to do whatever you want.
+
+## Creating a Custom Trigger Effect
+
+First, let's make a class that extends [TriggerEffect](https://release.server.docs.hytale.com/com/hypixel/hytale/builtin/triggervolumes/effect/TriggerEffect). This class will be the effect that is executed when the trigger volume is triggered and the conditions are met.
+
+```java
+public class YourEffect extends TriggerEffect {
+
+    @Override
+    public void execute(@Nonnull TriggerContext context) { }
+
+}
+```
+
+You can find all the functions and variables available in the `TriggerContext` class [here](https://release.server.docs.hytale.com/com/hypixel/hytale/builtin/triggervolumes/effect/TriggerContext).
+
+Next up, we need to make a CODEC for our trigger effect. This is how the game will know how to serialize and deserialize our trigger effect. We're going to use the `BuilderCodec` for this and add the `BASE_CODEC` from the [TriggerEffect](https://release.server.docs.hytale.com/com/hypixel/hytale/builtin/triggervolumes/effect/TriggerEffect) class.
+
+```java
+    public static final BuilderCodec<YourEffect> CODEC = BuilderCodec.builder(YourEffect.class, YourEffect::new, BASE_CODEC)
+            .append(new KeyedCodec<>("SomeKey", Codec.STRING), (o, v) -> o.someValue = v, o -> o.someValue).add()
+            .build();
+```
+
+It's very important to add the `BASE_CODEC`, otherwise your trigger effect will not be able to be serialized and deserialized properly.
+
+### Registering the Trigger Effect
+
+Let's now register the trigger effect so that the game knows about it. This is done in the `setup` function of your main plugin class.
+
+```java
+    @Override
+    public void setup() {
+        TriggerEffect.CODEC.register("YourEffectID", YourEffect.class, YourEffect.CODEC);
+    }
+```
+
+### Final Example Code
+
+#### YourEffect.java
+```java
+public class YourEffect extends TriggerEffect {
+
+    public static final BuilderCodec<YourEffect> CODEC = BuilderCodec.builder(YourEffect.class, YourEffect::new, BASE_CODEC)
+            .append(new KeyedCodec<>("SomeKey", Codec.STRING), (o, v) -> o.someValue = v, o -> o.someValue).add()
+            .build();
+
+    private String someValue;
+
+    @Override
+    public void execute(@Nonnull TriggerContext context) {
+        // Do something with the context and someValue
+    }
+
+}
+```
+
+## Creating a Custom Trigger Condition
+
+Let's first make a class that extends [TriggerCondition](https://release.server.docs.hytale.com/com/hypixel/hytale/builtin/triggervolumes/effect/TriggerCondition) and define a BuilderCodec that chains from the `BASE_CODEC`.
+
+After this, we can override the `test` function to define our custom condition. This function will be called when the trigger volume is activated and will determine if the trigger effect should be executed.
+
+```java
+public class YourCondition extends TriggerCondition {
+
+    public static final BuilderCodec<YourCondition> CODEC = BuilderCodec.builder(YourCondition.class, YourCondition::new, BASE_CODEC)
+            .append(new KeyedCodec<>("SomeKey", Codec.STRING), (o, v) -> o.someValue = v, o -> o.someValue).add()
+            .build();
+
+    private String someValue;
+
+    @Override
+    public boolean test(@Nonnull TriggerContext context) {
+        // Do something with the context and someValue
+        return true;
+    }
+
+}
+```
+
+Now let's register the trigger condition in the `setup` function of your main plugin class.
+
+```java
+    @Override
+    public void setup() {
+        TriggerCondition.CODEC.register("YourConditionID", YourCondition.class, YourCondition.CODEC);
+    }
+```
