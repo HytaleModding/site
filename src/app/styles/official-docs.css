@@ -6,6 +6,7 @@
   background: linear-gradient(#f5fbff, #bfe6ff);
   -webkit-background-clip: text;
   background-clip: text;
+  line-height: 1.5;
 }
 
 /* Body Headings */

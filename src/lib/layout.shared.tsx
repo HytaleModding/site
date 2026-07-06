@@ -1,9 +1,8 @@
 import Image from "next/image";
-import { BookIcon, XIcon } from "lucide-react";
+import { BookIcon } from "lucide-react";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { i18n } from "@/lib/i18n";
 import { getMessages } from "./locale";
-import HytaleLogo from "@/../public/hytale-branding/hytale-logo-white.svg";
 import HytaleModdingLogo from "@/../public/branding/hytalemodding/HM_DARK.svg";
 import HytaleModdingIcon from "@/app/icon0.svg";
 
@@ -18,20 +17,6 @@ export function baseOptions(
     nav: {
       title: (
         <div className="flex items-center gap-2 lg:px-2">
-          <div className="hidden in-[.official]:block">
-            <div className="relative h-16 w-20 lg:h-8">
-              <Image
-                alt="Hytale"
-                src={HytaleLogo}
-                fill
-                className="object-contain not-dark:invert lg:object-cover"
-              />
-            </div>
-          </div>
-          <div className="hidden in-[.official]:block">
-            <XIcon className="text-muted-foreground size-4" />
-          </div>
-
           <div className="relative h-16 w-8 in-[.official]:w-20 lg:h-8">
             <Image
               alt="Hytale Modding"
@@ -76,6 +61,10 @@ export function baseOptions(
       {
         text: messages.nav.grants,
         url: `/${locale}/grants`,
+      },
+      {
+        text: messages.nav.blogs ?? "Blogs",
+        url: "/blogs",
       },
     );
   }

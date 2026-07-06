@@ -1,6 +1,7 @@
 import { baseUrl } from "@/lib/config";
 import { source } from "@/lib/source";
 import { i18n } from "@/lib/i18n";
+import { getBlogs } from "@/lib/blogs";
 import { readdir } from "fs/promises";
 import { join } from "path";
 import type { MetadataRoute } from "next";
@@ -34,8 +35,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   await addProjectPages(sitemap);
+  await addBlogPages(sitemap);
 
   return sitemap;
+}
+
+async function addBlogPages(sitemap: MetadataRoute.Sitemap) {
+  const blogs = await getBlogs();
+
+  sitemap.push({
+    url: `${baseUrl}/blogs`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.9,
+  });
+
+  for (const blog of blogs) {
+    sitemap.push({
+      url: `${baseUrl}/blogs/${blog.slug}`,
+      lastModified: blog.date ? new Date(blog.date) : new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    });
+  }
 }
 
 async function addProjectPages(sitemap: MetadataRoute.Sitemap) {
