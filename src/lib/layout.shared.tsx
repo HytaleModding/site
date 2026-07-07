@@ -32,7 +32,7 @@ export function baseOptions(
             />
           </div>
           <div className="in-[.official]:hidden">
-            <span className="font-medium">{messages.nav.title}</span>
+            <span className="font-medium">HytaleModding</span>
           </div>
         </div>
       ),
