@@ -2,6 +2,9 @@ import { readdir, readFile } from "fs/promises";
 import { join } from "path";
 import matter from "gray-matter";
 
+const blogFilenamePattern = /^(\d{4})-(\d{2})-(.+)$/;
+const blogFolderPattern = /^(\d{4})[\\/](\d{2})[\\/](.+)$/;
+
 export type BlogFrontmatter = {
   title: string;
   description: string;
@@ -12,6 +15,15 @@ export type BlogFrontmatter = {
 };
 
 export type BlogOverview = BlogFrontmatter & {
+  year: string;
+  month: string;
+  slug: string;
+  path: string;
+};
+
+export type BlogRouteParams = {
+  year: string;
+  month: string;
   slug: string;
 };
 
@@ -21,22 +33,80 @@ function getSlug(file: string) {
   return file.replace(/\.mdx?$/, "");
 }
 
+function getRouteParams(relativePath: string): BlogRouteParams | null {
+  const flatMatch = getSlug(relativePath).match(blogFilenamePattern);
+
+  if (flatMatch) {
+    return {
+      year: flatMatch[1],
+      month: flatMatch[2],
+      slug: flatMatch[3],
+    };
+  }
+
+  const folderMatch = getSlug(relativePath).match(blogFolderPattern);
+
+  if (!folderMatch) return null;
+
+  return {
+    year: folderMatch[1],
+    month: folderMatch[2],
+    slug: folderMatch[3],
+  };
+}
+
+function getBlogPath(params: BlogRouteParams) {
+  return `/news/${params.year}/${params.month}/${params.slug}`;
+}
+
+function getBlogFilePath(params: BlogRouteParams, extension: ".md" | ".mdx") {
+  return join(blogsPath, params.year, params.month, `${params.slug}${extension}`);
+}
+
+async function collectMarkdownFiles(directory: string): Promise<string[]> {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files: string[] = [];
+
+  for (const entry of entries) {
+    const fullPath = join(directory, entry.name);
+
+    if (entry.isDirectory()) {
+      files.push(...(await collectMarkdownFiles(fullPath)));
+      continue;
+    }
+
+    if (isMarkdownFile(entry.name)) {
+      files.push(fullPath);
+    }
+  }
+
+  return files;
+}
+
+function getRelativeBlogPath(filePath: string) {
+  return filePath.slice(blogsPath.length + 1);
+}
+
 function isMarkdownFile(file: string) {
   return file.endsWith(".md") || file.endsWith(".mdx");
 }
 
 export async function getBlogs(): Promise<BlogOverview[]> {
   try {
-    const files = await readdir(blogsPath);
-    const blogs = await Promise.all(
-      files.filter(isMarkdownFile).map(async (file) => {
-        const source = await readFile(join(blogsPath, file), "utf-8");
+    const files = await collectMarkdownFiles(blogsPath);
+    const blogs: Array<BlogOverview | null> = await Promise.all(
+      files.map(async (filePath) => {
+        const params = getRouteParams(getRelativeBlogPath(filePath));
+
+        if (!params) return null;
+
+        const source = await readFile(filePath, "utf-8");
         const { data } = matter(source);
-        const slug = getSlug(file);
 
         return {
-          slug,
-          title: data.title || slug,
+          ...params,
+          path: getBlogPath(params),
+          title: data.title || params.slug,
           description: data.description || "",
           date: data.date,
           author: data.author,
@@ -46,30 +116,37 @@ export async function getBlogs(): Promise<BlogOverview[]> {
       }),
     );
 
-    return blogs.sort((a, b) => {
-      const aTime = a.date ? new Date(a.date).getTime() : 0;
-      const bTime = b.date ? new Date(b.date).getTime() : 0;
+    return blogs
+      .filter((blog): blog is BlogOverview => blog !== null)
+      .sort((a, b) => {
+        const aTime = a.date ? new Date(a.date).getTime() : 0;
+        const bTime = b.date ? new Date(b.date).getTime() : 0;
 
-      return bTime - aTime;
-    });
+        return bTime - aTime;
+      });
   } catch (error) {
     console.error("Error reading blogs:", error);
     return [];
   }
 }
 
-export async function getBlog(slug: string) {
-  const files = [`${slug}.mdx`, `${slug}.md`];
+export async function getBlog(params: BlogRouteParams) {
+  const files = [
+    getBlogFilePath(params, ".mdx"),
+    getBlogFilePath(params, ".md"),
+    join(blogsPath, `${params.year}-${params.month}-${params.slug}.mdx`),
+    join(blogsPath, `${params.year}-${params.month}-${params.slug}.md`),
+  ];
 
   for (const file of files) {
     try {
-      const source = await readFile(join(blogsPath, file), "utf-8");
+      const source = await readFile(file, "utf-8");
       const { data, content } = matter(source);
 
       return {
         content,
         frontmatter: {
-          title: data.title || slug,
+          title: data.title || params.slug,
           description: data.description || "",
           date: data.date,
           author: data.author,
@@ -85,11 +162,14 @@ export async function getBlog(slug: string) {
   return null;
 }
 
-export async function getBlogSlugs() {
+export async function getBlogSlugs(): Promise<BlogRouteParams[]> {
   try {
-    const files = await readdir(blogsPath);
+    const files = await collectMarkdownFiles(blogsPath);
 
-    return files.filter(isMarkdownFile).map(getSlug);
+    return files
+      .map(getRelativeBlogPath)
+      .map(getRouteParams)
+      .filter((params): params is BlogRouteParams => params !== null);
   } catch (error) {
     console.error("Error reading blog slugs:", error);
     return [];

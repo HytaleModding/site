@@ -64,7 +64,7 @@ export function baseOptions(
       },
       {
         text: messages.nav.blogs ?? "Blogs",
-        url: "/blogs",
+        url: "/news",
       },
     );
   }

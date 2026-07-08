@@ -44,7 +44,7 @@ async function addBlogPages(sitemap: MetadataRoute.Sitemap) {
   const blogs = await getBlogs();
 
   sitemap.push({
-    url: `${baseUrl}/blogs`,
+    url: `${baseUrl}/news`,
     lastModified: new Date(),
     changeFrequency: "weekly",
     priority: 0.9,
@@ -52,7 +52,7 @@ async function addBlogPages(sitemap: MetadataRoute.Sitemap) {
 
   for (const blog of blogs) {
     sitemap.push({
-      url: `${baseUrl}/blogs/${blog.slug}`,
+      url: `${baseUrl}${blog.path}`,
       lastModified: blog.date ? new Date(blog.date) : new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
