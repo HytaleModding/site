@@ -29,28 +29,164 @@ export type BlogRouteParams = {
 };
 
 const blogsPath = join(process.cwd(), "content", "blogs");
-const blogCacheManifestPath = join(
-  process.cwd(),
-  ".content-cache",
-  "blogs.manifest.json",
-);
 
-type CachedBlogManifestItem = {
-  id: string;
-  slug: string;
+
+type CmsBlogFile = {
   path: string;
-  localPath: string;
-  title: string;
-  description: string | null;
-  date: string;
-  author: string | null;
-  authorIsAdmin: boolean;
-  image: string | null;
-  imageAlt: string | null;
-  status: "published";
-  publishedAt: string | null;
-  updatedAt: string;
+  content: string;
+  data: {
+    id: string;
+    slug: string;
+    title: string;
+    description: string | null;
+    date: string;
+    author: string | null;
+    authorIsAdmin: boolean;
+    image: string | null;
+    imageAlt: string | null;
+    status: "published";
+    publishedAt: string | null;
+    updatedAt: string;
+  };
 };
+
+type CmsBlogsResponse = {
+  access: "public" | "admin";
+  files: CmsBlogFile[];
+};
+
+function isCmsBlogsResponse(value: unknown): value is CmsBlogsResponse {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    Array.isArray((value as CmsBlogsResponse).files)
+  );
+}
+
+function validateFile(file: CmsBlogFile) {
+  return (
+    typeof file?.path === "string" &&
+    typeof file.content === "string" &&
+    typeof file.data?.id === "string" &&
+    typeof file.data.slug === "string" &&
+    typeof file.data.title === "string" &&
+    (typeof file.data.description === "string" ||
+      file.data.description === null) &&
+    typeof file.data.date === "string" &&
+    (typeof file.data.author === "string" || file.data.author === null) &&
+    typeof file.data.authorIsAdmin === "boolean" &&
+    (typeof file.data.image === "string" || file.data.image === null) &&
+    (typeof file.data.imageAlt === "string" || file.data.imageAlt === null) &&
+    file.data.status === "published" &&
+    (typeof file.data.publishedAt === "string" ||
+      file.data.publishedAt === null) &&
+    typeof file.data.updatedAt === "string"
+  );
+}
+
+/**
+ * Fetches the CMS blog bulk endpoint directly, relying on Next.js's Data
+ * Cache for staleness rather than a build-time file sync. `revalidate: 60`
+ * means: serve the cached response instantly if it's under 60s old; if it's
+ * older, still serve it instantly but kick off a background refetch so the
+ * *next* request gets fresh data. Tagged so it could be force-revalidated
+ * later (e.g. `revalidateTag("cms-blogs")`) without needing that right now.
+ */
+async function fetchCmsBlogs(): Promise<CmsBlogFile[]> {
+  const apiUrl = process.env.CMS_BLOGS_API_URL;
+  const secret = process.env.CONTENT_API_SECRET;
+
+  if (!apiUrl || !secret) {
+    return [];
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${secret}`,
+        "x-api-key": secret,
+      },
+      next: {
+        revalidate: 60,
+        tags: ["cms-blogs"],
+      },
+    });
+
+    if (!response.ok) {
+      console.error(`CMS blog API returned ${response.status}`);
+      return [];
+    }
+
+    const json: unknown = await response.json();
+
+    if (!isCmsBlogsResponse(json)) {
+      console.error("CMS blog API returned an invalid response shape.");
+      return [];
+    }
+
+    return json.files.filter((file) => {
+      const valid = validateFile(file);
+      if (!valid) console.warn("Skipping invalid CMS blog file:", file?.path);
+      return valid;
+    });
+  } catch (error) {
+    console.error("Error fetching CMS blogs:", error);
+    return [];
+  }
+}
+
+function sanitizeSlug(slug: string) {
+  return slug.replace(/[\\/]/g, "-");
+}
+
+function getRouteParamsFromCms(file: CmsBlogFile): BlogRouteParams | null {
+  const match = file.data.date.match(/^(\d{4})-(\d{2})/);
+
+  if (!match) return null;
+
+  return {
+    year: match[1],
+    month: match[2],
+    slug: sanitizeSlug(file.data.slug),
+  };
+}
+
+function toBlogFrontmatter(
+  file: CmsBlogFile,
+  data: Record<string, unknown> = {},
+): BlogFrontmatter {
+  return {
+    title:
+      file.data.title ||
+      (typeof data.title === "string" ? data.title : undefined) ||
+      file.data.slug,
+    description:
+      file.data.description ||
+      (typeof data.description === "string" ? data.description : undefined) ||
+      "",
+    date:
+      file.data.date ||
+      (typeof data.date === "string" ? data.date : undefined),
+    author:
+      file.data.author ||
+      (typeof data.author === "string" ? data.author : undefined) ||
+      undefined,
+    authorIsAdmin:
+      file.data.authorIsAdmin ??
+      (typeof data.authorIsAdmin === "boolean"
+        ? data.authorIsAdmin
+        : undefined),
+    image:
+      file.data.image ||
+      (typeof data.image === "string" ? data.image : undefined) ||
+      undefined,
+    imageAlt:
+      file.data.imageAlt ||
+      (typeof data.imageAlt === "string" ? data.imageAlt : undefined) ||
+      undefined,
+  };
+}
+
 
 function getSlug(file: string) {
   return file.replace(/\.mdx?$/, "");
@@ -119,114 +255,15 @@ function isMarkdownFile(file: string) {
   return file.endsWith(".md") || file.endsWith(".mdx");
 }
 
-async function readCachedBlogManifest(): Promise<CachedBlogManifestItem[]> {
+async function getLocalBlogs(): Promise<BlogOverview[]> {
+  let files: string[];
+
   try {
-    const source = await readFile(blogCacheManifestPath, "utf-8");
-    const manifest = JSON.parse(source);
-
-    if (!Array.isArray(manifest)) return [];
-
-    return manifest.filter((item): item is CachedBlogManifestItem => {
-      return (
-        typeof item === "object" &&
-        item !== null &&
-        typeof item.slug === "string" &&
-        typeof item.localPath === "string" &&
-        typeof item.date === "string"
-      );
-    });
+    files = await collectMarkdownFiles(blogsPath);
   } catch {
     return [];
   }
-}
 
-function getRouteParamsFromDate(
-  item: CachedBlogManifestItem,
-): BlogRouteParams | null {
-  const match = item.date.match(/^(\d{4})-(\d{2})/);
-
-  if (!match) return null;
-
-  return {
-    year: match[1],
-    month: match[2],
-    slug: item.slug,
-  };
-}
-
-function toBlogFrontmatter(
-  item: CachedBlogManifestItem,
-  data: Record<string, unknown> = {},
-): BlogFrontmatter {
-  return {
-    title:
-      item.title ||
-      (typeof data.title === "string" ? data.title : undefined) ||
-      item.slug,
-    description:
-      item.description ||
-      (typeof data.description === "string" ? data.description : undefined) ||
-      "",
-    date: item.date || (typeof data.date === "string" ? data.date : undefined),
-    author:
-      item.author ||
-      (typeof data.author === "string" ? data.author : undefined),
-    authorIsAdmin:
-      item.authorIsAdmin ??
-      (typeof data.authorIsAdmin === "boolean"
-        ? data.authorIsAdmin
-        : undefined),
-    image:
-      item.image || (typeof data.image === "string" ? data.image : undefined),
-    imageAlt:
-      item.imageAlt ||
-      (typeof data.imageAlt === "string" ? data.imageAlt : undefined),
-  };
-}
-
-function mergeBlogs(blogs: BlogOverview[]) {
-  const seen = new Set<string>();
-  const merged: BlogOverview[] = [];
-
-  for (const blog of blogs) {
-    const key = `${blog.year}/${blog.month}/${blog.slug}`;
-
-    if (seen.has(key)) continue;
-
-    seen.add(key);
-    merged.push(blog);
-  }
-
-  return merged;
-}
-
-async function getCachedBlogs(): Promise<BlogOverview[]> {
-  const manifest = await readCachedBlogManifest();
-  const blogs: BlogOverview[] = [];
-
-  for (const item of manifest) {
-    const params = getRouteParamsFromDate(item);
-
-    if (!params) continue;
-
-    blogs.push({
-      ...params,
-      path: getBlogPath(params),
-      title: item.title || params.slug,
-      description: item.description || "",
-      date: item.date,
-      author: item.author || undefined,
-      authorIsAdmin: item.authorIsAdmin,
-      image: item.image || undefined,
-      imageAlt: item.imageAlt || undefined,
-    });
-  }
-
-  return blogs;
-}
-
-async function getLocalBlogs(): Promise<BlogOverview[]> {
-  const files = await collectMarkdownFiles(blogsPath);
   const blogs: Array<BlogOverview | null> = await Promise.all(
     files.map(async (filePath) => {
       const params = getRouteParams(getRelativeBlogPath(filePath));
@@ -253,11 +290,51 @@ async function getLocalBlogs(): Promise<BlogOverview[]> {
   return blogs.filter((blog): blog is BlogOverview => blog !== null);
 }
 
+function mergeBlogs(blogs: BlogOverview[]) {
+  const seen = new Set<string>();
+  const merged: BlogOverview[] = [];
+
+  for (const blog of blogs) {
+    const key = `${blog.year}/${blog.month}/${blog.slug}`;
+
+    if (seen.has(key)) continue;
+
+    seen.add(key);
+    merged.push(blog);
+  }
+
+  return merged;
+}
+
+
 export async function getBlogs(): Promise<BlogOverview[]> {
   try {
-    const blogs = [...(await getCachedBlogs()), ...(await getLocalBlogs())];
+    const [cmsFiles, localBlogs] = await Promise.all([
+      fetchCmsBlogs(),
+      getLocalBlogs(),
+    ]);
 
-    return mergeBlogs(blogs).sort((a, b) => {
+    const cmsBlogs = cmsFiles
+      .map((file): BlogOverview | null => {
+        const params = getRouteParamsFromCms(file);
+
+        if (!params) return null;
+
+        return {
+          ...params,
+          path: getBlogPath(params),
+          title: file.data.title || params.slug,
+          description: file.data.description || "",
+          date: file.data.date,
+          author: file.data.author || undefined,
+          authorIsAdmin: file.data.authorIsAdmin,
+          image: file.data.image || undefined,
+          imageAlt: file.data.imageAlt || undefined,
+        };
+      })
+      .filter((blog): blog is BlogOverview => blog !== null);
+
+    return mergeBlogs([...cmsBlogs, ...localBlogs]).sort((a, b) => {
       const aTime = a.date ? new Date(a.date).getTime() : 0;
       const bTime = b.date ? new Date(b.date).getTime() : 0;
 
@@ -270,32 +347,24 @@ export async function getBlogs(): Promise<BlogOverview[]> {
 }
 
 export async function getBlog(params: BlogRouteParams) {
-  const manifest = await readCachedBlogManifest();
-  const cachedItem = manifest.find((item) => {
-    const cachedParams = getRouteParamsFromDate(item);
+  const cmsFiles = await fetchCmsBlogs();
+  const cmsFile = cmsFiles.find((file) => {
+    const cmsParams = getRouteParamsFromCms(file);
 
     return (
-      cachedParams?.year === params.year &&
-      cachedParams.month === params.month &&
-      cachedParams.slug === params.slug
+      cmsParams?.year === params.year &&
+      cmsParams.month === params.month &&
+      cmsParams.slug === params.slug
     );
   });
 
-  if (cachedItem) {
-    try {
-      const source = await readFile(
-        join(process.cwd(), cachedItem.localPath),
-        "utf-8",
-      );
-      const { data, content } = matter(source);
+  if (cmsFile) {
+    const { data, content } = matter(cmsFile.content);
 
-      return {
-        content,
-        frontmatter: toBlogFrontmatter(cachedItem, data),
-      };
-    } catch (error) {
-      console.warn("Error reading cached blog:", cachedItem.slug, error);
-    }
+    return {
+      content,
+      frontmatter: toBlogFrontmatter(cmsFile, data),
+    };
   }
 
   const files = [
@@ -332,18 +401,22 @@ export async function getBlog(params: BlogRouteParams) {
 
 export async function getBlogSlugs(): Promise<BlogRouteParams[]> {
   try {
-    const cachedSlugs = (await readCachedBlogManifest())
-      .map(getRouteParamsFromDate)
+    const [cmsFiles, localFiles] = await Promise.all([
+      fetchCmsBlogs(),
+      collectMarkdownFiles(blogsPath).catch(() => [] as string[]),
+    ]);
+
+    const cmsSlugs = cmsFiles
+      .map(getRouteParamsFromCms)
       .filter((params): params is BlogRouteParams => params !== null);
-    const files = await collectMarkdownFiles(blogsPath);
-    const localSlugs = files
+    const localSlugs = localFiles
       .map(getRelativeBlogPath)
       .map(getRouteParams)
       .filter((params): params is BlogRouteParams => params !== null);
 
     const seen = new Set<string>();
 
-    return [...cachedSlugs, ...localSlugs].filter((params) => {
+    return [...cmsSlugs, ...localSlugs].filter((params) => {
       const key = `${params.year}/${params.month}/${params.slug}`;
 
       if (seen.has(key)) return false;

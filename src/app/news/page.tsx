@@ -4,6 +4,9 @@ import Link from "next/link";
 import { CalendarDaysIcon, UserIcon } from "lucide-react";
 import { getBlogs } from "@/lib/blogs";
 
+// Revalidation now happens at the fetch call inside getBlogs()
+// (next: { revalidate: 60 }), not at the route segment level.
+
 function formatDate(date?: string) {
   if (!date) return null;
 

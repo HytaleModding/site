@@ -8,8 +8,19 @@ import remarkGfm from "remark-gfm";
 import { DocsBody } from "fumadocs-ui/page";
 import { ChevronLeftIcon, CalendarDaysIcon, UserIcon } from "lucide-react";
 import { getMDXComponents } from "@/lib/mdx-components";
-import { getBlog, getBlogSlugs, type BlogRouteParams } from "@/lib/blogs";
+import { getBlog, type BlogRouteParams } from "@/lib/blogs";
 import { BlogIframe, BlogImage, BlogVideo } from "@/components/mdx/blog-image";
+
+// Blog pages are now rendered on-demand — data comes from a fetch with
+// `next: { revalidate: 60 }` inside getBlog(), not from files present at
+// build time — so we don't pre-generate params. Returning [] plus
+// dynamicParams=true skips build-time generation and renders each slug on
+// first request, picking up new/updated CMS posts without a rebuild.
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  return [];
+}
 
 function formatDate(date?: string) {
   if (!date) return null;
@@ -19,10 +30,6 @@ function formatDate(date?: string) {
     day: "numeric",
     year: "numeric",
   }).format(new Date(date));
-}
-
-export async function generateStaticParams() {
-  return getBlogSlugs();
 }
 
 export async function generateMetadata({
