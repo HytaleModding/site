@@ -5,6 +5,10 @@
 @import "fumadocs-ui/css/preset.css";
 @import "tw-animate-css";
 
+@import "tailwindcss";
+@source inline("w-[704px]");
+@source inline("h-[396px]");
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {

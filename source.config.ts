@@ -5,8 +5,8 @@ import {
   metaSchema,
 } from "fumadocs-mdx/config";
 import { z } from "zod";
-import rehypeKatex from 'rehype-katex';
-import remarkMath from 'remark-math';
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
 // import { enableImageFetchCache } from "./src/lib/image-cache";
 
 // Enable fetch caching for image processing during build
@@ -48,6 +48,6 @@ export default defineConfig({
       },
     },
     remarkPlugins: [remarkMath],
-    rehypePlugins: v => [rehypeKatex, ...v],
+    rehypePlugins: (v) => [rehypeKatex, ...v],
   },
 });

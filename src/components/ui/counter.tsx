@@ -15,7 +15,8 @@ type PlaceValue = number | "." | ",";
 type CounterEasing = Easing | Easing[];
 
 const DEFAULT_EASING: Easing = [0.16, 1, 0.3, 1];
-const getDefaultDuration = (distance: number) => 2 + Math.abs(distance) * 0.00005;
+const getDefaultDuration = (distance: number) =>
+  2 + Math.abs(distance) * 0.00005;
 
 interface NumberProps {
   mv: MotionValue<number>;

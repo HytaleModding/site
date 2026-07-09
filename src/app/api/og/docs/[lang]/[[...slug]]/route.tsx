@@ -125,9 +125,7 @@ export async function GET(
   } as const;
 
   return new ImageResponse(
-    <div
-      style={containerStyle}
-    >
+    <div style={containerStyle}>
       {backgroundImage ? (
         <img
           src={backgroundImage}
@@ -160,20 +158,10 @@ export async function GET(
           zIndex: 1,
         }}
       >
-        <span
-          style={titleStyle}
-        >
-          {page.data.title}
-        </span>
-        <span
-          style={descriptionStyle}
-        >
-          {page.data.description}
-        </span>
+        <span style={titleStyle}>{page.data.title}</span>
+        <span style={descriptionStyle}>{page.data.description}</span>
       </div>
-      <div
-        style={footerStyle}
-      >
+      <div style={footerStyle}>
         <img
           src={`data:image/png;base64,${Buffer.from(logoImage).toString("base64")}`}
           alt="Logo"

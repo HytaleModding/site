@@ -1,7 +1,9 @@
-console.log("Generating git-info.json");
-
 import { $ } from "bun";
-import { rmdir } from "fs/promises";
+import { syncCmsBlogs } from "./scripts/sync-cms-blogs";
+
+await syncCmsBlogs();
+
+console.log("Generating git-info.json");
 
 //check if git is available
 $`git --version`.catch(() => {

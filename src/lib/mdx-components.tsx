@@ -11,7 +11,6 @@ import { Answer } from "@/components/mdx/answer";
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     ...defaultMdxComponents,
-    ...components,
     ...TabsComponents,
     Callout,
     ParameterList,
@@ -20,5 +19,6 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     Card,
     Cards,
     Answer,
+    ...components,
   };
 }

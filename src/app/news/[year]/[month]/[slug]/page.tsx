@@ -4,9 +4,12 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
+import { DocsBody } from "fumadocs-ui/page";
 import { ChevronLeftIcon, CalendarDaysIcon, UserIcon } from "lucide-react";
 import { getMDXComponents } from "@/lib/mdx-components";
 import { getBlog, getBlogSlugs, type BlogRouteParams } from "@/lib/blogs";
+import { BlogIframe, BlogImage, BlogVideo } from "@/components/mdx/blog-image";
 
 function formatDate(date?: string) {
   if (!date) return null;
@@ -117,9 +120,21 @@ export default async function NewsPostPage({
 
         <div className="border-fd-border my-8 border-t" />
 
-        <div className="prose prose-neutral dark:prose-invert max-w-none [&_li]:text-[1.125rem] [&_li]:leading-8 [&_p]:text-[1.125rem] [&_p]:leading-8">
-          <MDXRemote source={blog.content} components={getMDXComponents()} />
-        </div>
+        <DocsBody className="max-w-none text-[1.125rem] leading-8">
+          <MDXRemote
+            source={blog.content}
+            components={getMDXComponents({
+              iframe: BlogIframe,
+              img: BlogImage,
+              video: BlogVideo,
+            })}
+            options={{
+              mdxOptions: {
+                remarkPlugins: [remarkGfm],
+              },
+            }}
+          />
+        </DocsBody>
       </article>
     </main>
   );

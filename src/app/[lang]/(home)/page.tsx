@@ -149,29 +149,29 @@ const showcaseItems: ShowcaseItem[] = [
     author: "lulu",
     image: Sanguivar,
     link: "https://discord.gg/hytalemodding",
-    type: "art"
+    type: "art",
   },
   {
     title: "Hexcode",
     author: "Riprod",
     image: Hexcode,
     link: "https://docs.hexcodec.com",
-    type: "art"
+    type: "art",
   },
   {
     title: "HyYap",
     author: "Azim",
     image: HyYap,
     link: "https://discord.gg/hytalemodding",
-    type: "art"
+    type: "art",
   },
   {
     title: "Arcanum",
     author: "zenkuro",
     image: Arcanum,
     link: "https://wiki.hytalemodding.dev/mod/zens-arcanum",
-    type: "art"
-  }
+    type: "art",
+  },
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {

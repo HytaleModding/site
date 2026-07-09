@@ -17,14 +17,14 @@ Parameters:
 <ParameterList
   parameters={[
     {
-      name: 'Material',
-      type: 'Material slot',
-      description: '',
+      name: "Material",
+      type: "Material slot",
+      description: "",
     },
   ]}
 />
 
-***
+---
 
 ### Transparent
 
@@ -32,7 +32,7 @@ The lack of any Material.
 
 Parameters: None.
 
-***
+---
 
 ### Solidity
 
@@ -43,14 +43,15 @@ Parameters:
 <ParameterList
   parameters={[
     {
-      name: 'Solid',
-      type: 'Material Provider slot',
-      description: 'Where the terrain\'s Density value is greater than 0.',
+      name: "Solid",
+      type: "Material Provider slot",
+      description: "Where the terrain's Density value is greater than 0.",
     },
     {
-      name: 'Empty',
-      type: 'Material Provider slot',
-      description: 'Where the terrain\'s Density value is smaller or equal to 0.',
+      name: "Empty",
+      type: "Material Provider slot",
+      description:
+        "Where the terrain's Density value is smaller or equal to 0.",
     },
   ]}
 />
@@ -65,11 +66,15 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "Queue", type: "list of Material Provider slots", description: "Slots are queried from top to bottom." },
+    {
+      name: "Queue",
+      type: "list of Material Provider slots",
+      description: "Slots are queried from top to bottom.",
+    },
   ]}
 />
 
-***
+---
 
 ### SimpleHorizontal
 
@@ -81,15 +86,37 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "TopY", type: "integer", description: "Y coordinate. Defines the vertical top <strong>exclusive</strong> limit of the region." },
-    { name: "Top BaseHeight", type: "string", description: "DecimalConstant name." },
-    { name: "BottomY", type: "integer", description: "Y coordinate. Defines the vertical bottom <strong>inclusive</strong> limit of the region." },
-    { name: "Bottom BaseHeight", type: "string", description: "DecimalConstant name." },
-    { name: "Material", type: "Material Provider slot", description: "Slot to query for the selected region." },
+    {
+      name: "TopY",
+      type: "integer",
+      description:
+        "Y coordinate. Defines the vertical top <strong>exclusive</strong> limit of the region.",
+    },
+    {
+      name: "Top BaseHeight",
+      type: "string",
+      description: "DecimalConstant name.",
+    },
+    {
+      name: "BottomY",
+      type: "integer",
+      description:
+        "Y coordinate. Defines the vertical bottom <strong>inclusive</strong> limit of the region.",
+    },
+    {
+      name: "Bottom BaseHeight",
+      type: "string",
+      description: "DecimalConstant name.",
+    },
+    {
+      name: "Material",
+      type: "Material Provider slot",
+      description: "Slot to query for the selected region.",
+    },
   ]}
 />
 
-***
+---
 
 ### Striped
 
@@ -101,14 +128,31 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "Stripes", type: "list of stripe assets", description: "Each stripe contains <code>TopY</code> and <code>BottomY</code>." },
-    { name: "Stripes[].TopY", type: "integer", description: "World Y value. Inclusive." },
-    { name: "Stripes[].BottomY", type: "integer", description: "World Y value. Inclusive." },
-    { name: "Material", type: "Material Provider slot", description: "Slot to query for the selected region." },
+    {
+      name: "Stripes",
+      type: "list of stripe assets",
+      description:
+        "Each stripe contains <code>TopY</code> and <code>BottomY</code>.",
+    },
+    {
+      name: "Stripes[].TopY",
+      type: "integer",
+      description: "World Y value. Inclusive.",
+    },
+    {
+      name: "Stripes[].BottomY",
+      type: "integer",
+      description: "World Y value. Inclusive.",
+    },
+    {
+      name: "Material",
+      type: "Material Provider slot",
+      description: "Slot to query for the selected region.",
+    },
   ]}
 />
 
-***
+---
 
 ### Weighted
 
@@ -119,14 +163,31 @@ Parameters:
 <ParameterList
   parameters={[
     { name: "Seed", type: "string", description: "" },
-    { name: "SkipChance", type: "float (0.0–1.0)", description: "Percentage of blocks to skip. When skipped, this provider returns no block and does not pick a slot." },
-    { name: "WeightedMaterials", type: "list of weighted Material Provider slots", description: "" },
-    { name: "WeightedMaterials[].Weight", type: "number (> 0)", description: "Higher value increases likelihood of being picked." },
-    { name: "WeightedMaterials[].Material", type: "Material Provider slot", description: "" },
+    {
+      name: "SkipChance",
+      type: "float (0.0–1.0)",
+      description:
+        "Percentage of blocks to skip. When skipped, this provider returns no block and does not pick a slot.",
+    },
+    {
+      name: "WeightedMaterials",
+      type: "list of weighted Material Provider slots",
+      description: "",
+    },
+    {
+      name: "WeightedMaterials[].Weight",
+      type: "number (> 0)",
+      description: "Higher value increases likelihood of being picked.",
+    },
+    {
+      name: "WeightedMaterials[].Material",
+      type: "Material Provider slot",
+      description: "",
+    },
   ]}
 />
 
-***
+---
 
 ### FieldFunction
 
@@ -136,15 +197,36 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "FieldFunction", type: "field function asset", description: "Defines the field value for each block. Same asset type used by DAOTerrain density." },
-    { name: "Delimiters", type: "list of delimiters", description: "Higher entries have higher priority." },
-    { name: "Delimiters[].From", type: "float", description: "Minimum limit of the delimiter’s range." },
-    { name: "Delimiters[].To", type: "float", description: "Maximum limit of the delimiter’s range." },
-    { name: "Delimiters[].Material", type: "Material Provider slot", description: "Slot linked to this delimiter." },
+    {
+      name: "FieldFunction",
+      type: "field function asset",
+      description:
+        "Defines the field value for each block. Same asset type used by DAOTerrain density.",
+    },
+    {
+      name: "Delimiters",
+      type: "list of delimiters",
+      description: "Higher entries have higher priority.",
+    },
+    {
+      name: "Delimiters[].From",
+      type: "float",
+      description: "Minimum limit of the delimiter’s range.",
+    },
+    {
+      name: "Delimiters[].To",
+      type: "float",
+      description: "Maximum limit of the delimiter’s range.",
+    },
+    {
+      name: "Delimiters[].Material",
+      type: "Material Provider slot",
+      description: "Slot linked to this delimiter.",
+    },
   ]}
 />
 
-***
+---
 
 ### SpaceAndDepth
 
@@ -158,14 +240,32 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "LayerContext", type: "string", description: "Context the layers are applied on. Values: <code>DEPTH_INTO_FLOOR</code>, <code>DEPTH_INTO_CEILING</code>." },
-    { name: "MaxExpectedDepth", type: "positive integer", description: "Optimization hint. Set to max expected combined layer depth. Too small can cut off layers. Too large can hurt performance." },
-    { name: "Condition", type: "Condition slot", description: "Provider returns no block if the Condition fails." },
-    { name: "Layers", type: "list of Layer objects", description: "Stacked top-to-bottom as depth increases into the context." },
+    {
+      name: "LayerContext",
+      type: "string",
+      description:
+        "Context the layers are applied on. Values: <code>DEPTH_INTO_FLOOR</code>, <code>DEPTH_INTO_CEILING</code>.",
+    },
+    {
+      name: "MaxExpectedDepth",
+      type: "positive integer",
+      description:
+        "Optimization hint. Set to max expected combined layer depth. Too small can cut off layers. Too large can hurt performance.",
+    },
+    {
+      name: "Condition",
+      type: "Condition slot",
+      description: "Provider returns no block if the Condition fails.",
+    },
+    {
+      name: "Layers",
+      type: "list of Layer objects",
+      description: "Stacked top-to-bottom as depth increases into the context.",
+    },
   ]}
 />
 
-***
+---
 
 ### Condition
 
@@ -179,8 +279,8 @@ An example Condition could check if there are at least 5 blocks of empty space a
 
 The Condition’s `ContextToCheck` parameter selects which context value the Condition queries. In the example above, we’re checking the `SPACE_ABOVE_FLOOR` context, which is the number of blocks above the floor. There are currently two possible context values you can use:
 
-* `SPACE_ABOVE_FLOOR`
-* `SPACE_BELOW_CEILING`
+- `SPACE_ABOVE_FLOOR`
+- `SPACE_BELOW_CEILING`
 
 There are multiple Condition types that allow you to compose more complex Conditions from simpler ones. Below are the different types.
 
@@ -192,8 +292,16 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "ContextToCheck", type: "string (<code>SPACE_ABOVE_FLOOR</code> | <code>SPACE_BELOW_CEILING</code>)", description: "Which context value the Condition queries." },
-    { name: "Value", type: "integer", description: "Condition passes only if the context value equals this." },
+    {
+      name: "ContextToCheck",
+      type: "string (<code>SPACE_ABOVE_FLOOR</code> | <code>SPACE_BELOW_CEILING</code>)",
+      description: "Which context value the Condition queries.",
+    },
+    {
+      name: "Value",
+      type: "integer",
+      description: "Condition passes only if the context value equals this.",
+    },
   ]}
 />
 
@@ -205,8 +313,17 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "ContextToCheck", type: "string (<code>SPACE_ABOVE_FLOOR</code> | <code>SPACE_BELOW_CEILING</code>)", description: "Which context value the Condition queries." },
-    { name: "Threshold", type: "integer", description: "Condition passes only if the context value is greater than this." },
+    {
+      name: "ContextToCheck",
+      type: "string (<code>SPACE_ABOVE_FLOOR</code> | <code>SPACE_BELOW_CEILING</code>)",
+      description: "Which context value the Condition queries.",
+    },
+    {
+      name: "Threshold",
+      type: "integer",
+      description:
+        "Condition passes only if the context value is greater than this.",
+    },
   ]}
 />
 
@@ -218,8 +335,17 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "ContextToCheck", type: "string (<code>SPACE_ABOVE_FLOOR</code> | <code>SPACE_BELOW_CEILING</code>)", description: "Which context value the Condition queries." },
-    { name: "Threshold", type: "integer", description: "Condition passes only if the context value is smaller than this." },
+    {
+      name: "ContextToCheck",
+      type: "string (<code>SPACE_ABOVE_FLOOR</code> | <code>SPACE_BELOW_CEILING</code>)",
+      description: "Which context value the Condition queries.",
+    },
+    {
+      name: "Threshold",
+      type: "integer",
+      description:
+        "Condition passes only if the context value is smaller than this.",
+    },
   ]}
 />
 
@@ -231,7 +357,11 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "Conditions", type: "list of Condition slots", description: "Condition passes only if all child Conditions pass." },
+    {
+      name: "Conditions",
+      type: "list of Condition slots",
+      description: "Condition passes only if all child Conditions pass.",
+    },
   ]}
 />
 
@@ -243,7 +373,11 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "Conditions", type: "list of Condition slots", description: "Condition passes if any child Condition passes." },
+    {
+      name: "Conditions",
+      type: "list of Condition slots",
+      description: "Condition passes if any child Condition passes.",
+    },
   ]}
 />
 
@@ -255,7 +389,12 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "Condition", type: "Condition slot", description: "Single slot (not a list). Condition passes if the child Condition fails." },
+    {
+      name: "Condition",
+      type: "Condition slot",
+      description:
+        "Single slot (not a list). Condition passes if the child Condition fails.",
+    },
   ]}
 />
 
@@ -263,7 +402,7 @@ Parameters:
 
 This Condition type always validates.
 
-***
+---
 
 ### Layer
 
@@ -273,27 +412,27 @@ Below are some examples that illustrate how layers work.
 
 Example 1:
 
-* Layer 1: grass of thickness 1.
+- Layer 1: grass of thickness 1.
 
 ![](/assets/official-documentation/worldgen/technical-hytale-generator/material-providers/grass-layer-example.png)
 
 Example 2:
 
-* Layer 1: grass of thickness 1.
-* Layer 2: dirt of thickness ranging from 2 to 3.
+- Layer 1: grass of thickness 1.
+- Layer 2: dirt of thickness ranging from 2 to 3.
 
 ![](/assets/official-documentation/worldgen/technical-hytale-generator/material-providers/dirt-layer-example.png)
 
 Example 3:
 
-* Layer 1: mud of thickness 1 to 5 defined by a 2D simplex noise function.
-* Layer 2: dirt of thickness ranging from 2 to 3.
+- Layer 1: mud of thickness 1 to 5 defined by a 2D simplex noise function.
+- Layer 2: dirt of thickness ranging from 2 to 3.
 
 ![](/assets/official-documentation/worldgen/technical-hytale-generator/material-providers/mud-layer-example.png)
 
 Example 4: This example shows how this can work not only on floors but also on ceilings by changing the LayerContext value to `DEPTH_INTO_CEILING`.
 
-* Layer 1: dirt of thickness in range 2 to 3.
+- Layer 1: dirt of thickness in range 2 to 3.
 
 ![](/assets/official-documentation/worldgen/technical-hytale-generator/material-providers/ceiling-layer-example.png)
 
@@ -310,7 +449,11 @@ Parameters:
 <ParameterList
   parameters={[
     { name: "Material", type: "Material Provider slot", description: "" },
-    { name: "Thickness", type: "integer (>= 0)", description: "Thickness in blocks." },
+    {
+      name: "Thickness",
+      type: "integer (>= 0)",
+      description: "Thickness in blocks.",
+    },
   ]}
 />
 
@@ -323,8 +466,16 @@ Parameters:
 <ParameterList
   parameters={[
     { name: "Material", type: "Material Provider slot", description: "" },
-    { name: "RangeMin", type: "integer (>= 0)", description: "Minimum thickness in blocks." },
-    { name: "RangeMax", type: "integer (>= 0)", description: "Maximum thickness in blocks (inclusive)." },
+    {
+      name: "RangeMin",
+      type: "integer (>= 0)",
+      description: "Minimum thickness in blocks.",
+    },
+    {
+      name: "RangeMax",
+      type: "integer (>= 0)",
+      description: "Maximum thickness in blocks (inclusive).",
+    },
     { name: "Seed", type: "string", description: "" },
   ]}
 />
@@ -338,8 +489,16 @@ Parameters:
 <ParameterList
   parameters={[
     { name: "Material", type: "Material Provider slot", description: "" },
-    { name: "PossibleThicknesses", type: "list of weighted thickness values", description: "Used to pick a thickness per XZ." },
-    { name: "Seed", type: "string", description: "Seed used when picking the thickness." },
+    {
+      name: "PossibleThicknesses",
+      type: "list of weighted thickness values",
+      description: "Used to pick a thickness per XZ.",
+    },
+    {
+      name: "Seed",
+      type: "string",
+      description: "Seed used when picking the thickness.",
+    },
   ]}
 />
 
@@ -352,11 +511,16 @@ Parameters:
 <ParameterList
   parameters={[
     { name: "Material", type: "Material Provider slot", description: "" },
-    { name: "ThicknessFunctionXZ", type: "noise function tree", description: "Sampled as a 2D function on the XZ plane (Y is always <code>0</code>)." },
+    {
+      name: "ThicknessFunctionXZ",
+      type: "noise function tree",
+      description:
+        "Sampled as a 2D function on the XZ plane (Y is always <code>0</code>).",
+    },
   ]}
 />
 
-***
+---
 
 ### Imported
 
@@ -366,6 +530,10 @@ Parameters:
 
 <ParameterList
   parameters={[
-    { name: "Name", type: "string", description: "The exported Material Provider." },
+    {
+      name: "Name",
+      type: "string",
+      description: "The exported Material Provider.",
+    },
   ]}
 />

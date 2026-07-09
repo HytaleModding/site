@@ -15,7 +15,7 @@ export function Answer({
 }) {
   return (
     <div className="text-muted-foreground my-4 flex flex-col gap-4">
-      <div className="bg-card flex flex-col gap-2 border-l px-4 rounded-r-lg">
+      <div className="bg-card flex flex-col gap-2 rounded-r-lg border-l px-4">
         {profile && (
           <>
             <div className="mt-4 flex shrink-0 items-center gap-4">

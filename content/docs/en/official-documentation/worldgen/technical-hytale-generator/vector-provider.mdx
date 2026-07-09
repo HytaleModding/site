@@ -20,7 +20,7 @@ Parameters:
 | ------ | ----------------- | ----------- |
 | Vector | 3D decimal vector |             |
 
-***
+---
 
 ### SetX
 
@@ -33,7 +33,7 @@ Parameters:
 | VectorProvider | VectorProvider slot |             |
 | Value          | Density slot        |             |
 
-***
+---
 
 ### SetY
 
@@ -46,7 +46,7 @@ Parameters:
 | VectorProvider | VectorProvider slot |             |
 | Value          | Density slot        |             |
 
-***
+---
 
 ### SetZ
 
@@ -59,7 +59,7 @@ Parameters:
 | VectorProvider | VectorProvider slot |             |
 | Value          | Density slot        |             |
 
-***
+---
 
 ### Adder
 
@@ -73,7 +73,7 @@ Parameters:
 | ------ | -------------------- | ----------- |
 | Inputs | VectorProvider slots |             |
 
-***
+---
 
 ### Subtracter
 
@@ -88,7 +88,7 @@ Parameters:
 | VectorProviderA | VectorProvider slot |             |
 | VectorProviderB | VectorProvider slot |             |
 
-***
+---
 
 ### Random
 
@@ -96,9 +96,24 @@ Generates a unit vector in a random direction.
 
 Parameters:
 
-<table><thead><tr><th width="97.87127685546875">Name</th><th width="116.841552734375">Type</th><th>Description</th></tr></thead><tbody><tr><td>Seed</td><td>String</td><td>Determines pseudo-random outcome.</td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="97.87127685546875">Name</th>
+      <th width="116.841552734375">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Seed</td>
+      <td>String</td>
+      <td>Determines pseudo-random outcome.</td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Normalizer
 
@@ -113,7 +128,7 @@ Parameters:
 | VectorProvider | VectorProvider slot |                                      |
 | Magnitude      | Density slot        | Determines the length of the vector. |
 
-***
+---
 
 ### ScalarMultiplier
 
@@ -128,7 +143,7 @@ Parameters:
 | VectorProvider | VectorProvider slot |             |
 | Density        | Density slot        | Scalar.     |
 
-***
+---
 
 ### Multiplier
 
@@ -142,7 +157,7 @@ Parameters:
 | ------ | -------------------- | -------------------- |
 | Inputs | VectorProvider slots | Vectors to multiply. |
 
-***
+---
 
 ### Cross
 
@@ -157,7 +172,7 @@ Parameters:
 | VectorProviderA | VectorProvider slot |             |
 | VectorProviderB | VectorProvider slot |             |
 
-***
+---
 
 ### PlaneProjector
 
@@ -173,7 +188,7 @@ Parameters:
 | PlaneA         | VectorProvider slot | Defines the plane.     |
 | PlaneB         | VectorProvider slot | Defines the plane.     |
 
-***
+---
 
 ### VectorProjector
 
@@ -188,7 +203,7 @@ Parameters:
 | Source | VectorProvider slot |             |
 | Target | VectorProvider slot |             |
 
-***
+---
 
 ### DensityGradient
 
@@ -198,9 +213,33 @@ For more information about gradient vectors, see: [https://en.wikipedia.org/wiki
 
 Parameters:
 
-<table><thead><tr><th width="163.4554443359375">Name</th><th width="202.65338134765625">Type</th><th>Description</th></tr></thead><tbody><tr><td>SampleDistance</td><td>positive decimal value</td><td>How far apart the Density field value samples are taken. The optimal value for performance is 1.0. Greater values could be useful for smoothing out results for specific applications.</td></tr><tr><td>Density</td><td>Density slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="163.4554443359375">Name</th>
+      <th width="202.65338134765625">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SampleDistance</td>
+      <td>positive decimal value</td>
+      <td>
+        How far apart the Density field value samples are taken. The optimal
+        value for performance is 1.0. Greater values could be useful for
+        smoothing out results for specific applications.
+      </td>
+    </tr>
+    <tr>
+      <td>Density</td>
+      <td>Density slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Cache
 
@@ -210,9 +249,33 @@ Use this only if the downstream (child) VectorProvider is expensive and the same
 
 Parameters:
 
-<table><thead><tr><th width="153.95050048828125">Name</th><th width="198.14862060546875">Type</th><th>Description</th></tr></thead><tbody><tr><td>SampleDistance</td><td>positive decimal value</td><td>How far apart the Density field value samples are taken. The optimal value for performance is 1.0. Greater values could be useful for smoothing out results for specific applications.</td></tr><tr><td>Density</td><td>Density slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="153.95050048828125">Name</th>
+      <th width="198.14862060546875">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SampleDistance</td>
+      <td>positive decimal value</td>
+      <td>
+        How far apart the Density field value samples are taken. The optimal
+        value for performance is 1.0. Greater values could be useful for
+        smoothing out results for specific applications.
+      </td>
+    </tr>
+    <tr>
+      <td>Density</td>
+      <td>Density slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Exported
 
@@ -228,9 +291,32 @@ Expected Inputs: 1
 
 Parameters:
 
-<table><thead><tr><th width="151.09893798828125">Name</th><th width="185.84161376953125">Type</th><th>Description</th></tr></thead><tbody><tr><td>SingleInstance</td><td>boolean</td><td>Enable this to share the export across all Imported nodes that reference this key.</td></tr><tr><td>VectorProvider</td><td>VectorProvider slot</td><td></td></tr></tbody></table>
+<table>
+  <thead>
+    <tr>
+      <th width="151.09893798828125">Name</th>
+      <th width="185.84161376953125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SingleInstance</td>
+      <td>boolean</td>
+      <td>
+        Enable this to share the export across all Imported nodes that reference
+        this key.
+      </td>
+    </tr>
+    <tr>
+      <td>VectorProvider</td>
+      <td>VectorProvider slot</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-***
+---
 
 ### Imported
 
