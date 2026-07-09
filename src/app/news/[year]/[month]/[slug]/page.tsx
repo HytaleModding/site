@@ -9,7 +9,7 @@ import { DocsBody } from "fumadocs-ui/page";
 import { ChevronLeftIcon, CalendarDaysIcon, UserIcon } from "lucide-react";
 import { getMDXComponents } from "@/lib/mdx-components";
 import { getBlog, getBlogSlugs, type BlogRouteParams } from "@/lib/blogs";
-import { BlogImage } from "@/components/mdx/blog-image";
+import { BlogIframe, BlogImage, BlogVideo } from "@/components/mdx/blog-image";
 
 function formatDate(date?: string) {
   if (!date) return null;
@@ -124,7 +124,9 @@ export default async function NewsPostPage({
           <MDXRemote
             source={blog.content}
             components={getMDXComponents({
+              iframe: BlogIframe,
               img: BlogImage,
+              video: BlogVideo,
             })}
             options={{
               mdxOptions: {

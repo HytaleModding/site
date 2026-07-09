@@ -1,6 +1,12 @@
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
+function isDirectVideo(src?: string) {
+  if (!src) return false;
+
+  return /\.(mp4|webm|ogg)(\?.*)?$/i.test(src);
+}
+
 export function BlogImage({
   className,
   alt = "",
@@ -12,9 +18,55 @@ export function BlogImage({
     // eslint-disable-next-line @next/next/no-img-element
     <img
       alt={alt}
-      className={cn("my-8 h-auto max-w-full rounded-lg border", className)}
+      className={cn(
+        "not-prose my-8 block h-auto w-auto max-w-full rounded-lg border object-contain",
+        className,
+      )}
       loading="lazy"
       decoding="async"
+      {...props}
+    />
+  );
+}
+
+export function BlogVideo({
+  className,
+  controls = true,
+  ...props
+}: ComponentProps<"video">) {
+  return (
+    <video
+      className={cn(
+        "not-prose my-8 aspect-video w-full max-w-[704px] rounded-xl border bg-black object-contain",
+        className,
+      )}
+      controls={controls}
+      preload="metadata"
+      {...props}
+    />
+  );
+}
+
+export function BlogIframe({
+  className,
+  src,
+  title,
+  ...props
+}: ComponentProps<"iframe">) {
+  if (isDirectVideo(src)) {
+    return <BlogVideo src={src} title={title} />;
+  }
+
+  return (
+    <iframe
+      className={cn(
+        "not-prose my-8 aspect-video w-full max-w-[704px] rounded-xl border",
+        className,
+      )}
+      src={src}
+      title={title}
+      loading="lazy"
+      allowFullScreen
       {...props}
     />
   );
