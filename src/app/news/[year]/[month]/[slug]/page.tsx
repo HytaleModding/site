@@ -32,22 +32,6 @@ function formatDate(date?: string) {
   }).format(new Date(date));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<BlogRouteParams>;
-}): Promise<Metadata> {
-  const { year, month, slug } = await params;
-  const blog = await getBlog({ year, month, slug });
-
-  if (!blog) notFound();
-
-  return {
-    title: `${blog.frontmatter.title} | Hytale Modding`,
-    description: blog.frontmatter.description,
-  };
-}
-
 export default async function NewsPostPage({
   params,
 }: {
@@ -145,4 +129,43 @@ export default async function NewsPostPage({
       </article>
     </main>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<BlogRouteParams>;
+}): Promise<Metadata> {
+  const { year, month, slug } = await params;
+  const blog = await getBlog({ year, month, slug });
+
+  if (!blog) notFound();
+
+  const title = `${blog.frontmatter.title} | Hytale Modding`;
+  const description = blog.frontmatter.description;
+  const url = `/news/${year}/${month}/${slug}`;
+  const image = blog.frontmatter.image;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: blog.frontmatter.title,
+      description,
+      url,
+      type: "article",
+      siteName: "Hytale Modding",
+      publishedTime: blog.frontmatter.date,
+      authors: blog.frontmatter.author ? [blog.frontmatter.author] : undefined,
+      images: image
+        ? [{ url: image, width: 1200, height: 630, alt: blog.frontmatter.imageAlt ?? blog.frontmatter.title }]
+        : undefined,
+    },
+    twitter: {
+      card: image ? "summary_large_image" : "summary",
+      title: blog.frontmatter.title,
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
 }
