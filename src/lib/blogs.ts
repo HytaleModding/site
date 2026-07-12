@@ -30,7 +30,6 @@ export type BlogRouteParams = {
 
 const blogsPath = join(process.cwd(), "content", "blogs");
 
-
 type CmsBlogFile = {
   path: string;
   content: string;
@@ -165,8 +164,7 @@ function toBlogFrontmatter(
       (typeof data.description === "string" ? data.description : undefined) ||
       "",
     date:
-      file.data.date ||
-      (typeof data.date === "string" ? data.date : undefined),
+      file.data.date || (typeof data.date === "string" ? data.date : undefined),
     author:
       file.data.author ||
       (typeof data.author === "string" ? data.author : undefined) ||
@@ -186,7 +184,6 @@ function toBlogFrontmatter(
       undefined,
   };
 }
-
 
 function getSlug(file: string) {
   return file.replace(/\.mdx?$/, "");
@@ -305,7 +302,6 @@ function mergeBlogs(blogs: BlogOverview[]) {
 
   return merged;
 }
-
 
 export async function getBlogs(): Promise<BlogOverview[]> {
   try {

@@ -142,7 +142,10 @@ export async function generateMetadata({
   if (!blog) notFound();
 
   const title = `${blog.frontmatter.title} | HytaleModding`;
-  const description = blog.frontmatter.description !== undefined ? blog.frontmatter.description : blog.content.slice(0, 160).replace(/\n/g, " ") + "...";
+  const description =
+    blog.frontmatter.description !== undefined
+      ? blog.frontmatter.description
+      : blog.content.slice(0, 160).replace(/\n/g, " ") + "...";
   const url = `/news/${year}/${month}/${slug}`;
   const image = blog.frontmatter.image;
 
@@ -158,7 +161,14 @@ export async function generateMetadata({
       publishedTime: blog.frontmatter.date,
       authors: blog.frontmatter.author ? [blog.frontmatter.author] : undefined,
       images: image
-        ? [{ url: image, width: 1200, height: 630, alt: blog.frontmatter.imageAlt ?? blog.frontmatter.title }]
+        ? [
+            {
+              url: image,
+              width: 1200,
+              height: 630,
+              alt: blog.frontmatter.imageAlt ?? blog.frontmatter.title,
+            },
+          ]
         : undefined,
     },
     twitter: {
