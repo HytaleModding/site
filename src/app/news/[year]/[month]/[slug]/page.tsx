@@ -3,13 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import remarkGfm from "remark-gfm";
 import { DocsBody } from "fumadocs-ui/page";
 import { ChevronLeftIcon, CalendarDaysIcon, UserIcon } from "lucide-react";
 import { getMDXComponents } from "@/lib/mdx-components";
 import { getBlog, type BlogRouteParams } from "@/lib/blogs";
 import { BlogIframe, BlogImage, BlogVideo } from "@/components/mdx/blog-image";
+import { blogCompiler } from "@/lib/mdx-compiler";
 
 // Blog pages are now rendered on-demand — data comes from a fetch with
 // `next: { revalidate: 60 }` inside getBlog(), not from files present at
@@ -43,6 +42,10 @@ export default async function NewsPostPage({
   if (!blog) notFound();
 
   const formattedDate = formatDate(blog.frontmatter.date);
+
+  const { body: MdxContent } = await blogCompiler.compile({
+    source: blog.content,
+  });
 
   return (
     <main className="relative flex flex-1 overflow-hidden">
@@ -112,18 +115,12 @@ export default async function NewsPostPage({
         <div className="border-fd-border my-8 border-t" />
 
         <DocsBody className="max-w-none text-[1.125rem] leading-8">
-          <MDXRemote
-            source={blog.content}
+          <MdxContent
             components={getMDXComponents({
               iframe: BlogIframe,
               img: BlogImage,
               video: BlogVideo,
             })}
-            options={{
-              mdxOptions: {
-                remarkPlugins: [remarkGfm],
-              },
-            }}
           />
         </DocsBody>
       </article>
