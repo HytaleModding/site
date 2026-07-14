@@ -4,32 +4,32 @@ description: Uma introdução básica ao ECS (Entity Component System)
 ---
 
 <Callout type="warning">
-    This guide requires basic understanding of OOP concepts such as inheritance.
+    Este guia exige um entendimento básico de conceitos de Programação Orientada a Objetos (OOP), como herança.
 
-    Please make sure you have a good understanding of these concepts before reading this guide.
+    Certifique-se de ter um bom entendimento desses conceitos antes de ler este guia.
 </Callout>
 
 <Callout type="info">
-    This guide is currently only on the theory of ECS and will not have code examples.
+    Atualmente, este guia aborda apenas a teoria do ECS e não inclui exemplos de código.
 
-    Code examples are intentionally omitted to avoid confusion about how Hytale’s ECS may be implemented.
+    Os exemplos de código foram intencionalmente ocultos para evitar confusão sobre como o ECS do Hytale pode ser implementado.
 </Callout>
 
-# Introduction
+# Introdução
 
-An Entity Component System otherwise known as ECS is a design pattern in game development.
+Um `Entity Component System`, também conhecido como ECS, é um padrão de design utilizado no desenvolvimento de jogos.
 
-ECS is made up of Entities, which reference Components and Systems that operates on Entities.
+O ECS é composto por entidades, que referenciam componentes e por sistemas que operam sobre essas entidades.
 
-It also focuses on composition over inheritance, eliminating rigid hierarchy, helps separate behavior and data and makes reusability easier.
+Ele também enfatiza composição em vez de herança, eliminando hierarquias rígidas, ajudando a separar comportamento e dados, além de facilitar a reutilização.
 
-# Composition Over Inheritance
+# Composição sobre herança
 
-Before getting into understanding what ECS is made of, lets understand what is the ECS philosophy.
+Antes de entender a composição de ECS, vamos compreender a filosofia por trás dele.
 
-We can describe composition as "has X" and inheritance as "is X".
-When we inherit a class in Java, we inherit all of its attributes and methods.
-While in composition we can choose for each object what it references and what systems will work on it.
+Podemos descrever a composição como "tem X" e a herança como "é X".
+Quando herdamos uma classe em Java, herdamos todos os seus atributos e métodos.
+Na composição, podemos escolher o que ele referencia e quais sistemas atuarão sobre ele para cada objeto.
 
 # Entidades, componentes e sistemas
 
@@ -37,14 +37,14 @@ While in composition we can choose for each object what it references and what s
 
 Uma entidade é apenas um identificador único.
 
-- It contains no data.
-- It contains no logic
+- Ela não contém dados;
+- Ela não contém lógica.
 
-Think of entities as nouns that can be described using components
+Pense nas entidades como substantivos que podem ser descritos usando componentes.
 
 ## Componentes
 
-Components are just plain data containers.
+Componentes são apenas contêineres simples de dados.
 
 - Eles armazenam apenas dados;
 - Eles não contêm comportamento nem lógica;
@@ -56,17 +56,17 @@ Exemplos de componentes:
 - Um componente "velocity" que armazena a velocidade ao longo de cada eixo;
 - Um componente "health" que armazena a vida atual da entidade.
 
-Think of components as adjectives that describe an entity
+Pense nos componentes como adjetivos que descrevem uma entidade.
 
 ## Sistemas
 
-Systems contains the logic for your game (or in this case, a mod).
+Os sistemas contêm a lógica do seu jogo (ou, neste caso, de um mod).
 
-- It Operates on all entities that have a specific set of components
-- It Does not store entity data itself
-- It Applies behavior by reading and modifying component data
+- Operam sobre todas as entidades que têm um conjunto específico de componentes;
+- Não armazenam dados das entidades por conta própria;
+- Aplicam comportamento lendo e modificando os dados dos componentes.
 
 Por exemplo:
 
-- A "WinConditionSystem" may process every Entity that contains the components "Position" and "Velocity"
-- If an entity reaches the position `(0, 0, 0)`, the system will trigger a "You Won!" message.
+- Um sistema "WinConditionSystem" pode processar toda entidade que contenha os componentes "Position" e "Velocity";
+- Se uma entidade alcançar a posição `(0, 0, 0)`, o sistema acionará uma mensagem: "Você venceu!".

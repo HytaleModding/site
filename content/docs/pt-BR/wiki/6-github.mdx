@@ -1,15 +1,15 @@
 ---
-title: 6 - GitHub Sync
-description: How to sync your wiki documentation from a GitHub repository.
+title: 6 — Sincronização com o GitHub
+description: Veja como sincronizar a documentação da sua wiki a partir de um repositório no GitHub.
 authors:
   - name: Neil Revin
     url: https://itsneil.dev
 ---
 
-## Overview
+## Visão geral
 
-If your documentation already lives on GitHub, you can sync it directly with your mod wiki.
-Changes pushed to your repository will automatically appear on the site — no manual updates needed.
+Se sua documentação já estiver no GitHub, você pode sincronizá-la diretamente com a wiki do seu mod.
+As alterações enviadas para o seu repositório aparecerão automaticamente no site, e não é necessário atualizar manualmente.
 
 <Callout type="warning">
   Once GitHub sync is enabled, the built-in editor will be disabled.
@@ -48,8 +48,8 @@ Here is a table of available fields:
 | --------- | ------- | -------- | ------------------------- | ------------------------------------------- |
 | title     | string  | No       | Derived from filename     | Override the page title.                    |
 | order     | integer | No       | Position in the file list | Sort among siblings (lower = appears first) |
-| published | boolean | No       | false                     | Whether the page is published.              |
-| draft     | boolean | No       | false                     | Whether the page is a draft.                |
+| published | boolean | Não      | false                     | Whether the page is published.              |
+| draft     | boolean | Não      | false                     | Whether the page is a draft.                |
 
 ### Example
 
@@ -64,7 +64,7 @@ draft: false
 # Introduction
 ```
 
-## Categorys and Hierarchy
+## Categorias e hierarquia
 
 If you want to make children pages under a page, you need to create a folder. If you want the parent page to have contents, you can make a file named `index.md` and put the content inside it. The rest of the pages in that folder will be children of the folder.
 
@@ -74,7 +74,7 @@ If you want to create a category and do not want content on the parent page, you
 
 ```json
 {
-  "title": "My Category",
+  "title": "Minha Categoria",
   "published": true
 }
 ```

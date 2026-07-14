@@ -1,31 +1,31 @@
 ---
 title: Customizing Camera Controls
-description: Intro to custom camera modding.
+description: Introdução à modificação personalizada de câmera.
 authors:
   - name: Vibe Theory
     url: https://discord.com/users/145420279294722048
 ---
 
-## The Basics
+## O básico
 
-Hytale provides great camera customizability! Heres the essentials to get started.
+O Hytale oferece uma excelente capacidade de personalização de câmera!  Os conceitos essenciais para começar estão logo abaixo.
 
-Camera is controlled by sending a `SetServerCamera` packet with `ServerCameraSettings`:
+A câmera é controlada enviando um pacote `SetServerCamera` com `ServerCameraSettings`:
 
 ```java
 ServerCameraSettings settings = new ServerCameraSettings();
-settings.distance = 10.0f;           // Zoom distance from player
-settings.isFirstPerson = false;      // Third-person mode
-settings.positionLerpSpeed = 0.2f;   // Smooth camera follow
+settings.distance = 10.0f;           // Distância de zoom em relação ao jogador
+settings.isFirstPerson = false;      // Modo em terceira pessoa
+settings.positionLerpSpeed = 0.2f;   // Suavização do acompanhamento da câmera
 
 playerRef.getPacketHandler().writeNoCache(
     new SetServerCamera(ClientCameraView.Custom, true, settings)
 );
 ```
 
-This gives you a simple third-person camera. The presets below show more complete configurations.
+Isso fornece uma câmera simples em terceira pessoa.  The presets below show more complete configurations.
 
-**Reset to default:**
+**Redefinir para o padrão:**
 
 ```java
 playerRef.getPacketHandler().writeNoCache(
@@ -71,12 +71,12 @@ settings.distance = 15.0f;
 settings.displayCursor = true;
 settings.isFirstPerson = false;
 settings.movementForceRotationType = MovementForceRotationType.Custom;
-settings.movementMultiplier = new Vector3f(1.0f, 1.0f, 0.0f);  // Lock Z-axis
+settings.movementMultiplier = new Vector3f(1.0f, 1.0f, 0.0f);  // Trava o eixo Z
 settings.eyeOffset = true;
 settings.positionDistanceOffsetType = PositionDistanceOffsetType.DistanceOffset;
 settings.rotationType = RotationType.Custom;
 settings.mouseInputType = MouseInputType.LookAtPlane;
-settings.planeNormal = new Vector3f(0.0f, 0.0f, 1.0f);         // Side plane
+settings.planeNormal = new Vector3f(0.0f, 0.0f, 1.0f);         // Plano lateral
 ```
 
 ### Isometric Character Camera (Diablo style)
@@ -89,12 +89,12 @@ settings.isFirstPerson = false;
 settings.distance = 6f;
 settings.allowPitchControls = false;
 settings.displayCursor = true;
-// Force the camera's rotation to be set by the server.
+// Força a rotação da câmera a ser definida pelo servidor.
 settings.applyLookType = ApplyLookType.Rotation;
-// Notify that we provide a custom rotation in "settings.rotation"
+// Notifica que fornecemos uma rotação personalizada em "settings.rotation"
 settings.rotationType = RotationType.Custom;
 
-// Set the typical isometric rotation to the camera
+// Define a rotação isométrica típica para a câmera
 Direction direction = new Direction(
     (float) Math.toRadians(45f),  // yaw
     (float) Math.toRadians(-35f), // pitch
@@ -104,9 +104,9 @@ settings.rotation = rotation;
 settings.movementForceRotation = rotation;
 ```
 
-## Common Settings Explained
+## Configurações comuns explicadas
 
-### Position & Rotation
+### Posição e rotação
 
 - **`positionLerpSpeed`** (0.0-1.0): How smoothly the camera follows the player. Lower = smoother but slower response.
 - **`rotationLerpSpeed`** (0.0-1.0): How smoothly the camera rotates. Lower = smoother but slower response.
@@ -114,14 +114,14 @@ settings.movementForceRotation = rotation;
 - **`rotation`**: Camera angle as `Direction(yaw, pitch, roll)` in radians.
 - **`rotationType`**: How rotation is calculated. `RotationType.Custom` uses your `rotation` value.
 
-### Movement Alignment
+### Alinhamento de movimento
 
 - **`movementForceRotationType`**:
 - `MovementForceRotationType.AttachedToHead` = movement follows where player looks
 - `MovementForceRotationType.Custom` = use `movementForceRotation` value
 - **`movementForceRotation`**: When using `Custom`, this sets the direction for W/S movement. Match yaw with camera but keep pitch at 0.
 
-### Input & Display
+### Entrada e exibição
 
 - **`displayCursor`**: Show/hide mouse cursor.
 - **`mouseInputType`**:
@@ -129,17 +129,17 @@ settings.movementForceRotation = rotation;
 - `MouseInputType.LookAtTarget` = mouse rotates camera
 - **`planeNormal`**: For `LookAtPlane`, defines which plane the mouse moves on. `(0,1,0)` = ground plane.
 
-### Advanced
+### Avançado
 
 - **`positionDistanceOffsetType`**:
-- `DistanceOffset` = simple distance offset
-- `DistanceOffsetRaycast` = prevents camera clipping through walls
-- **`eyeOffset`**: Offset camera from player's eye position.
-- **`movementMultiplier`**: Scale movement on each axis. `(1,1,0)` = lock Z-axis for 2D movement.
+- `DistanceOffset`: deslocamento simples por distância;
+- `DistanceOffsetRaycast`: impede que a câmera atravesse paredes;
+- **`eyeOffset`**: desloca a câmera a partir da posição dos olhos do jogador;
+- **`movementMultiplier`**: escala o movimento em cada eixo. `(1,1,0)` = trava o eixo Z para movimento 2D.
 
 ---
 
-## Imports
+## Importações
 
 ```java
 import com.hypixel.hytale.protocol.ClientCameraView;
@@ -155,16 +155,16 @@ import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
 
 ---
 
-## Tips
+## Dicas
 
-- **Zoom:** Adjust `distance` (higher = further out)
-- **Smoothness:** `positionLerpSpeed` and `rotationLerpSpeed` control how quickly the camera catches up to its target
-- **Wall clipping:** Use `PositionDistanceOffsetType.DistanceOffsetRaycast`
-- **Lock camera:** Set `isLocked = true` in the packet to prevent player changes
-- **2D movement:** Set `movementMultiplier` to zero out an axis
-- **Isometric cameras:** Always set `movementForceRotation` to match camera yaw for proper movement alignment
-- **Angle calculations:** Use `Math.toRadians(degrees)` or `degrees * Math.PI / 180.0` to convert degrees to radians
+- **Zoom:** ajuste a `distance` (maior = mais afastado);
+- **Suavidade:** `positionLerpSpeed` e `rotationLerpSpeed` controlam o quão rápido a câmera alcança o destino;
+- **Colisão com paredes:** use `PositionDistanceOffsetType.DistanceOffsetRaycast`;
+- **Travar câmera:** defina `isLocked = true` no pacote para impedir alterações pelo jogador;
+- **Movimento 2D:** defina `movementMultiplier` zerando um eixo;
+- **Câmeras isométricas:** sempre defina `movementForceRotation` para corresponder ao yaw da câmera para um alinhamento correto do movimento;
+- **Cálculo de ângulos:** use `Math.toRadians(graus)` ou graus \* Math.PI / 180.0 para converter graus em radianos.
 
 ---
 
-_From Hytale Server build `2026.01.13-dcad8778f`_
+_De Hytale Server build `2026.01.13-dcad8778f`_

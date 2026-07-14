@@ -1,6 +1,6 @@
 ---
-title: Block Components
-description: Learn how to use the block components.
+title: Componentes de bloco
+description: Aprenda a usar os componentes do bloco.
 authors:
   - name: Bird
     link: https://discord.com/users/495709580068651009
@@ -8,17 +8,17 @@ authors:
     link: https://oskar.scot
 ---
 
-# Overview
+# Visão geral
 
-In this guide, you'll learn how to use block components to create a ticking block.
+Neste guia, você aprenderá a usar os componentes do bloco para criar um bloco-tique-taque.
 
 <Callout>
-For a more complete reference, you may also want to review FarmingSystems.Ticking, as much of the underlying logic is based on its implementation.
+Para uma referência mais completa, recomenda-se rever o `FarmingSystems.Ticking`, uma vez que grande parte da lógica subjacente é baseada em sua implementação.
 </Callout>
 
-## Steps
+## Etapas
 
-### 1. ExampleBlock - holds block behavior
+### 1. `ExampleBlock` — Contém o comportamento do bloco
 
 ```java
 public class ExampleBlock implements Component<ChunkStore> {
@@ -77,7 +77,7 @@ public class ExampleInitializer extends RefSystem {
 }
 ```
 
-ExampleInitializer is a RefSystem that reacts when block entities with the ExampleBlock component are added or removed. This is crucial for marking blocks as ticking when they're first placed.
+ExampleInitializer é um RefSystem que reage quando entidades de bloco com o componente ExampleBlock são adicionadas ou removidas. This is crucial for marking blocks as ticking when they're first placed.
 
 **Key Points:**
 
@@ -144,30 +144,30 @@ public class ExampleSystem extends EntityTickingSystem {
 }
 ```
 
-ExampleSystem is an EntityTickingSystem that runs every tick to execute the logic for all ticking blocks with the ExampleBlock component.
+`ExampleSystem` é um `EntityTickingSystem` que é realizado a cada tick para executar a lógica de todos os blocos que realizam ticks com o componente `ExampleBlock`.
 
-**Key Points:**
+**Pontos-chave:**
 
-- **Get the block component**
+- **Obter o componente do bloco**
 
 ```java
 ExampleBlock exampleBlock = (ExampleBlock) commandBuffer.getComponent(blockRef, ExampleBlock.getComponentType());
 ```
 
-- **Convert local chunk coordinates to world coordinates**
+- **Converter as coordenadas locais do chunk para as coordenadas do mundo**
 
 ```java
 int globalX = localX + (worldChunk.getX() * 32);
 int globalZ = localZ + (worldChunk.getZ() * 32);
 ```
 
-- **Run the block logic**
+- **Executar a lógica do bloco**
 
 ```java
 exampleBlock.runBlockAction(globalX, localY, globalZ, worldChunk.getWorld());
 ```
 
-- **Keep the block ticking in the next tick**
+- **Manter o ticking do bloco no próximo tick**
 
 ```java
 return BlockTickStrategy.CONTINUE;
@@ -175,13 +175,13 @@ return BlockTickStrategy.CONTINUE;
 
 ---
 
-### 4. ExamplePlugin - registers components and systems
+### 4. `ExamplePlugin` — Registra os componentes e os sistemas
 
 ```java
 public class ExamplePlugin extends JavaPlugin {
-    protected static ExamplePlugin instance;
+    private static ExamplePlugin instance;
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    private ComponentType exampleBlockComponentType;
+    private ComponentType<ChunkStore, ExampleBlock> exampleBlockComponentType;
 
     public static ExamplePlugin get() {
         return instance;
@@ -205,7 +205,7 @@ public class ExamplePlugin extends JavaPlugin {
 		this.getChunkStoreRegistry().registerSystem(new ExampleInitializer());
 	}
 
-    public ComponentType getExampleBlockComponentType() {
+    public ComponentType<ChunkStore, ExampleBlock> getExampleBlockComponentType() {
         return this.exampleBlockComponentType;
     }
 }
@@ -213,7 +213,7 @@ public class ExamplePlugin extends JavaPlugin {
 
 ---
 
-### 5. Configure In-Game
+### 5. Configurar no jogo
 
 ![block-component-1](/assets/guides/block-component-1.png)
 
@@ -223,18 +223,18 @@ With this logic, the block will now continuously place an Ice Block at the coord
 
 ---
 
-## Common Issues
+## Problemas comuns
 
-### NullPointerException on Startup
+### NullPointerException na inicialização
 
-**Error message:**
+**Mensagem de erro:**
 
 ```java
 java.lang.NullPointerException: Cannot invoke "com.hypixel.hytale.component.query.Query.validateRegistry(com.hypixel.hytale.component.ComponentRegistry)" because "query" is null
 ```
 
-**Cause:**
-This error occurs when your module is loaded **before** the required Hytale modules.
+**Causa:**
+Esse erro ocorre quando o seu módulo é carregado **antes** dos módulos necessários do Hytale.
 
 **Fix:**
 Add `EntityModule` and `BlockModule` as dependencies in your `manifest.json` to ensure proper load order.
