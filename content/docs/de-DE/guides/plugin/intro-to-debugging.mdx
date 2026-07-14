@@ -1,0 +1,94 @@
+---
+title: Introduction to Debugging
+description: Learn the basics of debugging your Hytale mods, including setting up your environment
+---
+
+# Hytale Debugging Guide
+
+This guide will go over the general process of debugging, teaching you how to get to the fun parts of mod creation faster. I use my own experiences working with NPC assets as examples, but the steps in this guide can be applied to all mods with a bit of adjustment.
+
+## Introduction
+
+Debugging is, put simply, the process of figuring out why your mod isn't doing what you want it to do. In this guide, I'm going to walk you through the process I use to fix my mod problems when I can't find the answer online. You're not always going to have the answers, documentation, or proper tools to instantly understand what is causing your mod to malfunction, and depending on how innovative your mod is, you might be the first person to ever need the answer. That can sound intimidating, which is exactly why this guide is here to help. These intimidating moments and how you handle them are what make the difference between someone who writes code and someone who makes mods.
+
+![Debugging](/assets/guides/debugging-basics/debugging-cycle.png)
+
+The debugging process is a cycle, as shown above, and we'll be going over each of the four steps:
+
+**Setup**, where we'll focus on making sure you have the tools you need to get to the root of the problem.
+
+**Isolation**, where we'll take a look at what the problem is, what could be causing it, and how you can whittle things down so you're dealing with just the problem.
+
+**Testing**, where we'll be going over how you can reproduce the problem and get valuable information from it.
+
+**Feedback**, where we'll look at what you learned and figure out what to do next.
+
+While you might not go through every step of the process every time you need to fix a problem, it's important to be familiar with the steps and check in with each one. You'll save a lot of time and headache with a little bit of forward thinking.
+
+## Setup
+
+When setting up our modding/debugging environment, we're going to want three things: An easy way to view and edit the files, a way to view logs, and a plan for saving your progress. You may hit a point where you'll want other tools, such as a tool to manipulate your models and visual assets, or perhaps a script to adjust hundreds of similar lines of your file at once. This step isn't just for initial setup, but also for when you run into an issue and realize your current tools are falling short.
+
+### File Editor
+
+The Asset Editor is great for what it's built to do, but it's still in development and many file types only allow Script view, which is basically just notepad. Good for minor adjustments, but you definitely want something better if you're going to be doing significant changes. The official Hytale Modding recommendation is to use IntelliJ, and it's what I use for my own mods as well. It lets me hide portions of my file, tells me when I've made a basic error, color codes the file to make it much easier to read, and lets me run advanced find and replace searches. These features are completely absent from the Asset Editor, and they will make your life much easier when you start taking advantage of them. For more information on installing IntelliJ, see [Setting Up Your Development Environment](../../plugin/setting-up-env.mdx).
+
+### Log Viewing
+
+There are many different ways to implement live Hytale log viewing, and plenty of people are more than willing to share their own methods of viewing logs. It's a tale as old as computers, and in this section I'll be going over how I use Notepad++ to accomplish this. If that method doesn't appeal to you, a quick Google search of “How to view a text file live” will show you there are quite a few different options not covered here.
+
+**Step 1:** Download and install the stable version of [Notepad++](https://notepad-plus-plus.org/downloads/). Watch out for malicious advertisements!
+
+**Step 2:** Navigate to your Hytale Logs folder. You can find it at %appdata%/Hytale/UserData/Logs on Windows and ~/.local/share/Hytale/UserData/Logs on Linux.
+
+**Step 3:** Sort by Date Modified and open the most recent log file (indicated by a .lck file of the same name) with Notepad++.
+
+**Step 4:** Click the Monitoring button (An eye inside of a square, located next to the record button on the top toolbar).
+![Location of Monitoring button](/assets/guides/debugging-basics/monitoring.png)
+
+That's it! You're now looking at a live log of what your server has to say. We'll go over how to review the log later, but one useful shortcut to remember is Ctrl+End to immediately jump to the most recent entries.
+
+### Save System
+
+One of the absolute most important things you can do is make sure you save so you can undo your changes if you realize what you're working on just isn't panning out. Like logging, there are many different ways to accomplish this and you can keep as many different copies of a file as you'd like.
+
+I personally prefer to have two separate copies of the file I'm working on. One to save my progress on the current solution or experiment (editing), and one to copy if I need to return to the last working version of my mod (stable). I recommend keeping these files in different folders and never opening the stable copy so you avoid the risk of accidentally overwriting it. Every time you fix a bug or add a feature and your program works as intended, copy the editing version to the stable version's folder. It's easy to ignore this step because it's more work than just saving, but you're basically gambling on a bit of time saved now versus lots of time saved later. Do yourself a favor and keep backups!
+
+## Isolation
+
+For this step we're going to be answering three questions that will help us understand exactly where to focus our testing: What do you know, what is the game telling you, and what could be causing this to happen? It might sound complicated, but it's really not.
+
+### What do you know?
+
+Here you want to name your problem. Think about what's going on. What are you doing to interact with the game? What do you expect to happen? What happens instead? Try to be specific. "It's not working" is much less useful than "When I tell it to spawn chickens, it spawns tigers!" The first tells you nothing, but the second tells you a lot. You're telling the game to spawn chickens, and you expect it to spawn chickens, but for some reason you get tigers instead.
+
+If you're having difficulty coming up with anything, try some rubberducking. It may sound weird but describing what your program does, even to an inanimate object, is a tried and true practice in software development for exactly this purpose. Sometimes when you break things down to their simplest, you'll just stumble on the entire reason something isn't working, and it can be unbelievably simple!
+
+### What is the game telling you?
+
+This may be your NPC not spawning, your textures appearing wrong, or any number of other issues. You may not even be able to answer this at first, and that's okay. Sometimes you don't know anything other than it just doesn't work.
+Before you accept that you have no information to work with, make sure you read the log. You may see nothing, but you may get an error that leads you in the right direction and prevents many future meetings between forehead and keyboard. The best way to check your log for relevant details is to search (Ctrl+F) for keywords within your mod, such as the name of one of your files. Just make sure you're looking at the most recent error message, or you might be led astray. You can also press Ctrl+End to jump to the bottom of the document and shorten your search, and you may find the information waiting for you there.
+
+If you get an error, try to figure out what it's telling you. Using an AI such as Claude here can be really helpful, or asking around to see if anyone has any idea what the error is, but make sure you make an effort to figure it out yourself first. What you learn will stick better if you make an effort first, and you'll know more next time you have to deal with an issue.
+
+Sometimes you won't have any information other than it just doesn't work. That's when you want to think about how you can see what's going on. If you're programming your mod in Java there's a handy guide on sending messages to the log [here](../../plugin/logging.mdx) and if you're using the asset editor, try to think about how you can implement changes you can see. When messing with NPCs, I like using the Spawn function to see if parts of my mod are actually working and changing the Appearance to confirm my file is actually loading.
+
+### What could be causing this?
+
+I know, I know. Isn't the entire point of reading this guide to answer this question?. Don't focus on being correct here. This isn't about what the answer is as much as coming up with what it could be. Any answer, as long as it's reasonable, is exactly what we want. Just take a guess. Maybe you think the game is somehow reading a chicken as a tiger. Maybe you think there's a missed line somewhere. Maybe you just think there's something wrong with your spawn command. All of these are valid. The point is to have something to test, not to be right.
+
+Now that you have an idea to test, figure out the smallest possible thing you can do to isolate your problem. If we think the game is reading a chicken as a tiger, you might try using a command to spawn a chicken. If you think you missed a line somewhere in your code and that's messing things up, you can search your file for a tiger. If you think something is wrong with your spawn command, put it in a blank testing NPC and mess with it until you get it to run. You want something where your only unknown is the answer to your question.
+
+## Testing
+
+Now it's time to use your isolated test. Think about how you can best disprove your idea, since the best way to prove something is trying to prove it wrong. That's science! Try different things, looking to get some kind of result. If what you test works but the issue remains, you've ruled out one possible answer. If what you test doesn't work, you've either successfully isolated your problem or found something else that was waiting to pop up after you fixed this issue. It can take a few tries before you get things working, but doing so will leave you with a much better mod in the end, and if you end up fixing more issues beforehand then you just saved yourself a bunch of headache down the road!
+
+## Feedback
+
+Testing doesn't mean anything if you don't use the results. After you've run your test, you obviously want to confirm that it worked. Check the game, check the logs, and confirm the game is actually running your mod. If it's working, great! Odds are you might have to do a bit more testing to get it working though and this is where you step back, look at the steps again, and figure out what needs to happen next. It's time to apply the cycle again, using the necessary steps to figure out the problem as you get closer and closer to the solution.
+
+One final piece of advice I'd like to leave you with is don't push yourself too hard. I read a Reddit post a while ago that stuck with me, about a team deciding to stay late to fix a bug. The boss said that everyone would go out for a celebration once that bug was fixed, but everyone ended up leaving late in the evening with the issue unresolved. The next morning, everyone had emailed within 15 minutes saying they had found the bug. I would bet that any experienced programmer has similar experiences. Sometimes rest can be far more productive than just pushing through.
+
+## Conclusion
+
+Many people have to learn this information the hard way, since it's not really something most go out of their way to teach. When you're working on something nobody else has done before, this is also one of the most important things to know. Hopefully this guide can give you some clarity on how to approach uncertain problems and allow you to focus on what we all started modding for: making cool things.

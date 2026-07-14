@@ -8,11 +8,13 @@ authors:
 
 <OfficialDocumentationNotice />
 
+# Prop Distributions
+
 ### Constant
 
 Pairs the Prop with every position.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -42,7 +44,7 @@ Pairs the Prop with every position.
 
 Creates empty positions.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -67,7 +69,7 @@ Creates empty positions.
 
 Assigns all empty positions coming from the child PropDistribution, using the Assignments. All non-empty positions are left unchanged.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -97,7 +99,7 @@ Assigns all empty positions coming from the child PropDistribution, using the As
 
 Combines all children, keeping all their positioned Props.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -118,11 +120,46 @@ Combines all children, keeping all their positioned Props.
 
 ---
 
+### Anchor
+
+Anchors the origin of the child PropDistribution field to the contextual Anchor, if one exists. For a contextual Anchor to exist, a parent of this node must produce an Anchor.
+
+You can also reverse the effect later in the chain to move the origin back to the world’s origin, as in the screenshot below.
+
+#### Parameters:
+
+<table>
+  <thead>
+    <tr>
+      <th width="155.2872314453125">Name</th>
+      <th width="189.37628173828125">Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PropDistribution</td>
+      <td>PropDistribution slot</td>
+      <td />
+    </tr>
+    <tr>
+      <td>Reverse</td>
+      <td>boolean</td>
+      <td>
+        If <code>true</code>, reverses the origin of the child back to the
+        world’s origin (or to the origin before the previous Anchor node).
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
 ### Imported
 
 Imports an exported PropDistribution.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>

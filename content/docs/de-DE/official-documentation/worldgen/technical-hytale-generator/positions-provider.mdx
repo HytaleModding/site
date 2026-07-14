@@ -6,15 +6,13 @@ authors:
     url: https://hytale.com
 ---
 
-<OfficialDocumentationNotice />
+# Positions Provider
 
 ### TriangularGrid2d
 
 Generates a 2D infinite triangular mesh of positions with a distance of 1 block between them.
 
-#### Parameters
-
-None
+#### Parameters: None
 
 ---
 
@@ -22,9 +20,7 @@ None
 
 Generates a 2D infinite square mesh of positions with a distance of 1 block between them.
 
-#### Parameters
-
-None
+#### Parameters: None
 
 ---
 
@@ -32,9 +28,7 @@ None
 
 Generates a 3D infinite square mesh of positions with a distance of 1 block between them.
 
-#### Parameters
-
-None
+#### Parameters: None
 
 ---
 
@@ -42,7 +36,7 @@ None
 
 Scales the child Positions.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -72,7 +66,7 @@ Scales the child Positions.
 
 Adds jitter along the x/z plane.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -111,7 +105,7 @@ Adds jitter along the x/z plane.
 
 Adds jitter in all directions.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -152,7 +146,7 @@ Generates clusters of positions anchored by a Distributor PositionProvider. The 
 
 The Cluster PositionProvider receives the cluster's position as an anchor.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -187,7 +181,7 @@ The Cluster PositionProvider receives the cluster's position as an anchor.
 
 Allows you to manually define a static list of positions in world coordinates.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -231,17 +225,22 @@ Anchors the origin of the child Positions field to the contextual Anchor, if one
 
 You can also reverse the effect later in the chain to move the origin back to the world’s origin, as in the screenshot below.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
     <tr>
-      <th width="95.40594482421875">Name</th>
-      <th width="113.336669921875">Type</th>
+      <th width="118.21783447265625">Name</th>
+      <th width="141.85150146484375">Type</th>
       <th>Description</th>
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td>Positions</td>
+      <td>Positions slot</td>
+      <td />
+    </tr>
     <tr>
       <td>Reverse</td>
       <td>boolean</td>
@@ -261,7 +260,7 @@ Limits the positions to a bounded region.
 
 <Callout>This can limit an infinite mesh for use as spawn points.</Callout>
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -286,7 +285,7 @@ Limits the positions to a bounded region.
 
 Enables masking out positions using a Density field. The delimiters determine the regions of the Density field where positions are kept.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -341,7 +340,7 @@ Below is an image showing a simple noise field used to create regions with rare 
 
 ![Example of Occurrence PositionsProvider2](/assets/official-documentation/worldgen/technical-hytale-generator/positions-provider/occurrence-example-2.png)
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -374,9 +373,9 @@ Below is an image showing a simple noise field used to create regions with rare 
 
 ### Offset
 
-Offsets the positions by the provided vector.
+Offsets the positions by the vector.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -402,13 +401,52 @@ Offsets the positions by the provided vector.
 
 ---
 
+### VectorOffset
+
+Offsets each position by their respective vector.
+
+The MovementBounds limit the possible movement of each position. The position doesn't move if the vector points outside its MovementBounds.
+
+#### Parameters:
+
+<table>
+  <thead>
+    <tr>
+      <th width="180">Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Positions</td>
+      <td>PositionProvider slot</td>
+      <td>Positions to offset.</td>
+    </tr>
+    <tr>
+      <td>VectorProvider</td>
+      <td>VectorProvider slot</td>
+      <td>Offset vector.</td>
+    </tr>
+    <tr>
+      <td>MovementBounds</td>
+      <td>3D decimal bounds</td>
+      <td>
+        The bounds each position is allowed to move relative to its origin.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
 ### BaseHeight
 
 Vertically offsets the Positions inside the configured vertical region by the number of blocks determined by the referenced DecimalConstant.
 
 A typical application of this would be to grab Positions at `Y: 0` and offset them up by the DecimalConstant to get closer to a terrain feature. Further adjustments can then be made using an Offset PositionsProvider node.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -433,7 +471,7 @@ A typical application of this would be to grab Positions at `Y: 0` and offset th
 
 Combines all positions into a single Positions field.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -458,7 +496,7 @@ Combines all positions into a single Positions field.
 
 Keeps only positions within the provided Y range.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>
@@ -494,7 +532,7 @@ I recommend that you don’t use this cache everywhere in your Positions trees, 
 
 This cache functions by saving 3D sections of space containing the Positions (points) generated by the child slot. The sections are cubes, and their size is determined by the asset’s SectionSize parameter. The number of sections allowed to be saved in the cache is determined by the CacheSize asset parameter. A safe starting value for the SectionSize parameter would be 32, and a safe starting value for the CacheSize would be 50.
 
-#### Parameters
+#### Parameters:
 
 <table><thead><tr><th width="138.17822265625">Name</th><th width="187.089111328125">Type</th><th>Description</th></tr></thead><tbody><tr><td>SectionSize</td><td>integer (> 0)</td><td>Determines the side length of each section cube, in blocks. A safe starting value is <code>32</code>.</td></tr><tr><td>CacheSize</td><td>integer (>= 0)</td><td>Determines how many sections can be saved in memory. A safe starting value is <code>50</code>. If set to <code>0</code>, the cache is ignored and positions are sourced directly from the child slot.</td></tr><tr><td>Positions</td><td>PositionProvider slot</td><td>The output of this Positions asset is cached.</td></tr></tbody></table>
 
@@ -504,7 +542,7 @@ This cache functions by saving 3D sections of space containing the Positions (po
 
 Imports an exported PositionsProvider.
 
-#### Parameters
+#### Parameters:
 
 <table>
   <thead>

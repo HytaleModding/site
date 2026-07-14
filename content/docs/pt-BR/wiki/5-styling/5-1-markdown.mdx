@@ -1,162 +1,162 @@
 ---
-title: 5.1 - Markdown
-description: Markdown formatting reference for wiki pages.
+title: 5.1 — Markdown
+description: Referência de formatação em Markdown para páginas da wiki.
 authors:
   - name: Dobya
     url: https://discordapp.com/users/1242082598281281629
 ---
 
-## Text formatting
+## Formatação de texto
 
 ```md
-**Bold text**
-*Italic text*
-~~Strikethrough~~
-**_Bold and italic_**
+**Texto em negrito**
+*Texto em itálico*
+~~Texto riscado~~
+**_Negrito e itálico_**
 ```
 
-## Headings
+## Cabeçalhos
 
 ```md
-# Heading 1
-## Heading 2
-### Heading 3
-#### Heading 4
+# Cabeçalho 1
+## Cabeçalho 2
+### Cabeçalho 3
+#### Cabeçalho 4
 ```
 
-## Lists
+## Listas
 
-### Unordered
+### Desordenada
 
 ```md
 - Item
 - Item
-  - Nested item
-  - Nested item
+  - Item aninhado
+  - Item aninhado
 - Item
 ```
 
-### Ordered
+### Ordenada
 
 ```md
-1. First
-2. Second
-   1. Nested
-   2. Nested
-3. Third
+1. Primeiro
+2. Segundo
+   1. Aninhado
+   2. Aninhado
+3. Terceiro
 ```
 
-### Task list
+### Lista de tarefas
 
 ```md
-- [x] Done
-- [ ] Not done
+- [x] Concluído
+- [ ] Não concluído
 ```
 
 ## Links
 
 ```md
-[Link text](https://example.com)
-[Link with title](https://example.com "Hover title")
+[Texto do link](https://example.com)
+[Link com o título](https://example.com "Título de passagem")
 ```
 
-## Images
+## Imagens
 
-The site may contain images from external resources.
+O site pode conter imagens de recursos externos.
 
 ```md
-![Alt text](https://example.com/image.png)
-![Alt text](https://example.com/image.png "Image title")
+![Texto alternativo](https://example.com/image.png)
+![Texto alternativo](https://example.com/image.png "Título da imagem")
 ```
 
-## Code
+## Código
 
-### Inline
+### Em linha
 
 ```md
-Use `code` inside text.
+Use o `código` dentro do texto.
 ```
 
-### Block
+### Bloco
 
 ````md
 ```js
-const hello = "world";
+const hello = "mundo";
 console.log(hello);
 \```
 ````
 
-Supported language hints: `js`, `ts`, `css`, `html`, `json`, `md`, `bash`, and others.
+Dicas de linguagem suportadas: `js`, `ts`, `css`, `html`, `json`, `md`, `bash` e outras.
 
-## Blockquotes
+## Bloco de citaões
 
 ```md
-> This is a blockquote.
-> It can span multiple lines.
+> Isto é uma citação longa.
+> Ela pode conter várias linhas.
 >
-> And multiple paragraphs.
+> E vários parágrafos.
 ```
 
-## Alerts
+## Alertas
 
-Alerts are styled blockquotes for highlighting important information.
+Os alertas são citações longas estilizadas para destacar informações importantes.
 
 ```md
 > [!NOTE]
-> Useful information the reader should know.
+> Informações úteis que o leitor deve saber.
 
 > [!TIP]
-> Helpful advice for doing things better.
+> Dicas úteis para fazer as coisas de maneira melhor.
 
 > [!IMPORTANT]
-> Key information the reader must be aware of.
+> Informações importantes que o leitor precisa estar ciente.
 
 > [!WARNING]
-> Potential issues the reader should watch out for.
+> Possíveis problemas que o leitor deve ficar atento.
 
 > [!CAUTION]
-> Actions that may cause problems or data loss.
+> Ações que podem causar problemas ou perda de dados.
 ```
 
-## Tables
+## Tabelas
 
 ```md
-| Column A | Column B | Column C |
-| -------- | -------- | -------- |
-| Cell     | Cell     | Cell     |
-| Cell     | Cell     | Cell     |
+| Coluna A  | Coluna B  | Coluna C  |
+| --------- | --------- | --------- |
+| Célula    | Célula    | Célula    |
+| Célula    | Célula    | Célula    |
 ```
 
-Alignment:
+Alinhamento:
 
 ```md
-| Left     | Center   | Right    |
+| Esquerda |  Centro  | Direita  |
 | :------- | :------: | -------: |
-| Cell     | Cell     | Cell     |
+|  Célula  |  Célula  |  Célula  |
 ```
 
-## Horizontal rule
+## Regra horizontal
 
 ```md
 ---
 ```
 
-## Footnotes
+## Notas de rodapé
 
 ```md
-Some text with a footnote.[^1]
+Um texto com uma nota de rodapé.[^1]
 
-[^1]: This is the footnote content.
+[^1]: Este é o conteúdo da nota de rodapé.
 ```
 
-## Escaping characters
+## Escapar caracteres
 
 ```md
-\*Not italic\*
-\# Not a heading
+\*Não é itálico\*
+\# Não é um cabeçalho
 ```
 
 <Callout type="info">
-  Imported components are only available when editing via GitHub sync.
-  The built-in editor supports custom components registered on the platform.
+  Os componentes importados só estão disponíveis ao editar através da sincronização do GitHub.
+  O editor interno suporta componentes personalizados registrados na plataforma.
 </Callout>
