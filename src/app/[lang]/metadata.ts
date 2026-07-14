@@ -20,7 +20,6 @@ export const metadata: Metadata = {
       "pt-BR": `${SITE_URL}/pt-BR`,
       "pt-PT": `${SITE_URL}/pt-PT`,
       ru: `${SITE_URL}/ru-RU`,
-      tr: `${SITE_URL}/tr-TR`,
       uk: `${SITE_URL}/uk-UA`,
     },
   },

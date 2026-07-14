@@ -17,7 +17,6 @@ export const i18n = defineI18n({
     "pt-PT",
     "pl-PL",
     "ru-RU",
-    "tr-TR",
     "uk-UA",
   ],
   parser: "dir",
