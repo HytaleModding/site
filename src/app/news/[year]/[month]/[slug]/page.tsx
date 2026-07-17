@@ -58,7 +58,7 @@ export default async function NewsPostPage({
           priority
         />
       </div>
-      <article className="container mx-auto flex w-full max-w-4xl flex-1 flex-col px-6 py-12 lg:px-8">
+      <article className="container mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 py-12 lg:px-8">
         <Link
           href="/news"
           className="text-muted-foreground hover:text-foreground mb-10 inline-flex w-fit items-center gap-2 text-sm transition-colors"
