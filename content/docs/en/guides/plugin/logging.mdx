@@ -44,6 +44,13 @@ All log messages have an associated level. The level can be used to categorize m
     LOGGER.atSevere().log("A serious error that will prevent things from working as expected.");
 ```
 
+Modify a plugins logging level by using the `/log` command
+```
+/log --help
+/log <PLUGIN> --level <LEVEL>
+/log MyCustomPlugin --level fine
+```
+
 ## Template Arguments
 
 The HytaleLogger uses `printf` style arguments, and should support most of the features and specifiers used by normal string formatting.
