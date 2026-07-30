@@ -34,7 +34,7 @@ export default function NewsLayout({ children }: { children: ReactNode }) {
           className="flex min-h-screen flex-col"
           i18n={false}
         >
-          <div className="official flex flex-1 flex-col">{children}</div>
+          <div className="blogs flex flex-1 flex-col">{children}</div>
         </HomeLayout>
       </ViewTransition>
     </RootProvider>

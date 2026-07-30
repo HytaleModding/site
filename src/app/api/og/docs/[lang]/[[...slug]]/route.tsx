@@ -31,7 +31,7 @@ const promises: Promise<Buffer>[] = [];
   // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-BlackItalic.otf")));
 
   promises.push(readFile(join(process.cwd(), "public/branding/logo-light-348.png")));
-  promises.push(readFile(join(process.cwd(), "public/assets/official-documentation/background/content-lower.png")));
+  promises.push(readFile(join(process.cwd(), "public/assets/official-documentation/background/content-lower.webp")));
 }
 
 export async function GET(

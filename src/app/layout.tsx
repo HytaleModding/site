@@ -2,6 +2,7 @@ import "./styles/global.css";
 import "./styles/transitions.css";
 import "./styles/official-docs.css";
 import "katex/dist/katex.css";
+import "./styles/blogs.css"
 import { Geist, Geist_Mono, Lexend, Nunito_Sans } from "next/font/google";
 import type { Metadata } from "next";
 import { baseUrl } from "@/lib/config";

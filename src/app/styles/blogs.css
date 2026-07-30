@@ -1,5 +1,5 @@
 /* Title */
-.dark .official :is(h1, h2, h3) {
+.dark .blogs :is(h1, h2, h3) {
   font-family: var(--font-official-title);
 
   color: #0000;
@@ -10,7 +10,7 @@
 }
 
 /* Body Headings */
-.dark .official .prose :is(h1, h2, h3) {
+.dark .blogs .prose :is(h1, h2, h3) {
   font-family: var(--font-official-title);
 
   /* position: relative; */
@@ -25,10 +25,11 @@
   -webkit-text-fill-color: transparent;
 }
 
-.dark body:has(.official),
-.dark .official {
+.dark body:has(.blogs),
+.dark .blogs {
   font-family: var(--font-official-body);
 
+  /* Official variables, straight from their blog css */
   --color-hytale-text: #b7cedd;
   --color-hytale-text-muted: #9eb2c0;
   --color-hytale-gold: #d29f32;
@@ -43,17 +44,12 @@
   --color-hytale-bg-footer: #10161e;
   --color-hytale-bg-skeleton: #1d3150;
   --color-hytale-bg-panel: #d2e9f70a;
-  --color-hytale-sidebar: #1c263b;
 
   --color-fd-background: var(--color-hytale-bg-dark);
 
-  background-color:#15243a;
-  background-image:url(/assets/official-documentation/background/content-lower.webp), linear-gradient(#0f1418,#0f1418);
-  background-position:top;
-  background-repeat:no-repeat;
-  background-size:auto;
+  --background: #1c263b;
 
-  --sidebar: var(--color-hytale-sidebar);
+  --sidebar: var(--color-hytale-bg-darker);
   --sidebar-foreground: var(--color-hytale-gold-light);
   --sidebar-primary: #ff0000;
   --sidebar-accent: var(--color-hytale-bg-footer);
@@ -81,14 +77,6 @@
   --color-fd-ring: hsl(0, 0%, 54.9%);
 }
 
-.dark .official #nd-sidebar {
-  font-family: var(--font-official-title);
-  background-color: #162039;
-  --color-fd-muted: #1d3150;
-  --color-fd-secondary: #1d3150;
-  --color-fd-muted-foreground: #9eb2c0;
-}
-
-.official .prose strong {
+.blogs .prose strong {
   font-weight: 700;
 }
