@@ -34,6 +34,8 @@ A parallel to using Graphs would be the Position Cell Noise Density (PCN), so I 
 
     This is my [BiomeSpheres Example](#biome-spheres) with a “Biome” per Node with random Edges connecting them! The density, materials, and props were all done through the graph system!
 
+    Hytale has also included a few [Examples to try out!](#hytale-examples)
+
   </div>
 </div>
 
@@ -233,17 +235,11 @@ While defining specific Content per Nodes is cool, we’re here to create some w
 
 ![Edges Example](/assets/official-documentation/worldgen/graphs/edges-example.webp)
 
-<Callout type="warning">
-  This tech is still new and creating Content for too many Edges or not using a
-  YOverride can create a huge performance loss, so use sparingly for now or else
-  your World will timeout and crash!
-</Callout>
-
 There are 2 ways to define Content along Edges:
 
 #### **Splitter EdgeAction**
 
-The first way is to use the **Splitter EdgeAction**. This will create Nodes along the selected Edges that you can then define Content for.
+The first way is to use the **Splitter EdgeAction**. This will create Nodes along the selected Edges that you can then define Content for. In between each Node, a new Edge is also created.
 
 ![Splitter EdgeAction](/assets/official-documentation/worldgen/graphs/pass-content-splitter.webp)
 
@@ -261,9 +257,21 @@ The second method utilizes the new **DistanceToGraphEdge Density**. This density
 
 What’s really cool about a lot of these Actions, is you can select which nodes or edges to perform these actions on based on a whole set of **Selector** operations.
 
+#### **All Selector**
+
+Selects All Nodes/Edges. Useful for the ProximityConnector if you want to connect all your nodes together!
+
+![Selector All](/assets/official-documentation/worldgen/graphs/selector-all.webp)
+
+#### **Random Selector**
+
+Selects a random subset of Nodes/Edges based on the Seed and Chance.
+
+![Selector Random](/assets/official-documentation/worldgen/graphs/selector-random.webp)
+
 #### **Node: ConnectionCount**
 
-Selects Nodes with a certain amount of Edges, like in this example, above 1 Edge.
+Selects Nodes with a certain amount of Edges, like in this example, more than 1 Edge.
 
 ![Selector ConnectionCount](/assets/official-documentation/worldgen/graphs/selector-connectioncount.webp)
 
@@ -293,99 +301,225 @@ In this example, I’ve combined 2 Selectors! Any Edges that are more than 50 bl
 
 ![Selector Neighbors](/assets/official-documentation/worldgen/graphs/selector-neighbors.webp)
 
-The “SelectedNeightborsThreshold” is how many nodes/edges are needed to pass this condition. If set to “-1”, all Neighbors must satisfy their **Selector** Conditions. These Neighbor Checks are very useful for creating transitionary Nodes and Edges based on what the Content is of neighboring/connected Nodes like removing Ice Caves connected to Lava Caves or creating Lush tunnel transitions towards Lush Cave Biomes.
+The “SelectedNeighborsThreshold” is how many nodes/edges are needed to pass this condition. If set to “-1”, all Neighbors must satisfy their **Selector** Conditions. These Neighbor Checks are very useful for creating transitionary Nodes and Edges based on what the Content is of neighboring/connected Nodes like removing Ice Caves connected to Lava Caves or creating Lush tunnel transitions towards Lush Cave Biomes.
+
+#### **And / Or / Not Selectors**
+
+Finally the logic isn't complete without these Selectors! Use them in combination to be as specific in your selections as you need!
+
+![Selector Logic](/assets/official-documentation/worldgen/graphs/selector-logic.webp)
 
 ### Node/Edge Actions
 
-Actions aren't limited to creating new Edges, defining Content, and Splitting Edges. Here's a list of some other useful Actions! (Not all Actions are listed like Move or Jitter as they seemed self-explanatory.)
+Actions aren't limited to creating new Edges, defining Content, and Splitting Edges. Here's a list of some other useful Actions!
 
 #### **Node: Spawner**
 
-This Action creates Content from new Nodes within a cluster around the central Node. This can be similarly attributed to the Cluster PositionProvider. You can also select to “CreateEdges” connecting these clustered Nodes.
+This Action creates new Nodes within an area around the central Node. This can be similarly attributed to the Cluster PositionProvider. You can also set the new Nodes' Content or set “CreateEdges” to connect these new Nodes to the Central Node.
 
 ![Action Spawner](/assets/official-documentation/worldgen/graphs/action-spawner.webp)
 
 #### **Node: Connected Nodes/Edges**
 
-This Action will select ConnectedNodes to perform their own actions. (I’m not too sure what the Ratio value does in this situation.)
+This Action will select Nodes connected by an Edge or Edges connected to this Node to perform their own actions. The Ratio value determines the amount of Connected Nodes or Edges to perform the Action on. The Seed will randomize which ones are selected if the Ratio is set between 0 and 1.
 
 ![Action Connected](/assets/official-documentation/worldgen/graphs/action-connected.webp)
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        This is an example of expanding an IcyCave Content to its Connected
-        Nodes!
-      </td>
-    </tr>
-    <tr>
-      <td>
-        ![Connected
-        Example](/assets/official-documentation/worldgen/graphs/action-connected-example.webp)
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
-      <td>
-        Based on the Previous NodeSelectors section, this setup would work as
-        well!
-      </td>
-    </tr>
-    <tr>
-      <td>
-        ![Connected Alt
-        Example](/assets/official-documentation/worldgen/graphs/action-connected-example-alt.webp)
-      </td>
-    </tr>
-  </tbody>
-</table>
-
 #### **Node: ContentCopy**
 
-(Not tested yet, will update with info later)
+Content Copy will spread the Content listed to Nodes connected by an Edge. If there's a tie of, for example, "IceCave" and "LavaCave" both connecting to the same Node, the seed will randomize which one wins.
 
 ![Action ContentCopy](/assets/official-documentation/worldgen/graphs/action-contentcopy.webp)
 
+Based on all the Nodes so far, there's 3 ways to "spread" out content based on connected Edges.
+
+<table>
+  <tbody>
+    <tr>
+      <td>NeighborNodes NodeSelector</td>
+      <td>
+        ![Connected
+        Example](/assets/official-documentation/worldgen/graphs/action-connected-example-alt.webp)
+      </td>
+    </tr>
+    <tr>
+      <td>ConnectedNodes NodeAction</td>
+      <td>
+        ![Connected Alt
+        Example](/assets/official-documentation/worldgen/graphs/action-connected-example.webp)
+      </td>
+    </tr>
+    <tr>
+      <td>ContentCopy NodeAction</td>
+      <td>
+        ![Connected Alt 2
+        Example](/assets/official-documentation/worldgen/graphs/action-contentcopy.webp)
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 #### **Edge: Proxy**
 
-(Not tested yet, will update with info later)
+Edge Proxy is a good way to create offset Nodes from pre-existing Nodes to for example create bridges across islands.
 
 ![Action Proxy](/assets/official-documentation/worldgen/graphs/action-proxy.webp)
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        Before ![Action Proxy
+        Before](/assets/official-documentation/worldgen/graphs/action-proxy-example-before.webp)
+      </td>
+      <td>
+        After ![Action Proxy
+        After](/assets/official-documentation/worldgen/graphs/action-proxy-example-after.webp)
+      </td>
+    </tr>
+    <tr>
+      <td>Image credit to Ams of Hypixel Studios</td>
+    </tr>
+  </tbody>
+</table>
+
+#### **Other Actions**
+
+Quick fire round as these are mostly self explanatory especially if you've been messing around with other WorldGen features!
+
+<table>
+  <tbody>
+    <tr>
+      <td>**Move NodeAction**</td>
+      <td>Moves selected Nodes based on a Vector Provider</td>
+    </tr>
+    <tr>
+      <td>**Jitter2D/3D NodeAction**</td>
+      <td>
+        Jitters the Position of selected Nodes same as the Jitter Position
+        Provider
+      </td>
+    </tr>
+    <tr>
+      <td>**Weighted NodeAction**</td>
+      <td>Selects a random Action to exectute per Node based on the Seed</td>
+    </tr>
+    <tr>
+      <td>**Empty Node/EdgeAction**</td>
+      <td>
+        A placeholder to do nothing. Most often used with a Weighted NodeAction
+      </td>
+    </tr>
+    <tr>
+      <td>**Delete Node/EdgeAction**</td>
+      <td>Removes the Node/Edge from the Graph</td>
+    </tr>
+  </tbody>
+</table>
 
 ### New Position & Vector Providers
 
 This section includes a look at some of the new Position and Vector Providers also included in this pre-release that may be useful in your Graph creating Journey!
 
-The list is far too long to include here, but I've included an example of using them to set the Y-Position of Positions (or Nodes for Graphs) to the top of the World without for example for Props requiring a Scanner!
+The list is far too long to include here, but I've included an example of using them to set the Y-Value of Positions. This is useful for setting either the Position of Nodes on Graphs or the Positions of Props to the top of your World (without needing a Scanner Prop which is useful for optimization!)
 
 ![New Providers Example](/assets/official-documentation/worldgen/graphs/newproviders-example.webp)
 
-We also have the new **OpposedToGraphEdges** VectorProvider which is also on my list of Nodes I have yet to test so new info will be included here soon!
+We also have the new **OpposedToGraphEdges** VectorProvider! This Provider gives you the Vector that is furthest from all the Connected Edges' Vectors,
+so for this example of a triangular pyramid, each Node will be pushed further outwards, away from the other Nodes.
 
 ![OpposedToGraphEdges VectorProvider](/assets/official-documentation/worldgen/graphs/newproviders-graphedges.webp)
 
-## Examples
+<table>
+  <tbody>
+    <tr>
+      <td>
+        Before ![VectorProvider
+        Before](/assets/official-documentation/worldgen/graphs/newproviders-graphedges-example1-before.webp)
+      </td>
+      <td>
+        After ![VectorProvider
+        After](/assets/official-documentation/worldgen/graphs/newproviders-graphedges-example1-after.webp)
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+However, on the edge case that the Node is connected on a straight line where the Opposed Vector could be one of many varieties, the results are inconsistent depending on orientation.
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        Before ![VectorProvider EdgeCase
+        Before](/assets/official-documentation/worldgen/graphs/newproviders-graphedges-example2-before.webp)
+      </td>
+      <td>
+        After ![VectorProvider EdgeCase
+        After](/assets/official-documentation/worldgen/graphs/newproviders-graphedges-example2-after.webp)
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Hytale Examples
+
+### River Drainage
+
+This Graph includes an example of an iterative Selection approach to create river branches that branch out from a coast line!
+
+You can find this Example as `HytaleGenerator/BiomeAsset/Examples/Example_Graph_River`
+
+![Rivers Showcase](/assets/official-documentation/worldgen/graphs/examples/river-1.webp)
+![Rivers Nodes](/assets/official-documentation/worldgen/graphs/examples/river-2.webp)
+
+### City Roads
+
+This Graph continues off of the previous example by adding Buildings that spawn next to roads near city centers and making sure Road connections don't enter the areas indicated by Bedrock!
+
+You can find this Example as `HytaleGenerator/BiomeAsset/Examples/Example_Graph_Road_Layout`
+
+![Roads Showcase](/assets/official-documentation/worldgen/graphs/examples/roads-1.webp)
+
+### Mountain Erosion
+
+This Graph utilizes the Density Gradient of the Terrain to only include certain Edges that run alongside the mountain slope and then uses Move Actions with a Simplex noise pattern to create a wavy pattern as the Edges head downwards.
+
+You can find this Example as `HytaleGenerator/BiomeAsset/Examples/Example_Graph_Erosion`
+
+![Erosion Showcase](/assets/official-documentation/worldgen/graphs/examples/erosion-1.webp)
+![Erosion Nodes1](/assets/official-documentation/worldgen/graphs/examples/erosion-2.webp)
+![Erosion Nodes2](/assets/official-documentation/worldgen/graphs/examples/erosion-3.webp)
+
+### Roots
+
+This Graph uses a technique of starting off only creating 1 Node then creating new Nodes by iteratively using the Spawner Action from previous Nodes. It also halfway through switches the Density defined in the Content to be smaller.
+
+You can find this Example as `HytaleGenerator/BiomeAsset/Examples/Example_Graph_Roots`
+
+![Roots Showcase](/assets/official-documentation/worldgen/graphs/examples/roots-1.webp)
+![Roots Nodes1](/assets/official-documentation/worldgen/graphs/examples/roots-2.webp)
+![Roots Nodes2](/assets/official-documentation/worldgen/graphs/examples/roots-3.webp)
+
+## Community Examples
 
 ### Biome Spheres
 
-This is a showcase example of creating a “Biome” per Node with random Edges connecting them! The density, materials, and props were all done through the graph system! [Link to GitHub Repository.](https://github.com/RedstoneEngine/Hytale-WorldGen/blob/main/Examples/Graphs/BiomeSpheres.json) (Warning for testing this example in that the Edges create a huge hit on performance and may timeout the World!)
+This is a showcase example of creating a “Biome” per Node with random Edges connecting them! The density, materials, and props were all done through the graph system!
+
+[Link to GitHub Repository](https://github.com/RedstoneEngine/Hytale-WorldGen/blob/main/Examples/Graphs/BiomeSpheres.json) `- Credit to RedEng Developer`
 
 ![Biome Spheres Showcase](/assets/official-documentation/worldgen/graphs/examples/biomespheres-1.webp)
 ![Biome Spheres Nodes](/assets/official-documentation/worldgen/graphs/examples/biomespheres-2.webp)
 
-### River Drainage
+### Dungeon
 
-**This Example is brought to us by Ams of Hypixel Studios.**
+This is a Graphs setup for generating a dynamic Dungeon! This Graph contains multiple techniques to get the Dungeon to generate its paths and props, too much to list here right now, but feel free to replace with your own prefabs or define your own pathing GraphPasses!
 
-It includes an example of an iterative Selection approach to create river branches that branch out from a coast line! Feel free to download and experiment! This example will be included in a future pre-release. [Link to GitHub Repository.](https://github.com/RedstoneEngine/Hytale-WorldGen/blob/main/Examples/Graphs/Example_Graph_River.json)
+[Link to GitHub Repository](https://github.com/RedstoneEngine/Hytale-WorldGen/tree/main/Examples/Graphs/DungeonGenerator) `- Credit to RedEng Developer`
 
-![Rivers Showcase](/assets/official-documentation/worldgen/graphs/examples/river-1.webp)
-![Rivers Nodes](/assets/official-documentation/worldgen/graphs/examples/river-2.webp)
+![BigRoom Dungeon Showcase](/assets/official-documentation/worldgen/graphs/examples/dungeon-bigrooms-1.webp)
+![BigRoom Dungeon Rooms Showcase](/assets/official-documentation/worldgen/graphs/examples/dungeon-bigrooms-2.webp)
 
 ---
 
