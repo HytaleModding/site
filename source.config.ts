@@ -37,6 +37,10 @@ export const docs = defineDocs({
 
 export default defineConfig({
   mdxOptions: {
+    remarkImageOptions: {
+      // Don't fail the build when an external image's size can't be fetched
+      onError: "ignore",
+    },
     rehypeCodeOptions: {
       langs: ["java"],
       themes: {

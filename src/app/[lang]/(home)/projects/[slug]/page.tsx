@@ -7,7 +7,8 @@ import { GitInfoButton } from "@/components/git-info-button";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, Github, Globe, Twitter } from "lucide-react";
+import { ChevronLeft, Globe } from "lucide-react";
+import { FaGithub, FaXTwitter } from "react-icons/fa6";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { Callout } from "@/components/mdx/Callout";
 
@@ -96,9 +97,9 @@ export default async function ProjectPage({
 
   const socialLinks = [
     { icon: DiscordIcon, url: project.frontmatter.discord, label: "Discord" },
-    { icon: Github, url: project.frontmatter.github, label: "GitHub" },
+    { icon: FaGithub, url: project.frontmatter.github, label: "GitHub" },
     { icon: Globe, url: project.frontmatter.website, label: "Website" },
-    { icon: Twitter, url: project.frontmatter.twitter, label: "Twitter" },
+    { icon: FaXTwitter, url: project.frontmatter.twitter, label: "Twitter" },
   ].filter((link) => link.url);
 
   const hasBanner = !!project.frontmatter.banner;
@@ -107,8 +108,8 @@ export default async function ProjectPage({
 
   const authorSocialLinks = author
     ? [
-        { icon: Github, url: author.github, label: "GitHub" },
-        { icon: Twitter, url: author.twitter, label: "Twitter" },
+        { icon: FaGithub, url: author.github, label: "GitHub" },
+        { icon: FaXTwitter, url: author.twitter, label: "Twitter" },
         { icon: Globe, url: author.website, label: "Website" },
       ].filter((link) => link.url)
     : [];

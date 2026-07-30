@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { BookIcon } from "lucide-react";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { i18n } from "@/lib/i18n";
 import HytaleModdingLogo from "@/app/icon0.svg";
 import { getMessages } from "./locale";
 
@@ -12,7 +11,6 @@ export function baseOptions(
   const messages = getMessages(locale);
 
   let options: BaseLayoutProps = {
-    i18n,
     nav: {
       title: (
         <>

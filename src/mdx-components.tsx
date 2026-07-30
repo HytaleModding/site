@@ -14,6 +14,6 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     Callout,
     ParameterList,
     OfficialDocumentationNotice,
-    img: ImageZoom,
+    img: ImageZoom as unknown as NonNullable<MDXComponents["img"]>,
   };
 }
