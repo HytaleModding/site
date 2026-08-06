@@ -396,7 +396,6 @@ export default function HomePage() {
               </div>
               <div className="flex flex-wrap justify-center gap-4">
                 <DiscordButton />
-                <SponsorButton />
               </div>
             </div>
           </ViewTransition>
