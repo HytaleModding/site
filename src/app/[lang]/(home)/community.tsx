@@ -84,7 +84,13 @@ const PHOTOS: SidePhoto[] = [
   },
 ];
 
-function Polaroid({ photo, onOpen }: { photo: SidePhoto; onOpen: (src: string) => void }) {
+function Polaroid({
+  photo,
+  onOpen,
+}: {
+  photo: SidePhoto;
+  onOpen: (src: string) => void;
+}) {
   const [hovered, setHovered] = useState(false);
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -113,7 +119,8 @@ function Polaroid({ photo, onOpen }: { photo: SidePhoto; onOpen: (src: string) =
         style={{
           width: "100%",
           transform:
-            hovered && !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            hovered &&
+            !window.matchMedia("(prefers-reduced-motion: reduce)").matches
               ? `translateX(${slideX}px)`
               : "none",
           transition: "transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
@@ -133,7 +140,9 @@ function Polaroid({ photo, onOpen }: { photo: SidePhoto; onOpen: (src: string) =
             border: "4px solid var(--paper, #fff)",
             borderRadius: 10,
             overflow: "hidden",
-            boxShadow: hovered ? "0 14px 26px rgba(0,0,0,0.28)" : "0 4px 14px rgba(0,0,0,0.18)",
+            boxShadow: hovered
+              ? "0 14px 26px rgba(0,0,0,0.28)"
+              : "0 4px 14px rgba(0,0,0,0.18)",
             pointerEvents: "auto",
             cursor: "pointer",
             transition: "box-shadow 0.3s ease",
@@ -293,7 +302,7 @@ export function CommunitySection() {
               and start building.
             </div>
           </div>
-          <div className="not-lg:hidden relative flex flex-col items-center pb-40">
+          <div className="relative flex flex-col items-center pb-40 not-lg:hidden">
             <DiscordButton showMemberCount />
             <DraggableSticker
               src={FeranImage.src}

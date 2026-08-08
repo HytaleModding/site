@@ -12,7 +12,10 @@ function isNewsRoute(pathname: string) {
   return pathname === "/news" || pathname.startsWith("/news/");
 }
 
-export default function middleware(request: NextRequest, event: NextFetchEvent) {
+export default function middleware(
+  request: NextRequest,
+  event: NextFetchEvent,
+) {
   if (request.nextUrl.pathname === "/") {
     const url = request.nextUrl.clone();
     url.pathname = "/en";

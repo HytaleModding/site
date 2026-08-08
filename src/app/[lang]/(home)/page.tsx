@@ -12,7 +12,6 @@ import { DiscordButton } from "@/components/discord-button";
 import { ShowcaseMarquee } from "@/components/showcase";
 import { Separator } from "@/components/ui/separator";
 import { DynamicLink } from "fumadocs-core/dynamic-link";
-import { BlogsSection } from "./blogs-section";
 import { CommunitySection } from "./community";
 import { ProgramsSection } from "./programs";
 import { Footer } from "./footer";
@@ -119,7 +118,7 @@ export default async function HomePage({
 
       <CommunitySection />
       <Separator />
-      
+
       {/* <BlogsSection
         blogs={blogs}
         lang={lang}

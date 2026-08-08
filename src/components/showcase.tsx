@@ -11,7 +11,6 @@ import MushroomLizard from "@/../public/showcaseImages/MushroomLizard.png";
 import AlecsTamework from "@/../public/showcaseImages/AlecsTamework.png";
 import Sanguivar from "@/../public/showcaseImages/Sanguivar.gif";
 import Hexcode from "@/../public/showcaseImages/Hexcode.png";
-import Orbitech from "@/../public/showcaseImages/Orbitech.gif";
 import BattleshipEffectExperiment from "@/../public/showcaseImages/BattleshipEffectExperiment.gif";
 import PingPong from "@/../public/showcaseImages/PingPong.gif";
 import TriggerVolumeKeyboard from "@/../public/showcaseImages/TriggerVolumeKeyboard.png";
@@ -19,10 +18,7 @@ import TriggerVolumeKeyboard from "@/../public/showcaseImages/TriggerVolumeKeybo
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
-import {
-  Card,
-  CardTitle,
-} from "./ui/card";
+import { Card, CardTitle } from "./ui/card";
 import { useState } from "react";
 import {
   Marquee,
@@ -139,7 +135,7 @@ const showcaseItems: ShowcaseItem[] = [
     image: TriggerVolumeKeyboard,
     link: "",
     type: "art",
-  }
+  },
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
