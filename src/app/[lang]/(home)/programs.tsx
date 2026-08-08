@@ -43,7 +43,7 @@ export function ProgramsSection() {
           className="dark relative overflow-hidden rounded-xl border bg-[#0f1418] bg-cover bg-top p-8"
           style={{
             backgroundImage:
-              "url(/assets/official-documentation/background/content-lower-nowatermark.webp), linear-gradient(#0f1418,#0f1418)",
+              "url(https://cdn.internal.hytalemodding.dev/assets/landing/content-lower-nowatermark.webp), linear-gradient(#0f1418,#0f1418)",
           }}
         >
           <div className="flex flex-col gap-12">
