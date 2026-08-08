@@ -8,6 +8,10 @@ function isStaticAsset(pathname: string) {
   return pathname.startsWith("/assets/") || /\.[a-z0-9]+$/i.test(pathname);
 }
 
+function isNewsRoute(pathname: string) {
+  return pathname === "/news" || pathname.startsWith("/news/");
+}
+
 export default function middleware(request: NextRequest, event: NextFetchEvent) {
   if (request.nextUrl.pathname === "/") {
     const url = request.nextUrl.clone();
@@ -17,6 +21,10 @@ export default function middleware(request: NextRequest, event: NextFetchEvent) 
   }
 
   if (isStaticAsset(request.nextUrl.pathname)) {
+    return NextResponse.next();
+  }
+
+  if (isNewsRoute(request.nextUrl.pathname)) {
     return NextResponse.next();
   }
 

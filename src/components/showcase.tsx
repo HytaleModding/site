@@ -1,3 +1,5 @@
+"use client";
+
 import WulfrumProsthesis from "@/../public/showcaseImages/wulfrum_prosthesis.png";
 import Melodium from "@/../public/showcaseImages/Melodium.gif";
 import GaleWivern from "@/../public/showcaseImages/gale_wivern.gif";

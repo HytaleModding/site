@@ -1,4 +1,5 @@
-"use client";
+import { ViewTransition } from "react";
+import Link from "next/link";
 import {
   BookIcon,
   SquarePenIcon,
@@ -7,23 +8,27 @@ import {
 } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { useMessages } from "@/lib/hooks/useMessages";
-import { richText } from "@/lib/rich-text";
-
 import { DiscordButton } from "@/components/discord-button";
-import { ViewTransition } from "react";
 import { ShowcaseMarquee } from "@/components/showcase";
 import { Separator } from "@/components/ui/separator";
 import { DynamicLink } from "fumadocs-core/dynamic-link";
+import { BlogsSection } from "./blogs-section";
 import { CommunitySection } from "./community";
-import { UtilsSection } from "./utils";
 import { ProgramsSection } from "./programs";
 import { Footer } from "./footer";
 import { HeroStickers } from "./hero-stickers";
+import { getBlogs } from "@/lib/blogs";
+import { getMessages } from "@/lib/locale";
+import { richText } from "@/lib/rich-text";
 
-export default function HomePage() {
-  const messages = useMessages();
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  const messages = getMessages(lang);
+  const blogs = (await getBlogs()).slice(0, 4);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -114,6 +119,13 @@ export default function HomePage() {
 
       <CommunitySection />
       <Separator />
+      
+      {/* <BlogsSection
+        blogs={blogs}
+        lang={lang}
+        title={messages.nav.blogs ?? "Blogs"}
+      />
+      <Separator /> */}
 
       {/* <UtilsSection />
       <Separator /> */}
