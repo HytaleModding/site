@@ -5,6 +5,8 @@ import { DiscordButton } from "@/components/discord-button";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import FeranImage from "@/../public/assets/landing/hero/feran.png";
+import { DraggableSticker } from "./draggable-sticker";
 
 type SidePhoto = {
   src: string;
@@ -261,8 +263,16 @@ export function CommunitySection() {
               and start building.
             </div>
           </div>
-          <div className="not-lg:hidden">
+          <div className="not-lg:hidden relative flex flex-col items-center pb-40">
             <DiscordButton showMemberCount />
+            <DraggableSticker
+              src={FeranImage.src}
+              initialLeft="calc(50% - 80px)"
+              initialTop="calc(100% - 6rem)"
+              rotate={0}
+              width={160}
+              sizes="(max-width: 768px) 120px, 160px"
+            />
           </div>
         </div>
       </div>
