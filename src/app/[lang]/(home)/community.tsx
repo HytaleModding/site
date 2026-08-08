@@ -195,6 +195,11 @@ function PhotoLightbox({
 
 export function CommunitySection() {
   const [zoomedSrc, setZoomedSrc] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="relative my-8 min-h-[820px] overflow-x-clip">

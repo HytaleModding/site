@@ -29,7 +29,9 @@ export default function HomePage() {
     <div className="flex flex-1 flex-col">
       <Spotlight />
       <div className="relative container mx-auto flex h-192 max-h-[calc(100vh-21rem)] min-h-fit flex-col items-center justify-center px-4 py-32 md:px-12">
-        <HeroStickers />
+        <div className="hidden md:block">
+          <HeroStickers />
+        </div>
         <div className="flex h-full w-full max-w-5xl flex-col items-center justify-around gap-6 space-y-8 text-center">
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
