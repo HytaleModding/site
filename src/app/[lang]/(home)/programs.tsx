@@ -226,9 +226,10 @@ export function ProgramsSection() {
               </p>
             </div>
             <div className="mt-auto flex gap-4">
-              <Button variant={"secondary"} asChild>
-                <DynamicLink href="https://hytalemodjam.com/submissions?modjam=hm-26.1">
-                  View submissions <ExternalLinkIcon />
+              <Button asChild variant={"primary"}>
+                <DynamicLink href="/[lang]/grants">
+                  View Submissions
+                  <ExternalLinkIcon />
                 </DynamicLink>
               </Button>
             </div>
