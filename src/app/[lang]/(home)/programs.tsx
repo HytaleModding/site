@@ -168,14 +168,8 @@ export function ProgramsSection() {
                 href="/en/grants/apply"
                 className="bg-white text-[#0C46B0]"
               >
-                Apply Now
-              </BisectButton>
-              <BisectButton
-                variant="secondary"
-                href="/en/grants"
-                className="text-white hover:text-white"
-              >
-                <BookOpenIcon /> Guidelines
+                Applications are open!
+                <ArrowRightIcon />
               </BisectButton>
             </div>
           </div>
