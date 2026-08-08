@@ -34,7 +34,7 @@ const PHOTOS: SidePhoto[] = [
   },
   {
     src: "/assets/landing/hero/photo5.png",
-    top: "52%",
+    top: "49%",
     x: -85,
     rotate: -12,
     side: "left",
@@ -42,7 +42,7 @@ const PHOTOS: SidePhoto[] = [
   },
   {
     src: "/assets/landing/hero/photo4.png",
-    top: "77%",
+    top: "74%",
     x: -65,
     rotate: 9,
     side: "left",
