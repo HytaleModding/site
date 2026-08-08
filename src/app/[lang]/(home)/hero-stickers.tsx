@@ -18,7 +18,7 @@ export function HeroStickers() {
       <DraggableSticker
         src={ChestImage.src}
         initialLeft={10}
-        initialTop="calc(100% - 7rem)"
+        initialTop="calc(100% - 8rem)"
         rotate={8}
         width={112}
         sizes="(max-width: 768px) 78px, 112px"
