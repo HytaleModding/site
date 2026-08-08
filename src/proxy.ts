@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 import { createI18nMiddleware } from "fumadocs-core/i18n/middleware";
 import { i18n } from "@/lib/i18n";
 
 const handleI18n = createI18nMiddleware(i18n);
 
-export default function middleware(request: NextRequest) {
+export default function middleware(request: NextRequest, event: NextFetchEvent) {
   if (request.nextUrl.pathname === "/") {
     const url = request.nextUrl.clone();
     url.pathname = "/en";
@@ -12,7 +12,7 @@ export default function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  return handleI18n(request);
+  return handleI18n(request, event);
 }
 
 export const config = {
