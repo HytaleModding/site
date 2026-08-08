@@ -10,13 +10,13 @@ import HytaleModdingLogoDark from "@/../public/branding/hytalemodding/HM_DARK.sv
 import HytaleModdingLogoLight from "@/../public/branding/hytalemodding/HM_LIGHT.svg";
 
 const LINK_GROUPS = [
-  {
-    heading: "Community",
-    links: [
-      { label: "About & Contact", href: "/about" },
-      { label: "Support", href: "/support" },
-    ],
-  },
+//   {
+//     heading: "Community",
+//     links: [
+//       { label: "About & Contact", href: "/about" },
+//       { label: "Support", href: "/support" },
+//     ],
+//   },
   {
     heading: "Resources",
     links: [
@@ -39,7 +39,7 @@ const SOCIALS = [
     href: "https://discord.gg/hytalemodding",
     icon: SiDiscord,
   },
-  { label: "Email", href: "mailto:team@hytalemodding.dev", icon: MailIcon },
+  { label: "Email", href: "mailto:hello@hytalemodding.dev", icon: MailIcon },
 ];
 
 function isExternal(href: string) {
