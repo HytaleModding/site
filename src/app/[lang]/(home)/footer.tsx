@@ -28,16 +28,16 @@ const LINK_GROUPS = [
 ];
 
 const SOCIALS = [
+  {
+    label: "Discord",
+    href: "https://discord.gg/hytalemodding",
+    icon: SiDiscord,
+  },
   { label: "GitHub", href: "https://github.com/HytaleModding", icon: SiGithub },
   {
     label: "YouTube",
     href: "https://www.youtube.com/@HytaleModding",
     icon: SiYoutube,
-  },
-  {
-    label: "Discord",
-    href: "https://discord.gg/hytalemodding",
-    icon: SiDiscord,
   },
   { label: "Email", href: "mailto:hello@hytalemodding.dev", icon: MailIcon },
 ];
