@@ -11,6 +11,10 @@ import MushroomLizard from "@/../public/showcaseImages/MushroomLizard.png";
 import AlecsTamework from "@/../public/showcaseImages/AlecsTamework.png";
 import Sanguivar from "@/../public/showcaseImages/Sanguivar.gif";
 import Hexcode from "@/../public/showcaseImages/Hexcode.png";
+import Orbitech from "@/../public/showcaseImages/Orbitech.gif";
+import BattleshipEffectExperiment from "@/../public/showcaseImages/BattleshipEffectExperiment.gif";
+import PingPong from "@/../public/showcaseImages/PingPong.gif";
+import TriggerVolumeKeyboard from "@/../public/showcaseImages/TriggerVolumeKeyboard.png";
 
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
@@ -91,7 +95,7 @@ const showcaseItems: ShowcaseItem[] = [
     title: "Mushroom Lizard",
     author: "lulu",
     image: MushroomLizard,
-    link: "https://discord.gg/hytalemodding",
+    link: "",
     type: "art",
   },
   {
@@ -105,16 +109,37 @@ const showcaseItems: ShowcaseItem[] = [
     title: "Sanguivar",
     author: "lulu",
     image: Sanguivar,
-    link: "https://discord.gg/hytalemodding",
+    link: "",
     type: "art",
   },
   {
     title: "Hexcode",
     author: "Riprod",
     image: Hexcode,
-    link: "https://discord.gg/hytalemodding",
+    link: "https://docs.hexcodec.com",
     type: "art",
   },
+  {
+    title: "Battleship Effect Experiment",
+    author: "FoxyCCA",
+    image: BattleshipEffectExperiment,
+    link: "",
+    type: "art",
+  },
+  {
+    title: "Ping Pong",
+    author: "FoxyCCA",
+    image: PingPong,
+    link: "",
+    type: "art",
+  },
+  {
+    title: "Trigger Volume Keyboard",
+    author: "FoxyCCA",
+    image: TriggerVolumeKeyboard,
+    link: "",
+    type: "art",
+  }
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
