@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useMessages } from "@/lib/hooks/useMessages";
+import { richText } from "@/lib/rich-text";
 
 import { DiscordButton } from "@/components/discord-button";
 import { SponsorButton } from "@/components/support-button";
@@ -51,8 +52,17 @@ export default function HomePage() {
                     </Link>
                 </div>
               </div>*/}
-              <h1 className="text-4xl font-semibold text-balance md:text-5xl">
-                <div>{messages.home.title}</div>
+              <h1 className="text-6xl font-semibold text-balance md:text-7xl" style={{ fontFamily: "Lexend, Geist, sans-serif" }}>
+                <div>
+                {richText(messages.home.title, {
+                  italic: (chunks) => <span className="italic">{chunks}</span>,
+                  badge: (chunks) => (
+                    <span className="text-rainbow italic font-bold text-black px-2.5 py-0.5 rounded-md">
+                      {chunks}
+                    </span>
+                  ),
+                })}
+                </div>
               </h1>
               <h2 className="text-muted-foreground text-lg text-balance md:text-xl">
                 {messages.home.description}
