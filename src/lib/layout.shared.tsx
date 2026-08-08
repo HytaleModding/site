@@ -12,6 +12,7 @@ export function baseOptions(
   docsLayout?: boolean,
 ): BaseLayoutProps {
   const messages = getMessages(locale);
+  const localeUrl = locale === i18n.defaultLanguage ? "/" : `/${locale}/`;
 
   let options: BaseLayoutProps = {
     i18n,
@@ -50,7 +51,7 @@ export function baseOptions(
           </div>
         </div>
       ),
-      url: `/${locale}/`,
+      url: localeUrl,
     },
   };
 
