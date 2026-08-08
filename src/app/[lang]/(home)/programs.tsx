@@ -10,11 +10,9 @@ import Cubes from "@/../public/grants/BH_HytaleModding_Assets-09.png";
 import Background from "@/../public/grants/BG_Desert_Dunes.png";
 import { BorderTrail } from "@/components/ui/border-trail";
 
-import { TextLink } from "@/components/text-link";
-import { DiscordButton } from "@/components/discord-button";
-import { GrantsHero } from "./grants/hero";
 import { BisectButton } from "./grants/bisect-button";
 import ModJamBg from "@/../public/branding/hytalemodding/hytalemodjam-bg.jpg";
+import NitradoBg from "@/../public/assets/landing/hero/exploration.jpg";
 import {
   ArrowRightIcon,
   BookOpenIcon,
@@ -197,7 +195,9 @@ export function ProgramsSection() {
             />
           </div>
         </div>
-        <div className="rounded-xl border p-8">
+        <div className="relative overflow-hidden rounded-xl border p-8">
+          <Image src={NitradoBg} alt="" fill className="-z-20 object-cover" />
+          <div className="absolute inset-0 -z-10 bg-black/50" />
           <div className="flex flex-col gap-12">
             <div className="flex h-12 items-center gap-6">
               <Image
