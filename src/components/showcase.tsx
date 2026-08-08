@@ -1,32 +1,22 @@
 "use client";
 
 import WulfrumProsthesis from "@/../public/showcaseImages/wulfrum_prosthesis.png";
-import Melodium from "@/../public/showcaseImages/Melodium.gif";
 import GaleWivern from "@/../public/showcaseImages/gale_wivern.gif";
 import WulfrumArmor from "@/../public/showcaseImages/Wulfrum_Armor.gif";
 import ElectricMotor from "@/../public/showcaseImages/HyEnergy_Electric_Motor.gif";
-import WulfrumTriangle from "@/../public/showcaseImages/Wulfrum_triangle.gif";
 import MagicCircleGust from "@/../public/showcaseImages/MagicCircleGust.gif";
 import Shroomie from "@/../public/showcaseImages/Shroomie.gif";
 import Froggy from "@/../public/showcaseImages/Froggy.gif";
-import VoileBanner from "@/../public/showcaseImages/voile.png";
 import MushroomLizard from "@/../public/showcaseImages/MushroomLizard.png";
 import AlecsTamework from "@/../public/showcaseImages/AlecsTamework.png";
 import Sanguivar from "@/../public/showcaseImages/Sanguivar.gif";
 import Hexcode from "@/../public/showcaseImages/Hexcode.png";
-import HyYap from "@/../public/showcaseImages/HyYap.png";
 
-import { useMessages } from "@/lib/hooks/useMessages";
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
-import { Button } from "./ui/button";
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
   CardTitle,
 } from "./ui/card";
 import { useState } from "react";
@@ -36,7 +26,6 @@ import {
   MarqueeContent,
   MarqueeItem,
 } from "./ui/shadcn-io/marquee";
-import { ProgressiveBlur } from "./ui/progressive-blur";
 
 type ProjectType = "art" | "website" | "server" | "mod";
 
@@ -64,13 +53,6 @@ const showcaseItems: ShowcaseItem[] = [
     type: "art",
   },
   {
-    title: "Soundscape: Melodium Chunk",
-    author: "44Hydras",
-    image: Melodium,
-    link: "https://discord.com/users/197065442479702016",
-    type: "art",
-  },
-  {
     title: "Gale Wivern",
     author: "Nicolas | Tourne_Vis",
     image: GaleWivern,
@@ -81,13 +63,6 @@ const showcaseItems: ShowcaseItem[] = [
     title: "Hylamity: Wulfrum Armor",
     author: "slader._.",
     image: WulfrumArmor,
-    link: "https://discord.gg/f2fMKYnRqR",
-    type: "art",
-  },
-  {
-    title: "Hylamity: Wulfrum Triangle",
-    author: "slader._.",
-    image: WulfrumTriangle,
     link: "https://discord.gg/f2fMKYnRqR",
     type: "art",
   },
@@ -110,13 +85,6 @@ const showcaseItems: ShowcaseItem[] = [
     author: "Unknown Knight",
     image: Froggy,
     link: "",
-    type: "art",
-  },
-  {
-    title: "Voile",
-    author: "mayuna",
-    image: VoileBanner,
-    link: "https://www.curseforge.com/hytale/mods/docs",
     type: "art",
   },
   {
@@ -144,13 +112,6 @@ const showcaseItems: ShowcaseItem[] = [
     title: "Hexcode",
     author: "Riprod",
     image: Hexcode,
-    link: "https://discord.gg/hytalemodding",
-    type: "art",
-  },
-  {
-    title: "HyYap",
-    author: "Azim",
-    image: HyYap,
     link: "https://discord.gg/hytalemodding",
     type: "art",
   },
