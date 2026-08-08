@@ -228,7 +228,7 @@ export function CommunitySection() {
           >
             What is HytaleModding?
           </h1>
-          <p className="text-foreground/80 text-lg">
+          <div className="text-foreground/80 text-lg">
             HytaleModding is the largest community of modders for{" "}
             <TextLink href="https://hytale.com">Hytale</TextLink>. We write
             docs, guides, and tools for modders of every skill level, and run
@@ -260,7 +260,7 @@ export function CommunitySection() {
               </TextLink>{" "}
               and start building.
             </div>
-          </p>
+          </div>
           <div className="not-lg:hidden">
             <DiscordButton showMemberCount />
           </div>
