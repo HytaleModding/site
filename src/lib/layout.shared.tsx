@@ -77,10 +77,6 @@ export function baseOptions(
         text: messages.nav.blogs ?? "Blogs",
         url: "/news",
       },
-      {
-        text: messages.nav.sponsors,
-        url: `/${locale}/sponsors`,
-      },
     );
   }
 
