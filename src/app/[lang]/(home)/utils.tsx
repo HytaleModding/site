@@ -96,16 +96,16 @@ const utils: UtilsShowcaseItem[] = [
     backgroundImage: "https://cataas.com/cat/says/wiki-background",
     by: "hytalemodding",
   },
-  {
-    title: "Forum",
-    description:
-      "Discuss about Hytale, ask questions, and connect with other modders!",
-    href: "https://forum.hytalemodding.dev",
-    type: "platform",
-    logo: "https://cataas.com/cat/says/forum-logo",
-    backgroundImage: "https://cataas.com/cat/says/forum-background",
-    by: "hytalemodding",
-  },
+  // {
+  //   title: "Forum",
+  //   description:
+  //     "Discuss about Hytale, ask questions, and connect with other modders!",
+  //   href: "https://forum.hytalemodding.dev",
+  //   type: "platform",
+  //   logo: "https://cataas.com/cat/says/forum-logo",
+  //   backgroundImage: "https://cataas.com/cat/says/forum-background",
+  //   by: "hytalemodding",
+  // },
 ];
 
 function UtilsShowcase() {

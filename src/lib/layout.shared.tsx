@@ -77,10 +77,6 @@ export function baseOptions(
         url: "/news",
       },
       {
-        text: messages.nav.forum,
-        url: "https://forum.hytalemodding.dev",
-      },
-      {
         text: messages.nav.sponsors,
         url: `/${locale}/sponsors`,
       },
