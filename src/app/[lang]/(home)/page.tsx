@@ -22,6 +22,7 @@ import { DynamicLink } from "fumadocs-core/dynamic-link";
 import { CommunitySection } from "./community";
 import { UtilsSection } from "./utils";
 import { ProgramsSection } from "./programs";
+import { Footer } from "./footer";
 
 export default function HomePage() {
   const params = useParams();
@@ -113,6 +114,7 @@ export default function HomePage() {
       <Separator /> */}
 
       <ProgramsSection />
+      <Footer />
     </div>
   );
 }
