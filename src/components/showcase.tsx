@@ -155,60 +155,53 @@ const showcaseItems: ShowcaseItem[] = [
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
-  const messages = useMessages();
-
   const cardContent = (
     <>
-      <Image
-        src={item.image}
-        alt={`${item.title} background`}
-        aria-hidden
-        fill
-        draggable={false}
-        className="border-card z-10 rounded-lg border mask-b-from-90% object-contain"
-      />
-      <Image
-        src={item.image}
-        alt={`${item.title} background`}
-        aria-hidden
-        fill
-        draggable={false}
-        className="border-card rounded-lg border mask-b-from-90% object-cover opacity-50 blur-xl"
-      />
+      <div className="relative h-44 w-full shrink-0">
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          draggable={false}
+          className="object-contain"
+        />
+      </div>
 
-      <div className="from-card/65 to-card group-hover:from-card relative z-20 mt-auto flex flex-col justify-between gap-2 border-t bg-linear-to-b pt-4 backdrop-blur-md transition-colors">
-        <CardHeader className="block">
-          <CardTitle className="flex items-center gap-4 p-0">
-            <p>{item.title}</p>
-          </CardTitle>
-        </CardHeader>
-        <CardFooter className="flex gap-4 pb-4 text-sm">
-          <p className="text-muted-foreground">{item.author}</p>
-        </CardFooter>
+      <div className="relative flex min-h-0 flex-1 flex-col justify-center border-t px-4 py-3">
+        <CardTitle className="pr-6 text-base">
+          {item.title}
+        </CardTitle>
+
+        <p className="mt-1 text-sm text-muted-foreground">
+          {item.author}
+        </p>
+
         {item.link && (
-          <ExternalLinkIcon className="text-muted-foreground absolute right-4 bottom-4 ml-auto h-4 w-4" />
+          <ExternalLinkIcon className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         )}
       </div>
     </>
   );
 
   return (
-    <Card className="h-64 w-96 overflow-hidden py-0 lg:data-[expanded=true]:col-span-2">
+    <Card className="h-64 w-96 overflow-hidden p-0">
       {item.link ? (
         <Link
           href={item.link}
-          className="group relative flex h-full flex-col"
+          className="group flex h-full flex-col"
           target="_blank"
           rel="noopener"
         >
           {cardContent}
         </Link>
       ) : (
-        <div className="relative flex h-full flex-col">{cardContent}</div>
+        <div className="flex h-full flex-col">{cardContent}</div>
       )}
     </Card>
   );
 };
+
+
 
 export function ShowcaseMarquee() {
   const [repeatedItems] = useState(() => {

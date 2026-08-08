@@ -7,52 +7,58 @@ import { getDiscordStats } from "../app/[lang]/(home)/actions";
 import { useMessages } from "@/lib/hooks/useMessages";
 import Link from "next/link";
 
-export function DiscordButton() {
-  const messages = useMessages();
-  // const [stats, setStats] = useState<{
-  //   active_members: number;
-  //   total_members: number;
-  // } | null>(null);
-  // const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
+type DiscordButtonProps = {
+  showMemberCount?: boolean;
+};
 
-  // useEffect(() => {
-  //   getDiscordStats()
-  //     .then((data) => {
-  //       setStats(data);
-  //       startTransition(() => setState("loaded"));
-  //     })
-  //     .catch((error) => {
-  //       console.error("Failed to fetch Discord stats:", error);
-  //       startTransition(() => setState("error"));
-  //     });
-  // }, []);
+export function DiscordButton({ showMemberCount = false }: DiscordButtonProps) {
+  const messages = useMessages();
+  const [stats, setStats] = useState<{
+    active_members: number;
+    total_members: number;
+  } | null>(null);
+  const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
+
+  useEffect(() => {
+    if (!showMemberCount) return;
+
+    getDiscordStats()
+      .then((data) => {
+        setStats(data);
+        startTransition(() => setState("loaded"));
+      })
+      .catch((error) => {
+        console.error("Failed to fetch Discord stats:", error);
+        startTransition(() => setState("error"));
+      });
+  }, [showMemberCount]);
 
   return (
     <Button className="relative" asChild variant={"primary"}>
       <Link href="https://discord.gg/hytalemodding" target="_blank">
         <FaDiscord />
         {messages.home.discord}
-        {/* <div className="absolute top-full mt-2 flex">
-          <ViewTransition>
-            {state === "loading" ? (
-              <p className="text-muted-foreground text-sm">
-                {messages.misc.loading}
-              </p>
-            ) : state === "loaded" && stats ? (
-              <p className="text-muted-foreground flex items-center gap-1 text-sm">
-                <span className="flex gap-1 text-green-400">
-                  <CircleUserIcon className="my-auto" />
-                  {messages.home.memberCount.replace(
-                    "{count}",
-                    stats.total_members.toLocaleString(),
-                  )}
-                </span>
-              </p>
-            ) : (
-              <p className="text-destructive text-sm">Failed to load stats</p>
-            )}
-          </ViewTransition>
-        </div> */}
+        {showMemberCount ? (
+          <div className="absolute top-full mt-2 flex">
+            <ViewTransition>
+              {state === "loading" ? (
+                <p className="text-muted-foreground text-sm">{messages.misc.loading}</p>
+              ) : state === "loaded" && stats ? (
+                <p className="text-muted-foreground flex items-center gap-1 text-sm">
+                  <span className="flex gap-1 text-green-400">
+                    <CircleUserIcon className="my-auto" />
+                    {messages.home.memberCount.replace(
+                      "{count}",
+                      stats.total_members.toLocaleString(),
+                    )}
+                  </span>
+                </p>
+              ) : (
+                <p className="text-destructive text-sm">Failed to load stats</p>
+              )}
+            </ViewTransition>
+          </div>
+        ) : null}
       </Link>
     </Button>
   );

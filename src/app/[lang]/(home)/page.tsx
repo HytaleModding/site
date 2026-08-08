@@ -29,7 +29,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-1 flex-col">
       <Spotlight />
-      <div className="relative container mx-auto flex h-192 max-h-[calc(100vh-12rem)] min-h-fit flex-col items-center justify-center px-4 py-32 md:px-12">
+      <div className="relative container mx-auto flex h-192 max-h-[calc(100vh-21rem)] min-h-fit flex-col items-center justify-center px-4 py-32 md:px-12">
         <div className="flex h-full w-full max-w-5xl flex-col items-center justify-around gap-6 space-y-8 text-center">
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
@@ -78,12 +78,6 @@ export default function HomePage() {
                 </Link>
               </Button>
               <Button asChild>
-                <Link href="https://forum.hytalemodding.dev" target="_blank">
-                  <MessageSquareIcon />
-                  {messages.home.forum}
-                </Link>
-              </Button>
-              <Button asChild>
                 <DynamicLink href="/[lang]/grants">
                   <CoinsIcon />
                   Grant Program
@@ -92,16 +86,10 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        {/* TODO: decide if we're going to keep this */}
-        {/* <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
+        <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
           <p className="text-sm">Scroll down for more</p>
           <ArrowDownCircleIcon />
-        </div> */}
-        {/* TODO: decide if we're going to keep this */}
-        {/* <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
-          <p className="text-sm">Scroll down for more</p>
-          <ArrowDownCircleIcon />
-        </div> */}
+        </div>
       </div>
 
       <div className="w-full pb-16">

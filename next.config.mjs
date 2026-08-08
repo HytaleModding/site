@@ -23,6 +23,14 @@ const config = {
         protocol: "https",
         hostname: "cdn.internal.hytalemodding.dev",
       },
+      {
+        protocol: "https",
+        hostname: "hytalemodding.dev",
+      },
+      {
+        protocol: "https",
+        hostname: "cataas.com",
+      }
     ],
   },
   async redirects() {
@@ -57,11 +65,6 @@ const config = {
         source: "/docs",
         destination: "/en/docs",
         permanent: false,
-      },
-      {
-        source: "/",
-        destination: "/en",
-        permanent: true,
       },
       {
         source: "/drakon-guide/:path*",
