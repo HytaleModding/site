@@ -2,14 +2,20 @@ import BisectHostingDark from "@/../public/branding/bisecthosting/BH_DARK.svg";
 import BisectHostingLight from "@/../public/branding/bisecthosting/BH_LIGHT.svg";
 import HMLogoDark from "@/../public/branding/hytalemodding/HM_DARK.svg";
 import HMLogoLight from "@/../public/branding/hytalemodding/HM_LIGHT.svg";
-import Yeti from "@/../public/grants/BH_HytaleModding_Assets-10.png";
 import NitradoLogoColored from "@/../public/branding/nitrado/nitrado-logo.svg";
 import NitradoLogoDark from "@/../public/branding/nitrado/nitrado-logo-black.svg";
+import HytaleLogo from "@/../public/branding/hytale/Hytale-Logo-Illustrated.png";
+import Mascot from "@/../public/grants/BH_HytaleModding_Assets-05.png";
+import Cubes from "@/../public/grants/BH_HytaleModding_Assets-09.png";
+import Background from "@/../public/grants/BG_Desert_Dunes.png";
+import { BorderTrail } from "@/components/ui/border-trail";
+
 
 import { TextLink } from "@/components/text-link";
 import { DiscordButton } from "@/components/discord-button";
 import { GrantsHero } from "./grants/hero";
 import { BisectButton } from "./grants/bisect-button";
+import ModJamBg from "@/../public/branding/hytalemodding/hytalemodjam-bg.jpg";
 import {
   ArrowRightIcon,
   BookOpenIcon,
@@ -33,20 +39,98 @@ export function ProgramsSection() {
         </p>
       </div>
       <div className="grid lg:grid-cols-2 gap-8">
-        <div className="overflow-clip rounded-xl border p-8">
+        {/* Official Docs */}
+        <div
+          className="dark relative overflow-hidden rounded-xl border bg-[#0f1418] p-8 bg-cover bg-top"
+          style={{
+            backgroundImage:
+              "url(/assets/official-documentation/background/content-lower-nowatermark.webp), linear-gradient(#0f1418,#0f1418)",
+          }}
+        >
+          <div className="flex flex-col gap-12">
+            <div className="flex h-12 items-center gap-6">
+              <Image
+                src={HMLogoDark}
+                alt="HytaleModding Logo"
+                className="h-full w-fit"
+              />
+              <XIcon className="size-6 shrink-0 text-white/50" />
+              <Image
+                src={HytaleLogo}
+                alt="Hytale Logo"
+                className="h-full w-auto scale-250 pl-2"
+              />
+            </div>
+            <div className="space-y-4">
+              <h2
+                className="text-3xl font-semibold tracking-wide text-[#f0c65f]" style={{ fontFamily: "Lexend, Geist, sans-serif" }}
+              >
+                Hytale's Official Documentation
+              </h2>
+              <p className="text-[#9eb2c0] font-normal">
+                We host the official documentation for Hytale, provided by Hypixel Studios. It contains source reference material for modders, and guides for modding Hytale.
+              </p>
+            </div>
+            <div className="mt-auto flex">
+              <Button asChild variant={"primary"}>
+                <DynamicLink href="/[lang]/docs/">
+                  View Documentation
+                  <ArrowRightIcon />
+                </DynamicLink>
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="relative overflow-hidden rounded-xl border p-8 text-white">
+          <Image src={ModJamBg} alt="" fill className="-z-20 object-cover" />
+          <div className="absolute inset-0 -z-10 bg-black/60" />
+          <div className="flex flex-col gap-12">
+            <div className="flex h-12 items-center gap-6">
+              <Image
+                src={HMLogoDark}
+                alt="HytaleModding Logo"
+                className="h-full w-fit"
+              />
+              <XIcon className="size-6 shrink-0 text-white/50" />
+              <Image
+                src={HytaleLogo}
+                alt="Hytale Logo"
+                className="h-full w-auto scale-250 pl-2"
+              />
+            </div>
+            <div className="space-y-4">
+              <h2 className="text-3xl font-semibold text-[#dce8eb]" style={{ fontFamily: "Lexend, Geist, sans-serif" }}>
+                The Hytale ModJam, June 2026
+              </h2>
+              <p className="opacity-75 font-normal">
+                A 7-day modding event where creators from around the world come together to build amazing mods based on a secret theme. Funded by Hypixel Studios.
+              </p>
+            </div>
+            <div className="mt-auto flex">
+              <Button asChild variant={"primary"}>
+                <DynamicLink href="/[lang]/grants">
+                  View Submissions
+                  <ExternalLinkIcon />
+                </DynamicLink>
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="relative overflow-hidden rounded-xl border border-[#1B57C4] p-8 shadow-xl shadow-[#0C46B0]/40">
+          <BorderTrail
+            style={{ boxShadow: "0px 0px 90px 90px rgba(137,230,196,0.6)" }}
+            size={0}
+          />
+          <div className="absolute inset-0 -z-10 bg-linear-to-l from-[#0C46B0]/10 via-[#0C46B0]/90 to-[#0C46B0]" />
+          <Image src={Background} alt="" fill className="-z-20 object-cover object-top" />
           <div className="flex h-full flex-col gap-12">
             <div className="flex h-12 items-center gap-6">
               <Image
                 src={HMLogoDark}
                 alt="HytaleModding Logo"
-                className="h-full w-fit not-dark:hidden"
+                className="h-full w-fit"
               />
-              <Image
-                src={HMLogoLight}
-                alt="HytaleModding Logo"
-                className="h-full w-fit dark:hidden"
-              />
-              <XIcon className="size-6 shrink-0" />
+              <XIcon className="size-6 shrink-0 text-white/50" />
               <Image
                 src={BisectHostingDark}
                 alt="BisectHosting Logo"
@@ -58,24 +142,34 @@ export function ProgramsSection() {
                 className="h-full w-fit dark:hidden"
               />
             </div>
-            <div className="space-y-4">
-              <h2 className="text-3xl font-semibold">
-                HytaleModding Grant Program
-              </h2>
-              <p className="text-muted-foreground font-normal">
+            <div className="space-y-4 text-white">
+              <h2 className="text-3xl font-semibold">HytaleModding Grant Program</h2>
+              <p className="opacity-75 font-normal text-shadow-lg">
                 We have partnered with BisectHosting to fund high-impact,
                 community-driven projects that help advance the Hytale modding
                 ecosystem forward.
               </p>
             </div>
-            <div className="mt-auto flex">
-              <Button asChild variant={"primary"}>
-                <DynamicLink href="/[lang]/grants">
-                  Applications are open!
-                  <ArrowRightIcon />
-                </DynamicLink>
-              </Button>
+            <div className="mt-auto flex gap-4">
+              <BisectButton
+                variant="alternative"
+                href="/en/grants/apply"
+                className="bg-white text-[#0C46B0]"
+              >
+                Apply Now
+              </BisectButton>
+              <BisectButton
+                variant="secondary"
+                href="/en/grants"
+                className="text-white hover:text-white"
+              >
+                <BookOpenIcon /> Guidelines
+              </BisectButton>
             </div>
+          </div>
+          <div className="pointer-events-none absolute -right-6 -bottom-4 z-[-1] h-40 w-56 not-lg:hidden">
+            <Image src={Mascot} alt="" className="-scale-x-100 -rotate-12 object-cover object-top" draggable={false} />
+            <Image src={Cubes} alt="" width={64} height={64} className="absolute left-0 top-0" />
           </div>
         </div>
         <div className="rounded-xl border p-8">
@@ -108,10 +202,7 @@ export function ProgramsSection() {
                 The first ever Hytale Modjam!
               </h2>
               <p className="text-muted-foreground font-normal">
-                A 4-day modding event in collaboration with Kweebec Corner,
-                where creators from around the world come together to create
-                amazing mods based on a secret theme and compete for 5,000$ in
-                prizes funded by Nitrado!
+                A 4-day modding event in collaboration with Kweebec Corner with a prize of $5,000 funded by Nitrado.
               </p>
             </div>
             <div className="mt-auto flex gap-4">
@@ -119,7 +210,7 @@ export function ProgramsSection() {
                 Jam has ended.
               </Button>
               <Button variant={"secondary"} asChild>
-                <DynamicLink href="https://hytalemodjam.com/submissions">
+                <DynamicLink href="https://hytalemodjam.com/submissions?modjam=hm-26.1">
                   See submissions <ExternalLinkIcon />
                 </DynamicLink>
               </Button>
