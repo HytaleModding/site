@@ -63,7 +63,7 @@ export default function HomePage() {
                       <span className="italic">{chunks}</span>
                     ),
                     badge: (chunks) => (
-                      <span className="text-rainbow rounded-md px-2.5 py-0.5 font-bold text-black">
+                      <span className="text-rainbow rounded-md py-0.5 font-bold text-black">
                         {chunks}
                       </span>
                     ),
