@@ -157,9 +157,8 @@ export function ProgramsSection() {
                 HytaleModding Grant Program
               </h2>
               <p className="font-normal opacity-75 text-shadow-lg">
-                We have partnered with BisectHosting to fund high-impact,
-                community-driven projects that help advance the Hytale modding
-                ecosystem forward.
+                We partnered with BisectHosting to fund impactful community
+                projects that advance the Hytale modding ecosystem.
               </p>
             </div>
             <div className="mt-auto flex gap-4">
