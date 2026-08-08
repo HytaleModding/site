@@ -23,6 +23,7 @@ const LINK_GROUPS = [
       { label: "Documentation", href: "/en/docs" },
       { label: "Wiki", href: "https://wiki.hytalemodding.dev" },
       { label: "Grant Program", href: "/en/grants" },
+      { label: "Blogs", href: "/news" },
     ],
   },
 ];
