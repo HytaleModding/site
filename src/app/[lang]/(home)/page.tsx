@@ -57,7 +57,7 @@ export default function HomePage() {
                 {richText(messages.home.title, {
                   italic: (chunks) => <span className="italic">{chunks}</span>,
                   badge: (chunks) => (
-                    <span className="text-rainbow italic font-bold text-black px-2.5 py-0.5 rounded-md">
+                    <span className="text-rainbow font-bold text-black px-2.5 py-0.5 rounded-md">
                       {chunks}
                     </span>
                   ),
@@ -102,15 +102,15 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="w-full pb-16">
+      <div className="w-full pb-4">
         <ShowcaseMarquee />
       </div>
 
       <CommunitySection />
       <Separator />
 
-      <UtilsSection />
-      <Separator />
+      {/* <UtilsSection />
+      <Separator /> */}
 
       <ProgramsSection />
     </div>
