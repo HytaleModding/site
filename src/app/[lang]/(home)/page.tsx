@@ -53,16 +53,21 @@ export default function HomePage() {
                     </Link>
                 </div>
               </div>*/}
-              <h1 className="text-6xl font-semibold text-balance md:text-7xl" style={{ fontFamily: "Lexend, Geist, sans-serif" }}>
+              <h1
+                className="text-6xl font-semibold text-balance md:text-7xl"
+                style={{ fontFamily: "Lexend, Geist, sans-serif" }}
+              >
                 <div>
-                {richText(messages.home.title, {
-                  italic: (chunks) => <span className="italic">{chunks}</span>,
-                  badge: (chunks) => (
-                    <span className="text-rainbow font-bold text-black px-2.5 py-0.5 rounded-md">
-                      {chunks}
-                    </span>
-                  ),
-                })}
+                  {richText(messages.home.title, {
+                    italic: (chunks) => (
+                      <span className="italic">{chunks}</span>
+                    ),
+                    badge: (chunks) => (
+                      <span className="text-rainbow rounded-md px-2.5 py-0.5 font-bold text-black">
+                        {chunks}
+                      </span>
+                    ),
+                  })}
                 </div>
               </h1>
               <h2 className="text-muted-foreground text-lg text-balance md:text-xl">

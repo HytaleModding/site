@@ -33,9 +33,7 @@ export function richText(
 
     const renderer = components[tag];
     parts.push(
-      <Fragment key={key++}>
-        {renderer ? renderer(content) : content}
-      </Fragment>,
+      <Fragment key={key++}>{renderer ? renderer(content) : content}</Fragment>,
     );
 
     lastIndex = start + fullMatch.length;

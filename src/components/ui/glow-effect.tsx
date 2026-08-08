@@ -7,12 +7,7 @@ export type GlowEffectProps = {
   style?: React.CSSProperties;
   colors?: string[];
   mode?:
-    | "rotate"
-    | "pulse"
-    | "breathe"
-    | "colorShift"
-    | "flowHorizontal"
-    | "static";
+    "rotate" | "pulse" | "breathe" | "colorShift" | "flowHorizontal" | "static";
   blur?:
     | number
     | "softest"

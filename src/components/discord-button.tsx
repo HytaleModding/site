@@ -42,7 +42,9 @@ export function DiscordButton({ showMemberCount = false }: DiscordButtonProps) {
           <div className="absolute top-full mt-2 flex">
             <ViewTransition>
               {state === "loading" ? (
-                <p className="text-muted-foreground text-sm">{messages.misc.loading}</p>
+                <p className="text-muted-foreground text-sm">
+                  {messages.misc.loading}
+                </p>
               ) : state === "loaded" && stats ? (
                 <p className="text-muted-foreground flex items-center gap-1 text-sm">
                   <span className="flex gap-1 text-green-400">

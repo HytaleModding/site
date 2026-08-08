@@ -30,7 +30,7 @@ const config = {
       {
         protocol: "https",
         hostname: "cataas.com",
-      }
+      },
     ],
   },
   async redirects() {

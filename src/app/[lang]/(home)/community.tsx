@@ -16,17 +16,79 @@ type SidePhoto = {
 };
 
 const PHOTOS: SidePhoto[] = [
-  { src: "/assets/landing/hero/photo2.png", top: "2%", x: -70, rotate: -8, side: "left", size: 340 },
-  { src: "/assets/landing/hero/photo6.png", top: "27%", x: -105, rotate: 14, side: "left", size: 340 },
-  { src: "/assets/landing/hero/photo5.png", top: "52%", x: -85, rotate: -12, side: "left", size: 340 },
-  { src: "/assets/landing/hero/photo4.png", top: "77%", x: -65, rotate: 9, side: "left", size: 340 },
-  { src: "/assets/landing/hero/photo3.png", top: "2%", x: -70, rotate: 10, side: "right", size: 340 },
-  { src: "/assets/landing/hero/photo8.png", top: "27%", x: -105, rotate: -16, side: "right", size: 340 },
-  { src: "/assets/landing/hero/photo7.png", top: "52%", x: -85, rotate: 12, side: "right", size: 340 },
-  { src: "/assets/landing/hero/photo1.png", top: "77%", x: -65, rotate: -10, side: "right", size: 340 },
+  {
+    src: "/assets/landing/hero/photo2.png",
+    top: "2%",
+    x: -70,
+    rotate: -8,
+    side: "left",
+    size: 340,
+  },
+  {
+    src: "/assets/landing/hero/photo6.png",
+    top: "27%",
+    x: -105,
+    rotate: 14,
+    side: "left",
+    size: 340,
+  },
+  {
+    src: "/assets/landing/hero/photo5.png",
+    top: "52%",
+    x: -85,
+    rotate: -12,
+    side: "left",
+    size: 340,
+  },
+  {
+    src: "/assets/landing/hero/photo4.png",
+    top: "77%",
+    x: -65,
+    rotate: 9,
+    side: "left",
+    size: 340,
+  },
+  {
+    src: "/assets/landing/hero/photo3.png",
+    top: "2%",
+    x: -70,
+    rotate: 10,
+    side: "right",
+    size: 340,
+  },
+  {
+    src: "/assets/landing/hero/photo8.png",
+    top: "27%",
+    x: -105,
+    rotate: -16,
+    side: "right",
+    size: 340,
+  },
+  {
+    src: "/assets/landing/hero/photo7.png",
+    top: "52%",
+    x: -85,
+    rotate: 12,
+    side: "right",
+    size: 340,
+  },
+  {
+    src: "/assets/landing/hero/photo1.png",
+    top: "77%",
+    x: -65,
+    rotate: -10,
+    side: "right",
+    size: 340,
+  },
 ];
 
-function Polaroid({ photo, onOpen }: { photo: SidePhoto; onOpen: (src: string) => void }) {
+function Polaroid({
+  photo,
+  onOpen,
+}: {
+  photo: SidePhoto;
+  onOpen: (src: string) => void;
+}) {
   return (
     <div
       className="side-photo"
@@ -43,7 +105,8 @@ function Polaroid({ photo, onOpen }: { photo: SidePhoto; onOpen: (src: string) =
         boxShadow: "0 4px 14px rgba(0,0,0,0.18)",
         pointerEvents: "auto",
         cursor: "pointer",
-        transition: "transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.25s ease",
+        transition:
+          "transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.25s ease",
       }}
     >
       <Image
@@ -57,7 +120,13 @@ function Polaroid({ photo, onOpen }: { photo: SidePhoto; onOpen: (src: string) =
   );
 }
 
-function PhotoLightbox({ src, onClose }: { src: string | null; onClose: () => void }) {
+function PhotoLightbox({
+  src,
+  onClose,
+}: {
+  src: string | null;
+  onClose: () => void;
+}) {
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -103,7 +172,8 @@ function PhotoLightbox({ src, onClose }: { src: string | null; onClose: () => vo
           width: "min(90vw, 700px)",
           transform: visible ? "scale(1)" : "scale(0.85)",
           opacity: visible ? 1 : 0,
-          transition: "transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.25s ease",
+          transition:
+            "transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.25s ease",
           border: "6px solid #fff",
           borderRadius: 12,
           overflow: "hidden",
@@ -119,7 +189,7 @@ function PhotoLightbox({ src, onClose }: { src: string | null; onClose: () => vo
         />
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }
 
@@ -127,7 +197,7 @@ export function CommunitySection() {
   const [zoomedSrc, setZoomedSrc] = useState<string | null>(null);
 
   return (
-    <div className="relative left-1/2 w-screen -translate-x-1/2 my-8 min-h-[820px]">
+    <div className="relative my-8 min-h-[820px] overflow-x-clip">
       <style>{`
         .side-photo:hover {
           box-shadow: 0 14px 26px rgba(0,0,0,0.28);
@@ -145,36 +215,42 @@ export function CommunitySection() {
 
       <PhotoLightbox src={zoomedSrc} onClose={() => setZoomedSrc(null)} />
 
-      <div className="pt-35 relative z-[5] mx-auto flex h-full w-full max-w-3xl items-center justify-center gap-12 px-4 not-lg:flex-col">
+      <div className="relative z-[5] mx-auto flex h-full w-full max-w-3xl items-center justify-center gap-12 px-4 pt-35 not-lg:flex-col">
         <div className="space-y-8 text-center">
-          <h1 className="text-3xl font-semibold" style={{ fontFamily: "Lexend, Geist, sans-serif" }}>What is HytaleModding?</h1>
+          <h1
+            className="text-3xl font-semibold"
+            style={{ fontFamily: "Lexend, Geist, sans-serif" }}
+          >
+            What is HytaleModding?
+          </h1>
           <p className="text-foreground/80 text-lg">
             HytaleModding is the largest community of modders for{" "}
-            <TextLink href="https://hytale.com">Hytale</TextLink>. We write docs,
-            guides, and tools for modders of every skill level, and run community
-            events like ModJams, town halls, and more that bring modders together and
-            celebrate what they build.
+            <TextLink href="https://hytale.com">Hytale</TextLink>. We write
+            docs, guides, and tools for modders of every skill level, and run
+            community events like ModJams, town halls, and more that bring
+            modders together and celebrate what they build.
             <br />
             <br />
             A big part of Hytale is its moddability, and our goal is to empower
             modders of all skill levels to create amazing content for the game.
             <br />
             <br />
-            <b style={{ fontFamily: "Lexend, Geist, sans-serif" }}>Artists, game developers, or just curious players: everyone's welcome, and nobody needs experience to start.</b>
+            <b style={{ fontFamily: "Lexend, Geist, sans-serif" }}>
+              Artists, game developers, or just curious players: everyone's
+              welcome, and nobody needs experience to start.
+            </b>
             <br />
             <br />
             <div style={{ fontFamily: "Lexend, Geist, sans-serif" }}>
               Join{" "}
               <TextLink
                 href="https://discord.gg/hytalemodding"
-                className="group relative inline-block font-medium text-foreground"
+                className="group text-foreground relative inline-block font-medium"
               >
                 <span className="relative z-10">9,800+ modders on Discord</span>
                 <span
                   aria-hidden="true"
-                  className="absolute inset-0 -z-0 origin-right scale-x-0 bg-indigo-400
-                            transition-transform duration-300 ease-out
-                            group-hover:origin-left group-hover:scale-x-100"
+                  className="absolute inset-0 -z-0 origin-right scale-x-0 bg-indigo-400 transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"
                 />
               </TextLink>{" "}
               and start building.

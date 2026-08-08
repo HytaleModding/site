@@ -168,16 +168,12 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
       </div>
 
       <div className="relative flex min-h-0 flex-1 flex-col justify-center border-t px-4 py-3">
-        <CardTitle className="pr-6 text-base">
-          {item.title}
-        </CardTitle>
+        <CardTitle className="pr-6 text-base">{item.title}</CardTitle>
 
-        <p className="mt-1 text-sm text-muted-foreground">
-          {item.author}
-        </p>
+        <p className="text-muted-foreground mt-1 text-sm">{item.author}</p>
 
         {item.link && (
-          <ExternalLinkIcon className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <ExternalLinkIcon className="text-muted-foreground absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2" />
         )}
       </div>
     </>
@@ -200,8 +196,6 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
     </Card>
   );
 };
-
-
 
 export function ShowcaseMarquee() {
   const [repeatedItems] = useState(() => {
