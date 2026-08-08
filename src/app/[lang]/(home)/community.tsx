@@ -3,7 +3,7 @@
 import { TextLink } from "@/components/text-link";
 import { DiscordButton } from "@/components/discord-button";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import FeranImage from "@/../public/assets/landing/hero/feran.png";
 import { DraggableSticker } from "./draggable-sticker";
@@ -84,40 +84,70 @@ const PHOTOS: SidePhoto[] = [
   },
 ];
 
-function Polaroid({
-  photo,
-  onOpen,
-}: {
-  photo: SidePhoto;
-  onOpen: (src: string) => void;
-}) {
+function Polaroid({ photo, onOpen }: { photo: SidePhoto; onOpen: (src: string) => void }) {
+  const [hovered, setHovered] = useState(false);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const size = photo.size ?? 280;
+  const edgeStyle: React.CSSProperties =
+    photo.side === "right" ? { right: photo.x } : { left: photo.x };
+
+  const REVEAL = 80;
+  const MIN_SLIDE = size * 0.9;
+  const hidden = Math.abs(photo.x);
+  const magnitude = Math.max(hidden + REVEAL, MIN_SLIDE);
+  const slideX = photo.side === "left" ? magnitude : -magnitude;
+
   return (
     <div
-      className="side-photo"
-      onClick={() => onOpen(photo.src)}
       style={{
         position: "absolute",
-        [photo.side]: photo.x,
+        ...edgeStyle,
         top: photo.top,
-        width: photo.size,
-        transform: `rotate(${photo.rotate}deg)`,
-        border: "4px solid var(--paper, #fff)",
-        borderRadius: 10,
-        overflow: "hidden",
-        boxShadow: "0 4px 14px rgba(0,0,0,0.18)",
-        pointerEvents: "auto",
-        cursor: "pointer",
-        transition:
-          "transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.25s ease",
+        width: size,
+        zIndex: hovered ? 20 : 1,
+        pointerEvents: "none",
       }}
     >
-      <Image
-        src={photo.src}
-        alt=""
-        width={photo.size}
-        height={Math.round((photo.size ?? 280) * 0.7)}
-        style={{ width: "100%", height: "auto", display: "block" }}
-      />
+      <div
+        style={{
+          width: "100%",
+          transform:
+            hovered && !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? `translateX(${slideX}px)`
+              : "none",
+          transition: "transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        }}
+      >
+        <div
+          onClick={() => onOpen(photo.src)}
+          onMouseEnter={() => {
+            if (leaveTimer.current) clearTimeout(leaveTimer.current);
+            setHovered(true);
+          }}
+          onMouseLeave={() => {
+            leaveTimer.current = setTimeout(() => setHovered(false), 200);
+          }}
+          style={{
+            transform: `rotate(${photo.rotate}deg)`,
+            border: "4px solid var(--paper, #fff)",
+            borderRadius: 10,
+            overflow: "hidden",
+            boxShadow: hovered ? "0 14px 26px rgba(0,0,0,0.28)" : "0 4px 14px rgba(0,0,0,0.18)",
+            pointerEvents: "auto",
+            cursor: "pointer",
+            transition: "box-shadow 0.3s ease",
+          }}
+        >
+          <Image
+            src={photo.src}
+            alt=""
+            width={size}
+            height={Math.round(size * 0.7)}
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </div>
+      </div>
     </div>
   );
 }
