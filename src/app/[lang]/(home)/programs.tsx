@@ -115,7 +115,7 @@ export function ProgramsSection() {
               </p>
             </div>
             <div className="mt-auto flex">
-              <Button asChild variant={"primary"}>
+              <Button asChild variant={"primary"} className="bg-white text-black">
                 <DynamicLink href="/[lang]/grants">
                   View Submissions
                   <ExternalLinkIcon />
@@ -147,12 +147,7 @@ export function ProgramsSection() {
               <Image
                 src={BisectHostingDark}
                 alt="BisectHosting Logo"
-                className="h-full w-fit not-dark:hidden"
-              />
-              <Image
-                src={BisectHostingLight}
-                alt="BisectHosting Logo"
-                className="h-full w-fit dark:hidden"
+                className="h-full w-fit"
               />
             </div>
             <div className="space-y-4 text-white">
@@ -202,36 +197,26 @@ export function ProgramsSection() {
               <Image
                 src={HMLogoDark}
                 alt="HytaleModding Logo"
-                className="h-full w-fit not-dark:hidden"
+                className="h-full w-fit "
               />
-              <Image
-                src={HMLogoLight}
-                alt="HytaleModding Logo"
-                className="h-full w-fit dark:hidden"
-              />
-              <XIcon className="size-6 shrink-0" />
+              <XIcon className="size-6 shrink-0 text-white/50" />
               <Image
                 src={NitradoLogoColored}
                 alt="Nitrado Logo"
-                className="h-full w-fit not-dark:hidden"
-              />
-              <Image
-                src={NitradoLogoDark}
-                alt="Nitrado Logo"
-                className="h-full w-fit dark:hidden"
+                className="h-full w-fit"
               />
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4 text-white">
               <h2 className="text-3xl font-semibold">
                 The first ever Hytale Modjam!
               </h2>
-              <p className="text-muted-foreground font-normal">
+              <p className="font-normal">
                 A 4-day modding event in collaboration with Kweebec Corner with
                 a prize of $5,000 funded by Nitrado.
               </p>
             </div>
             <div className="mt-auto flex gap-4">
-              <Button asChild variant={"primary"}>
+              <Button asChild variant={"primary"} className="bg-white text-black">
                 <DynamicLink href="/[lang]/grants">
                   View Submissions
                   <ExternalLinkIcon />
