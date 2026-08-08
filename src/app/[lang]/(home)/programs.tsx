@@ -226,12 +226,9 @@ export function ProgramsSection() {
               </p>
             </div>
             <div className="mt-auto flex gap-4">
-              <Button variant={"primary"} disabled>
-                Jam has ended.
-              </Button>
               <Button variant={"secondary"} asChild>
                 <DynamicLink href="https://hytalemodjam.com/submissions?modjam=hm-26.1">
-                  See submissions <ExternalLinkIcon />
+                  View submissions <ExternalLinkIcon />
                 </DynamicLink>
               </Button>
             </div>
