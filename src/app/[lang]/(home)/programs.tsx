@@ -83,7 +83,10 @@ export function ProgramsSection() {
         </div>
         <div className="relative overflow-hidden rounded-xl border p-8 text-white">
           <Image src={ModJamBg} alt="" fill className="-z-20 object-cover" />
-          <div className="absolute inset-0 -z-10 bg-black/60" />
+          <div className="absolute inset-0 -z-10 bg-black/40" />
+          <div className="absolute right-0 bottom-0 rounded-tl-xl bg-[#0C46B0] px-4 py-2 text-sm font-medium tracking-wide text-white shadow-lg backdrop-blur-sm ring-1 ring-white/10">
+            15-22 June
+          </div>
           <div className="flex flex-col gap-12">
             <div className="flex h-12 items-center gap-6">
               <Image
@@ -190,7 +193,10 @@ export function ProgramsSection() {
         </div>
         <div className="relative overflow-hidden rounded-xl border p-8">
           <Image src={NitradoBg} alt="" fill className="-z-20 object-cover" />
-          <div className="absolute inset-0 -z-10 bg-black/50" />
+          <div className="absolute inset-0 -z-10 bg-black/60" />
+          <div className="absolute right-0 bottom-0 rounded-tl-xl bg-[#0C46B0] px-4 py-2 text-sm font-medium tracking-wide text-white shadow-lg backdrop-blur-sm ring-1 ring-white/10">
+            30 Jan-3 Feb
+          </div>
           <div className="flex flex-col gap-12">
             <div className="flex h-12 items-center gap-6">
               <Image
