@@ -105,7 +105,7 @@ export default function TownHallSection({
             {archiveKicker}
           </span>
           <Button
-            className="h-12 px-8 text-base bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90"
+            className="h-12 px-8 text-base bg-black text-white hover:bg-black/90 hover:text-white dark:bg-white dark:text-black dark:hover:bg-white/90 dark:hover:text-black"
             asChild
           >
             <Link href={archiveHref}>
