@@ -112,7 +112,14 @@ function Polaroid({
         top: photo.top,
         width: size,
         zIndex: hovered ? 20 : 1,
-        pointerEvents: "none",
+        pointerEvents: "auto",
+      }}
+      onMouseEnter={() => {
+        if (leaveTimer.current) clearTimeout(leaveTimer.current);
+        setHovered(true);
+      }}
+      onMouseLeave={() => {
+        leaveTimer.current = setTimeout(() => setHovered(false), 200);
       }}
     >
       <div
@@ -124,17 +131,11 @@ function Polaroid({
               ? `translateX(${slideX}px)`
               : "none",
           transition: "transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+          pointerEvents: "none",
         }}
       >
         <div
           onClick={() => onOpen(photo.src)}
-          onMouseEnter={() => {
-            if (leaveTimer.current) clearTimeout(leaveTimer.current);
-            setHovered(true);
-          }}
-          onMouseLeave={() => {
-            leaveTimer.current = setTimeout(() => setHovered(false), 200);
-          }}
           style={{
             transform: `rotate(${photo.rotate}deg)`,
             border: "4px solid var(--paper, #fff)",
