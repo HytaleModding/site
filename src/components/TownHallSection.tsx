@@ -47,14 +47,14 @@ export default function TownHallSection({
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start">
           <div className="flex flex-col gap-8">
             <p className="max-w-md text-base leading-relaxed text-white/60">
-              We run monthly town halls to keep everyone in the loop, share
-              what we&apos;re building, and collect feedback for Hytale
-              directly from the community.
+              We run monthly town halls to keep everyone in the loop, share what
+              we&apos;re building, and collect feedback for Hytale directly from
+              the community.
             </p>
 
             {speakers.length > 0 && (
               <div className="flex flex-col gap-3">
-                <span className="text-xs font-medium uppercase tracking-wide text-white/40">
+                <span className="text-xs font-medium tracking-wide text-white/40 uppercase">
                   {upcoming ? "Confirmed speakers" : "Speakers"}
                 </span>
                 <div className="flex flex-wrap gap-4">
@@ -100,7 +100,7 @@ export default function TownHallSection({
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-3 ">
+        <div className="flex flex-col items-center gap-3">
           <span className="text-sm font-medium text-white/70">
             {archiveKicker}
           </span>
@@ -118,7 +118,8 @@ export default function TownHallSection({
 }
 
 function ScheduledEmbed({ upcoming }: { upcoming: UpcomingTownHall }) {
-  const d = typeof upcoming.date === "string" ? new Date(upcoming.date) : upcoming.date;
+  const d =
+    typeof upcoming.date === "string" ? new Date(upcoming.date) : upcoming.date;
 
   const formattedDate = new Intl.DateTimeFormat(undefined, {
     weekday: "long",
@@ -165,7 +166,8 @@ function ScheduledEmbed({ upcoming }: { upcoming: UpcomingTownHall }) {
 }
 
 function UpcomingCard({ upcoming }: { upcoming: UpcomingTownHall }) {
-  const d = typeof upcoming.date === "string" ? new Date(upcoming.date) : upcoming.date;
+  const d =
+    typeof upcoming.date === "string" ? new Date(upcoming.date) : upcoming.date;
 
   const formattedDate = new Intl.DateTimeFormat(undefined, {
     weekday: "long",
@@ -185,7 +187,7 @@ function UpcomingCard({ upcoming }: { upcoming: UpcomingTownHall }) {
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
           <CalendarClock className="h-5 w-5 text-white/70" />
         </div>
-        <span className="text-xs font-medium uppercase tracking-wide text-white/40">
+        <span className="text-xs font-medium tracking-wide text-white/40 uppercase">
           Next town hall
         </span>
       </div>
