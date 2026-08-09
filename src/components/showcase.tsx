@@ -14,6 +14,11 @@ import Hexcode from "@/../public/showcaseImages/Hexcode.png";
 import BattleshipEffectExperiment from "@/../public/showcaseImages/BattleshipEffectExperiment.gif";
 import PingPong from "@/../public/showcaseImages/PingPong.gif";
 import TriggerVolumeKeyboard from "@/../public/showcaseImages/TriggerVolumeKeyboard.png";
+import Burger from "@/../public/showcaseImages/Burger.png";
+import LuminaryAethers from "@/../public/showcaseImages/LuminaryAethers.png";
+import AutumnPeaks from "@/../public/showcaseImages/AutumnPeaks.png";
+import Prehistoria from "@/../public/showcaseImages/Prehistoria.png";
+import ScarakStacks from "@/../public/showcaseImages/ScarakStacks.png";
 
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
@@ -136,6 +141,41 @@ const showcaseItems: ShowcaseItem[] = [
     link: "",
     type: "art",
   },
+  {
+    title: "Burger",
+    author: "StrayTheDev",
+    image: Burger,
+    link: "",
+    type: "art"
+  },
+  {
+    title: "Luminary Aethers",
+    author: "SAMPL3R, Meyos and Nep",
+    image: LuminaryAethers,
+    link: "https://www.curseforge.com/hytale/mods/neymeros",
+    type: "art"
+  },
+  {
+    title: "Autumn Peaks",
+    author: "Breadley",
+    image: AutumnPeaks,
+    link: "",
+    type: "art"
+  },
+  {
+    title: "Prehistoria",
+    author: "Kirschdieb and PlasticFantastic",
+    image: Prehistoria,
+    link: "",
+    type: "art"
+  },
+  {
+    title: "Scarak Stacks",
+    author: "Kirschdieb",
+    image: ScarakStacks,
+    link: "",
+    type: "art"
+  }
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
