@@ -31,6 +31,10 @@ const config = {
         protocol: "https",
         hostname: "cataas.com",
       },
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+      },
     ],
   },
   async redirects() {

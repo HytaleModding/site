@@ -19,6 +19,7 @@ import { HeroStickers } from "./hero-stickers";
 import { getBlogs } from "@/lib/blogs";
 import { getMessages } from "@/lib/locale";
 import { richText } from "@/lib/rich-text";
+import TownHallHomepageBlock from "@/components/TownHallHomepageBlock";
 
 export default async function HomePage({
   params,
@@ -130,6 +131,10 @@ export default async function HomePage({
       <Separator /> */}
 
       <ProgramsSection />
+      <Separator />
+
+      <TownHallHomepageBlock />
+
       <Footer />
     </div>
   );
