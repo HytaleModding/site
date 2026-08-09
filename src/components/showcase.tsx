@@ -32,7 +32,7 @@ import {
   MarqueeItem,
 } from "./ui/shadcn-io/marquee";
 
-type ProjectType = "art" | "website" | "server" | "mod";
+type ProjectType = "art" | "website" | "server" | "mod" | "worldgen";
 
 interface ShowcaseItem {
   title: string;
@@ -132,7 +132,7 @@ const showcaseItems: ShowcaseItem[] = [
     author: "FoxyCCA",
     image: PingPong,
     link: "",
-    type: "art",
+    type: "worldgen",
   },
   {
     title: "Trigger Volume Keyboard",
@@ -153,33 +153,61 @@ const showcaseItems: ShowcaseItem[] = [
     author: "SAMPL3R, Meyos and Nep",
     image: LuminaryAethers,
     link: "https://www.curseforge.com/hytale/mods/neymeros",
-    type: "art"
+    type: "worldgen"
   },
   {
     title: "Autumn Peaks",
     author: "Breadley",
     image: AutumnPeaks,
     link: "",
-    type: "art"
+    type: "worldgen"
   },
   {
     title: "Prehistoria",
     author: "Kirschdieb and PlasticFantastic",
     image: Prehistoria,
     link: "",
-    type: "art"
+    type: "worldgen"
   },
   {
     title: "Scarak Stacks",
     author: "Kirschdieb",
     image: ScarakStacks,
     link: "",
-    type: "art"
+    type: "worldgen"
   }
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
-  const cardContent = (
+  const isWorldgen = item.type === "worldgen";
+
+  const cardContent = isWorldgen ? (
+    <>
+      <div className="absolute inset-0">
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          draggable={false}
+          className="object-cover"
+        />
+      </div>
+
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
+
+      <div className="relative mt-auto flex min-h-0 flex-1 flex-col justify-end px-4 py-3 text-white">
+        <CardTitle className="pr-6 text-base text-balance text-white">
+          {item.title}
+        </CardTitle>
+
+        <p className="mt-1 text-sm text-white/80">{item.author}</p>
+
+        {item.link && (
+          <ExternalLinkIcon className="absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-white/80" />
+        )}
+      </div>
+    </>
+  ) : (
     <>
       <div className="relative h-44 w-full shrink-0">
         <Image
@@ -208,14 +236,16 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
       {item.link ? (
         <Link
           href={item.link}
-          className="group flex h-full flex-col"
+          className={`group flex h-full ${isWorldgen ? "relative" : "flex-col"}`}
           target="_blank"
           rel="noopener"
         >
           {cardContent}
         </Link>
       ) : (
-        <div className="flex h-full flex-col">{cardContent}</div>
+        <div className={`flex h-full ${isWorldgen ? "relative" : "flex-col"}`}>
+          {cardContent}
+        </div>
       )}
     </Card>
   );
