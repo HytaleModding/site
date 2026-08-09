@@ -19,6 +19,7 @@ import { HeroStickers } from "./hero-stickers";
 import { getBlogs } from "@/lib/blogs";
 import { getMessages } from "@/lib/locale";
 import { richText } from "@/lib/rich-text";
+import TownHallSection from "./townhalls";
 
 export default async function HomePage({
   params,
@@ -130,6 +131,31 @@ export default async function HomePage({
       <Separator /> */}
 
       <ProgramsSection />
+      <Separator />
+      
+      <TownHallSection
+        speakers={[
+                {
+                  name: "Neil",
+                  role: "HytaleModding",
+                  avatarUrl:
+                    "https://cdn.internal.hytalemodding.dev/avatars/neil.jpg",
+                },
+                {
+                  name: "Kaupenjoe",
+                  role: "Content Creator",
+                  avatarUrl:
+                    "https://cdn.internal.hytalemodding.dev/avatars/kaupenjoe.webp",
+                }
+              ]}
+        archiveHref="/townhalls"
+        latestVod={{
+          date: "2026-07-30T17:00:00Z",
+          videoId: "MDRimYi75fY",
+          title: "HytaleModding Town Hall",
+        }}
+      />
+
       <Footer />
     </div>
   );
