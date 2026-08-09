@@ -71,6 +71,11 @@ export const townHalls: TownHall[] = [
         avatarUrl:
           "https://cdn.internal.hytalemodding.dev/avatars/kaupenjoe.webp",
       },
+      {
+          name: "ZeroErrors",
+          role: "Lead Architect @ Hypixel Studios",
+          avatarUrl: "https://cdn.internal.hytalemodding.dev/avatars/zeroerrors.jpg"
+      }
     ],
     reportHref: "",
   },
@@ -91,6 +96,11 @@ export const townHalls: TownHall[] = [
         avatarUrl:
           "https://cdn.internal.hytalemodding.dev/avatars/kaupenjoe.webp",
       },
+      {
+          name: "ZeroErrors",
+          role: "Lead Architect @ Hypixel Studios",
+          avatarUrl: "https://cdn.internal.hytalemodding.dev/avatars/zeroerrors.jpg"
+      }
     ],
     reportHref: "",
   },
