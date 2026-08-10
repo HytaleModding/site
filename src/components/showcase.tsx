@@ -19,6 +19,12 @@ import LuminaryAethers from "@/../public/showcaseImages/LuminaryAethers.png";
 import AutumnPeaks from "@/../public/showcaseImages/AutumnPeaks.png";
 import Prehistoria from "@/../public/showcaseImages/Prehistoria.png";
 import ScarakStacks from "@/../public/showcaseImages/ScarakStacks.png";
+import TheUnderfrost from "@/../public/showcaseImages/TheUnderfrost.png";
+import TheGlimmerdeep from "@/../public/showcaseImages/TheGlimmerdeep.png";
+import FungusSpiral from "@/../public/showcaseImages/FungusSpiral.png";
+import TheWastelands from "@/../public/showcaseImages/TheWastelands.png";
+import RaptorHollows from "@/../public/showcaseImages/RaptorHollows.png";
+import ColdestReaches from "@/../public/showcaseImages/ColdestReaches.png";
 
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
@@ -156,6 +162,13 @@ const showcaseItems: ShowcaseItem[] = [
     type: "worldgen",
   },
   {
+    title: "Raptor Hollows",
+    author: "SAMPL3R",
+    image: RaptorHollows,
+    link: "",
+    type: "worldgen",
+  },
+  {
     title: "Autumn Peaks",
     author: "Breadley",
     image: AutumnPeaks,
@@ -176,6 +189,41 @@ const showcaseItems: ShowcaseItem[] = [
     link: "",
     type: "worldgen",
   },
+  {
+    title: "The Underfrost",
+    author: "TristanM",
+    image: TheUnderfrost,
+    link: "",
+    type: "worldgen",
+  },
+  {
+    title: "The Glimmerdeep",
+    author: "TristanM",
+    image: TheGlimmerdeep,
+    link: "",
+    type: "worldgen",
+  },
+  {
+    title: "Fungus Spiral",
+    author: "DeepCanionStudio",
+    image: FungusSpiral,
+    link: "",
+    type: "worldgen",
+  },
+  {
+    title: "The Wastelands",
+    author: "DeepCanionStudio",
+    image: TheWastelands,
+    link: "",
+    type: "worldgen",
+  },
+  {
+    title: "Coldest Reaches",
+    author: "Lunaronin777",
+    image: ColdestReaches,
+    link: "https://www.curseforge.com/hytale/mods/fullmetal-labyrinth",
+    type: "worldgen",
+  }
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
