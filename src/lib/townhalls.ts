@@ -72,10 +72,11 @@ export const townHalls: TownHall[] = [
           "https://cdn.internal.hytalemodding.dev/avatars/kaupenjoe.webp",
       },
       {
-          name: "ZeroErrors",
-          role: "Lead Architect @ Hypixel Studios",
-          avatarUrl: "https://cdn.internal.hytalemodding.dev/avatars/zeroerrors.jpg"
-      }
+        name: "ZeroErrors",
+        role: "Lead Architect @ Hypixel Studios",
+        avatarUrl:
+          "https://cdn.internal.hytalemodding.dev/avatars/zeroerrors.jpg",
+      },
     ],
     reportHref: "",
   },
@@ -97,10 +98,11 @@ export const townHalls: TownHall[] = [
           "https://cdn.internal.hytalemodding.dev/avatars/kaupenjoe.webp",
       },
       {
-          name: "ZeroErrors",
-          role: "Lead Architect @ Hypixel Studios",
-          avatarUrl: "https://cdn.internal.hytalemodding.dev/avatars/zeroerrors.jpg"
-      }
+        name: "ZeroErrors",
+        role: "Lead Architect @ Hypixel Studios",
+        avatarUrl:
+          "https://cdn.internal.hytalemodding.dev/avatars/zeroerrors.jpg",
+      },
     ],
     reportHref: "",
   },
@@ -114,4 +116,21 @@ export const upcomingTownHall:
       note?: string;
       speakers: Speaker[];
     }
-  | undefined = undefined;
+  | undefined = {
+  date: "2026-08-27T22:30:00+05:30",
+  videoId: "ei0PuGwKPAo",
+  discordHref: "https://discord.gg/hytalemodding",
+  note: "Join us on Discord for the next Town Hall!",
+  speakers: [
+    {
+      name: "Neil",
+      role: "HytaleModding",
+      avatarUrl: "https://cdn.internal.hytalemodding.dev/avatars/neil.jpg",
+    },
+    {
+      name: "BuddhaCat",
+      role: "Community Manager @ Hypixel Studios",
+      avatarUrl: "https://cdn.internal.hytalemodding.dev/avatars/BuddhaCat.jpg",
+    },
+  ],
+};

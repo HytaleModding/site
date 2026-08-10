@@ -42,11 +42,11 @@ export default function TownHallSection({
   return (
     <section className="mx-auto my-24 flex w-full max-w-7xl flex-col gap-16 px-4">
       <div className="space-y-8">
-        <h2 className="text-3xl font-semibold text-foreground">Town Halls</h2>
+        <h2 className="text-foreground text-3xl font-semibold">Town Halls</h2>
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start">
           <div className="flex flex-col gap-8">
-            <p className="max-w-md text-base leading-relaxed text-muted-foreground">
+            <p className="text-muted-foreground max-w-md text-base leading-relaxed">
               We run monthly town halls to keep everyone in the loop, share what
               we&apos;re building, and collect feedback for Hytale directly from
               the community.
@@ -54,7 +54,7 @@ export default function TownHallSection({
 
             {speakers.length > 0 && (
               <div className="flex flex-col gap-3">
-                <span className="text-xs font-medium tracking-wide text-muted-foreground/70 uppercase">
+                <span className="text-muted-foreground/70 text-xs font-medium tracking-wide uppercase">
                   {upcoming ? "Confirmed speakers" : "Speakers"}
                 </span>
                 <div className="flex flex-wrap gap-4">
@@ -63,7 +63,7 @@ export default function TownHallSection({
                       key={speaker.name}
                       className="flex items-center gap-2.5"
                     >
-                      <div className="relative h-9 w-9 overflow-hidden rounded-full border border-border bg-muted">
+                      <div className="border-border bg-muted relative h-9 w-9 overflow-hidden rounded-full border">
                         <Image
                           src={speaker.avatarUrl}
                           alt={speaker.name}
@@ -73,11 +73,11 @@ export default function TownHallSection({
                         />
                       </div>
                       <div className="flex flex-col leading-tight">
-                        <span className="text-sm font-medium text-foreground">
+                        <span className="text-foreground text-sm font-medium">
                           {speaker.name}
                         </span>
                         {speaker.role && (
-                          <span className="text-xs text-muted-foreground/70">
+                          <span className="text-muted-foreground/70 text-xs">
                             {speaker.role}
                           </span>
                         )}
@@ -101,11 +101,11 @@ export default function TownHallSection({
         </div>
 
         <div className="flex flex-col items-center gap-3">
-          <span className="text-sm font-medium text-muted-foreground">
+          <span className="text-muted-foreground text-sm font-medium">
             {archiveKicker}
           </span>
           <Button
-            className="h-12 px-8 text-base bg-black text-white hover:bg-black/90 hover:text-white dark:bg-white dark:text-black dark:hover:bg-white/90 dark:hover:text-black"
+            className="h-12 bg-black px-8 text-base text-white hover:bg-black/90 hover:text-white dark:bg-white dark:text-black dark:hover:bg-white/90 dark:hover:text-black"
             asChild
           >
             <Link href={archiveHref}>
@@ -137,7 +137,7 @@ function ScheduledEmbed({ upcoming }: { upcoming: UpcomingTownHall }) {
 
   return (
     <>
-      <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border bg-black shadow-2xl shadow-black/40">
+      <div className="border-border relative aspect-video w-full overflow-hidden rounded-2xl border bg-black shadow-2xl shadow-black/40">
         <iframe
           className="absolute inset-0 h-full w-full"
           src={`https://www.youtube-nocookie.com/embed/${upcoming.videoId}`}
@@ -147,7 +147,7 @@ function ScheduledEmbed({ upcoming }: { upcoming: UpcomingTownHall }) {
         />
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3 px-1">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="text-muted-foreground flex items-center gap-2 text-sm">
           <CalendarClock className="h-3.5 w-3.5" />
           <span>
             {formattedDate} · {formattedTime}
@@ -184,23 +184,25 @@ function UpcomingCard({ upcoming }: { upcoming: UpcomingTownHall }) {
   }).format(d);
 
   return (
-    <div className="flex h-full flex-col justify-center gap-6 rounded-2xl border border-border bg-muted px-8 py-10">
+    <div className="border-border bg-muted flex h-full flex-col justify-center gap-6 rounded-2xl border px-8 py-10">
       <div className="flex items-center gap-4">
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-background">
-          <CalendarClock className="h-5 w-5 text-muted-foreground" />
+        <div className="border-border bg-background flex h-11 w-11 shrink-0 items-center justify-center rounded-full border">
+          <CalendarClock className="text-muted-foreground h-5 w-5" />
         </div>
-        <span className="text-xs font-medium tracking-wide text-muted-foreground/70 uppercase">
+        <span className="text-muted-foreground/70 text-xs font-medium tracking-wide uppercase">
           Next town hall
         </span>
       </div>
 
       <div className="flex flex-col gap-1">
-        <span className="text-2xl font-semibold text-foreground">
+        <span className="text-foreground text-2xl font-semibold">
           {formattedDate}
         </span>
-        <span className="text-base text-muted-foreground">{formattedTime}</span>
+        <span className="text-muted-foreground text-base">{formattedTime}</span>
         {upcoming.note && (
-          <span className="mt-1 text-sm text-muted-foreground/70">{upcoming.note}</span>
+          <span className="text-muted-foreground/70 mt-1 text-sm">
+            {upcoming.note}
+          </span>
         )}
       </div>
 
@@ -225,7 +227,7 @@ function VodEmbed({ vod }: { vod: LatestVod }) {
 
   return (
     <>
-      <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border bg-black shadow-2xl shadow-black/40">
+      <div className="border-border relative aspect-video w-full overflow-hidden rounded-2xl border bg-black shadow-2xl shadow-black/40">
         <iframe
           className="absolute inset-0 h-full w-full"
           src={`https://www.youtube-nocookie.com/embed/${vod.videoId}`}
@@ -243,7 +245,7 @@ function VodEmbed({ vod }: { vod: LatestVod }) {
         {vod.reportHref && (
           <Link
             href={vod.reportHref}
-            className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground/60"
+            className="text-muted-foreground decoration-muted-foreground/40 hover:text-foreground hover:decoration-foreground/60 inline-flex items-center gap-1 text-sm font-medium underline underline-offset-4 transition-colors"
           >
             Read the report
             <ArrowRight className="h-3.5 w-3.5" />

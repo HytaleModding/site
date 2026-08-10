@@ -17,8 +17,8 @@ export default function TownHallsArchive({ townHalls }: TownHallsArchiveProps) {
     <div>
       <div className="mx-auto my-24 flex w-full max-w-7xl flex-col gap-16 px-4">
         <div className="space-y-4">
-          <h1 className="text-3xl font-semibold text-foreground">Town Halls</h1>
-          <p className="max-w-md text-base leading-relaxed text-muted-foreground">
+          <h1 className="text-foreground text-3xl font-semibold">Town Halls</h1>
+          <p className="text-muted-foreground max-w-md text-base leading-relaxed">
             Every town hall we&apos;ve run, in one place with their recordings
             and speakers. Check back here for new town halls as they happen, and
             for reports on what we discussed.
@@ -26,7 +26,9 @@ export default function TownHallsArchive({ townHalls }: TownHallsArchiveProps) {
         </div>
 
         {sorted.length === 0 ? (
-          <p className="text-muted-foreground">Nothing here yet — check back soon.</p>
+          <p className="text-muted-foreground">
+            Nothing here yet — check back soon.
+          </p>
         ) : (
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {sorted.map((townHall) => (
@@ -52,7 +54,7 @@ function TownHallCard({ townHall }: { townHall: TownHall }) {
       <Link
         href={`https://www.youtube.com/watch?v=${townHall.videoId}`}
         target="_blank"
-        className="group relative block aspect-video w-full overflow-hidden rounded-2xl border border-border bg-muted"
+        className="group border-border bg-muted relative block aspect-video w-full overflow-hidden rounded-2xl border"
       >
         <Image
           src={`https://i.ytimg.com/vi/${townHall.videoId}/hqdefault.jpg`}
@@ -70,17 +72,17 @@ function TownHallCard({ townHall }: { townHall: TownHall }) {
 
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-1">
-          <span className="text-base font-medium text-foreground">
+          <span className="text-foreground text-base font-medium">
             {townHall.title}
           </span>
-          <span className="text-sm text-muted-foreground">{formattedDate}</span>
+          <span className="text-muted-foreground text-sm">{formattedDate}</span>
         </div>
 
         {townHall.speakers.length > 0 && (
           <div className="flex flex-wrap gap-3">
             {townHall.speakers.map((speaker) => (
               <div key={speaker.name} className="flex items-center gap-2">
-                <div className="relative h-6 w-6 overflow-hidden rounded-full border border-border bg-muted">
+                <div className="border-border bg-muted relative h-6 w-6 overflow-hidden rounded-full border">
                   <Image
                     src={speaker.avatarUrl}
                     alt={speaker.name}
@@ -89,7 +91,9 @@ function TownHallCard({ townHall }: { townHall: TownHall }) {
                     className="object-cover"
                   />
                 </div>
-                <span className="text-xs text-muted-foreground">{speaker.name}</span>
+                <span className="text-muted-foreground text-xs">
+                  {speaker.name}
+                </span>
               </div>
             ))}
           </div>
@@ -98,7 +102,7 @@ function TownHallCard({ townHall }: { townHall: TownHall }) {
         {townHall.reportHref && (
           <Link
             href={townHall.reportHref}
-            className="inline-flex w-fit items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground inline-flex w-fit items-center gap-1.5 text-sm font-medium transition-colors"
           >
             <FileText className="h-3.5 w-3.5" />
             Read the report

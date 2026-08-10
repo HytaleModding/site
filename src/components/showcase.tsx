@@ -146,36 +146,36 @@ const showcaseItems: ShowcaseItem[] = [
     author: "StrayTheDev",
     image: Burger,
     link: "",
-    type: "art"
+    type: "art",
   },
   {
     title: "Luminary Aethers",
     author: "SAMPL3R, Meyos and Nep",
     image: LuminaryAethers,
     link: "https://www.curseforge.com/hytale/mods/neymeros",
-    type: "worldgen"
+    type: "worldgen",
   },
   {
     title: "Autumn Peaks",
     author: "Breadley",
     image: AutumnPeaks,
     link: "",
-    type: "worldgen"
+    type: "worldgen",
   },
   {
     title: "Prehistoria",
     author: "Kirschdieb and PlasticFantastic",
     image: Prehistoria,
     link: "",
-    type: "worldgen"
+    type: "worldgen",
   },
   {
     title: "Scarak Stacks",
     author: "Kirschdieb",
     image: ScarakStacks,
     link: "",
-    type: "worldgen"
-  }
+    type: "worldgen",
+  },
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
