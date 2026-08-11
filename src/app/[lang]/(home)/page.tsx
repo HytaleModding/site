@@ -68,9 +68,7 @@ export default async function HomePage({
                       <span className="italic">{chunks}</span>
                     ),
                     badge: (chunks) => (
-                      <span className="text-shine font-bold">
-                        {chunks}
-                      </span>
+                      <span className="text-shine font-bold">{chunks}</span>
                     ),
                   })}
                 </div>
