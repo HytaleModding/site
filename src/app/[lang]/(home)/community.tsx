@@ -244,7 +244,7 @@ export function CommunitySection() {
   }, []);
 
   return (
-    <div className="relative my-8 min-h-[820px] overflow-x-clip">
+    <div className="relative my-8 min-h-fit overflow-x-clip xl:min-h-205">
       <style>{`
         .side-photo:hover {
           box-shadow: 0 14px 26px rgba(0,0,0,0.28);
@@ -262,7 +262,7 @@ export function CommunitySection() {
 
       <PhotoLightbox src={zoomedSrc} onClose={() => setZoomedSrc(null)} />
 
-      <div className="relative z-[5] mx-auto flex h-full w-full max-w-3xl items-center justify-center gap-12 px-4 pt-35 not-lg:flex-col">
+      <div className="relative z-5 mx-auto flex h-full w-full max-w-3xl items-center justify-center gap-12 px-4 pt-16 not-lg:flex-col xl:pt-35">
         <div className="space-y-8 text-center">
           <h1
             className="text-3xl font-semibold"
@@ -297,22 +297,24 @@ export function CommunitySection() {
                 <span className="relative z-10">9,800+ modders on Discord</span>
                 <span
                   aria-hidden="true"
-                  className="absolute inset-0 -z-0 origin-right scale-x-0 bg-indigo-400 transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"
+                  className="absolute inset-0 z-0 origin-right scale-x-0 bg-indigo-400 transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"
                 />
               </TextLink>{" "}
               and start building.
             </div>
           </div>
-          <div className="relative flex flex-col items-center pb-40 not-lg:hidden">
+          <div className="relative flex flex-col items-center pb-16 lg:pb-40">
             <DiscordButton showMemberCount />
-            <DraggableSticker
-              src={FeranImage.src}
-              initialLeft="calc(50% - 80px)"
-              initialTop="calc(100% - 6rem)"
-              rotate={0}
-              width={160}
-              sizes="(max-width: 768px) 120px, 160px"
-            />
+            <div className="not-lg:hidden">
+              <DraggableSticker
+                src={FeranImage.src}
+                initialLeft="calc(50% - 80px)"
+                initialTop="calc(100% - 6rem)"
+                rotate={0}
+                width={160}
+                sizes="(max-width: 768px) 120px, 160px"
+              />
+            </div>
           </div>
         </div>
       </div>
