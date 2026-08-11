@@ -3,7 +3,6 @@
 import { TextLink } from "@/components/text-link";
 import { DiscordButton } from "@/components/discord-button";
 import Image from "next/image";
-import { Heart, MessageCircle, Send, Bookmark } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import FeranImage from "@/../public/assets/landing/hero/feran.png";
@@ -16,7 +15,6 @@ type SidePhoto = {
   rotate: number;
   side: "left" | "right";
   size?: number;
-  user?: string;
 };
 
 const PHOTOS: SidePhoto[] = [
@@ -27,7 +25,6 @@ const PHOTOS: SidePhoto[] = [
     rotate: -8,
     side: "left",
     size: 340,
-    user: "hytalemodding",
   },
   {
     src: "/assets/landing/hero/photo6.png",
@@ -36,7 +33,6 @@ const PHOTOS: SidePhoto[] = [
     rotate: 10,
     side: "left",
     size: 340,
-    user: "modjam",
   },
   {
     src: "/assets/landing/hero/photo5.png",
@@ -45,7 +41,6 @@ const PHOTOS: SidePhoto[] = [
     rotate: -10,
     side: "left",
     size: 340,
-    user: "worldsmiths",
   },
   {
     src: "/assets/landing/hero/photo4.png",
@@ -54,7 +49,6 @@ const PHOTOS: SidePhoto[] = [
     rotate: 9,
     side: "left",
     size: 340,
-    user: "creators",
   },
   {
     src: "/assets/landing/hero/photo3.png",
@@ -63,7 +57,6 @@ const PHOTOS: SidePhoto[] = [
     rotate: 10,
     side: "right",
     size: 340,
-    user: "townhall",
   },
   {
     src: "/assets/landing/hero/photo8.png",
@@ -72,7 +65,6 @@ const PHOTOS: SidePhoto[] = [
     rotate: -10,
     side: "right",
     size: 340,
-    user: "buildclub",
   },
   {
     src: "/assets/landing/hero/photo7.png",
@@ -81,7 +73,6 @@ const PHOTOS: SidePhoto[] = [
     rotate: 8,
     side: "right",
     size: 340,
-    user: "artistry",
   },
   {
     src: "/assets/landing/hero/photo1.png",
@@ -90,7 +81,6 @@ const PHOTOS: SidePhoto[] = [
     rotate: -10,
     side: "right",
     size: 340,
-    user: "community",
   },
 ];
 
@@ -144,269 +134,30 @@ function Polaroid({
           pointerEvents: "none",
         }}
       >
-        <InstagramCard
-          photo={photo}
-          size={size}
-          onOpen={onOpen}
-          hovered={hovered}
-          rotate={photo.rotate}
-        />
-      </div>
-    </div>
-  );
-}
-
-function InstagramCard({
-  photo,
-  size,
-  onOpen,
-  hovered = false,
-  rotate = 0,
-  fill = false,
-}: {
-  photo: SidePhoto;
-  size: number;
-  onOpen: (src: string) => void;
-  hovered?: boolean;
-  rotate?: number;
-  fill?: boolean;
-}) {
-  return (
-    <div
-      style={{
-        transform: rotate ? `rotate(${rotate}deg)` : undefined,
-        background: "#fff",
-        borderRadius: 12,
-        overflow: "hidden",
-        border: "1px solid rgba(0,0,0,0.08)",
-        height: fill ? "100%" : undefined,
-        display: fill ? "flex" : undefined,
-        flexDirection: fill ? "column" : undefined,
-        boxShadow: hovered
-          ? "0 16px 30px rgba(0,0,0,0.30)"
-          : "0 5px 16px rgba(0,0,0,0.20)",
-        pointerEvents: "auto",
-        cursor: "pointer",
-        transition: "box-shadow 0.3s ease",
-        color: "#0f172a",
-      }}
-    >
-      {/* header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          padding: "8px 10px",
-        }}
-      >
         <div
+          onClick={() => onOpen(photo.src)}
           style={{
-            width: 26,
-            height: 26,
-            borderRadius: "50%",
-            padding: 2,
-            background:
-              "linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)",
-            flexShrink: 0,
+            transform: `rotate(${photo.rotate}deg)`,
+            border: "4px solid var(--paper, #fff)",
+            borderRadius: 10,
+            overflow: "hidden",
+            boxShadow: hovered
+              ? "0 14px 26px rgba(0,0,0,0.28)"
+              : "0 4px 14px rgba(0,0,0,0.18)",
+            pointerEvents: "auto",
+            cursor: "pointer",
+            transition: "box-shadow 0.3s ease",
           }}
         >
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              borderRadius: "50%",
-              overflow: "hidden",
-              background: "#fff",
-            }}
-          >
-            <Image
-              src={photo.src}
-              alt=""
-              width={26}
-              height={26}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
-              }}
-            />
-          </div>
+          <Image
+            src={photo.src}
+            alt=""
+            width={size}
+            height={Math.round(size * 0.7)}
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
         </div>
-        <span style={{ fontSize: 13, fontWeight: 600 }}>
-          {photo.user ?? "hytalemodding"}
-        </span>
       </div>
-
-      {/* image */}
-      <div
-        onClick={() => onOpen(photo.src)}
-        style={{ background: "#000", overflow: "hidden" }}
-      >
-        <Image
-          src={photo.src}
-          alt=""
-          width={size}
-          height={Math.round(size * 0.7)}
-          style={{ width: "100%", height: "auto", display: "block" }}
-        />
-      </div>
-
-      {/* actions */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-          padding: "8px 10px 4px",
-        }}
-      >
-        <Heart size={20} style={{ fill: "#ed4956", stroke: "#ed4956" }} />
-        <MessageCircle size={20} />
-        <Send size={20} />
-        <Bookmark size={20} style={{ marginLeft: "auto" }} />
-      </div>
-
-      {/* likes + caption */}
-      <div
-        style={{
-          padding: "0 10px 10px",
-          lineHeight: 1.35,
-          flex: fill ? 1 : undefined,
-        }}
-      >
-        <p style={{ fontSize: 12, fontWeight: 600, margin: 0 }}>
-          {1200 + ((((photo.rotate * 137) % 800) + 800) % 800)} likes
-        </p>
-        <p style={{ fontSize: 12, margin: "2px 0 0" }}>
-          <span style={{ fontWeight: 600 }}>
-            {photo.user ?? "hytalemodding"}
-          </span>{" "}
-          building the future of Hytale 🛠️
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function MobileDeck({
-  photos,
-  onOpen,
-}: {
-  photos: SidePhoto[];
-  onOpen: (src: string) => void;
-}) {
-  const [order, setOrder] = useState<number[]>(() => photos.map((_, i) => i));
-  const [drag, setDrag] = useState<{ x: number; y: number } | null>(null);
-  const [leaving, setLeaving] = useState<1 | -1 | null>(null);
-  const startRef = useRef<{ x: number; y: number } | null>(null);
-  const movedRef = useRef(false);
-
-  const topPos = order.length - 1;
-  const topIdx = order[topPos];
-
-  // make the deck look hand-shuffled
-  const seedX = (i: number) => ((i * 53) % 15) - 7;
-  const seedY = (i: number) => ((i * 29) % 9) - 4;
-  const seedRot = (i: number) => ((i * 37) % 9) - 4;
-
-  const onPointerDown = (e: React.PointerEvent) => {
-    e.currentTarget.setPointerCapture?.(e.pointerId);
-    startRef.current = { x: e.clientX, y: e.clientY };
-    movedRef.current = false;
-    setDrag({ x: 0, y: 0 });
-  };
-
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (!startRef.current) return;
-    const dx = e.clientX - startRef.current.x;
-    const dy = e.clientY - startRef.current.y;
-    if (Math.abs(dx) > 6 || Math.abs(dy) > 6) movedRef.current = true;
-    setDrag({ x: dx, y: dy });
-  };
-
-  const endDrag = () => {
-    if (!drag) return;
-    if (Math.abs(drag.x) > 90) {
-      const dir: 1 | -1 = drag.x > 0 ? 1 : -1;
-      setLeaving(dir);
-      window.setTimeout(() => {
-        setOrder((o) => [o[o.length - 1], ...o.slice(0, o.length - 1)]);
-        setLeaving(null);
-        setDrag(null);
-        startRef.current = null;
-      }, 300);
-    } else {
-      setDrag(null);
-      startRef.current = null;
-    }
-  };
-
-  const onClickCapture = (e: React.MouseEvent) => {
-    // swallow the click that follows a drag so it doesn't open the lightbox
-    if (movedRef.current) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
-  };
-
-  return (
-    <div className="mx-auto w-full">
-      <div style={{ display: "grid", touchAction: "pan-y" }}>
-        {order.map((idx, pos) => {
-          const photo = photos[idx];
-          const isTop = pos === topPos;
-          const depth = topPos - pos;
-          const baseRot = photo.rotate * 0.4 + seedRot(idx);
-
-          let transform = `translate(${seedX(idx)}px, ${
-            depth * 4 + seedY(idx)
-          }px) rotate(${baseRot}deg) scale(${1 - depth * 0.02})`;
-          let transition = "transform 0.3s ease";
-
-          if (isTop && leaving !== null) {
-            transform = `translate(${leaving * 140}%, ${
-              drag?.y ?? 0
-            }px) rotate(${baseRot + leaving * 18}deg)`;
-          } else if (isTop && drag) {
-            transform = `translate(${drag.x}px, ${drag.y}px) rotate(${
-              baseRot + drag.x * 0.04
-            }deg)`;
-            transition = "none";
-          }
-
-          return (
-            <div
-              key={idx}
-              style={{
-                gridArea: "1 / 1",
-                zIndex: pos,
-                transform,
-                transition,
-                pointerEvents: isTop ? "auto" : "none",
-                cursor: isTop ? "grab" : "default",
-                filter:
-                  depth > 0 ? `brightness(${1 - depth * 0.03})` : undefined,
-                userSelect: "none",
-              }}
-              onPointerDown={isTop ? onPointerDown : undefined}
-              onPointerMove={isTop ? onPointerMove : undefined}
-              onPointerUp={isTop ? endDrag : undefined}
-              onPointerCancel={isTop ? endDrag : undefined}
-              onClickCapture={isTop ? onClickCapture : undefined}
-            >
-              <InstagramCard photo={photo} size={480} onOpen={onOpen} fill />
-            </div>
-          );
-        })}
-      </div>
-      <p
-        className="text-foreground/50 mt-4 text-center text-xs"
-        style={{ fontFamily: "Lexend, Geist, sans-serif" }}
-      >
-        Swipe a card to shuffle the deck · tap to enlarge
-      </p>
     </div>
   );
 }
@@ -501,8 +252,6 @@ export function CommunitySection() {
         }
         .side-photos { display: block; }
         @media (max-width: 1279px) { .side-photos { display: none; } }
-        .mobile-feed { display: none; }
-        @media (max-width: 1279px) { .mobile-feed { display: block; } }
       `}</style>
 
       <div className="side-photos" aria-hidden="true">
@@ -568,11 +317,6 @@ export function CommunitySection() {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* mobile feed: shown only where the side photos are hidden */}
-      <div className="mobile-feed relative z-5 mx-auto w-full max-w-md px-4 pb-16">
-        <MobileDeck photos={PHOTOS} onOpen={setZoomedSrc} />
       </div>
     </div>
   );
