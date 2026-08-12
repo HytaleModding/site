@@ -129,38 +129,27 @@
   }
 }
 
-@keyframes shine-sweep {
-  0% {
-    background-position: 100% center;
-  }
-  100% {
-    background-position: -100% center;
+@keyframes rainbow-flow {
+  to {
+    background-position: 200% center;
   }
 }
 
-.text-shine {
+.text-rainbow {
   background-image: linear-gradient(
-    110deg,
-    var(--foreground) 0%,
-    var(--foreground) 40%,
-    #c7d2fe 46%,
-    #fff 50%,
-    #bae6fd 54%,
-    var(--foreground) 60%,
-    var(--foreground) 100%
+    90deg,
+    #ff5757,
+    #ffb347,
+    #fff34f,
+    #4ade80,
+    #38bdf8,
+    #a78bfa,
+    #f472b6,
+    #ff5757
   );
-  background-size: 250% auto;
+  background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent;
-  padding-right: 0.06em;
-  animation: shine-sweep 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .text-shine {
-    animation: none;
-    background-position: 100% center;
-  }
+  animation: rainbow-flow 8s linear infinite;
 }
