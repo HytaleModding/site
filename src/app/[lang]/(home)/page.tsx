@@ -33,7 +33,7 @@ export default async function HomePage({
   return (
     <div className="flex flex-1 flex-col">
       <Spotlight />
-      <div className="relative container mx-auto flex h-192 max-h-[calc(100vh-21rem)] min-h-fit flex-col items-center justify-center px-4 py-32 md:px-12">
+      <div className="relative container mx-auto flex h-192 max-h-[calc(100svh-9rem)] min-h-fit flex-col items-center justify-center px-4 py-20 md:max-h-[calc(100vh-21rem)] md:px-12 md:py-32">
         <div className="hidden md:block">
           <HeroStickers />
         </div>
@@ -59,7 +59,7 @@ export default async function HomePage({
                 </div>
               </div>*/}
               <h1
-                className="text-6xl font-semibold text-balance md:text-7xl"
+                className="text-4xl font-semibold text-balance sm:text-5xl md:text-7xl"
                 style={{ fontFamily: "Lexend, Geist, sans-serif" }}
               >
                 <div>
@@ -68,9 +68,7 @@ export default async function HomePage({
                       <span className="italic">{chunks}</span>
                     ),
                     badge: (chunks) => (
-                      <span className="text-rainbow rounded-md py-0.5 font-bold text-black">
-                        {chunks}
-                      </span>
+                      <span className="text-shine font-bold">{chunks}</span>
                     ),
                   })}
                 </div>

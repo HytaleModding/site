@@ -45,13 +45,13 @@ export function ProgramsSection() {
           }}
         >
           <div className="flex flex-col gap-12">
-            <div className="flex h-12 items-center gap-6">
+            <div className="flex h-9 items-center gap-3 sm:h-12 sm:gap-6">
               <Image
                 src={HMLogoDark}
                 alt="HytaleModding Logo"
                 className="h-full w-fit"
               />
-              <XIcon className="size-6 shrink-0 text-white/50" />
+              <XIcon className="size-5 shrink-0 text-white/50 sm:size-6" />
               <Image
                 src={HytaleLogo}
                 alt="Hytale Logo"
@@ -88,13 +88,13 @@ export function ProgramsSection() {
             15-22 June
           </div>
           <div className="flex flex-col gap-12">
-            <div className="flex h-12 items-center gap-6">
+            <div className="flex h-9 items-center gap-3 sm:h-12 sm:gap-6">
               <Image
                 src={HMLogoDark}
                 alt="HytaleModding Logo"
                 className="h-full w-fit"
               />
-              <XIcon className="size-6 shrink-0 text-white/50" />
+              <XIcon className="size-5 shrink-0 text-white/50 sm:size-6" />
               <Image
                 src={HytaleLogo}
                 alt="Hytale Logo"
@@ -141,13 +141,13 @@ export function ProgramsSection() {
             className="-z-20 object-cover object-top"
           />
           <div className="flex h-full flex-col gap-12">
-            <div className="flex h-12 items-center gap-6">
+            <div className="flex h-9 items-center gap-3 sm:h-12 sm:gap-6">
               <Image
                 src={HMLogoDark}
                 alt="HytaleModding Logo"
                 className="h-full w-fit"
               />
-              <XIcon className="size-6 shrink-0 text-white/50" />
+              <XIcon className="size-5 shrink-0 text-white/50 sm:size-6" />
               <Image
                 src={BisectHostingDark}
                 alt="BisectHosting Logo"
@@ -197,13 +197,13 @@ export function ProgramsSection() {
             30 Jan-3 Feb
           </div>
           <div className="flex flex-col gap-12">
-            <div className="flex h-12 items-center gap-6">
+            <div className="flex h-9 items-center gap-3 sm:h-12 sm:gap-6">
               <Image
                 src={HMLogoDark}
                 alt="HytaleModding Logo"
                 className="h-full w-fit"
               />
-              <XIcon className="size-6 shrink-0 text-white/50" />
+              <XIcon className="size-5 shrink-0 text-white/50 sm:size-6" />
               <Image
                 src={NitradoLogoColored}
                 alt="Nitrado Logo"

@@ -223,7 +223,7 @@ const showcaseItems: ShowcaseItem[] = [
     image: ColdestReaches,
     link: "https://www.curseforge.com/hytale/mods/fullmetal-labyrinth",
     type: "worldgen",
-  }
+  },
 ];
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
