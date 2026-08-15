@@ -1,7 +1,10 @@
 "use client";
 
 import { TextLink } from "@/components/text-link";
-import { DiscordButton } from "@/components/discord-button";
+import {
+  DiscordButton,
+  useDiscordStats,
+} from "@/components/discord-button";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -238,6 +241,11 @@ function PhotoLightbox({
 export function CommunitySection() {
   const [zoomedSrc, setZoomedSrc] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const { stats } = useDiscordStats(true);
+
+  const discordMemberCount = stats?.total_members ?? 0;
+  const clampedDiscordMemberCount = Math.floor(discordMemberCount / 100) * 100;
+  const discordMemberCountLabel = `${clampedDiscordMemberCount.toLocaleString()}+`;
 
   useEffect(() => {
     setMounted(true);
@@ -294,7 +302,9 @@ export function CommunitySection() {
                 href="https://discord.gg/hytalemodding"
                 className="group text-foreground relative inline-block font-medium"
               >
-                <span className="relative z-10">9,800+ modders on Discord</span>
+                <span className="relative z-10">
+                  {discordMemberCountLabel} modders on Discord
+                </span>
                 <span
                   aria-hidden="true"
                   className="absolute inset-0 z-0 origin-right scale-x-0 bg-indigo-400 transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"

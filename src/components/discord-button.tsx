@@ -11,8 +11,7 @@ type DiscordButtonProps = {
   showMemberCount?: boolean;
 };
 
-export function DiscordButton({ showMemberCount = false }: DiscordButtonProps) {
-  const messages = useMessages();
+export function useDiscordStats(showMemberCount = false) {
   const [stats, setStats] = useState<{
     active_members: number;
     total_members: number;
@@ -20,18 +19,37 @@ export function DiscordButton({ showMemberCount = false }: DiscordButtonProps) {
   const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
 
   useEffect(() => {
-    if (!showMemberCount) return;
+    if (!showMemberCount) {
+      setState("loading");
+      setStats(null);
+      return;
+    }
+
+    let active = true;
 
     getDiscordStats()
       .then((data) => {
+        if (!active) return;
         setStats(data);
         startTransition(() => setState("loaded"));
       })
       .catch((error) => {
+        if (!active) return;
         console.error("Failed to fetch Discord stats:", error);
         startTransition(() => setState("error"));
       });
+
+    return () => {
+      active = false;
+    };
   }, [showMemberCount]);
+
+  return { stats, state };
+}
+
+export function DiscordButton({ showMemberCount = false }: DiscordButtonProps) {
+  const messages = useMessages();
+  const { stats, state } = useDiscordStats(showMemberCount);
 
   return (
     <Button className="relative" asChild variant={"primary"}>
