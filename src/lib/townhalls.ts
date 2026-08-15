@@ -1,6 +1,7 @@
 export interface Speaker {
   name: string;
   role?: string;
+  company?: string;
   avatarUrl: string;
 }
 
@@ -129,7 +130,8 @@ export const upcomingTownHall:
     },
     {
       name: "BuddhaCat",
-      role: "Community Manager @ Hypixel Studios",
+      role: "Community Manager",
+      company: "Hypixel Studios",
       avatarUrl: "https://cdn.internal.hytalemodding.dev/avatars/BuddhaCat.jpg",
     },
   ],

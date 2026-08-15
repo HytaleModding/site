@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 interface Speaker {
   name: string;
   role?: string;
+  company?: string;
   avatarUrl: string;
 }
 
@@ -61,7 +62,7 @@ export default function TownHallSection({
                   {speakers.map((speaker) => (
                     <div
                       key={speaker.name}
-                      className="flex items-center gap-2.5"
+                      className="flex items-start gap-2.5"
                     >
                       <div className="border-border bg-muted relative h-9 w-9 overflow-hidden rounded-full border">
                         <Image
@@ -79,6 +80,11 @@ export default function TownHallSection({
                         {speaker.role && (
                           <span className="text-muted-foreground/70 text-xs">
                             {speaker.role}
+                          </span>
+                        )}
+                        {speaker.company && (
+                          <span className="text-muted-foreground/70 text-xs">
+                            {speaker.company}
                           </span>
                         )}
                       </div>
