@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import FeranImage from "@/../public/assets/landing/hero/feran.png";
+import BurgerImage from "@/../public/assets/landing/hero/burger.png";
 import { DraggableSticker } from "./draggable-sticker";
 
 type SidePhoto = {
@@ -268,8 +269,18 @@ export function CommunitySection() {
         ))}
       </div>
 
-      <PhotoLightbox src={zoomedSrc} onClose={() => setZoomedSrc(null)} />
+      <div className="not-lg:hidden">
+        <DraggableSticker
+          src={BurgerImage.src}
+          initialLeft="calc(1% - 40px)"
+          initialTop="calc(100% - 6rem)"
+          rotate={12}
+          width={160}
+          sizes="(max-width: 768px) 120px, 160px"
+        />
+      </div>
 
+      <PhotoLightbox src={zoomedSrc} onClose={() => setZoomedSrc(null)} />
       <div className="relative z-5 mx-auto flex h-full w-full max-w-3xl items-center justify-center gap-12 px-4 pt-16 not-lg:flex-col xl:pt-35">
         <div className="space-y-8 text-center">
           <h1
