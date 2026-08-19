@@ -21,6 +21,7 @@ import { getBlogs } from "@/lib/blogs";
 import { getMessages } from "@/lib/locale";
 import { richText } from "@/lib/rich-text";
 import TownHallHomepageBlock from "@/components/TownHallHomepageBlock";
+import { BlogsSection } from "./blogs-section";
 
 export default async function HomePage({
   params,

@@ -33,6 +33,7 @@ export default function BlogsLayout({ children }: { children: ReactNode }) {
           {...baseOptions("en")}
           className="flex min-h-screen flex-col"
           i18n={false}
+          searchToggle={{ enabled: false }}
         >
           <div className="blogs flex flex-1 flex-col">{children}</div>
         </HomeLayout>

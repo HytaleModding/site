@@ -19,7 +19,11 @@ export default async function Layout({
   const { lang } = await params;
   return (
     <ViewTransition update="none">
-      <HomeLayout {...baseOptions(lang)} className="flex min-h-screen flex-col">
+      <HomeLayout
+        {...baseOptions(lang)}
+        searchToggle={{ enabled: false }}
+        className="flex min-h-screen flex-col"
+      >
         {children}
       </HomeLayout>
     </ViewTransition>
