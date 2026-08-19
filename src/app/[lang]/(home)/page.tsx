@@ -98,12 +98,6 @@ export default async function HomePage({
                   Wiki
                 </Link>
               </Button>
-              <Button asChild>
-                <DynamicLink href="/[lang]/grants">
-                  <CoinsIcon />
-                  Grant Program
-                </DynamicLink>
-              </Button>
             </div>
           </div>
         </div>
