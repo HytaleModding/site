@@ -5,6 +5,7 @@ import {
   SquarePenIcon,
   ArrowDownCircleIcon,
   CoinsIcon,
+  NewspaperIcon,
 } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { Button } from "@/components/ui/button";
@@ -95,7 +96,13 @@ export default async function HomePage({
               <Button asChild>
                 <Link href="https://wiki.hytalemodding.dev" target="_blank">
                   <SquarePenIcon />
-                  Wiki
+                  Mod Wiki
+                </Link>
+              </Button>
+              <Button asChild>
+                <Link href="/news" passHref>
+                  <NewspaperIcon />
+                  News
                 </Link>
               </Button>
             </div>
