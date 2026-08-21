@@ -43,7 +43,7 @@ function ResourceRow({ resource, reverse }: { resource: Resource; reverse?: bool
       <div className="resource-row-copy flex flex-col p-6 sm:p-8 lg:p-10">
         <h2 className="font-display text-3xl font-semibold">{resource.title}</h2>
         <p className="text-muted-foreground mt-4 max-w-xl text-base leading-relaxed">{resource.description}</p>
-        <div className="flex flex-wrap gap-3 pt-20 t-4">
+        <div className="mt-auto flex flex-wrap gap-3 pt-6">
           {resource.links.map((link) => (
             <Button key={link.label} asChild variant="primary">
               <Link href={link.href} target={resource.external ? "_blank" : undefined} rel={resource.external ? "noopener noreferrer" : undefined}>
