@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,14 +9,28 @@ import {
   MarqueeFade,
   MarqueeItem,
 } from "@/components/ui/shadcn-io/marquee";
+import { useEffect, useState } from "react";
 
-const PHOTOS = ["photo1.png", "photo2.png", "photo3.png", "photo4.png", "photo5.png", "photo6.png", "photo7.png", "photo8.png"];
+const COMMUNITY_PHOTOS = Array.from({ length: 20 }, (_, i) => `${i + 1}.png`);
+
+function shuffle<T>(items: T[]): T[] {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+function buildRow(): string[] {
+  return [...shuffle(COMMUNITY_PHOTOS), ...shuffle(COMMUNITY_PHOTOS)];
+}
 
 function PhotoTile({ photo }: { photo: string }) {
   return (
     <div
       className="h-40 w-60 rounded-xl border shadow-sm transition-transform duration-300 hover:scale-[1.03] sm:h-48 sm:w-72"
-      style={{ backgroundImage: `url(/assets/landing/hero/${photo})`, backgroundSize: "cover", backgroundPosition: "center" }}
+      style={{ backgroundImage: `url(/assets/landing/community/${photo})`, backgroundSize: "cover", backgroundPosition: "center" }}
     />
   );
 }
@@ -36,13 +52,21 @@ function PhotoRow({ photos, reverse = false }: { photos: string[]; reverse?: boo
 }
 
 export function CommunityCta() {
-  const rowOne = [...PHOTOS, ...PHOTOS, ...PHOTOS];
-  const rowTwo = [...PHOTOS].reverse();
-  const rowTwoRepeated = [...rowTwo, ...rowTwo, ...rowTwo];
+  const [rows, setRows] = useState(() => ({
+    rowOne: [...COMMUNITY_PHOTOS, ...COMMUNITY_PHOTOS],
+    rowTwo: [...COMMUNITY_PHOTOS].reverse().concat([...COMMUNITY_PHOTOS].reverse()),
+  }));
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setRows({ rowOne: buildRow(), rowTwo: buildRow().reverse() });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   return (
     <section className="my-24 space-y-10 overflow-hidden">
-      <PhotoRow photos={rowOne} />
+      <PhotoRow photos={rows.rowOne} />
 
       <div className="mx-auto max-w-4xl px-4 text-center">
         <h2 className="font-display text-5xl font-bold tracking-tight text-balance sm:text-7xl">
@@ -55,7 +79,7 @@ export function CommunityCta() {
         </div>
       </div>
 
-      <PhotoRow photos={rowTwoRepeated} reverse />
+      <PhotoRow photos={rows.rowTwo} reverse />
     </section>
   );
 }
