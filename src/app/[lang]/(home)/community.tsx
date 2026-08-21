@@ -283,12 +283,9 @@ export function CommunitySection() {
       <PhotoLightbox src={zoomedSrc} onClose={() => setZoomedSrc(null)} />
       <div className="relative z-5 mx-auto flex h-full w-full max-w-3xl items-center justify-center gap-12 px-4 pt-16 not-lg:flex-col xl:pt-35">
         <div className="space-y-8 text-center">
-          <h1
-            className="text-3xl font-semibold"
-            style={{ fontFamily: "Lexend, Geist, sans-serif" }}
-          >
+          <h2 className="font-display text-3xl font-semibold">
             What is HytaleModding?
-          </h1>
+          </h2>
           <div className="text-foreground/80 text-lg">
             HytaleModding is the largest community of modders for{" "}
             <TextLink href="https://hytale.com">Hytale</TextLink>. We write
@@ -301,13 +298,13 @@ export function CommunitySection() {
             modders of all skill levels to create amazing content for the game.
             <br />
             <br />
-            <b style={{ fontFamily: "Lexend, Geist, sans-serif" }}>
+            <b className="font-display">
               Artists, game developers, or just curious players: everyone's
               welcome, and nobody needs experience to start.
             </b>
             <br />
             <br />
-            <div style={{ fontFamily: "Lexend, Geist, sans-serif" }}>
+            <div className="font-display">
               Join{" "}
               <TextLink
                 href="https://discord.gg/hytalemodding"

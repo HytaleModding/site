@@ -277,10 +277,7 @@ export function InstagramPostDeck({
         })}
       </div>
       {hint ? (
-        <p
-          className="text-foreground/50 mt-4 text-center text-xs"
-          style={{ fontFamily: "Lexend, Geist, sans-serif" }}
-        >
+        <p className="text-foreground/50 font-display mt-4 text-center text-xs">
           {hint}
         </p>
       ) : null}

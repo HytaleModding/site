@@ -22,19 +22,16 @@ import {
 import Image from "next/image";
 import DynamicLink from "fumadocs-core/dynamic-link";
 import { Button } from "@/components/ui/button";
+import { SectionHeader } from "@/components/section-header";
 
 export function ProgramsSection() {
   return (
     <div className="mx-auto my-24 flex w-full max-w-7xl flex-col gap-16 px-4">
-      <div className="space-y-8">
-        <h1 className="text-3xl font-semibold">Programs & Partnerships</h1>
-        <p className="text-muted-foreground">
-          We work with various partners to make programs for supporting our
-          community and help them succeed.
-          <br />
-          See them below!
-        </p>
-      </div>
+      <SectionHeader
+        align="left"
+        title="Programs & Partnerships"
+        description="We work with various partners to make programs for supporting our community and help them succeed. See them below!"
+      />
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Official Docs */}
         <div
@@ -59,11 +56,8 @@ export function ProgramsSection() {
               />
             </div>
             <div className="space-y-4">
-              <h2
-                className="text-3xl font-semibold tracking-wide text-[#f0c65f]"
-                style={{ fontFamily: "Lexend, Geist, sans-serif" }}
-              >
-                Hytale's Official Documentation
+              <h2 className="font-display text-3xl font-semibold tracking-wide text-[#f0c65f]">
+                Hytale&apos;s Official Documentation
               </h2>
               <p className="font-normal text-[#9eb2c0]">
                 We host the official documentation for Hytale, provided by
@@ -102,10 +96,7 @@ export function ProgramsSection() {
               />
             </div>
             <div className="space-y-4">
-              <h2
-                className="text-3xl font-semibold text-[#dce8eb]"
-                style={{ fontFamily: "Lexend, Geist, sans-serif" }}
-              >
+              <h2 className="font-display text-3xl font-semibold text-[#dce8eb]">
                 The Hytale ModJam, June 2026
               </h2>
               <p className="font-normal opacity-75">

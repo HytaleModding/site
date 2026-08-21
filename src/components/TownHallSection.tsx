@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FaDiscord } from "react-icons/fa6";
 import { ArrowRight, CalendarClock, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SectionHeader } from "@/components/section-header";
 
 interface Speaker {
   name: string;
@@ -43,7 +44,7 @@ export default function TownHallSection({
   return (
     <section className="mx-auto my-24 flex w-full max-w-7xl flex-col gap-16 px-4">
       <div className="space-y-8">
-        <h2 className="text-foreground text-3xl font-semibold">Town Halls</h2>
+        <SectionHeader align="left" title="Town Halls" />
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start">
           <div className="flex flex-col gap-8">

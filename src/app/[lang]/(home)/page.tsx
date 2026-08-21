@@ -4,7 +4,6 @@ import {
   BookIcon,
   SquarePenIcon,
   ArrowDownCircleIcon,
-  CoinsIcon,
   NewspaperIcon,
 } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight-new";
@@ -22,6 +21,8 @@ import { getMessages } from "@/lib/locale";
 import { richText } from "@/lib/rich-text";
 import TownHallHomepageBlock from "@/components/TownHallHomepageBlock";
 import { BlogsSection } from "./blogs-section";
+import { CommunityCta } from "./community-cta";
+import { ResourcesSection } from "./resources-section";
 
 export default async function HomePage({
   params,
@@ -30,7 +31,7 @@ export default async function HomePage({
 }) {
   const { lang } = await params;
   const messages = getMessages(lang);
-  const blogs = (await getBlogs()).slice(0, 4);
+  const blogs = (await getBlogs()).slice(0, 3);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -42,29 +43,8 @@ export default async function HomePage({
         <div className="flex h-full w-full max-w-5xl flex-col items-center justify-around gap-6 space-y-8 text-center">
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
-              {/*<div className="relative mx-auto w-fit max-w-full">
-                <GlowEffect
-                  colors={["#FF5733", "#33FF57", "#3357FF", "#F1C40F"]}
-                  mode="flowHorizontal"
-                  blur="soft"
-                  duration={3}
-                  scale={0.9}
-                />
-                <div className="bg-background hover:bg-background/85 relative mx-4 rounded-lg p-2 text-sm font-medium shadow-md transition-colors duration-200 ease-in-out">
-                    <Link
-                    href={"https://hytalemodjam.com"}
-                    className="flex items-center justify-center gap-2 text-wrap"
-                    >
-                    Hytale x HytaleModding ModJam is live!{" "}
-                    <ArrowRightIcon className="h-4 w-4" />
-                    </Link>
-                </div>
-              </div>*/}
-              <h1
-                className="text-4xl font-semibold text-balance sm:text-5xl md:text-7xl"
-                style={{ fontFamily: "Lexend, Geist, sans-serif" }}
-              >
-                <div>
+              <h1 className="font-display text-4xl font-semibold text-balance sm:text-5xl md:text-7xl">
+                <span className="block">
                   {richText(messages.home.title, {
                     italic: (chunks) => (
                       <span className="italic">{chunks}</span>
@@ -75,7 +55,7 @@ export default async function HomePage({
                       </span>
                     ),
                   })}
-                </div>
+                </span>
               </h1>
               <h2 className="text-muted-foreground text-lg text-balance md:text-xl">
                 {messages.home.description}
@@ -122,6 +102,14 @@ export default async function HomePage({
       <CommunitySection />
       <Separator />
 
+      <ResourcesSection />
+      <Separator />
+
+      <ProgramsSection />
+      <Separator />
+
+      <TownHallHomepageBlock />
+
       {/* <BlogsSection
         blogs={blogs}
         lang={lang}
@@ -129,13 +117,8 @@ export default async function HomePage({
       />
       <Separator /> */}
 
-      {/* <UtilsSection />
-      <Separator /> */}
 
-      <ProgramsSection />
-      <Separator />
-
-      <TownHallHomepageBlock />
+      <CommunityCta />
 
       <Footer />
     </div>

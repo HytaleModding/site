@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { CalendarDaysIcon, UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SectionHeader } from "@/components/section-header";
 import { type BlogOverview } from "@/lib/blogs";
-import { localizeHref } from "@/lib/locale";
 
 function formatDate(date?: string) {
   if (!date) return null;
@@ -31,16 +31,9 @@ export function BlogsSection({
 
   return (
     <section className="container mx-auto flex w-full flex-col px-6 py-20 lg:px-12">
-      <div className="mx-auto max-w-3xl space-y-5 text-center">
-        <h2
-          className="text-4xl leading-normal font-semibold text-balance md:text-5xl"
-          style={{ fontFamily: "Lexend, Geist, sans-serif" }}
-        >
-          {title}
-        </h2>
-      </div>
+      <SectionHeader title={title} />
 
-      <div className="mx-auto mt-16 grid w-full max-w-5xl gap-5">
+      <div className="mx-auto mt-12 flex w-full max-w-5xl flex-col gap-5">
         {blogs.map((blog) => {
           const formattedDate = formatDate(blog.date);
 
@@ -52,20 +45,19 @@ export function BlogsSection({
             >
               <Link
                 href={blog.path}
-                className="group bg-fd-card/80 hover:bg-fd-card/60 block overflow-hidden rounded-xl border p-6 shadow-sm backdrop-blur-3xl transition-all hover:shadow-lg focus:ring-2 focus:outline-none"
+                className="group block overflow-hidden rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-lg focus:ring-2 focus:outline-none"
               >
                 <div className="flex flex-col gap-6 md:flex-row md:items-stretch md:justify-between">
                   <div className="flex flex-1 flex-col justify-between gap-4">
                     <div className="space-y-3">
-                      <h3 className="text-2xl font-bold text-balance transition-colors group-hover:text-(--color-hytale-gold-light)">
+                      <h3 className="font-display text-2xl font-bold text-balance">
                         {blog.title}
                       </h3>
                       <p className="text-muted-foreground max-w-3xl text-pretty">
                         {blog.description}
                       </p>
                     </div>
-
-                    <div className="text-muted-foreground flex flex-wrap gap-3 text-sm">
+                    <div className="text-muted-foreground flex flex-wrap gap-x-3 gap-y-1 text-sm">
                       {formattedDate && (
                         <span className="inline-flex items-center gap-1.5">
                           <CalendarDaysIcon className="size-4" />
@@ -80,14 +72,13 @@ export function BlogsSection({
                       )}
                     </div>
                   </div>
-
                   {blog.image && (
                     <div className="relative min-h-44 w-full overflow-hidden rounded-lg border md:min-h-0 md:w-56 md:shrink-0">
                       <Image
                         src={blog.image}
                         alt={blog.imageAlt ?? blog.title}
                         fill
-                        sizes="(min-width: 768px) 224px, calc(100vw - 48px)"
+                        sizes="(min-width: 768px) 224px, calc(100vw - 96px)"
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     </div>
