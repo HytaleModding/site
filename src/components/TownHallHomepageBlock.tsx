@@ -1,7 +1,12 @@
 import TownHallSection from "./TownHallSection";
 import { townHalls, upcomingTownHall } from "@/lib/townhalls";
+import { Messages } from "@/lib/locale";
 
-export default function TownHallHomepageBlock() {
+export default function TownHallHomepageBlock({
+  messages,
+}: {
+  messages: Messages["home"]["townHalls"];
+}) {
   const sorted = [...townHalls].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
@@ -9,6 +14,7 @@ export default function TownHallHomepageBlock() {
 
   return (
     <TownHallSection
+      messages={messages}
       speakers={
         upcomingTownHall ? upcomingTownHall.speakers : (latest?.speakers ?? [])
       }

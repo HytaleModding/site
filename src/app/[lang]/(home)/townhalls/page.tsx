@@ -1,6 +1,24 @@
 import TownHallsArchive from "@/components/TownHallsArchive";
 import { townHalls } from "@/lib/townhalls";
+import { getMessages, Messages } from "@/lib/locale";
+import { deepMerge } from "@/lib/utils";
 
-export default function Page() {
-  return <TownHallsArchive townHalls={townHalls} />;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  const baseMessages = getMessages("en");
+  const messages =
+    lang === "en"
+      ? baseMessages
+      : (deepMerge(baseMessages, getMessages(lang)) as Messages);
+
+  return (
+    <TownHallsArchive
+      messages={messages.home.townHalls}
+      townHalls={townHalls}
+    />
+  );
 }

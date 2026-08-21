@@ -24,7 +24,47 @@
       "minutes": "m",
       "seconds": "s"
     },
-    "hytaleReleased": "Hytale is out!"
+    "hytaleReleased": "Hytale is out!",
+    "community": {
+      "title": "What is HytaleModding?",
+      "description": "HytaleModding is the largest community of modders for <link>Hytale</link>. We write docs, guides, and tools for modders of every skill level, and run community events like ModJams, town halls, and more that bring modders together and celebrate what they build.",
+      "moddability": "A big part of Hytale is its moddability, and our goal is to empower modders of all skill levels to create amazing content for the game.",
+      "welcome": "Artists, game developers, or just curious players: everyone's welcome, and nobody needs experience to start.",
+      "join": "Join <link>{count} modders on Discord</link> and start building."
+    },
+    "resources": {
+      "title": "<accent>There’s a place to start,</accent> whatever you want to make.",
+      "documentation": {
+        "title": "Documentation",
+        "description": "HytaleModding provides documentation for World Gen, Asset Packs, and Modding Tools. Learn how to create your own mods, explore the API, and get started with modding in Hytale. Start with practical guides, then dive into the API reference for more advanced topics.",
+        "viewDocs": "View documentation"
+      },
+      "wiki": {
+        "title": "HytaleModding Wiki",
+        "description": "The HytaleModding Wiki lets modders create a dedicated wiki for their own mod. It's a place to publish guides, document features, and keep everything about the project organized in one spot for the community.",
+        "browseMods": "Browse existing mods",
+        "writeWiki": "Write your own wiki"
+      }
+    },
+    "communityCta": {
+      "title": "So, what are you <italic>waiting</italic> for?",
+      "worldGen": "Design your first biome",
+      "firstAsset": "Make your first asset",
+      "firstMod": "Code your first mod"
+    },
+    "townHalls": {
+      "title": "Town Halls",
+      "description": "We run monthly town halls to keep everyone in the loop, share what we're building, and collect feedback for Hytale directly from the community.",
+      "speakers": "Speakers",
+      "confirmedSpeakers": "Confirmed speakers",
+      "next": "Next town hall",
+      "joinOnDiscord": "Join on Discord",
+      "readReport": "Read the report",
+      "viewAll": "View all Townhalls",
+      "archiveKicker": "missed one? we've got you",
+      "archiveDescription": "Every town hall we've run, in one place with their recordings and speakers. Check back here for new town halls as they happen, and for reports on what we discussed.",
+      "empty": "Nothing here yet — check back soon."
+    }
   },
 
   "showcaseItems": {

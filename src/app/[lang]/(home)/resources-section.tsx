@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/section-header";
+import { Messages } from "@/lib/locale";
+import { richText } from "@/lib/rich-text";
 
 type Resource = {
   title: string;
@@ -10,27 +12,6 @@ type Resource = {
   links: { label: string; href: string }[];
   external?: boolean;
 };
-
-const RESOURCES: Resource[] = [
-  {
-    title: "Documentation",
-    description: "HytaleModding provides documentation for World Gen, Asset Packs, and Modding Tools. Learn how to create your own mods, explore the API, and get started with modding in Hytale. Start with practical guides, then dive into the API reference for more advanced topics.",
-    image: "/assets/landing/hero/exploration.jpg",
-    links: [
-      { label: "View documentation", href: "/en/docs" },
-    ],
-  },
-  {
-    title: "HytaleModding Wiki",
-    description: "The HytaleModding Wiki lets modders create a dedicated wiki for their own mod. It's a place to publish guides, document features, and keep everything about the project organized in one spot for the community.",
-    image: "/assets/blogs/background/sunlight-through-trees.jpg",
-    external: true,
-    links: [
-      { label: "Browse existing mods", href: "https://wiki.hytalemodding.dev/mods" },
-      { label: "Write your own wiki", href: "https://wiki.hytalemodding.dev/login" },
-    ],
-  },
-];
 
 function ResourceRow({ resource, reverse }: { resource: Resource; reverse?: boolean }) {
   return (
@@ -57,24 +38,50 @@ function ResourceRow({ resource, reverse }: { resource: Resource; reverse?: bool
   );
 }
 
-export function ResourcesSection() {
+export function ResourcesSection({
+  messages,
+}: {
+  messages: Messages["home"]["resources"];
+}) {
+  const resources: Resource[] = [
+    {
+      title: messages.documentation.title,
+      description: messages.documentation.description,
+      image: "/assets/landing/hero/exploration.jpg",
+      links: [{ label: messages.documentation.viewDocs, href: "/en/docs" }],
+    },
+    {
+      title: messages.wiki.title,
+      description: messages.wiki.description,
+      image: "/assets/blogs/background/sunlight-through-trees.jpg",
+      external: true,
+      links: [
+        {
+          label: messages.wiki.browseMods,
+          href: "https://wiki.hytalemodding.dev/mods",
+        },
+        {
+          label: messages.wiki.writeWiki,
+          href: "https://wiki.hytalemodding.dev/login",
+        },
+      ],
+    },
+  ];
+
   return (
     <section className="container mx-auto my-24 max-w-7xl px-4">
       <SectionHeader
         align="left"
         className="mb-10"
-        title={
-          <>
-            <span className="text-sky-600 dark:text-sky-400">
-              There’s a place to start,
-            </span>{" "}
-            whatever you want to make.
-          </>
-        }
+        title={richText(messages.title, {
+          accent: (chunks) => (
+            <span className="text-sky-600 dark:text-sky-400">{chunks}</span>
+          ),
+        })}
       />
       <div className="grid gap-8">
-        <ResourceRow resource={RESOURCES[0]} />
-        <ResourceRow resource={RESOURCES[1]} reverse />
+        <ResourceRow resource={resources[0]} />
+        <ResourceRow resource={resources[1]} reverse />
       </div>
     </section>
   );

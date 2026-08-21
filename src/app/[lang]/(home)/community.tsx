@@ -11,6 +11,8 @@ import { createPortal } from "react-dom";
 import FeranImage from "@/../public/assets/landing/hero/feran.png";
 import BurgerImage from "@/../public/assets/landing/hero/burger.png";
 import { DraggableSticker } from "./draggable-sticker";
+import { useMessages } from "@/lib/hooks/useMessages";
+import { richText } from "@/lib/rich-text";
 
 type SidePhoto = {
   src: string;
@@ -243,6 +245,8 @@ export function CommunitySection() {
   const [zoomedSrc, setZoomedSrc] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const { stats } = useDiscordStats(true);
+  const messages = useMessages();
+  const t = messages.home.community;
 
   const discordMemberCount = stats?.total_members ?? 0;
   const clampedDiscordMemberCount = Math.floor(discordMemberCount / 100) * 100;
@@ -283,42 +287,36 @@ export function CommunitySection() {
       <PhotoLightbox src={zoomedSrc} onClose={() => setZoomedSrc(null)} />
       <div className="relative z-5 mx-auto flex h-full w-full max-w-3xl items-center justify-center gap-12 px-4 pt-16 not-lg:flex-col xl:pt-35">
         <div className="space-y-8 text-center">
-          <h2 className="font-display text-3xl font-semibold">
-            What is HytaleModding?
-          </h2>
+          <h2 className="font-display text-3xl font-semibold">{t.title}</h2>
           <div className="text-foreground/80 text-lg">
-            HytaleModding is the largest community of modders for{" "}
-            <TextLink href="https://hytale.com">Hytale</TextLink>. We write
-            docs, guides, and tools for modders of every skill level, and run
-            community events like ModJams, town halls, and more that bring
-            modders together and celebrate what they build.
+            {richText(t.description, {
+              link: (chunks) => (
+                <TextLink href="https://hytale.com">{chunks}</TextLink>
+              ),
+            })}
             <br />
             <br />
-            A big part of Hytale is its moddability, and our goal is to empower
-            modders of all skill levels to create amazing content for the game.
+            {t.moddability}
             <br />
             <br />
-            <b className="font-display">
-              Artists, game developers, or just curious players: everyone's
-              welcome, and nobody needs experience to start.
-            </b>
+            <b className="font-display">{t.welcome}</b>
             <br />
             <br />
             <div className="font-display">
-              Join{" "}
-              <TextLink
-                href="https://discord.gg/hytalemodding"
-                className="group text-foreground relative inline-block font-medium"
-              >
-                <span className="relative z-10">
-                  {discordMemberCountLabel} modders on Discord
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 z-0 origin-right scale-x-0 bg-indigo-400 transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"
-                />
-              </TextLink>{" "}
-              and start building.
+              {richText(t.join.replace("{count}", discordMemberCountLabel), {
+                link: (chunks) => (
+                  <TextLink
+                    href="https://discord.gg/hytalemodding"
+                    className="group text-foreground relative inline-block font-medium"
+                  >
+                    <span className="relative z-10">{chunks}</span>
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 z-0 origin-right scale-x-0 bg-indigo-400 transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"
+                    />
+                  </TextLink>
+                ),
+              })}
             </div>
           </div>
           <div className="relative flex flex-col items-center pb-16 lg:pb-40">

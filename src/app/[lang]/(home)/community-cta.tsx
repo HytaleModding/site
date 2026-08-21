@@ -10,6 +10,8 @@ import {
   MarqueeItem,
 } from "@/components/ui/shadcn-io/marquee";
 import { useEffect, useState } from "react";
+import { useMessages } from "@/lib/hooks/useMessages";
+import { richText } from "@/lib/rich-text";
 
 const COMMUNITY_PHOTOS = Array.from({ length: 20 }, (_, i) => `${i + 1}.png`);
 
@@ -52,6 +54,8 @@ function PhotoRow({ photos, reverse = false }: { photos: string[]; reverse?: boo
 }
 
 export function CommunityCta() {
+  const messages = useMessages();
+  const t = messages.home.communityCta;
   const [rows, setRows] = useState(() => ({
     rowOne: [...COMMUNITY_PHOTOS, ...COMMUNITY_PHOTOS],
     rowTwo: [...COMMUNITY_PHOTOS].reverse().concat([...COMMUNITY_PHOTOS].reverse()),
@@ -70,12 +74,14 @@ export function CommunityCta() {
 
       <div className="mx-auto max-w-4xl px-4 text-center">
         <h2 className="font-display text-5xl font-bold tracking-tight text-balance sm:text-7xl">
-          So, what are you <span className="italic">waiting</span> for?
+          {richText(t.title, {
+            italic: (chunks) => <span className="italic">{chunks}</span>,
+          })}
         </h2>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button asChild><Link href="/en/docs/guides/plugin/world-gen">Start playing with World Gen <ArrowRightIcon /></Link></Button>
-          <Button asChild><Link href="/en/docs/official-documentation/worldgen/pack-tutorial/asset-packs">Make your first asset<ArrowRightIcon /></Link></Button>
-          <Button asChild><Link href="/en/docs/guides/plugin/setting-up-env">Code your first mod<ArrowRightIcon /></Link></Button>
+          <Button asChild><Link href="/en/docs/guides/plugin/world-gen">{t.worldGen} <ArrowRightIcon /></Link></Button>
+          <Button asChild><Link href="/en/docs/official-documentation/worldgen/pack-tutorial/asset-packs">{t.firstAsset}<ArrowRightIcon /></Link></Button>
+          <Button asChild><Link href="/en/docs/guides/plugin/setting-up-env">{t.firstMod}<ArrowRightIcon /></Link></Button>
         </div>
       </div>
 

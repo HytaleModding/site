@@ -17,7 +17,8 @@ import { ProgramsSection } from "./programs";
 import { Footer } from "./footer";
 import { HeroStickers } from "./hero-stickers";
 import { getBlogs } from "@/lib/blogs";
-import { getMessages } from "@/lib/locale";
+import { getMessages, Messages } from "@/lib/locale";
+import { deepMerge } from "@/lib/utils";
 import { richText } from "@/lib/rich-text";
 import TownHallHomepageBlock from "@/components/TownHallHomepageBlock";
 import { BlogsSection } from "./blogs-section";
@@ -30,7 +31,11 @@ export default async function HomePage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const messages = getMessages(lang);
+  const baseMessages = getMessages("en");
+  const messages =
+    lang === "en"
+      ? baseMessages
+      : (deepMerge(baseMessages, getMessages(lang)) as Messages);
   const blogs = (await getBlogs()).slice(0, 3);
 
   return (
@@ -102,13 +107,13 @@ export default async function HomePage({
       <CommunitySection />
       <Separator />
 
-      <ResourcesSection />
+      <ResourcesSection messages={messages.home.resources} />
       <Separator />
 
       <ProgramsSection />
       <Separator />
 
-      <TownHallHomepageBlock />
+      <TownHallHomepageBlock messages={messages.home.townHalls} />
 
       {/* <BlogsSection
         blogs={blogs}

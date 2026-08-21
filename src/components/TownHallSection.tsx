@@ -4,6 +4,7 @@ import { FaDiscord } from "react-icons/fa6";
 import { ArrowRight, CalendarClock, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/section-header";
+import { Messages } from "@/lib/locale";
 
 interface Speaker {
   name: string;
@@ -27,37 +28,35 @@ interface LatestVod {
 }
 
 interface TownHallSectionProps {
+  messages: Messages["home"]["townHalls"];
   speakers: Speaker[];
   archiveHref: string;
   upcoming?: UpcomingTownHall;
   latestVod?: LatestVod;
-  archiveKicker?: string;
 }
 
 export default function TownHallSection({
+  messages: t,
   speakers,
   archiveHref,
   upcoming,
   latestVod,
-  archiveKicker = "missed one? we've got you",
 }: TownHallSectionProps) {
   return (
     <section className="mx-auto my-24 flex w-full max-w-7xl flex-col gap-16 px-4">
       <div className="space-y-8">
-        <SectionHeader align="left" title="Town Halls" />
+        <SectionHeader align="left" title={t.title} />
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start">
           <div className="flex flex-col gap-8">
             <p className="text-muted-foreground max-w-md text-base leading-relaxed">
-              We run monthly town halls to keep everyone in the loop, share what
-              we&apos;re building, and collect feedback for Hytale directly from
-              the community.
+              {t.description}
             </p>
 
             {speakers.length > 0 && (
               <div className="flex flex-col gap-3">
                 <span className="text-muted-foreground/70 text-xs font-medium tracking-wide uppercase">
-                  {upcoming ? "Confirmed speakers" : "Speakers"}
+                  {upcoming ? t.confirmedSpeakers : t.speakers}
                 </span>
                 <div className="flex flex-wrap gap-4">
                   {speakers.map((speaker) => (
@@ -98,25 +97,25 @@ export default function TownHallSection({
 
           <div className="flex flex-col gap-3">
             {upcoming?.videoId ? (
-              <ScheduledEmbed upcoming={upcoming} />
+              <ScheduledEmbed messages={t} upcoming={upcoming} />
             ) : upcoming ? (
-              <UpcomingCard upcoming={upcoming} />
+              <UpcomingCard messages={t} upcoming={upcoming} />
             ) : latestVod ? (
-              <VodEmbed vod={latestVod} />
+              <VodEmbed messages={t} vod={latestVod} />
             ) : null}
           </div>
         </div>
 
         <div className="flex flex-col items-center gap-3">
           <span className="text-muted-foreground text-sm font-medium">
-            {archiveKicker}
+            {t.archiveKicker}
           </span>
           <Button
             className="h-12 bg-black px-8 text-base text-white hover:bg-black/90 hover:text-white dark:bg-white dark:text-black dark:hover:bg-white/90 dark:hover:text-black"
             asChild
           >
             <Link href={archiveHref}>
-              View all Townhalls
+              {t.viewAll}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
@@ -126,7 +125,13 @@ export default function TownHallSection({
   );
 }
 
-function ScheduledEmbed({ upcoming }: { upcoming: UpcomingTownHall }) {
+function ScheduledEmbed({
+  messages: t,
+  upcoming,
+}: {
+  messages: Messages["home"]["townHalls"];
+  upcoming: UpcomingTownHall;
+}) {
   const d =
     typeof upcoming.date === "string" ? new Date(upcoming.date) : upcoming.date;
 
@@ -166,7 +171,7 @@ function ScheduledEmbed({ upcoming }: { upcoming: UpcomingTownHall }) {
         <Button className="h-9 px-4 text-sm" asChild variant="primary">
           <Link href={upcoming.discordHref} target="_blank">
             <FaDiscord />
-            Join on Discord
+            {t.joinOnDiscord}
           </Link>
         </Button>
       </div>
@@ -174,7 +179,13 @@ function ScheduledEmbed({ upcoming }: { upcoming: UpcomingTownHall }) {
   );
 }
 
-function UpcomingCard({ upcoming }: { upcoming: UpcomingTownHall }) {
+function UpcomingCard({
+  messages: t,
+  upcoming,
+}: {
+  messages: Messages["home"]["townHalls"];
+  upcoming: UpcomingTownHall;
+}) {
   const d =
     typeof upcoming.date === "string" ? new Date(upcoming.date) : upcoming.date;
 
@@ -197,7 +208,7 @@ function UpcomingCard({ upcoming }: { upcoming: UpcomingTownHall }) {
           <CalendarClock className="text-muted-foreground h-5 w-5" />
         </div>
         <span className="text-muted-foreground/70 text-xs font-medium tracking-wide uppercase">
-          Next town hall
+          {t.next}
         </span>
       </div>
 
@@ -216,14 +227,20 @@ function UpcomingCard({ upcoming }: { upcoming: UpcomingTownHall }) {
       <Button className="h-11 w-fit px-5" asChild variant="primary">
         <Link href={upcoming.discordHref} target="_blank">
           <FaDiscord />
-          Join on Discord
+          {t.joinOnDiscord}
         </Link>
       </Button>
     </div>
   );
 }
 
-function VodEmbed({ vod }: { vod: LatestVod }) {
+function VodEmbed({
+  messages: t,
+  vod,
+}: {
+  messages: Messages["home"]["townHalls"];
+  vod: LatestVod;
+}) {
   const formattedDate = vod.date
     ? new Intl.DateTimeFormat(undefined, {
         month: "long",
@@ -254,7 +271,7 @@ function VodEmbed({ vod }: { vod: LatestVod }) {
             href={vod.reportHref}
             className="text-muted-foreground decoration-muted-foreground/40 hover:text-foreground hover:decoration-foreground/60 inline-flex items-center gap-1 text-sm font-medium underline underline-offset-4 transition-colors"
           >
-            Read the report
+            {t.readReport}
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         )}
