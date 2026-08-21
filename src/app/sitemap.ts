@@ -9,7 +9,6 @@ import type { MetadataRoute } from "next";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sitemap: MetadataRoute.Sitemap = [];
 
-  // Add all language home pages
   for (const lang of i18n.languages) {
     sitemap.push({
       url: lang === i18n.defaultLanguage ? baseUrl : `${baseUrl}/${lang}`,
@@ -19,11 +18,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  // Get all pages from source
   const pages = source.getPages();
 
   for (const page of pages) {
-    // Skip if page doesn't have url
     if (!page.url) continue;
 
     sitemap.push({

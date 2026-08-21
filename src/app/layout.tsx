@@ -4,7 +4,7 @@ import "./styles/official-docs.css";
 import "katex/dist/katex.css";
 import "./styles/blogs.css";
 import { Geist, Geist_Mono, Lexend, Nunito_Sans } from "next/font/google";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { baseUrl } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
@@ -51,6 +51,10 @@ export const metadata: Metadata = {
       ],
     },
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
