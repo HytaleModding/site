@@ -14,7 +14,7 @@ type Resource = {
 const RESOURCES: Resource[] = [
   {
     title: "Documentation",
-    description: "HytaleModding provides documentation for World Gen, Asset Packs, and Modding Toolsa. Learn how to create your own mods, explore the API, and get started with modding in Hytale. Start with practical guides, then dive into the API reference for more advanced topics.",
+    description: "HytaleModding provides documentation for World Gen, Asset Packs, and Modding Tools. Learn how to create your own mods, explore the API, and get started with modding in Hytale. Start with practical guides, then dive into the API reference for more advanced topics.",
     image: "/assets/landing/hero/exploration.jpg",
     links: [
       { label: "View documentation", href: "/en/docs" },
