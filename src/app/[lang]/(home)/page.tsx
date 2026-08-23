@@ -7,6 +7,7 @@ import {
   NewspaperIcon,
 } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight-new";
+import { FadeIn } from "@/components/ui/reveal";
 import { Button } from "@/components/ui/button";
 import { DiscordButton } from "@/components/discord-button";
 import { ShowcaseMarquee } from "@/components/showcase";
@@ -47,7 +48,7 @@ export default async function HomePage({
         </div>
         <div className="flex h-full w-full max-w-5xl flex-col items-center justify-around gap-6 space-y-8 text-center">
           <ViewTransition name="hero" share="blur-scale-transition">
-            <div className="space-y-6">
+            <FadeIn className="space-y-6">
               <h1 className="font-display text-4xl font-semibold text-balance sm:text-5xl md:text-7xl">
                 <span className="block">
                   {richText(messages.home.title, {
@@ -65,10 +66,13 @@ export default async function HomePage({
               <h2 className="text-muted-foreground text-lg text-balance md:text-xl">
                 {messages.home.description}
               </h2>
-            </div>
+            </FadeIn>
           </ViewTransition>
 
-          <div className="flex w-fit flex-col items-center gap-4">
+          <FadeIn
+            delay={0.15}
+            className="flex w-fit flex-col items-center gap-4"
+          >
             <div className="flex flex-wrap justify-center gap-4 px-4">
               <DiscordButton />
             </div>
@@ -92,12 +96,16 @@ export default async function HomePage({
                 </Link>
               </Button>
             </div>
-          </div>
+          </FadeIn>
         </div>
-        <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
+        <FadeIn
+          delay={0.6}
+          duration={0.9}
+          className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2"
+        >
           <p className="text-sm">Scroll down for more</p>
           <ArrowDownCircleIcon />
-        </div>
+        </FadeIn>
       </div>
 
       <div className="w-full pb-4">
@@ -121,7 +129,6 @@ export default async function HomePage({
         title={messages.nav.blogs ?? "Blogs"}
       />
       <Separator /> */}
-
 
       <CommunityCta />
 

@@ -1,16 +1,14 @@
 "use client";
 
 import { TextLink } from "@/components/text-link";
-import {
-  DiscordButton,
-  useDiscordStats,
-} from "@/components/discord-button";
+import { DiscordButton, useDiscordStats } from "@/components/discord-button";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import FeranImage from "@/../public/assets/landing/hero/feran.png";
 import BurgerImage from "@/../public/assets/landing/hero/burger.png";
 import { DraggableSticker } from "./draggable-sticker";
+import { FadeIn } from "@/components/ui/reveal";
 import { useMessages } from "@/lib/hooks/useMessages";
 import { richText } from "@/lib/rich-text";
 
@@ -285,7 +283,7 @@ export function CommunitySection() {
       </div>
 
       <PhotoLightbox src={zoomedSrc} onClose={() => setZoomedSrc(null)} />
-      <div className="relative z-5 mx-auto flex h-full w-full max-w-3xl items-center justify-center gap-12 px-4 pt-16 not-lg:flex-col xl:pt-35">
+      <FadeIn className="relative z-5 mx-auto flex h-full w-full max-w-3xl items-center justify-center gap-12 px-4 pt-16 not-lg:flex-col xl:pt-35">
         <div className="space-y-8 text-center">
           <h2 className="font-display text-3xl font-semibold">{t.title}</h2>
           <div className="text-foreground/80 text-lg">
@@ -333,7 +331,7 @@ export function CommunitySection() {
             </div>
           </div>
         </div>
-      </div>
+      </FadeIn>
     </div>
   );
 }

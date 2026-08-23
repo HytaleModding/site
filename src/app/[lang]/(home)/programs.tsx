@@ -23,18 +23,21 @@ import Image from "next/image";
 import DynamicLink from "fumadocs-core/dynamic-link";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/section-header";
+import { FadeIn } from "@/components/ui/reveal";
 
 export function ProgramsSection() {
   return (
     <div className="mx-auto my-24 flex w-full max-w-7xl flex-col gap-16 px-4">
-      <SectionHeader
-        align="left"
-        title="Programs & Partnerships"
-        description="We work with various partners to make programs for supporting our community and help them succeed. See them below!"
-      />
+      <FadeIn>
+        <SectionHeader
+          align="left"
+          title="Programs & Partnerships"
+          description="We work with various partners to make programs for supporting our community and help them succeed. See them below!"
+        />
+      </FadeIn>
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Official Docs */}
-        <div
+        <FadeIn
           className="dark relative overflow-hidden rounded-xl border bg-[#0f1418] bg-cover bg-top p-8"
           style={{
             backgroundImage:
@@ -74,8 +77,11 @@ export function ProgramsSection() {
               </Button>
             </div>
           </div>
-        </div>
-        <div className="relative overflow-hidden rounded-xl border p-8 text-white">
+        </FadeIn>
+        <FadeIn
+          delay={0.08}
+          className="relative overflow-hidden rounded-xl border p-8 text-white"
+        >
           <Image src={ModJamBg} alt="" fill className="-z-20 object-cover" />
           <div className="absolute inset-0 -z-10 bg-black/40" />
           <div className="absolute right-0 bottom-0 rounded-tl-xl bg-[#0C46B0] px-4 py-2 text-sm font-medium tracking-wide text-white shadow-lg ring-1 ring-white/10 backdrop-blur-sm">
@@ -118,8 +124,11 @@ export function ProgramsSection() {
               </Button>
             </div>
           </div>
-        </div>
-        <div className="relative overflow-hidden rounded-xl border border-[#1B57C4] p-8 shadow-xl shadow-[#0C46B0]/40">
+        </FadeIn>
+        <FadeIn
+          delay={0.16}
+          className="relative overflow-hidden rounded-xl border border-[#1B57C4] p-8 shadow-xl shadow-[#0C46B0]/40"
+        >
           <BorderTrail
             style={{ boxShadow: "0px 0px 90px 90px rgba(137,230,196,0.6)" }}
             size={0}
@@ -180,8 +189,11 @@ export function ProgramsSection() {
               className="absolute top-0 left-0"
             />
           </div>
-        </div>
-        <div className="relative overflow-hidden rounded-xl border p-8">
+        </FadeIn>
+        <FadeIn
+          delay={0.24}
+          className="relative overflow-hidden rounded-xl border p-8"
+        >
           <Image src={NitradoBg} alt="" fill className="-z-20 object-cover" />
           <div className="absolute inset-0 -z-10 bg-black/60" />
           <div className="absolute right-0 bottom-0 rounded-tl-xl bg-[#0C46B0] px-4 py-2 text-sm font-medium tracking-wide text-white shadow-lg ring-1 ring-white/10 backdrop-blur-sm">
@@ -223,7 +235,7 @@ export function ProgramsSection() {
               </Button>
             </div>
           </div>
-        </div>
+        </FadeIn>
       </div>
     </div>
   );

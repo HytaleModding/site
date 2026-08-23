@@ -4,6 +4,7 @@ import { FaDiscord } from "react-icons/fa6";
 import { ArrowRight, CalendarClock, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/section-header";
+import { FadeIn } from "@/components/ui/reveal";
 import { Messages } from "@/lib/locale";
 
 interface Speaker {
@@ -45,10 +46,12 @@ export default function TownHallSection({
   return (
     <section className="mx-auto my-24 flex w-full max-w-7xl flex-col gap-16 px-4">
       <div className="space-y-8">
-        <SectionHeader align="left" title={t.title} />
+        <FadeIn>
+          <SectionHeader align="left" title={t.title} />
+        </FadeIn>
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start">
-          <div className="flex flex-col gap-8">
+          <FadeIn x={-32} y={0} className="flex flex-col gap-8">
             <p className="text-muted-foreground max-w-md text-base leading-relaxed">
               {t.description}
             </p>
@@ -93,9 +96,9 @@ export default function TownHallSection({
                 </div>
               </div>
             )}
-          </div>
+          </FadeIn>
 
-          <div className="flex flex-col gap-3">
+          <FadeIn x={32} y={0} className="flex flex-col gap-3">
             {upcoming?.videoId ? (
               <ScheduledEmbed messages={t} upcoming={upcoming} />
             ) : upcoming ? (
@@ -103,10 +106,10 @@ export default function TownHallSection({
             ) : latestVod ? (
               <VodEmbed messages={t} vod={latestVod} />
             ) : null}
-          </div>
+          </FadeIn>
         </div>
 
-        <div className="flex flex-col items-center gap-3">
+        <FadeIn delay={0.1} className="flex flex-col items-center gap-3">
           <span className="text-muted-foreground text-sm font-medium">
             {t.archiveKicker}
           </span>
@@ -119,7 +122,7 @@ export default function TownHallSection({
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
-        </div>
+        </FadeIn>
       </div>
     </section>
   );
