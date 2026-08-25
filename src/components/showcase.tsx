@@ -1,18 +1,11 @@
 "use client";
 
 import WulfrumProsthesis from "@/../public/showcaseImages/wulfrum_prosthesis.png";
-import GaleWivern from "@/../public/showcaseImages/gale_wivern.gif";
-import WulfrumArmor from "@/../public/showcaseImages/Wulfrum_Armor.gif";
-import ElectricMotor from "@/../public/showcaseImages/HyEnergy_Electric_Motor.gif";
-import MagicCircleGust from "@/../public/showcaseImages/MagicCircleGust.gif";
-import Shroomie from "@/../public/showcaseImages/Shroomie.gif";
-import Froggy from "@/../public/showcaseImages/Froggy.gif";
+import Shroomie from "@/../public/showcaseImages/Shroomie.webp";
 import MushroomLizard from "@/../public/showcaseImages/MushroomLizard.png";
 import AlecsTamework from "@/../public/showcaseImages/AlecsTamework.png";
-import Sanguivar from "@/../public/showcaseImages/Sanguivar.gif";
+import Sanguivar from "@/../public/showcaseImages/Sanguivar.webp";
 import Hexcode from "@/../public/showcaseImages/Hexcode.png";
-import BattleshipEffectExperiment from "@/../public/showcaseImages/BattleshipEffectExperiment.gif";
-import PingPong from "@/../public/showcaseImages/PingPong.gif";
 import TriggerVolumeKeyboard from "@/../public/showcaseImages/TriggerVolumeKeyboard.png";
 import Burger from "@/../public/showcaseImages/Burger.png";
 import LuminaryAethers from "@/../public/showcaseImages/LuminaryAethers.png";
@@ -30,7 +23,7 @@ import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import { Card, CardTitle } from "./ui/card";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Marquee,
   MarqueeFade,
@@ -40,19 +33,101 @@ import {
 
 type ProjectType = "art" | "website" | "server" | "mod" | "worldgen";
 
-interface ShowcaseItem {
+type ShowcaseItem = {
   title: string;
   author: string;
-  image: StaticImageData;
   link: string;
   type: ProjectType;
-}
+} & (
+  | { image: StaticImageData }
+  | { video: string; poster?: string | StaticImageData }
+);
+
+const resolvePoster = (poster?: string | StaticImageData) => {
+  if (!poster) return undefined;
+  return typeof poster === "string" ? poster : poster.src;
+};
+
+const AutoplayVideo = ({
+  src,
+  poster,
+  className,
+}: {
+  src: string;
+  poster?: string;
+  className?: string;
+}) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        void video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      poster={poster}
+      className={className}
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+      disablePictureInPicture
+      tabIndex={-1}
+    />
+  );
+};
+
+const ShowcaseMedia = ({
+  item,
+  fit,
+}: {
+  item: ShowcaseItem;
+  fit: "cover" | "contain";
+}) => {
+  const fitClass = fit === "cover" ? "object-cover" : "object-contain";
+
+  if ("video" in item) {
+    return (
+      <AutoplayVideo
+        src={item.video}
+        poster={resolvePoster(item.poster)}
+        className={`pointer-events-none absolute inset-0 h-full w-full ${fitClass}`}
+      />
+    );
+  }
+
+  return (
+    <Image
+      src={item.image}
+      alt={item.title}
+      fill
+      draggable={false}
+      className={fitClass}
+    />
+  );
+};
 
 const showcaseItems: ShowcaseItem[] = [
   {
     title: "Hynergy: Electric Motor",
     author: "seyager",
-    image: ElectricMotor,
+    video: "/showcaseVideos/HyEnergy_Electric_Motor.webm",
+    poster: "/showcaseVideos/posters/HyEnergy_Electric_Motor.jpg",
     link: "https://x.com/SeyagerYT",
     type: "art",
   },
@@ -66,35 +141,15 @@ const showcaseItems: ShowcaseItem[] = [
   {
     title: "Gale Wivern",
     author: "Nicolas | Tourne_Vis",
-    image: GaleWivern,
+    video: "/showcaseVideos/gale_wivern.webm",
+    poster: "/showcaseVideos/posters/gale_wivern.jpg",
     link: "https://x.com/TourneVis_MC",
-    type: "art",
-  },
-  {
-    title: "Hylamity: Wulfrum Armor",
-    author: "slader._.",
-    image: WulfrumArmor,
-    link: "https://discord.gg/f2fMKYnRqR",
-    type: "art",
-  },
-  {
-    title: "Saqvobase's Spellcasting: Magic Circle - Gust",
-    author: "Saqvobase",
-    image: MagicCircleGust,
-    link: "",
     type: "art",
   },
   {
     title: "Shroomie",
     author: "Miyako Hikari",
     image: Shroomie,
-    link: "",
-    type: "art",
-  },
-  {
-    title: "Froggy",
-    author: "Unknown Knight",
-    image: Froggy,
     link: "",
     type: "art",
   },
@@ -129,14 +184,16 @@ const showcaseItems: ShowcaseItem[] = [
   {
     title: "Battleship Effect Experiment",
     author: "FoxyCCA",
-    image: BattleshipEffectExperiment,
+    video: "/showcaseVideos/BattleshipEffectExperiment.webm",
+    poster: "/showcaseVideos/posters/BattleshipEffectExperiment.jpg",
     link: "",
     type: "art",
   },
   {
     title: "Ping Pong",
     author: "FoxyCCA",
-    image: PingPong,
+    video: "/showcaseVideos/PingPong.webm",
+    poster: "/showcaseVideos/posters/PingPong.jpg",
     link: "",
     type: "worldgen",
   },
@@ -232,13 +289,7 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
   const cardContent = isWorldgen ? (
     <>
       <div className="absolute inset-0">
-        <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          draggable={false}
-          className="object-cover"
-        />
+        <ShowcaseMedia item={item} fit="cover" />
       </div>
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
@@ -258,13 +309,7 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
   ) : (
     <>
       <div className="relative h-44 w-full shrink-0">
-        <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          draggable={false}
-          className="object-contain"
-        />
+        <ShowcaseMedia item={item} fit="contain" />
       </div>
 
       <div className="relative flex min-h-0 flex-1 flex-col justify-center border-t px-4 py-3">
