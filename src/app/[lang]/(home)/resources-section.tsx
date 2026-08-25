@@ -25,7 +25,11 @@ function ResourceRow({
     <article
       className={`resource-row bg-card relative grid overflow-hidden rounded-xl border shadow-sm lg:grid-cols-2 ${reverse ? "lg:[&_.resource-row-image]:order-2" : ""}`}
     >
-      <FadeIn y={16} x={reverse ? 48 : -48} className="min-h-64 lg:min-h-88">
+      <FadeIn
+        y={16}
+        x={reverse ? 48 : -48}
+        className={`min-h-64 lg:min-h-88 ${reverse ? "lg:order-2" : ""}`}
+      >
         <div className="resource-row-image relative h-full min-h-64 overflow-hidden lg:min-h-88">
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105"
