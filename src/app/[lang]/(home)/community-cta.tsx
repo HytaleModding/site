@@ -32,7 +32,7 @@ function buildRow(): string[] {
 function PhotoTile({ photo }: { photo: string }) {
   return (
     <div
-      className="h-40 w-60 rounded-xl border shadow-sm transition-transform duration-300 hover:scale-[1.03] sm:h-48 sm:w-72"
+      className="bg-muted h-40 w-60 transform-gpu overflow-hidden rounded-xl border bg-no-repeat shadow-sm transition-transform duration-300 hover:scale-[1.03] sm:h-48 sm:w-72"
       style={{
         backgroundImage: `url(/assets/landing/community/${photo})`,
         backgroundSize: "cover",
@@ -86,7 +86,7 @@ export function CommunityCta() {
   }, []);
 
   return (
-    <section className="my-24 space-y-10 overflow-hidden">
+    <section className="my-24 space-y-10 overflow-clip">
       <PhotoRow photos={rows.rowOne} />
 
       <FadeIn className="mx-auto max-w-4xl px-4 text-center">
