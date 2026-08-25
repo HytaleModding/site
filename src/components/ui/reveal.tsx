@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import type { HTMLMotionProps, Transition } from "motion/react";
-import { cn } from "@/lib/utils";
 
 const EASE_OUT: Transition["ease"] = [0.21, 0.47, 0.32, 0.98];
 
