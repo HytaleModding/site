@@ -14,7 +14,7 @@ import { FadeIn } from "@/components/ui/reveal";
 import { useMessages } from "@/lib/hooks/useMessages";
 import { richText } from "@/lib/rich-text";
 
-const COMMUNITY_PHOTOS = Array.from({ length: 20 }, (_, i) => `${i + 1}.png`);
+const COMMUNITY_PHOTOS = Array.from({ length: 20 }, (_, i) => `${i + 1}.webp`);
 
 function shuffle<T>(items: T[]): T[] {
   const result = [...items];
