@@ -97,7 +97,7 @@ export function CommunityCta() {
         </h2>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button asChild>
-            <Link href="/en/docs/guides/plugin/world-gen">
+            <Link href="/en/docs/official-documentation/worldgen/worldgen-tutorial/README">
               {t.worldGen} <ArrowRightIcon />
             </Link>
           </Button>
