@@ -4,7 +4,7 @@ import HMLogoDark from "@/../public/branding/hytalemodding/HM_DARK.svg";
 import HMLogoLight from "@/../public/branding/hytalemodding/HM_LIGHT.svg";
 import NitradoLogoColored from "@/../public/branding/nitrado/nitrado-logo.svg";
 import NitradoLogoDark from "@/../public/branding/nitrado/nitrado-logo-black.svg";
-import HytaleLogo from "@/../public/branding/hytale/Hytale-Logo-Illustrated.png";
+import HytaleLogo from "@/../public/branding/hytale/hytale-logo-white.svg";
 import Mascot from "@/../public/grants/BH_HytaleModding_Assets-05.png";
 import Cubes from "@/../public/grants/BH_HytaleModding_Assets-09.png";
 import Background from "@/../public/grants/BG_Desert_Dunes.png";
@@ -55,7 +55,7 @@ export function ProgramsSection() {
               <Image
                 src={HytaleLogo}
                 alt="Hytale Logo"
-                className="h-full w-auto scale-250 pl-2"
+                className="h-full w-auto scale-180 pl-2"
               />
             </div>
             <div className="space-y-4">
@@ -98,7 +98,7 @@ export function ProgramsSection() {
               <Image
                 src={HytaleLogo}
                 alt="Hytale Logo"
-                className="h-full w-auto scale-250 pl-2"
+                className="h-full w-auto scale-180 pl-2"
               />
             </div>
             <div className="space-y-4">

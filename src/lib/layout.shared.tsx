@@ -3,7 +3,7 @@ import { BookIcon, XIcon } from "lucide-react";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { i18n } from "@/lib/i18n";
 import { getMessages } from "./locale";
-import HytaleLogo from "@/../public/hytale-branding/hytale-logo-white.svg";
+import HytaleLogo from "@/../public/branding/hytale/hytale-logo-white.svg";
 import HytaleModdingLogo from "@/../public/branding/hytalemodding/HM_DARK.svg";
 import HytaleModdingIcon from "@/app/icon0.svg";
 
