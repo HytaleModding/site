@@ -52,34 +52,36 @@ export function DiscordButton({ showMemberCount = false }: DiscordButtonProps) {
   const { stats, state } = useDiscordStats(showMemberCount);
 
   return (
-    <Button className="relative" asChild variant={"primary"}>
-      <Link href="https://discord.gg/hytalemodding" target="_blank">
-        <FaDiscord />
-        {messages.home.discord}
-        {showMemberCount ? (
-          <div className="absolute top-full mt-2 flex">
-            <ViewTransition>
-              {state === "loading" ? (
-                <p className="text-muted-foreground text-sm">
-                  {messages.misc.loading}
-                </p>
-              ) : state === "loaded" && stats ? (
-                <p className="text-muted-foreground flex items-center gap-1 text-sm">
-                  <span className="flex gap-1 text-green-400">
-                    <CircleUserIcon className="my-auto" />
-                    {messages.home.memberCount.replace(
-                      "{count}",
-                      stats.total_members.toLocaleString(),
-                    )}
-                  </span>
-                </p>
-              ) : (
-                <p className="text-destructive text-sm">Failed to load stats</p>
-              )}
-            </ViewTransition>
-          </div>
-        ) : null}
-      </Link>
-    </Button>
+    <div className="relative">
+      <Button asChild variant={"primary"}>
+        <Link href="https://discord.gg/hytalemodding" target="_blank">
+          <FaDiscord />
+          {messages.home.discord}
+        </Link>
+      </Button>
+      {showMemberCount ? (
+        <div className="absolute top-full left-0 mt-2 flex">
+          <ViewTransition>
+            {state === "loading" ? (
+              <p className="text-muted-foreground text-sm">
+                {messages.misc.loading}
+              </p>
+            ) : state === "loaded" && stats ? (
+              <p className="text-muted-foreground flex items-center gap-1 text-sm">
+                <span className="flex gap-1 text-green-400">
+                  <CircleUserIcon className="my-auto" />
+                  {messages.home.memberCount.replace(
+                    "{count}",
+                    stats.total_members.toLocaleString(),
+                  )}
+                </span>
+              </p>
+            ) : (
+              <p className="text-destructive text-sm">Failed to load stats</p>
+            )}
+          </ViewTransition>
+        </div>
+      ) : null}
+    </div>
   );
 }
