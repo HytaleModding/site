@@ -65,7 +65,7 @@ export function ProgramsSection() {
               <p className="font-normal text-[#9eb2c0]">
                 We host the official documentation for Hytale, provided by
                 Hypixel Studios. It contains source reference material for
-                modders, and guides for modding Hytale.
+                modders and guides for modding Hytale.
               </p>
             </div>
             <div className="mt-auto flex">
