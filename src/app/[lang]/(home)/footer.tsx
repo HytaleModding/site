@@ -10,13 +10,13 @@ import HytaleModdingLogoDark from "@/../public/branding/hytalemodding/HM_DARK.sv
 import HytaleModdingLogoLight from "@/../public/branding/hytalemodding/HM_LIGHT.svg";
 
 const LINK_GROUPS = [
-  //   {
-  //     heading: "Community",
-  //     links: [
-  //       { label: "About & Contact", href: "/about" },
-  //       { label: "Support", href: "/support" },
-  //     ],
-  //   },
+  {
+    heading: "HytaleModding",
+    links: [
+      { label: "Press Inquiries", href: "/press" },
+      { label: "Town Halls", href: "/townhalls" },
+    ],
+  },
   {
     heading: "Resources",
     links: [
