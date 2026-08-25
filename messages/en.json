@@ -77,6 +77,48 @@
     "ourSponsors": "Our Sponsors"
   },
 
+  "press": {
+    "title": "Press Kit",
+    "description": "HytaleModding is the largest community of modders for Hytale. We're an open-source, volunteer-run project that writes documentation, guides, and tools for modders of every skill level.",
+    "downloadKit": "Download press kit",
+    "about": {
+      "title": "Who we are.",
+      "body1": "HytaleModding brings modders together to build, share, and celebrate what they make. We maintain documentation, guides, and tools for modders of every skill level, and everything we produce is open source. We also run community events like ModJams and town halls, and fund community projects through our grant program.",
+      "mentions": [
+        {
+          "count": "2",
+          "label": "Features in official Hytale blog posts",
+          "hrefs": [
+            "https://hytale.com/news/2026/7/community-spotlight-worldgen-v2#learning-world-generation-hytalemodding-community",
+            "https://hytale.com/news/2026/3/hytale-new-worlds-modding-contest#resources-where-to-learn-about-modding-hytalemodding"
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "title": "Contact",
+      "leadIn": "You can reach the team directly:",
+      "business": {
+        "label": "Business & partnerships",
+        "email": "hello@hytalemodding.dev"
+      },
+      "media": {
+        "label": "Press & media",
+        "email": "press@hytalemodding.dev"
+      },
+      "legal": {
+        "label": "Legal",
+        "email": "legal@hytalemodding.dev"
+      }
+    },
+    "legalNote": "For anything urgent such as takedowns, copyright, or trademark requests, reach Neil directly at neil@hytalemodding.dev with legal@hytalemodding.dev in CC.",
+    "logos": {
+      "title": "Logos",
+      "subtitle": "Official HytaleModding marks.",
+      "note": "Stick to SVG or PNG. Avoid stretching, outlining, or recoloring."
+    }
+  },
+
   "misc": {
     "loading": "Loading...",
     "failedToLoad": "Failed to load.",
