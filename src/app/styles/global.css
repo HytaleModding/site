@@ -154,3 +154,41 @@
   -webkit-text-fill-color: transparent;
   animation: rainbow-flow 8s linear infinite;
 }
+
+.reveal {
+  opacity: 0;
+  transform: translate(var(--reveal-x), var(--reveal-y));
+  transition:
+    opacity var(--reveal-duration) cubic-bezier(0.21, 0.47, 0.32, 0.98)
+      var(--reveal-delay),
+    transform var(--reveal-duration) cubic-bezier(0.21, 0.47, 0.32, 0.98)
+      var(--reveal-delay);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.spotlight-sweep {
+  animation: spotlight-sweep var(--spotlight-duration) ease-in-out infinite
+    alternate;
+}
+
+@keyframes spotlight-sweep {
+  to {
+    transform: translateX(var(--spotlight-offset));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .spotlight-sweep {
+    animation: none;
+  }
+}

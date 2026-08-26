@@ -1,6 +1,4 @@
-"use client";
 import React from "react";
-import { motion } from "motion/react";
 
 type SpotlightProps = {
   gradientFirst?: string;
@@ -26,29 +24,10 @@ export const Spotlight = ({
   xOffset = 100,
 }: SpotlightProps = {}) => {
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 1.5,
-      }}
-      className="pointer-events-none absolute inset-0 isolate h-full w-full overflow-clip"
-    >
-      <motion.div
-        animate={{
-          x: [0, xOffset, 0],
-        }}
-        transition={{
-          duration,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute top-0 left-0 z-40 h-screen w-screen"
+    <div className="pointer-events-none absolute inset-0 isolate h-full w-full overflow-clip">
+      <div
+        className="spotlight-sweep spotlight-sweep-left pointer-events-none absolute top-0 left-0 z-40 h-screen w-screen"
+        style={{ "--spotlight-offset": `${xOffset}px`, "--spotlight-duration": `${duration}s` } as React.CSSProperties}
       >
         <div
           style={{
@@ -79,19 +58,11 @@ export const Spotlight = ({
           }}
           className={`absolute top-0 left-0 origin-top-left`}
         />
-      </motion.div>
+      </div>
 
-      <motion.div
-        animate={{
-          x: [0, -xOffset, 0],
-        }}
-        transition={{
-          duration,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute top-0 right-0 z-40 h-screen w-screen"
+      <div
+        className="spotlight-sweep pointer-events-none absolute top-0 right-0 z-40 h-screen w-screen"
+        style={{ "--spotlight-offset": `${-xOffset}px`, "--spotlight-duration": `${duration}s` } as React.CSSProperties}
       >
         <div
           style={{
@@ -122,7 +93,7 @@ export const Spotlight = ({
           }}
           className={`absolute top-0 right-0 origin-top-right`}
         />
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };

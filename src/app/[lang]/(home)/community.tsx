@@ -248,7 +248,10 @@ export function CommunitySection() {
 
   const discordMemberCount = stats?.total_members ?? 0;
   const clampedDiscordMemberCount = Math.floor(discordMemberCount / 100) * 100;
-  const discordMemberCountLabel = `${clampedDiscordMemberCount.toLocaleString()}+`;
+  // Keep the copy truthful while the client-side Discord request completes.
+  const discordMemberCountLabel = stats
+    ? `${clampedDiscordMemberCount.toLocaleString()}+`
+    : "—";
 
   useEffect(() => {
     setMounted(true);
@@ -305,7 +308,7 @@ export function CommunitySection() {
                 link: (chunks) => (
                   <TextLink
                     href="https://discord.gg/hytalemodding"
-                    className="group text-foreground relative inline-block font-medium"
+                    className="group text-foreground relative inline-block min-w-[18ch] font-medium"
                   >
                     <span className="relative z-10">{chunks}</span>
                     <span

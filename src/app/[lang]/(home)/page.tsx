@@ -7,10 +7,9 @@ import {
   NewspaperIcon,
 } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight-new";
-import { FadeIn } from "@/components/ui/reveal";
 import { Button } from "@/components/ui/button";
 import { DiscordButton } from "@/components/discord-button";
-import { DeferredShowcase } from "@/components/deferred-showcase";
+import { ShowcaseMarquee } from "@/components/showcase";
 import { Separator } from "@/components/ui/separator";
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 import { CommunitySection } from "./community";
@@ -98,7 +97,7 @@ export default async function HomePage({
       </div>
 
       <div className="w-full pb-4">
-        <DeferredShowcase />
+        <ShowcaseMarquee />
       </div>
 
       <CommunitySection />

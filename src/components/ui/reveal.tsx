@@ -1,9 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
-import type { HTMLMotionProps, Transition } from "motion/react";
-
-const EASE_OUT: Transition["ease"] = [0.21, 0.47, 0.32, 0.98];
+import { useEffect, useRef, useState, type HTMLAttributes } from "react";
 
 export function FadeIn({
   children,
@@ -12,25 +9,48 @@ export function FadeIn({
   duration = 0.7,
   y = 24,
   x = 0,
+  style,
   ...props
-}: HTMLMotionProps<"div"> & {
+}: HTMLAttributes<HTMLDivElement> & {
   delay?: number;
   duration?: number;
   y?: number;
   x?: number;
 }) {
-  const reduceMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsVisible(true);
+        observer.disconnect();
+      },
+      { rootMargin: "0px 0px -80px 0px" },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y, x }}
-      whileInView={{ opacity: 1, y: 0, x: 0 }}
-      viewport={{ once: true, margin: "0px 0px -80px 0px" }}
-      transition={{ duration, delay, ease: EASE_OUT }}
-      className={className}
+    <div
+      ref={ref}
+      className={`reveal ${isVisible ? "reveal-visible" : ""} ${className ?? ""}`}
+      style={{
+        "--reveal-x": `${x}px`,
+        "--reveal-y": `${y}px`,
+        "--reveal-delay": `${delay}s`,
+        "--reveal-duration": `${duration}s`,
+        ...style,
+      } as React.CSSProperties}
       {...props}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

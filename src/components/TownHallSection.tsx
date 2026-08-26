@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaDiscord } from "react-icons/fa6";
-import { ArrowRight, CalendarClock, Play } from "lucide-react";
+import { ArrowRight, CalendarClock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/section-header";
 import { FadeIn } from "@/components/ui/reveal";
 import { Messages } from "@/lib/locale";
+import { DeferredYouTubeEmbed } from "./deferred-youtube-embed";
 
 interface Speaker {
   name: string;
@@ -153,13 +154,9 @@ function ScheduledEmbed({
   return (
     <>
       <div className="border-border relative aspect-video w-full overflow-hidden rounded-2xl border bg-black shadow-2xl shadow-black/40">
-        <iframe
-          className="absolute inset-0 h-full w-full"
-          src={`https://www.youtube-nocookie.com/embed/${upcoming.videoId}`}
+        <DeferredYouTubeEmbed
+          videoId={upcoming.videoId}
           title="Upcoming town hall"
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
         />
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3 px-1">
@@ -256,14 +253,7 @@ function VodEmbed({
   return (
     <>
       <div className="border-border relative aspect-video w-full overflow-hidden rounded-2xl border bg-black shadow-2xl shadow-black/40">
-        <iframe
-          className="absolute inset-0 h-full w-full"
-          src={`https://www.youtube-nocookie.com/embed/${vod.videoId}`}
-          title={vod.title}
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        />
+        <DeferredYouTubeEmbed videoId={vod.videoId} title={vod.title} />
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3 px-1">
         {/* <div className="flex items-center gap-2 text-sm text-muted-foreground">
