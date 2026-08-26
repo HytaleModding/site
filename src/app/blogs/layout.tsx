@@ -8,6 +8,7 @@ import { baseOptions } from "@/lib/layout.shared";
 import { baseUrl } from "@/lib/config";
 import englishTranslations from "@/../messages/en.json";
 import { DocumentAttributes } from "@/components/document-attributes";
+import "../styles/blogs.css";
 
 const { provider } = defineI18nUI(i18n, {
   translations: {

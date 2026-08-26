@@ -23,7 +23,7 @@ import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import { Card, CardTitle } from "./ui/card";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import {
   Marquee,
   MarqueeFade,
@@ -81,11 +81,10 @@ const AutoplayVideo = ({
       src={src}
       poster={poster}
       className={className}
-      autoPlay
       loop
       muted
       playsInline
-      preload="auto"
+      preload="none"
       disablePictureInPicture
       tabIndex={-1}
     />
@@ -117,6 +116,7 @@ const ShowcaseMedia = ({
       alt={item.title}
       fill
       draggable={false}
+      sizes="384px"
       className={fitClass}
     />
   );
@@ -345,17 +345,12 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
 };
 
 export function ShowcaseMarquee() {
-  const [repeatedItems] = useState(() => {
-    const shuffledItems = [...showcaseItems].sort(() => Math.random() - 0.5);
-    return [...shuffledItems, ...shuffledItems, ...shuffledItems];
-  });
-
   return (
     <Marquee className="h-64 w-full">
       <MarqueeFade side="left" className="w-12" />
-      <MarqueeContent speed={200} autoFill={false}>
-        {repeatedItems.map((item, index) => (
-          <MarqueeItem key={`${item.title}-${index}`} className="mx-2">
+      <MarqueeContent speed={200} autoFill>
+        {showcaseItems.map((item) => (
+          <MarqueeItem key={item.title} className="mx-2">
             <ShowcaseCard item={item} />
           </MarqueeItem>
         ))}

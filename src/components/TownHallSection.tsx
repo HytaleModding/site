@@ -157,6 +157,7 @@ function ScheduledEmbed({
           className="absolute inset-0 h-full w-full"
           src={`https://www.youtube-nocookie.com/embed/${upcoming.videoId}`}
           title="Upcoming town hall"
+          loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />
@@ -259,6 +260,7 @@ function VodEmbed({
           className="absolute inset-0 h-full w-full"
           src={`https://www.youtube-nocookie.com/embed/${vod.videoId}`}
           title={vod.title}
+          loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />

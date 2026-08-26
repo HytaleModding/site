@@ -10,19 +10,17 @@ import { Spotlight } from "@/components/ui/spotlight-new";
 import { FadeIn } from "@/components/ui/reveal";
 import { Button } from "@/components/ui/button";
 import { DiscordButton } from "@/components/discord-button";
-import { ShowcaseMarquee } from "@/components/showcase";
+import { DeferredShowcase } from "@/components/deferred-showcase";
 import { Separator } from "@/components/ui/separator";
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 import { CommunitySection } from "./community";
 import { ProgramsSection } from "./programs";
 import { Footer } from "./footer";
 import { HeroStickers } from "./hero-stickers";
-import { getBlogs } from "@/lib/blogs";
 import { getMessages, Messages } from "@/lib/locale";
 import { deepMerge } from "@/lib/utils";
 import { richText } from "@/lib/rich-text";
 import TownHallHomepageBlock from "@/components/TownHallHomepageBlock";
-import { BlogsSection } from "./blogs-section";
 import { CommunityCta } from "./community-cta";
 import { ResourcesSection } from "./resources-section";
 
@@ -37,8 +35,6 @@ export default async function HomePage({
     lang === "en"
       ? baseMessages
       : (deepMerge(baseMessages, getMessages(lang)) as Messages);
-  const blogs = (await getBlogs()).slice(0, 3);
-
   return (
     <div className="flex flex-1 flex-col">
       <Spotlight />
@@ -48,7 +44,7 @@ export default async function HomePage({
         </div>
         <div className="flex h-full w-full max-w-5xl flex-col items-center justify-around gap-6 space-y-8 text-center">
           <ViewTransition name="hero" share="blur-scale-transition">
-            <FadeIn className="space-y-6">
+            <div className="space-y-6">
               <h1 className="font-display text-4xl font-semibold text-balance sm:text-5xl md:text-7xl">
                 <span className="block">
                   {richText(messages.home.title, {
@@ -66,13 +62,10 @@ export default async function HomePage({
               <h2 className="text-muted-foreground text-lg text-balance md:text-xl">
                 {messages.home.description}
               </h2>
-            </FadeIn>
+            </div>
           </ViewTransition>
 
-          <FadeIn
-            delay={0.15}
-            className="flex w-fit flex-col items-center gap-4"
-          >
+          <div className="flex w-fit flex-col items-center gap-4">
             <div className="flex flex-wrap justify-center gap-4 px-4">
               <DiscordButton />
             </div>
@@ -96,20 +89,16 @@ export default async function HomePage({
                 </Link>
               </Button>
             </div>
-          </FadeIn>
+          </div>
         </div>
-        <FadeIn
-          delay={0.6}
-          duration={0.9}
-          className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2"
-        >
+        <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
           <p className="text-sm">Scroll down for more</p>
           <ArrowDownCircleIcon />
-        </FadeIn>
+        </div>
       </div>
 
       <div className="w-full pb-4">
-        <ShowcaseMarquee />
+        <DeferredShowcase />
       </div>
 
       <CommunitySection />
@@ -122,13 +111,6 @@ export default async function HomePage({
       <Separator />
 
       <TownHallHomepageBlock messages={messages.home.townHalls} />
-
-      {/* <BlogsSection
-        blogs={blogs}
-        lang={lang}
-        title={messages.nav.blogs ?? "Blogs"}
-      />
-      <Separator /> */}
 
       <CommunityCta />
 

@@ -4,6 +4,8 @@ import { baseOptions } from "@/lib/layout.shared";
 import { ViewTransition } from "react";
 import { localizePageTree } from "@/lib/tree-localization";
 import { cn } from "@/lib/utils";
+import "../../../styles/official-docs.css";
+import "katex/dist/katex.css";
 
 export default async function Layout({
   params,

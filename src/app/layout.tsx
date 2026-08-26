@@ -1,9 +1,6 @@
 import "./styles/global.css";
 import "./styles/transitions.css";
-import "./styles/official-docs.css";
-import "katex/dist/katex.css";
-import "./styles/blogs.css";
-import { Geist, Geist_Mono, Lexend, Nunito_Sans } from "next/font/google";
+import { Geist, Lexend, Nunito_Sans } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import { baseUrl } from "@/lib/config";
 import { cn } from "@/lib/utils";
@@ -13,19 +10,17 @@ const geist = Geist({
   variable: "--font-sans",
 });
 
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
-
 const lexend = Lexend({
   subsets: ["latin"],
   variable: "--font-official-title",
+  display: "swap",
 });
 
 const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
   variable: "--font-official-body",
+  preload: false,
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -64,7 +59,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div
           className={cn(
             geist.variable,
-            geistMono.variable,
             lexend.variable,
             nunitoSans.variable,
           )}
