@@ -46,83 +46,79 @@ export default function TownHallSection({
 }: TownHallSectionProps) {
   return (
     <section className="mx-auto my-24 flex w-full max-w-7xl flex-col gap-16 px-4">
-      <div className="space-y-8">
-        <FadeIn>
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start">
+        <FadeIn x={-32} y={0} className="flex flex-col gap-8">
           <SectionHeader align="left" title={t.title} />
+
+          <p className="text-muted-foreground max-w-md text-base leading-relaxed">
+            {t.description}
+          </p>
+
+          {speakers.length > 0 && (
+            <div className="flex flex-col gap-3">
+              <span className="text-muted-foreground/70 text-xs font-medium tracking-wide uppercase">
+                {upcoming ? t.confirmedSpeakers : t.speakers}
+              </span>
+              <div className="flex flex-wrap gap-4">
+                {speakers.map((speaker) => (
+                  <div
+                    key={speaker.name}
+                    className="flex items-start gap-2.5"
+                  >
+                    <div className="border-border bg-muted relative h-9 w-9 overflow-hidden rounded-full border">
+                      <Image
+                        src={speaker.avatarUrl}
+                        alt={speaker.name}
+                        fill
+                        sizes="36px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-col leading-tight">
+                      <span className="text-foreground text-sm font-medium">
+                        {speaker.name}
+                      </span>
+                      {speaker.role && (
+                        <span className="text-muted-foreground/70 text-xs">
+                          {speaker.role}
+                        </span>
+                      )}
+                      {speaker.company && (
+                        <span className="text-muted-foreground/70 text-xs">
+                          {speaker.company}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="flex flex-col items-start gap-3">
+            <span className="text-muted-foreground text-sm font-medium">
+              {t.archiveKicker}
+            </span>
+            <Button
+              className="h-12 bg-black px-8 text-base text-white hover:bg-black/90 hover:text-white dark:bg-white dark:text-black dark:hover:bg-white/90 dark:hover:text-black"
+              asChild
+            >
+              <Link href={archiveHref}>
+                {t.viewAll}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start">
-          <FadeIn x={-32} y={0} className="flex flex-col gap-8">
-            <p className="text-muted-foreground max-w-md text-base leading-relaxed">
-              {t.description}
-            </p>
-
-            {speakers.length > 0 && (
-              <div className="flex flex-col gap-3">
-                <span className="text-muted-foreground/70 text-xs font-medium tracking-wide uppercase">
-                  {upcoming ? t.confirmedSpeakers : t.speakers}
-                </span>
-                <div className="flex flex-wrap gap-4">
-                  {speakers.map((speaker) => (
-                    <div
-                      key={speaker.name}
-                      className="flex items-start gap-2.5"
-                    >
-                      <div className="border-border bg-muted relative h-9 w-9 overflow-hidden rounded-full border">
-                        <Image
-                          src={speaker.avatarUrl}
-                          alt={speaker.name}
-                          fill
-                          sizes="36px"
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="flex flex-col leading-tight">
-                        <span className="text-foreground text-sm font-medium">
-                          {speaker.name}
-                        </span>
-                        {speaker.role && (
-                          <span className="text-muted-foreground/70 text-xs">
-                            {speaker.role}
-                          </span>
-                        )}
-                        {speaker.company && (
-                          <span className="text-muted-foreground/70 text-xs">
-                            {speaker.company}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </FadeIn>
-
-          <FadeIn x={32} y={0} className="flex flex-col gap-3">
-            {upcoming?.videoId ? (
-              <ScheduledEmbed messages={t} upcoming={upcoming} />
-            ) : upcoming ? (
-              <UpcomingCard messages={t} upcoming={upcoming} />
-            ) : latestVod ? (
-              <VodEmbed messages={t} vod={latestVod} />
-            ) : null}
-          </FadeIn>
-        </div>
-
-        <FadeIn delay={0.1} className="flex flex-col items-center gap-3">
-          <span className="text-muted-foreground text-sm font-medium">
-            {t.archiveKicker}
-          </span>
-          <Button
-            className="h-12 bg-black px-8 text-base text-white hover:bg-black/90 hover:text-white dark:bg-white dark:text-black dark:hover:bg-white/90 dark:hover:text-black"
-            asChild
-          >
-            <Link href={archiveHref}>
-              {t.viewAll}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
+        <FadeIn x={32} y={0} className="flex flex-col gap-3">
+          {upcoming?.videoId ? (
+            <ScheduledEmbed messages={t} upcoming={upcoming} />
+          ) : upcoming ? (
+            <UpcomingCard messages={t} upcoming={upcoming} />
+          ) : latestVod ? (
+            <VodEmbed messages={t} vod={latestVod} />
+          ) : null}
         </FadeIn>
       </div>
     </section>
