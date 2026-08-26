@@ -52,7 +52,7 @@ export function DiscordButton({ showMemberCount = false }: DiscordButtonProps) {
   const { stats, state } = useDiscordStats(showMemberCount);
 
   return (
-    <div className="relative">
+    <div className="relative inline-flex flex-col items-center">
       <Button asChild variant={"primary"}>
         <Link href="https://discord.gg/hytalemodding" target="_blank">
           <FaDiscord />
@@ -60,7 +60,7 @@ export function DiscordButton({ showMemberCount = false }: DiscordButtonProps) {
         </Link>
       </Button>
       {showMemberCount ? (
-        <div className="absolute top-full left-0 mt-2 flex">
+        <div className="absolute top-full left-1/2 mt-2 -translate-x-1/2 whitespace-nowrap">
           <ViewTransition>
             {state === "loading" ? (
               <p className="text-muted-foreground text-sm">
