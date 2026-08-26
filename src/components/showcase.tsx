@@ -23,7 +23,7 @@ import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import { Card, CardTitle } from "./ui/card";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Marquee,
   MarqueeFade,
@@ -283,6 +283,17 @@ const showcaseItems: ShowcaseItem[] = [
   },
 ];
 
+function shuffle<T>(items: T[]): T[] {
+  const result = [...items];
+
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
+}
+
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
   const isWorldgen = item.type === "worldgen";
 
@@ -345,11 +356,21 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
 };
 
 export function ShowcaseMarquee() {
+  const [items, setItems] = useState(showcaseItems);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setItems(shuffle(showcaseItems));
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   return (
     <Marquee className="h-64 w-full">
       <MarqueeFade side="left" className="w-12" />
       <MarqueeContent speed={200} autoFill>
-        {showcaseItems.map((item) => (
+        {items.map((item) => (
           <MarqueeItem key={item.title} className="mx-2">
             <ShowcaseCard item={item} />
           </MarqueeItem>
