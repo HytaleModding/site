@@ -136,6 +136,8 @@ function ScheduledEmbed({
   messages: Messages["home"]["townHalls"];
   upcoming: UpcomingTownHall;
 }) {
+  if (!upcoming.videoId) return null;
+
   const d =
     typeof upcoming.date === "string" ? new Date(upcoming.date) : upcoming.date;
 
