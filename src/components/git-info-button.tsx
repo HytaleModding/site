@@ -7,7 +7,7 @@ export function GitInfoButton() {
   return (
     <Button
       asChild
-      className="absolute right-4 bottom-4 z-10 flex items-center gap-2"
+      className="fixed right-4 bottom-4 z-10 flex items-center gap-2"
     >
       <Link
         href={`https://github.com/HytaleModding/site/tree/${branch}`}

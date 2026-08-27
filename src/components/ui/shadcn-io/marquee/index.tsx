@@ -9,7 +9,7 @@ export type MarqueeProps = HTMLAttributes<HTMLDivElement>;
 
 export const Marquee = ({ className, ...props }: MarqueeProps) => (
   <div
-    className={cn("relative w-full overflow-hidden", className)}
+    className={cn("relative w-full overflow-clip", className)}
     {...(props as any)}
   />
 );
@@ -20,12 +20,14 @@ export const MarqueeContent = ({
   loop = 0,
   autoFill = true,
   pauseOnHover = true,
+  style,
   ...props
 }: MarqueeContentProps) => (
   <FastMarquee
     autoFill={autoFill}
     loop={loop}
     pauseOnHover={pauseOnHover}
+    style={{ overflowX: "clip", overflowY: "clip", ...style }}
     {...(props as any)}
   />
 );

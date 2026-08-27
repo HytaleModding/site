@@ -1,4 +1,4 @@
 /content/docs/**/*.mdx
-!/content/docs/en/official-documentation/**
+/content/docs/**/official-documentation/**
 /messages/*-*.json
 /content/docs/en/official-documentation/worldgen/technical-hytale-generator/density.mdx

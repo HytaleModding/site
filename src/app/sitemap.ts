@@ -9,21 +9,18 @@ import type { MetadataRoute } from "next";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sitemap: MetadataRoute.Sitemap = [];
 
-  // Add all language home pages
   for (const lang of i18n.languages) {
     sitemap.push({
-      url: `${baseUrl}/${lang}`,
+      url: lang === i18n.defaultLanguage ? baseUrl : `${baseUrl}/${lang}`,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: lang === i18n.defaultLanguage ? 1.0 : 0.95,
     });
   }
 
-  // Get all pages from source
   const pages = source.getPages();
 
   for (const page of pages) {
-    // Skip if page doesn't have url
     if (!page.url) continue;
 
     sitemap.push({

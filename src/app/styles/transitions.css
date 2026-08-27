@@ -34,3 +34,12 @@
     opacity: 1;
   }
 }
+
+/* helper class for making view transitions respect top elements */
+.above-transitions {
+  view-transition-name: above-transition;
+}
+
+::view-transition-group(above-transition) {
+  z-index: 9999;
+}

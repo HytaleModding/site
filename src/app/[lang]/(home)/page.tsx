@@ -1,429 +1,119 @@
-"use client";
+import { ViewTransition } from "react";
+import Link from "next/link";
 import {
-  ExternalLinkIcon,
   BookIcon,
-  MessageSquareIcon,
-  ArrowUpRightIcon,
-  ArrowRightIcon,
+  SquarePenIcon,
+  ArrowDownCircleIcon,
+  NewspaperIcon,
 } from "lucide-react";
-import { FlipWords } from "@/components/ui/flip-words";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Marquee,
-  MarqueeContent,
-  MarqueeFade,
-  MarqueeItem,
-} from "@/components/ui/shadcn-io/marquee";
-import Image, { StaticImageData } from "next/image";
-import { localizeHref } from "@/lib/locale";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useMessages } from "@/lib/hooks/useMessages";
+import { DiscordButton } from "@/components/discord-button";
+import { ShowcaseMarquee } from "@/components/showcase";
+import { Separator } from "@/components/ui/separator";
+import { DynamicLink } from "fumadocs-core/dynamic-link";
+import { CommunitySection } from "./community";
+import { ProgramsSection } from "./programs";
+import { Footer } from "./footer";
+import { HeroStickers } from "./hero-stickers";
+import { getMessages, Messages } from "@/lib/locale";
+import { deepMerge } from "@/lib/utils";
+import { richText } from "@/lib/rich-text";
+import TownHallHomepageBlock from "@/components/TownHallHomepageBlock";
+import { CommunityCta } from "./community-cta";
+import { ResourcesSection } from "./resources-section";
 
-import WulfrumProsthesis from "./(showcaseImages)/wulfrum_prosthesis.png";
-import Melodium from "./(showcaseImages)/Melodium.gif";
-import GaleWivern from "./(showcaseImages)/gale_wivern.gif";
-import WulfrumArmor from "./(showcaseImages)/Wulfrum_Armor.gif";
-import ElectricMotor from "./(showcaseImages)/HyEnergy_Electric_Motor.gif";
-import WulfrumTriangle from "./(showcaseImages)/Wulfrum_triangle.gif";
-import MagicCircleGust from "./(showcaseImages)/MagicCircleGust.gif";
-import Shroomie from "./(showcaseImages)/Shroomie.gif";
-import Froggy from "./(showcaseImages)/Froggy.gif";
-import Sanguivar from "./(showcaseImages)/Sanguivar.gif";
-import VoileBanner from "./(showcaseImages)/voile.png";
-import MushroomLizard from "./(showcaseImages)/MushroomLizard.png";
-import AlecsTamework from "./(showcaseImages)/AlecsTamework.png";
-import Hexcode from "./(showcaseImages)/Hexcode.png";
-import HyYap from "./(showcaseImages)/HyYap.png";
-import Arcanum from "./(showcaseImages)/Arcanum.png";
-import { DiscordButton } from "./discord-button";
-import { SponsorButton } from "./support-button";
-import { GitInfoButton } from "@/components/git-info-button";
-import { useState, ViewTransition, useMemo } from "react";
-import { GlowEffect } from "@/components/ui/glow-effect";
-
-type ProjectType = "art" | "website" | "server" | "mod";
-
-const RELEASE_DATE = new Date("2026-01-13T15:00:00.000Z");
-
-interface ShowcaseItem {
-  title: string;
-  author: string;
-  image?: StaticImageData;
-  logo?: StaticImageData;
-  banner?: StaticImageData;
-  link: string;
-  type: ProjectType;
-  description?: string;
-}
-
-const showcaseItems: ShowcaseItem[] = [
-  {
-    title: "Hynergy: Electric Motor",
-    author: "seyager",
-    image: ElectricMotor,
-    link: "https://x.com/SeyagerYT",
-    type: "art",
-  },
-  {
-    title: "Hylamity: Wulfrum Prosthesis",
-    author: "slader._.",
-    image: WulfrumProsthesis,
-    link: "https://discord.gg/f2fMKYnRqR",
-    type: "art",
-  },
-  {
-    title: "Soundscape: Melodium Chunk",
-    author: "44Hydras",
-    image: Melodium,
-    link: "https://discord.com/users/197065442479702016",
-    type: "art",
-  },
-  {
-    title: "Gale Wivern",
-    author: "Nicolas | Tourne_Vis",
-    image: GaleWivern,
-    link: "https://x.com/TourneVis_MC",
-    type: "art",
-  },
-  {
-    title: "Hylamity: Wulfrum Armor",
-    author: "slader._.",
-    image: WulfrumArmor,
-    link: "https://discord.gg/f2fMKYnRqR",
-    type: "art",
-  },
-  {
-    title: "Hylamity: Wulfrum Triangle",
-    author: "slader._.",
-    image: WulfrumTriangle,
-    link: "https://discord.gg/f2fMKYnRqR",
-    type: "art",
-  },
-  {
-    title: "Saqvobase's Spellcasting: Magic Circle - Gust",
-    author: "Saqvobase",
-    image: MagicCircleGust,
-    link: "https://discord.gg/hytalemodding",
-    type: "art",
-  },
-  {
-    title: "Shroomie",
-    author: "Miyako Hikari",
-    image: Shroomie,
-    link: "https://discord.gg/hytalemodding",
-    type: "art",
-  },
-  {
-    title: "Froggy",
-    author: "Unknown Knight",
-    image: Froggy,
-    link: "https://discord.gg/hytalemodding",
-    type: "art",
-  },
-  {
-    title: "Voile",
-    author: "mayuna",
-    image: VoileBanner,
-    link: "https://www.curseforge.com/hytale/mods/docs",
-    type: "art",
-  },
-  {
-    title: "Mushroom Lizard",
-    author: "lulu",
-    image: MushroomLizard,
-    link: "https://discord.gg/hytalemodding",
-    type: "art",
-  },
-  {
-    title: "Alec's Tamework",
-    author: "Alec",
-    image: AlecsTamework,
-    link: "https://www.curseforge.com/hytale/mods/alecs-tamework",
-    type: "art",
-  },
-  {
-    title: "Sanguivar",
-    author: "lulu",
-    image: Sanguivar,
-    link: "https://discord.gg/hytalemodding",
-    type: "art",
-  },
-  {
-    title: "Hexcode",
-    author: "Riprod",
-    image: Hexcode,
-    link: "https://docs.hexcodec.com",
-    type: "art",
-  },
-  {
-    title: "HyYap",
-    author: "Azim",
-    image: HyYap,
-    link: "https://discord.gg/hytalemodding",
-    type: "art",
-  },
-  {
-    title: "Arcanum",
-    author: "zenkuro",
-    image: Arcanum,
-    link: "https://wiki.hytalemodding.dev/mod/zens-arcanum",
-    type: "art",
-  },
-];
-
-const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
-  const hasImage = item.image;
-  const hasLogo = item.logo;
-  const hasBanner = item.banner;
-  const messages = useMessages();
-
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  const baseMessages = getMessages("en");
+  const messages =
+    lang === "en"
+      ? baseMessages
+      : (deepMerge(baseMessages, getMessages(lang)) as Messages);
   return (
-    <Card className="relative h-64 w-96 overflow-hidden">
-      <CardContent className="flex h-full items-center justify-center p-0">
-        {hasImage ? (
-          <>
-            <div className="from-card absolute z-20 flex size-full items-end bg-linear-to-t from-15% to-transparent to-30% p-6">
-              <div className="flex flex-1 flex-col">
-                <h3 className="z-20 line-clamp-2 text-xl font-bold">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground z-20 text-base">
-                  {messages.showcaseItems.madeBy.replace(
-                    "{author}",
-                    item.author,
-                  )}
-                </p>
-                {item.description && (
-                  <p className="text-muted-foreground z-20 mt-1 line-clamp-2 text-sm">
-                    {item.description}
-                  </p>
-                )}
-              </div>
-              <Button
-                size="default"
-                asChild
-                className="bg-background/90 text-foreground hover:bg-background ml-3"
-              >
-                <Link
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLinkIcon className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-            <Image
-              src={hasImage}
-              alt={item.title}
-              className="absolute size-full object-cover opacity-30 blur-sm"
-              fill
-            />
-            <div className="z-10 flex size-full items-center justify-center">
-              <Image
-                src={hasImage}
-                alt={item.title}
-                className="h-full w-auto overflow-hidden object-contain"
-                fill
-              />
-            </div>
-          </>
-        ) : hasBanner ? (
-          <>
-            <div className="from-card absolute z-20 flex size-full items-end bg-linear-to-t from-25% to-transparent to-50% p-6">
-              <div className="flex flex-1 flex-col">
-                {hasLogo && (
-                  <div className="mb-2">
-                    <Image
-                      src={hasLogo}
-                      alt={`${item.title} logo`}
-                      className="h-8 w-8 rounded object-contain"
-                      width={32}
-                      height={32}
-                    />
-                  </div>
-                )}
-                <h3 className="z-20 line-clamp-2 text-xl font-bold">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground z-20 text-base">
-                  {item.author}
-                </p>
-                {item.description && (
-                  <p className="text-muted-foreground z-20 mt-1 line-clamp-2 text-sm">
-                    {item.description}
-                  </p>
-                )}
-              </div>
-              <Button
-                size="default"
-                asChild
-                className="bg-background/90 text-foreground hover:bg-background ml-3"
-              >
-                <Link
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLinkIcon className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-            <Image
-              src={hasBanner}
-              alt={item.title}
-              className="absolute size-full object-cover"
-              fill
-            />
-          </>
-        ) : (
-          <div className="flex h-full w-full flex-col justify-between p-6">
-            <div className="flex flex-1 flex-col justify-center">
-              {hasLogo && (
-                <div className="mb-4 flex justify-center">
-                  <Image
-                    src={hasLogo}
-                    alt={`${item.title} logo`}
-                    className="h-16 w-16 rounded-lg object-contain"
-                    width={64}
-                    height={64}
-                  />
-                </div>
-              )}
-              <h3 className="mb-2 line-clamp-2 text-center text-xl font-bold">
-                {item.title}
-              </h3>
-              <p className="text-muted-foreground mb-3 text-center text-base">
-                {item.author}
-              </p>
-              {item.description && (
-                <p className="text-muted-foreground line-clamp-4 text-center text-sm">
-                  {item.description}
-                </p>
-              )}
-            </div>
-            <div className="flex justify-center pt-4">
-              <Button size="default" asChild>
-                <Link
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLinkIcon className="mr-2 h-4 w-4" />
-                  Visit
-                </Link>
-              </Button>
-            </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  );
-};
-
-export default function HomePage() {
-  const params = useParams();
-  const messages = useMessages();
-
-  const [repeatedItems] = useState(() => {
-    const shuffledItems = [...showcaseItems].sort(() => Math.random() - 0.5);
-    return [...shuffledItems, ...shuffledItems, ...shuffledItems];
-  });
-
-  return (
-    <div className="relative flex flex-1 flex-col overflow-hidden">
+    <div className="flex flex-1 flex-col">
       <Spotlight />
-      <GitInfoButton />
-      {/* <div className="absolute top-4 right-4 z-10 max-w-xs">
-        <p className="text-muted-foreground mb-2 text-right text-xs">
-          Proudly sponsored by
-        </p>
-        <div className="flex justify-end">
-          <Image
-            src="/branding/logo-light-348.png"
-            alt="Sponsor Logo"
-            width={40}
-            height={20}
-            className="object-contain"
-          />
+      <div className="relative container mx-auto flex h-192 max-h-[calc(100svh-9rem)] min-h-fit flex-col items-center justify-center px-4 py-20 md:max-h-[calc(100vh-21rem)] md:px-12 md:py-32">
+        <div className="hidden md:block">
+          <HeroStickers />
         </div>
-      </div> */}
-
-      <div className="container mx-auto flex flex-1 flex-col items-center justify-center px-4 py-8 md:px-12">
-        <div className="w-full max-w-5xl space-y-8 pt-16 text-center md:pt-0">
+        <div className="flex h-full w-full max-w-5xl flex-col items-center justify-around gap-6 space-y-8 text-center">
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
-              {/*<div className="relative mx-auto w-fit max-w-full">
-                <GlowEffect
-                  colors={["#FF5733", "#33FF57", "#3357FF", "#F1C40F"]}
-                  mode="flowHorizontal"
-                  blur="soft"
-                  duration={3}
-                  scale={0.9}
-                />
-                <div className="bg-background hover:bg-background/85 relative mx-4 rounded-lg p-2 text-sm font-medium shadow-md transition-colors duration-200 ease-in-out">
-                    <Link
-                    href={"https://hytalemodjam.com"}
-                    className="flex items-center justify-center gap-2 text-wrap"
-                    >
-                    Hytale x HytaleModding ModJam is live!{" "}
-                    <ArrowRightIcon className="h-4 w-4" />
-                    </Link>
-                </div>
-              </div>*/}
-              <h1 className="text-4xl font-semibold text-balance md:text-5xl">
-                <div>{messages.home.title.split("{flipwords}")[0]}</div>
-                <div>
-                  <FlipWords words={messages.home.flipwords} />
-                </div>
-                <div>{messages.home.title.split("{flipwords}")[1]}</div>
+              <h1 className="font-display text-4xl font-semibold text-balance sm:text-5xl md:text-7xl">
+                <span className="block">
+                  {richText(messages.home.title, {
+                    italic: (chunks) => (
+                      <span className="italic">{chunks}</span>
+                    ),
+                    badge: (chunks) => (
+                      <span className="text-rainbow rounded-md py-0.5 font-bold text-black">
+                        {chunks}
+                      </span>
+                    ),
+                  })}
+                </span>
               </h1>
               <h2 className="text-muted-foreground text-lg text-balance md:text-xl">
                 {messages.home.description}
               </h2>
             </div>
-
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="flex flex-wrap justify-center gap-4">
-                <Button asChild>
-                  <Link href={localizeHref("/docs", params.lang?.toString())}>
-                    <BookIcon /> {messages.home.documentation}
-                  </Link>
-                </Button>
-              </div>
-              <div className="flex flex-wrap justify-center gap-4">
-                <DiscordButton />
-              </div>
-            </div>
           </ViewTransition>
+
+          <div className="flex w-fit flex-col items-center gap-4">
+            <div className="flex flex-wrap justify-center gap-4 px-4">
+              <DiscordButton />
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-4 px-4">
+              <Button asChild>
+                <DynamicLink href="/[lang]/docs">
+                  <BookIcon /> {messages.home.documentation}
+                </DynamicLink>
+              </Button>
+              <Button asChild>
+                <Link href="https://wiki.hytalemodding.dev" target="_blank">
+                  <SquarePenIcon />
+                  Mod Wiki
+                </Link>
+              </Button>
+              <Button asChild>
+                <Link href="/news" passHref>
+                  <NewspaperIcon />
+                  News
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="text-muted-foreground absolute bottom-0 mx-auto mb-4 flex items-center gap-2">
+          <p className="text-sm">Scroll down for more</p>
+          <ArrowDownCircleIcon />
         </div>
       </div>
 
-      <div className="mt-auto mb-8 w-full py-8">
-        <Marquee className="h-64 w-full">
-          <MarqueeFade side="left" className="w-12" />
-          <MarqueeContent speed={200} autoFill={false}>
-            {repeatedItems.map((item, index) => (
-              <MarqueeItem key={`${item.title}-${index}`} className="mx-2">
-                <ShowcaseCard item={item} />
-              </MarqueeItem>
-            ))}
-          </MarqueeContent>
-          <MarqueeFade side="right" className="w-12" />
-        </Marquee>
-
-        {/* <div className="mt-6 flex justify-center">
-            <Button asChild>
-              <Link href={params?.lang?.toString() + "/projects"}>
-                <ArrowUpRightIcon className="mr-2 h-4 w-4" />
-                View More Projects
-              </Link>
-            </Button>
-          </div> */}
+      <div className="w-full pb-4">
+        <ShowcaseMarquee />
       </div>
+
+      <CommunitySection />
+      <Separator />
+
+      <ResourcesSection messages={messages.home.resources} />
+      <Separator />
+
+      <ProgramsSection />
+      <Separator />
+
+      <TownHallHomepageBlock messages={messages.home.townHalls} />
+
+      <CommunityCta />
+
+      <Footer />
     </div>
   );
 }

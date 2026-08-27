@@ -3,7 +3,7 @@ import { BookIcon, XIcon } from "lucide-react";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { i18n } from "@/lib/i18n";
 import { getMessages } from "./locale";
-import HytaleLogo from "@/../public/hytale-branding/hytale-logo-white.svg";
+import HytaleLogo from "@/../public/branding/hytale/hytale-logo-white.svg";
 import HytaleModdingLogo from "@/../public/branding/hytalemodding/HM_DARK.svg";
 import HytaleModdingIcon from "@/app/icon0.svg";
 
@@ -12,6 +12,7 @@ export function baseOptions(
   docsLayout?: boolean,
 ): BaseLayoutProps {
   const messages = getMessages(locale);
+  const localeUrl = locale === i18n.defaultLanguage ? "/" : `/${locale}/`;
 
   let options: BaseLayoutProps = {
     i18n,
@@ -50,7 +51,7 @@ export function baseOptions(
           </div>
         </div>
       ),
-      url: `/${locale}/`,
+      url: localeUrl,
     },
   };
 
@@ -63,10 +64,6 @@ export function baseOptions(
         text: messages.nav.documentation,
         url: `/${locale}/docs`,
         active: "nested-url",
-      },
-      {
-        text: messages.nav.sponsors,
-        url: `/${locale}/sponsors`,
       },
       {
         text: messages.nav.wiki,

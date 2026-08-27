@@ -47,11 +47,13 @@
 
   --color-fd-background: var(--color-hytale-bg-dark);
 
-  background-color:#15243a;
-  background-image:url(/assets/official-documentation/background/content-lower.webp), linear-gradient(#0f1418,#0f1418);
-  background-position:top;
-  background-repeat:no-repeat;
-  background-size:auto;
+  background-color: #15243a;
+  background-image:
+    url(/assets/official-documentation/background/content-lower.webp),
+    linear-gradient(#0f1418, #0f1418);
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: auto;
 
   --sidebar: var(--color-hytale-sidebar);
   --sidebar-foreground: var(--color-hytale-gold-light);
