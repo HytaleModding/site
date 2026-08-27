@@ -57,11 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <body className="transition-colors">
         <div
-          className={cn(
-            geist.variable,
-            lexend.variable,
-            nunitoSans.variable,
-          )}
+          className={cn(geist.variable, lexend.variable, nunitoSans.variable)}
         >
           {children}
         </div>

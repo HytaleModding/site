@@ -30,16 +30,16 @@ export const townHalls: TownHall[] = [
         name: "BuddhaCat",
         role: "Community Manager",
         company: "Hypixel Studios",
-        avatarUrl: "https://cdn.internal.hytalemodding.dev/avatars/BuddhaCat.jpg",
+        avatarUrl:
+          "https://cdn.internal.hytalemodding.dev/avatars/BuddhaCat.jpg",
       },
       {
         name: "RyanHCode",
         role: "Game Engineer",
         company: "Hypixel Studios",
-        avatarUrl:
-          "https://cdn.internal.hytalemodding.dev/avatars/ryan.webp",
-      }
-    ]
+        avatarUrl: "https://cdn.internal.hytalemodding.dev/avatars/ryan.webp",
+      },
+    ],
   },
   {
     id: "2026-07-30",
@@ -139,10 +139,10 @@ export const townHalls: TownHall[] = [
 
 export const upcomingTownHall:
   | {
-    date: string;
-    videoId?: string;
-    discordHref: string;
-    note?: string;
-    speakers: Speaker[];
-  }
+      date: string;
+      videoId?: string;
+      discordHref: string;
+      note?: string;
+      speakers: Speaker[];
+    }
   | undefined = undefined;

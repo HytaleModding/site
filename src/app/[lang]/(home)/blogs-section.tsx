@@ -45,7 +45,7 @@ export function BlogsSection({
             >
               <Link
                 href={blog.path}
-                className="group block overflow-hidden rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-lg focus:ring-2 focus:outline-none"
+                className="group bg-card block overflow-hidden rounded-xl border p-6 shadow-sm transition-all hover:shadow-lg focus:ring-2 focus:outline-none"
               >
                 <div className="flex flex-col gap-6 md:flex-row md:items-stretch md:justify-between">
                   <div className="flex flex-1 flex-col justify-between gap-4">

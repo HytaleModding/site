@@ -27,7 +27,12 @@ export const Spotlight = ({
     <div className="pointer-events-none absolute inset-0 isolate h-full w-full overflow-clip">
       <div
         className="spotlight-sweep spotlight-sweep-left pointer-events-none absolute top-0 left-0 z-40 h-screen w-screen"
-        style={{ "--spotlight-offset": `${xOffset}px`, "--spotlight-duration": `${duration}s` } as React.CSSProperties}
+        style={
+          {
+            "--spotlight-offset": `${xOffset}px`,
+            "--spotlight-duration": `${duration}s`,
+          } as React.CSSProperties
+        }
       >
         <div
           style={{
@@ -62,7 +67,12 @@ export const Spotlight = ({
 
       <div
         className="spotlight-sweep pointer-events-none absolute top-0 right-0 z-40 h-screen w-screen"
-        style={{ "--spotlight-offset": `${-xOffset}px`, "--spotlight-duration": `${duration}s` } as React.CSSProperties}
+        style={
+          {
+            "--spotlight-offset": `${-xOffset}px`,
+            "--spotlight-duration": `${duration}s`,
+          } as React.CSSProperties
+        }
       >
         <div
           style={{

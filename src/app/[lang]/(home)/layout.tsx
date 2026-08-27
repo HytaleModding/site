@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "HytaleModding",
   description:
     "HytaleModding is the largest community of modders for Hytale. We bring modders together to build, share, and celebrate what they make. We write docs, guides, and tools for modders of every skill level, and run events like ModJams, town halls, and more!",
-  
+
   alternates: {
     canonical: "/",
     languages: {

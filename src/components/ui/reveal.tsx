@@ -41,13 +41,15 @@ export function FadeIn({
     <div
       ref={ref}
       className={`reveal ${isVisible ? "reveal-visible" : ""} ${className ?? ""}`}
-      style={{
-        "--reveal-x": `${x}px`,
-        "--reveal-y": `${y}px`,
-        "--reveal-delay": `${delay}s`,
-        "--reveal-duration": `${duration}s`,
-        ...style,
-      } as React.CSSProperties}
+      style={
+        {
+          "--reveal-x": `${x}px`,
+          "--reveal-y": `${y}px`,
+          "--reveal-delay": `${delay}s`,
+          "--reveal-duration": `${duration}s`,
+          ...style,
+        } as React.CSSProperties
+      }
       {...props}
     >
       {children}

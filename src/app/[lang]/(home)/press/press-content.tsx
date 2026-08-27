@@ -9,7 +9,8 @@ import { Spotlight } from "@/components/ui/spotlight-new";
 import { useMessages } from "@/lib/hooks/useMessages";
 import { pressKitLogos } from "@/lib/press-kit";
 
-const PRESS_KIT_ZIP_URL = "https://cdn.internal.hytalemodding.dev/branding/HytaleModding_PressKit.zip";
+const PRESS_KIT_ZIP_URL =
+  "https://cdn.internal.hytalemodding.dev/branding/HytaleModding_PressKit.zip";
 
 function linkifyEmails(text: string) {
   return text.split(/([\w.+-]+@[\w.-]+\.\w+)/g).map((part, i) =>

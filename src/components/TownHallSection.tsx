@@ -61,10 +61,7 @@ export default function TownHallSection({
               </span>
               <div className="flex flex-wrap gap-4">
                 {speakers.map((speaker) => (
-                  <div
-                    key={speaker.name}
-                    className="flex items-start gap-2.5"
-                  >
+                  <div key={speaker.name} className="flex items-start gap-2.5">
                     <div className="border-border bg-muted relative h-9 w-9 overflow-hidden rounded-full border">
                       <Image
                         src={speaker.avatarUrl}
