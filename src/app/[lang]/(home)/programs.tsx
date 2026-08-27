@@ -13,6 +13,7 @@ import { BorderTrail } from "@/components/ui/border-trail";
 import { BisectButton } from "./grants/bisect-button";
 import ModJamBg from "@/../public/branding/hytalemodding/hytalemodjam-bg.jpg";
 import NitradoBg from "@/../public/assets/landing/hero/exploration.jpg";
+import WizardSticker from "@/../public/assets/landing/stickers/wizard.png";
 import {
   ArrowRightIcon,
   BookOpenIcon,
@@ -24,10 +25,21 @@ import DynamicLink from "fumadocs-core/dynamic-link";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/section-header";
 import { FadeIn } from "@/components/ui/reveal";
+import { DraggableSticker } from "./draggable-sticker";
 
 export function ProgramsSection() {
   return (
-    <div className="mx-auto my-24 flex w-full max-w-7xl flex-col gap-16 px-4">
+    <div className="relative mx-auto my-24 flex w-full max-w-7xl flex-col gap-16 px-4">
+      <div className="absolute top-0 right-4 hidden h-36 w-40 xl:block">
+        <DraggableSticker
+          src={WizardSticker.src}
+          initialRight={-140}
+          initialTop={-10}
+          rotate={-12}
+          width={144}
+          sizes="144px"
+        />
+      </div>
       <FadeIn>
         <SectionHeader
           align="left"
