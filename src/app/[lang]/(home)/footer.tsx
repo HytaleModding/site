@@ -15,6 +15,7 @@ const LINK_GROUPS = [
     links: [
       { label: "Press Inquiries", href: "/press" },
       { label: "Town Halls", href: "/townhalls" },
+      { label: "Privacy Policy", href: "/privacy" },
     ],
   },
   {
