@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PressContent } from "./press-content";
+import { Footer } from "../footer";
 
 export const metadata: Metadata = {
   title: "Press Kit | HytaleModding",
@@ -23,5 +24,10 @@ export const metadata: Metadata = {
 };
 
 export default function PressPage() {
-  return <PressContent />;
+  return (
+    <>
+      <PressContent />
+      <Footer />
+    </>
+  );
 }
