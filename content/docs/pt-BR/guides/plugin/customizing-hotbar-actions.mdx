@@ -1,6 +1,6 @@
 ---
 title: Packet Interception
-description: Step by step breakdown on customizing hotbar functionality via packet interception.
+description: Etapa detalhando a personalização da funcionalidade da barra rápida através da interceptação de pacotes.
 authors:
   - name: Vibe Theory
     url: https://discord.com/users/145420279294722048
@@ -12,9 +12,9 @@ This guide teaches packet interception and modification using hotbar actions as 
 
 In this guide, We're going to turn hotbar slot 8 (the "9" key) into an ability trigger. When pressed:
 
-1. The normal slot-switching behavior is blocked
-2. The player stays on their current slot
-3. Some ideas to get started on what to have it actually do
+1. O comportamento normal de troca de espaço é bloqueado;
+2. O jogador permanece no espaço atual;
+3. Algumas ideias para começar sobre o que fazer de fato com isso.
 
 ---
 
@@ -45,14 +45,14 @@ Note: Slot index is 0-based, so slot "9" is index 8.
 
 ## Part 2: Packet Interception
 
-### Watcher vs Filter
+### Watcher vs. Filter
 
 Hytale provides two ways to intercept packets via `PacketAdapters`:
 
-| Type        | Interface             | Can Block? | Use Case                                    |
-| ----------- | --------------------- | ---------- | ------------------------------------------- |
-| **Watcher** | `PlayerPacketWatcher` | No         | Logging, analytics, triggering side effects |
-| **Filter**  | `PlayerPacketFilter`  | Yes        | Blocking/modifying behavior                 |
+| Tipo        | Interface             | Pode bloquear? | Caso de uso                                            |
+| ----------- | --------------------- | -------------- | ------------------------------------------------------ |
+| **Watcher** | `PlayerPacketWatcher` | Não            | Registros, análises, acionamento de efeitos colaterais |
+| **Filter**  | `PlayerPacketFilter`  | Sim            | Bloquear/modificar comportamento                       |
 
 Since we need to **block** the slot switch, we use `PlayerPacketFilter`. This interface has one method - `test()` - which receives every inbound packet. Return `true` to block the packet, `false` to let it through.
 
@@ -84,7 +84,7 @@ public class AbilitySlotHandler implements PlayerPacketFilter {
 }
 ```
 
-### Registration
+### Registro
 
 In your plugin, register the handler in `setup()` and store the returned filter so you can deregister later:
 
@@ -92,7 +92,7 @@ In your plugin, register the handler in `setup()` and store the returned filter 
 import com.hypixel.hytale.server.core.io.adapter.PacketAdapters;
 import com.hypixel.hytale.server.core.io.adapter.PacketFilter;
 
-// In your plugin class:
+// Na sua classe de plugin:
 private PacketFilter inboundFilter;
 
 @Override

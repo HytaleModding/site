@@ -12,31 +12,24 @@ In this guide, you'll learn how to manage player inventories in your Hytale mod.
 
 ## Accessing the Player Inventory
 
-To access the Inventory of a `Player`, you can use the `getInventory()` method which returns the `Inventory` object.
+To access the Inventory of a `Player`, you can get the `InventoryComponent`. Before we can do that, you should know all the individual Component Types that come under this.
+
+InventoryComponent has the following component types:
+
+- `InventoryComponent.Backpack`
+- `InventoryComponent.Tool`
+- `InventoryComponent.Utility`
+- `InventoryComponent.Armor`
+- `InventoryComponent.Storage`
+- `InventoryComponent.Hotbar`
+
+Each of these have their own `getComponentType()` method that you can use to get the component type for that specific inventory. InventoryComponent does not have a `getComponentType()` method itself.
+
+To get the inventory, you can do the following:
 
 ```java
-Inventory inventory = player.getInventory();
-```
-
-## Opening Inventories
-
-You can open different types of inventories, these inventories are known as "Pages". You can also add custom pages, this will be covered in a guide later on.
-
-You can use the `Page` enum to reference existing inventories, currently the following pages are available:
-
-- `Page.None`
-- `Page.Bench`
-- `Page.Inventory`
-- `Page.ToolsSettings`
-- `Page.Map`
-- `Page.MachinimaEditor`
-- `Page.ContentCreation`
-- `Page.Custom`
-
-```java
-PageManager pageManager = player.getPageManager();
-Store<EntityStore> store = player.getWorld().getEntityStore().getStore();
-pageManager.setPage(player.getReference(), store, Page.Inventory);
+InventoryComponent armorComponent = store.getComponent(entityRef, InventoryComponent.Armor.getComponentType());
+ItemContainer container = armorComponent.getInventory()
 ```
 
 ## `ItemStack` Class
@@ -74,33 +67,12 @@ ItemStack stackWithDurability = new ItemStack(
 );
 ```
 
-## Getting the `ItemContainer`
-
-The `Inventory` class provides methods to get multiple `ItemContainer` objects, like:
-
-- `.getStorage()`
-- `.getArmor()`
-- `.getBackpack()`
-- `.getHotbar()`
-- `.getUtility()`
-
-There are also combined methods like:
-
-- `.getCombinedEverything()`
-- `.getCombinedArmorHotbarStorage()`
-- `.getCombinedBackpackStorageHotbar()`
-- `.getCombinedHotbarFirst()`
-- `.getCombinedStorageFirst()`
-- `.getCombinedArmorHotbarUtilityStorage()`
-- `.getCombinedHotbarUtilityConsumableStorage()`
-
 ## Adding `ItemStack` objects to the Inventory
 
 To add an `ItemStack` to a player's inventory, you can use the `addItemStack()` method of the `ItemContainer` class.
 
 ```java
-Inventory inventory = player.getInventory();
-ItemContainer storageContainer = inventory.getStorage();
+ItemContainer storageContainer = inventoryComponent.getInventory()
 storageContainer.addItemStack(item);
 ```
 
@@ -112,11 +84,10 @@ storageContainer.addItemStackToSlot((short) 4, stack)
 
 ## Removing `ItemStack` objects from the Inventory
 
-To remove an `ItemStack` from a player's inventory, you can use the `removeItemStack()` method of the `Inventory` class.
+To remove an `ItemStack` from a player's inventory, you can use the `removeItemStack()` method of the `ItemContainer` class.
 
 ```java
-Inventory inventory = player.getInventory();
-ItemContainer storageContainer = inventory.getStorage();
+ItemContainer storageContainer = inventoryComponent.getInventory()
 storageContainer.removeItemStack(item);
 ```
 
@@ -126,21 +97,17 @@ Or you can specify a certain slot to remove it from:
 storageContainer.removeItemStackFromSlot((short) 4);
 ```
 
+{ /*
 ## Custom Inventories (Item Containers)
-
 #### Adding an inventory to an item
-
 You can add a custom inventory by adding the following to the items json
-
 ```json
 "Container": {
     "Capacity": 9
 },
 ```
-
-And adding the following interaction allows opening the inventory UI Page by using a pre defined UI page. It opens the UI like how it would for a backpackpack.
+And adding the following interaction allows opening the inventory UI Page by using a pre defined UI page. It opens the UI like how it would for a backpackpack. 
 This allows the player to see their inventory along with the items.
-
 ```json
 "Interactions": {
     "Use": {
@@ -154,9 +121,8 @@ This allows the player to see their inventory along with the items.
 ```
 
 #### Plugin Interaction of Container Items
-
 The items stored in an inventory are saved in the item BSON. Because of this they can not be access data through ECS when wanting to edit items.
-You will instead need to load the data from the BSON to interact with it and save it back to the BSON.
+You will instead need to load the data from the BSON to interact with it and save it back to the BSON. 
 
 ```java
 // Get held item that we know has a container field & its position in invenotory (Assume item its held for example)
@@ -193,9 +159,7 @@ player.getInventory().getHotbar().setItemStackForSlot(ACTIVE_HOTBAR_SLOT, update
 ```
 
 #### Getting Components from Container Items
-
 You can use a similar method to get any component from an item in a container
-
 ```java
 // Get the component data
 CustomComponent customComponent = itemStack.getFromMetadataOrDefault(CustomComponent.CUSTOM_COMPONENT_ID, CustomComponent.CODEC);
@@ -213,3 +177,5 @@ ItemStack newItem = itemStack.withMetadata(
 // Add updated item to the player
 player.getInventory().getHotbar().setItemStackForSlot(0, newItem);
 ```
+
+*/}

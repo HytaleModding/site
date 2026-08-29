@@ -1,0 +1,39 @@
+---
+title: Setting Custom Join & Leave Messages
+description: Learn how to set custom join and leave messages for players
+authors:
+  - name: Neil Revin
+    url: https://itsneil.dev/
+---
+
+In this guide, you'll learn how to set custom join and leave messages for players in your Hytale mod. We recommend that you read the [Creating custom event listeners](./creating-events) guide before following this one, as it will give you a better understanding of how events work in Hytale.
+
+We have two events we can use to set custom join and leave messages, `AddPlayerToWorldEvent` and `RemovedPlayerFromWorldEvent`.
+
+## Setting a custom join message
+
+To set a custom join message, we can listen to the `AddPlayerToWorldEvent`. This event is fired when a player joins the world. We can use the `setJoinMessage` method to set a custom join message.
+
+```java
+    public static void onPlayerAddToWorld(AddPlayerToWorldEvent event) {
+        PlayerRef playerRef = event.getHolder().getComponent(PlayerRef.getComponentType());
+        event.setJoinMessage(Message.raw(playerRef.getUsername() + " has joined the world!").bold(true));
+        
+        // or if we want to disable sending a message entirely, we can do:
+        event.setBroadcastJoinMessage(false);
+    }
+```
+
+## Setting a custom leave message
+
+To set a custom leave message, we can listen to the `RemovedPlayerFromWorldEvent`. This event is fired when a player leaves the world. We can use the `setLeaveMessage` method to set a custom leave message.
+
+```java
+    public static void onPlayerRemovedFromWorld(RemovedPlayerFromWorldEvent event) {
+        PlayerRef playerRef = event.getHolder().getComponent(PlayerRef.getComponentType());
+        event.setLeaveMessage(Message.raw(playerRef.getUsername() + " has left the world!").italic(true));
+
+        // or if we want to disable sending a message entirely, we can do:
+        event.setBroadcastLeaveMessage(false);
+    }
+```

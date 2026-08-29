@@ -12,27 +12,24 @@ Dans ce guide, vous apprendrez à gérer les inventaires des joueurs dans votre 
 
 ## Accéder à l'inventaire du joueur
 
-Vous pouvez accéder à l'inventaire d'un joueur de type `Player` avec la méthode `getInventory()` qui donnent un objet de type `Inventory`.
+To access the Inventory of a `Player`, you can get the `InventoryComponent`. Before we can do that, you should know all the individual Component Types that come under this.
+
+InventoryComponent has the following component types:
+
+- `InventoryComponent.Backpack`
+- `InventoryComponent.Tool`
+- `InventoryComponent.Utility`
+- `InventoryComponent.Armor`
+- `InventoryComponent.Storage`
+- `InventoryComponent.Hotbar`
+
+Each of these have their own `getComponentType()` method that you can use to get the component type for that specific inventory. InventoryComponent does not have a `getComponentType()` method itself.
+
+To get the inventory, you can do the following:
 
 ```java
-```
-
-## Ouverture des inventaires
-
-Vous pouvez ouvrir différents types d'inventaires, ces inventaires sont appelés "Pages". Vous pouvez également ajouter des pages personnalisées, qui seront couvertes dans un guide plus tard.
-
-Vous pouvez utiliser l'énumération `Page` pour référencer les inventaires existants, actuellement les pages suivantes sont disponibles:
-
--
--
--
--
--
--
--
--
-
-```java
+InventoryComponent armorComponent = store.getComponent(entityRef, InventoryComponent.Armor.getComponentType());
+ItemContainer container = armorComponent.getInventory()
 ```
 
 ## Classe `ItemStack`
@@ -60,33 +57,13 @@ Vous pouvez également ajouter des métadonnées personnalisées à un `ItemStac
 ```java
 ```
 
-## Obtention du `ItemContainer`
-
-La classe `Inventory` fournit des méthodes pour obtenir plusieurs objets `ItemContainer`, comme:
-
--
--
--
--
--
-
-Il existe également des méthodes combinées comme:
-
--
--
--
--
--
--
--
-
 ## Ajout d'objets `ItemStack` à l'Inventaire
 
 To add an `ItemStack` to a player's inventory, you can use the `addItemStack()` method of the `Inventory` class.
 
 ```java
-Inventory inventory = player.getInventory();
-inventory.addItemStack(item);
+ItemContainer storageContainer = inventoryComponent.getInventory()
+storageContainer.addItemStack(item);
 ```
 
 Ou vous pouvez spécifier un certain emplacement à ajouter à :
@@ -97,11 +74,11 @@ inventory.addItemStackToSlot((short) 4, stack)
 
 ## Suppression d'objets `ItemStack` de l'inventaire
 
-Pour supprimer un `ItemStack` de l'inventaire d'un joueur, vous pouvez utiliser la méthode `removeItemStack()` de la classe `Inventory`.
+To remove an `ItemStack` from a player's inventory, you can use the `removeItemStack()` method of the `ItemContainer` class.
 
 ```java
-Inventory inventory = player.getInventory();
-inventory.removeItemStack(item);
+ItemContainer storageContainer = inventoryComponent.getInventory()
+storageContainer.removeItemStack(item);
 ```
 
 Ou vous pouvez spécifier une case spécifique depuis laquelle faire la supression:
@@ -110,21 +87,17 @@ Ou vous pouvez spécifier une case spécifique depuis laquelle faire la supressi
 inventory.removeItemStackFromSlot((short) 4);
 ```
 
+{ /*
 ## Custom Inventories (Item Containers)
-
 #### Adding an inventory to an item
-
 You can add a custom inventory by adding the following to the items json
-
 ```json
 "Container": {
     "Capacity": 9
 },
 ```
-
-And adding the following interaction allows opening the inventory UI Page by using a pre defined UI page. It opens the UI like how it would for a backpackpack.
+And adding the following interaction allows opening the inventory UI Page by using a pre defined UI page. It opens the UI like how it would for a backpackpack. 
 This allows the player to see their inventory along with the items.
-
 ```json
 "Interactions": {
     "Use": {
@@ -138,9 +111,8 @@ This allows the player to see their inventory along with the items.
 ```
 
 #### Plugin Interaction of Container Items
-
 The items stored in an inventory are saved in the item BSON. Because of this they can not be access data through ECS when wanting to edit items.
-You will instead need to load the data from the BSON to interact with it and save it back to the BSON.
+You will instead need to load the data from the BSON to interact with it and save it back to the BSON. 
 
 ```java
 // Get held item that we know has a container field & its position in invenotory (Assume item its held for example)
@@ -177,9 +149,7 @@ player.getInventory().getHotbar().setItemStackForSlot(ACTIVE_HOTBAR_SLOT, update
 ```
 
 #### Getting Components from Container Items
-
 You can use a similar method to get any component from an item in a container
-
 ```java
 // Get the component data
 CustomComponent customComponent = itemStack.getFromMetadataOrDefault(CustomComponent.CUSTOM_COMPONENT_ID, CustomComponent.CODEC);
@@ -197,3 +167,5 @@ ItemStack newItem = itemStack.withMetadata(
 // Add updated item to the player
 player.getInventory().getHotbar().setItemStackForSlot(0, newItem);
 ```
+
+*/}

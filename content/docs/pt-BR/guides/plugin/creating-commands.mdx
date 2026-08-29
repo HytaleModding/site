@@ -181,7 +181,7 @@ this.debugArg = this.withFlagArg("debug", "Add debug logs");
 
 ### ArgTypes
 
-You can find all the available argument types on the [ArgTypes](../../argtypes) page.
+Você pode encontrar todos os tipos de argumento disponíveis na página [ArgTypes](../../argtypes).
 
 ### Example Command Arg Types
 
@@ -443,6 +443,9 @@ public class MyPlugin extends JavaPlugin {
         // Another way to add commands:
         CommandRegistry registry = getCommandRegistry();
         registry.registerCommand(new ExampleCommand());
+
+        // CommandCollection is also a command:
+        registry.registerCommand(new UserCommandCollection());
     }
 }
 ```

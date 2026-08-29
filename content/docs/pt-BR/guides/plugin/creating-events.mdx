@@ -1,6 +1,6 @@
 ---
-title: Creating Events Listeners
-description: Learn how to create event listeners for your Hytale mod.
+title: Criando ouvintes de eventos
+description: Aprenda a criar ouvintes de eventos para o seu mod de Hytale.
 authors:
   - name: Neil Revin
     url: https://itsneil.dev
@@ -10,7 +10,7 @@ authors:
 
 ## Classe de evento
 
-You can import an Event class and create a function with the Event as an argument. [Clique aqui](../../server/events) para ver todos os eventos disponíveis.
+Você pode importar uma classe Event e criar uma função com o Event como argumento. [Clique aqui](../../server/events) para ver todos os eventos disponíveis.
 
 Exemplo de plugin para quando um jogador estiver pronto (entrar num servidor):
 
@@ -40,9 +40,9 @@ public class MyPlugin extends JavaPlugin {
 }
 ```
 
-## ECS Event Classes
+## Classes de eventos do ECS
 
-For events that fall under the [ECS Events](../../server/events#ecsevent) list you will need to instead create and register an entity event system.
+Para eventos que se enquadram na lista de [Eventos do ECS](../../server/events#ecsevent) você precisará criar e registrar um sistema de eventos de entidade.
 Veja abaixo um exemplo que cancelará a criação de uma receita caso ela use fibra como ingrediente:
 
 ```java
@@ -75,7 +75,7 @@ class ExampleCancelCraft extends EntityEventSystem<EntityStore, CraftRecipeEvent
 }
 ```
 
-## Registering ECS Events
+## Registrando eventos do ECS
 
 Você precisará registrar o sistema no seu plugin:
 

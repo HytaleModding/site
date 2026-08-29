@@ -1,6 +1,6 @@
 ---
-title: Example ECS Plugin
-description: In this guide you will learn how to create a simple poison system utilizing all of the features you previously learned about Hytale's ECS system
+title: Exemplo de Plugin ECS
+description: Neste guia, você aprenderá a criar um sistema simples de veneno utilizando todos os recursos que foi aprendido anteriormente sobre o sistema ECS do Hytale.
 authors:
   - name: oskarscot
     url: https://oskar.scot
@@ -8,9 +8,9 @@ authors:
     url: https://github.com/jacobwojoski
 ---
 
-## Practical Example: Poison System
+## Exemplo prático: sistema de veneno
 
-Putting together everything you learned so far, here's a complete poison effect. When applied to any entity, it deals damage at a set interval until it expires and removes itself.
+Juntando tudo o que você aprendeu até agora, aqui está um efeito completo de veneno. Quando aplicado a qualquer entidade, ele causa dano em intervalos definidos até expirar e se remover automaticamente.
 
 ```java
 package scot.oskar.hytaletemplate.components;
@@ -26,10 +26,10 @@ public class PoisonComponent implements Component<EntityStore> {
   private int remainingTicks;
   private float elapsedTime;
 
-  // Add static getter and setter to store componentType in the component instead of getting it from the plugin singleton.
-  // - This allows anyone to call PoisonComponent.getComponentType() instead of ExamplePlugin.get().getPoisonComponentType();
-  // - You could also update the setter to be a singleton if desired.
-  // - Adding a throw condition if getComponentType() returns null could also be good.
+  // Adiciona getters e setters estáticos para armazenar o ComponentType diretamente no componente, em vez de obtê-lo a partir do singleton do plugin.
+  // - Isso permite que qualquer pessoa chame PoisonComponent.getComponentType() em vez de ExamplePlugin.get().getPoisonComponentType();
+  // - Você também pode transformar o setter em um singleton, se desejar.
+  // - Adicionar uma condição de erro caso getComponentType() retorne null também pode ser uma boa prática.
   private static ComponentType<EntityStore, PoisonComponent> type;
   public static ComponentType<EntityStore, PoisonComponent> getComponentType(){
     return this.type;
@@ -38,7 +38,7 @@ public class PoisonComponent implements Component<EntityStore> {
     this.type = type;
   }
 
-  // A builder codec is needed to allow components to be saved and loaded from disk
+  // Um BuilderCodec é necessário para permitir que componentes sejam salvos e carregados do disco
   public static final BuilderCodec<PoisonComponent> CODEC = BuilderCodec
         .builder(PoisonComponent.class, PoisonComponent::new)
         .append(
@@ -155,7 +155,7 @@ public class PoisonSystem extends EntityTickingSystem<EntityStore> {
   public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
       @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
-    // You could also just call PoisonComponent.getComponentType() instead of taking in the passed in variable here.
+    // Você também poderia chamar PoisonComponent.getComponentType() em vez de usar a variável passada aqui.
     PoisonComponent poison = archetypeChunk.getComponent(index, poisonComponentType);
     Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
 
@@ -195,7 +195,7 @@ package scot.oskar.hytaletemplate.commands;
 public class ExampleCommand extends AbstractPlayerCommand {
 
   public ExampleCommand() {
-    super("test", "Super test command!");
+    super("test", "Comando de super teste!");
   }
 
   @Override
@@ -204,7 +204,7 @@ public class ExampleCommand extends AbstractPlayerCommand {
     Player player = store.getComponent(ref, Player.getComponentType());
     PoisonComponent poison = new PoisonComponent(3f, 0.5f, 8);
     store.addComponent(ref, PoisonComponent.getComponentType(), poison);
-    player.sendMessage(Message.raw("You have been poisoned!").color(Color.GREEN).bold(true));
+    player.sendMessage(Message.raw("Você foi envenenado!").color(Color.GREEN).bold(true));
   }
 }
 ```
@@ -227,7 +227,7 @@ public final class ExamplePlugin extends JavaPlugin {
     this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, ExampleEvent::onPlayerReady);
     this.getEventRegistry().registerGlobal(PlayerChatEvent.class, ChatFormatter::onPlayerChat);
 
-    // Register the component & set the type in the component class so its easier to retrieve.
+    // Registra o componente e define o tipo dentro da própria classe do componente para facilitar o acesso posterior.
     ComponentType<EntityStore, PoisonComponent> poisonComponentType = this.getEntityStoreRegistry()
         .registerComponent(PoisonComponent.class, PoisonComponent::new);
     PoisonComponent.setComponentType(poisonComponentType);
@@ -241,4 +241,4 @@ public final class ExamplePlugin extends JavaPlugin {
 }
 ```
 
-The query uses only `poisonComponentType` which means the system will process any entity with a `PoisonComponent`, not just players. This makes it flexible for poisoning NPCs, mobs, or any living entity. The system places itself in the `GatherDamageGroup` so the damage it creates flows through the full damage pipeline including armor reduction and invulnerability checks.
+A `query` utiliza apenas `poisonComponentType`, o que significa que o sistema processará qualquer entidade que possua um `PoisonComponent` e não apenas jogadores. Isso o torna flexível para aplicar veneno em NPCs, criaturas ou qualquer entidade viva. O sistema se registra no `GatherDamageGroup` para que o dano gerado percorra todo o `pipeline` de dano, incluindo redução por armadura e verificações de invulnerabilidade.

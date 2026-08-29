@@ -1,6 +1,6 @@
 ---
-title: Hytale ECS Theory
-description: In this guide you will learn about the basics of Hytale's powerful ECS system as well as create your own component, a system, and work together with other systems to create gameplay logic.
+title: Teoria do ECS do Hytale
+description: Neste guia, você aprenderá os fundamentos do poderoso sistema ECS do Hytale, além de criar seu próprio componente, um sistema e trabalhar em conjunto com outros sistemas para criar lógica de gameplay.
 authors:
   - name: oskarscot
     url: https://oskar.scot
@@ -10,60 +10,59 @@ authors:
     url: https://marcel-to.net
 ---
 
-## Store
+## `Store`
 
-The `Store` class is the core of Hytale's ECS system, it's responsible for storing entities, if you ever need to access an entity, you need access to the store. It utilises a concept called Archetypes where data is grouped together in chunks. For example if we have 100 Trorks, they will be chunked together along with their components so that they're closely packed together and faster to retrieve.
+A classe `Store` é o núcleo do sistema ECS do Hytale. Ela é responsável por armazenar entidades. Sempre que você precisar acessar uma entidade, será necessário ter acesso ao `Store`. Ele utiliza um conceito chamado Arquétipos (Archetypes), no qual os dados são agrupados em blocos (chunks). Por exemplo, se tivermos 100 Trorks, eles serão agrupados juntos com seus componentes, de forma que fiquem compactados e mais rápidos de acessar.
 
-## EntityStore
+## `EntityStore`
 
-When looking through Hytale's server code you will find that most of the time `Store` will be of type `EntityStore`. This name can be misleading as it might suggest that it's a `Store` for entities.
-But didn't we just say that the base `Store` already stores entities? The `EntityStore` class implements `WorldProvider` meaning that `EntityStore` is responsible for accessing a specific Hytale `World`. It maintains internal maps `entitiesByUuid` and `networkIdToRef`, allowing you to find a specific entity by its persistent ID or its networking ID.
+Ao analisar o código do servidor do Hytale, você perceberá que, na maioria das vezes, o `Store` será do tipo `EntityStore`. Esse nome pode ser um pouco enganoso, pois pode sugerir que ele é um `Store` apenas de entidades.
+Mas não acabamos de dizer que o `Store` base já armazena entidades? A classe `EntityStore` implementa `WorldProvider`, o que significa que o `EntityStore` é responsável por acessar um `World` específico do Hytale. Ele mantém mapas internos, como `entitiesByUuid` e `networkIdToRef`, permitindo que você encontre uma entidade específica pelo seu ID persistente ou pelo seu ID de rede.
 
-Every Entity has a `UUIDComponent` as well as a `NetworkId` which are used by the `EntityStore` to lookup entities inside of the `Store`.
+Toda entidade possui um `UUIDComponent` e um `NetworkId`, que são utilizados pelo `EntityStore` para localizar entidades dentro do `Store`.
 
-## ChunkStore
+## `ChunkStore`
 
-Another type of `Store` that you might come across is the `ChunkStore`, it is responsible for storing all the components, related to blocks inside of the `World`. You can retrieve `WorldChunk`s which are your general chunk Components.
-A `WorldChunk` component contains an `EntityChunk` which holds all the Entities that are inside of the chunk as well as their reference to the EntityStore. It also holds the `BlockChunk` which consists of `BlockSection`s. There are more components making up the overall world and chunk systems but
-for now this is the basic understanding for the `ChunkStore`. You can use it to retrieve data about chunks and their blocks as well as entities on a given chunk and create block and chunk systems.
+Outro tipo de `Store` que você pode encontrar é o `ChunkStore`. Ele é responsável por armazenar todos os componentes relacionados aos blocos dentro do `World`. A partir dele, você pode recuperar `WorldChunks`, que são os componentes gerais de chunks.
+Um componente `WorldChunk` contém um `EntityChunk`, que mantém todas as `Entities` dentro daquele chunk, além de suas referências ao `EntityStore`. Ele também contém o `BlockChunk`, que é composto por `BlockSections`. Existem mais componentes que formam os sistemas gerais de mundo e de chunks, mas, por enquanto, essa é a compreensão básica do `ChunkStore`. Você pode utilizá-lo para obter dados sobre chunks e seus blocos, bem como entidades em um determinado chunk, e para criar sistemas de blocos e chunks.
 
-## Holder
+## `Holder`
 
-A Holder is essentially a blueprint for an entity. Before an entity exists in the Store (and thus in the world), it exists as a `Holder`. It collects and holds all the necessary components (data). You can compare it analogous to shopping cart. You grab all components you need and once you have everything, check out at the store which will take your cart and create a valid entity ID and hand you back a receipt (a Ref).
+Um `Holder` é essencialmente um blueprint de uma entidade. Antes de uma entidade existir na Loja, e no mundo, ela existe como um `Holder`. Ele coleta e mantém todos os componentes (dados) necessários. Você pode compará-lo a um carrinho de compras: você pega todos os componentes de que precisa e, quando tiver tudo pronto, finaliza no caixa do `Store`, que irá pegar seu carrinho, criar um ID de entidade válido e devolver um recibo (um `Ref`).
 
-Let's take a look at an example: initializing players. In `Universe`, the `addPlayer` method demonstrates it perfectly.
-When a player connects, we don't immediately throw them into the ECS. We first construct their data in a Holder.
-Notice that `PlayerStorage#load` method, which loads player data from disk, returns a `CompletableFuture<Holder<EntityStore>>`.
-What it means is that the method is async and the future will contain a Holder for something in the `EntityStore`.
-Just open the `Universe `class, find the `addPlayer` method and read it start to end. Trust me, it will help you a lot when you see the actual process how an entity is constructed, what it has to pass through. In the end, `Universe` calls `world#addPlayer`, which (after dispatching an event) calls the delightful
+Vamos ver um exemplo: a inicialização de jogadores. Na classe `Universe`, o método `addPlayer` demonstra isso perfeitamente.
+Quando um jogador se conecta, não o inserimos imediatamente no ECS. Primeiro, construímos seus dados em um `Holder`.
+Observe que o método `PlayerStorage#load`, que carrega os dados do jogador do disco, retorna um `CompletableFuture<Holder<EntityStore>>`.
+Isso significa que o método é assíncrono e que o future conterá um `Holder` para algo no `EntityStore`.
+Basta abrir a classe `Universe`, localizar o método `addPlayer` e lê-lo do início ao fim. Confie em mim, isso vai ajudar muito quando você enxergar o processo real de como uma entidade é construída e por tudo o que ela passa. No final, o `Universe` chama `world#addPlayer`, que (após despachar um evento) executa a seguinte linha:
 
 ```java
 Ref<EntityStore> ref = playerRefComponent.addToStore(store);
 ```
 
-and `PlayerRef#addToStore` has this:
+E o método `PlayerRef#addToStore` contém:
 
 ```java
 store.addEntity(this.holder, AddReason.LOAD);
 ```
 
-## Ref (referência)
+## `Ref` (Referência)
 
-For those familiar with languages like C++, you probably already can guess what this class is purely by the name of it. However, a Ref is a safe "handle" or pointer to an entity. You should **NEVER** store a direct reference to an entity object, you use a Ref instead. It tracks whether an entity is still alive. If you call `validate()` on a Ref for an entity that has been deleted, it throws an exception.
+Para quem já está familiarizado com linguagens como C++, provavelmente já é possível adivinhar o que essa classe representa apenas pelo nome. Um `Ref` é um "handle" ou ponteiro seguro para uma entidade. Você **NUNCA** deve armazenar uma referência direta a um objeto de entidade; em vez disso, utilize um `Ref`. Ele rastreia se a entidade ainda está viva. Se você chamar `validate()` em um `Ref` de uma entidade que já foi removida, uma exceção será lançada.
 
-## Player Components
+## Componentes de `Player`
 
-In Hytale, a "Player" is not just one object. It is a single entity composed of multiple specialized components. Understanding the difference between `Player` and `PlayerRef` is crucial for modding.
+No Hytale, um "Player" não é apenas um único objeto. Ele é uma única entidade composta por múltiplos componentes especializados. Entender a diferença entre `Player` e `PlayerRef` é fundamental para modificação.
 
-### PlayerRef
+### `PlayerRef`
 
-Despite its name, PlayerRef is a Component, not a handle. It represents the player's connection and identity. It's a special component which stays active as long as the player is connected to the server, even if the player switches worlds. The key data that it stores are the player's username, UUID, language as well as the packet handler.
+Apesar do nome, `PlayerRef` é um `Component`, não um handle. Ele representa a conexão e a identidade do jogador. É um componente especial que permanece ativo enquanto o jogador estiver conectado ao servidor, mesmo que ele troque de mundo. Os principais dados que ele armazena são o nome de usuário do jogador, o UUID, o idioma e o packet handler.
 
-### Player
+### `Player`
 
-The `Player` component represents the player's physical presence. It only exists when the player is actually spawned in a world. Providing access to gameplay specific data, this component differs per world.
+O componente `Player` representa a presença física do jogador. Ele só existe quando o jogador está efetivamente spawnado em um mundo. Fornecendo acesso a dados específicos de gameplay, esse componente varia de acordo com o mundo.
 
-To interact with an entity, you use the `Store` to retrieve its components via their `ComponentType`. Because Hytale uses a decoupled system, you don't call `entity.getHealth()`. Instead, you ask the `Store` for the health data associated with that entity's `Ref`.
+Para interagir com uma entidade, você utiliza o `Store` para recuperar seus componentes por meio do `ComponentType`. Como o Hytale utiliza um sistema desacoplado, você não chama `entity.getHealth()`. Em vez disso, você solicita ao `Store` os dados de vida associados ao `Ref` da entidade.
 
 ```java
 @Override
@@ -77,11 +76,11 @@ protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<En
 }
 ```
 
-In here we use the `Store<EntityStore>` to access the `Player` component using the `Ref<EntityStore>`. We can do the same for other components like the `UUIDComponent` or the `TransformComponent` to retrieve the entity Transform containing the position and rotation.
+Aqui, utilizamos o `Store<EntityStore>` para acessar o componente `Player` usando o `Ref<EntityStore>`. Podemos fazer o mesmo para outros componentes, como o `UUIDComponent` ou o `TransformComponent`, para obter o `Transform` da entidade, que contém posição e rotação.
 
-## Componentes
+## `Components`
 
-Components are pure data containers. They hold state but contain no logic. In Hytale, components must implement `Component<EntityStore>` and provide a clone method for the ECS to copy them when needed.
+Os components são contêineres puros de dados. Eles mantêm o estado, mas não contêm lógica. No Hytale, componentes devem implementar `Component<EntityStore>` e fornecer um método clone para que o ECS possa copiá-los quando necessário.
 
 ```java
 public class PoisonComponent implements Component<EntityStore> {
@@ -149,11 +148,11 @@ public class PoisonComponent implements Component<EntityStore> {
 }
 ```
 
-The default constructor is required for the registration factory. The copy constructor is used by `clone()` which the ECS calls internally when it needs to duplicate component data.
+O construtor padrão é obrigatório para a fábrica de registro. O construtor de cópia é utilizado pelo método `clone()`, que o ECS chama internamente quando precisa duplicar dados de componentes.
 
-## CommandBuffer
+## `CommandBuffer`
 
-The `CommandBuffer` queues changes to entities. Use it instead of modifying the store directly to ensure thread safety and proper ordering. You'll use it to add components, remove components, and execute damage.
+O `CommandBuffer` enfileira alterações em entidades. Utilize-o em vez de modificar o `Store` diretamente, para garantir segurança de threads e ordenação correta. Você o utilizará para adicionar componentes, remover componentes e executar dano.
 
 ```java
 commandBuffer.addComponent(ref, componentType, new MyComponent());
@@ -165,9 +164,9 @@ MyComponent comp = commandBuffer.getComponent(ref, componentType);
 
 ## Codec
 
-Codecs handle serialization and deserialization of components. Hytale uses them to save and load entity data to and from disk as well as sending component data over the network. When creating a custom component, you must also create a corresponding Codec.
+Os codecs lidam com a serialização e desserialização de componentes. O Hytale os utiliza para salvar e carregar dados de entidades do disco, além de enviar dados de componentes pela rede. Ao criar um componente personalizado, você também deve criar um codec correspondente.
 
-There are multiple Codec types already implemented in the default Codec Interface:
+Existem vários tipos de codecs já implementados na interface de codecs padrão:
 
 - Codec.STRING
 - Codec.BOOLEAN
@@ -190,52 +189,52 @@ There are multiple Codec types already implemented in the default Codec Interfac
 - Codec.UUID_BINARY
 - Codec.UUID_STRING
 
-Aside from the basic types, there are also more complex Codec implementations like `CodecMap`, `ObjectMapCodec` or `EnumCodec`.
+Além dos tipos básicos, também existem implementações mais complexas, como `CodecMap`, `ObjectMapCodec` e `EnumCodec`.
 
 ### Builder Codec
 
-The `BuilderCodec` is a powerful utility for creating your custom codecs. It allows you to define how each field in your component is serialized and deserialized. Each Field needs to have the following information:
+O `BuilderCodec` é uma ferramenta poderosa para criar _codecs_ customizados. Ele permite definir como cada campo do seu componente será serializado e desserializado. Cada campo precisa conter as seguintes informações:
 
-- The KeyedCodec to use for serialization/deserialization of the field. This can be one of the built-in codecs or a custom codec if your field is a complex type. To initialize a KeyedCodec you need to provide a unique string identifier for the codec and the actual Codec instance to use for the field.
+- O `KeyedCodec` usado para serialização e desserialização do campo. Ele pode ser um _codec_ interno ou um _codec_ customizado, caso o campo seja um tipo complexo. Para inicializar um `KeyedCodec`, é necessário fornecer um identificador de _string_ único e a instância do `Codec` que será usada.
 
 <Callout type="warning">
-Keep in mind that every KeyedCodec identifier string must start Uppercase and be unique across your entire mod. This means that if you have multiple components, each field's KeyedCodec identifier must not clash with any other field's identifier in any other component within your mod. Otherwise you may run into serialization issues.
+Tenha em mente que todo identificador de `KeyedCodec` deve começar com letra maiúscula e ser único em todo o seu mod. Isso significa que, se você tiver múltiplos componentes, o identificador de cada campo não pode entrar em conflito com o identificador de qualquer outro campo de qualquer outro componente dentro do mod. Caso contrário, você poderá enfrentar problemas de serialização.
 </Callout>
 
-- A setter function to set the field value on the component
-- A getter function to retrieve the field value from the component
+- Uma função setter para definir o valor do campo no componente;
+- Uma função getter para recuperar o valor do campo a partir do componente.
 
-This might seem tedious at first but it ensures that your component can be correctly serialized and deserialized by the ECS system. Let's take a look at each of the required parameters in detail:
+Isso pode parecer trabalhoso no início, mas garante que seu componente possa ser corretamente serializado e desserializado pelo sistema ECS. Vamos analisar cada um dos parâmetros necessários em detalhes:
 
-- **KeyedCodec**: This defines how the data is converted to and from a storable format. For example, if you have an integer field, you would use `Codec.INTEGER`.
+- **KeyedCodec**: Define como os dados são convertidos de e para um formato armazenável. Por exemplo, se você tiver um campo inteiro, deverá usar `Codec.INTEGER`.
   ```java
-  // Example of creating a KeyedCodec for a String field
+  // Exemplo de criação de um KeyedCodec para um campo String
   KeyedCodec<String> example = new KeyedCodec<String>("ExampleIdForCodec", Codec.STRING);
-  // Example of creating a KeyedCodec for an Integer field
+  // Exemplo de criação de um KeyedCodec para um campo Integer
   KeyedCodec<Integer> exampleInt = new KeyedCodec<Integer>("ExampleIntIdForCodec", Codec.INTEGER);
   ```
 
-- **Setter Function**: This is a lambda function that takes an instance of your component + the value to set and sets the field value on the component. For example, if you have a field called `myCustomField` in your custom component, your setter function would look like this:
+- **Função setter**: Esta é uma função lambda que recebe uma instância do seu componente + o valor a ser definido e define o valor do campo no componente. Por exemplo, se você tiver um campo chamado `myCustomField` em seu componente personalizado, sua função setter ficaria assim:
   ```java
   (data, value) -> data.myCustomField = value
   ```
 
-- **Getter Function**: This is a lambda function that takes an instance of your component and returns the value of the field you want to serialize. For example, if you have a field called `myCustomField` in your custom component, your getter function would look like this:
+- **Função getter**: É uma função lambda que recebe uma instância do seu componente e retorna o valor do campo. Por exemplo, se você tiver um campo chamado `myCustomField`, o _getter_ ficaria assim:
   ```java
   (data) -> data.myCustomField
   ```
 
 <Callout type="info">
-Lambda functions are a concise way to represent functional interfaces in Java. They allow you to pass behavior as parameters, making your code more flexible and reusable. In the context of Codec creation, they enable you to define how to get and set field values without needing to create separate classes or methods for each field.
+As funções lambda são uma forma concisa de representar interfaces funcionais em Java. Elas permitem passar comportamento como parâmetro, tornando o código mais flexível e reutilizável. No contexto da criação de _codecs_, elas permitem definir como obter e definir valores de campos sem a necessidade de criar classes ou métodos separados para cada campo.
 
-If you are unfamiliar with lambda functions, you can view them as short and compressed methods that can be defined inline. They are particularly useful for scenarios where you need to pass simple behavior, such as getting or setting a value, without the overhead of creating a full class or method.
+Se você não estiver familiarizado com funções lambda, pode enxergá-las como métodos curtos e compactos definidos inline. Elas são especialmente úteis em cenários em que é necessário passar um comportamento simples, como obter ou definir um valor, sem a sobrecarga de criar uma classe ou método completo.
 
-As an example, consider the following lambda function used as a getter:
+Como exemplo, considere a seguinte função lambda usada como _getter_:
 ```java
 (data) -> data.myCustomField
 ```
 
-This lambda takes a single parameter `data` (which would be an instance of your component) and returns the value of `myCustomField`. It's equivalent to writing a method like this:
+Essa lambda recebe um único parâmetro `data` (que seria uma instância do seu componente) e retorna o valor de `myCustomField`. Ela é equivalente a escrever um método como este:
 ```java
 public Object getMyCustomField(MyComponent data) {
     return data.myCustomField;
@@ -243,7 +242,7 @@ public Object getMyCustomField(MyComponent data) {
 ```
 </Callout>
 
-After defining the necessary parameters, you can create a `BuilderCodec` for your component. As example let's look at how to create a Codec for the previously defined `PoisonComponent`. For the purpose of this example, let's assume that the `PoisonComponent` has only the following fields:
+Após definir os parâmetros necessários, você pode criar um `BuilderCodec` para o seu componente. Como exemplo, veja como criar um _Codec_ para o `PoisonComponent` definido anteriormente. Para a proposta desse exemplo, vamos assumir que o `PoisonComponent` possui apenas os seguintes campos:
 
 - `damagePerTick` (float)
 - `poisonName` (String)
@@ -253,7 +252,7 @@ public class PoisonComponent implements Component<EntityStore> {
     private float damagePerTick;
     private String poisonName;
 
-    // Constructors, getters, setters, clone method omitted for brevity
+    // Construtores, getters, setters e método clone omitidos por brevidade
 
         public static final BuilderCodec<PoisonComponent> CODEC = BuilderCodec.builder(PoisonComponent.class, PoisonComponent::new)
             .append(
@@ -272,9 +271,9 @@ public class PoisonComponent implements Component<EntityStore> {
 }
 ```
 
-You can also add validators to your Codec fields to ensure that the data being serialized/deserialized meets certain criteria. For example, if you want to ensure that the `damagePerTick` field is always non-negative or the poison name is never null, you can add a validator like this:
+Você também pode adicionar validadores aos campos do _Codec_ para garantir que os dados serializados e desserializados atendam a determinados critérios. Por exemplo, para garantir que o campo `damagePerTick` seja sempre não negativo ou que o nome do veneno nunca seja nulo, você pode usar validadores como estes:
 
-```java
+````java
 .append(
     new KeyedCodec<Float>("DamagePerTick", Codec.FLOAT),
     (data, value) -> data.damagePerTick = value,
@@ -290,16 +289,23 @@ You can also add validators to your Codec fields to ensure that the data being s
 )
 .addValidator(Validators.nonNull())
 .add()
-```
 
-### Complex Codec Examples
+### Exemplos de codecs complexos
 
-If you want to have a map inside your component, you can use the MapCodec class to build a KeyedCodec for it. Here's an example of how to create a Codec for a Map field:
+Se você deseja ter um mapa dentro do seu componente, pode usar a classe `MapCodec` para criar um `KeyedCoded` para ele. Aqui está um exemplo de como criar um Codec para um campo de mapa:
+
+```java
+var damagePerTick = new KeyedCodec<>("DamagePerTick", new MapCodec<>(Codec.FLOAT, HashMap<String, Float>::new));
+````
+
+### Exemplos de Codecs Complexos
+
+Se desejar ter um mapa dentro do seu componente, pode usar a classe MapCodec para construir um KeyedCodec para ele. Aqui está um exemplo de como criar um Codec para um campo de Mapa (Map):
 
 ```java
 var damagePerTick = new KeyedCodec<>("DamagePerTick", new MapCodec<>(Codec.FLOAT, HashMap<String, Float>::new));
 ```
 
 <Callout type="info">
-This also works with custom Objects as long as you have a Codec defined for the Object type.
+Isso também funciona com objetos customizados, desde que você tenha um codec definido para o tipo do objeto.
 </Callout>

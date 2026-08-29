@@ -1,0 +1,278 @@
+---
+title: Modding Q&A - 26/05/2026
+description: A Q&A session with Slikey, ZeroErrors, DevSlashNull, Kaupenjoe and Neil about the future of Hytale modding.
+---
+
+import { SlikeyProfile, ZeroErrorsProfile, DevSlashNullProfile } from '@/lib/qna-profiles';
+
+HytaleModding interviewed Slikey, ZeroErrors and DevSlashNull about the future of Hytale modding. In this page you'll find the answers from the interview.
+
+# Documentation & Custom UIs
+
+### When can we expect more documentation regarding Custom UIs?
+
+<Answer profile={SlikeyProfile}>
+    The legacy custom UI will not get further documentation. The UI is moving to NoesisGUI in an upcoming update (update 6), and NoesisGUI already has its own XAML documentation the community can lean on. Hytale-specific UI docs (server UI extensions, talking to players) will come at some point after the NoesisGUI update, but we don't have a timeline for that yet.
+
+    The legacy custom UI will not be removed in the near future but it will eventually be retired.
+</Answer>
+
+<Answer profile={ZeroErrorsProfile}>
+    The NoesisGUI update will be a big change, and we want to make sure the community has the resources to learn how to use it. We are planning on doing some sessions like this one focused on NoesisGUI after the update is out, and we will also be providing more primary source material (ex. shared source with comments, Maven Sources JAR) so docs are easier to infer.
+</Answer>
+
+<Answer profile={SlikeyProfile}>
+    We might add scripting support once the client-side visual scripting exists, possibly client-side node-based scripting for UI later. You can expect the UI to look more animated and alive over time once NoesisGUI particle and shader effects are used, which the legacy system can't do at all right now.
+
+    Not every hard-coded UI will be ported, but the goal is to migrate the tab menu, character frame, inventories, and crafting benches into the asset-driven custom UIs so each crafting bench becomes a server-modifiable asset.
+</Answer>
+
+### What are your plans regarding Official Documentation?
+
+<Answer profile={SlikeyProfile}>
+    Building documentation in-house would be a massive time sink, and without a feedback signal, it would be “yelling into the forest”. The path forward right now is community-driven docs, sessions like these for systems that are severely lacking, and more **primary source material** (ex. Shared source with comments, Maven sources JAR) so docs are easier to infer.
+
+    Anything that the team ships would be worse than what the community already has; and we’d rather contribute to community efforts and provide primary source material.
+</Answer>
+
+# Machinima Tools
+
+### Will the machinima tools improve - custom camera angles, keyframe animations, manipulating bones directly in-game?
+
+<Answer profile={SlikeyProfile}>
+    Yes, the whole system is being rewritten server-side by Arcaniax and Ktar, which unlocks a lot more capability and true collaboration. The current system was written in ~2017 as a client-side-only feature. It tracks save locally, and the client spawns entities only it can see, which desyncs client from the server.
+
+    > It was just good enough for NinjaCharlieT to make the trailer and nothing else. Its a really bad system and we're completely rewritting it
+
+    We have shipped the new NoesisGUI for machinima (one of the first systems to use NoesisGUI), but the underlying tech is still the legacy mess. The replacement is server-driven: spline entities and camera entities live on the server, enabling collaborative editing, where one person lays a rough spline while another builds a tree and a third can refine the spline. The new system will support shared playback to all players. I cannot wait for this to exist.
+</Answer>
+
+# Rendering
+
+### Are there any plans to expand the API for screen effects / post-procesing (filters, fake rain overlay)?
+
+<Answer profile={SlikeyProfile}>
+    This feature is not planned as of now, but if we need it for Chapter 1 we will work on it. Small per-feature rendering work is deprioritized right now in favor of renderer modernization (see questions below)
+</Answer>
+
+### Will there be more rendering options driven from the server beyond debug shapes? (Block states, block animations)
+
+<Answer profile={SlikeyProfile}>
+    - **Model instancing / optimizations** are avoided for now because the renderer is performant enough.
+    - **Block-state-driven rendering** (the Thermal-Expansion-pipe-with-fluid case, where block state changes how a model renders) was discussed at length internally with every rendering dev. Conclusion: "without client-side visual scripting, it would be a complete mess to configure". So its pushed to the future, but it is wanted.
+    - **The vision:** an Unreal-material-graph-style node graph. The block state gets a data definition, a visual script interprets it, and it outputs the actual render state. "That is future music. Until then, we need first visual scripting as a thing, and then we need to have that being integrated into the renderer".
+    - **Timing:** maybe 1.0, possibly ~two years out. No ad-hoc hooks before then, because they would "make a mess inside the code base when we are actually trying to switch the rendering away from OpenGL 3.3".
+
+    **Renderer modernization context:** Hytale is on OpenGL 3.3, moving to Vulkan / MoltenVK. Apple "deprecated OpenGL... its been over for eight years" but hasn't pulled the plug. As of early May there's finally a third rendering engineer - the team is now Cortex, Gaeqs, and Jelly, all from the community. Current work is mostly block-tech / data-model so it survives the renderer swap: UV locking on blocky models, linear animation for blocky models (cogs/gears now turn at linear speed; animation interpolation moved to the GPU).
+</Answer>
+
+### Any plans on adding splines to the game?
+
+<Answer profile={SlikeyProfile}>
+    Splines are "something that we will probably have earlier." They show up in two places already in planning: the new server-side machinima system (spline + camera entities) and spline-conforming blocky models, where "the rendering is kind of easy, but how do we actually want to configure it is the harder part".
+</Answer>
+
+### Will the systems support microblock chiseling (breaking blocks into 1/8th or 1/16th voxels)?
+
+<Answer profile={SlikeyProfile}>
+    If we don't do it for gameplay, then you will probably be able to make a mod for this. If this tech is in for movable structures, I'll make sure that we have a scaling component on the track.
+</Answer>
+
+### The 255-node limit for models - any plans to increase it?
+
+<Answer profile={ZeroErrorsProfile}>
+    This is currently a limitation with how the renderer works, increasing it would cause older graphics cards to stop working, we also agree this limitation is annoying and wish to increase this limit in the future. We expect such improvements to come with the introduction of more modern graphics such as Vulkan / Metal.
+</Answer>
+
+# Asset Editor(s)
+
+### What direction do you want to take the NPC Editor? Are there any plans to simplify this workflow?
+
+<Answer profile={SlikeyProfile}>
+    We plan to keep the **state tree**. The editor keeps getting updates until its moved to the Asset Editor - I recommend looking at Unreal's State Trees. The biggest current pain point is the lack of live debugging: in Unreal you can pause execution and inspect the state tree mid-run; you can't do that here yet. Once its in-game, debugging improves substantially.
+
+    Currently, there is only one internal developer dedicated to NPCs, and we do not have the bandwidth to dedicate to documentation at the moment. NPCs are fundamentally the most difficult system because they model a living world.
+</Answer>
+
+<Answer profile={ZeroErrorsProfile}>
+    We plan to move the NPC editor directly into the Asset Editor, and once its in, a nicer UI can guide the first-step creation rather than forcing people to reverse-engineer demo configurations.
+</Answer>
+
+### When are improvements planned to the Asset Editor?
+
+<Answer profile={SlikeyProfile}>
+    Sach and Panda are bringing everything over to Noesis. Today the editor is still this external thing that's kind of bolted on top of the game, the goal is to connect everything together. Its "a Photoshop" kind of situation with too many options for beginners, so expect simplified UIs and **wizards** later, once power-user workflows are solid.
+
+    If we could get videos of true-beginners using the editor (first few hours) and trying to make a mod, it would be super helpful to identify pain points and opportunities for improvement. Internally we only have power users who know the ins and outs of the editor, so we don't have that fresh perspective.
+</Answer>
+
+### Is the Node Editor "done" or are more tools/nodes coming?
+
+<Answer profile={SlikeyProfile}>
+    WorldGen v2 is not performant enough yet and needs many more features, so its continously going to get more and more features. The node editor is a prototype and it was never originally meant to be publicly released, and will move into the Asset Editor itself.
+
+</Answer>
+
+# Asset System
+
+### Is runetim-safe asset registration planned? ETA?
+
+<Answer profile={ZeroErrorsProfile}>
+    We are prototyping a new asset system to address multiple issues with the current asset system. We hope this will also help us improve runtime-safe registration, client-side caching/preloading, modpack syncing and other asset issues. There's no timeline exactly on when that'll happen, but we're working on it.
+</Answer>
+
+### Will assets be cached on the client to avoid timeouts on server joins?
+
+<Answer profile={ZeroErrorsProfile}>
+    Yes, this is one of the goals of the new asset system. We do not have a timeline for this as of now.
+</Answer>
+
+### Do you plan on adding the ability to have different mods per world?
+
+<Answer profile={ZeroErrorsProfile}>
+    There is no current plan to support this kind of feature, because the trade-off would cause more complexity and more performance issues for the asset system.
+
+    > With other improvements to the asset system it should not really be a problem to have multiple mods on a server and just not use some in some worlds. This is more an issue of how modders develop their mods so they can be used only in some worlds. There is also a further question of how our ECS currently handles system registration which limits the ability for Java mods to avoid registering a system in specific worlds.
+
+</Answer>
+
+# Items
+
+### Plans for improving ItemStack handling - change name/descriptions at runtime?
+
+<Answer profile={ZeroErrorsProfile}>
+    This feature was recently added, and custom names and descriptions are supported now, backed by metadata on stacks.
+</Answer>
+
+### Is there a planned API for item variants with unique properties per ItemStack (modifiers, levels, rarities per drop)?
+
+<Answer profile={ZeroErrorsProfile}>
+    Per-stack metadata is supported, so it should be fairly straight-forward for a mod to implement the ability to read metadata from an item stack to do damage modification, although stat modifications could be a little bit more complicated. Mods can only store their own data on items; there's just no built-in way to do stat changes.
+
+    > I'm sure we'll want that kind of thing at some point anyway.
+
+</Answer>
+
+# NPC / Quests
+
+### Can the NPC system change NPCs real-time (texture, size, attributes) without respawning?
+
+<Answer profile={ZeroErrorsProfile}>
+    There is no reason why it shouldn't be possible for it to be able to change its appearance by swapping out the model or changing its transform to be scaled larger. I am pretty confident I've seen in the past NPCs with the ability to switch their appearance.
+
+    If it doesn't work, a small reproducible NPC configuration would let us confirm whether it's a bug or a limitation that shouldn't exist
+</Answer>
+
+### Closer to Adventure Mode, will there be a more diverse NPC system with a Quest system, easy for modders to interface with, maybe a visual quest editor?
+
+<Answer profile={SlikeyProfile}>
+    The objective system is still in the codebase, we just removed all usages of it. It is kind of abandoned right now, but likely to make a reappearance in dungeons that are going to come up. The open design question is **implied quests** (craft this, gather that, done) versus **explicit quests** (enter a portal, fight enemies, hud progression) - and this is up to the design team.
+
+    Any system we introduce for quests, modders will be able to hook into. The objective plugin works today if you wish to use it.
+</Answer>
+
+# Performance
+
+### Single instance seems to be mostly bound to one CPU thread, limiting players per instance. Is multithreading / scalable instance architecture being worked on? Soon or long-term?
+
+<Answer profile={ZeroErrorsProfile}>
+    We're generally working on performance improvements, such as MachineBreaker working on various things in the ECS and the server. Some systems already leverage multi-core and parallelism, but for smaller-scale systems going could be worse. We can spend more time waiting on synchronization. Before launch, we had to disable a bunch of systems running multi-threaded because it was worse performance for people playing in single player, which was our primary target then. No ship date for full multicore, it's ongoing.
+
+    We are actively working on improving this, if you see places that have specific performance issues, we'd be happy to hear about them and take a look.
+</Answer>
+
+# Multi-Server Tech: Proxy, Sharding, Sync
+
+### Stick with transfer packets or move to a proxy server?
+
+<Answer profile={ZeroErrorsProfile}>
+    We don't plan to provide an official proxy server at the moment because we don't have a current use case for it. If there are certain things in the protocol that are causing issues to be able to actually implement a proxy, I definitely would be interested to hear more.
+
+    Currently, you can transfer to the same server with additional data, or use the domain to switch.
+
+    We have shipped Crash Fallback, you can specify a single fallback server the client connects to if disconnected by an error. Multiple addresses per transfer packet do not exist. You can also use Cloudflare Load Balancing.
+</Answer>
+
+### Will you support server sharding and server sync?
+
+<Answer profile={ZeroErrorsProfile}>
+    It's not a thing that we directly need to support. Synchronizing gameplay elements across server boundaries gets very complicated very quickly, so it's better for a server host that wants to do sharding in a specific way to build it in a way that makes sense for them. If something established emerges in the community, we might consider it.
+</Answer>
+
+# Modding Ergonomics
+
+### Will you reduce the number of calls needed to do things? (Ex. getting a block in the world takes ~10 calls)
+
+<Answer profile={ZeroErrorsProfile}>
+    There definitely should be some work done on ergonomics there. There is no reason why it should be so many steps to do something that is quite simple. Convenience/util functions make sense for things redone across the codebase. The complication right now is that a lot of the old-system code is still around, and if the team is migrating to direct chunk access, we would rather not invest in convenience APIs over a surface that's going away.
+</Answer>
+
+# Misc
+
+### When do we get statistics? Will they be built with modding in mind?
+
+<Answer profile={SlikeyProfile}>
+    At the moment, I don't think we have any plans for stats or achievements. The memory system exists and chapter quests are coming, but those are more progression systems than achievement systems.
+</Answer>
+
+### Can we improve how anchor points for mounts are set up - e.g.; pick a bone to attach the player to?
+
+<Answer profile={ZeroErrorsProfile}>
+    This is definitely a pain point and we're aware of it... but there's technical complexity, because at the moment the server does not understand animations or animation state. So there's no way to understand where that bone is to attach the player's position correctly, do position validation etc.
+</Answer>
+
+<Answer profile={SlikeyProfile}>
+    Today there's a single mount offset in the configuration, which is a bad solution, ideally it uses an attachment point so the player is animated with the mob itself instead of being at a fixed location.
+</Answer>
+
+### Worldgen V2 currently uses a 2D biome map, with cubic chunks coming, will we get a 3D Biome Map?
+
+<Answer profile={ZeroErrorsProfile}>
+    As we add the ability to have basically infinite height, it definitely makes sense to also have biomes vertically, so it's definitely a thing we'll look at improving as we go through.
+</Answer>
+
+### Are we getting Modpacks soon, via CurseForge or a built-in solution?
+
+<Answer profile={DevSlashNullProfile}>
+    We are building and shipping the mod browser in an upcoming update, with potential to integrate some form of getting mods in a bundled experience. Modpacks are definitely useful, and we know we want to do it, but there's currently nothing planned. I foresee a Steam Workshop-like subscription model, where curators bundle mods that you can subscribe to.
+</Answer>
+
+### With the Movement System changes, when might proper Mount Controls (e.g., flying mounts) arrive?
+
+<Answer profile={ZeroErrorsProfile}>
+    No date. The recent movement changes were a big clean up to improve the general way player movement is handled, and I'm pretty confident that extends into mount stuff in the future... it's definitely a thing we'd like to improve.
+</Answer>
+
+### If Hytale implements its own Tech System in the future, would existing Tech Mods be consulted for maximum compatibility?
+
+<Answer profile={ZeroErrorsProfile}>
+    That's probably going to come down to the people working on it specifically, if a set of plugin/mods fit the general area of what we're looking at, maybe there will be some investigation into how they work, but more than likely not. Whoever is working on the gameplay code will implement whatever makes sense for us for Adventure.
+
+    > If there's a reason to add a feature that people can register with or use to make plugins more interoperable, that could be useful.
+
+</Answer>
+
+# Additional Topics
+
+### Shared Source Rollout
+
+<Answer profile={SlikeyProfile}>
+    All the tech is ready, just waiting on a couple of legal hurdles. There will be a private GitHub organization (sort of like Unreal Engine), you can link via the account-management portal and get an automated invite, which prevents anonymous scraping.
+
+    It will be **view-only initially; no PRs accepted at launch**. We will be able to provide the server source code to Neil and Kaupenjoe by this week to test out the workflow.
+</Answer>
+
+### Telemetry & Live config
+
+<Answer profile={SlikeyProfile}>
+    This is standard practice and primarily a security feature. For example, Update 5's rollout used live config to ship with social and server discovery disabled, we let it settle and then flipped those features on.
+
+    > If there is some zero-day to send something via the party system or the friend invite system that compromises other computers, we simply cannot patch this in real time. With live config, we can turn off the friend system while we work on a patch.
+
+</Answer>
+
+### Social Integration
+
+<Answer profile={SlikeyProfile}>
+    We plan to have Hypixel-style deep social integration - the whole ecosystem should benefit rather than each server reinventing it. The party system is coming online soon, the goal: in a later update, when minigame/short-lived experiences ship, players form a party and start them, with parties extensible to other servers, so you can queue as a party across servers, this would unlock rapid replayability. The mod browser will include **creator profiles** tied to the main profile system
+</Answer>
