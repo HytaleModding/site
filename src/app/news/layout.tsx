@@ -23,6 +23,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: "News | HytaleModding",
   description: "News, guides, and community updates from HytaleModding.",
+  alternates: { canonical: "/news" },
+  openGraph: {
+    type: "website",
+    url: "/news",
+    siteName: "HytaleModding",
+  },
 };
 
 export default function NewsLayout({ children }: { children: ReactNode }) {

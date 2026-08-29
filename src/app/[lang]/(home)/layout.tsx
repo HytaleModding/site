@@ -1,35 +1,15 @@
 import { ViewTransition, type ReactNode } from "react";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { baseOptions } from "@/lib/layout.shared";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "HytaleModding",
   description:
     "HytaleModding is the largest community of modders for Hytale. We bring modders together to build, share, and celebrate what they make. We write docs, guides, and tools for modders of every skill level, and run events like ModJams, town halls, and more!",
 
-  alternates: {
-    canonical: "/",
-    languages: {
-      af: "/af-ZA",
-      de: "/de-DE",
-      en: "/en",
-      es: "/es-ES",
-      fr: "/fr-FR",
-      id: "/id-ID",
-      it: "/it-IT",
-      ja: "/ja-JP",
-      nl: "/nl-NL",
-      "pt-BR": "/pt-BR",
-      "pt-PT": "/pt-PT",
-      ru: "/ru-RU",
-      uk: "/uk-UA",
-    },
-  },
   openGraph: {
     type: "website",
     siteName: "HytaleModding",
-    url: "/",
     images: [
       { url: "/og.png", width: 1200, height: 630, alt: "HytaleModding" },
     ],

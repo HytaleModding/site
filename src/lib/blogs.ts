@@ -9,6 +9,7 @@ export type BlogFrontmatter = {
   title: string;
   description: string;
   date?: string;
+  dateModified?: string;
   author?: string;
   authorIsAdmin?: boolean;
   image?: string;
@@ -276,6 +277,7 @@ async function getLocalBlogs(): Promise<BlogOverview[]> {
         title: data.title || params.slug,
         description: data.description || "",
         date: data.date,
+        dateModified: data.dateModified || data.updatedAt,
         author: data.author,
         authorIsAdmin: data.authorIsAdmin,
         image: data.image,
@@ -322,6 +324,7 @@ export async function getBlogs(): Promise<BlogOverview[]> {
           title: file.data.title || params.slug,
           description: file.data.description || "",
           date: file.data.date,
+          dateModified: file.data.updatedAt,
           author: file.data.author || undefined,
           authorIsAdmin: file.data.authorIsAdmin,
           image: file.data.image || undefined,
@@ -381,6 +384,7 @@ export async function getBlog(params: BlogRouteParams) {
           title: data.title || params.slug,
           description: data.description || "",
           date: data.date,
+          dateModified: data.dateModified || data.updatedAt,
           author: data.author,
           authorIsAdmin: data.authorIsAdmin,
           image: data.image,

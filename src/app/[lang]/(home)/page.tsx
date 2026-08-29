@@ -22,6 +22,38 @@ import { richText } from "@/lib/rich-text";
 import TownHallHomepageBlock from "@/components/TownHallHomepageBlock";
 import { CommunityCta } from "./community-cta";
 import { ResourcesSection } from "./resources-section";
+import type { Metadata } from "next";
+import { i18n } from "@/lib/i18n";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const pathname = lang === i18n.defaultLanguage ? "/" : `/${lang}`;
+
+  return {
+    alternates: {
+      canonical: pathname,
+      languages: {
+        de: "/de-DE",
+        en: "/en",
+        es: "/es-ES",
+        fr: "/fr-FR",
+        id: "/id-ID",
+        it: "/it-IT",
+        ja: "/ja-JP",
+        nl: "/nl-NL",
+        "pt-BR": "/pt-BR",
+        "pt-PT": "/pt-PT",
+        ru: "/ru-RU",
+        uk: "/uk-UA",
+      },
+    },
+    openGraph: { url: pathname },
+  };
+}
 
 export default async function HomePage({
   params,

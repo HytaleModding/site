@@ -9,6 +9,7 @@ import { getMDXComponents } from "@/lib/mdx-components";
 import { getBlog, type BlogRouteParams } from "@/lib/blogs";
 import { BlogIframe, BlogImage, BlogVideo } from "@/components/mdx/blog-image";
 import { blogCompiler } from "@/lib/mdx-compiler";
+import { baseUrl } from "@/lib/config";
 
 // Blog pages are now rendered on-demand — data comes from a fetch with
 // `next: { revalidate: 60 }` inside getBlog(), not from files present at
@@ -42,13 +43,54 @@ export default async function NewsPostPage({
   if (!blog) notFound();
 
   const formattedDate = formatDate(blog.frontmatter.date);
+  const publishedDate = blog.frontmatter.date?.slice(0, 10);
+  const absoluteUrl = new URL(
+    `/news/${year}/${month}/${slug}`,
+    baseUrl,
+  ).toString();
+  const absoluteImage = blog.frontmatter.image
+    ? new URL(blog.frontmatter.image, baseUrl).toString()
+    : undefined;
+  const dateModified =
+    blog.frontmatter.dateModified?.slice(0, 10) ?? publishedDate;
+  const authorName = blog.frontmatter.author || "HytaleModding";
+  const authorSlug = authorName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
   const { body: MdxContent } = await blogCompiler.compile({
     source: blog.content,
   });
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: blog.frontmatter.title,
+    description: blog.frontmatter.description,
+    ...(absoluteImage ? { image: absoluteImage } : {}),
+    ...(publishedDate ? { datePublished: publishedDate } : {}),
+    ...(dateModified ? { dateModified } : {}),
+    author: {
+      "@type": "Person",
+      name: authorName,
+      url: new URL(`/authors/${authorSlug}`, baseUrl).toString(),
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "HytaleModding",
+      logo: {
+        "@type": "ImageObject",
+        url: new URL("/og.png", baseUrl).toString(),
+      },
+    },
+    mainEntityOfPage: absoluteUrl,
+  };
 
   return (
     <main className="relative flex flex-1 overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-screen overflow-hidden not-dark:hidden!">
         <Image
           src="/assets/blogs/background/sunlight-through-trees.jpg"
@@ -84,7 +126,7 @@ export default async function NewsPostPage({
                   {formattedDate && (
                     <span className="inline-flex items-center gap-1.5">
                       <CalendarDaysIcon className="size-4" />
-                      {formattedDate}
+                      <time dateTime={publishedDate}>{formattedDate}</time>
                     </span>
                   )}
                   {blog.frontmatter.author && (
@@ -145,10 +187,20 @@ export async function generateMetadata({
       : blog.content.slice(0, 160).replace(/\n/g, " ") + "...";
   const url = `/news/${year}/${month}/${slug}`;
   const image = blog.frontmatter.image;
+  const absoluteUrl = new URL(url, baseUrl).toString();
+  const absoluteImage = image
+    ? new URL(image, baseUrl).toString()
+    : undefined;
+  const datePublished = blog.frontmatter.date?.slice(0, 10);
+  const dateModified =
+    blog.frontmatter.dateModified?.slice(0, 10) ?? datePublished;
+  const authorName = blog.frontmatter.author || "HytaleModding";
+  const authorSlug = authorName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
   return {
     title,
     description,
+    alternates: { canonical: url },
     openGraph: {
       title: blog.frontmatter.title,
       description,

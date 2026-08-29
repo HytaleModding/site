@@ -137,13 +137,16 @@ export async function generateMetadata(
       title: page.data.title,
       description: page.data.description,
       keywords: [...globalKeywords, ...pageKeywords],
+      alternates: { canonical: page.url },
     };
   else
     return {
       title: page.data.title,
       description: page.data.description,
       keywords: [...globalKeywords, ...pageKeywords],
+      alternates: { canonical: page.url },
       openGraph: {
+        url: page.url,
         images: [
           {
             url: imageUrl,

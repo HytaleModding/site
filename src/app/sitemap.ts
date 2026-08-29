@@ -34,6 +34,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   await addProjectPages(sitemap);
   await addBlogPages(sitemap);
 
+  sitemap.push(
+    {
+      url: `${baseUrl}/en/grants`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/en/grants/apply`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/townhalls`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+  );
+
   return sitemap;
 }
 
