@@ -1,3 +1,5 @@
+"use client";
+
 import SnowBg from "@/../public/grants/BG_Snowy_Forest.png";
 import Yeti from "@/../public/grants/BH_HytaleModding_Assets-10.png";
 import { div } from "motion/react-client";

@@ -11,7 +11,7 @@ import Image from "next/image";
 import TreeParallaxLayer1 from "@/../public/grants/tree-parallax/tree_parallax_layer_1.svg";
 import TreeParallaxLayer2 from "@/../public/grants/tree-parallax/tree_parallax_layer_2.svg";
 import TreeParallaxLayer3 from "@/../public/grants/tree-parallax/tree_parallax_layer_3.svg";
-import { useScroll, useTransform, motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 
 export function ElligibilityRequirements() {
