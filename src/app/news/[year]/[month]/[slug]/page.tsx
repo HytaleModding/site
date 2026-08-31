@@ -4,12 +4,18 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DocsBody } from "fumadocs-ui/page";
-import { ChevronLeftIcon, CalendarDaysIcon, UserIcon } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  CalendarDaysIcon,
+  ChevronLeftIcon,
+} from "lucide-react";
 import { getMDXComponents } from "@/lib/mdx-components";
-import { getBlog, type BlogRouteParams } from "@/lib/blogs";
+import { getBlog, getBlogs, type BlogRouteParams } from "@/lib/blogs";
 import { BlogIframe, BlogImage, BlogVideo } from "@/components/mdx/blog-image";
 import { blogCompiler } from "@/lib/mdx-compiler";
 import { baseUrl } from "@/lib/config";
+import { BlogShareActions } from "@/components/blog-share-actions";
 
 // Blog pages are now rendered on-demand — data comes from a fetch with
 // `next: { revalidate: 60 }` inside getBlog(), not from files present at
@@ -38,14 +44,25 @@ export default async function NewsPostPage({
   params: Promise<BlogRouteParams>;
 }) {
   const { year, month, slug } = await params;
-  const blog = await getBlog({ year, month, slug });
+  const [blog, blogs] = await Promise.all([
+    getBlog({ year, month, slug }),
+    getBlogs(),
+  ]);
 
   if (!blog) notFound();
+
+  const currentPath = `/news/${year}/${month}/${slug}`;
+  const currentIndex = blogs.findIndex((item) => item.path === currentPath);
+  const newerBlog = currentIndex > 0 ? blogs[currentIndex - 1] : null;
+  const olderBlog =
+    currentIndex >= 0 && currentIndex < blogs.length - 1
+      ? blogs[currentIndex + 1]
+      : null;
 
   const formattedDate = formatDate(blog.frontmatter.date);
   const publishedDate = blog.frontmatter.date?.slice(0, 10);
   const absoluteUrl = new URL(
-    `/news/${year}/${month}/${slug}`,
+    currentPath,
     baseUrl,
   ).toString();
   const absoluteImage = blog.frontmatter.image
@@ -91,12 +108,12 @@ export default async function NewsPostPage({
           __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-screen overflow-hidden not-dark:hidden!">
+      <div className="blogs-hytale-background pointer-events-none absolute inset-x-0 top-0 -z-10 hidden h-screen overflow-hidden">
         <Image
           src="/assets/blogs/background/sunlight-through-trees.jpg"
-          alt="Background"
+          alt=""
           fill
-          className="mask mask-b-from-50% mask-b-to-transparent mask-b-to-85% object-cover opacity-10"
+          className="mask mask-b-from-50% mask-b-to-transparent mask-b-to-85% object-cover opacity-[0.07]"
           priority
         />
       </div>
@@ -110,31 +127,26 @@ export default async function NewsPostPage({
         </Link>
 
         <ViewTransition name="hero" share="blur-scale-transition">
-          <header className="space-y-5">
+          <header className="blogs-post-header space-y-5">
             <ViewTransition
               name={`blog-${year}-${month}-${slug}`}
               share="blur-scale-transition"
             >
               <div className="space-y-5">
-                <h1 className="text-3xl font-semibold text-balance md:text-5xl">
+                <h1 className="font-display text-3xl font-semibold text-balance md:text-5xl">
                   {blog.frontmatter.title}
                 </h1>
                 <p className="text-muted-foreground text-xl text-pretty md:text-2xl">
                   {blog.frontmatter.description}
                 </p>
-                <div className="text-muted-foreground flex flex-wrap gap-4 text-sm">
+                <div className="text-muted-foreground flex flex-wrap items-center gap-4 text-sm">
                   {formattedDate && (
                     <span className="inline-flex items-center gap-1.5">
                       <CalendarDaysIcon className="size-4" />
                       <time dateTime={publishedDate}>{formattedDate}</time>
                     </span>
                   )}
-                  {blog.frontmatter.author && (
-                    <span className="inline-flex items-center gap-1.5">
-                      <UserIcon className="size-4" />
-                      {blog.frontmatter.author}
-                    </span>
-                  )}
+                  <span className="blogs-author">By {authorName}</span>
                 </div>
               </div>
             </ViewTransition>
@@ -165,6 +177,56 @@ export default async function NewsPostPage({
             })}
           />
         </DocsBody>
+
+        <footer className="mt-12 border-t pt-8">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+            <div>
+              <p className="font-semibold">Share this post</p>
+              <p className="text-muted-foreground mt-1 text-sm">
+                Send it to someone who might find it useful.
+              </p>
+            </div>
+            <BlogShareActions title={blog.frontmatter.title} url={absoluteUrl} />
+          </div>
+
+          {(newerBlog || olderBlog) && (
+            <nav
+              className="mt-8 grid gap-4 sm:grid-cols-2"
+              aria-label="More news"
+            >
+              {newerBlog ? (
+                <Link
+                  href={newerBlog.path}
+                  className="group bg-fd-card/70 hover:bg-fd-card rounded-xl border p-5 transition-colors"
+                >
+                  <span className="text-muted-foreground flex items-center gap-2 text-xs font-bold tracking-wider uppercase">
+                    <ArrowLeftIcon className="size-3.5 transition-transform group-hover:-translate-x-1" />
+                    Newer post
+                  </span>
+                  <span className="mt-2 block font-semibold text-balance">
+                    {newerBlog.title}
+                  </span>
+                </Link>
+              ) : (
+                <div className="hidden sm:block" />
+              )}
+              {olderBlog && (
+                <Link
+                  href={olderBlog.path}
+                  className="group bg-fd-card/70 hover:bg-fd-card rounded-xl border p-5 text-right transition-colors"
+                >
+                  <span className="text-muted-foreground flex items-center justify-end gap-2 text-xs font-bold tracking-wider uppercase">
+                    Older post
+                    <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-1" />
+                  </span>
+                  <span className="mt-2 block font-semibold text-balance">
+                    {olderBlog.title}
+                  </span>
+                </Link>
+              )}
+            </nav>
+          )}
+        </footer>
       </article>
     </main>
   );

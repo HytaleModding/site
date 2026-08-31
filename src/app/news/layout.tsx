@@ -8,6 +8,7 @@ import { baseOptions } from "@/lib/layout.shared";
 import { baseUrl } from "@/lib/config";
 import englishTranslations from "@/../messages/en.json";
 import { DocumentAttributes } from "@/components/document-attributes";
+import { Footer } from "@/app/[lang]/(home)/footer";
 import "../styles/blogs.css";
 
 const { provider } = defineI18nUI(i18n, {
@@ -42,7 +43,10 @@ export default function NewsLayout({ children }: { children: ReactNode }) {
           i18n={false}
           searchToggle={{ enabled: false }}
         >
-          <div className="blogs flex flex-1 flex-col">{children}</div>
+          <div className="blogs flex flex-1 flex-col">
+            {children}
+            <Footer variant="hytale" />
+          </div>
         </HomeLayout>
       </ViewTransition>
     </RootProvider>

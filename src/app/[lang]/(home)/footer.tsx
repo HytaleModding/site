@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import HytaleModdingLogoDark from "@/../public/branding/hytalemodding/HM_DARK.svg";
 import HytaleModdingLogoLight from "@/../public/branding/hytalemodding/HM_LIGHT.svg";
+import { cn } from "@/lib/utils";
 
 const LINK_GROUPS = [
   {
@@ -15,7 +16,7 @@ const LINK_GROUPS = [
     links: [
       { label: "Press Inquiries", href: "/press" },
       { label: "Town Halls", href: "/townhalls" },
-      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Privacy Policgy", href: "/privacy" },
     ],
   },
   {
@@ -87,12 +88,21 @@ function LinkCol({
   );
 }
 
-export function Footer({ logoAlt = "HytaleModding" }: { logoAlt?: string }) {
+export function Footer({
+  logoAlt = "HytaleModding",
+  variant = "default",
+}: {
+  logoAlt?: string;
+  variant?: "default" | "hytale";
+}) {
   const year = new Date().getFullYear();
 
   return (
     <footer
-      className="site-footer bg-background text-foreground relative overflow-hidden border-t"
+      className={cn(
+        "site-footer bg-background text-foreground relative overflow-hidden border-t",
+        variant === "hytale" && "blog-footer",
+      )}
       style={{
         paddingLeft: "clamp(24px, 6vw, 80px)",
         paddingRight: "clamp(24px, 6vw, 80px)",
@@ -158,6 +168,7 @@ export function Footer({ logoAlt = "HytaleModding" }: { logoAlt?: string }) {
                 </a>
               ))}
             </div>
+
           </div>
 
           <div className="flex flex-wrap gap-8 sm:gap-12">

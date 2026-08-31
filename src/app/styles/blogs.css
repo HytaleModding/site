@@ -1,21 +1,14 @@
-/* Title */
+/* Hytale-inspired blog theme */
 .dark .blogs :is(h1, h2, h3) {
   font-family: var(--font-official-title);
-
-  color: #0000;
+  color: transparent;
   background: linear-gradient(#f5fbff, #bfe6ff);
   -webkit-background-clip: text;
   background-clip: text;
   line-height: 1.5;
 }
 
-/* Body Headings */
 .dark .blogs .prose :is(h1, h2, h3) {
-  font-family: var(--font-official-title);
-
-  /* position: relative; */
-  /* margin-top: 1.2em; */
-  /* padding-top: 0.2em; */
   font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -29,7 +22,6 @@
 .dark .blogs {
   font-family: var(--font-official-body);
 
-  /* Official variables, straight from their blog css */
   --color-hytale-text: #b7cedd;
   --color-hytale-text-muted: #9eb2c0;
   --color-hytale-gold: #d29f32;
@@ -39,26 +31,22 @@
   --color-hytale-border: #473e26;
   --color-hytale-border-gold: #423b2b;
   --color-hytale-border-separator: #36455c;
-  --color-hytale-bg-dark: #162039;
-  --color-hytale-bg-darker: #151e2c;
-  --color-hytale-bg-footer: #10161e;
+  --color-hytale-bg-dark: #0d1424;
+  --color-hytale-bg-darker: #101827;
+  --color-hytale-bg-footer: #0a0f18;
   --color-hytale-bg-skeleton: #1d3150;
   --color-hytale-bg-panel: #d2e9f70a;
 
   --color-fd-background: var(--color-hytale-bg-dark);
-
-  --background: #1c263b;
-
+  --background: var(--color-hytale-bg-dark);
   --sidebar: var(--color-hytale-bg-darker);
   --sidebar-foreground: var(--color-hytale-gold-light);
-  --sidebar-primary: #ff0000;
   --sidebar-accent: var(--color-hytale-bg-footer);
   --sidebar-accent-foreground: var(--color-hytale-gold-light);
   --sidebar-border: var(--color-hytale-border);
-
   --color-fd-foreground: var(--color-hytale-text);
   --color-fd-muted: hsl(0, 0%, 12.9%);
-  --color-fd-muted-foreground: hsla(0, 0%, 70%, 0.8);
+  --color-fd-muted-foreground: var(--color-hytale-text-muted);
   --color-fd-popover: hsl(0, 0%, 11.6%);
   --color-fd-popover-foreground: hsl(0, 0%, 86.9%);
   --color-fd-card: var(--color-hytale-bg-darker);
@@ -66,15 +54,40 @@
   --color-fd-border: var(--color-hytale-border);
   --color-fd-primary: var(--color-hytale-gold-light);
   --color-fd-primary-foreground: hsl(0, 0%, 9%);
-  --color-fd-secondary: color-mix(
-    in oklab,
-    var(--color-gray-500) 60%,
-    transparent
-  );
-  --color-fd-secondary-foreground: hsl(0, 0%, 92%);
   --color-fd-accent: hsla(0, 0%, 40.9%, 30%);
   --color-fd-accent-foreground: hsl(0, 0%, 90%);
   --color-fd-ring: hsl(0, 0%, 54.9%);
+}
+
+.dark .blogs-hytale-background {
+  display: block;
+}
+
+.dark .blog-footer {
+  --paper: var(--color-hytale-text);
+
+  font-family: var(--font-sans), sans-serif;
+  background:
+    linear-gradient(180deg, rgb(16 24 39 / 92%), rgb(10 15 24 / 98%)),
+    var(--color-hytale-bg-footer);
+}
+
+.blogs-card {
+  border-color: color-mix(
+    in srgb,
+    var(--color-hytale-border-separator) 72%,
+    transparent
+  );
+}
+
+.blogs-author {
+  color: var(--color-fd-muted-foreground);
+  font-weight: 600;
+}
+
+.blogs-post-header {
+  width: 100%;
+  max-width: 60rem;
 }
 
 .blogs .prose strong {
