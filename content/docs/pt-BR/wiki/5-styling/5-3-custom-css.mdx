@@ -1,6 +1,6 @@
 ---
-title: 5.3 - Custom CSS
-description: How to customize the appearance of your wiki.
+title: 5.3 — CSS personalizado
+description: Como personalizar a aparência da sua wiki.
 authors:
   - name: Dobya
     url: https://discordapp.com/users/1242082598281281629
@@ -12,7 +12,7 @@ if you're new to it, [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web
 
 To add custom CSS, go to your mod page and find the **Custom CSS** field.
 
-## CSS variables
+## Variáveis do CSS
 
 The platform is built with [shadcn/ui](https://ui.shadcn.com) and [Tailwind CSS](https://tailwindcss.com).
 The most effective way to style your wiki is through CSS variables on `:root` —
@@ -62,11 +62,11 @@ Overriding them affects every page of your mod at once:
 }
 ```
 
-### Direct selectors
+### Seletores diretos
 
 For things not covered by variables, you can target elements directly.
 
-By default, `--radius` is not applied to cards — but you can connect it manually:
+Por padrão, `--radius` não é aplicado aos cartões, mas você pode conectá-lo manualmente:
 
 ```css
 [data-slot="card"] {
@@ -85,7 +85,7 @@ For example, to make all `h1` headings red:
 }
 ```
 
-### Selectors reference
+### Referência de seletores
 
 A full list of available selectors, matching the elements from [Markdown](./5-1-markdown):
 
@@ -147,7 +147,7 @@ A full list of available selectors, matching the elements from [Markdown](./5-1-
 .prose .footnotes { } /* Footnote block */
 ````
 
-## Custom classes
+## Classes personalizadas
 
 To style a specific part of a page, create a custom class in CSS and apply it as a `div` in MDX.
 
@@ -161,7 +161,7 @@ For example, a `.green` class with green text:
 
 ```mdx
 <div class="green">
-  Green text!
+  Texto verde!
 </div>
 ```
 

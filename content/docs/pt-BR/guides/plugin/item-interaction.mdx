@@ -1,6 +1,6 @@
 ---
-title: Create Custom Item and Interaction
-description: Learn how you can create a custom item interactions for your custom items
+title: Criar item personalizado e interação
+description: Aprenda a criar interações personalizadas para os seus itens personalizados.
 authors:
   - name: Marcel-TO
     url: https://marcel-to.net
@@ -10,10 +10,10 @@ import { File, Folder, Files } from 'fumadocs-ui/components/files';
 
 Creating a custom item follows the same setup than the [Creating custom blocks](./creating-block).
 
-## Setup
+## Configurando
 
 1. Enable asset packs in `manifest.json` by setting `IncludesAssetPack` to `true`
-2. Create the following folder structure:
+2. Crie a seguinte estrutura de pastas:
 
 <Files>
     <Folder name="resources" defaultOpen>
@@ -40,24 +40,24 @@ Creating a custom item follows the same setup than the [Creating custom blocks](
     </Folder>
 </Files>
 
-The following files are relevant for the item:
+Os arquivos abaixo são relevantes para o item:
 
-| File                 | Location                    | Description                              |
-| -------------------- | --------------------------- | ---------------------------------------- |
-| my_new_item.json     | Server/Item/Items           | Defines the item properties and behavior |
-| my_new_item_icon.png | Common/Icons/ItemsGenerated | Icon for the item in inventory           |
-| model.blockymodel    | Common/Items/my_new_item    | 3D model of the item                     |
-| model_texture.png    | Common/Items/my_new_item    | Texture for the item model               |
+| Arquivo              | Diretório                   | Descrição                                        |
+| -------------------- | --------------------------- | ------------------------------------------------ |
+| my_new_item.json     | Server/Item/Items           | Define as propriedades e o comportamento do item |
+| my_new_item_icon.png | Common/Icons/ItemsGenerated | Ícone do item no inventário                      |
+| model.blockymodel    | Common/Items/my_new_item    | Modelo 3D do item                                |
+| model_texture.png    | Common/Items/my_new_item    | Textura do modelo do item                        |
 
-## Custom Item Definition
+## Definição de item personalizado
 
-Create `Server/Item/Items/my_new_item.json`:
+Crie `Server/Item/Items/my_new_item.json`:
 
 ```json
 {
   "TranslationProperties": {
-    "Name": "My New Item", // Alternatively, use localization keys
-    "Description": "My New Item Description" // Alternatively, use localization keys
+    "Name": "Meu novo item", // Outra opção é usar chaves de localização
+    "Description": "Descrição do meu novo item" // Outra opção é usar chaves de localização
   },
    "Id": "My_New_Item",
   "Icon": "Icons/ItemsGenerated/my_new_item_icon.png",
@@ -80,12 +80,12 @@ To allow players to craft the new item, you can define a crafting recipe. Inside
 
 ```json
 {
-  ... // existing item properties from above
+  ... // propriedades existentes do item acima
   "Recipe": {
-    "TimeSeconds": 3.5, // Time taken to craft the item
+    "TimeSeconds": 3.5, // Exemplo de ID de item ingrediente
     "Input": [
       {
-        "ItemId": "Ingredient_1", // Example ingredient item ID
+        "ItemId": "Ingredient_1", // Exemplo de ID de item ingrediente
         "Quantity": 15
       },
       {
@@ -93,16 +93,16 @@ To allow players to craft the new item, you can define a crafting recipe. Inside
         "Quantity": 15
       },
       {
-        "ItemId": "Ingredient_3", // Example ingredient item ID
+        "ItemId": "Ingredient_3", // Exemplo de ID de item ingrediente
         "Quantity": 15
       }
     ],
     "BenchRequirement": [
       {
-        "Id": "Workbench", // What type of crafting bench is required
+        "Id": "Workbench",// Tipo de bancada de crafting necessária
         "Type": "Crafting",
         "Categories": [
-          "Workbench_Survival" // Which category of workbench tab
+          "Workbench_Survival" // Categoria da aba da bancada
         ]
       }
     ]
@@ -170,9 +170,9 @@ To link the custom interaction to the item, add the following property to the it
 
 ```json
 {
-  ... // existing item properties from above
+  ... // propriedades existentes do item acima
   "Interactions": {
-    "Secondary": { // depending on the type of interaction you want
+    "Secondary": { // dependendo do tipo de interação 
       "Interactions": [
         {
           "Type": "my_custom_interaction_id",
@@ -200,28 +200,28 @@ public class SendMessageInteraction extends SimpleInstantInteraction {
         CommandBuffer<EntityStore> commandBuffer = interactionContext.getCommandBuffer();
         if (commandBuffer == null) {
             interactionContext.getState().state = InteractionState.Failed;
-            LOGGER.atInfo().log("CommandBuffer is null");
+            LOGGER.atInfo().log("CommandBuffer é null");
             return;
         }
 
-        World world = commandBuffer.getExternalData().getWorld(); // just to show how to get the world if needed
-        Store<EntityStore> store = commandBuffer.getExternalData().getStore(); // just to show how to get the store if needed
+        World world = commandBuffer.getExternalData().getWorld(); // apenas para mostrar como obter o mundo, se necessário
+        Store<EntityStore> store = commandBuffer.getExternalData().getStore(); // apenas para mostrar como obter o store, se necessário
         Ref<EntityStore> ref = interactionContext.getEntity();
         Player player = commandBuffer.getComponent(ref, Player.getComponentType());
         if (player == null) {
             interactionContext.getState().state = InteractionState.Failed;
-            LOGGER.atInfo().log("Player is null");
+            LOGGER.atInfo().log("Player é null");
             return;
         }
 
         ItemStack itemStack = interactionContext.getHeldItem();
         if (itemStack == null) {
             interactionContext.getState().state = InteractionState.Failed;
-            LOGGER.atInfo().log("ItemStack is null");
+            LOGGER.atInfo().log("ItemStack é null");
             return;
         }
 
-        player.sendMessage(Message.raw("You have used the custom item +" + itemStack.getItemId()));
+        player.sendMessage(Message.raw("Você usou o item personalizado " + itemStack.getItemId()));
     }
 }
 ```
@@ -237,10 +237,10 @@ To get your creative juices flowing, here are some examples of interaction types
 ```json
 {
     "Type": "Condition",
-    "Crouching": true, // only allow if player is crouching example
+    "Crouching": true, // permite apenas se o jogador estiver agachado
     "Failed": "Block_Secondary",
     "Next": {
-        ... // next interaction to run if condition is met
+        ... // próxima interação a ser executada se a condição for atendida
     }
 }
 ```
@@ -250,15 +250,15 @@ To get your creative juices flowing, here are some examples of interaction types
 ```json
 {
     "Type": "Charging",
-    "FailsOnDamage": true, // cancel if player takes damage
-    "HorizontalSpeedMultiplier": 0.4, // reduce speed while charging
+    "FailsOnDamage": true, // cancela se o jogador sofrer dano
+    "HorizontalSpeedMultiplier": 0.4, // reduz a velocidade enquanto carrega
     "Next": {
-        "2.5" : {  // interaction after 2.5 seconds of charging
-            ... // interaction to run after charge time
+        "2.5" : {  // interação após 2,5 segundos de carregamento
+            ... // interação a ser executada após o tempo de carga
         },
     },
     "Failed": {
-        ... // interaction to run if charging fails
+        ... // interação a ser executada se o carregamento falhar
     }
 }
 ```
@@ -270,10 +270,10 @@ To get your creative juices flowing, here are some examples of interaction types
     "Type": "Serial",
     "Interactions": [
         {
-            ... // first interaction
+            ... // primeira interação
         },
         {
-            ... // second interaction
+            ... // segunda interação
         }
     ]
 }
@@ -288,7 +288,7 @@ To get your creative juices flowing, here are some examples of interaction types
     "DefaultValue": {
         "Interactions": [
             {
-                ... // default interaction that replaces the original
+                ... // interação padrão que substitui a original
             }
         ]
     }
@@ -309,7 +309,7 @@ Here is an example of a more complex interaction that requires the player to cro
 
 ```json
 {
-    ... // existing item properties from above
+    ...// propriedades existentes do item acima
     "Interactions": {
         "Secondary": {
             "Interactions": [

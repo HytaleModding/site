@@ -443,6 +443,9 @@ public class MyPlugin extends JavaPlugin {
         // Another way to add commands:
         CommandRegistry registry = getCommandRegistry();
         registry.registerCommand(new ExampleCommand());
+
+        // CommandCollection is also a command:
+        registry.registerCommand(new UserCommandCollection());
     }
 }
 ```

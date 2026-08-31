@@ -1,5 +1,5 @@
 ---
-title: Common Styling
+title: Estilização comum
 authors:
   - name: Hypixel Studios Canada Inc.
     url: https://hytale.com
@@ -7,41 +7,41 @@ authors:
 
 <OfficialDocumentationNotice />
 
-# Common Styling
+# Introdução
 
-## Common UI Styling Library
+## Biblioteca comum de estilização de interface
 
-This document describes the shared UI components and styles defined in `Common.ui`.
+Esse documento descreve os componentes de interface e estilos compartilhados definidos em `Common.ui`.
 
 ---
 
-### Styles
+### Estilos
 
-We are providing some styles that can be re-used in any custom UI that, provide a cohesive UI experience with the core game UI. These styles are available in the `Common.ui` file.
+Estamos fornecendo alguns estilos que podem ser reutilizados em qualquer interface personalizada, proporcionando uma experiência de interface coesa com a do jogo. Esses estilos estão disponíveis no arquivo `Common.ui`.
 
-You can find a list of all the styles defined with live examples by running the `/ui-gallery` command ingame.
+Você pode encontrar uma lista com todos os estilos definidos com exemplos em tempo real executando o comando `/ui-gallery` dentro do jogo.
 
 ![Gallery](/assets/official-documentation/ui/gallery.png)
 
-### Importing
+### Importando
 
-To use these styles in your UI file:
+Para usar esses estilos no seu arquivo de interface:
 
 ```
 $Common = "Common.ui";
 
-// Then reference styles and components:
-$Common.@TextButton { @Text = "My Button"; }
+// Em seguida, referencie os estilos e os componentes:
+$Common.@TextButton { @Text = "Meu botão"; }
 $Common.@Container { ... }
 ```
 
 <Callout type="info">
-The `Common.ui` file is at `Common/UI/Custom/Common.ui` within the Hytale pack. If your custom ui document is in a subfolder of `Common/UI/Custom/`, reference it via relative path traversal:
+O arquivo `Common.ui` está em `Common/UI/Custom/Common.ui` dentro do pacote de Hytale. Se o seu documento de interface personalizado estiver em uma subpasta em `Common/UI/Custom/`, referencie usando a navegação relativa de caminho:
 
 ```
 $Common = "../Common.ui";
 ```
 
-You can find more info about paths [here](markup#path).
+Você pode encontrar mais informações sobre caminhos [aqui](markup#path).
 
 </Callout>

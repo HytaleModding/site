@@ -1,6 +1,6 @@
 ---
-title: Creating custom blocks
-description: Learn how to create custom blocks for your Hytale mod.
+title: Criando blocos personalizados
+description: Aprenda a criar blocos personalizados para o seu mod de Hytale.
 authors:
   - name: Flo_12344
     url: https://flotterstudio.com
@@ -8,12 +8,12 @@ authors:
 
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
 
-Creating custom blocks requires enabling asset packs and organizing your files properly.
+A criação de blocos personalizados requer a ativação de pacotes de assets e a organização adequada dos seus arquivos.
 
-## Setup
+## Configuração
 
-1. Enable asset packs in `manifest.json` by setting `IncludesAssetPack` to `true`
-2. Create the following folder structure:
+1. Habilite os pacotes de assets no `manifest.json` definindo `IncludesAssetPack` como `true`
+2. Crie a seguinte estrutura de pastas:
 
 <Files>
     <Folder name="resources" defaultOpen>
@@ -39,16 +39,16 @@ Creating custom blocks requires enabling asset packs and organizing your files p
     </Folder>
 </Files>
 
-3. Add translations in `Server/Languages/en-US/items.lang`:
+3. Adicione as traduções em `Server/Languages/en-US/items.lang`:
 
 ```
-my_new_block.name = My New Block
-my_new_block.description = My Description
+my_new_block.name = Meu Novo Bloco
+my_new_block.description = Minha Descrição
 ```
 
-## Basic Cube Block
+## Bloco de Cubo Básico
 
-Create `Server/Item/Items/my_new_block.json`:
+Crie `Server/Item/Items/my_new_block.json`:
 
 ```json
 {
@@ -94,4 +94,4 @@ Create `Server/Item/Items/my_new_block.json`:
 }
 ```
 
-Ensure all referenced files exist in their respective folders, and the paths are correct.
+Certifique-se de que todos os arquivos referenciados existam em suas respectivas pastas e que os caminhos estejam corretos.

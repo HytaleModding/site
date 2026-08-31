@@ -3,31 +3,71 @@
   "nav": {
     "title": "Hytale Modding",
     "documentation": "Dokumentation",
-    "sponsors": "Sponsoren",
+    "sponsors": "Support Us",
     "wiki": "Wiki",
     "search": "Suche",
-    "grants": "Grants"
+    "grants": "Grants",
+    "blogs": "Blogs"
   },
   "home": {
-    "title": "#1 Ressource für Hytale Modding {flipwords}",
+    "title": "The largest community for <badge>modders</badge>",
     "flipwords": [
       "Anleitungen",
       "Dokumentation",
       "Werkzeuge",
       "Leitfäden"
     ],
-    "description": "Das beste Community-Angebot für Hytale Modding mit\numfassenden Anleitungen, detaillierter Dokumentation und wichtigen Tools, um deine Modding-Reise zu starten.",
+    "description": "We bring modders together to build, share, and celebrate what they make.",
     "documentation": "Dokumentation",
-    "forum": "Forum",
     "discord": "Werde Teil unserer Community!",
-    "memberCount": "{count} Mitglieder",
+    "memberCount": "{count} modders",
     "countdown": "Hytale erscheint in {countdown}",
     "countdownUnits": {
       "hours": "h",
       "minutes": "m",
       "seconds": "s"
     },
-    "hytaleReleased": "Hytale ist da!"
+    "hytaleReleased": "Hytale ist da!",
+    "community": {
+      "title": "What is HytaleModding?",
+      "description": "HytaleModding is the largest community of modders for <link>Hytale</link>. We write docs, guides, and tools for modders of every skill level, and run community events like ModJams, town halls, and more that bring modders together and celebrate what they build.",
+      "moddability": "A big part of Hytale is its moddability, and our goal is to empower modders of all skill levels to create amazing content for the game.",
+      "welcome": "Artists, game developers, or just curious players: everyone's welcome, and nobody needs experience to start.",
+      "join": "Join <link>{count} modders on Discord</link> and start building."
+    },
+    "resources": {
+      "title": "<accent>There’s a place to start,</accent> whatever you want to make.",
+      "documentation": {
+        "title": "Documentation",
+        "description": "HytaleModding provides documentation for World Gen, Asset Packs, and Modding Tools. Learn how to create your own mods, explore the API, and get started with modding in Hytale. Start with practical guides, then dive into the API reference for more advanced topics.",
+        "viewDocs": "View documentation"
+      },
+      "wiki": {
+        "title": "HytaleModding Wiki",
+        "description": "The HytaleModding Wiki lets modders create a dedicated wiki for their own mod. It's a place to publish guides, document features, and keep everything about the project organized in one spot for the community.",
+        "browseMods": "Browse existing mods",
+        "writeWiki": "Write your own wiki"
+      }
+    },
+    "communityCta": {
+      "title": "So, what are you <italic>waiting</italic> for?",
+      "worldGen": "Design your first biome",
+      "firstAsset": "Make your first asset",
+      "firstMod": "Code your first mod"
+    },
+    "townHalls": {
+      "title": "Town Halls",
+      "description": "We run monthly town halls to keep everyone in the loop, share what we're building, and collect feedback for Hytale directly from the community.",
+      "speakers": "Speakers",
+      "confirmedSpeakers": "Confirmed speakers",
+      "next": "Next town hall",
+      "joinOnDiscord": "Join on Discord",
+      "readReport": "Read the report",
+      "viewAll": "View all Townhalls",
+      "archiveKicker": "missed one? we've got you",
+      "archiveDescription": "Every town hall we've run, in one place with their recordings and speakers. Check back here for new town halls as they happen, and for reports on what we discussed.",
+      "empty": "Nothing here yet — check back soon."
+    }
   },
   "showcaseItems": {
     "madeBy": "by {author}"
@@ -36,6 +76,47 @@
     "title": "Unterstütze uns",
     "description": "HytaleModding ist ein Open-Source-Community-Projekt, und Teil des Managements der Community ist die Bezahlung für Dienste, Server und Infrastruktur, wie das Hosting dieser Website. Wenn du das Projekt unterstützen möchtest, solltest du ein Sponsor werden! Wir verwenden OpenCollective, damit du sehen kannst, wie Gelder verwendet werden, um die Community zu unterstützen.",
     "ourSponsors": "Unsere Sponsoren"
+  },
+  "press": {
+    "title": "Press Kit",
+    "description": "HytaleModding is the largest community of modders for Hytale. We're an open-source, volunteer-run project that writes documentation, guides, and tools for modders of every skill level.",
+    "downloadKit": "Download press kit",
+    "about": {
+      "title": "Who we are.",
+      "body1": "HytaleModding brings modders together to build, share, and celebrate what they make. We maintain documentation, guides, and tools for modders of every skill level, and everything we produce is open source. We also run community events like ModJams and town halls, and fund community projects through our grant program.",
+      "mentions": [
+        {
+          "count": "2",
+          "label": "Features in official Hytale blog posts",
+          "hrefs": [
+            "https://hytale.com/news/2026/7/community-spotlight-worldgen-v2#learning-world-generation-hytalemodding-community",
+            "https://hytale.com/news/2026/3/hytale-new-worlds-modding-contest#resources-where-to-learn-about-modding-hytalemodding"
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "title": "Contact",
+      "leadIn": "You can reach the team directly:",
+      "business": {
+        "label": "Business & partnerships",
+        "email": "hello@hytalemodding.dev"
+      },
+      "media": {
+        "label": "Press & media",
+        "email": "press@hytalemodding.dev"
+      },
+      "legal": {
+        "label": "Legal",
+        "email": "legal@hytalemodding.dev"
+      }
+    },
+    "legalNote": "For anything urgent such as takedowns, copyright, or trademark requests, reach Neil directly at neil@hytalemodding.dev with legal@hytalemodding.dev in CC.",
+    "logos": {
+      "title": "Logos",
+      "subtitle": "Official HytaleModding marks.",
+      "note": "Stick to SVG or PNG. Avoid stretching, outlining, or recoloring."
+    }
   },
   "misc": {
     "loading": "Lädt...",

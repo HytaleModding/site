@@ -1,114 +1,130 @@
 ---
-title: Build and Test Your Mod
-description: Learn how to build your Hytale mod and test it in-game.
+title: Construa e teste seu mod
+description: Aprenda a construir seu mod de Hytale e testá-lo no jogo.
 authors:
   - name: Michael B
+  - name: AzureDoom
+    link: https://azuredoom.com
 ---
 
-If you followed along with the [Setting Up Your Development Environment](./setting-up-env) page, you should now be able to build your project.
+Se você acompanhou a página [Configurando seu ambiente de desenvolvimento](./setting-up-env), agora deverá conseguir construir seu projeto.
 
-## Building Your Mod
+## Criando seu mod
 
-In our case, we've **Gradle** as the build system. Gradle is a powerful build automation tool that manages dependencies, compiles your code, and packages everything into a distributable JAR file.
+In our case, we've used **Gradle** as the build system. O Gradle é uma poderosa ferramenta de automação de build que gerencia dependências, compila seu código e empacota tudo em um arquivo JAR distribuível.
 
-### Understanding Gradle
+### Entendendo o Gradle
 
-Gradle can use a `build.gradle.kts` file (Kotlin DSL) to define your project's configuration, dependencies, and build settings. You can learn more about Gradle at the [official Gradle website](https://gradle.org/).
+Gradle can use a `build.gradle.kts` file (Kotlin DSL) and `gradle.properties` to define your project's configuration, dependencies, and build settings. Você pode aprender mais sobre o Gradle no [site oficial do Gradle](https://gradle.org/).
 
-### Building with Gradle
+### Construindo com Gradle
 
-To build your mod, open a terminal in your project directory and run:
+Para criar seu mod, abra um terminal no diretório do seu projeto e execute:
 
 ```bash
+// Windows
+gradlew.bat build
+
+// Linux/MacOS
 ./gradlew build
 ```
 
-This command will:
+Esse comando irá:
 
-1. Compile your Java source code
-2. Run any tests (if present)
-3. Package everything into a JAR file
+1. Compilar seu código-fonte Java
+2. Executar testes (se existirem)
+3. Empacotar tudo em um arquivo JAR
 
 <Callout type="info">
-If you are using the plugin template from the [Setting Up Your Development Environment](./setting-up-env) guide, then the build script is already set up for you. It includes paths to your Hytale game library and handles the packaging of your mod, managing hytale dependencies and manifest changes.
+Se você estiver usando o modelo de plugin do guia [Configurando seu ambiente de desenvolvimento](./setting-up-env), então o script de compilação já está configurado para você. It automatically grabs Hytale server jar/assets and handles the packaging of your mod, managing hytale dependencies and manifest changes.
 
-If you have a different path to your Hytale installation, you may receive the following error:
-```bash
-FAILURE: Build failed with an exception.
-
-* What went wrong:
-Failed to find Hytale at the expected location. Please make sure you have installed the game. The expected location can be changed using the hytale.home_path property. Currently looking in 'C:\Path\To\Hytale'
-```
-
-You can change the path by adding a property to your `gradle.properties` file (if it doesn't exist, create it in the root of your project):
+You can change the project to using your game installs Asset zip by uncommenting a property to your `gradle.properties` file:
 ```properties
-hytale.home_path=C:\Correct\Path\To\Hytale
+hytaleHomeOverride=/path/to/Hytale/install/release/package/game/latest/Assets.zip
+```
+and `build.gradle.kts` file:
+```kts
+hytaleHomeOverride = property("hytaleHomeOverride").toString()
 ```
 
 </Callout>
 
-### Build Output
+### Saída da build
 
-Once the build completes successfully, your mod will be located in the `build/libs` directory and named:
+Quando a build for concluída com sucesso, seu mod estará localizado no diretório `build/libs` e será nomeado:
 
 ```
 ExamplePlugin-1.0.jar
 ```
 
 <Callout type="info">
-The exact name may vary depending on what you configured in your `build.gradle.kts` and `settings.gradle.kts` file. Check the `rootProject.name` and `version` fields to see what your JAR will be named.
+The exact name may vary depending on what you configured in your `gradle.properties` file. Check the `mod_name` and `version` fields to see what your JAR will be named.
 </Callout>
 
-## Testing Your Mod
+## Testando seu mod
 
-Now that you've built your mod, it's time to test it in Hytale!
+Agora que você construiu seu mod, é hora de testá-lo no Hytale!
 
-### 1. Locate the Mods Folder
+### 1. Localize a pasta de mods
 
-First, you need to find Hytale's mods directory:
+Primeiro, você precisa encontrar o diretório de mods do Hytale:
 
-1. Go to your Hytale installation directory (The default location is usually in your AppData folder)
-   > On Windows, you can access it by clicking `windows + R` and typing `%appdata%`.
-2. Navigate to: `/UserData/Mods`
+1. Vá até o diretório de instalação do Hytale (o local padrão geralmente fica na pasta AppData)
+   > No Windows, você pode acessá-lo clicando em `Windows + R` e digitando `%appdata%`.
+2. Navegue até: `/UserData/Mods`
 
-The default path would look like:
+O caminho padrão deve se parecer com:
 
 ```
-C:\Users\YourUsername\AppData\Roaming\Hytale\UserData\Mods
+C:\Users\SeuUsuario\AppData\Roaming\Hytale\UserData\Mods
 ```
 
 <Callout type="warning">
-If the `Mods` folder doesn't exist, you may need to create it manually or launch Hytale at least once.
+Se a pasta `Mods` não existir, talvez seja necessário criá-la manualmente ou iniciar o Hytale pelo menos uma vez.
 </Callout>
 
-### 2. Copy Your Mod
+### 2. Copie seu mod
 
-Copy the `ExamplePlugin-1.0.jar` file from your project's `build/libs` directory into the `Mods` folder you just located.
+Copie o arquivo `ExamplePlugin-1.0.jar` do diretório `build/libs` do seu projeto para a pasta `Mods` que você acabou de localizar.
 
-### 3. Launch Hytale and Verify
+### 3. Inicie o Hytale e verifique
 
-1. **Start Hytale**
-2. **Click "Create a New World"**
-3. **Click the settings cog**
-4. **Click "Mods"**
-5. **See your mod** in the list!
+1. **Inicie o Hytale**
+2. **Clique em "Criar um Novo Mundo"**
+3. **Clique no ícone de engrenagem de configurações**
+4. **Clique em "Mods"**
+5. **Veja o seu mod** na lista!
 
-If your mod appears in the list, congratulations! Your mod has been successfully loaded by Hytale.
+Se o seu mod aparecer na lista, parabéns!  Seu mod foi carregado com sucesso pelo Hytale.
 
-## Troubleshooting
+## Testing Your Mod Without Building
 
-If your mod doesn't appear in the mods list:
+Now that you have verified your project builds and runs in Hytale, you'll want to test it as you do development. To do this, simply run the `runServer` task or manually via:
 
-- Make sure the JAR file is in the correct `Mods` folder
-- Check that your `manifest.json` file is properly configured
-- Look for any error messages in the Hytale logs
-- Verify that you're using the correct version of Java and Gradle
+```bash
+// Windows
+gradlew.bat runServer
 
-## Next Steps
+// Linux/MacOS
+./gradlew runServer
+```
 
-Now that you can build and test your mod, you're ready to start adding functionality! Check out these guides:
+This will start and run a local Hytale server. You'll connect in your game adding a private server pointing to `localhost`. This server will run your mod and any dependencies you have added via your `build.gradle.kts` file.
 
-- [Create Commands](./creating-commands) - Add custom commands to your mod
-- [Create Events](./creating-events) - React to in-game events
+## Solução de problemas
 
-Happy modding!
+Se o seu mod não aparecer na lista de mods:
+
+- Certifique-se de que o arquivo JAR está na pasta `Mods` correta
+- Confirme se o arquivo `manifest.json` está configurado corretamente
+- Procure por mensagens de erro nos logs do Hytale
+- Verifique se você está usando a versão correta do Java e do Gradle
+
+## Próximos passos
+
+Agora que você consegue construir e testar seu mod, está pronto para começar a adicionar funcionalidades! Confira estes guias:
+
+- [Criar comandos](./creating-commands) - Adicione comandos personalizados ao seu mod
+- [Criar eventos](./creating-events) - Reagir a eventos dentro do jogo
+
+Boa criação de mods!
