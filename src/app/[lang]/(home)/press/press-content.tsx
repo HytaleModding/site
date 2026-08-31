@@ -115,9 +115,6 @@ export function PressContent() {
               </p>
             ))}
           </div>
-          <p className="text-muted-foreground mt-6 text-sm leading-relaxed">
-            {linkifyEmails(press.legalNote)}
-          </p>
         </section>
 
         <section className="mt-16">
