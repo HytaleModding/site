@@ -18,6 +18,9 @@ import FungusSpiral from "@/../public/showcaseImages/FungusSpiral.png";
 import TheWastelands from "@/../public/showcaseImages/TheWastelands.png";
 import RaptorHollows from "@/../public/showcaseImages/RaptorHollows.png";
 import ColdestReaches from "@/../public/showcaseImages/ColdestReaches.png";
+import TrorkFortress from "@/../public/showcaseImages/TrorkFortress.png";
+import TrorkArena from "@/../public/showcaseImages/TrorkArena.png";
+import TrorkZeppelins from "@/../public/showcaseImages/TrorkZeppelins.png";
 
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
@@ -275,12 +278,33 @@ const showcaseItems: ShowcaseItem[] = [
     type: "worldgen",
   },
   {
+    title: "Trork Fortress",
+    author: "DeepCanionStudio",
+    image: TrorkFortress,
+    link: "",
+    type: "worldgen",
+  },
+  {
     title: "Coldest Reaches",
     author: "Lunaronin777",
     image: ColdestReaches,
     link: "https://www.curseforge.com/hytale/mods/fullmetal-labyrinth",
     type: "worldgen",
   },
+  {
+    title: "Trork Zeppelins",
+    author: "Lunaronin777",
+    image: TrorkZeppelins,
+    link: "https://www.curseforge.com/hytale/prefabs/trork-zeppelins",
+    type: "worldgen",
+  },
+  {
+    title: "Trork Arena",
+    author: "Harizon",
+    image: TrorkArena,
+    link: "",
+    type: "worldgen",
+  }
 ];
 
 function shuffle<T>(items: T[]): T[] {
