@@ -175,7 +175,7 @@ const showcaseItems: ShowcaseItem[] = [
     author: "lulu",
     image: Sanguivar,
     link: "",
-    type: "art",
+    type: "worldgen",
   },
   {
     title: "Hexcode",
@@ -199,13 +199,6 @@ const showcaseItems: ShowcaseItem[] = [
     poster: "/showcaseVideos/posters/PingPong.jpg",
     link: "",
     type: "worldgen",
-  },
-  {
-    title: "Trigger Volume Keyboard",
-    author: "FoxyCCA",
-    image: TriggerVolumeKeyboard,
-    link: "",
-    type: "art",
   },
   {
     title: "Burger",
@@ -319,12 +312,13 @@ function shuffle<T>(items: T[]): T[] {
 }
 
 const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
-  const isWorldgen = item.type === "worldgen";
+  const isArt = item.type === "art";
+  const hasOverlay = isArt || item.type === "worldgen";
 
-  const cardContent = isWorldgen ? (
+  const cardContent = hasOverlay ? (
     <>
       <div className="absolute inset-0">
-        <ShowcaseMedia item={item} fit="cover" />
+        <ShowcaseMedia item={item} fit={isArt ? "contain" : "cover"} />
       </div>
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
@@ -364,14 +358,14 @@ const ShowcaseCard = ({ item }: { item: ShowcaseItem }) => {
       {item.link ? (
         <Link
           href={item.link}
-          className={`group flex h-full ${isWorldgen ? "relative" : "flex-col"}`}
+          className={`group flex h-full ${hasOverlay ? "relative" : "flex-col"}`}
           target="_blank"
           rel="noopener"
         >
           {cardContent}
         </Link>
       ) : (
-        <div className={`flex h-full ${isWorldgen ? "relative" : "flex-col"}`}>
+        <div className={`flex h-full ${hasOverlay ? "relative" : "flex-col"}`}>
           {cardContent}
         </div>
       )}
