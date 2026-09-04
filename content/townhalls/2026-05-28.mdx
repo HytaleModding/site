@@ -1,0 +1,49 @@
+---
+title: "May 28, 2026"
+description: "This document is a summary of the Town Hall event hosted by HytaleModding & Kaupenjoe on 28th May 2026."
+date: "2026-05-28"
+editedForClarity: true
+published: true
+---
+
+# Modding Q&A 
+
+HytaleModding interviewed Slikey, ZeroErrors and DevSlashNull about the future of Hytale modding. At the start of the town hall, we went over the report, which is now published [here](https://hytalemodding.dev/en/docs/qna/26-05-2026). 
+
+At the end, we had a Q&A session with the community, where we answered questions about modding, the Hytale engine, and the future of Hytale.
+
+## Community Q&A
+
+<Question title="Will the existing common UI system break when Noesis is introduced?" askedBy="ziggfreed" timestamp="46:33">
+  <Answer person="zeroerrors">
+    We want to support both of them side-by-side for a while, because we know that a lot of mods are currently using the existing system. We'll let you know way ahead of time when we are looking to deprecate it, so that you have time to make the transition. 
+  </Answer>
+</Question>
+
+<Question title="Are you working on optimizing high player-count load optimization?" askedBy="Community member" timestamp="49:00">
+  <Answer person="zeroerrors">
+    We're actively working on performance, as we know it is a pain-point for a lot of the community. If you have more information, for example profiles, or specific information about hotspots, we're absolutely happy to take a look at that. Generally speaking, we are working on improving performance across the server and the client. 
+  </Answer>
+</Question>
+
+<Question title="Trigger Volumes don't appear to work with world gen, will that be changed?" askedBy="QPTech" timestamp="51:40">
+  <Answer person="neil">
+    Yeah, the team told me that they are planning to add more conditions, effects, etc to the system.
+  </Answer>
+
+  <Answer person="zeroerrors">
+    Yeah, we definitely want to expand the system, but we want to find that line where we don't go too far where we make it too complicated, because we still want to have visual scripting at one point. We don't want to go so far with Trigger Volumes that we have to un-do work with Visual scripting gets added.
+  </Answer>
+</Question>
+
+<Question title="Are you planning to remove the Bukkit events and move to ECS events?" askedBy="Community member" timestamp="53:50">
+  <Answer person="zeroerrors">
+    Probably not everything, the way they have been approached is that those events are out of the world (and async), where as the stuff that is in ECS are in the world. So they are useful in their specific context
+  </Answer>
+</Question>
+
+<Question title="Are there plans to move Vulkan over OpenGL at some point?" askedBy="MelodicAlbuild" timestamp="54:40">
+  <Answer person="zeroerrors">
+    We definitely want to modernize our rendering stack, OpenGL is effectively unsupported. We have a bunch of work to get out of the way to be able to do other things, and one of those is making code changes so that we can look at things like mordernizing the rendering API, so that we can get away from the current limitations that we have. We can just throw things together and try and kind of make it work, but we wanna make sure that we are setting ourself up for the future, so we are looking at ways to make that happen and work on this long-term.
+  </Answer>
+</Question>

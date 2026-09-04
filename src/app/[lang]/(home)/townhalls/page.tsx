@@ -1,6 +1,6 @@
 import TownHallsArchive from "@/components/TownHallsArchive";
-import { townHalls } from "@/lib/townhalls";
 import { getMessages, Messages } from "@/lib/locale";
+import { getTownHallsWithReports } from "@/lib/townhall-reports";
 import { deepMerge } from "@/lib/utils";
 import type { Metadata } from "next";
 
@@ -18,6 +18,7 @@ export default async function Page({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
+  const townHalls = await getTownHallsWithReports(lang);
   const baseMessages = getMessages("en");
   const messages =
     lang === "en"

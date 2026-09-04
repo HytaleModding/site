@@ -1,0 +1,152 @@
+---
+title: "July 30, 2026"
+description: "This document is a summary of the Town Hall event hosted by HytaleModding & Kaupenjoe on 30th July 2026."
+date: "2026-07-30"
+editedForClarity: true
+published: true
+---
+
+# Pre-Release updates
+We combed through the patch notes for this week's pre release and compiled a list of the most important changes:
+- **Thrown poop no longer does damage** (devastating, I know)
+- Plugins can drop a ghost of any prefab into the world with the new `PersistentPrefabPreview` API and reveal it from the bottom up one layer at a time, handy for guided or automatic building.
+- Dedicated servers now recover on their own when the main world crashes. Before, a crash could leave the server unjoinable and kick everyone until an operator reloaded the world or restarted the process.
+
+# Shard
+
+Shard is the community-built, from-scratch reimplementation of the Hytale Server in C#. 
+
+Shard's source is shared publicly under the [Shard Shared Source License Agreement](https://shard.hytalemodding.dev/license). Get access by completing the flow at https://accounts.hytalemodding.dev/shard-shared-source
+
+![Shard - Why are we doing this?](/assets/townhalls/2026-07-30/shard-why-are-we-doing-this.png)
+![Shard - Simon's Message](/assets/townhalls/2026-07-30/shard-simon-message.png)
+
+We've published two blogs regarding Shard on the HytaleModding Website:
+- [DEVLOG #1: INTRODUCING SHARD](https://hytalemodding.dev/news/2026/07/introducing-shard)
+- [DEVLOG #2: MODDING IN SHARD](https://hytalemodding.dev/news/2026/07/modding-in-shard)
+
+We’re working on Shard daily, and are updating the patch notes in a blog post, sorted by changes per day. You can visit it by clicking here: https://hytalemodding.dev/news/2026/07/shard-patch-notes-2026 
+
+# Cubic Chunks
+Up until this point, Hytale's worlds have been generated and loaded in columns that reach from the bottom to the top of the world.
+Recently, the Hytale Team been working on renovating the engine to support a fully 3D format that instead loads the world in cubic chunks around players.
+
+The first iteration of Cubic Chunks is already available to look at in the pre-release patchline. 
+
+<div
+  style={{
+    position: "relative",
+    width: "100%",
+    aspectRatio: "16 / 9",
+    margin: "2rem 0",
+    overflow: "hidden",
+    borderRadius: "0.75rem",
+  }}
+>
+  <iframe
+    src="https://www.youtube.com/embed/k7Ia7YhD7Ro"
+    title="Cubic Chunks in Hytale"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+    style={{
+      position: "absolute",
+      inset: 0,
+      width: "100%",
+      height: "100%",
+      border: 0,
+    }}
+  />
+</div>
+
+# Third-Party Developer Apps
+Hytale has begun rolling out Third-Party Developer Apps, allowing developers to add “Login with Hytale” like features, and access account data. 
+
+HytaleModding was the first provider to get closed source access to test it out. It was rolled out to the public 4 days later.
+
+# First Look at Hytale’s Chapter 1 & More
+Hytale released a teaser for Hytale’s Chapter 1 on 17th July, 2026. Let’s break down all the modder-related information!
+
+## Transparency
+“The Hytale Engine is adding support for real transparency! This means that stained glass and window blocks will now be possible. NPCs & Entities can also now have transparent parts”
+
+https://hytale.com/news/2026/7/first-look-chapter-1-and-more#chapter-1-transparency 
+
+## Player Physics
+Avatars can now stand on entities that move and rotate, stay anchored to them when they move, and carry momentum when jumping off.
+
+<div
+  style={{
+    position: "relative",
+    width: "100%",
+    aspectRatio: "16 / 9",
+    margin: "2rem 0",
+    overflow: "hidden",
+    borderRadius: "0.75rem",
+  }}
+>
+  <iframe
+    src="https://www.youtube.com/embed/mJ7meg0tQsk"
+    title="Cubic Chunks in Hytale"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+    style={{
+      position: "absolute",
+      inset: 0,
+      width: "100%",
+      height: "100%",
+      border: 0,
+    }}
+  />
+</div>
+
+## Mod Browser
+
+Here's a first look at the in-game Mod Browser! It's quite simple: you can browse, install, and update mods directly from the Mods tab in Hytale. All of this works without ever leaving the game!
+
+![Mod Browser 1](/assets/townhalls/2026-07-30/mod-browser-1.png)
+![Mod Browser 2](/assets/townhalls/2026-07-30/mod-browser-2.png)
+
+## Machinima Rework
+Machinima is the Hytale tool that enables players to create in-game animations. The Team have been hard at work rewriting and expanding it for new capabilities!
+
+<div
+  style={{
+    position: "relative",
+    width: "100%",
+    aspectRatio: "16 / 9",
+    margin: "2rem 0",
+    overflow: "hidden",
+    borderRadius: "0.75rem",
+  }}
+>
+  <iframe
+    src="https://www.youtube.com/embed/XdftKOzpJ8w"
+    title="Cubic Chunks in Hytale"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+    style={{
+      position: "absolute",
+      inset: 0,
+      width: "100%",
+      height: "100%",
+      border: 0,
+    }}
+  />
+</div>
+
+# Hytale’s $20,000 Bug Bounty
+“A security researcher privately reported a flaw in the way the client handled image files (PNGs) that a server sends to your game. On an affected client, a malicious or compromised server could send a specially crafted image that the client mishandled while loading it, and in the worst case use it to run code on the player's computer. ” - Hytale Team
+
+“It only affected people who connected to a server set up to abuse it, after a thorough investigation we have found no evidence it was ever used against players. The fix for this issue was shipped the same day it was reported.”
+
+# Hytale’s Feature Bounty Program
+**⚠️ THIS IS NOT A OFFICIAL COMMITMENT OR ANNOUNCEMENT BY HYPIXEL STUDIOS ⚠️**
+
+Simon announced a possible brainstorm for the Feature Bounty Program, where the Hytale Team would pay modders to implement features that they want to see in the game.
+![Feature Bounty Program](/assets/townhalls/2026-07-30/feature-bounty-program.png)

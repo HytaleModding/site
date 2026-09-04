@@ -7,6 +7,7 @@ import { OfficialDocumentationNotice } from "@/components/mdx/official-documenta
 import * as TabsComponents from "fumadocs-ui/components/tabs";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { Answer } from "@/components/mdx/answer";
+import { TownHallQuestion } from "@/components/mdx/townhall-question";
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
@@ -19,6 +20,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     Card,
     Cards,
     Answer,
+    Question: TownHallQuestion,
     ...components,
   };
 }

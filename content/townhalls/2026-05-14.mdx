@@ -1,0 +1,141 @@
+---
+title: "May 14, 2026"
+description: "This document is a summary of the Town Hall event hosted by HytaleModding & Kaupenjoe on 14th May 2026."
+date: "2026-05-14"
+editedForClarity: true
+published: true
+---
+
+## Community Q&A
+
+<Question   title="Thoughts on the current userbase of Hytale?" askedBy="haro0">
+  <Answer person="kaupenjoe">
+    With the hype slightly dying down, which I would say is absolutely fine. We right now are at the stage where it only has the diehard people, so at the very beginning, it was super easy to think that “This might be an opportunity for me to make a lot of money” because there was a ton of talk about modding and servers. But I do think that people jumping in with that mentality, it’s not a smart choice. 
+  </Answer>
+
+  <Answer person="neil">
+    It’s going to grow pretty quickly after the chapters release, and the entire ecosystem develops to what they want it to be. When the first chapter releases, many people are going to hop back into the game to try it out, and then when they finish the chapter, they would be easily able to move onto mods. 
+  </Answer>
+</Question>
+
+<Question title="Are there any plans to improve Asset Loading or overriding other assets?" askedBy="riprod">
+  <Answer person="kaupenjoe">
+    The note I have on that is, as they are sort of almost every major system, they’re also reworking the asset system, and I hope that something like that would come in there, but that’s as much detail as I have on that one.  On overriding assets, it works to some degree, but only with very specific things.  
+  </Answer>
+
+  <Answer person="zeroerrors">
+    So basically the way that it works is that when you have a parent field that is set to “super”, it will automatically have the parent object of that asset use whatever is already loaded in the assets. So, for example if you have multiple packs and they load in a specific order, so you have the base game with a certain item, and you have your pack that gets loaded later, and it has the parent set to super, the pre-existing one that was loaded by the base-game will be the object that is the parent, and the child one when it loads will use that to do inheritance, and what happens is as it goes through and loads the fields in the CODEC, if the field is added with the inherited method, they have a 3rd argument that allows it to take a value from the parent object and add it to the current one. That’s how the parenting system works.
+  </Answer>
+</Question>
+
+<Question title="The Asset Node Editor appears to be a local standalone tool, is there any possibility of centralizing tools more instead of having them exist only as a standalone application?" askedBy="shark.studio">
+  <Answer person="neil">
+    The Asset Node Editor is indeed a standalone tool, but they’re working to integrate all of that directly into the same set. There’s also a NPC Editor, they’re also integrating that into the Asset Node Editor at one point. It will just take time, but it will be all in one.
+  </Answer>
+
+  <Answer person="zeroerrors">
+    I’ve seen some previews of some theming, from what I remember the Asset Editor is one of the first things we’ve been testing out Noesis with.
+  </Answer>
+</Question>
+
+<Question title="When will we get Player Input, or the ability to read Player Input Directly?" askedBy="alechilles">
+  <Answer person="neil">
+    The Asset Node Editor is indeed a standalone tool, but they’re working to integrate all of that directly into the same set. There’s also a NPC Editor, they’re also integrating that into the Asset Node Editor at one point. It will just take time, but it will be all in one.
+  </Answer>
+
+  <Answer person="zeroerrors">
+    I’ve seen some previews of some theming, from what I remember the Asset Editor is one of the first things we’ve been testing out Noesis with.
+  </Answer>
+</Question>
+
+<Question title="Will ItemComponents - or a similar system - be added to add additional metadata to items via the asset editors / jsons?" askedBy="riprod" >
+  <Answer person="kaupenjoe">
+    I had this coming aswell, like the item components or item stack components basically being able to hold metadata for items. 
+  </Answer>
+
+  <Answer person="zeroerrors">
+    We briefly talked about this at one point. We definitely want to make some improvements there, there’s just sort of generic blob of metadata on Items / ItemStacks, we’ve talked about things internally atleast about something more structured and easier to work with, but I’m not aware of things happening right now, there’s some ideas and thoughts and it is on the backlog. We’re also thinking about expanding tool tips, making them more dynamic. 
+  </Answer>
+</Question>
+
+<Question title="The current state of modding, is it worth to learn it? I have not seen any YouTube tutorials recently." askedBy="sirjohn85">
+  <Answer person="neil">
+    Regarding the YouTube tutorials, the right thing now is that the server code changes so quickly that it’s not feasible for us to make tutorials right now. But I do plan on making some regarding server plugin programming. The three videos that we already have out, the code has changed enough that we could consider them outdated.
+  </Answer>
+
+  <Answer person="kaupenjoe">
+    I basically would second exactly that. There are so many changes and suggestions, and with many of those things changing, it does make sense to wait for slightly more stable versions. Anything that can be done right now is super high-level, and I don’t know how useful that is, because specifically with any sort of tutorial, it makes sense to go well into detail. I also agree that I’ll definitely be looking into WGV2 and the Asset Editor. Multiple explanations are always super useful, because HytaleModding and I could explain the same topic in very different ways, and some people may understand mine better, while others may understand HytaleModding’s better.
+  </Answer>
+</Question>
+
+<Question title="Are there any key features you can tell us that will be coming with Noesis?" askedBy="scarforges">
+  <Answer person="zeroerrors">
+    One of the main things we’re looking at is being able to replace a lot more things in the UI. There are certain things that are very hard-coded at the moment, that servers are not able to control, and we’d like to expand that so that you’re able to make a lot more use of the inventory, etc.
+  </Answer>
+</Question>
+
+<Question title="Are you guys looking to implement World Space UI into the game?" askedBy="itsneil">
+  <Answer person="zeroerrors">
+    That would be nice, but I don’t think there are currently plans for that. But we have to take the first step first, which is getting Noesis into the game. I’d like to see that in the game at one point for sure.
+  </Answer>
+</Question>
+
+<Question title="Client prediction / client-side logic" askedBy="jakekill871">
+  <Answer person="zeroerrors">
+    We want to do visual scripting, as Slikey has also pointed out before, with node-based scripting. That kind of thing could potentially be run on the client in certain scenarios for things like client prediction. Those are more constrained so we can make sure it’s not doing anything nasty and that it uses the APIs correctly. There’s definitely room for that to exist, and we definitely want to look in that direction, but we need to get some more things into the game before we do that.
+  </Answer>
+</Question>
+
+<Question title="With the implementation of the new 3D previews of prefabs in the UI, is it already possible, or planned, to make custom previews and support animations / interactions?" askedBy="edilan">
+  <Answer person="zeroerrors">
+    It depends on the scope we’re talking about. If you’re talking about just displaying a block that already exists, that’s potentially something that could happen relatively easily. For other things, where we have custom meshes, we haven’t talked much about that, so it would be a discussion to have later.
+  </Answer>
+</Question>
+
+<Question title="Are there plans to expand on the Dynamic Lighting capabilities or add new types of dynamic lighting? A spotlight or flashlight for reference?" askedBy="popshotgames">
+  <Answer person="zeroerrors">
+    There is some work happening in the rendering space. As I’ve said, there is a ton of backlog to get through, but we are making our way through by making internal changes to the engine, so hopefully we can make improvements like that in the future. I’m not aware of any plans right at this moment to make any changes.
+  </Answer>
+</Question>
+
+<Question title="Can Zero talk about the movement system and the changes that happened in the pre-release?" askedBy="scarforges">
+  <Answer person="zeroerrors">
+    Basically, there are some changes happening there to clean up some of that logic. The plan is to make it more extensible, and the long-term plan is to have more types of movement and better support for things like mounts.
+  </Answer>
+</Question>
+
+<Question title="What can the community do to help in the future? If there’s just feedback, or test things as players/modders, or anything to help you guys get more work done?" askedBy="mkoutlaw87">
+  <Answer person="zeroerrors">
+    Just enjoy playing the game and making cool things. When possible, collect feedback—for example, on the suggestions tab, where we have votes so we know what’s in demand. Anytime we can see that something has a need and a reason behind it, we can look at that, see how it fits into what we are planning, and prioritize it if we see that it’s something people really want.
+  </Answer>
+</Question>
+
+<Question title="Are there any plans for an overhaul of the pathfinding system for NPCs?" askedBy="lordimass">
+  <Answer person="zeroerrors">
+    I’m not sure, but if you have any more information on where we can make changes, feel free to pass that along.
+  </Answer>
+</Question>
+
+<Question title="What kind of testing tools or libraries are currently used in the development of Hytale?" askedBy="haro0">
+  <Answer person="zeroerrors">
+    A lot of the stuff we have is in-house. At the base level, it’s just C# and Java. We have some tools that we built for automated testing, and we do have the usual testing frameworks as well. I mentioned in the Discord at one point that we also have a build tool that helps build the game. That has a test framework built into it that boots up the client and a server and tests some scenarios to make sure things are the way they are supposed to be. It’s pretty limited right now, but we want to make sure that when we pick up problems, we can regression test and avoid them coming up again in the future.
+  </Answer>
+</Question>
+
+<Question title="The Instances system currently is not the best. Do you think there would be improvements that you want to do to that? Follow-up to that, will there ever be a feature where you can add multiple entry and exit points to Instances?" askedBy="quentin_qptech">
+  <Answer person="zeroerrors">
+    There are multiple levels here. At the base level, you have the server itself, which supports multiple worlds. On top of that, you have instances, which allow you to have an asset that defines a world with either a savegame, a pre-made world, or a configuration for world generation. On top of that, there are the actual instances in the game, which you see with the portals. It depends on what level you’re talking about. On the gameplay side, there will always be iteration to make sure the game is fun and enjoyable, but on the lower-level systems, if there is feedback on how instances themselves or worlds within the server actually function, we would love to hear it.
+  </Answer>
+</Question>
+
+<Question title="Is it possible or planned to be able to add new phobia modes?" askedBy="edilan">
+  <Answer person="zeroerrors">
+    Potentially, I’m not sure at the moment. I believe there were a handful of things done there for very specific scenarios, but I can ask and see if there are any thoughts there. If you have anything specific you’re thinking about, a lot of the problems with phobia-type systems are that there are very specific scenarios of things you need to override or change. Until we have some generic system that can do that a lot better, it’s harder to do.
+  </Answer>
+</Question>
+
+<Question title="Are there any plans to allow animations to use real-time data?" askedBy="thetabork">
+  <Answer person="zeroerrors">
+    At the moment, there is not much happening on that side of things. There are plans for improvements when it comes to having data-driven animations, such as gears. We’re not sure exactly how that’ll work, and I’m not sure exactly if that’ll be directly usable on entities, but that’s definitely something we want to improve.
+  </Answer>
+</Question>

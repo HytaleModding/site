@@ -1,6 +1,6 @@
 import { createCompiler } from "@fumadocs/mdx-remote";
 
-export const blogCompiler = createCompiler({
+export const contentCompiler = createCompiler({
   // GFM (tables, strikethrough, task lists, bold/italic edge cases) is included by default
   rehypeCodeOptions: {
     themes: {
@@ -10,3 +10,5 @@ export const blogCompiler = createCompiler({
     // lazy: true // enable if you have a huge/unbounded set of languages and want on-demand loading
   },
 });
+
+export const blogCompiler = contentCompiler;

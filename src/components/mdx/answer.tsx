@@ -1,9 +1,9 @@
 import React from "react";
-import { Separator } from "../ui/separator";
-import { cn } from "@/lib/utils";
+import { getPerson, getPersonTitle } from "@/lib/people";
 
 export function Answer({
   profile,
+  person,
   children,
 }: {
   profile?: {
@@ -11,32 +11,48 @@ export function Answer({
     avatarUrl: string;
     title: string;
   };
+  person?: string;
   children: React.ReactNode;
 }) {
+  const personProfile = person ? getPerson(person) : undefined;
+  const resolvedProfile =
+    profile ??
+    (personProfile
+      ? {
+          name: personProfile.name,
+          avatarUrl: personProfile.avatarUrl,
+          title: getPersonTitle(personProfile),
+        }
+      : undefined);
+
   return (
-    <div className="text-muted-foreground my-4 flex flex-col gap-4">
-      <div className="bg-card flex flex-col gap-2 rounded-r-lg border-l px-4">
-        {profile && (
+    <div className="not-prose text-muted-foreground my-4 flex flex-col gap-4">
+      <div className="bg-card flex flex-col gap-3 rounded-xl border px-5 py-5 shadow-sm">
+        {resolvedProfile && (
           <>
-            <div className="mt-4 flex shrink-0 items-center gap-4">
+            <div className="flex shrink-0 items-center gap-3">
               {/* Q&A profile images are arbitrary external URLs supplied by content. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={profile.avatarUrl}
-                alt={profile.name}
-                className="my-0! size-12 rounded-full object-cover"
+                src={resolvedProfile.avatarUrl}
+                alt={resolvedProfile.name}
+                className="my-0! size-10 rounded-full object-cover ring-1 ring-black/10 dark:ring-white/10"
               />
-              <div className="flex flex-col gap-1 text-start text-sm">
+              <div className="flex flex-col gap-0.5 text-start text-sm">
                 <p className="text-foreground my-0! font-medium">
-                  {profile.name}
+                  {resolvedProfile.name}
                 </p>
-                <p className="my-0!">{profile.title}</p>
+                {resolvedProfile.title && (
+                  <p className="my-0! text-xs">{resolvedProfile.title}</p>
+                )}
               </div>
             </div>
           </>
         )}
 
-        <div className="my-0!">{children}</div>
+        <div className="prose prose-no-margin text-foreground/85 max-w-none leading-7">
+          {children}
+        </div>
       </div>
     </div>
   );

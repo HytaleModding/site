@@ -12,6 +12,14 @@ function isNewsRoute(pathname: string) {
   return pathname === "/news" || pathname.startsWith("/news/");
 }
 
+function isUnprefixedTownHallRoute(pathname: string) {
+  return pathname === "/townhalls" || pathname.startsWith("/townhalls/");
+}
+
+function isEnglishTownHallRoute(pathname: string) {
+  return pathname === "/en/townhalls" || pathname.startsWith("/en/townhalls/");
+}
+
 export default function middleware(
   request: NextRequest,
   event: NextFetchEvent,
@@ -29,6 +37,20 @@ export default function middleware(
 
   if (isNewsRoute(request.nextUrl.pathname)) {
     return NextResponse.next();
+  }
+
+  if (isEnglishTownHallRoute(request.nextUrl.pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = request.nextUrl.pathname.slice(3);
+
+    return NextResponse.redirect(url);
+  }
+
+  if (isUnprefixedTownHallRoute(request.nextUrl.pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/en${request.nextUrl.pathname}`;
+
+    return NextResponse.rewrite(url);
   }
 
   return handleI18n(request, event);
