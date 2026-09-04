@@ -3,7 +3,7 @@
 import { TextLink } from "@/components/text-link";
 import { DiscordButton, useDiscordStats } from "@/components/discord-button";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import FeranImage from "@/../public/assets/landing/hero/feran.png";
 import BurgerImage from "@/../public/assets/landing/hero/burger.png";
@@ -87,6 +87,8 @@ const PHOTOS: SidePhoto[] = [
     size: 340,
   },
 ];
+
+const subscribeToClientEnvironment = () => () => {};
 
 function Polaroid({
   photo,
@@ -174,9 +176,11 @@ function PhotoLightbox({
   onClose: () => void;
 }) {
   const [visible, setVisible] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
+  const mounted = useSyncExternalStore(
+    subscribeToClientEnvironment,
+    () => true,
+    () => false,
+  );
 
   useEffect(() => {
     if (src) {
@@ -190,7 +194,6 @@ function PhotoLightbox({
         document.body.style.overflow = "";
       };
     }
-    setVisible(false);
   }, [src, onClose]);
 
   if (!mounted || !src) return null;
@@ -241,7 +244,6 @@ function PhotoLightbox({
 
 export function CommunitySection() {
   const [zoomedSrc, setZoomedSrc] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
   const { stats } = useDiscordStats(true);
   const messages = useMessages();
   const t = messages.home.community;
@@ -252,10 +254,6 @@ export function CommunitySection() {
   const discordMemberCountLabel = stats
     ? `${clampedDiscordMemberCount.toLocaleString()}+`
     : "—";
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <div className="relative my-8 min-h-fit overflow-x-clip xl:min-h-205">
@@ -285,7 +283,11 @@ export function CommunitySection() {
         />
       </div>
 
-      <PhotoLightbox src={zoomedSrc} onClose={() => setZoomedSrc(null)} />
+      <PhotoLightbox
+        key={zoomedSrc ?? "closed"}
+        src={zoomedSrc}
+        onClose={() => setZoomedSrc(null)}
+      />
       <FadeIn className="relative z-5 mx-auto flex h-full w-full max-w-3xl items-center justify-center gap-12 px-4 pt-16 not-lg:flex-col xl:pt-35">
         <div className="space-y-8 text-center">
           <h2 className="font-display text-3xl font-semibold">{t.title}</h2>

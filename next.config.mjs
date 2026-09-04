@@ -5,6 +5,9 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
+  turbopack: {
+    root: process.cwd(),
+  },
   images: {
     remotePatterns: [
       {
@@ -88,9 +91,6 @@ const config = {
         permanent: true,
       },
     ];
-  },
-  experimental: {
-    viewTransition: true,
   },
   cacheComponents: false, // TODO: Improve caching strategy
 };

@@ -5,7 +5,9 @@ import type { ComponentProps } from "react";
 import Zoom, { type UncontrolledProps } from "react-medium-image-zoom";
 import "../styles/image-zoom.css";
 
-export type ImageZoomProps = ImageProps & {
+export type ImageZoomProps = Omit<ImageProps, "src"> & {
+  src?: ComponentProps<"img">["src"] | ImageProps["src"];
+
   /**
    * Image props when zoom in
    */
@@ -17,8 +19,14 @@ export type ImageZoomProps = ImageProps & {
   rmiz?: UncontrolledProps;
 };
 
-function getImageSrc(src: ImageProps["src"]): string {
+function isBlobSource(src: ImageZoomProps["src"]): src is Blob {
+  return typeof Blob !== "undefined" && src instanceof Blob;
+}
+
+function getImageSrc(src: ImageZoomProps["src"]): ComponentProps<"img">["src"] {
   if (typeof src === "string") return src;
+
+  if (isBlobSource(src)) return src;
 
   if (typeof src === "object") {
     // Next.js
@@ -36,25 +44,38 @@ export function ImageZoom({
   rmiz,
   ...props
 }: ImageZoomProps) {
+  const { src, ...imageProps } = props;
+
   return (
     <Zoom
       zoomMargin={20}
       wrapElement="span"
       {...rmiz}
       zoomImg={{
-        src: getImageSrc(props.src),
+        src: getImageSrc(src),
         sizes: undefined,
         ...zoomInProps,
       }}
     >
       {children ?? (
-        // declared in mdx files, should be in props
-        // eslint-disable-next-line jsx-a11y/alt-text
-        <Image
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 900px"
-          className="rounded-lg border"
-          {...props}
-        />
+        isBlobSource(src) ? (
+          // Blob URLs cannot be passed to the framework image optimizer.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            className="rounded-lg border"
+            {...imageProps}
+            src={src}
+            alt={imageProps.alt ?? ""}
+          />
+        ) : (
+          // eslint-disable-next-line jsx-a11y/alt-text
+          <Image
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 900px"
+            className="rounded-lg border"
+            {...imageProps}
+            src={src}
+          />
+        )
       )}
     </Zoom>
   );

@@ -32,10 +32,6 @@ export function TimeCountdown({
   };
   options?: Omit<React.ComponentProps<typeof Counter>, "value" | "places">;
 }) {
-  if (targetDate.getTime() < Date.now()) {
-    targetDate = new Date(Date.now());
-  }
-
   const [days, setDays] = useState(() => getTimeLeft(targetDate).days);
   const [hours, setHours] = useState(() => getTimeLeft(targetDate).hours);
   const [minutes, setMinutes] = useState(() => getTimeLeft(targetDate).minutes);

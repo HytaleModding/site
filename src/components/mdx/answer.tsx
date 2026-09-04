@@ -19,6 +19,8 @@ export function Answer({
         {profile && (
           <>
             <div className="mt-4 flex shrink-0 items-center gap-4">
+              {/* Q&A profile images are arbitrary external URLs supplied by content. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={profile.avatarUrl}
                 alt={profile.name}

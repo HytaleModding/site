@@ -19,9 +19,7 @@ const translations = Object.fromEntries(
   }),
 );
 
-const { provider } = defineI18nUI(i18n, {
-  translations,
-});
+const { provider } = defineI18nUI(i18n, translations);
 
 export default async function RootLayout({
   children,

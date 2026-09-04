@@ -19,11 +19,7 @@ export function useDiscordStats(showMemberCount = false) {
   const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
 
   useEffect(() => {
-    if (!showMemberCount) {
-      setState("loading");
-      setStats(null);
-      return;
-    }
+    if (!showMemberCount) return;
 
     let active = true;
 
@@ -44,7 +40,10 @@ export function useDiscordStats(showMemberCount = false) {
     };
   }, [showMemberCount]);
 
-  return { stats, state };
+  return {
+    stats: showMemberCount ? stats : null,
+    state: showMemberCount ? state : ("loading" as const),
+  };
 }
 
 export function DiscordButton({ showMemberCount = false }: DiscordButtonProps) {

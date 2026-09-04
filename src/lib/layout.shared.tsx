@@ -15,7 +15,6 @@ export function baseOptions(
   const localeUrl = locale === i18n.defaultLanguage ? "/" : `/${locale}/`;
 
   let options: BaseLayoutProps = {
-    i18n,
     nav: {
       title: (
         <div className="flex items-center gap-2 lg:px-2">

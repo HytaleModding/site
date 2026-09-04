@@ -12,11 +12,9 @@ import { Footer } from "@/app/[lang]/(home)/footer";
 import "../styles/blogs.css";
 
 const { provider } = defineI18nUI(i18n, {
-  translations: {
-    en: {
-      displayName: englishTranslations.displayName ?? "en",
-      search: englishTranslations.nav.search,
-    },
+  en: {
+    displayName: englishTranslations.displayName ?? "en",
+    search: englishTranslations.nav.search,
   },
 });
 

@@ -217,12 +217,7 @@ function getBlogPath(params: BlogRouteParams) {
 }
 
 function getBlogFilePath(params: BlogRouteParams, extension: ".md" | ".mdx") {
-  return join(
-    blogsPath,
-    params.year,
-    params.month,
-    `${params.slug}${extension}`,
-  );
+  return join(params.year, params.month, `${params.slug}${extension}`);
 }
 
 async function collectMarkdownFiles(directory: string): Promise<string[]> {
@@ -369,13 +364,16 @@ export async function getBlog(params: BlogRouteParams) {
   const files = [
     getBlogFilePath(params, ".mdx"),
     getBlogFilePath(params, ".md"),
-    join(blogsPath, `${params.year}-${params.month}-${params.slug}.mdx`),
-    join(blogsPath, `${params.year}-${params.month}-${params.slug}.md`),
+    `${params.year}-${params.month}-${params.slug}.mdx`,
+    `${params.year}-${params.month}-${params.slug}.md`,
   ];
 
   for (const file of files) {
     try {
-      const source = await readFile(file, "utf-8");
+      const source = await readFile(
+        join(process.cwd(), "content", "blogs", file),
+        "utf-8",
+      );
       const { data, content } = matter(source);
 
       return {
