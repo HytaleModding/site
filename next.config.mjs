@@ -43,11 +43,6 @@ const config = {
   async redirects() {
     return [
       {
-        source: "/docs/:path*",
-        destination: "/en/docs/:path*",
-        permanent: false,
-      },
-      {
         source:
           "/:lang/docs/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts-1",
         destination:
@@ -66,23 +61,6 @@ const config = {
           "/:lang/docs/official-documentation/worldgen/worldgen-tutorial/world-generation-concepts",
         destination:
           "/:lang/docs/official-documentation/worldgen/worldgen-tutorial/density-generation-concepts",
-        permanent: true,
-      },
-      {
-        source: "/docs",
-        destination: "/en/docs",
-        permanent: false,
-      },
-      {
-        source: "/drakon-guide/:path*",
-        destination:
-          "https://docs.google.com/document/d/10BTtTlM0KlK18l-hLkU6-eRiWUTFljcvnaqF593cX8E/edit?tab=t.0",
-        permanent: true,
-      },
-      {
-        source: "/drakon-doc/:path*",
-        destination:
-          "https://docs.google.com/document/d/10BTtTlM0KlK18l-hLkU6-eRiWUTFljcvnaqF593cX8E/edit?tab=t.0",
         permanent: true,
       },
       {
