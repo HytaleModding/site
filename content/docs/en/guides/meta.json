@@ -6,9 +6,7 @@
     "plugin",
     "ecs",
     "creative-tools",
-    "...",
-    "---Gameplay Systems---",
-    "prefabs.mdx"
+    "..."
   ],
   "icon": "GraduationCap"
 }
