@@ -1,21 +1,9 @@
 <p align="center"><a href="https://hytalemodding.dev"><img src="https://cdn.internal.hytalemodding.dev/assets/HytaleLogo_DiscordBannerV6.png" width="600"></a></p>
 
-# Hytale Modding Documentation
+# About HytaleModding 
+HytaleModding is the largest community of modders for Hytale. We write docs, guides, and tools for modders of every skill level, and run community events like ModJams, town halls, and more that bring modders together and celebrate what they build.
 
-**An unofficial community-maintained documentation site for Hytale modding.**
-
-This project provides comprehensive guides, documentation, and resources for modding [Hytale](https://hytale.com/) - a voxel-based sandbox RPG game built from the ground up with modding and user-generated content at its core.
-
-## About Hytale Modding
-
-Hytale is designed with a server-first modding approach, allowing anyone to create and share mods without requiring players to download external client modifications. Whether you're interested in:
-
-- **Server Plugins** - Java-based programming for deep gameplay modifications
-- **Data Assets** - JSON-driven content like blocks, items, NPCs, and world generation
-- **Art Assets** - Custom models, textures, and sounds using Blockbench
-- **Visual Scripting** - Node-based logic for designers and non-programmers
-
-This documentation aims to help you get started and master Hytale modding.
+Join us on [Discord](https://discord.gg/hytalemodding)
 
 ## Contributing
 
