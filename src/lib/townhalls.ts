@@ -61,4 +61,9 @@ export const upcomingTownHall:
       note?: string;
       speakers: Speaker[];
     }
-  | undefined = undefined;
+  | undefined = {
+    date: "2026-09-25T22:30:00+05:30",
+    videoId: "_gdIAUp2lS0",
+    discordHref: "https://discord.gg/hytalemodding",
+    speakers: [people.neil, people.slikey, people.kaupenjoe],
+  };

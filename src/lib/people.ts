@@ -39,14 +39,14 @@ export const people = {
     role: "Technical Director",
     company: "Hypixel Studios",
     avatarUrl:
-      "https://cdn.discordapp.com/avatars/244410985400500224/6229d9024ffdebf827cbf2d6fea774e2.webp",
+      "https://cdn.internal.hytalemodding.dev/avatars/slikey.webp",
   },
   devslashnull: {
     name: "DevSlashNull",
     role: "Platform Lead",
     company: "Hypixel Studios",
     avatarUrl:
-      "https://cdn.discordapp.com/avatars/124207751424507904/17d0949b68b68ec6e0d1315bd2fbcfeb.webp",
+      "https://cdn.internal.hytalemodding.dev/avatars/devslashnull.webp",
   },
 } satisfies Record<string, PersonProfile>;
 
