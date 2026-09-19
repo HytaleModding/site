@@ -129,7 +129,7 @@ export function ProgramsSection() {
                 variant={"primary"}
                 className="bg-white text-black"
               >
-                <DynamicLink href="/[lang]/grants">
+                <DynamicLink href="https://hytalemodjam.com/submissions?modjam=hm-26.2">
                   View Submissions
                   <ExternalLinkIcon />
                 </DynamicLink>
@@ -240,7 +240,7 @@ export function ProgramsSection() {
                 variant={"primary"}
                 className="bg-white text-black"
               >
-                <DynamicLink href="/[lang]/grants">
+                <DynamicLink href="https://hytalemodjam.com/submissions?modjam=hm-26.1">
                   View Submissions
                   <ExternalLinkIcon />
                 </DynamicLink>
