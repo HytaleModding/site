@@ -48,6 +48,13 @@ export const people = {
     avatarUrl:
       "https://cdn.internal.hytalemodding.dev/avatars/devslashnull.webp",
   },
+  melodicalbuild: {
+    name: "MelodicalBuild",
+    role: "Engine Developer",
+    company: "Hypixel Studios",
+    avatarUrl:
+      "https://cdn.internal.hytalemodding.dev/avatars/melodic.png",
+  }
 } satisfies Record<string, PersonProfile>;
 
 export type PersonId = keyof typeof people;

@@ -1,0 +1,150 @@
+---
+title: "Brainstorming Visual Scripting w/ Slikey"
+description: "This document is a summary of the Town Hall event hosted by HytaleModding on 25th September 2026."
+date: "2026-09-25"
+editedForClarity: true
+published: true
+---
+
+
+This month's Town Hall was about visual scripting. Slikey, Hytale's tech director, joined us to talk through the current ideas and, more importantly, to hear what the community would actually want to use it for.
+
+# Before you read
+Please note that this is a brainstorming session. The team is still working out the details of how this system will work, and they want to hear from the community about what they would like to see. This is not the final design, and the team is open to feedback and suggestions. Nothing is guaranteed from this Town hall, but you will be able to see the idea behind Visual Scripting by reading this report. 
+
+**This is NOT a replacement for Programming, this is a tool for people who do not know how to program, or for people who want to make things quickly without having to write code.**
+
+# Where it all started
+In the very beginning of Hypixel (Minecraft Server), the team started with Adventure Maps (ex. Herobrine's Mansion, 2012 & Herobrine's Return, 2013). These were handcrafted experiences that the team wanted to make easier to build again. A simple puzzle might be as straightforward as pulling a lever to open a door, but the same system should be able to handle much bigger maps and story-driven content.
+
+The main difference from the usual approach is that this is meant to happen inside the world. A builder could decorate a room while somebody else works on its logic, with the whole team seeing the changes as they happen. Slikey compared this to Unreal's Blueprints, except without needing to commit changes to version control or share your screen every time you want somebody to see what you are doing.
+
+This would be more than just an improved version of trigger volumes. Trigger volumes would still have a place, but the goal is a complete logic system for the world: events, conditions, actions, and the connections between them.
+
+# Testing Your Maps
+
+One problem with scripting directly in a map is that testing it can change the map. The idea discussed on stream was to have a separate scripting mode where the world stays untouched, then a play (test) button that makes a temporary copy of the map for testing.
+
+You could trigger the bridge collapse, fight through the puzzle, and try everything out in that copy. When you are done, the test world would be thrown away and you would return to the original map. There are still some details to work out here, especially making sure scripts do not accidentally run while you are editing.
+
+<Callout type="info" title="HytaleModding's Explanatory Note">
+You can think of this system like the prefab editor, you are teleported to a separate world, and when you are finished with your work, you are returned to the original world. The temporary world is a copy of the original, so you can test your scripts without affecting the original world.
+</Callout>
+
+# Keeping It Simple
+
+The system is supposed to be usable without understanding Hytale's entity-component architecture or much programming terminology. Instead of manually putting together every component needed to create an NPC, the scripting tools could offer a simple node such as “Spawn NPC”.
+
+That kind of convenience may not be the fastest possible way to do everything, and that is fine. Visual scripting is intended to be readable and approachable. If something needs to be heavily optimized, it can be handled by a mod or by a more specialized implementation instead.
+
+The same idea applies to the node connections. The basic flow would run from one node to the next in order, so it is easy to follow what happens when an event fires. More complicated pieces could be saved as subgraphs with their own inputs and outputs, giving creators reusable custom functions without having to copy and paste a large section of nodes every time.
+
+# Making Larger Scripts Manageable
+
+We agree that large graphs could become messy quickly. We have thought of multiple possible solutions to this, including the use of colors, groups, layers, and subgraphs. These tools will help creators organize their scripts and keep the logic for different rooms or puzzles separate. 
+
+Debugging will be important too. Eventually, the plan is to show which nodes have run, what data is moving through the graph, and where a script stopped working. Breakpoints and a visual debugger were mentioned as useful additions, so designers do not need to keep a Java debugger open just to find out why a door did not open.
+
+<Callout type="info" title="Reminder from HytaleModding">
+As a reminder, this is a brainstorming session. The team is still working out the details of how this system will work, and they want to hear from the community about what they would like to see. This is not the final design, and the team is open to feedback and suggestions. Nothing is guaranteed.
+</Callout>
+
+# What Comes First?
+
+The first phase is expected to focus on server-side scripting and adventure maps. Client-side scripting is a much later possibility, with examples including smoother inventory interactions and limited visual effects without changing the game client itself.
+
+Visual scripting is not intended to replace every existing system immediately. Interactions could eventually be a good fit for node graphs, but that would depend on the teams responsible for those systems. Audio Visual scripting could trigger high-level audio events, while a dedicated audio system handles things like propagation and occlusion.
+
+The tools are being designed for NoesisUI, Hytale's newer UI system. Slikey said the technical design was still being finalized, with the first implementation phase expected to begin.
+
+# Q&A
+
+<Question title="Will it be possible to put together components and systems with little hassle, like a highly abstracted workflow?" askedBy="Peter" timestamp="23:26">
+  <Answer person="slikey">
+    In Unreal, you have sort of the same situtation, but there, the visual scripting layer hides this architecture. We plan to add something called a "Simple API", that will provide simple ways to perform tasks, such as spawning an NPC, right now, you'd have to add all the components to it, etc. but the Simple API should be able to do that for you. Generally, it will be for a lot more approachable things, although it does come with a performance penalty, it will be worth it for the ease of use. 
+  </Answer>
+</Question>
+
+<Question title="Will we have a way to check player interactions, such as, checking if the player moved, jumped, looked at something, etc.?" askedBy="Foxy" timestamp="26:30">
+  <Answer person="slikey">
+    Yes, this would be done through events. They do not exist in the context on the world, they exist everywhere. Then you have access to events such as PlayerMoved, etc. (this will be performance expensive, and you'd have to optimize for that), but the Hytale team will not prevent from not using it.
+  </Answer>
+</Question>
+
+<Question title="Will this unlock better client prediction or the ability to have interpolation at places we currently cannot?" askedBy="Riprod" timestamp="27:57">
+  <Answer person="slikey">
+    Yes, but not initially. So the whole client side scripting is the very last phase of all of this. First we do adventure maps, and we try to stay as server-side as possible. We will try to come up with a way to run certain visual scripts on the client (in a sandbox). *Please note that this answer may not be word-for-word accurate and is not a guarantee.*
+  </Answer>
+</Question>
+
+<Question title="Is there gonna be libraries importing to visual scripting?" askedBy="bread" timestamp="30:40">
+  <Answer person="slikey">
+    Yes. For example, if you have a mod that simply adds more visual scripting nodes, that's possible. Like a mod that adds compatibility with SQL databases, while it may not be a good idea, it's possible.
+  </Answer>
+</Question>
+
+<Question title="so this is essentially just trigger volumes with better controls" askedBy="oskar" timestamp="31:30">
+  <Answer person="slikey">
+    It's more than that, it's like a whole logic flow, it becomes a part of the whole scripting experience. This is more holistic on the entire simulation of the game, but you can say that this could be an expansion of trigger volumes. There is a possibility that we make most of the adventure content with this.
+  </Answer>
+</Question>
+
+<Question title="Could nodes work on trap doors too?" askedBy="Catzilla" timestamp="34:40">
+  <Answer person="slikey">
+    Yes, basically every block could work with this. Anything that has a block state, or a interaction, will be able to be manipulated through Visual Scripting
+  </Answer>
+</Question>
+
+<Question title="Are there plans to organize the visual scripting in world? Say something like groups, coloring, layers, etc. My worry is the world will get very cluttered with more complex systems" askedBy="Ale" timestamp="35:00">
+  <Answer person="slikey">
+    This is kind of a UX thing that we will have to see how it pans out. I do like the coloring, seems like a very hytale-y thing that we can do, but when it comes to like grouping, like for example taking a bunch of nodes that put them into sub graphs would be much nicer and help a lot with the UX. Layers is also a interesting option where you kind of enable layers (like in Photoshop) where you only see the relevant nodes for the current thing that you are working on. *This is not final or a guaranteed answer*
+  </Answer>
+</Question>
+
+<Question title="I see the trigger volumes still far away from beeing easy to use for none programmers. How realistic is it to hope for that to change in the next year or so ?" askedBy="MKOutlaw" timestamp="36:00">
+  <Answer person="slikey">
+    Triggers volumes went past what they were supposed to be because we needed it and we tossed the UX over the board. Trigger Volumes will eventually just be just volumes, maybe with filters, but generally a lot less feature rich. The goal here is that at the moment there are a lot of dropdowns and it's much more complex than what we are playing for VIsual Scripting, where you can just connect nodes.
+  </Answer>
+</Question>
+
+<Question title="Was this made in Noesis?" askedBy="MelodicSlikeyKaupenjoeNeil97" timestamp="38:38">
+  <Answer person="slikey">
+    So far, we are completely outside of the Noesis space, but when we implement this, yes it will be implemented with Noesis.
+  </Answer>
+</Question>
+
+<Question title="Will visual scripting be a replacement to any existing systems?  I.E. Interactions for combat etc." askedBy="Aumo" timestamp="39:00">
+  <Answer person="slikey">
+    "No, but yes."
+  </Answer>
+
+  <Answer person="slikey">
+    This is not a replacement for any existing systems. This is a new system that will be used for adventure maps and other content. It will not replace interactions or any other existing systems.
+  </Answer>
+</Question>
+
+<Question title="Thoughts on scripting being sophisticated enough to handle dynamic audio propagation like realtime occlusion, layered ambient mixing, and event driven parameters,? Or do you view the visual scripting as a high level trigger system that hands off complexity to an external audio system or dedicated sound editor?" askedBy="Aiden" timestamp="41:26">
+  <Answer person="slikey">
+    Yeah, the visual scripting will be more like a high level trigger system. We are moving away from OpenAL, because things like realtime ambient occulusion and a bunch of other things that you mentioned are not possible. So, our audio engineers will be working on a replacement for the audio system to bring us a lot better audio in the future.
+  </Answer>
+</Question>
+
+<Question title="Will there be a text-based representation of Visual Scripts? It would be really useful if AI could actually read and modify Visual Scripts directly instead of having to understand screenshots of node graphs" askedBy="BoomPixel" timestamp="42:00">
+
+  <Answer person="slikey">
+    "No, but yes."
+  </Answer>
+
+  <Answer person="slikey">
+    The visual scripts by themselves will be stored as an asset (and assets are stored as JSONs in Hytale), so there is a text-based representation, you can build tooling around that, but there will not be a text-based representation in the editor itself. The editor will be visual only.
+  </Answer>
+</Question>
+
+<Question title="Bit of a weird one: will the trigger volume system allow to utilise arbitrary math on anything? Like mapping the Mandelbrot formula on a door opening animation for whatever reason you would what to do that. But just curious about the freedom." askedBy="TwoOneEight">
+  <Answer person="slikey">
+    Doing complex math may not be the best idea due to performance implications, but if you want to, I recommend that you make a node in Java and gives you more control over the numbers and get the values as a result. There will be some basic arithematic in there that you'll need in visual scripting to rotate a vector for example.
+  </Answer>
+</Question>
+
+# Thank you!
+...for an awesome town hall session! We hope you enjoyed it as much as we did. If you have any questions or feedback, please reach out to us on our [Discord](https://discord.gg/hytalemodding) server.

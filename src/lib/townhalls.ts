@@ -13,6 +13,13 @@ export interface TownHall {
 
 export const townHalls: TownHall[] = [
   {
+    id: "2026-09-25",
+    date: "2026-09-25T22:30:00+05:30",
+    videoId: "_gdIAUp2lS0",
+    title: "Brainstorming Visual Scripting w/ Slikey",
+    speakers: [people.neil, people.kaupenjoe, people.slikey],
+  },
+  {
     id: "2026-08-27",
     date: "2026-08-27T22:30:00+05:30",
     videoId: "ei0PuGwKPAo",
@@ -55,15 +62,10 @@ export const townHalls: TownHall[] = [
 
 export const upcomingTownHall:
   | {
-      date: string;
-      videoId?: string;
-      discordHref: string;
-      note?: string;
-      speakers: Speaker[];
-    }
-  | undefined = {
-    date: "2026-09-25T22:30:00+05:30",
-    videoId: "_gdIAUp2lS0",
-    discordHref: "https://discord.gg/hytalemodding",
-    speakers: [people.neil, people.slikey, people.kaupenjoe],
-  };
+    date: string;
+    videoId?: string;
+    discordHref: string;
+    note?: string;
+    speakers: Speaker[];
+  }
+  | undefined = undefined;
