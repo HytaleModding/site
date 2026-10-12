@@ -50,12 +50,14 @@ export function ProgramsSection() {
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Official Docs */}
         <FadeIn
-          className="dark relative overflow-hidden rounded-xl border bg-[#0f1418] bg-cover bg-top p-8"
-          style={{
-            backgroundImage:
-              "url(https://cdn.internal.hytalemodding.dev/assets/landing/content-lower-nowatermark.webp), linear-gradient(#0f1418,#0f1418)",
-          }}
+          delay={0.08}
+          className="relative overflow-hidden rounded-xl border p-8 text-white"
         >
+          <Image src="https://cdn.internal.hytalemodding.dev/assets/chapter-1-challenge/background.jpg" alt="" fill className="-z-20 object-cover" />
+          <div className="absolute inset-0 -z-10 bg-black/40" />
+          {/* <div className="absolute right-0 bottom-0 rounded-tl-xl bg-[#0C46B0] px-4 py-2 text-sm font-medium tracking-wide text-white shadow-lg ring-1 ring-white/10 backdrop-blur-sm">
+            15-22 June
+          </div> */}
           <div className="flex flex-col gap-12">
             <div className="flex h-9 items-center gap-3 sm:h-12 sm:gap-6">
               <Image
@@ -71,20 +73,22 @@ export function ProgramsSection() {
               />
             </div>
             <div className="space-y-4">
-              <h2 className="font-display text-3xl font-semibold tracking-wide text-[#f0c65f]">
-                Hytale&apos;s Official Documentation
+              <h2 className="font-display text-3xl font-semibold text-[#dce8eb]">
+                Gobliterator Challenge: Chapter 1
               </h2>
-              <p className="font-normal text-[#9eb2c0]">
-                We host the official documentation for Hytale, provided by
-                Hypixel Studios. It contains source reference material for
-                modders and guides for modding Hytale.
+              <p className="font-normal opacity-75">
+                First to defeat the Gobliterator boss in Hard Mode with intense restrictions wins $15,000! Funded by Hypixel Studios in collaboration with HytaleModding.
               </p>
             </div>
             <div className="mt-auto flex">
-              <Button asChild variant={"primary"}>
-                <DynamicLink href="/[lang]/docs/">
-                  View Documentation
-                  <ArrowRightIcon />
+              <Button
+                asChild
+                variant={"primary"}
+                className="bg-white text-black"
+              >
+                <DynamicLink href="https://chapter1.hytalemodding.dev">
+                  View Challenge Details
+                  <ExternalLinkIcon />
                 </DynamicLink>
               </Button>
             </div>
@@ -132,6 +136,47 @@ export function ProgramsSection() {
                 <DynamicLink href="https://hytalemodjam.com/submissions?modjam=hm-26.2">
                   View Submissions
                   <ExternalLinkIcon />
+                </DynamicLink>
+              </Button>
+            </div>
+          </div>
+        </FadeIn>
+        <FadeIn
+          className="dark relative overflow-hidden rounded-xl border bg-[#0f1418] bg-cover bg-top p-8"
+          style={{
+            backgroundImage:
+              "url(https://cdn.internal.hytalemodding.dev/assets/landing/content-lower-nowatermark.webp), linear-gradient(#0f1418,#0f1418)",
+          }}
+        >
+          <div className="flex flex-col gap-12">
+            <div className="flex h-9 items-center gap-3 sm:h-12 sm:gap-6">
+              <Image
+                src={HMLogoDark}
+                alt="HytaleModding Logo"
+                className="h-full w-fit"
+              />
+              <XIcon className="size-5 shrink-0 text-white/50 sm:size-6" />
+              <Image
+                src={HytaleLogo}
+                alt="Hytale Logo"
+                className="h-full w-auto scale-180 pl-2"
+              />
+            </div>
+            <div className="space-y-4">
+              <h2 className="font-display text-3xl font-semibold tracking-wide text-[#f0c65f]">
+                Hytale&apos;s Official Documentation
+              </h2>
+              <p className="font-normal text-[#9eb2c0]">
+                We host the official documentation for Hytale, provided by
+                Hypixel Studios. It contains source reference material for
+                modders and guides for modding Hytale.
+              </p>
+            </div>
+            <div className="mt-auto flex">
+              <Button asChild variant={"primary"}>
+                <DynamicLink href="/[lang]/docs/">
+                  View Documentation
+                  <ArrowRightIcon />
                 </DynamicLink>
               </Button>
             </div>
@@ -202,7 +247,7 @@ export function ProgramsSection() {
             />
           </div>
         </FadeIn>
-        <FadeIn
+        {/* <FadeIn
           delay={0.24}
           className="relative overflow-hidden rounded-xl border p-8"
         >
@@ -247,7 +292,7 @@ export function ProgramsSection() {
               </Button>
             </div>
           </div>
-        </FadeIn>
+        </FadeIn> */}
       </div>
     </div>
   );
