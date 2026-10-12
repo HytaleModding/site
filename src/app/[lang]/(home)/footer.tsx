@@ -6,7 +6,7 @@ import { branch, commit } from "@/git-info.json";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import HytaleModdingLogoDark from "@/../public/branding/hytalemodding/HM_DARK.svg";
+import HytaleModdingLogoDark from "@/../public/branding/hytalemodding/HM_CHAPTER1_DARK.svg";
 import HytaleModdingLogoLight from "@/../public/branding/hytalemodding/HM_LIGHT.svg";
 import { cn } from "@/lib/utils";
 
