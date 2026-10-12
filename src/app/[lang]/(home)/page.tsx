@@ -4,7 +4,9 @@ import {
   BookIcon,
   SquarePenIcon,
   ArrowDownCircleIcon,
+  ArrowRightIcon,
   NewspaperIcon,
+  MegaphoneIcon,
 } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { Button } from "@/components/ui/button";
@@ -74,6 +76,19 @@ export default async function HomePage({
           <HeroStickers />
         </div>
         <div className="flex h-full w-full max-w-5xl flex-col items-center justify-around gap-6 space-y-8 text-center">
+          <Link
+            href="https://chapter1.hytalemodding.dev"
+            target="_blank"
+            rel="noreferrer"
+            className="border-primary/40 bg-primary/10 text-primary hover:bg-primary/20 absolute top-16 left-1/2 z-10 inline-flex w-fit max-w-[calc(100%-2rem)] -translate-x-1/2 items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors"
+          >
+            <MegaphoneIcon className="size-4 shrink-0" />
+            <span>
+              Participate in the Gobliterator Challenge: Chapter 1 for a
+              chance to win $15,000!
+            </span>
+            <ArrowRightIcon className="size-4 shrink-0" />
+          </Link>
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
               <h1 className="font-display text-4xl font-semibold text-balance sm:text-5xl md:text-7xl">
