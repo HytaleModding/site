@@ -76,7 +76,7 @@ export default async function HomePage({
           <HeroStickers />
         </div>
         <div className="flex h-full w-full max-w-5xl flex-col items-center justify-around gap-6 space-y-8 text-center">
-          <Link
+          {/* <Link
             href="https://chapter1.hytalemodding.dev"
             target="_blank"
             rel="noreferrer"
@@ -88,7 +88,7 @@ export default async function HomePage({
               chance to win $15,000!
             </span>
             <ArrowRightIcon className="size-4 shrink-0" />
-          </Link>
+          </Link> */}
           <ViewTransition name="hero" share="blur-scale-transition">
             <div className="space-y-6">
               <h1 className="font-display text-4xl font-semibold text-balance sm:text-5xl md:text-7xl">
