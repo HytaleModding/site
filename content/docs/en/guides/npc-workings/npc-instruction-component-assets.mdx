@@ -1,0 +1,121 @@
+---
+title: "NPCs: Instruction Component assets"
+description: "Use Instruction Component assets to clean up your NPC and cut back on repetition."
+authors:
+    - name: "Lord Zibblington"
+---
+
+Introduction
+In this guide we’ll walk through the process of using Instruction Component asset files, referred to as Instructions (capital I) going forward. Instructions allow you to use the same sensor/action pairing across many NPCs, which is extremely useful if you’re going to be reusing the same action a lot. They also allow you to decrease the bulk of your NPC Role files, which makes them much easier to read and digest going forward.
+
+Creating the Instruction
+
+This is an Instruction. It has a Class field, a Type field, a Parameters field, and a Content field. Below is a bare bones representation of the structure.
+
+```
+"Class": "Instruction",
+"Type": "Component",
+"Parameters": {
+
+},
+"Content":{
+
+}
+```
+
+As it stands, this Instruction won’t run. On that note, always make sure you remove any invalid Instructions from your asset packs.  Unlike other assets, where the game will ignore them and move on, your entire asset pack will be rejected due to a broken Instruction even if you never reference that file. The game will give an error with the name of your asset in the log, so it’s a good idea to check it first if your mod pack isn’t loading.
+
+Instructions are comprised of four parts: Class, Type, Parameters, and Content. Class and Type are what let the game know this is an Instruction to be used for your NPC. We won’t be touching either of these fields in this tutorial. Parameters are where you define the customization settings of your Instruction. If it’s not in here, it can’t be changed. Finally, Content is where the magic happens. This is where you’ll put all of your Actions to be used later by your NPCs.
+
+Parameters are comprised of two parts: The value, and the description. Both are necessary for the initial parameter declaration.
+
+```
+"Parameters":{
+    "Example_Parameter_One":{
+        "Value": 1,
+        "Description": "An example of storing a number with a parameter"
+    },
+    "Example_Parameter_Two":{
+        "Value": "Hello World",
+        "Description": "An example of storing a string with a parameter"
+    },
+    "Example_Parameter_Three":{
+        "Value": [ 1 , 7 , 9 ],
+        "Description": "An example of storing an array with a parameter"
+    }
+}
+```
+
+The fields are self-explanatory, with the Value field stating what the parameter holds and the Description field describing the parameter.
+
+
+Content is what tells the game what you want the Instruction to do, and when you want it to do it. You need a Sensor and Actions field, the same as when you outline your instructions in a normal NPC Role asset.
+
+
+```
+"Content":{
+    "Sensor":{
+        "Type": "Player",
+        "Range": "Compute": "Example_Parameter_One"
+    },
+    Actions:[
+        {
+            "Type": "Spawn",
+            "Kind": "Gecko",
+            "LaunchAtTarget": true
+        },
+    ]
+}
+```
+
+The Content field shown here will tell the game to launch a Gecko at the player when they get as close as defined in Example_Parameter_One. It’s important that you use Compute and pass a parameter value if you want someone to have the ability to adjust part of the instruction every time they call it.
+
+Content is different from Actions and Instructions fields found in a normal NPC Role in that it is not an array. You cannot, to my knowledge, have multiple Sensor/Action pairings within the first level of the content section, and using square brackets will break it entirely.
+
+BAD:
+```
+Content: [
+    {
+        Sensor:{
+
+        },
+        Actions:[
+            {
+
+            }
+        ]
+    }
+]
+```
+
+GOOD:
+```
+Content:  {
+    Sensor:{
+
+    },
+    Actions:[
+        {
+
+        }
+    ]
+}
+```
+
+Calling the Instruction
+To call your Instruction, you want it to place it inside an Instructions field like you would any Sensor/Actions pairing. You’re going to use the Reference and Modify fields instead of the usual Sensor and Actions fields, but otherwise it’s the same. Reference tells the game which file to use, and Modify allows you to customize the parameters inside this specific instance of your Instructions asset.
+
+```
+"Instructions": [
+    {
+        "Reference": "Example_Instruction",
+        "Modify": {
+            "Example_Parameter_One": 20
+        }
+    }
+]
+```
+
+If the Instruction has more parameters than you want to adjust, or if you want to run the Instruction exactly as is, fear not! You only need to include what you’re going to use and you can leave out the rest, even the Modify field! Hytale’s engine (or json in general?) is great because if you don’t need a field from an Instruction you can just leave it out.
+
+That’s it for this guide. Now you should be able to confidently use Instructions to simplify your NPC assets and remove redundancy. Don’t forget that an invalid instruction stops the entire asset pack, and have fun being efficient!
